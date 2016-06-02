@@ -1,0 +1,130 @@
+<?php
+
+/**
+ * @TODO: Provide function/method to determine version.
+ */
+
+use Drupal\Core\Template\Attribute;
+
+/**
+ * Point feature constant.
+ *
+ * @var string
+ */
+define('GEOFIELD_TYPE_POINT', 'POINT');
+
+/**
+ * Multipoint feature constant.
+ *
+ * @var string
+ */
+define('GEOFIELD_TYPE_MULTIPOINT', 'MULTIPOINT');
+
+/**
+ * Linestring feature constant.
+ *
+ * @var string
+ */
+define('GEOFIELD_TYPE_LINESTRING', 'LINESTRING');
+
+/**
+ * Multilinestring feature constant.
+ *
+ * @var string
+ */
+define('GEOFIELD_TYPE_MULTILINESTRING' , 'MULTILINESTRING');
+
+/**
+ * Polygon feature constant.
+ *
+ * @var string
+ */
+define('GEOFIELD_TYPE_POLYGON', 'POLYGON');
+
+/**
+ * Multipolygon feature constant.
+ *
+ * @var string
+ */
+define('GEOFIELD_TYPE_MULTIPOLYGON', 'MULTIPOLYGON');
+
+/* *
+ * Max length of geohashes (imposed by database column length).
+ */
+define('GEOFIELD_GEOHASH_LENGTH', 16);
+
+/**
+ * Diameter of the Earth in kilometers.
+ */
+define('GEOFIELD_KILOMETERS', 6371);
+
+/**
+ * Diameter of the Earth in meters.
+ */
+define('GEOFIELD_METERS', 6371000);
+
+/**
+ * Diameter of the Earth in miles.
+ */
+define('GEOFIELD_MILES', 3959);
+
+/**
+ * Diameter of the Earth in yards.
+ */
+define('GEOFIELD_YARDS', 6975175);
+
+/**
+ * Diameter of the Earth in feet.
+ */
+define('GEOFIELD_FEET', 20925525);
+
+/**
+ * Diameter of the Earth in nautical miles.
+ */
+define('GEOFIELD_NAUTICAL_MILES', 3444);
+
+/**
+ * Implements hook_theme().
+ */
+function geofield_theme() {
+  return array(
+    'geofield_proximity' => array(
+      'render element' => 'element',
+    ),
+  );
+}
+
+/**
+ * Returns options for radius of the Earth.
+ */
+function geofield_radius_options() {
+  return array(
+    GEOFIELD_KILOMETERS => t('Kilometers'),
+    GEOFIELD_METERS => t('Meters'),
+    GEOFIELD_MILES => t('Miles'),
+    GEOFIELD_YARDS => t('Yards'),
+    GEOFIELD_FEET => t('Feet'),
+    GEOFIELD_NAUTICAL_MILES => t('Nautical Miles'),
+  );
+}
+
+/**
+ * Theme wrapper for form item
+ */
+function theme_geofield_proximity($vars) {
+  $element = $vars['element'];
+
+  $attributes = !empty($element['#wrapper_attributes']) ? $element['#wrapper_attributes'] : array('class' => array());
+  $attributes['class'][] = 'geofield-proximity-field-wrapper';
+  $attributes['class'][] = 'clearfix';
+
+  $wrapper_attributes = array();
+  $wrapper_attributes['class'][] = 'clearfix';
+
+  if (isset($element['#children']))
+    $element['#children'] = '<div id="' . $element['#id'] . '" ' . new Attribute($wrapper_attributes) . '>' . $element['#children'] . '</div>';
+
+  $output = '<div ' . new Attribute($attributes) . '>' . render($vars) . '</div>';
+
+  return $output;
+}
