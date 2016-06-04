@@ -134,7 +134,7 @@ class AutoEntityLabelForm extends ConfigFormBase {
     // Display the list of available placeholders if token module is installed.
     if (\Drupal::moduleHandler()->moduleExists('token')) {
       $form['auto_entitylabel']['token_help'] = array(
-        '#theme' => 'token_tree',
+        '#theme' => 'token_tree_link',
         '#token_types' => array($entity_type_parameter),
         '#dialog' => TRUE,
       );
