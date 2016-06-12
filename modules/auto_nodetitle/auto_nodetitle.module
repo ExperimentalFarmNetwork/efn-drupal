@@ -1,0 +1,167 @@
+<?php
+
+/**
+ * @file
+ * Allows hiding of the node title field and automatic title creation.
+ */
+
+use Drupal\node\NodeInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\node\NodeTypeInterface;
+use Drupal\Core\Form\FormStateInterface;
+
+use Drupal\auto_nodetitle\AutoNodeTitle;
+
+/**
+ * Implements hook_form_FORM_ID_alter() for the node form.
+ */
+function auto_nodetitle_form_node_form_alter(&$form, FormStateInterface $form_state) {
+  $type = $form_state->getFormObject()->getEntity()->getType();
+  if (AutoNodeTitle::auto_nodetitle_get_setting($type) == AutoNodeTitle::AUTO_NODETITLE_ENABLED) {
+    $widget = &$form['title']['widget'][0];
+    // We will autogenerate the title later, just hide the title field in the
+    // meanwhile.
+    $widget['value']['#type'] = 'hidden';
+    $widget['value']['#required'] = FALSE;
+  }
+  elseif (AutoNodeTitle::auto_nodetitle_get_setting($type) == AutoNodeTitle::AUTO_NODETITLE_OPTIONAL) {
+    $widget = &$form['title']['widget'][0];
+    $widget['value']['#required'] = FALSE;
+  }
+
+  //For this to work it needs to be after the preview callback and before the submit callback.
+  array_splice($form['actions']['preview']['#submit'], 1, 0, 'auto_nodetitle_form_node_form_submit_preview');
+}
+
+/**
+ *
+ * Show the new title in the preview page.
+ */
+function auto_nodetitle_form_node_form_submit_preview(&$form, FormStateInterface $form_state) {
+  $node = $form_state->getFormObject()->getEntity();
+  $setting = AutoNodeTitle::auto_nodetitle_get_setting($node->getType());
+  $title = $form_state->getValue('title');
+  if ($setting == AutoNodeTitle::AUTO_NODETITLE_ENABLED || ($setting == AutoNodeTitle::AUTO_NODETITLE_OPTIONAL && empty($title))) {
+    $new_title = AutoNodeTitle::auto_nodetitle_set_title($node);
+    $form_state->setValue('title', array($new_title));
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ */
+function auto_nodetitle_node_presave(EntityInterface $entity) {
+  // If not yet done, generate the title now.
+  if (AutoNodeTitle::auto_nodetitle_is_needed($entity)) {
+    AutoNodeTitle::auto_nodetitle_set_title($entity);
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for the node type form.
+ */
+function auto_nodetitle_form_node_type_form_alter(&$form, FormStateInterface $form_state) {
+  $type = $form['type']['#default_value'];
+  $default_value = AutoNodeTitle::auto_nodetitle_get_setting($type);
+  $form['auto_nodetitle'] = array(
+    '#type' => 'details',
+    '#title' => t('Automatic title generation'),
+    '#weight' => 0,
+    '#group' => 'additional_settings',
+    '#tree' => TRUE,
+    '#attached' => array(
+      'library' => array('auto_nodetitle.auto_node_title'),
+    ),
+  );
+  $form['auto_nodetitle']['status'] = array(
+    '#type' => 'radios',
+    '#default_value' => $default_value,
+    '#options' => array(
+      t('Disabled'),
+      t('Automatically generate the title and hide the title field'),
+      t('Automatically generate the title if the title field is left empty'),
+    )
+  );
+  $form['auto_nodetitle']['pattern'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Pattern for the title'),
+    '#description' => t('Leave blank for using the per default generated title. Otherwise this string will be used as title. Use the syntax [token] if you want to insert a replacement pattern.'),
+    '#default_value' => \Drupal::config('auto_nodetitle.node.' . $type)
+      ->get('pattern') ?: '',
+  );
+  // Don't allow editing of the pattern if PHP is used, but the users lacks
+  // permission for PHP.
+  if (\Drupal::config('auto_nodetitle.node.' . $type)
+      ->get('php') && !\Drupal::currentUser()
+      ->hasPermission('use PHP for title patterns')
+  ) {
+    $form['auto_nodetitle']['ant_pattern']['#disabled'] = TRUE;
+    $form['auto_nodetitle']['ant_pattern']['#description'] = t('You are not allow the configure the pattern for the title, as you lack the %permission permission.', array('%permission' => t('Use PHP for title patterns')));
+  }
+
+  // Display the list of available placeholders if token module is installed.
+  if (Drupal::moduleHandler()->moduleExists('token')) {
+    $form['auto_nodetitle']['token_help'] = array(
+      '#theme' => 'token_tree',
+      '#token_types' => array('node'),
+    );
+  }
+
+  $form['auto_nodetitle']['php'] = array(
+    '#access' => \Drupal::currentUser()
+      ->hasPermission('use PHP for title patterns'),
+    '#type' => 'checkbox',
+    '#title' => t('Evaluate PHP in pattern.'),
+    '#description' => t('Put PHP code above that returns your string, but make sure you surround code in &lt;?php and ?&gt;. Note that $node is available and can be used by your code.'),
+    '#default_value' => \Drupal::config('auto_nodetitle.node.' . $type)
+      ->get('php') ?: '',
+  );
+  $form['actions']['submit']['#submit'][] = 'auto_nodetitle_form_node_type_form_submit';
+}
+
+/**
+ * Submit handler for forms with auto node title options.
+ *
+ * @see auto_nodetitle_form_node_type_form_alter().
+ */
+function auto_nodetitle_form_node_type_form_submit(&$form, FormStateInterface $form_state) {
+  $type = $form_state->getValue('type');
+  $settings = \Drupal::configFactory()
+    ->getEditable('auto_nodetitle.node.' . $type);
+  foreach ($form_state->getValue('auto_nodetitle') as $config_name => $config_value) {
+    $settings->set($config_name, $config_value);
+  }
+  $settings->save();
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_delete() for node_type entities.
+ */
+function auto_nodetitle_node_type_delete(NodeTypeInterface $type) {
+  \Drupal::configFactory()
+    ->getEditable('auto_nodetitle.node.' . $type->id())
+    ->delete();
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update() for node_type entities.
+ *
+ * Updates auto_nodetitle configuration object if the machine-readable name of a
+ * node type is changed.
+ */
+function auto_nodetitle_node_type_update(NodeTypeInterface $type) {
+  $original_type = $type->getOriginalId();
+  $type = $type->id();
+  if ($original_type != $type) {
+    $original_config = \Drupal::configFactory()
+      ->getEditable('auto_nodetitle.node.' . $original_type);
+    $new_config = \Drupal::configFactory()
+      ->getEditable('auto_nodetitle.node.' . $type);
+    $new_config
+      ->set('status', $original_config->get('status') ?: '')
+      ->set('pattern', $original_config->get('pattern') ?: '')
+      ->set('php', $original_config->get('php') ?: '')
+      ->save();
+    $original_config->delete();
+  }
+}

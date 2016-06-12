@@ -1,0 +1,3 @@
+auto_nodetitle.auto_node_title:
+  js:
+    js/auto_nodetitle.js: {}
