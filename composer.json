@@ -10,6 +10,7 @@
     "replace": {
         "drupal/core": "~8.0",
         "drupal/address": "8.*",
+        "drupal/webprofiler": "8.*",
         "drupal/entity": "8.*",
         "drupal/geocoder": "8.*",
         "drupal/profile": "8.*"
@@ -29,6 +30,7 @@
             "include": [
                 "core/composer.json",
                 "modules/address/composer.json",
+                "modules/devel/webprofiler/composer.json",
                 "modules/entity/composer.json",
                 "modules/geocoder/composer.json",
                 "modules/profile/composer.json"

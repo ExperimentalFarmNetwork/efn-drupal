@@ -21,6 +21,10 @@ class ComposerStaticInitDrupal8
     );
 
     public static $prefixLengthsPsr4 = array (
+        'p' => 
+        array (
+            'phpDocumentor\\Reflection\\' => 25,
+        ),
         'Z' => 
         array (
             'Zumba\\Mink\\Driver\\' => 18,
@@ -33,6 +37,7 @@ class ComposerStaticInitDrupal8
         'W' => 
         array (
             'Wikimedia\\Composer\\' => 19,
+            'Webmozart\\Assert\\' => 17,
         ),
         'S' => 
         array (
@@ -105,6 +110,12 @@ class ComposerStaticInitDrupal8
     );
 
     public static $prefixDirsPsr4 = array (
+        'phpDocumentor\\Reflection\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+        ),
         'Zumba\\Mink\\Driver\\' => 
         array (
             0 => __DIR__ . '/..' . '/jcalderonzumba/mink-phantomjs-driver/src',
@@ -132,6 +143,10 @@ class ComposerStaticInitDrupal8
         'Wikimedia\\Composer\\' => 
         array (
             0 => __DIR__ . '/..' . '/wikimedia/composer-merge-plugin/src',
+        ),
+        'Webmozart\\Assert\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/webmozart/assert/src',
         ),
         'Symfony\\Polyfill\\Php55\\' => 
         array (
@@ -313,13 +328,6 @@ class ComposerStaticInitDrupal8
     );
 
     public static $prefixesPsr0 = array (
-        'p' => 
-        array (
-            'phpDocumentor' => 
-            array (
-                0 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
-            ),
-        ),
         'o' => 
         array (
             'org\\bovigo\\vfs\\' => 
@@ -336,6 +344,10 @@ class ComposerStaticInitDrupal8
         ),
         'S' => 
         array (
+            'Symfony\\Component\\Stopwatch\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/symfony/stopwatch',
+            ),
             'Stack' => 
             array (
                 0 => __DIR__ . '/..' . '/stack/builder/src',
