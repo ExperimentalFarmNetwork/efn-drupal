@@ -2,6 +2,8 @@
 
 namespace CommerceGuys\Zone\Repository;
 
+use CommerceGuys\Addressing\Repository\SubdivisionRepository;
+use CommerceGuys\Addressing\Repository\SubdivisionRepositoryInterface;
 use CommerceGuys\Zone\Exception\UnknownZoneException;
 use CommerceGuys\Zone\Model\Zone;
 use CommerceGuys\Zone\Model\ZoneMemberCountry;

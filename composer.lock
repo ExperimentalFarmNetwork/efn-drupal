@@ -9,7 +9,7 @@
     "packages": [
         {
             "name": "commerceguys/addressing",
-            "version": "dev-master",
+            "version": "v0.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/commerceguys/addressing.git",
@@ -110,7 +110,7 @@
         },
         {
             "name": "commerceguys/intl",
-            "version": "dev-master",
+            "version": "v0.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/commerceguys/intl.git",
@@ -155,16 +155,16 @@
         },
         {
             "name": "commerceguys/zone",
-            "version": "dev-master",
+            "version": "v0.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/commerceguys/zone.git",
-                "reference": "1a690b7366a58cf3778b8ca440813d89a56204d4"
+                "reference": "685c49bc032305b69b2b9edee0e76bfa9a4830b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/commerceguys/zone/zipball/1a690b7366a58cf3778b8ca440813d89a56204d4",
-                "reference": "1a690b7366a58cf3778b8ca440813d89a56204d4",
+                "url": "https://api.github.com/repos/commerceguys/zone/zipball/685c49bc032305b69b2b9edee0e76bfa9a4830b4",
+                "reference": "685c49bc032305b69b2b9edee0e76bfa9a4830b4",
                 "shasum": ""
             },
             "require": {
@@ -198,7 +198,7 @@
                 }
             ],
             "description": "Zone management library.",
-            "time": "2015-10-06 20:06:04"
+            "time": "2015-10-05 15:40:40"
         },
         {
             "name": "composer/installers",
@@ -4683,11 +4683,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "commerceguys/intl": 20,
-        "commerceguys/addressing": 20,
-        "commerceguys/zone": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

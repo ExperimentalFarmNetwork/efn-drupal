@@ -2883,53 +2883,6 @@
         ]
     },
     {
-        "name": "commerceguys/intl",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/commerceguys/intl.git",
-            "reference": "94a1f8f9a452bbb2e1bc5fbb3712796beb1ed3dd"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/commerceguys/intl/zipball/94a1f8f9a452bbb2e1bc5fbb3712796beb1ed3dd",
-            "reference": "94a1f8f9a452bbb2e1bc5fbb3712796beb1ed3dd",
-            "shasum": ""
-        },
-        "require": {
-            "ext-bcmath": "*",
-            "php": ">=5.4.0"
-        },
-        "require-dev": {
-            "mikey179/vfsstream": "1.*",
-            "phpunit/phpunit": "~4.0"
-        },
-        "time": "2016-04-07 12:40:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "0.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "CommerceGuys\\Intl\\": "src"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Bojan Zivanovic"
-            }
-        ],
-        "description": "Internationalization library powered by CLDR data."
-    },
-    {
         "name": "commerceguys/enum",
         "version": "v1.0",
         "version_normalized": "1.0.0.0",
@@ -2968,120 +2921,6 @@
             }
         ],
         "description": "A PHP 5.4+ enumeration library."
-    },
-    {
-        "name": "commerceguys/addressing",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/commerceguys/addressing.git",
-            "reference": "93ddf176d7dd851edb0bb05694ed1614c5c67ef8"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/commerceguys/addressing/zipball/93ddf176d7dd851edb0bb05694ed1614c5c67ef8",
-            "reference": "93ddf176d7dd851edb0bb05694ed1614c5c67ef8",
-            "shasum": ""
-        },
-        "require": {
-            "commerceguys/enum": "~1.0",
-            "doctrine/collections": "~1.0",
-            "php": ">=5.4.0"
-        },
-        "require-dev": {
-            "mikey179/vfsstream": "1.*",
-            "phpunit/phpunit": "~4.0",
-            "symfony/intl": ">=2.3",
-            "symfony/validator": ">=2.3"
-        },
-        "suggest": {
-            "commerceguys/intl": "to use it as the source of country data",
-            "symfony/form": "to generate Symfony address forms",
-            "symfony/intl": "to use it as the source of country data",
-            "symfony/validator": "to validate addresses"
-        },
-        "time": "2015-12-24 23:07:20",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "0.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "CommerceGuys\\Addressing\\": "src"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Bojan Zivanovic"
-            },
-            {
-                "name": "Damien Tournoud"
-            }
-        ],
-        "description": "Addressing library powered by Google's address data.",
-        "keywords": [
-            "address",
-            "internationalization",
-            "localization",
-            "postal"
-        ]
-    },
-    {
-        "name": "commerceguys/zone",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/commerceguys/zone.git",
-            "reference": "1a690b7366a58cf3778b8ca440813d89a56204d4"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/commerceguys/zone/zipball/1a690b7366a58cf3778b8ca440813d89a56204d4",
-            "reference": "1a690b7366a58cf3778b8ca440813d89a56204d4",
-            "shasum": ""
-        },
-        "require": {
-            "commerceguys/addressing": "~0.5",
-            "doctrine/collections": "~1.0",
-            "php": ">=5.4.0"
-        },
-        "require-dev": {
-            "mikey179/vfsstream": "1.*",
-            "phpunit/phpunit": "~4.0",
-            "symfony/intl": ">=2.3"
-        },
-        "time": "2015-10-06 20:06:04",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "0.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "CommerceGuys\\Zone\\": "src"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Bojan Zivanovic"
-            }
-        ],
-        "description": "Zone management library."
     },
     {
         "name": "twig/twig",
@@ -4835,5 +4674,166 @@
         ],
         "description": "Symfony Stopwatch Component",
         "homepage": "http://symfony.com"
+    },
+    {
+        "name": "commerceguys/intl",
+        "version": "v0.7.1",
+        "version_normalized": "0.7.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/commerceguys/intl.git",
+            "reference": "94a1f8f9a452bbb2e1bc5fbb3712796beb1ed3dd"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/commerceguys/intl/zipball/94a1f8f9a452bbb2e1bc5fbb3712796beb1ed3dd",
+            "reference": "94a1f8f9a452bbb2e1bc5fbb3712796beb1ed3dd",
+            "shasum": ""
+        },
+        "require": {
+            "ext-bcmath": "*",
+            "php": ">=5.4.0"
+        },
+        "require-dev": {
+            "mikey179/vfsstream": "1.*",
+            "phpunit/phpunit": "~4.0"
+        },
+        "time": "2016-04-07 12:40:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "CommerceGuys\\Intl\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Bojan Zivanovic"
+            }
+        ],
+        "description": "Internationalization library powered by CLDR data."
+    },
+    {
+        "name": "commerceguys/addressing",
+        "version": "v0.8.2",
+        "version_normalized": "0.8.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/commerceguys/addressing.git",
+            "reference": "93ddf176d7dd851edb0bb05694ed1614c5c67ef8"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/commerceguys/addressing/zipball/93ddf176d7dd851edb0bb05694ed1614c5c67ef8",
+            "reference": "93ddf176d7dd851edb0bb05694ed1614c5c67ef8",
+            "shasum": ""
+        },
+        "require": {
+            "commerceguys/enum": "~1.0",
+            "doctrine/collections": "~1.0",
+            "php": ">=5.4.0"
+        },
+        "require-dev": {
+            "mikey179/vfsstream": "1.*",
+            "phpunit/phpunit": "~4.0",
+            "symfony/intl": ">=2.3",
+            "symfony/validator": ">=2.3"
+        },
+        "suggest": {
+            "commerceguys/intl": "to use it as the source of country data",
+            "symfony/form": "to generate Symfony address forms",
+            "symfony/intl": "to use it as the source of country data",
+            "symfony/validator": "to validate addresses"
+        },
+        "time": "2015-12-24 23:07:20",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "CommerceGuys\\Addressing\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Bojan Zivanovic"
+            },
+            {
+                "name": "Damien Tournoud"
+            }
+        ],
+        "description": "Addressing library powered by Google's address data.",
+        "keywords": [
+            "address",
+            "internationalization",
+            "localization",
+            "postal"
+        ]
+    },
+    {
+        "name": "commerceguys/zone",
+        "version": "v0.7.1",
+        "version_normalized": "0.7.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/commerceguys/zone.git",
+            "reference": "685c49bc032305b69b2b9edee0e76bfa9a4830b4"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/commerceguys/zone/zipball/685c49bc032305b69b2b9edee0e76bfa9a4830b4",
+            "reference": "685c49bc032305b69b2b9edee0e76bfa9a4830b4",
+            "shasum": ""
+        },
+        "require": {
+            "commerceguys/addressing": "~0.5",
+            "doctrine/collections": "~1.0",
+            "php": ">=5.4.0"
+        },
+        "require-dev": {
+            "mikey179/vfsstream": "1.*",
+            "phpunit/phpunit": "~4.0",
+            "symfony/intl": ">=2.3"
+        },
+        "time": "2015-10-05 15:40:40",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "CommerceGuys\\Zone\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Bojan Zivanovic"
+            }
+        ],
+        "description": "Zone management library."
     }
 ]
