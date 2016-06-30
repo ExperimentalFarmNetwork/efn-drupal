@@ -1,0 +1,4 @@
+services:
+  ajax_comments.field_settings_helper:
+    class: Drupal\ajax_comments\FieldSettingsHelper
+    arguments: ['@entity_type.manager', '@plugin.manager.field.formatter']

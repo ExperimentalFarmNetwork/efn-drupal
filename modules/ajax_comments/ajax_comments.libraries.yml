@@ -1,0 +1,9 @@
+commands:
+  version: VERSION
+  js:
+    ajax_comments.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupal.ajax
+    - core/drupal.form
