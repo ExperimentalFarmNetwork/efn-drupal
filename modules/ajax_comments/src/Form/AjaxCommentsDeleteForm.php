@@ -2,11 +2,14 @@
 
 namespace Drupal\ajax_comments\Form;
 
-use Drupal\ajax_comments\Controller\AjaxCommentsController;
+use Drupal\ajax_comments\TempStore;
+use Drupal\ajax_comments\Utility;
 use Drupal\comment\CommentInterface;
 use Drupal\comment\Form\DeleteForm;
+use Drupal\Core\Entity\EntityManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides ajax enhancements to core Comment delete form.
@@ -16,20 +19,64 @@ use Drupal\Core\Url;
 class AjaxCommentsDeleteForm extends DeleteForm {
 
   /**
+   * The TempStore service.
+   *
+   * This service stores temporary data to be used across HTTP requests.
+   *
+   * @var \Drupal\ajax_comments\TempStore
+   */
+  protected $tempStore;
+
+  /**
+   * Constructs an AjaxCommentsDeleteForm object.
+   *
+   * @param \Drupal\Core\Entity\EntityManagerInterface $entity_manager
+   *   The entity manager.
+   * @param \Drupal\ajax_comments\TempStore $temp_store
+   *   The TempStore service.
+   */
+  public function __construct(EntityManagerInterface $entity_manager, TempStore $temp_store) {
+    parent::__construct($entity_manager);
+    $this->tempStore = $temp_store;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('entity.manager'),
+      $container->get('ajax_comments.temp_store')
+    );
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state, CommentInterface $comment = NULL) {
     $form = parent::buildForm($form, $form_state);
 
     // Check if this form is being loaded through ajax or as a modal dialog.
-    $input = $form_state->getUserInput();
-    $is_ajax_request = !empty($input['_drupal_ajax']);
-    $is_modal_request = \Drupal::request()->query->get('_wrapper_format') === 'drupal_modal';
+    $request = $this->requestStack->getCurrentRequest();
+    $is_ajax_request = Utility::isAjaxRequest($request, $form_state->getUserInput());
+    $is_modal_request = Utility::isModalRequest($request);
     if ($is_modal_request || $is_ajax_request) {
       // In some circumstances the $comment object needs to be initialized.
       if (empty($comment)) {
         $comment = $form_state->getFormObject()->getEntity();
       }
+
+      // Get the selectors from the request.
+      $this->tempStore->getSelectors($request, $overwrite = TRUE);
+      $wrapper_html_id = $this->tempStore->getSelectorValue($request, 'wrapper_html_id');
+
+      // Add the wrapping fields's HTML id as a hidden input
+      // so we can access it in the controller.
+      $form['wrapper_html_id'] = [
+        '#type' => 'hidden',
+        '#value' => $wrapper_html_id,
+      ];
+
       // Workaround for the core issue with markup in dialog titles:
       // https://www.drupal.org/node/2207247
       // Replace the emphasis tags with quote marks.
@@ -65,7 +112,7 @@ class AjaxCommentsDeleteForm extends DeleteForm {
             'comment' => $comment->id(),
           ]
         ),
-        'wrapper' => AjaxCommentsController::getWrapperSelector(),
+        'wrapper' => $wrapper_html_id,
         'method' => 'replace',
         'effect' => 'fade',
       ];
@@ -78,7 +125,13 @@ class AjaxCommentsDeleteForm extends DeleteForm {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     parent::submitForm($form, $form_state);
-    $form_state->disableRedirect();
+    $request = $this->requestStack->getCurrentRequest();
+    // Disable the form redirect if the delete confirmation form was loaded
+    // through ajax in a modal dialog box, but allow redirect if the user
+    // manually opens the link in a new window or tab (e.g., /comment/1/delete).
+    if (Utility::isAjaxRequest($request)) {
+      $form_state->disableRedirect();
+    }
   }
 
 }

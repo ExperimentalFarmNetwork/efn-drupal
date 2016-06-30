@@ -3,7 +3,8 @@
 namespace Drupal\ajax_comments\Controller;
 
 use Drupal\ajax_comments\Ajax\ajaxCommentsScrollToElementCommand;
-use Drupal\ajax_comments\Form\AjaxCommentsForm;
+use Drupal\ajax_comments\TempStore;
+use Drupal\ajax_comments\Utility;
 use Drupal\comment\CommentInterface;
 use Drupal\comment\Controller\CommentController;
 use Drupal\Core\Ajax\AfterCommand;
@@ -17,7 +18,6 @@ use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
@@ -25,23 +25,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-
 /**
  * Controller routines for AJAX comments routes.
  */
 class AjaxCommentsController extends ControllerBase {
-
-  /**
-   * Class(es) to apply to the outermost wrapper element of the comments field.
-   *
-   * TODO: Maybe make this configurable?
-   *
-   * @var array
-   *  An array of class names.
-   */
-  public static $commentWrapperClasses = [
-    'js-ajax-comments-wrapper',
-  ];
 
   /**
    * Class prefix to apply to each comment.
@@ -59,6 +46,15 @@ class AjaxCommentsController extends ControllerBase {
   protected $renderer;
 
   /**
+   * The TempStore service.
+   *
+   * This service stores temporary data to be used across HTTP requests.
+   *
+   * @var \Drupal\ajax_comments\TempStore
+   */
+  protected $tempStore;
+
+  /**
    * Constructs a AjaxCommentsController object.
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
@@ -67,11 +63,14 @@ class AjaxCommentsController extends ControllerBase {
    *   The current user.
    * @param \Drupal\Core\Render\RendererInterface $renderer
    *   The render service.
+   * @param \Drupal\ajax_comments\TempStore $temp_store
+   *   The TempStore service.
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, AccountInterface $current_user, RendererInterface $renderer) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, AccountInterface $current_user, RendererInterface $renderer, TempStore $temp_store) {
     $this->entityTypeManager = $entity_type_manager;
     $this->currentUser = $current_user;
     $this->renderer = $renderer;
+    $this->tempStore = $temp_store;
   }
 
   /**
@@ -81,18 +80,9 @@ class AjaxCommentsController extends ControllerBase {
     return new static(
       $container->get('entity_type.manager'),
       $container->get('current_user'),
-      $container->get('renderer')
+      $container->get('renderer'),
+      $container->get('ajax_comments.temp_store')
     );
-  }
-
-  /**
-   * Get a selector for the wrapper class(es) of the comments field.
-   *
-   * @return string
-   *   A selector based on the wrapper classes of the comments field.
-   */
-  public static function getWrapperSelector() {
-    return '.' . implode('.', static::$commentWrapperClasses);
   }
 
   /**
@@ -116,7 +106,7 @@ class AjaxCommentsController extends ControllerBase {
    * @return array
    *   A render array for the updated comment field.
    */
-  public function renderCommentField(EntityInterface $entity, $field_name) {
+  protected function renderCommentField(EntityInterface $entity, $field_name) {
     $comment_field = $entity->get($field_name);
     // Load the display settings to ensure that the field formatter
     // configuration is properly applied to the rendered field when it is
@@ -137,6 +127,8 @@ class AjaxCommentsController extends ControllerBase {
   /**
    * Create an ajax response to replace the comment field.
    *
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The current request object.
    * @param \Drupal\Core\Ajax\AjaxResponse $response
    *   The response object being built.
    * @param \Drupal\Core\Entity\EntityInterface $entity
@@ -147,13 +139,17 @@ class AjaxCommentsController extends ControllerBase {
    * @return \Drupal\Core\Ajax\AjaxResponse
    *   The modified ajax response.
    */
-  public function buildCommentFieldResponse(AjaxResponse $response, EntityInterface $entity, $field_name) {
+  protected function buildCommentFieldResponse(Request $request, AjaxResponse $response, EntityInterface $entity, $field_name) {
     // Build a comment field render array for the ajax response.
     $comment_display = $this->renderCommentField($entity, $field_name);
 
+    // Get the wrapper HTML id selector.
+    $selectors = $this->tempStore->getSelectors($request);
+    $wrapper_html_id = $selectors['wrapper_html_id'];
+
     // Rendering the comment form below (as part of comment_display) triggers
     // form processing.
-    $response->addCommand(new ReplaceCommand(static::getWrapperSelector(), $comment_display));
+    $response->addCommand(new ReplaceCommand($wrapper_html_id, $comment_display));
 
     return $response;
   }
@@ -161,6 +157,8 @@ class AjaxCommentsController extends ControllerBase {
   /**
    * Add messages to the ajax response.
    *
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The current request object.
    * @param \Drupal\Core\Ajax\AjaxResponse $response
    *   The response object being built.
    * @param string $selector
@@ -171,15 +169,23 @@ class AjaxCommentsController extends ControllerBase {
    * @return \Drupal\Core\Ajax\AjaxResponse
    *   The modified ajax response.
    */
-  public function addMessages(AjaxResponse $response, $selector = '', $position = 'prepend') {
+  protected function addMessages(Request $request, AjaxResponse $response, $selector = '', $position = 'prepend') {
     $settings = \Drupal::config('ajax_comments.settings');
     $notify = $settings->get('notify');
 
     if ($notify) {
       if (empty($selector)) {
-        // Use the wrapper for the entire comment field as the default selector
-        // for inserting messages, if no selector is specified.
-        $selector = static::getWrapperSelector();
+        // Use the first id found in the ajax replacement markup to be
+        // inserted into the page as the selector, if none was provided.
+        foreach ($response->getCommands() as $command) {
+          if ($command['command'] === 'insert' && $command['method'] === 'replaceWith') {
+            $markup = $command['data']->__toString();
+            if (preg_match('/\sid="(.*)"/', $markup, $matches)) {
+              $selector = '#' . $matches[1];
+              break;
+            }
+          }
+        }
       }
       // Add any status messages.
       $status_messages = ['#type' => 'status_messages'];
@@ -219,16 +225,24 @@ class AjaxCommentsController extends ControllerBase {
    *   The Ajax response.
    */
   public function edit(Request $request, CommentInterface $comment) {
-    $is_ajax = $request->request->get('_drupal_ajax', FALSE) || $request->query->get('_wrapper_format') === 'drupal_ajax';
+    $is_ajax = Utility::isAjaxRequest($request);
 
     if ($is_ajax) {
       $response = new AjaxResponse();
+
+      // Get the selectors.
+      $selectors = $this->tempStore->getSelectors($request, $overwrite = TRUE);
+      $wrapper_html_id = $selectors['wrapper_html_id'];
 
       // Hide anchor.
       $response->addCommand(new InvokeCommand('a#comment-' . $comment->id(), 'hide'));
 
       // Hide comment.
       $response->addCommand(new InvokeCommand(static::getCommentSelectorPrefix() . $comment->id(), 'hide'));
+
+      // Remove any existing status messages in the comment field,
+      // if applicable.
+      $response->addCommand(new RemoveCommand($wrapper_html_id . ' .js-ajax-comments-messages'));
 
       // Insert the comment form.
       $form = $this->entityFormBuilder()->getForm($comment);
@@ -239,6 +253,10 @@ class AjaxCommentsController extends ControllerBase {
       //   $response->addCommand(new ajaxCommentsScrollToElementCommand('.ajax-comments-reply-form-' . $comment->getCommentedEntityId() . '-' . $comment->get('pid')->target_id . '-' . $comment->id()));
       // }
 
+      // Don't delete the tempStore variables here; we need them
+      // to persist for the update() method below, where the form returned
+      // here will be submitted.
+      // Instead, return the response without calling $this->tempStore->deleteAll().
       return $response;
     }
     else {
@@ -259,30 +277,79 @@ class AjaxCommentsController extends ControllerBase {
   /**
    * Submit handler for the comment edit form.
    *
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The current request object.
    * @param \Drupal\comment\CommentInterface $comment
    *   The comment entity.
    *
    * @return \Drupal\Core\Ajax\AjaxResponse
    *   The Ajax response.
    */
-  public function update(CommentInterface $comment) {
+  public function update(Request $request, CommentInterface $comment) {
     $response = new AjaxResponse();
 
-    // Rebuild the form to trigger form submission.
-    $this->entityFormBuilder()->getForm($comment, 'default');
+    // Store the selectors from the incoming request, if applicable.
+    // If the selectors are not in the request, the stored ones will
+    // not be overwritten.
+    $this->tempStore->getSelectors($request, $overwrite = TRUE);
 
-    // Build the updated comment field and insert into a replaceWith
-    // response. Also prepend any status messages in the response.
-    $response = $this->buildCommentFieldResponse(
-      $response,
-      $comment->getCommentedEntity(),
-      $comment->get('field_name')->value
-    );
+    // Rebuild the form to trigger form submission.
+    $form = $this->entityFormBuilder()->getForm($comment, 'default', ['editing' => TRUE]);
+
+    // Check for errors.
+    if (empty(drupal_get_messages('error', FALSE))) {
+      // If there are no errors, set the ajax-updated
+      // selector value for the form.
+      $this->tempStore->setSelector('form_html_id', $form['#attributes']['id']);
+
+      // Build the updated comment field and insert into a replaceWith
+      // response. Also prepend any status messages in the response.
+      $response = $this->buildCommentFieldResponse(
+        $request,
+        $response,
+        $comment->getCommentedEntity(),
+        $comment->get('field_name')->value
+      );
+    }
+    else {
+      // Retrieve the selector values for use in building the response.
+      $selectors = $this->tempStore->getSelectors($request, $overwrite = TRUE);
+      $wrapper_html_id = $selectors['wrapper_html_id'];
+      $form_html_id = $selectors['form_html_id'];
+
+      // If there are errors, remove old messages and reload the form.
+      $response->addCommand(new RemoveCommand($wrapper_html_id . ' .js-ajax-comments-messages'));
+      $response->addCommand(new ReplaceCommand($form_html_id, $form));
+    }
     $response = $this->addMessages(
+      $request,
       $response,
       static::getCommentSelectorPrefix() . $comment->id(),
       'before'
     );
+
+    // Clear out the tempStore variables.
+    $this->tempStore->deleteAll();
+
+    // Remove the libraries from the response, otherwise when
+    // core/misc/drupal.js is reinserted into the DOM, the following line of
+    // code will execute, causing Drupal.attachBehaviors() to run on the entire
+    // document, and reattach behaviors to DOM elements that already have them:
+    // @code
+    // // Attach all behaviors.
+    // domready(function () { Drupal.attachBehaviors(document, drupalSettings); });
+    // @endcode
+    $attachments = $response->getAttachments();
+    // Need to have only 'core/drupalSettings' in the asset library list.
+    // If neither 'core/drupalSettings', nor a library with a dependency on it,
+    // is in the list of libraries, drupalSettings will be stripped out of the
+    // ajax response by \Drupal\Core\Asset\AssetResolver::getJsAssets().
+    $attachments['library'] = ['core/drupalSettings'];
+    // We need to keep the drupalSettings in the response, otherwise the
+    // #ajax properties in the form definition won't be properly attached to
+    // the rebuilt comment field returned in the ajax response, and subsequent
+    // ajax interactions will be broken.
+    $response->setAttachments($attachments);
 
     return $response;
   }
@@ -301,6 +368,11 @@ class AjaxCommentsController extends ControllerBase {
   public function cancel(Request $request, CommentInterface $comment) {
     $response = new AjaxResponse();
 
+    // Get the selectors.
+    $selectors = $this->tempStore->getSelectors($request, $overwrite = TRUE);
+    $wrapper_html_id = $selectors['wrapper_html_id'];
+    $form_html_id = $selectors['form_html_id'];
+
     // Show the hidden anchor.
     $response->addCommand(new InvokeCommand('a#comment-' . $comment->id(), 'show', [200, 'linear']));
 
@@ -308,7 +380,13 @@ class AjaxCommentsController extends ControllerBase {
     $response->addCommand(new InvokeCommand(static::getCommentSelectorPrefix() . $comment->id(), 'show', [200, 'linear']));
 
     // Remove the form.
-    $response->addCommand(new RemoveCommand('#' . $request->request->get('html_id')));
+    $response->addCommand(new RemoveCommand($form_html_id));
+
+    // Remove any messages, if applicable.
+    $response->addCommand(new RemoveCommand($wrapper_html_id . ' .js-ajax-comments-messages'));
+
+    // Clear out the tempStore variables.
+    $this->tempStore->deleteAll();
 
     return $response;
   }
@@ -316,14 +394,22 @@ class AjaxCommentsController extends ControllerBase {
   /**
    * Builds ajax response for deleting a comment.
    *
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The current request object.
    * @param \Drupal\comment\CommentInterface $comment
    *   The comment entity.
    *
    * @return \Drupal\Core\Ajax\AjaxResponse
    *   The Ajax response.
    */
-  public function delete(CommentInterface $comment) {
+  public function delete(Request $request, CommentInterface $comment) {
     $response = new AjaxResponse();
+
+    // Store the selectors from the incoming request, if applicable.
+    // If the selectors are not in the request, the stored ones will
+    // not be overwritten.
+    $this->tempStore->getSelectors($request, $overwrite = TRUE);
+
     $response->addCommand(new CloseModalDialogCommand());
 
     // Rebuild the form to trigger form submission.
@@ -332,14 +418,30 @@ class AjaxCommentsController extends ControllerBase {
     // Build the updated comment field and insert into a replaceWith response.
     // Also prepend any status messages in the response.
     $response = $this->buildCommentFieldResponse(
+      $request,
       $response,
       $comment->getCommentedEntity(),
       $comment->get('field_name')->value
     );
+
+    $render_array = Utility::getEntityRenderArray($comment->getCommentedEntity(), 'full');
+    $field_name = $comment->getFieldName();
+    if (isset($render_array[$field_name]['#attributes']['id'])) {
+      $wrapper_html_id = '#' . $render_array[$field_name]['#attributes']['id'];
+    }
+    else {
+      $selectors = $this->tempStore->getSelectors($request);
+      $wrapper_html_id = $selectors['wrapper_html_id'];
+    }
+
     $response = $this->addMessages(
+      $request,
       $response,
-      AjaxCommentsForm::getFormSelector()
+      $wrapper_html_id
     );
+
+    // Clear out the tempStore variables.
+    $this->tempStore->deleteAll();
 
     return $response;
   }
@@ -365,6 +467,11 @@ class AjaxCommentsController extends ControllerBase {
   public function reply(Request $request, EntityInterface $entity, $field_name, $pid = NULL) {
     $response = new AjaxResponse();
 
+    // Store the selectors from the incoming request, if applicable.
+    // If the selectors are not in the request, the stored ones will
+    // not be overwritten.
+    $this->tempStore->getSelectors($request, $overwrite = TRUE);
+
     // Check the user's access to reply.
     // The user should not have made it this far without proper permission,
     // but adding this access check as a fallback.
@@ -373,14 +480,47 @@ class AjaxCommentsController extends ControllerBase {
     // Build the updated comment field and insert into a replaceWith response.
     // Also prepend any status messages in the response.
     $response = $this->buildCommentFieldResponse(
+      $request,
       $response,
       $entity,
       $field_name
     );
+
+    // The form_html_id should have been updated by the form constructor when
+    // $this->buildCommentFieldResponse() was called, so retrieve the updated
+    // selector values for use in building the response.
+    $selectors = $this->tempStore->getSelectors($request);
+    $form_html_id = $selectors['form_html_id'];
+
     $response = $this->addMessages(
+      $request,
       $response,
-      AjaxCommentsForm::getFormSelector()
+      $form_html_id,
+      'before'
     );
+
+    // Clear out the tempStore variables.
+    $this->tempStore->deleteAll();
+
+    // Remove the libraries from the response, otherwise when
+    // core/misc/drupal.js is reinserted into the DOM, the following line of
+    // code will execute, causing Drupal.attachBehaviors() to run on the entire
+    // document, and reattach behaviors to DOM elements that already have them:
+    // @code
+    // // Attach all behaviors.
+    // domready(function () { Drupal.attachBehaviors(document, drupalSettings); });
+    // @endcode
+    $attachments = $response->getAttachments();
+    // Need to have only 'core/drupalSettings' in the asset library list.
+    // If neither 'core/drupalSettings', nor a library with a dependency on it,
+    // is in the list of libraries, drupalSettings will be stripped out of the
+    // ajax response by \Drupal\Core\Asset\AssetResolver::getJsAssets().
+    $attachments['library'] = ['core/drupalSettings'];
+    // We need to keep the drupalSettings in the response, otherwise the
+    // #ajax properties in the form definition won't be properly attached to
+    // the rebuilt comment field returned in the ajax response, and subsequent
+    // ajax interactions will be broken.
+    $response->setAttachments($attachments);
 
     return $response;
   }
@@ -404,16 +544,19 @@ class AjaxCommentsController extends ControllerBase {
    *   The ajax response, if access is denied.
    */
   public function replyAccess(Request $request, AjaxResponse $response, EntityInterface $entity, $field_name, $pid = NULL) {
+
+    // Get the selectors.
+    $selectors = $this->tempStore->getSelectors($request);
+    $wrapper_html_id = $selectors['wrapper_html_id'];
+    $form_html_id = $selectors['form_html_id'];
+
     $access = CommentController::create(\Drupal::getContainer())
       ->replyFormAccess($entity, $field_name, $pid);
 
     if ($access->isForbidden()) {
-      $selector = $request->request->get('html_id');
-      if ($selector) {
-        $selector = '#' . $selector;
-      }
-      else {
-        $selector = static::getWrapperSelector();
+      $selector = $form_html_id;
+      if (empty($selector)) {
+        $selector = $wrapper_html_id;
       }
       drupal_set_message(t('You do not have permission to post a comment.'), 'error');
       $status_messages = ['#type' => 'status_messages'];
@@ -421,6 +564,9 @@ class AjaxCommentsController extends ControllerBase {
         $selector,
         $this->renderer->renderRoot($status_messages)
       ));
+
+      // Clear out the tempStore variables.
+      $this->tempStore->deleteAll();
 
       return $response;
     }

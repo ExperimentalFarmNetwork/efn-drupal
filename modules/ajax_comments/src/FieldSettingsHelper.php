@@ -97,14 +97,22 @@ class FieldSettingsHelper {
     $display_options = $view_display
       ->getComponent($field_name);
 
-    // Get the formatter for the current comment field.
-    /** @var \Drupal\Core\Field\FormatterInterface $comment_formatter */
-    $comment_formatter = $this->fieldFormatterManager
-      ->getInstance([
-        'field_definition' => $field_definition,
-        'view_mode' => $view_mode,
-        'configuration' => $display_options,
-      ]);
+    // If the field is hidden on the provided view_mode, $display_options
+    // will be empty. Trying to get a field formatter instance will cause
+    // an error.
+    if (empty($display_options)) {
+      $comment_formatter = FALSE;
+    }
+    else {
+      // Get the formatter for the current comment field.
+      /** @var \Drupal\Core\Field\FormatterInterface $comment_formatter */
+      $comment_formatter = $this->fieldFormatterManager
+        ->getInstance([
+          'field_definition' => $field_definition,
+          'view_mode' => $view_mode,
+          'configuration' => $display_options,
+        ]);
+    }
 
     return $comment_formatter;
   }

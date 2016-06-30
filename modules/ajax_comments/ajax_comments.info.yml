@@ -6,8 +6,8 @@ dependencies:
   - comment
 configure: ajax_comments.settings
 
-# Information added by Drupal.org packaging script on 2016-05-11
-version: '8.x-1.0-alpha1'
+# Information added by Drupal.org packaging script on 2016-06-24
+version: '8.x-1.0-alpha1+9-dev'
 core: '8.x'
 project: 'ajax_comments'
-datestamp: 1463006040
+datestamp: 1466808842

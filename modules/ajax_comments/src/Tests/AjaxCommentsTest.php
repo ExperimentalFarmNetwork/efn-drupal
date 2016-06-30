@@ -3,9 +3,11 @@
 namespace Drupal\ajax_comments\Tests;
 
 use Drupal\ajax_comments\Controller\AjaxCommentsController;
+use Drupal\ajax_comments\Utility;
 use Drupal\comment\Tests\CommentTestBase;
 use Drupal\comment\Entity\Comment;
 use Drupal\node\Entity\Node;
+use Drupal\Core\EventSubscriber\AjaxResponseSubscriber;
 use Drupal\Core\EventSubscriber\MainContentViewSubscriber;
 use Drupal\Core\Url;
 use Drupal\Component\Utility\Xss;
@@ -78,12 +80,19 @@ class AjaxCommentsTest extends CommentTestBase {
         )->render(),
       ],
     ];
+    $wrapper_html_id = Utility::getWrapperIdFromEntity($node, $comment->getFieldName());
 
     // Test opening a modal dialog with the comment delete confirmation form.
     $modal_form_response = $this->drupalGetAjax(
       'comment/' . $comment->id() . '/delete',
-      ['query' => array(MainContentViewSubscriber::WRAPPER_FORMAT => 'drupal_modal')]
+      [
+        'query' => [
+          MainContentViewSubscriber::WRAPPER_FORMAT => 'drupal_modal',
+          'wrapper_html_id' => $wrapper_html_id,
+        ],
+      ]
     );
+
     // The openDialog command appears alternately at $modal_form_response[1]
     // and $modal_form_response[2], so loop through to check each.
     $delete_form_response_found = FALSE;
@@ -114,6 +123,8 @@ class AjaxCommentsTest extends CommentTestBase {
     // Test actually deleting the comment.
     $ajax_settings = $delete_form_render_array['actions']['submit']['#ajax'];
     $ajax_settings['url'] = $ajax_settings['url']->toString();
+    $ajax_settings['wrapper'] = $wrapper_html_id;
+
     $ajax_result = $this->drupalPostAjaxForm(
       // Path.
       'comment/' . $comment->id() . '/delete',
@@ -160,6 +171,8 @@ class AjaxCommentsTest extends CommentTestBase {
     $comment_cid = $node->get('comment')->get(0)->cid;
     /** @var \Drupal\comment\Entity\Comment $comment */
     $comment = Comment::load($comment_cid);
+    // Get the wrapper id for the comment to edit.
+    $wrapper_html_id = Utility::getWrapperIdFromEntity($node, $comment->getFieldName());
 
     $edit_form_render_array = \Drupal::service('entity.form_builder')
       ->getForm($comment, 'default', ['input' => ['_drupal_ajax' => TRUE]]);
@@ -183,7 +196,16 @@ class AjaxCommentsTest extends CommentTestBase {
     $comment_hide_response_found = FALSE;
     $edit_form_response_found = FALSE;
     $edit_form_index = NULL;
-    $ajax_result = $this->drupalGetAjax('ajax_comments/' . $comment->id() . '/edit');
+
+    $ajax_result = $this->drupalGetAjax(
+      'ajax_comments/' . $comment->id() . '/edit',
+      [
+        'query' => [
+          MainContentViewSubscriber::WRAPPER_FORMAT => 'drupal_ajax',
+          'wrapper_html_id' => $wrapper_html_id,
+        ],
+      ]
+    );
     foreach ($ajax_result as $index => $command) {
       if ($command === $comment_hide_expected_response) {
         $comment_hide_response_found = TRUE;
@@ -234,7 +256,7 @@ class AjaxCommentsTest extends CommentTestBase {
             'comment' => $comment->id(),
           ]
         )->toString(),
-        'wrapper' => AjaxCommentsController::getWrapperSelector(),
+        'wrapper' => $wrapper_html_id,
         'method' => 'replace',
         'effect' => 'fade',
       ]

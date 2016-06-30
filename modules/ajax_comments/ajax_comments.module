@@ -6,9 +6,12 @@
  */
 
 use Drupal\ajax_comments\Controller\AjaxCommentsController;
+use Drupal\ajax_comments\FieldSettingsHelper;
+use Drupal\ajax_comments\Utility;
 use Drupal\comment\CommentInterface;
 use Drupal\node\NodeInterface;
 use Drupal\Component\Serialization\Json;
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Ajax;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\AlertCommand;
@@ -23,6 +26,7 @@ use Drupal\Core\Form\FormBuilderInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\Core\Render\Element;
+use Drupal\Core\Routing\RouteMatch;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -32,6 +36,7 @@ use Symfony\Component\HttpFoundation\Request;
  * classes to allow ajax behaviors to be attached.
  */
 function ajax_comments_comment_links_alter(array &$links, CommentInterface &$entity, array &$context) {
+  $request = \Drupal::request();
   /** @var \Drupal\ajax_comments\FieldSettingsHelper $field_settings_helper */
   $field_settings_helper = \Drupal::service('ajax_comments.field_settings_helper');
   $comment_formatter = $field_settings_helper->getFieldFormatterFromComment($entity, $context['view_mode']);
@@ -41,6 +46,9 @@ function ajax_comments_comment_links_alter(array &$links, CommentInterface &$ent
     if ($entity->isNew() && ($entity->getOwnerId() === \Drupal::currentUser()->id())) {
       $entity->enforceIsNew(FALSE);
     }
+
+    $field_name = $entity->getFieldName();
+    $wrapper_html_id = Utility::getWrapperIdFromEntity($context['commented_entity'], $field_name);
 
     // Attach classes to comment delete links to allow ajax_comments.js
     // to attach ajax behaviors to them.
@@ -63,6 +71,7 @@ function ajax_comments_comment_links_alter(array &$links, CommentInterface &$ent
       $links['comment']['#links']['comment-delete']['attributes']['data-dialog-options'] = Json::encode([
         'width' => 700,
       ]);
+      $links['comment']['#links']['comment-delete']['attributes']['data-wrapper-html-id'] = $wrapper_html_id;
     }
 
     // Attach classes to comment edit links to allow ajax_comments.js
@@ -80,6 +89,7 @@ function ajax_comments_comment_links_alter(array &$links, CommentInterface &$ent
       else {
         $links['comment']['#links']['comment-edit']['attributes']['class'] = array_unique(array_merge($links['comment']['#links']['comment-edit']['attributes']['class'], $classes));
       }
+      $links['comment']['#links']['comment-edit']['attributes']['data-wrapper-html-id'] = $wrapper_html_id;
       $links['comment']['#links']['comment-edit']['url'] = Url::fromRoute(
         'ajax_comments.edit',
         ['comment' => $entity->id()]
@@ -124,6 +134,35 @@ function ajax_comments_node_links_alter(array &$node_links, NodeInterface $node,
 }
 
 /**
+ * Implements hook_entity_display_build_alter().
+ */
+function ajax_comments_entity_display_build_alter(&$build, $context) {
+  foreach ($build as $field_name => $field) {
+    if (!empty($field['#field_type']) && $field['#field_type'] === 'comment') {
+      // Check that this comment field uses Ajax Comments.
+      /** @var \Drupal\ajax_comments\FieldSettingsHelper $field_settings_helper */
+      $field_settings_helper = \Drupal::service('ajax_comments.field_settings_helper');
+      $field_config = $build[$field_name]['#items']->getFieldDefinition();
+      $field_formatter = $field_settings_helper->getFieldFormatter($context['display'], $field['#field_name'], $field_config, $context['display']->getMode());
+      if (!empty($field_formatter) && $field_settings_helper->isEnabled($field_formatter)) {
+        // Check if this ID is being generated in response to an Ajax request.
+        if (Utility::isAjaxRequest(\Drupal::request())) {
+          // Note that setting ajax as TRUE on Html here also fixes issue
+          // with non-unique IDs on textarea elements return through ajax,
+          // which otherwise could result in WYYSIWYG editors being
+          // incorrectly attached by Drupal.attachBehaviors().
+          Html::setIsAjax(TRUE);
+        }
+
+        $html_id = $field['#entity_type'] . '_' . $field['#bundle'] . '_' . $field['#field_name'];
+        $build[$field_name]['#attributes']['id'] = Html::getUniqueId($html_id);
+        Utility::setEntityRenderArray($build, $context['entity'], $context['display']->getMode());
+      }
+    }
+  }
+}
+
+/**
  * Implements hook_entity_view_alter().
  */
 function ajax_comments_entity_view_alter(array &$build, ContentEntityInterface $entity, EntityViewDisplayInterface $display) {
@@ -138,10 +177,11 @@ function ajax_comments_entity_view_alter(array &$build, ContentEntityInterface $
         /** @var \Drupal\ajax_comments\FieldSettingsHelper $field_settings_helper */
         $field_settings_helper = \Drupal::service('ajax_comments.field_settings_helper');
         $field_formatter = $field_settings_helper->getFieldFormatter($display, $machine_name, $field_config, $display->getMode());
-        if ($field_settings_helper->isEnabled($field_formatter)) {
+        if (!empty($field_formatter) && $field_settings_helper->isEnabled($field_formatter)) {
           $build['#attached']['library'][] = 'ajax_comments/commands';
           $commands_added = TRUE;
           break;
+
         }
       }
     }
@@ -176,6 +216,7 @@ function ajax_comments_form_comment_form_alter(&$form, \Drupal\Core\Form\FormSta
   if (!$field_settings_helper->isEnabled($comment_formatter)) {
     return;
   }
+
   $cid = $comment->id() ? $comment->id() : 0;
   $pid = $comment->get('pid')->target_id ? $comment->get('pid')->target_id : 0;
   $id = 'ajax-comments-reply-form-' . $commented_entity->getEntityTypeId() . '-' . $commented_entity->id() . '-' . $comment->getFieldName() . '-' . $pid . '-' . $cid;
@@ -195,14 +236,8 @@ function ajax_comments_form_comment_form_alter(&$form, \Drupal\Core\Form\FormSta
     }
   }
 
-  $form['#attributes']['id'] = \Drupal\Component\Utility\Html::getUniqueId($id);
   $form['#attributes']['class'][] = $id;
   $form['#attributes']['class'][] = $form_state_class;
-  // Add the form's id as a hidden input so we can access it in the controller.
-  $form['html_id'] = [
-    '#type' => 'hidden',
-    '#value' => $form['#attributes']['id'],
-  ];
 
   // Set unique id (need for Views with enabled AJAX).
   if (empty($form['actions']['submit']['#id'])) {
@@ -245,8 +280,6 @@ function ajax_comments_form_comment_form_alter(&$form, \Drupal\Core\Form\FormSta
       $form['actions']['cancel']['#id'] = \Drupal\Component\Utility\Html::getUniqueId('cancel-' . $id);
     }
   }
-
-  $form['#attached']['library'][] = 'ajax_comments/commands';
 }
 
 /**
@@ -290,35 +323,23 @@ function _ajax_comments_edit_cancel_js($form, FormStateInterface $form_state) {
 }
 
 /**
- * Add wrapper classes to the comments field in this preprocess function.
- *
- * @param array $variables
- *   An associative array containing:
- *   - element: An associative array containing render arrays for the list of
- *     comments, and the comment form. Array keys: comments, comment_form.
- */
-function ajax_comments_preprocess_field(&$variables) {
-  $element = $variables['element'];
-  if ($element['#field_type'] == 'comment') {
-    if (isset($variables['attributes']['class']) && is_array($variables['attributes']['class'])) {
-      $variables['attributes']['class'] = array_unique(array_merge(
-        $variables['attributes']['class'],
-        AjaxCommentsController::$commentWrapperClasses
-      ));
-    }
-    else {
-      $variables['attributes']['class'] = AjaxCommentsController::$commentWrapperClasses;
-    }
-  }
-}
-
-/**
  * Implements template_preprocess_comment().
  */
 function ajax_comments_preprocess_comment(&$variables) {
   /** @var \Drupal\comment\CommentInterface $comment */
   $comment = $variables['elements']['#comment'];
   $variables['attributes']['class'][] = AjaxCommentsController::$commentClassPrefix . $comment->id();
+}
+
+/**
+ * Implements template_preprocess_status_messages().
+ */
+function ajax_comments_preprocess_status_messages(&$variables) {
+  $request = \Drupal::request();
+  $route_name = RouteMatch::createFromRequest($request)->getRouteName();
+  if (strpos($route_name, 'ajax_comments') !== FALSE) {
+    $variables['attributes']['class'][] = 'js-ajax-comments-messages';
+  }
 }
 
 /**

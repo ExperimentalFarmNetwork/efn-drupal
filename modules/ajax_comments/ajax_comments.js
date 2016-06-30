@@ -182,6 +182,20 @@
   };
 
   /**
+   * Override and extend the functionality of Drupal.Ajax.prototype.beforeSerialize.
+   */
+  (function (beforeSerialize) {
+    Drupal.Ajax.prototype.beforeSerialize = function (element, options) {
+      beforeSerialize.call(this, element, options);
+      var wrapperHtmlId = $(element).data('wrapper-html-id') || null;
+      if (wrapperHtmlId) {
+        options.data['wrapper_html_id'] = wrapperHtmlId;
+      }
+    };
+  })(Drupal.Ajax.prototype.beforeSerialize);
+
+
+  /**
    * Binds a listener on dialog creation to handle dialog customizations.
    *
    * @param {jQuery.Event} e
