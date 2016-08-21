@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.project_update.body
+    - field.field.node.project_update.field_discussion
+    - field.field.node.project_update.field_image
+    - node.type.project_update
+  module:
+    - text
+    - user
+id: node.project_update.teaser
+targetEntityType: node
+bundle: project_update
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 0
+    settings:
+      trim_length: 1000
+    third_party_settings: {  }
+hidden:
+  field_discussion: true
+  field_image: true
+  links: true

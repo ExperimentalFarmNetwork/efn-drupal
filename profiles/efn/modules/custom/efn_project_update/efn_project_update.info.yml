@@ -1,0 +1,14 @@
+name: 'Project Update'
+description: 'Provides Project Update content type and related configuration. '
+type: module
+core: 8.x
+dependencies:
+  - comment
+  - field
+  - file
+  - image
+  - menu_ui
+  - node
+  - text
+  - user
+package: EFN

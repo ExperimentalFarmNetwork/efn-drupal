@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.group_content.project-group_membership.field_project_why
+    - field.field.group_content.project-group_membership.group_roles
+    - group.content_type.project-group_membership
+id: group_content.project-group_membership.default
+targetEntityType: group_content
+bundle: project-group_membership
+mode: default
+content:
+  field_project_why:
+    weight: -3
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+  group_roles:
+    label: above
+    type: entity_reference_label
+    settings:
+      link: false
+    weight: -4
+    third_party_settings: {  }
+hidden:
+  entity_id: true
+  uid: true

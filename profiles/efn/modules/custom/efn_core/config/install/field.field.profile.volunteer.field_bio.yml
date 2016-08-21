@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_bio
+    - profile.type.volunteer
+id: profile.volunteer.field_bio
+field_name: field_bio
+entity_type: profile
+bundle: volunteer
+label: Bio
+description: 'Please provide a short description of your background, skills, interests, and why you are excited about working with EFN.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long
