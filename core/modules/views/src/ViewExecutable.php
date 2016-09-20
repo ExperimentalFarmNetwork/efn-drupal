@@ -1420,7 +1420,7 @@ class ViewExecutable implements \Serializable {
     // Let modules modify the view just after executing it.
     $module_handler->invokeAll('views_post_execute', array($this));
 
-    $this->executed = TRUE;
+    return $this->executed = TRUE;
   }
 
   /**
@@ -2374,7 +2374,7 @@ class ViewExecutable implements \Serializable {
    * Returns whether admin links should be rendered on the view.
    *
    * @return bool
-   *  TRUE if admin links should be rendered, else FALSE.
+   *   TRUE if admin links should be rendered, else FALSE.
    */
   public function getShowAdminLinks() {
     if (!isset($this->showAdminLinks)) {

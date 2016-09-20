@@ -65,7 +65,7 @@ function update_check_incompatibility($name, $type = 'module') {
  * Returns whether the minimum schema requirement has been satisfied.
  *
  * @return array
- *  A requirements info array.
+ *   A requirements info array.
  */
 function update_system_schema_requirements() {
   $requirements = array();
@@ -596,7 +596,7 @@ function update_already_performed($module, $number) {
  *   An array of return values obtained by merging the results of the
  *   hook_update_dependencies() implementations in all installed modules.
  *
- * @see \Drupal::moduleHandler()->invokeAll()
+ * @see \Drupal\Core\Extension\ModuleHandlerInterface::invokeAll()
  * @see hook_update_dependencies()
  */
 function update_retrieve_dependencies() {

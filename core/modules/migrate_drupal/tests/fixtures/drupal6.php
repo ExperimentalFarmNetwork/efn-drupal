@@ -3089,24 +3089,6 @@ $connection->schema()->createTable('content_type_page', array(
   'mysql_character_set' => 'utf8',
 ));
 
-$connection->insert('content_type_page')
-->fields(array(
-  'vid',
-  'nid',
-  'field_text_field_value',
-))
-->values(array(
-  'vid' => '1',
-  'nid' => '1',
-  'field_text_field_value' => NULL,
-))
-->values(array(
-  'vid' => '3',
-  'nid' => '1',
-  'field_text_field_value' => NULL,
-))
-->execute();
-
 $connection->schema()->createTable('content_type_story', array(
   'fields' => array(
     'nid' => array(
@@ -3420,9 +3402,9 @@ $connection->insert('content_type_story')
   'field_test_three_value' => '101.00',
   'field_test_identical1_value' => NULL,
   'field_test_identical2_value' => NULL,
-  'field_test_link_url' => 'http://www.example.com/buy-one-upon-a-time',
+  'field_test_link_url' => 'node/10',
   'field_test_link_title' => 'Buy it now',
-  'field_test_link_attributes' => 'a:1:{s:6:"target";s:6:"_blank";}',
+  'field_test_link_attributes' => 's:32:"a:1:{s:6:"target";s:6:"_blank";}";',
   'field_test_date_value' => NULL,
   'field_test_datestamp_value' => NULL,
   'field_test_datetime_value' => NULL,
@@ -8052,7 +8034,17 @@ $connection->insert('history')
 ->values(array(
   'uid' => '1',
   'nid' => '9',
-  'timestamp' => '1457655127',
+  'timestamp' => '1468384961',
+))
+->values(array(
+  'uid' => '1',
+  'nid' => '12',
+  'timestamp' => '1468384823',
+))
+->values(array(
+  'uid' => '1',
+  'nid' => '13',
+  'timestamp' => '1468384931',
 ))
 ->execute();
 
@@ -34727,7 +34719,7 @@ $connection->insert('menu_router')
   'access_callback' => 'user_access',
   'access_arguments' => 'a:1:{i:0;s:24:"administer content types";}',
   'page_callback' => 'drupal_get_form',
-  'page_arguments' => 'a:2:{i:0;s:14:"node_type_form";i:1;O:8:"stdClass":14:{s:4:"type";s:7:"company";s:4:"name";s:7:"Company";s:6:"module";s:4:"node";s:11:"description";s:17:"Company node type";s:4:"help";s:0:"";s:9:"has_title";s:1:"1";s:11:"title_label";s:4:"Name";s:8:"has_body";s:1:"1";s:10:"body_label";s:11:"Description";s:14:"min_word_count";s:2:"20";s:6:"custom";s:1:"0";s:8:"modified";s:1:"0";s:6:"locked";s:1:"0";s:9:"orig_type";s:7:"company";}}',
+  'page_arguments' => 'a:2:{i:0;s:14:"node_type_form";i:1;O:8:"stdClass":14:{s:4:"type";s:7:"company";s:4:"name";s:7:"Company";s:6:"module";s:4:"node";s:11:"description";s:17:"Company node type";s:4:"help";s:0:"";s:9:"has_title";s:1:"1";s:11:"title_label";s:4:"Name";s:8:"has_body";s:1:"1";s:10:"body_label";s:11:"Description";s:14:"min_word_count";s:1:"0";s:6:"custom";s:1:"0";s:8:"modified";s:1:"1";s:6:"locked";s:1:"0";s:9:"orig_type";s:7:"company";}}',
   'fit' => '15',
   'number_parts' => '4',
   'tab_parent' => '',
@@ -34749,7 +34741,7 @@ $connection->insert('menu_router')
   'access_callback' => 'user_access',
   'access_arguments' => 'a:1:{i:0;s:24:"administer content types";}',
   'page_callback' => 'drupal_get_form',
-  'page_arguments' => 'a:2:{i:0;s:24:"node_type_delete_confirm";i:1;O:8:"stdClass":14:{s:4:"type";s:7:"company";s:4:"name";s:7:"Company";s:6:"module";s:4:"node";s:11:"description";s:17:"Company node type";s:4:"help";s:0:"";s:9:"has_title";s:1:"1";s:11:"title_label";s:4:"Name";s:8:"has_body";s:1:"1";s:10:"body_label";s:11:"Description";s:14:"min_word_count";s:2:"20";s:6:"custom";s:1:"0";s:8:"modified";s:1:"0";s:6:"locked";s:1:"0";s:9:"orig_type";s:7:"company";}}',
+  'page_arguments' => 'a:2:{i:0;s:24:"node_type_delete_confirm";i:1;O:8:"stdClass":14:{s:4:"type";s:7:"company";s:4:"name";s:7:"Company";s:6:"module";s:4:"node";s:11:"description";s:17:"Company node type";s:4:"help";s:0:"";s:9:"has_title";s:1:"1";s:11:"title_label";s:4:"Name";s:8:"has_body";s:1:"1";s:10:"body_label";s:11:"Description";s:14:"min_word_count";s:1:"0";s:6:"custom";s:1:"0";s:8:"modified";s:1:"1";s:6:"locked";s:1:"0";s:9:"orig_type";s:7:"company";}}',
   'fit' => '31',
   'number_parts' => '5',
   'tab_parent' => '',
@@ -34859,7 +34851,7 @@ $connection->insert('menu_router')
   'access_callback' => 'user_access',
   'access_arguments' => 'a:1:{i:0;s:24:"administer content types";}',
   'page_callback' => 'drupal_get_form',
-  'page_arguments' => 'a:2:{i:0;s:14:"node_type_form";i:1;O:8:"stdClass":14:{s:4:"type";s:7:"company";s:4:"name";s:7:"Company";s:6:"module";s:4:"node";s:11:"description";s:17:"Company node type";s:4:"help";s:0:"";s:9:"has_title";s:1:"1";s:11:"title_label";s:4:"Name";s:8:"has_body";s:1:"1";s:10:"body_label";s:11:"Description";s:14:"min_word_count";s:2:"20";s:6:"custom";s:1:"0";s:8:"modified";s:1:"0";s:6:"locked";s:1:"0";s:9:"orig_type";s:7:"company";}}',
+  'page_arguments' => 'a:2:{i:0;s:14:"node_type_form";i:1;O:8:"stdClass":14:{s:4:"type";s:7:"company";s:4:"name";s:7:"Company";s:6:"module";s:4:"node";s:11:"description";s:17:"Company node type";s:4:"help";s:0:"";s:9:"has_title";s:1:"1";s:11:"title_label";s:4:"Name";s:8:"has_body";s:1:"1";s:10:"body_label";s:11:"Description";s:14:"min_word_count";s:1:"0";s:6:"custom";s:1:"0";s:8:"modified";s:1:"1";s:6:"locked";s:1:"0";s:9:"orig_type";s:7:"company";}}',
   'fit' => '31',
   'number_parts' => '5',
   'tab_parent' => 'admin/content/node-type/company',
@@ -41352,6 +41344,40 @@ $connection->insert('node')
   'tnid' => '0',
   'translate' => '0',
 ))
+->values(array(
+  'nid' => '10',
+  'vid' => '13',
+  'type' => 'page',
+  'language' => 'en',
+  'title' => 'The Real McCoy',
+  'uid' => '1',
+  'status' => '1',
+  'created' => '1444238800',
+  'changed' => '1444238808',
+  'comment' => '2',
+  'promote' => '1',
+  'moderate' => '0',
+  'sticky' => '0',
+  'tnid' => '10',
+  'translate' => '0',
+))
+->values(array(
+  'nid' => '11',
+  'vid' => '14',
+  'type' => 'page',
+  'language' => 'fr',
+  'title' => 'Le Vrai McCoy',
+  'uid' => '1',
+  'status' => '1',
+  'created' => '1444239050',
+  'changed' => '1444239050',
+  'comment' => '2',
+  'promote' => '1',
+  'moderate' => '0',
+  'sticky' => '0',
+  'tnid' => '10',
+  'translate' => '0',
+))
 ->execute();
 
 $connection->schema()->createTable('node_access', array(
@@ -41482,6 +41508,13 @@ $connection->insert('node_comment_statistics')
   'comment_count',
 ))
 ->values(array(
+  'nid' => '0',
+  'last_comment_timestamp' => '1468384735',
+  'last_comment_name' => NULL,
+  'last_comment_uid' => '1',
+  'comment_count' => '0',
+))
+->values(array(
   'nid' => '1',
   'last_comment_timestamp' => '1388271197',
   'last_comment_name' => NULL,
@@ -41497,7 +41530,14 @@ $connection->insert('node_comment_statistics')
 ))
 ->values(array(
   'nid' => '9',
-  'last_comment_timestamp' => '1444671588',
+  'last_comment_timestamp' => '1444238800',
+  'last_comment_name' => NULL,
+  'last_comment_uid' => '1',
+  'comment_count' => '0',
+))
+->values(array(
+  'nid' => '10',
+  'last_comment_timestamp' => '1444239050',
   'last_comment_name' => NULL,
   'last_comment_uid' => '1',
   'comment_count' => '0',
@@ -41745,6 +41785,28 @@ $connection->insert('node_revisions')
   'timestamp' => '1444671588',
   'format' => '1',
 ))
+->values(array(
+  'nid' => '10',
+  'vid' => '13',
+  'uid' => '1',
+  'title' => 'The Real McCoy',
+  'body' => "In the original, Queen's English.",
+  'teaser' => "In the original, Queen's English.",
+  'log' => '',
+  'timestamp' => '1444238808',
+  'format' => '1',
+))
+->values(array(
+  'nid' => '11',
+  'vid' => '14',
+  'uid' => '1',
+  'title' => 'Le Vrai McCoy',
+  'body' => 'Ooh là là!',
+  'teaser' => 'Ooh là là!',
+  'log' => '',
+  'timestamp' => '1444239050',
+  'format' => '1',
+))
 ->execute();
 
 $connection->schema()->createTable('node_type', array(
@@ -41879,9 +41941,9 @@ $connection->insert('node_type')
   'title_label' => 'Name',
   'has_body' => '1',
   'body_label' => 'Description',
-  'min_word_count' => '20',
+  'min_word_count' => '0',
   'custom' => '0',
-  'modified' => '0',
+  'modified' => '1',
   'locked' => '0',
   'orig_type' => 'company',
 ))
@@ -44483,8 +44545,8 @@ $connection->insert('users')
   'signature' => '',
   'signature_format' => '0',
   'created' => '0',
-  'access' => '1458198052',
-  'login' => '1458193160',
+  'access' => '1468384823',
+  'login' => '1468384420',
   'status' => '1',
   'timezone' => NULL,
   'language' => '',
@@ -44828,12 +44890,16 @@ $connection->insert('variable')
   'value' => 's:1:"2";',
 ))
 ->values(array(
+  'name' => 'comment_company',
+  'value' => 's:1:"2";',
+))
+->values(array(
   'name' => 'comment_controls_article',
   'value' => 'i:3;',
 ))
 ->values(array(
   'name' => 'comment_controls_company',
-  'value' => 'i:3;',
+  'value' => 's:1:"3";',
 ))
 ->values(array(
   'name' => 'comment_controls_employee',
@@ -44873,7 +44939,7 @@ $connection->insert('variable')
 ))
 ->values(array(
   'name' => 'comment_default_mode_company',
-  'value' => 'i:4;',
+  'value' => 's:1:"4";',
 ))
 ->values(array(
   'name' => 'comment_default_mode_employee',
@@ -44913,7 +44979,7 @@ $connection->insert('variable')
 ))
 ->values(array(
   'name' => 'comment_default_order_company',
-  'value' => 'i:1;',
+  'value' => 's:1:"1";',
 ))
 ->values(array(
   'name' => 'comment_default_order_employee',
@@ -44953,7 +45019,7 @@ $connection->insert('variable')
 ))
 ->values(array(
   'name' => 'comment_default_per_page_company',
-  'value' => 'i:50;',
+  'value' => 's:2:"50";',
 ))
 ->values(array(
   'name' => 'comment_default_per_page_employee',
@@ -44993,7 +45059,7 @@ $connection->insert('variable')
 ))
 ->values(array(
   'name' => 'comment_form_location_company',
-  'value' => 'i:0;',
+  'value' => 's:1:"0";',
 ))
 ->values(array(
   'name' => 'comment_form_location_employee',
@@ -45037,7 +45103,7 @@ $connection->insert('variable')
 ))
 ->values(array(
   'name' => 'comment_preview_company',
-  'value' => 'i:1;',
+  'value' => 's:1:"1";',
 ))
 ->values(array(
   'name' => 'comment_preview_employee',
@@ -45081,7 +45147,7 @@ $connection->insert('variable')
 ))
 ->values(array(
   'name' => 'comment_subject_field_company',
-  'value' => 'i:1;',
+  'value' => 's:1:"1";',
 ))
 ->values(array(
   'name' => 'comment_subject_field_employee',
@@ -45444,6 +45510,10 @@ $connection->insert('variable')
   'value' => 's:5:"never";',
 ))
 ->values(array(
+  'name' => 'event_nodeapi_company',
+  'value' => 's:5:"never";',
+))
+->values(array(
   'name' => 'event_nodeapi_event',
   'value' => 's:3:"all";',
 ))
@@ -45505,7 +45575,11 @@ $connection->insert('variable')
 ))
 ->values(array(
   'name' => 'form_build_id_article',
-  'value' => 's:48:"form-mXZfFJxcCFGB80PPYtNOuwYbho6-xKTvrRLb3TAMkic";',
+  'value' => 's:48:"form-t2zKJflpBD4rpYoGQH33ckjjWAYdo5lF3Hl1O_YnWyE";',
+))
+->values(array(
+  'name' => 'form_build_id_company',
+  'value' => 's:48:"form-jFw2agRukPxjG5dG-N6joZLyoxXmCoxTzua0HUciqK0";',
 ))
 ->values(array(
   'name' => 'forum_block_num_0',
@@ -45550,6 +45624,14 @@ $connection->insert('variable')
 ->values(array(
   'name' => 'language_content_type_article',
   'value' => 's:1:"2";',
+))
+->values(array(
+  'name' => 'language_content_type_employee',
+  'value' => 's:1:"2";',
+))
+->values(array(
+  'name' => 'i18n_lock_node_article',
+  'value' => 'i:1;',
 ))
 ->values(array(
   'name' => 'language_count',
@@ -45598,6 +45680,10 @@ $connection->insert('variable')
 ->values(array(
   'name' => 'node_options_book',
   'value' => 'a:1:{i:0;s:6:"status";}',
+))
+->values(array(
+  'name' => 'node_options_company',
+  'value' => 'a:2:{i:0;s:6:"status";i:1;s:7:"promote";}',
 ))
 ->values(array(
   'name' => 'node_options_forum',
@@ -45794,6 +45880,10 @@ $connection->insert('variable')
 ->values(array(
   'name' => 'upload_article',
   'value' => 'b:0;',
+))
+->values(array(
+  'name' => 'upload_company',
+  'value' => 's:1:"1";',
 ))
 ->values(array(
   'name' => 'upload_page',

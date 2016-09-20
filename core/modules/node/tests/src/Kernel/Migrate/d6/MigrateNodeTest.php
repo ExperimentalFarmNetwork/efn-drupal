@@ -19,11 +19,16 @@ class MigrateNodeTest extends MigrateNodeTestBase {
   /**
    * {@inheritdoc}
    */
+  public static $modules = ['language', 'content_translation'];
+
+  /**
+   * {@inheritdoc}
+   */
   protected function setUp() {
     parent::setUp();
     $this->setUpMigratedFiles();
     $this->installSchema('file', ['file_usage']);
-    $this->executeMigrations(['d6_node']);
+    $this->executeMigrations(['language', 'd6_node', 'd6_node_translation']);
   }
 
   /**
@@ -74,12 +79,28 @@ class MigrateNodeTest extends MigrateNodeTestBase {
     $this->assertIdentical('test rev 3', $node->body->value);
     $this->assertIdentical('filtered_html', $node->body->format);
 
-    // Test that link fields are migrated.
+    // Test that a link field with an external link is migrated.
     $this->assertIdentical('http://groups.drupal.org/', $node->field_test_link->uri);
     $this->assertIdentical('Drupal Groups', $node->field_test_link->title);
     $this->assertIdentical([], $node->field_test_link->options['attributes']);
 
-    // Rerun migration with invalid link attributes and a different URL and
+    // Test that a link field with an internal link is migrated.
+    $node = Node::load(9);
+    $this->assertSame('internal:/node/10', $node->field_test_link->uri);
+    $this->assertSame('Buy it now', $node->field_test_link->title);
+    $this->assertSame(['attributes' => ['target' => '_blank']], $node->field_test_link->options);
+
+    // Test that translations are working.
+    $node = Node::load(10);
+    $this->assertIdentical('en', $node->langcode->value);
+    $this->assertIdentical('The Real McCoy', $node->title->value);
+    $this->assertTrue($node->hasTranslation('fr'), "Node 10 has french translation");
+
+    // Node 11 is a translation of node 10, and should not be imported separately.
+    $this->assertNull(Node::load(11), "Node 11 doesn't exist in D8, it was a translation");
+
+    // Rerun migration with two source database changes.
+    // 1. Add an invalid link attributes and a different URL and
     // title. If only the attributes are changed the error does not occur.
     Database::getConnection('default', 'migrate')
       ->update('content_type_story')
@@ -92,11 +113,26 @@ class MigrateNodeTest extends MigrateNodeTestBase {
       ->condition('vid', '3')
       ->execute();
 
+    // 2. Add a leading slash to an internal link.
+    Database::getConnection('default', 'migrate')
+      ->update('content_type_story')
+      ->fields([
+        'field_test_link_url' => '/node/10',
+      ])
+      ->condition('nid', '9')
+      ->condition('vid', '12')
+      ->execute();
+
     $this->rerunMigration();
     $node = Node::load(2);
     $this->assertIdentical('https://www.drupal.org/node/2127611', $node->field_test_link->uri);
     $this->assertIdentical('Migrate API in Drupal 8', $node->field_test_link->title);
     $this->assertIdentical([], $node->field_test_link->options['attributes']);
+
+    $node = Node::load(9);
+    $this->assertSame('internal:/node/10', $node->field_test_link->uri);
+    $this->assertSame('Buy it now', $node->field_test_link->title);
+    $this->assertSame(['attributes' => ['target' => '_blank']], $node->field_test_link->options);
 
     // Test that we can re-import using the EntityContentBase destination.
     $title = $this->rerunMigration();

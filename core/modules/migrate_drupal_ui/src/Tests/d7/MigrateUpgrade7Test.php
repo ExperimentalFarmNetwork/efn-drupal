@@ -3,6 +3,7 @@
 namespace Drupal\migrate_drupal_ui\Tests\d7;
 
 use Drupal\migrate_drupal_ui\Tests\MigrateUpgradeTestBase;
+use Drupal\user\Entity\User;
 
 /**
  * Tests Drupal 7 upgrade using the migrate UI.
@@ -38,15 +39,18 @@ class MigrateUpgrade7Test extends MigrateUpgradeTestBase {
       'block_content_type' => 1,
       'comment' => 1,
       'comment_type' => 7,
+      // Module 'language' comes with 'en', 'und', 'zxx'. Migration adds 'is'.
+      'configurable_language' => 4,
       'contact_form' => 3,
       'editor' => 2,
-      'field_config' => 41,
-      'field_storage_config' => 31,
+      'field_config' => 43,
+      'field_storage_config' => 32,
       'file' => 1,
       'filter_format' => 7,
       'image_style' => 6,
+      'language_content_settings' => 2,
       'migration' => 59,
-      'node' => 2,
+      'node' => 3,
       'node_type' => 6,
       'rdf_mapping' => 5,
       'search_page' => 2,
@@ -56,18 +60,30 @@ class MigrateUpgrade7Test extends MigrateUpgradeTestBase {
       'menu' => 10,
       'taxonomy_term' => 18,
       'taxonomy_vocabulary' => 3,
-      'tour' => 1,
+      'tour' => 4,
       'user' => 3,
       'user_role' => 4,
       'menu_link_content' => 9,
       'view' => 12,
       'date_format' => 11,
-      'entity_form_display' => 15,
+      'entity_form_display' => 16,
       'entity_form_mode' => 1,
-      'entity_view_display' => 22,
-      'entity_view_mode' => 10,
+      'entity_view_display' => 24,
+      'entity_view_mode' => 11,
       'base_field_override' => 7,
     ];
+  }
+
+  /**
+   * Executes all steps of migrations upgrade.
+   */
+  protected function testMigrateUpgrade() {
+    parent::testMigrateUpgrade();
+
+    // Ensure migrated users can log in.
+    $user = User::load(2);
+    $user->pass_raw = 'a password';
+    $this->drupalLogin($user);
   }
 
 }

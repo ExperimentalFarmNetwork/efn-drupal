@@ -23,13 +23,18 @@ Drupal 8
   (Release Manager)
 - Alex Pott 'alexpott' https://www.drupal.org/u/alexpott
   (Framework Manager)
-
-Provisional membership:
 - Scott Reeves 'Cottser' https://www.drupal.org/u/cottser
+  (Framework Manager - Frontend)
+
+Provisional membership: None at this time.
 
 Drupal 7
+- Fabian Franz 'Fabianx' https://www.drupal.org/u/fabianx
+  (Framework Manager)
 - David Rothstein 'David_Rothstein' https://www.drupal.org/u/david_rothstein
   (Release Manager, Framework Manager, Product Manager)
+- Stefan Ruijsenaars 'stefan.r' https://www.drupal.org/u/stefanr-0
+  (Release Manager, Product Manager)
 
 Provisional membership: None at this time.
 
@@ -200,7 +205,6 @@ Transliteration system
 - Andrei Mateescu 'amateescu' https://www.drupal.org/u/amateescu
 - Damien Tournoud 'damien-tournoud' https://www.drupal.org/u/damien-tournoud
 - Daniel F. Kudwien 'sun' https://www.drupal.org/u/sun
-- Jennifer Hodgdon 'jhodgdon' https://www.drupal.org/u/jhodgdon
 
 Typed data system
 - Wolfgang Ziegler 'fago' https://www.drupal.org/u/fago
@@ -211,9 +215,10 @@ Topic maintainers
 Accessibility
 - Mike Gifford 'mgifford' https://www.drupal.org/u/mgifford
 - Jesse Renée Beach 'jessebeach' https://www.drupal.org/u/jessebeach
+- Andrew Macpherson 'andrewmacpherson' https://www.drupal.org/u/andrewmacpherson
 
 Documentation
-- Jennifer Hodgdon 'jhodgdon' https://www.drupal.org/u/jhodgdon
+- ?
 
 Performance
 - Nathaniel Catchpole 'catch' https://www.drupal.org/u/catch
@@ -413,7 +418,6 @@ Responsive Image module
 - Jelle Sebreghts 'Jelle_S' https://www.drupal.org/u/jelle_s
 
 Search module
-- Jennifer Hodgdon 'jhodgdon' https://www.drupal.org/u/jhodgdon
 - Peter Wolanin 'pwolanin' https://www.drupal.org/u/pwolanin
 
 Serialization module
@@ -469,11 +473,13 @@ Views module
 - Tim Plunkett 'tim.plunkett' https://www.drupal.org/u/tim.plunkett
 - Damian Lee 'damiankloip' https://www.drupal.org/u/damiankloip
 - Jess Myrbo 'xjm' https://www.drupal.org/u/xjm
+- Len Swaneveld 'Lendude' https://www.drupal.org/u/lendude
 
 Views UI module
 - Daniel Wehner 'dawehner' https://www.drupal.org/u/dawehner
 - Tim Plunkett 'tim.plunkett' https://www.drupal.org/u/tim.plunkett
 - Damian Lee 'damiankloip' https://www.drupal.org/u/damiankloip
+- Len Swaneveld 'Lendude' https://www.drupal.org/u/lendude
 
 
 Theme maintainers
@@ -519,6 +525,9 @@ Multi-lingual
 
 Web services
 - Larry Garfield 'Crell' https://www.drupal.org/u/crell
+
+Workflow Initiative
+- Dick Olsson 'dixon_' https://www.drupal.org/u/dixon_
 
 Provisional membership: None at this time.
 

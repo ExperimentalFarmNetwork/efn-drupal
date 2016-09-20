@@ -72,14 +72,14 @@ use Drupal\Core\Utility\UpdateException;
  * frequently called should be left in the main module file so that they are
  * always available.
  *
+ * See system_hook_info() for all hook groups defined by Drupal core.
+ *
  * @return
  *   An associative array whose keys are hook names and whose values are an
  *   associative array containing:
  *   - group: A string defining the group to which the hook belongs. The module
  *     system will determine whether a file with the name $module.$group.inc
  *     exists, and automatically load it when required.
- *
- * See system_hook_info() for all hook groups defined by Drupal core.
  *
  * @see hook_hook_info_alter()
  */
@@ -175,7 +175,7 @@ function hook_module_preinstall($module) {
  * This function differs from hook_install() in that it gives all other modules
  * a chance to perform actions when a module is installed, whereas
  * hook_install() is only called on the module actually being installed. See
- * \Drupal\Core\Extension\ModuleHandler::install() for a detailed description of
+ * \Drupal\Core\Extension\ModuleInstaller::install() for a detailed description of
  * the order in which install hooks are invoked.
  *
  * This hook should be implemented in a .module file, not in an .install file.
@@ -183,7 +183,7 @@ function hook_module_preinstall($module) {
  * @param $modules
  *   An array of the modules that were installed.
  *
- * @see \Drupal\Core\Extension\ModuleHandler::install()
+ * @see \Drupal\Core\Extension\ModuleInstaller::install()
  * @see hook_install()
  */
 function hook_modules_installed($modules) {
@@ -223,7 +223,7 @@ function hook_modules_installed($modules) {
  * be removed during uninstall should be removed with hook_uninstall().
  *
  * @see hook_schema()
- * @see \Drupal\Core\Extension\ModuleHandler::install()
+ * @see \Drupal\Core\Extension\ModuleInstaller::install()
  * @see hook_uninstall()
  * @see hook_modules_installed()
  */

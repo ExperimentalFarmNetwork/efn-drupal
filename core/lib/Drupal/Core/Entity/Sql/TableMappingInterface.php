@@ -20,6 +20,11 @@ use Drupal\Core\Field\FieldStorageDefinitionInterface;
 interface TableMappingInterface {
 
   /**
+   * A property that represents delta used in entity query conditions.
+   */
+  const DELTA = '%delta';
+
+  /**
    * Gets a list of table names for this mapping.
    *
    * @return string[]
@@ -40,7 +45,11 @@ interface TableMappingInterface {
   public function getAllColumns($table_name);
 
   /**
-   * Gets a list of names of fields stored in the specified table.
+   * Gets a list of names for entity fields stored in the specified table.
+   *
+   * The return list is contains the entity field names, not database field
+   * (i.e. column) names. To get the mapping of specific entity field to
+   * database columns use ::getColumnNames().
    *
    * @param string $table_name
    *   The name of the table to return the field names for.

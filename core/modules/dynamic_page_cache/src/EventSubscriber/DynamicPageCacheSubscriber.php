@@ -124,8 +124,8 @@ class DynamicPageCacheSubscriber implements EventSubscriberInterface {
    */
   public function onRouteMatch(GetResponseEvent $event) {
     // Don't cache the response if the Dynamic Page Cache request policies are
-    // not met. Store the result in a request attribute, so that onResponse()
-    // does not have to redo the request policy check.
+    // not met. Store the result in a static keyed by current request, so that
+    // onResponse() does not have to redo the request policy check.
     $request = $event->getRequest();
     $request_policy_result = $this->requestPolicy->check($request);
     $this->requestPolicyResults[$request] = $request_policy_result;
@@ -173,13 +173,13 @@ class DynamicPageCacheSubscriber implements EventSubscriberInterface {
 
     // Don't cache the response if Dynamic Page Cache's request subscriber did
     // not fire, because that means it is impossible to have a Dynamic Page
-    // Cache hit. (This can happen when the master request is for example a 403
+    // Cache hit. This can happen when the master request is for example a 403
     // or 404, in which case a subrequest is performed by the router. In that
     // case, it is the subrequest's response that is cached by Dynamic Page
     // Cache, because the routing happens in a request subscriber earlier than
     // Dynamic Page Cache's and immediately sets a response, i.e. the one
     // returned by the subrequest, and thus causes Dynamic Page Cache's request
-    // subscriber to not fire for the master request.)
+    // subscriber to not fire for the master request.
     // @see \Drupal\Core\Routing\AccessAwareRouter::checkAccess()
     // @see \Drupal\Core\EventSubscriber\DefaultExceptionHtmlSubscriber::on403()
     $request = $event->getRequest();
@@ -218,7 +218,7 @@ class DynamicPageCacheSubscriber implements EventSubscriberInterface {
    * is automatically placeholdered, and consequently the cacheability metadata
    * of the placeholdered content does not bubble up to the response level.
    *
-   * @param \Drupal\Core\Cache\CacheableResponseInterface
+   * @param \Drupal\Core\Cache\CacheableResponseInterface $response
    *   The response whose cacheability to analyze.
    *
    * @return bool
