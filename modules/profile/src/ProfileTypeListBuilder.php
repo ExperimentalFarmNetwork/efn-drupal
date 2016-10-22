@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\profile\ProfileTypeListController.
- */
-
 namespace Drupal\profile;
 
 use Drupal\Core\Entity\EntityInterface;
@@ -29,7 +24,7 @@ class ProfileTypeListBuilder extends ConfigEntityListBuilder {
    * {@inheritdoc}
    */
   public function buildRow(EntityInterface $entity) {
-    $row['type'] = $entity->link();
+    $row['type'] = $entity->toLink(NULL, 'edit-form');
     $row['registration'] = $entity->getRegistration() ? t('Yes') : t('No');
     $row['multiple'] = $entity->getMultiple() ? t('Yes') : t('No');
     return $row + parent::buildRow($entity);

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder\Annotation\GeocoderProvider.
- */
-
 namespace Drupal\geocoder\Annotation;
 
 /**
@@ -19,7 +14,7 @@ class GeocoderProvider extends GeocoderPluginBase {
    *
    * This is the fully qualified class name of the plugin handler.
    *
-   * @var string (optional)
+   * @var stringoptional
    */
   public $handler = NULL;
 
@@ -31,7 +26,7 @@ class GeocoderProvider extends GeocoderPluginBase {
    * value will contain the default value to be used if the plugin instance
    * didn't provide a value.
    *
-   * @var array (optional)
+   * @var arrayoptional
    */
   public $arguments = [];
 

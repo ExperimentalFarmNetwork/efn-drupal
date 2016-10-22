@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder_geofield\Plugin\Geocoder\Dumper\Geometry.
- */
-
 namespace Drupal\geocoder_geofield\Plugin\Geocoder\Dumper;
 
 use Drupal\geocoder\Plugin\Geocoder\Dumper\GeoJson;

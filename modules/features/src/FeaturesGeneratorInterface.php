@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\features\FeaturesGeneratorInterface.
- */
-
 namespace Drupal\features;
 
 use Drupal\Core\Form\FormStateInterface;

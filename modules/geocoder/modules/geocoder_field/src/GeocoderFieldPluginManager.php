@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder_field\GeocoderFieldPluginManager.
- */
-
 namespace Drupal\geocoder_field;
 
 use Drupal\Core\Cache\CacheBackendInterface;
@@ -38,7 +33,7 @@ class GeocoderFieldPluginManager extends DefaultPluginManager {
    *
    * @param \Traversable $namespaces
    *   An object that implements \Traversable which contains the root paths
-   *   keyed by the corresponding namespace to look for plugin implementations,
+   *   keyed by the corresponding namespace to look for plugin implementations,.
    * @param \Drupal\Core\Cache\CacheBackendInterface $cache_backend
    *   The cache backend to use.
    * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
@@ -86,6 +81,7 @@ class GeocoderFieldPluginManager extends DefaultPluginManager {
    *   The field name.
    *
    * @return array
+   *   The array of source fields and their label.
    */
   public function getSourceFields($entity_type_id, $bundle, $field_name) {
     $options = [];
@@ -99,7 +95,12 @@ class GeocoderFieldPluginManager extends DefaultPluginManager {
 
     foreach ($this->entityFieldManager->getFieldDefinitions($entity_type_id, $bundle) as $id => $definition) {
       if (in_array($definition->getType(), $types) && ($definition->getName()) !== $field_name) {
-        $options[$id] = new TranslatableMarkup('@label (@name) [@type]', ['@label' => $definition->getLabel(), '@name' => $definition->getName(), '@type' => $definition->getType()]);
+        $options[$id] = new TranslatableMarkup(
+          '@label (@name) [@type]', [
+            '@label' => $definition->getLabel(),
+            '@name' => $definition->getName(),
+            '@type' => $definition->getType(),
+          ]);
       }
     }
 

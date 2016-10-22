@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder\Plugin\Geocoder\Provider\HostIp.
- */
-
 namespace Drupal\geocoder\Plugin\Geocoder\Provider;
 
 use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;

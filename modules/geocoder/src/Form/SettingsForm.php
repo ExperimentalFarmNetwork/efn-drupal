@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder\Form\SettingsForm.
- */
-
 namespace Drupal\geocoder\Form;
 
 use Drupal\Core\Form\ConfigFormBase;

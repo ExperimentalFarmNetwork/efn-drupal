@@ -108,13 +108,22 @@ class FeaturesInstallStorage extends ExtensionInstallStorage {
           // @todo Remove as part of https://www.drupal.org/node/2186491
           drupal_get_filename('profile', $profile, $profile_list[$profile]->getPathname());
         }
+        // CHANGED START: Put Features modules first in list returned.
+        // to allow features to override config provided by other extensions.
+        $featuresManager = \Drupal::service('features.manager');
+        $features_list = array();
         $module_list = array();
         foreach (array_keys($module_list_scan) as $module) {
-          if (isset($module_list_scan[$module])) {
+          if ($featuresManager->isFeatureModule($module_list_scan[$module])) {
+            $features_list[$module] = $module_list_scan[$module];
+          }
+          else {
             $module_list[$module] = $module_list_scan[$module];
           }
         }
+        $this->folders += $this->getComponentNames($features_list);
         $this->folders += $this->getComponentNames($module_list);
+        // CHANGED END
       }
       if (!empty($extensions['theme'])) {
         $theme_list_scan = $listing->scan('theme');

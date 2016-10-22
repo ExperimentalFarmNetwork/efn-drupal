@@ -92,6 +92,11 @@ function geocoder_field_entity_presave(EntityInterface $entity) {
     // @todo [cc]: Check here for malformed $geocode and throw exceptions.
 
     $remote_field = $entity->get($geocoder['field']);
+    if (empty($remote_field->getValue())) {
+      if ($geocoder['failure']['handling'] == 'preserve') {
+        return;
+      }
+    }
 
     // Pre-process field.
     $preprocessor_manager->preprocess($remote_field);

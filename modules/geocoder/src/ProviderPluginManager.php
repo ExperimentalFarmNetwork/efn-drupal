@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder\ProviderPluginManager.
- */
-
 namespace Drupal\geocoder;
 
 use Drupal\Core\Cache\CacheBackendInterface;

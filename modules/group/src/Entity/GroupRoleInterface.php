@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\group\Entity\GroupRoleInterface.
- */
-
 namespace Drupal\group\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityInterface;
@@ -82,6 +77,14 @@ interface GroupRoleInterface extends ConfigEntityInterface {
   public function getGroupTypeId();
 
   /**
+   * Returns whether the role shows up in the default permissions UI.
+   *
+   * @return bool
+   *   Whether the role shows up in the default permissions UI.
+   */
+  public function inPermissionsUI();
+
+  /**
    * Returns a list of permissions assigned to the role.
    *
    * @return array
@@ -112,7 +115,7 @@ interface GroupRoleInterface extends ConfigEntityInterface {
   public function grantPermission($permission);
 
   /**
-   * Grants multiple permission to the role.
+   * Grants multiple permissions to the role.
    *
    * @param string[] $permissions
    *   The permissions to grant.
@@ -121,6 +124,14 @@ interface GroupRoleInterface extends ConfigEntityInterface {
    *   The group role this was called on.
    */
   public function grantPermissions($permissions);
+
+  /**
+   * Grants all available permissions to the role.
+   *
+   * @return \Drupal\group\Entity\GroupRoleInterface
+   *   The group role this was called on.
+   */
+  public function grantAllPermissions();
 
   /**
    * Revokes a permission from the role.

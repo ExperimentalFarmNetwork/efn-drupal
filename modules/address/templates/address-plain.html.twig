@@ -4,7 +4,9 @@
  * Default template for the 'plain' address formatter.
  *
  * Available variables:
- *   - recipient: Recipient.
+ *   - given_name: Given name.
+ *   - additional_name: Additional name.
+ *   - family_name: Family name.
  *   - organization: Organization.
  *   - address_line1: First address line.
  *   - address_line2: Second address line.
@@ -24,15 +26,15 @@
  *     - country.name: Country name.
  *
  * if a subdivision (dependent_locality, locality, administrative_area) was
- * entered, the array will always have a name. If it's a predefined subdivision,
- * it will also have a code (e.g. 'CA' for California), which is preferred.
+ * entered, the array will always have a code. If it's a predefined subdivision,
+ * it will also have a name. The code is always prefered.
  *
  * @ingroup themeable
  */
 #}
 <p class="address" translate="no">
-  {% if recipient %}
-    {{ recipient }} <br>
+  {% if given_name or family_name %}
+    {{ given_name }} {{ family_name }} <br>
   {% endif %}
   {% if organization %}
     {{ organization }} <br>
@@ -43,11 +45,11 @@
   {% if address_line2 %}
     {{ address_line2 }} <br>
   {% endif %}
-  {% if dependent_locality.name %}
-    {{ dependent_locality.code ?: dependent_locality.name }} <br>
+  {% if dependent_locality.code %}
+    {{ dependent_locality.code }} <br>
   {% endif %}
-  {% if locality.name or postal_code or administrative_area.name %}
-    {{ locality.code ?: locality.name }} {{ postal_code }} {{ administrative_area.code ?: administrative_area.name }} <br>
+  {% if locality.code or postal_code or administrative_area.code %}
+    {{ locality.code }} {{ postal_code }} {{ administrative_area.code }} <br>
   {% endif %}
   {{ country.name }}
 </p>

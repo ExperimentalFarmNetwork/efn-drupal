@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\group\Entity\Views\GroupContentViewsData.
- */
-
 namespace Drupal\group\Entity\Views;
 
 use Drupal\Core\Entity\EntityManagerInterface;
@@ -66,6 +61,13 @@ class GroupContentViewsData extends EntityViewsData {
   public function getViewsData() {
     $data = parent::getViewsData();
 
+    // Add a custom numeric argument for the parent group ID that allows us to
+    // use replacement titles with the parent group's label.
+    $data['group_content_field_data']['gid']['argument'] = [
+      'id' => 'group_id',
+      'numeric' => TRUE,
+    ];
+    
     // Get the data table for GroupContent entities.
     $data_table = $this->entityType->getDataTable();
 
@@ -76,8 +78,9 @@ class GroupContentViewsData extends EntityViewsData {
     /** @var \Drupal\Core\Entity\EntityTypeInterface[] $entity_types */
     $entity_types = $this->entityManager->getDefinitions();
 
-    // Add views data for each installed plugin.
-    foreach ($this->pluginManager->getInstalled() as $plugin_id => $plugin) {
+    // Add views data for all defined plugins so modules can provide default
+    // views even though their plugins may not have been installed yet.
+    foreach ($this->pluginManager->getAll() as $plugin_id => $plugin) {
       $entity_type_id = $plugin->getEntityTypeId();
       $entity_type = $entity_types[$entity_type_id];
       $entity_data_table = $entity_type->getDataTable() ?: $entity_type->getBaseTable();

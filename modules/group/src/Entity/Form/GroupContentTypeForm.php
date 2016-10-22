@@ -1,16 +1,11 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\group\Entity\Form\GroupContentTypeForm.
- */
-
 namespace Drupal\group\Entity\Form;
 
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\Component\Plugin\PluginManagerInterface;
+use Drupal\group\Plugin\GroupContentEnablerManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -21,17 +16,17 @@ class GroupContentTypeForm extends EntityForm {
   /**
    * The group content enabler plugin manager.
    *
-   * @var \Drupal\Component\Plugin\PluginManagerInterface
+   * @var \Drupal\group\Plugin\GroupContentEnablerManagerInterface
    */
   protected $pluginManager;
 
   /**
    * Constructs a new GroupContentTypeForm.
    *
-   * @param \Drupal\Component\Plugin\PluginManagerInterface $plugin_manager
+   * @param \Drupal\group\Plugin\GroupContentEnablerManagerInterface $plugin_manager
    *   The group content plugin manager.
    */
-  public function __construct(PluginManagerInterface $plugin_manager) {
+  public function __construct(GroupContentEnablerManagerInterface $plugin_manager) {
     $this->pluginManager = $plugin_manager;
   }
 
@@ -58,9 +53,7 @@ class GroupContentTypeForm extends EntityForm {
     // Initialize an empty plugin so we can show a default configuration form.
     if ($this->operation == 'add') {
       $plugin_id = $group_content_type->getContentPluginId();
-      $configuration['id'] = $plugin_id;
-      $configuration['group_type'] = $group_type->id();
-
+      $configuration['group_type_id'] = $group_type->id();
       return $this->pluginManager->createInstance($plugin_id, $configuration);
     }
     // Return the already configured plugin for existing group content types.
@@ -143,12 +136,17 @@ class GroupContentTypeForm extends EntityForm {
     // Extract the values as configuration that should be saved.
     $config = $form_state->getValues();
 
+    // If we are on an 'add' form, we create the group content type using the
+    // plugin configuration submitted using this form.
     if ($this->operation == 'add') {
-      $group_type->installContentPlugin($group_content_type->getContentPluginId(), $config);
+      /** @var \Drupal\group\Entity\Storage\GroupContentTypeStorageInterface $storage */
+      $storage = $this->entityTypeManager->getStorage('group_content_type');
+      $storage->createFromPlugin($group_type, $plugin->getPluginId(), $config)->save();
       drupal_set_message($this->t('The content plugin was installed on the group type.'));
     }
+    // Otherwise, we update the existing group content type's configuration.
     else {
-      $group_type->updateContentPlugin($group_content_type->getContentPluginId(), $config);
+      $group_content_type->updateContentPlugin($config);
       drupal_set_message($this->t('The content plugin configuration was saved.'));
     }
 

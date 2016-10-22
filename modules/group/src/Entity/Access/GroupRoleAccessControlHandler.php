@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\group\Entity\Access\GroupRoleAccessControlHandler.
- */
-
 namespace Drupal\group\Entity\Access;
 
 use Drupal\Core\Access\AccessResult;
@@ -27,6 +22,14 @@ class GroupRoleAccessControlHandler extends EntityAccessControlHandler {
     if ($operation == 'delete') {
       return parent::checkAccess($entity, $operation, $account)->addCacheableDependency($entity);
     }
+    
+    // Group roles have no 'view' route but may be used in views to show what
+    // roles a member has. We therefore allow 'view' access so field formatters
+    // such as entity_reference_label will work.
+    if ($operation == 'view') {
+      return AccessResult::allowed()->addCacheableDependency($entity);
+    }
+    
     return parent::checkAccess($entity, $operation, $account);
   }
 

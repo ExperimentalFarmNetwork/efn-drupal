@@ -12,16 +12,16 @@ This module needs to be installed via Composer, which will download the required
 1. Add the Drupal Packagist repository
 
     ```sh
-    composer config repositories.drupal composer https://packagist.drupal-composer.org
+    composer config repositories.drupal composer https://packages.drupal.org/8
     ```
 This allows Composer to find Address and the other Drupal modules.
 
 2. Download Address
 
    ```sh
-   composer require "drupal/address ~8.1"
+   composer require "drupal/address ~1.0"
    ```
 This will download the latest release of Address.
-Use 8.1.x-dev instead of ~8.1 to get the -dev release instead.
+Use 1.x-dev instead of ~1.0 to get the -dev release instead.
 
 See https://www.drupal.org/node/2404989 for more information.

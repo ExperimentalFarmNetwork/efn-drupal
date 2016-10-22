@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- * The TomTom plugin.
- */
 
 namespace Drupal\geocoder\Plugin\Geocoder\Provider;
 
@@ -58,7 +54,7 @@ class Random extends ProviderBase {
   private function getRandomCountryInfo($type = NULL) {
     $manager = new CountryManager($this->getModuleHandler());
     $countries = $manager->getList();
-    uksort($countries, function() {
+    uksort($countries, function () {
       return rand() > rand();
     });
     $country = array_slice($countries, 0, 1);

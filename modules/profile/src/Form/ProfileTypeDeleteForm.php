@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\profile\Form\ProfileTypeDeleteForm.
- */
-
 namespace Drupal\profile\Form;
 
 use Drupal\Core\Entity\EntityDeleteForm;

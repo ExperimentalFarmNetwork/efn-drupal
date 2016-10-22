@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder\DumperPluginManager.
- */
-
 namespace Drupal\geocoder;
 
 use Drupal\Core\Cache\CacheBackendInterface;

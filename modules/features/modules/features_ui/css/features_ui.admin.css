@@ -36,6 +36,16 @@ span.features-item-list span {
   white-space: nowrap;
 }
 
+.features-listing span.features-moved,
+.features-listing a.features-moved {
+  color: #fff;
+  background-color: #215900 !important;
+  border-radius: 5px;
+  margin-right: 5px;
+  padding: 2px 5px;
+  white-space: nowrap;
+}
+
 .features-listing span.features-missing,
 .features-listing a.features-missing {
   color: #fff;
@@ -268,4 +278,9 @@ details.features-export-component .details-wrapper {
 #edit-bundles-wrapper #edit-bundle-remove {
   display: inline-block;
   font-size: 10px;
+}
+
+/** Styles for plugin config forms **/
+.features-assignment-settings-form .fieldset-wrapper {
+  padding-left: 16px;
 }

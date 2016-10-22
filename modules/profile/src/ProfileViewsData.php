@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\profile\ProfileViewsData.
- */
-
 namespace Drupal\profile;
 
 use Drupal\views\EntityViewsData;

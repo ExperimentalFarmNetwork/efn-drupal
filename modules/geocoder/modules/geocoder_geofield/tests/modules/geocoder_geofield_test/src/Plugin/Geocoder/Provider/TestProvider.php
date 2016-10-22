@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder_geofield_test\Plugin\Geocoder\Provider\TestProvider.
- */
-
 namespace Drupal\geocoder_geofield_test\Plugin\Geocoder\Provider;
 
 use Drupal\geocoder\ProviderBase;

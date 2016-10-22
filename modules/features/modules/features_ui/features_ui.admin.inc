@@ -6,7 +6,7 @@
  */
 
 use Drupal\Core\Render\Element;
-use Drupal\Component\Utility\SafeMarkup;
+Use \Drupal\Component\Render\FormattableMarkup;
 use Drupal\Component\Utility\Html;
 
 /**
@@ -37,7 +37,7 @@ function theme_features_listing(array $variables) {
 
     // Add the module label and expand/collapse functionalty.
     $id = Html::getUniqueId('feature-' . $key);
-    $col2 = SafeMarkup::format('<label id="@id" for="@for" class="module-name table-filter-text-source">@name</label>',
+    $col2 = new FormattableMarkup('<label id="@id" for="@for" class="module-name table-filter-text-source">@name</label>',
       array(
         '@id' => $id,
         '@for' => $element['enable']['#id'],
@@ -51,7 +51,7 @@ function theme_features_listing(array $variables) {
     $description = t('@details', array('@details' => $renderer->render($element['details'])));
     $details = array(
       '#type' => 'details',
-      '#title' => SafeMarkup::format('<span class="text">@desc</span>', array( '@desc' => $renderer->render($element['description']))),
+      '#title' => new FormattableMarkup('<span class="text">@desc</span>', array( '@desc' => $renderer->render($element['description']))),
       '#attributes' => array('id' => $element['enable']['#id'] . '-description'),
       '#description' => $description,
     );

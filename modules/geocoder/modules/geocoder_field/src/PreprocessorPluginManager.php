@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder_field\PreprocessorPluginManager.
- */
-
 namespace Drupal\geocoder_field;
 
 use Drupal\Component\Utility\SortArray;
@@ -39,7 +34,7 @@ class PreprocessorPluginManager extends GeocoderPluginManagerBase {
 
     // Get a list of plugins that are supporting fields of type $type.
     $definitions = array_filter($this->getDefinitions(),
-      function($definition) use ($type) {
+      function ($definition) use ($type) {
         return in_array($type, $definition['field_types']);
       }
     );

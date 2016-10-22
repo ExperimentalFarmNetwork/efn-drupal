@@ -9,7 +9,6 @@ namespace Drupal\geofield\Plugin\Field\FieldType;
 
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Form\FormStateInterface;
-use geoPHP;
 use Drupal\Core\Field\FieldItemBase;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\TypedData\DataDefinition;
@@ -147,6 +146,9 @@ class GeofieldItem extends FieldItemBase {
     $properties['geohash'] = DataDefinition::create('string')
       ->setLabel(t('Geohash'));
 
+    $properties['latlon'] = DataDefinition::create('string')
+      ->setLabel(t('LatLong Pair'));
+
     return $properties;
   }
 
@@ -201,8 +203,7 @@ class GeofieldItem extends FieldItemBase {
    * Populates computed variables.
    */
   protected function populateComputedValues() {
-    \Drupal::service('geophp.geophp');
-    $geom = geoPHP::load($this->value);
+    $geom = \Drupal::service('geofield.geophp')->load($this->value);
 
     if (!empty($geom)) {
       $centroid = $geom->getCentroid();
@@ -215,7 +216,8 @@ class GeofieldItem extends FieldItemBase {
       $this->top = $bounding['maxy'];
       $this->right = $bounding['maxx'];
       $this->bottom = $bounding['miny'];
-      $this->geohash = $geom->out('geohash');
+      $this->geohash = substr($geom->out('geohash'), 0, GEOFIELD_GEOHASH_LENGTH);
+      $this->latlon = $centroid->getY() . ',' . $centroid->getX();
     }
   }
 

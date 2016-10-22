@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder_field\Plugin\Geocoder\Preprocessor\Text.
- */
-
 namespace Drupal\geocoder_field\Plugin\Geocoder\Preprocessor;
 
 use Drupal\geocoder_field\PreprocessorBase;

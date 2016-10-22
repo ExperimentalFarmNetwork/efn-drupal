@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\group\Controller\GroupTypeController.
- */
-
 namespace Drupal\group\Entity\Controller;
 
 use Drupal\group\Entity\GroupTypeInterface;
@@ -28,13 +23,6 @@ class GroupTypeController extends ControllerBase {
    * @var \Drupal\group\Entity\GroupTypeInterface
    */
   protected $groupType;
-
-  /**
-   * The IDs of the content enabler plugins the group type uses.
-   *
-   * @var string[]
-   */
-  protected $installedPluginIds = [];
 
   /**
    * The group content plugin manager.
@@ -95,9 +83,6 @@ class GroupTypeController extends ControllerBase {
    */
   public function content(GroupTypeInterface $group_type) {
     $this->groupType = $group_type;
-    foreach ($this->groupType->getInstalledContentPlugins() as $plugin_id => $plugin) {
-      $this->installedPluginIds[] = $plugin_id;
-    }
 
     // Render the table of available content enablers.
     $page['system_compact_link'] = [
@@ -117,11 +102,12 @@ class GroupTypeController extends ControllerBase {
       '#suffix' =>  $this->t('<em>* These plugins are set to be always on by their providing module.</em>'),
     ];
 
+    $installed = $this->pluginManager->getInstalledIds($group_type);
     foreach ($this->pluginManager->getAll() as $plugin_id => $plugin) {
       // If the plugin is installed on the group type, use that one instead of
       // an 'empty' version so that we may use methods on it which expect to
       // have a group type configured.
-      if (in_array($plugin_id, $this->installedPluginIds)) {
+      if (in_array($plugin_id, $installed)) {
         $plugin = $this->groupType->getContentPlugin($plugin_id);
       }
       $page['content'][$plugin_id] = $this->buildRow($plugin);
@@ -140,8 +126,10 @@ class GroupTypeController extends ControllerBase {
    *   A render array to use as a table row.
    */
   public function buildRow(GroupContentEnablerInterface $plugin) {
+    $installed = $this->pluginManager->getInstalledIds($this->groupType);
+
     // Get the plugin status.
-    if (in_array($plugin->getPluginId(), $this->installedPluginIds)) {
+    if (in_array($plugin->getPluginId(), $installed)) {
       $status = $this->t('Installed');
 
       // Mark enforced plugins with an asterisk.
@@ -210,9 +198,9 @@ class GroupTypeController extends ControllerBase {
     $operations = [];
 
     $plugin_id = $plugin->getPluginId();
-    $installed = in_array($plugin_id, $this->installedPluginIds);
+    $installed = $this->pluginManager->getInstalledIds($this->groupType);
 
-    if ($installed) {
+    if (in_array($plugin_id, $installed)) {
       /** @var \Drupal\group\Entity\GroupContentTypeInterface $group_content_type */
       $group_content_type_id = $plugin->getContentTypeConfigId();
       $group_content_type = GroupContentType::load($group_content_type_id);

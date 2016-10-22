@@ -1,0 +1,6 @@
+name: 'Group configuration tests'
+description: 'Support module for group configuration tests.'
+package: 'Testing'
+type: 'module'
+version: '1.0'
+core: '8.x'

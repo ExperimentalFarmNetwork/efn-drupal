@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\profile\Form\ProfileTypeForm.
- */
-
 namespace Drupal\profile\Form;
 
 use Drupal\Core\Entity\BundleEntityFormBase;

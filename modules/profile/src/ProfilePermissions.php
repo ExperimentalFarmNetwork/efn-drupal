@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\profile\ProfilePermissions.
- */
-
 namespace Drupal\profile;
 
 use Drupal\Core\StringTranslation\StringTranslationTrait;

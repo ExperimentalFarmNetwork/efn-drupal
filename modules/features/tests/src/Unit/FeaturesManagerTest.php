@@ -76,6 +76,9 @@ class FeaturesManagerTest extends UnitTestCase {
     $entity_type->expects($this->any())
       ->method('getConfigPrefix')
       ->willReturn('custom');
+    $entity_type->expects($this->any())
+      ->method('getProvider')
+      ->willReturn('my_module');
     $this->entityManager = $this->getMock('\Drupal\Core\Entity\EntityManagerInterface');
     $this->entityManager->expects($this->any())
       ->method('getDefinition')
@@ -84,6 +87,11 @@ class FeaturesManagerTest extends UnitTestCase {
     $this->configStorage = $this->getMock(StorageInterface::class);
     $this->configManager = $this->getMock(ConfigManagerInterface::class);
     $this->moduleHandler = $this->getMock(ModuleHandlerInterface::class);
+    // getModuleList should return an array of extension objects.
+    // but we just need ::getConfigDependency isset($module_list[$provider]).
+    $this->moduleHandler->expects($this->any())
+      ->method('getModuleList')
+      ->willReturn(['my_module' => true]);
     $this->featuresManager = new FeaturesManager($this->root, $this->entityManager, $this->configFactory, $this->configStorage, $this->configManager, $this->moduleHandler);
 
     $string_translation = $this->getStringTranslationStub();
@@ -154,9 +162,12 @@ class FeaturesManagerTest extends UnitTestCase {
 
   /**
    * @covers ::setPackage
+   * @covers ::getPackage
    */
   public function testSetPackage() {
-    // @todo
+    $package = new Package('foo');
+    $this->featuresManager->setPackage($package);
+    $this->assertEquals($package, $this->featuresManager->getPackage('foo'));
   }
 
   protected function getAssignInterPackageDependenciesConfigCollection() {
@@ -409,7 +420,7 @@ class FeaturesManagerTest extends UnitTestCase {
     $this->featuresManager->assignConfigPackage('test_package', ['test_config', 'test_config2']);
 
     $this->assertEquals(['test_config', 'test_config2'], $this->featuresManager->getPackage('test_package')->getConfig());
-    $this->assertEquals(['example'], $this->featuresManager->getPackage('test_package')->getDependencies());
+    $this->assertEquals(['example', 'my_module'], $this->featuresManager->getPackage('test_package')->getDependencies());
   }
 
   /**
@@ -454,7 +465,7 @@ class FeaturesManagerTest extends UnitTestCase {
     \Drupal::getContainer()->set('info_parser', $info_parser->reveal());
 
     $bundle = $this->prophesize(FeaturesBundle::class);
-    $bundle->getShortName('test_module')->willReturn('test_module');
+    $bundle->getFullName('test_module')->willReturn('test_module');
     $bundle->isDefault()->willReturn(TRUE);
 
     $assigner = $this->prophesize(FeaturesAssignerInterface::class);
@@ -491,7 +502,7 @@ class FeaturesManagerTest extends UnitTestCase {
     \Drupal::getContainer()->set('info_parser', $info_parser->reveal());
 
     $bundle = $this->prophesize(FeaturesBundle::class);
-    $bundle->getShortName('test_module')->willReturn('test_module');
+    $bundle->getFullName('test_module')->willReturn('test_module');
     $bundle->isDefault()->willReturn(TRUE);
 
     $assigner = $this->prophesize(FeaturesAssignerInterface::class);
@@ -568,8 +579,11 @@ class FeaturesManagerTest extends UnitTestCase {
     return $data;
   }
 
+  /**
+   * @covers ::initPackage
+   **/
   public function testInitPackageWithNewPackage() {
-    $bundle = new FeaturesBundle(['machine_name' => 'default'], 'features_bundle');
+    $bundle = new FeaturesBundle(['machine_name' => 'test'], 'features_bundle');
 
     $features_manager = new TestFeaturesManager($this->root, $this->entityManager, $this->configFactory, $this->configStorage, $this->configManager, $this->moduleHandler);
     $features_manager->setAllModules([]);
@@ -581,12 +595,18 @@ class FeaturesManagerTest extends UnitTestCase {
     $this->assertEquals('test name', $package->getName());
     $this->assertEquals('test description', $package->getDescription());
     $this->assertEquals('module', $package->getType());
-    $this->assertEquals('', $package->getBundle());
-    $this->assertEquals([], $package->getFeaturesInfo());
+    $this->assertEquals(['bundle' => 'test'], $package->getFeaturesInfo());
+    $this->assertEquals('test', $package->getBundle());
+    $this->assertEquals(FALSE, $package->getRequired());
+    $this->assertEquals([], $package->getExcluded());
   }
 
+  /**
+   * @covers ::getFeaturesInfo
+   * @covers ::getFeaturesModules
+   **/
   public function testInitPackageWithExistingPackage() {
-    $bundle = new FeaturesBundle(['machine_name' => 'default'], 'features_bundle');
+    $bundle = new FeaturesBundle(['machine_name' => 'test'], 'features_bundle');
 
     $features_manager = new TestFeaturesManager('vfs://drupal', $this->entityManager, $this->configFactory, $this->configStorage, $this->configManager, $this->moduleHandler);
 
@@ -603,7 +623,10 @@ description: test description 2
 EOT
       ,
           'test_feature.features.yml' => <<<EOT
-true
+bundle: test
+excluded:
+  - system.theme
+required: true
 EOT
           ,
         ],
@@ -622,8 +645,26 @@ EOT
 
     $package = $features_manager->initPackage('test_feature', 'test name', 'test description', 'module', $bundle);
 
+    $this->assertEquals([
+      'bundle' => 'test',
+      'excluded' => [
+        0 => 'system.theme',
+      ],
+      'required' => TRUE,
+    ], $features_manager->getFeaturesInfo($extension));
+    $this->assertEquals(['test_feature' => $extension], $features_manager->getFeaturesModules($bundle));
+
     $this->assertInstanceOf(Package::class, $package);
-    $this->assertEquals(TRUE, $package->getFeaturesInfo());
+    $this->assertEquals([
+      'bundle' => 'test',
+      'excluded' => [
+        0 => 'system.theme',
+      ],
+      'required' => TRUE,
+    ], $package->getFeaturesInfo());
+    $this->assertEquals('test', $package->getBundle());
+    $this->assertEquals(TRUE, $package->getRequired());
+    $this->assertEquals(['system.theme'], $package->getExcluded());
   }
 
   /**

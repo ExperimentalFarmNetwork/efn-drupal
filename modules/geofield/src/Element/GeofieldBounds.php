@@ -68,7 +68,7 @@ class GeofieldBounds extends GeofieldElementBase {
    * @param array $complete_form
    *   The complete form structure.
    */
-  function boundsValidate(&$element, FormStateInterface $form_state, &$complete_form) {
+  public static function boundsValidate(&$element, FormStateInterface $form_state, &$complete_form) {
     static::elementValidate($element, $form_state, $complete_form);
 
     $pairs = array(

@@ -90,7 +90,7 @@ class GeofieldLatLonWidget extends WidgetBase {
   public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
     foreach ($values as $delta => $value) {
       foreach ($this->components as $component) {
-        if (empty($value['value'][$component]) && !is_numeric($value['value'][$component])) {
+        if (empty($value['value'][$component]) || !is_numeric($value['value'][$component])) {
           $values[$delta]['value'] = '';
           continue 2;
         }

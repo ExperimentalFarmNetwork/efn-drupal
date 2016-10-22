@@ -59,9 +59,9 @@ class Package {
   protected $excluded = [];
 
   /**
-   * @var string[]
+   * @var string[]|bool
    */
-  protected $required = [];
+  protected $required = false;
 
   /**
    * @var array
@@ -113,15 +113,6 @@ class Package {
   protected $configOrig = [];
 
   /**
-   * The features info.
-   *
-   * Contains the components used in this feature.
-   *
-   * @var array
-   */
-  protected $featuresInfo = [];
-
-  /**
    * Creates a new Package instance.
    *
    * @param string $machine_name
@@ -149,13 +140,31 @@ class Package {
   }
 
   /**
+   * Return TRUE if the machine_name already has the bundle prefix.
+   *
+   * @param string $machine_name
+   * @param string $bundle_name
+   * @return bool
+   */
+  protected function inBundle($machine_name, $bundle_name) {
+    return strpos($machine_name, $bundle_name . '_') === 0;
+  }
+
+  /**
+   * Return the full name of the package by prefixing it with bundle as needed
+   *
+   * NOTE: When possible, use the Bundle::getFullName method since it can
+   * better handle cases where a bundle is a profile.
+   *
    * @return string
    */
   public function getFullName() {
-    if (!empty($this->bundle)) {
+    if (empty($this->bundle) || $this->inBundle($this->machineName, $this->bundle)) {
+      return $this->machineName;
+    }
+    else {
       return $this->bundle . '_' . $this->machineName;
     }
-    return $this->machineName;
   }
 
   /**
@@ -237,8 +246,7 @@ class Package {
    */
   public function getRequiredAll() {
     $config_orig = $this->getConfigOrig();
-    $info = isset($this->getFeaturesInfo()['required']) ? $this->getFeaturesInfo()['required'] : array();
-    $info = is_array($info) ? $info : array();
+    $info = is_array($this->required) ? $this->required : array();
     $diff = array_diff($config_orig, $info);
     // Mark all as required if required:true, or required is empty, or
     // if required contains all the exported config
@@ -327,7 +335,17 @@ class Package {
    * @return array
    */
   public function getFeaturesInfo() {
-    return $this->featuresInfo;
+    $info = [];
+    if (!empty($this->bundle)) {
+      $info['bundle'] = $this->bundle;
+    }
+    if (!empty($this->excluded)) {
+      $info['excluded'] = $this->excluded;
+    }
+    if ($this->required !== FALSE) {
+      $info['required'] = $this->required;
+    }
+    return $info;
   }
 
   /**
@@ -399,10 +417,11 @@ class Package {
    * @return $this
    */
   public function setFeaturesInfo($features_info) {
-    $this->featuresInfo = $features_info;
     if (isset($features_info['bundle'])) {
       $this->setBundle($features_info['bundle']);
     }
+    $this->setRequired(isset($features_info['required']) ? $features_info['required'] : false);
+    $this->setExcluded(isset($features_info['excluded']) ? $features_info['excluded'] : array());
 
     return $this;
   }

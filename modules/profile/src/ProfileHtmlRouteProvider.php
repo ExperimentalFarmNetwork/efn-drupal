@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\profile\ProfileHtmlRouteProvider.
- */
-
 namespace Drupal\profile;
 
 use Drupal\Core\Entity\EntityTypeInterface;
@@ -27,7 +22,9 @@ class ProfileHtmlRouteProvider extends DefaultHtmlRouteProvider {
     foreach (ProfileType::loadMultiple() as $profile_type) {
       $route = (new Route(
         "/user/{user}/{profile_type}",
-        ['_controller' => '\Drupal\profile\Controller\ProfileController::userProfileForm'],
+        ['_controller' => '\Drupal\profile\Controller\ProfileController::userProfileForm',
+          '_title_callback' => '\Drupal\profile\Controller\ProfileController::addPageTitle'
+        ],
         ['_profile_access_check' => 'add'],
         [
           'parameters' => [

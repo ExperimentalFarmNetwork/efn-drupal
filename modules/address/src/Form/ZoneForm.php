@@ -68,7 +68,7 @@ class ZoneForm extends EntityForm {
     $form['scope'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Scope'),
-      '#description' => t('Used to group zones by purpose. Examples: tax, shipping.'),
+      '#description' => $this->t('Used to group zones by purpose. Examples: tax, shipping.'),
       '#default_value' => $zone->getScope(),
       '#maxlength' => 255,
     ];

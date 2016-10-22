@@ -99,13 +99,28 @@ function ajax_comments_comment_links_alter(array &$links, CommentInterface &$ent
     // Attach classes to comment reply links to allow ajax_comments.js
     // to attach ajax behaviors to them.
     if (isset($links['comment']['#links']['comment-reply'])) {
-      $classes = array('js-use-ajax-comments', 'js-ajax-comments-reply', 'js-ajax-comments-reply-' . $entity->getCommentedEntityId() . '-' . $entity->getFieldName() . '-' . $entity->id());
+      $classes = [
+        'use-ajax',
+        'js-use-ajax-comments',
+        'js-ajax-comments-reply',
+        'js-ajax-comments-reply-' . $entity->getCommentedEntityId() . '-' . $entity->getFieldName() . '-' . $entity->id(),
+      ];
       if (empty($links['comment']['#links']['comment-reply']['attributes']['class'])) {
         $links['comment']['#links']['comment-reply']['attributes']['class'] = $classes;
       }
       else {
         $links['comment']['#links']['comment-reply']['attributes']['class'] = array_unique(array_merge($links['comment']['#links']['comment-reply']['attributes']['class'], $classes));
       }
+      $links['comment']['#links']['comment-reply']['attributes']['data-wrapper-html-id'] = $wrapper_html_id;
+      $links['comment']['#links']['comment-reply']['url'] = Url::fromRoute(
+        'ajax_comments.reply',
+        [
+          'entity_type' => $entity->getCommentedEntityTypeId(),
+          'entity' => $entity->getCommentedEntityId(),
+          'field_name' => $entity->getFieldName(),
+          'pid' => $entity->id(),
+        ]
+      );
     }
   }
 }
@@ -254,42 +269,6 @@ function ajax_comments_form_comment_form_alter(&$form, \Drupal\Core\Form\FormSta
   if (empty($form['actions']['preview']['#id'])) {
     $form['actions']['preview']['#id'] = \Drupal\Component\Utility\Html::getUniqueId('preview-' . $id);
   }
-
-  // If this a reply to comment offer a 'cancel' button.
-  if (!empty($pid)) {
-    $form['actions']['cancel'] = array(
-      '#type' => 'button',
-      '#value' => t('Cancel'),
-      '#access' => TRUE,
-      '#weight' => 21,
-      '#limit_validation_errors' => array(),
-    );
-    $form['actions']['cancel']['#ajax'] = array(
-      'wrapper' => $form['#attributes']['id'],
-      'method' => 'replace',
-      'effect' => 'fade',
-    );
-    if (empty($cid)) {
-      $form['actions']['cancel']['#ajax']['callback'] = '_ajax_comments_add_cancel_js';
-    }
-    else {
-      $form['actions']['cancel']['#ajax']['callback'] = '_ajax_comments_edit_cancel_js';
-    }
-    // Set unique id (need for Views with enabled AJAX).
-    if (empty($form['actions']['cancel']['#id'])) {
-      $form['actions']['cancel']['#id'] = \Drupal\Component\Utility\Html::getUniqueId('cancel-' . $id);
-    }
-  }
-}
-
-/**
- * Ajax form callback: Submit comment.
- */
-function _ajax_comments_submit_js($form, FormStateInterface $form_state) {
-  $message = 'Comment submit';
-  $response = new AjaxResponse();
-  $response->addCommand(new AlertCommand($message));
-  return $response;
 }
 
 /**
@@ -297,26 +276,6 @@ function _ajax_comments_submit_js($form, FormStateInterface $form_state) {
  */
 function _ajax_comments_preview_js($form, FormStateInterface $form_state) {
   $message = 'Comment preview';
-  $response = new AjaxResponse();
-  $response->addCommand(new AlertCommand($message));
-  return $response;
-}
-
-/**
- * Ajax form callback: Cancel comment add.
- */
-function _ajax_comments_add_cancel_js($form, FormStateInterface $form_state) {
-  $message = 'Comment add cancel';
-  $response = new AjaxResponse();
-  $response->addCommand(new AlertCommand($message));
-  return $response;
-}
-
-/**
- * Ajax form callback: Cancel comment edit.
- */
-function _ajax_comments_edit_cancel_js($form, FormStateInterface $form_state) {
-  $message = 'Comment edit cancel';
   $response = new AjaxResponse();
   $response->addCommand(new AlertCommand($message));
   return $response;

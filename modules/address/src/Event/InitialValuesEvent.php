@@ -74,4 +74,3 @@ class InitialValuesEvent extends Event {
   }
 
 }
-

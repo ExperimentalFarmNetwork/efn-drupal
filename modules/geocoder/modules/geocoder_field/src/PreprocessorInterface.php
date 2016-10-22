@@ -1,11 +1,7 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder_field\PreprocessorInterface.
- */
-
 namespace Drupal\geocoder_field;
+
 use Drupal\Core\Field\FieldItemListInterface;
 
 /**

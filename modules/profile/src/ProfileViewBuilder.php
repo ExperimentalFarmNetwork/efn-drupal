@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\profile\ProfileViewBuilder.
- */
-
 namespace Drupal\profile;
 
 use Drupal\Core\Entity\EntityInterface;

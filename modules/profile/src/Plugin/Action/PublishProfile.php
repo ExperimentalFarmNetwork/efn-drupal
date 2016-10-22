@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\profile\Plugin\Action\PublishProfile.
- */
-
 namespace Drupal\profile\Plugin\Action;
 
 use Drupal\Core\Action\ActionBase;
@@ -34,6 +29,7 @@ class PublishProfile extends ActionBase {
    * {@inheritdoc}
    */
   public function access($object, AccountInterface $account = NULL, $return_as_object = FALSE) {
+    /** @var \Drupal\profile\Entity\ProfileInterface $object */
     $result = $object->access('update', $account, TRUE)
       ->andIf($object->status->access('edit', $account, TRUE));
 

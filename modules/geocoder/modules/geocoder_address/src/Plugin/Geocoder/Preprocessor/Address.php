@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder_address\Plugin\Geocoder\Preprocessor\Address.
- */
-
 namespace Drupal\geocoder_address\Plugin\Geocoder\Preprocessor;
 
 use Drupal\geocoder_field\PreprocessorBase;

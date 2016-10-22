@@ -3,8 +3,8 @@
 namespace Drupal\features\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBase;
-use Drupal\features\FeaturesAssignmentMethodInterface;
 use Drupal\features\FeaturesBundleInterface;
+use Drupal\Core\Site\Settings;
 
 /**
  * Defines a features bundle.
@@ -63,7 +63,7 @@ class FeaturesBundle extends ConfigEntityBase implements FeaturesBundleInterface
   /**
    * @var bool
    */
-  protected $is_profile;
+  protected $is_profile = FALSE;
 
   public function id() {
     // @todo Convert it to $this->id in the long run.
@@ -109,7 +109,11 @@ class FeaturesBundle extends ConfigEntityBase implements FeaturesBundleInterface
    * {@inheritdoc}
    */
   public function getFullName($short_name) {
-    if ($this->isDefault() || $this->inBundle($short_name)) {
+    if ($this->isDefault() ||
+      // If it's already prefixed, don't repeat the prefix.
+      $this->inBundle($short_name) ||
+      // If we are a profile, don't duplicate the bundle if same as profile.
+      $this->isProfilePackage($short_name)) {
       return $short_name;
     }
     else {
@@ -174,7 +178,8 @@ class FeaturesBundle extends ConfigEntityBase implements FeaturesBundleInterface
    */
   public function getProfileName() {
     $name = $this->isProfile() ? $this->profile_name : '';
-    return !empty($name) ? $name : drupal_get_profile();
+    // Use Settings::get to fetch current profile name so we can easily test.
+    return !empty($name) ? $name : Settings::get('install_profile');
   }
 
   /**

@@ -2,12 +2,13 @@
 
 namespace Drupal\address\Plugin\Field\FieldFormatter;
 
-use CommerceGuys\Addressing\Enum\AddressField;
-use CommerceGuys\Addressing\Repository\AddressFormatRepositoryInterface;
-use CommerceGuys\Addressing\Repository\CountryRepositoryInterface;
-use CommerceGuys\Addressing\Repository\SubdivisionRepositoryInterface;
+use CommerceGuys\Addressing\AddressFormat\AddressField;
+use CommerceGuys\Addressing\AddressFormat\AddressFormat;
+use CommerceGuys\Addressing\AddressFormat\AddressFormatRepositoryInterface;
+use CommerceGuys\Addressing\Country\CountryRepositoryInterface;
+use CommerceGuys\Addressing\LocaleHelper;
+use CommerceGuys\Addressing\Subdivision\SubdivisionRepositoryInterface;
 use Drupal\address\AddressInterface;
-use Drupal\address\Entity\AddressFormatInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
@@ -32,21 +33,21 @@ class AddressPlainFormatter extends FormatterBase implements ContainerFactoryPlu
   /**
    * The address format repository.
    *
-   * @var \CommerceGuys\Addressing\Repository\AddressFormatRepositoryInterface
+   * @var \CommerceGuys\Addressing\AddressFormat\AddressFormatRepositoryInterface
    */
   protected $addressFormatRepository;
 
   /**
    * The country repository.
    *
-   * @var \CommerceGuys\Addressing\Repository\CountryRepositoryInterface
+   * @var \CommerceGuys\Addressing\Country\CountryRepositoryInterface
    */
   protected $countryRepository;
 
   /**
    * The subdivision repository.
    *
-   * @var \CommerceGuys\Addressing\Repository\SubdivisionRepositoryInterface
+   * @var \CommerceGuys\Addressing\Subdivision\SubdivisionRepositoryInterface
    */
   protected $subdivisionRepository;
 
@@ -67,11 +68,11 @@ class AddressPlainFormatter extends FormatterBase implements ContainerFactoryPlu
    *   The view mode.
    * @param array $third_party_settings
    *   Any third party settings.
-   * @param \CommerceGuys\Addressing\Repository\AddressFormatRepositoryInterface $address_format_repository
+   * @param \CommerceGuys\Addressing\AddressFormat\AddressFormatRepositoryInterface $address_format_repository
    *   The address format repository.
-   * @param \CommerceGuys\Addressing\Repository\CountryRepositoryInterface $country_repository
+   * @param \CommerceGuys\Addressing\Country\CountryRepositoryInterface $country_repository
    *   The country repository.
-   * @param \CommerceGuys\Addressing\Repository\SubdivisionRepositoryInterface $subdivision_repository
+   * @param \CommerceGuys\Addressing\Subdivision\SubdivisionRepositoryInterface $subdivision_repository
    *   The subdivision repository.
    */
   public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, AddressFormatRepositoryInterface $address_format_repository, CountryRepositoryInterface $country_repository, SubdivisionRepositoryInterface $subdivision_repository) {
@@ -127,12 +128,14 @@ class AddressPlainFormatter extends FormatterBase implements ContainerFactoryPlu
   protected function viewElement(AddressInterface $address, $langcode) {
     $country_code = $address->getCountryCode();
     $countries = $this->countryRepository->getList();
-    $address_format = $this->addressFormatRepository->get($country_code, $address->getLocale());
+    $address_format = $this->addressFormatRepository->get($country_code);
     $values = $this->getValues($address, $address_format);
 
     $element = [
       '#theme' => 'address_plain',
-      '#recipient' => $values['recipient'],
+      '#given_name' => $values['givenName'],
+      '#additional_name' => $values['additionalName'],
+      '#family_name' => $values['familyName'],
       '#organization' => $values['organization'],
       '#address_line1' => $values['addressLine1'],
       '#address_line2' => $values['addressLine2'],
@@ -160,42 +163,55 @@ class AddressPlainFormatter extends FormatterBase implements ContainerFactoryPlu
    *
    * @param \Drupal\address\AddressInterface $address
    *   The address.
-   * @param \Drupal\address\Entity\AddressFormatInterface $address_format
+   * @param \CommerceGuys\Addressing\AddressFormat\AddressFormat $address_format
    *   The address format.
    *
    * @return array
    *   The values, keyed by address field.
    */
-  protected function getValues(AddressInterface $address, AddressFormatInterface $address_format) {
+  protected function getValues(AddressInterface $address, AddressFormat $address_format) {
     $values = [];
     foreach (AddressField::getAll() as $field) {
       $getter = 'get' . ucfirst($field);
       $values[$field] = $address->$getter();
     }
 
-    foreach ($address_format->getUsedSubdivisionFields() as $field) {
+    $original_values = [];
+    $subdivision_fields = $address_format->getUsedSubdivisionFields();
+    $parents = [];
+    foreach ($subdivision_fields as $index => $field) {
       $value = $values[$field];
       // The template needs access to both the subdivision code and name.
       $values[$field] = [
-        'code' => '',
-        'name' => $value,
+        'code' => $value,
+        'name' => '',
       ];
 
       if (empty($value)) {
         // This level is empty, so there can be no sublevels.
         break;
       }
-      $subdivision = $this->subdivisionRepository->get($value, $address->getLocale());
+      $parents[] = $index ? $original_values[$subdivision_fields[$index - 1]] : $address->getCountryCode();
+      $subdivision = $this->subdivisionRepository->get($value, $parents);
       if (!$subdivision) {
-        // This level has no predefined subdivisions, stop.
         break;
       }
 
-      // Replace the subdivision values with the predefined ones.
-      $values[$field] = [
-        'code' => $subdivision->getCode(),
-        'name' => $subdivision->getName(),
-      ];
+      // Remember the original value so that it can be used for $parents.
+      $original_values[$field] = $values[$field];
+      // Replace the value with the expected code.
+      if (LocaleHelper::match($address->getLocale(), $subdivision->getLocale())) {
+        $values[$field] = [
+          'code' => $subdivision->getLocalCode(),
+          'name' => $subdivision->getLocalName(),
+        ];
+      }
+      else {
+        $values[$field] = [
+          'code' => $subdivision->getCode(),
+          'name' => $subdivision->getName(),
+        ];
+      }
 
       if (!$subdivision->hasChildren()) {
         // The current subdivision has no children, stop.

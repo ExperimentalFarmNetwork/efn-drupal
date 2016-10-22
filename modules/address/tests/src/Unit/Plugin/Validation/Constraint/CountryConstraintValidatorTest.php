@@ -2,7 +2,7 @@
 
 namespace Drupal\Tests\address\Unit\Plugin\Validation\Constraint;
 
-use CommerceGuys\Addressing\Repository\CountryRepositoryInterface;
+use CommerceGuys\Addressing\Country\CountryRepositoryInterface;
 use Drupal\address\Plugin\Validation\Constraint\CountryConstraint;
 use Drupal\address\Plugin\Validation\Constraint\CountryConstraintValidator;
 use Drupal\Tests\UnitTestCase;

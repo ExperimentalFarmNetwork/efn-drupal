@@ -11,7 +11,7 @@ use Drupal\features\FeaturesAssignmentMethodBase;
  *   id = "namespace",
  *   weight = 0,
  *   name = @Translation("Namespace"),
- *   description = @Translation("Add to packages configuration with a machine name containing that package's machine name."),
+ *   description = @Translation("Add config to packages that contain that package's machine name."),
  * )
  */
 class FeaturesAssignmentNamespace extends FeaturesAssignmentMethodBase {

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\profile\Form\ProfileForm.
- */
-
 namespace Drupal\profile\Form;
 
 use Drupal\Core\Entity\ContentEntityForm;
@@ -34,13 +29,23 @@ class ProfileForm extends ContentEntityForm {
     $element = parent::actions($form, $form_state);
     /** @var \Drupal\profile\Entity\ProfileInterface $profile */
     $profile = $this->entity;
+    /** @var \Drupal\profile\Entity\ProfileTypeInterface $bundle */
+    $bundle = $this->entityTypeManager->getStorage('profile_type')->load($profile->bundle());
 
-    // Add an "Activate" button.
-    $element['set_default'] = $element['submit'];
-    $element['set_default']['#value'] = t('Save and make default');
-    $element['set_default']['#weight'] = 10;
-    $element['set_default']['#access'] = !$profile->isDefault();
-    array_unshift($element['set_default']['#submit'], [$this, 'setDefault']);
+    // If this is a new profile, the Save button should set it as the default
+    // automatically. Otherwise, display a "make default" button if the profile
+    // type supports multiple profiles.
+    if ($profile->isNew() && !$bundle->getMultiple()) {
+      array_unshift($element['submit']['#submit'], [$this, 'setDefault']);
+    }
+    elseif ($bundle->getMultiple()) {
+      // Add a "Set Default" button.
+      $element['set_default'] = $element['submit'];
+      $element['set_default']['#value'] = t('Save and make default');
+      $element['set_default']['#weight'] = 10;
+      $element['set_default']['#access'] = !$profile->isDefault();
+      array_unshift($element['set_default']['#submit'], [$this, 'setDefault']);
+    }
 
     return $element;
   }

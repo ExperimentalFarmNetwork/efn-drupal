@@ -2,7 +2,7 @@
 
 namespace Drupal\address\Plugin\ZoneMember;
 
-use CommerceGuys\Addressing\Model\AddressInterface;
+use CommerceGuys\Addressing\AddressInterface;
 
 /**
  * Matches EU addresses.

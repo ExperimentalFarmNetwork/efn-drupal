@@ -3,6 +3,7 @@
 namespace Drupal\features\Plugin\FeaturesGeneration;
 
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\File\FileSystemInterface;
 use Drupal\features\FeaturesGenerationMethodBase;
 use Drupal\features\FeaturesBundleInterface;
 use Drupal\features\Package;
@@ -33,13 +34,20 @@ class FeaturesGenerationWrite extends FeaturesGenerationMethodBase implements Co
   protected $root;
 
   /**
+   * The file_system service.
+   * @var \Drupal\Core\File\FileSystemInterface
+   */
+  protected $fileSystem;
+
+  /**
    * Creates a new FeaturesGenerationWrite instance.
    *
    * @param string $root
    *   The app root.
    */
-  public function __construct($root) {
+  public function __construct($root, FileSystemInterface $fileSystem) {
     $this->root = $root;
+    $this->fileSystem = $fileSystem;
   }
 
   /**
@@ -47,7 +55,8 @@ class FeaturesGenerationWrite extends FeaturesGenerationMethodBase implements Co
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     return new static(
-      $container->get('app.root')
+      $container->get('app.root'),
+      $container->get('file_system')
     );
   }
 
@@ -65,19 +74,22 @@ class FeaturesGenerationWrite extends FeaturesGenerationMethodBase implements Co
     // If this package is already present, prepare files.
     if (isset($existing_packages[$package->getMachineName()])) {
       $existing_directory = $existing_packages[$package->getMachineName()];
-
       $package->setDirectory($existing_directory);
+    }
+    else {
+      $existing_directory = $package->getDirectory();
+    }
 
-      // Merge in the info file.
-      $info_file_uri = $this->root . '/' . $existing_directory . '/' . $package->getMachineName() . '.info.yml';
-      if (file_exists($info_file_uri)) {
-        $files = $package->getFiles();
-        $files['info']['string'] = $this->mergeInfoFile($package->getFiles()['info']['string'], $info_file_uri);
-        $package->setFiles($files);
-      }
+    // Merge in the info file.
+    $info_file_uri = $this->root . '/' . $existing_directory . '/' . $package->getMachineName() . '.info.yml';
+    if (file_exists($info_file_uri)) {
+      $files = $package->getFiles();
+      $files['info']['string'] = $this->mergeInfoFile($package->getFiles()['info']['string'], $info_file_uri);
+      $package->setFiles($files);
 
       // Remove the config directories, as they will be replaced.
-      foreach (array_keys($this->featuresManager->getExtensionStorages()->getExtensionStorages()) as $directory) {
+      foreach (array_keys($this->featuresManager->getExtensionStorages()
+        ->getExtensionStorages()) as $directory) {
         $config_directory = $this->root . '/' . $existing_directory . '/' . $directory;
         if (is_dir($config_directory)) {
           file_unmanaged_delete_recursive($config_directory);
@@ -125,7 +137,7 @@ class FeaturesGenerationWrite extends FeaturesGenerationMethodBase implements Co
    */
   protected function generatePackage(array &$return, Package $package) {
     if (!$package->getFiles()) {
-      $this->failure($return, $package, NULL, t('No configuration was selected to be exported.'));
+      $this->failure($return, $package, NULL, $this->t('No configuration was selected to be exported.'));
       return;
     }
     $success = TRUE;
@@ -213,7 +225,7 @@ class FeaturesGenerationWrite extends FeaturesGenerationMethodBase implements Co
     }
     $directory = $this->root . '/' . $directory;
     if (!is_dir($directory)) {
-      if (drupal_mkdir($directory, NULL, TRUE) === FALSE) {
+      if ($this->fileSystem->mkdir($directory, NULL, TRUE) === FALSE) {
         throw new \Exception($this->t('Failed to create directory @directory.', ['@directory' => $directory]));
       }
     }

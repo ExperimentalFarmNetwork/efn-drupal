@@ -2,12 +2,12 @@
 
 namespace Drupal\address;
 
-use CommerceGuys\Addressing\Enum\AddressField;
-use CommerceGuys\Addressing\Enum\AdministrativeAreaType;
-use CommerceGuys\Addressing\Enum\DependentLocalityType;
-use CommerceGuys\Addressing\Enum\LocalityType;
-use CommerceGuys\Addressing\Enum\PostalCodeType;
-use Drupal\address\Entity\AddressFormatInterface;
+use CommerceGuys\Addressing\AddressFormat\AddressField;
+use CommerceGuys\Addressing\AddressFormat\AdministrativeAreaType;
+use CommerceGuys\Addressing\AddressFormat\DependentLocalityType;
+use CommerceGuys\Addressing\AddressFormat\LocalityType;
+use CommerceGuys\Addressing\AddressFormat\PostalCodeType;
+use CommerceGuys\Addressing\AddressFormat\AddressFormat;
 
 /**
  * Provides translated labels for the library enums.
@@ -21,13 +21,13 @@ class LabelHelper {
    * term than the field name (Company instead of Organization, Contact name
    * instead of Recipient, etc).
    *
-   * @param \Drupal\address\Entity\AddressFormatInterface $address_format
+   * @param \CommerceGuys\Addressing\AddressFormat\AddressFormat $address_format
    *   The address format.
    *
    * @return string[]
    *   An array of labels, keyed by field.
    */
-  public static function getFieldLabels(AddressFormatInterface $address_format) {
+  public static function getFieldLabels(AddressFormat $address_format) {
     $administrative_area_type = $address_format->getAdministrativeAreaType();
     $locality_type = $address_format->getLocalityType();
     $dependent_locality_type = $address_format->getDependentLocalityType();
@@ -44,7 +44,9 @@ class LabelHelper {
       // The address line 2 label is usually shown only to screen-reader users.
       AddressField::ADDRESS_LINE2 => t('Street address line 2', [], ['context' => 'Address label']),
       AddressField::ORGANIZATION => t('Company', [], ['context' => 'Address label']),
-      AddressField::RECIPIENT => t('Contact name', [], ['context' => 'Address label']),
+      AddressField::GIVEN_NAME => t('First name', [], ['context' => 'Address label']),
+      AddressField::ADDITIONAL_NAME => t('Middle name', [], ['context' => 'Address label']),
+      AddressField::FAMILY_NAME => t('Last name', [], ['context' => 'Address label']),
     ];
   }
 
@@ -66,7 +68,9 @@ class LabelHelper {
       AddressField::ADDRESS_LINE1 => t('Address line 1', [], ['context' => 'Address label']),
       AddressField::ADDRESS_LINE2 => t('Address line 2', [], ['context' => 'Address label']),
       AddressField::ORGANIZATION => t('Organization', [], ['context' => 'Address label']),
-      AddressField::RECIPIENT => t('Recipient', [], ['context' => 'Address label']),
+      AddressField::GIVEN_NAME => t('Given name', [], ['context' => 'Address label']),
+      AddressField::ADDITIONAL_NAME => t('Additional name', [], ['context' => 'Address label']),
+      AddressField::FAMILY_NAME => t('Family name', [], ['context' => 'Address label']),
     ];
   }
 
@@ -142,6 +146,7 @@ class LabelHelper {
       LocalityType::CITY => t('City', [], ['context' => 'Address label']),
       LocalityType::DISTRICT => t('District', [], ['context' => 'Address label']),
       LocalityType::POST_TOWN => t('Post town', [], ['context' => 'Address label']),
+      LocalityType::SUBURB => t('Suburb', [], ['context' => 'Address label']),
     ];
   }
 
@@ -176,6 +181,7 @@ class LabelHelper {
       DependentLocalityType::NEIGHBORHOOD => t('Neighborhood', [], ['context' => 'Address label']),
       DependentLocalityType::VILLAGE_TOWNSHIP => t('Village township', [], ['context' => 'Address label']),
       DependentLocalityType::SUBURB => t('Suburb', [], ['context' => 'Address label']),
+      DependentLocalityType::TOWNLAND => t('Townland', [], ['context' => 'Address label']),
     ];
   }
 

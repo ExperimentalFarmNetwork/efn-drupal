@@ -11,7 +11,7 @@ use Drupal\features\FeaturesAssignmentMethodBase;
  *   id = "exclude",
  *   weight = -5,
  *   name = @Translation("Exclude"),
- *   description = @Translation("Exclude configuration items from packaging by various methods including by configuration type."),
+ *   description = @Translation("Exclude configuration items from packaging by various methods including by configuration type. When configuration is excluded, it won't be automatically reassigned to other packages."),
  *   config_route_name = "features.assignment_exclude",
  *   default_settings = {
  *     "curated" = FALSE,
@@ -83,8 +83,9 @@ class FeaturesAssignmentExclude extends FeaturesAssignmentMethodBase {
         if ($module_namespace) {
           $modules = $this->featuresManager->getFeaturesModules($current_bundle);
           foreach ($modules as $extension) {
-            // Only make exception for non-exported modules
-            if (!empty($exclude_module['namespace_any']) || !isset($all_modules[$extension->getName()])) {
+            // Only make exception for uninstalled modules or
+            // if namespace_any is set
+            if (!empty($exclude_module['namespace_any']) || !$this->featuresManager->extensionEnabled($extension)) {
               $extension_list = array_merge($extension_list, $this->featuresManager->listExtensionConfig($extension));
             }
           }

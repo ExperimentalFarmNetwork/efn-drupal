@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- * The Geofield Data Prepare plugin.
- */
 
 namespace Drupal\geocoder_geofield\Plugin\Geocoder\DataPrepare;
 

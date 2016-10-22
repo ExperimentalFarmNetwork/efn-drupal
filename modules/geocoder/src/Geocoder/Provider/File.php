@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder\Geocoder\Provider\File.
- */
-
 namespace Drupal\geocoder\Geocoder\Provider;
 
 use Geocoder\Exception\NoResult;
@@ -36,7 +31,8 @@ class File extends AbstractProvider implements Provider {
         return $this->returnResults([[
           'latitude' => $latitude,
           'longitude' => $longitude,
-        ] + $this->getDefaults()]);
+        ] + $this->getDefaults(),
+        ]);
       }
     }
 

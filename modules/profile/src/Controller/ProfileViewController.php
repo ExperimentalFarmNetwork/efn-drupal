@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\profile\Controller\ProfileViewController.
- */
-
 namespace Drupal\profile\Controller;
 
 use Drupal\Core\Entity\EntityInterface;

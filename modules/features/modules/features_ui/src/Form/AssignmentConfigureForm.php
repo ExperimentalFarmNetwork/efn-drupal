@@ -1,13 +1,8 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\features_ui\Form\AssignmentConfigureForm.
- */
-
 namespace Drupal\features_ui\Form;
 
-use Drupal\Component\Utility\SafeMarkup;
+use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\Unicode;
 use Drupal\features\FeaturesManagerInterface;
 use Drupal\features\FeaturesAssignerInterface;
@@ -200,7 +195,7 @@ class AssignmentConfigureForm extends FormBase {
 
     $form['bundle'] = array(
       '#type' => 'fieldset',
-      '#title' => t('Bundle'),
+      '#title' => $this->t('Bundle'),
       '#tree' => TRUE,
       '#weight' => -9,
     );
@@ -226,10 +221,10 @@ class AssignmentConfigureForm extends FormBase {
       ];
     }
     $form['bundle']['bundle_select'] = array(
-      '#title' => t('Bundle'),
+      '#title' => $this->t('Bundle'),
       '#title_display' => 'invisible',
       '#type' => 'select',
-      '#options' => [self::NEW_BUNDLE_SELECT_VALUE => t('--New--')] + $this->assigner->getBundleOptions(),
+      '#options' => [self::NEW_BUNDLE_SELECT_VALUE => $this->t('--New--')] + $this->assigner->getBundleOptions(),
       '#default_value' => $default_values['bundle_select'],
       '#ajax' => array(
         'callback' => '::updateForm',
@@ -243,7 +238,7 @@ class AssignmentConfigureForm extends FormBase {
       $form['bundle']['remove'] = array(
         '#type' => 'button',
         '#name' => 'removebundle',
-        '#value' => t('Remove bundle'),
+        '#value' => $this->t('Remove bundle'),
       );
     }
 
@@ -287,7 +282,7 @@ class AssignmentConfigureForm extends FormBase {
 
     $form['bundle']['is_profile'] = array(
       '#type' => 'checkbox',
-      '#title' => t('Include install profile'),
+      '#title' => $this->t('Include install profile'),
       '#default_value' => $default_values['is_profile'],
       '#description' => $this->t('Select this option to have your features packaged into an install profile.'),
       '#attributes' => array(
@@ -330,7 +325,7 @@ class AssignmentConfigureForm extends FormBase {
       $enabled = isset($enabled_methods[$method_id]);
       $method = $assignment_info[$method_id];
 
-      $method_name = SafeMarkup::checkPlain($method['name']);
+      $method_name = Html::escape($method['name']);
 
       $form['weight'][$method_id] = array(
         '#type' => 'weight',
@@ -413,7 +408,7 @@ class AssignmentConfigureForm extends FormBase {
     }
     // Otherwise, load the current bundle and rename if needed.
     else {
-      $bundle = $this->assigner->getBundle();
+      $bundle = $this->assigner->loadBundle();
       $old_name = $bundle->getMachineName();
       $new_name = $form_state->getValue(array('bundle', 'machine_name'));
       if ($old_name != $new_name) {

@@ -23,6 +23,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class FeaturesGenerationArchive extends FeaturesGenerationMethodBase implements ContainerFactoryPluginInterface {
 
   /**
+   * The app root.
+   *
+   * @var string
+   */
+  protected $root;
+
+  /**
    * The CSRF token generator.
    *
    * @var \Drupal\Core\Access\CsrfTokenGenerator
@@ -32,10 +39,13 @@ class FeaturesGenerationArchive extends FeaturesGenerationMethodBase implements 
   /**
    * Creates a new FeaturesGenerationArchive instance.
    *
+   * @param string $root
+   *   The app root.
    * @param \Drupal\Core\Access\CsrfTokenGenerator $csrf_token
    *   The CSRF token generator.
    */
-  public function __construct(\Drupal\Core\Access\CsrfTokenGenerator $csrf_token) {
+  public function __construct($root, \Drupal\Core\Access\CsrfTokenGenerator $csrf_token) {
+    $this->root = $root;
     $this->csrfToken = $csrf_token;
   }
 
@@ -44,6 +54,7 @@ class FeaturesGenerationArchive extends FeaturesGenerationMethodBase implements 
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     return new static(
+      $container->get('app.root'),
       $container->get('csrf_token')
     );
   }
@@ -66,8 +77,19 @@ class FeaturesGenerationArchive extends FeaturesGenerationMethodBase implements 
   protected function preparePackage(Package $package, array $existing_packages, FeaturesBundleInterface $bundle = NULL) {
     if (isset($existing_packages[$package->getMachineName()])) {
       $existing_directory = $existing_packages[$package->getMachineName()];
+    }
+    else {
+      $existing_directory = $package->getDirectory();
+    }
+    $existing_directory = $this->root . '/' . $existing_directory;
+
+    if (is_dir($existing_directory)) {
       // Scan for all files.
       $files = file_scan_directory($existing_directory, '/.*/');
+      // Skip any existing .features.yml as it will be replaced.
+      $exclude_files = [
+        $package->getMachineName() . '.features',
+      ];
       foreach ($files as $file) {
         // Skip files in the any existing configuration directory, as these
         // will be replaced.
@@ -83,7 +105,7 @@ class FeaturesGenerationArchive extends FeaturesGenerationMethodBase implements 
           $package->setFiles($files);
         }
         // Read in remaining files.
-        else {
+        elseif (!in_array($file->name, $exclude_files)) {
           // Determine if the file is within a subdirectory of the
           // extension's directory.
           $file_directory = dirname($file->uri);

@@ -10,7 +10,6 @@ namespace Drupal\geofield\Tests;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FieldItemInterface;
 use Drupal\field\Tests\FieldUnitTestBase;
-use geoPHP;
 
 /**
  * Tests using entity fields of the geofield field type.
@@ -66,8 +65,7 @@ class GeofieldItemTest extends FieldUnitTestBase {
     $this->assertEqual($entity->geofield_field->value, $value);
 
     // Test computed values.
-    \Drupal::service('geophp.geophp');
-    $geom = geoPHP::load($value);
+    $geom = \Drupal::service('geofield.geophp')->load($value);
     if (!empty($geom)) {
       $centroid = $geom->getCentroid();
       $bounding = $geom->getBBox();

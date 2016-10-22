@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\profile\ProfileStorage.
- */
-
 namespace Drupal\profile;
 
 use Drupal\Core\Entity\Sql\SqlContentEntityStorage;

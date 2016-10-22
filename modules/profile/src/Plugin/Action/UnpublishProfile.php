@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\profile\Plugin\Action\UnpublishProfile.
- */
-
 namespace Drupal\profile\Plugin\Action;
 
 use Drupal\Core\Action\ActionBase;
@@ -34,7 +29,7 @@ class UnpublishProfile extends ActionBase {
    * {@inheritdoc}
    */
   public function access($object, AccountInterface $account = NULL, $return_as_object = FALSE) {
-    /** @var \Drupal\node\NodeInterface $object */
+    /** @var \Drupal\profile\Entity\ProfileInterface $object */
     $access = $object->access('update', $account, TRUE)
       ->andIf($object->status->access('edit', $account, TRUE));
 

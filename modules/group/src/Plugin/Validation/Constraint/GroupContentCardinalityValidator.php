@@ -1,44 +1,67 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\group\Plugin\Validation\Constraint\GroupContentCardinalityValidator.
- */
-
 namespace Drupal\group\Plugin\Validation\Constraint;
 
+use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 /**
- * Checks if content has reached the maximum amount of times it can be added.
- *
- * You should probably only use this constraint in your FieldType plugin through
- * TypedDataInterface::getConstraints() or set it on a base field definition
- * using BaseFieldDefinition->addConstraint('GroupContentCardinality').
- *
- * The reason is that we expect $value to be a FieldItemListInterface and
- * setting the constraint in your FieldType annotation will hand us a single
- * FieldItemInterface object instead. On the other hand, setting it on target_id
- * through BaseFieldDefinition::addPropertyConstraint() will only pass us the
- * integer value (the ID).
+ * Checks the amount of times a single content entity can be added to a group.
  */
-class GroupContentCardinalityValidator extends ConstraintValidator {
+class GroupContentCardinalityValidator extends ConstraintValidator implements ContainerInjectionInterface {
+
+  /**
+   * Type-hinting in parent Symfony class is off, let's fix that.
+   *
+   * @var \Symfony\Component\Validator\Context\ExecutionContextInterface
+   */
+  protected $context;
+
+  /**
+   * The entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  /**
+   * Constructs a GroupContentCardinalityValidator object.
+   *
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager.
+   */
+  public function __construct(EntityTypeManagerInterface $entity_type_manager) {
+    $this->entityTypeManager = $entity_type_manager;
+  }
 
   /**
    * {@inheritdoc}
    */
-  public function validate($value, Constraint $constraint) {
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('entity_type.manager')
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function validate($group_content, Constraint $constraint) {
+    /** @var \Drupal\group\Entity\GroupContentInterface $group_content */
     /** @var \Drupal\group\Plugin\Validation\Constraint\GroupContentCardinality $constraint */
-    /** @var \Drupal\Core\Field\FieldItemListInterface $value */
-    if (!isset($value)) {
+    if (!isset($group_content)) {
       return;
     }
 
-    /** @var \Drupal\group\Entity\GroupContentInterface $group_content */
-    $group_content = $value->getEntity();
-    $group_cardinality = $group_content->getContentPlugin()->getGroupCardinality();
-    $entity_cardinality = $group_content->getContentPlugin()->getEntityCardinality();
+    // Get the plugin for the group content entity.
+    $plugin = $group_content->getContentPlugin();
+
+    // Get the cardinality settings from the plugin.
+    $group_cardinality = $plugin->getGroupCardinality();
+    $entity_cardinality = $plugin->getEntityCardinality();
 
     // Exit early if both cardinalities are set to unlimited.
     if ($group_cardinality <= 0 && $entity_cardinality <= 0) {
@@ -46,17 +69,15 @@ class GroupContentCardinalityValidator extends ConstraintValidator {
     }
 
     // Only run our checks if an entity was referenced.
-    if (!empty($value->target_id)) {
-      $entity = $group_content->getEntity();
-      $plugin = $group_content->getContentPlugin();
-      $plugin_id = $plugin->getPluginId();
+    if ($entity = $group_content->getEntity()) {
+      // Get the entity_id field label for error messages.
       $field_name = $group_content->getFieldDefinition('entity_id')->getLabel();
 
       // Enforce the group cardinality if it's not set to unlimited.
       if ($group_cardinality > 0) {
         // Get the group content entities for this piece of content.
         $properties = ['type' => $plugin->getContentTypeConfigId(), 'entity_id' => $entity->id()];
-        $group_instances = \Drupal::entityTypeManager()
+        $group_instances = $this->entityTypeManager
           ->getStorage('group_content')
           ->loadByProperties($properties);
 
@@ -76,19 +97,20 @@ class GroupContentCardinalityValidator extends ConstraintValidator {
           $this->context->buildViolation($constraint->groupMessage)
             ->setParameter('@field', $field_name)
             ->setParameter('%content', $entity->label())
-            // We need to manually set the path to the first element because we
-            // expect this contraint to be set on the EntityReferenceItem level
-            // and therefore receive a FieldItemListInterface as the value.
-            ->atPath('0')
+            // We manually flag the entity reference field as the source of the
+            // violation so form API will add a visual indicator of where the
+            // validation failed.
+            ->atPath('entity_id.0')
             ->addViolation();
         }
       }
 
       // Enforce the entity cardinality if it's not set to unlimited.
       if ($entity_cardinality > 0) {
-        // Get the current instances of this content entity in the group.
         $group = $group_content->getGroup();
-        $entity_instances = $group->getContentByEntityId($plugin_id, $value->target_id);
+
+        // Get the current instances of this content entity in the group.
+        $entity_instances = $group->getContentByEntityId($plugin->getPluginId(), $entity->id());
         $entity_count = count($entity_instances);
 
         // If the current group content entity has an ID, exclude that one.
@@ -108,10 +130,10 @@ class GroupContentCardinalityValidator extends ConstraintValidator {
             ->setParameter('@field', $field_name)
             ->setParameter('%content', $entity->label())
             ->setParameter('%group', $group->label())
-            // We need to manually set the path to the first element because we
-            // expect this contraint to be set on the EntityReferenceItem level
-            // and therefore receive a FieldItemListInterface as the value.
-            ->atPath('0')
+            // We manually flag the entity reference field as the source of the
+            // violation so form API will add a visual indicator of where the
+            // validation failed.
+            ->atPath('entity_id.0')
             ->addViolation();
         }
       }

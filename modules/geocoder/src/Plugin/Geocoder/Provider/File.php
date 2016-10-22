@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder\Plugin\Geocoder\Provider\File.
- */
-
 namespace Drupal\geocoder\Plugin\Geocoder\Provider;
 
 use Drupal\geocoder\ProviderUsingHandlerBase;

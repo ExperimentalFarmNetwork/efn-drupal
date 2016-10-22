@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder\Annotation\DumperProvider.
- */
-
 namespace Drupal\geocoder\Annotation;
 
 /**
@@ -19,7 +14,7 @@ class GeocoderDumper extends GeocoderPluginBase {
    *
    * This is the fully qualified class name of the plugin handler.
    *
-   * @var string (optional)
+   * @var stringoptional
    */
   public $handler = NULL;
 

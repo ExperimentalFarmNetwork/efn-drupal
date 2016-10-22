@@ -1,16 +1,10 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder_field\Plugin\Geocoder\Field\DefaultField.
- */
-
 namespace Drupal\geocoder_field\Plugin\Geocoder\Field;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Plugin\PluginBase;
-use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\field\FieldConfigInterface;
 use Drupal\geocoder\DumperPluginManager;
 use Drupal\geocoder\ProviderPluginManager;
@@ -125,7 +119,8 @@ class DefaultField extends PluginBase implements GeocoderFieldPluginInterface, C
         'action' => 'order',
         'relationship' => 'sibling',
         'group' => 'plugins-order-weight',
-      ]],
+      ],
+      ],
       '#caption' => $this->t('Select the Geocoder plugins to use, you can reorder them. The first one to return a valid value will be used.'),
     ];
 

@@ -1,20 +1,18 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\features_ui\Form\FeaturesEditForm.
- */
-
 namespace Drupal\features_ui\Form;
 
-use Drupal\Component\Utility\SafeMarkup;
+use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\Xss;
 use Drupal\features\FeaturesAssignerInterface;
 use Drupal\features\FeaturesGeneratorInterface;
 use Drupal\features\FeaturesManagerInterface;
+use Drupal\features\ConfigurationItem;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+Use Drupal\Component\Render\FormattableMarkup;
+use Drupal\config_update\ConfigRevertInterface;
 
 /**
  * Defines the features settings form.
@@ -95,18 +93,34 @@ class FeaturesEditForm extends FormBase {
   protected $allowConflicts;
 
   /**
+   * Config missing from active site.
+   *
+   * @var array
+   */
+  protected $missing;
+
+  /**
+   * The config reverter.
+   *
+   * @var \Drupal\config_update\ConfigRevertInterface
+   */
+  protected $configRevert;
+
+  /**
    * Constructs a FeaturesEditForm object.
    *
    * @param \Drupal\features\FeaturesManagerInterface $features_manager
    *   The features manager.
    */
-  public function __construct(FeaturesManagerInterface $features_manager, FeaturesAssignerInterface $assigner, FeaturesGeneratorInterface $generator) {
+  public function __construct(FeaturesManagerInterface $features_manager, FeaturesAssignerInterface $assigner, FeaturesGeneratorInterface $generator, ConfigRevertInterface $config_revert) {
     $this->featuresManager = $features_manager;
     $this->assigner = $assigner;
     $this->generator = $generator;
+    $this->configRevert = $config_revert;
     $this->excluded = [];
     $this->required = [];
     $this->conflicts = [];
+    $this->missing = [];
   }
 
   /**
@@ -116,7 +130,8 @@ class FeaturesEditForm extends FormBase {
     return new static(
       $container->get('features.manager'),
       $container->get('features_assigner'),
-      $container->get('features_generator')
+      $container->get('features_generator'),
+      $container->get('features.config_update')
     );
   }
 
@@ -134,19 +149,22 @@ class FeaturesEditForm extends FormBase {
     $session = $this->getRequest()->getSession();
     $trigger = $form_state->getTriggeringElement();
     if ($trigger['#name'] == 'package') {
+      // Save current bundle name for later ajax callback.
       $this->oldBundle = $this->bundle;
-      $bundle_name = $form_state->getValue('package');
-      $bundle = $this->assigner->getBundle($bundle_name);
     }
     elseif ($trigger['#name'] == 'conflicts') {
       if (isset($session)) {
         $session->set('features_allow_conflicts', $form_state->getValue('conflicts'));
       }
-      $bundle = $this->assigner->loadBundle();
+    }
+    if (!$form_state->isValueEmpty('package')) {
+      $bundle_name = $form_state->getValue('package');
+      $bundle = $this->assigner->getBundle($bundle_name);
     }
     else {
       $bundle = $this->assigner->loadBundle();
     }
+    // Only store bundle name, not full object.
     $this->bundle = $bundle->getMachineName();
 
     $this->allowConflicts = FALSE;
@@ -166,6 +184,21 @@ class FeaturesEditForm extends FormBase {
       $this->package = $this->featuresManager->initPackage($featurename, NULL, '', 'module', $bundle);
     }
     else {
+      $this->package = $packages[$featurename];
+    }
+
+    if (!empty($packages[$featurename]) && $this->package->getBundle() !== $this->bundle && $form_state->isValueEmpty('package')) {
+      // Make sure the current bundle matches what is stored in the package.
+      // But only do this if the Package value hasn't been manually changed.
+      $bundle = $this->assigner->getBundle($this->package->getBundle());
+      if (empty($bundle)) {
+        // Create bundle if it doesn't exist yet
+        $bundle = $this->assigner->createBundleFromDefault($this->package->getBundle());
+      }
+      $this->bundle = $bundle->getMachineName();
+      $this->assigner->reset();
+      $this->assigner->assignConfigPackages(TRUE);
+      $packages = $this->featuresManager->getPackages();
       $this->package = $packages[$featurename];
     }
 
@@ -239,6 +272,16 @@ class FeaturesEditForm extends FormBase {
       '#size' => 30,
     );
 
+    list($full_name, $path) = $this->featuresManager->getExportInfo($this->package, $bundle);
+    $form['info']['directory'] = array(
+      '#title' => $this->t('Path'),
+      '#description' => $this->t('Path to export package using Write action, relative to root directory.'),
+      '#type' => 'textfield',
+      '#required' => FALSE,
+      '#default_value' => $path,
+      '#size' => 30,
+    );
+
     $require_all = $this->package->getRequiredAll();
     $form['info']['require_all'] = array(
       '#type' => 'checkbox',
@@ -274,13 +317,40 @@ class FeaturesEditForm extends FormBase {
         '#name' => $method_id,
         '#value' => $this->t('@name', array('@name' => $method['name'])),
         '#attributes' => array(
-          'title' => SafeMarkup::checkPlain($method['description']),
+          'title' => Html::escape($method['description']),
         ),
       );
     }
 
     // Build the Component Listing panel on the right.
     $form['export'] = $this->buildComponentList($form_state);
+
+    if (!empty($this->missing)) {
+      if ($this->allowConflicts) {
+        $form['actions']['#prefix'] = '<strong>' .
+          $this->t('WARNING: Package contains configuration missing from site.') . '<br>' .
+          $this->t('This configuration will be removed if you export it.') .
+          '</strong>';
+      }
+      else {
+        foreach ($generation_info as $method_id => $method) {
+          unset($form['actions'][$method_id]);
+        }
+        $form['actions']['#prefix'] = '<strong>' .
+          $this->t('Package contains configuration missing from site.') . '<br>' .
+          $this->t('Import the feature to create the missing config before you can export it.') . '<br>' .
+          $this->t('Or, enable the Allow Conflicts option above.') .
+          '</strong>';
+      }
+      $form['actions']['import_missing'] = array(
+        '#type' => 'submit',
+        '#name' => 'import_missing',
+        '#value' => $this->t('Import Missing'),
+        '#attributes' => array(
+          'title' => $this->t('Import only the missing configuration items.'),
+        ),
+      );
+    }
 
     $form['#attached'] = array(
       'library' => array(
@@ -333,7 +403,8 @@ class FeaturesEditForm extends FormBase {
    */
   public function featureExists($value, $element, $form_state) {
     $packages = $this->featuresManager->getPackages();
-    return isset($packages[$value]) || \Drupal::moduleHandler()->moduleExists($value);
+    // A package may conflict only if it's been exported.
+    return (isset($packages[$value]) && ($packages[$value]->getState() !== FeaturesManagerInterface::STATUS_NO_EXPORT)) || \Drupal::moduleHandler()->moduleExists($value);
   }
 
   /**
@@ -386,7 +457,7 @@ class FeaturesEditForm extends FormBase {
     foreach ($export['components'] as $component => $component_info) {
 
       $component_items_count = count($component_info['_features_options']['sources']);
-      $label = SafeMarkup::format('@component (<span class="component-count">@count</span>)',
+      $label = new FormattableMarkup('@component (<span class="component-count">@count</span>)',
         array(
           '@component' => $config_types[$component],
           '@count' => $component_items_count,
@@ -398,7 +469,7 @@ class FeaturesEditForm extends FormBase {
         $count += count($component_info['_features_options'][$section]);
       }
       $extra_class = ($count == 0) ? 'features-export-empty' : '';
-      $component_name = str_replace('_', '-', SafeMarkup::checkPlain($component));
+      $component_name = str_replace('_', '-', Html::escape($component));
 
       if ($count + $component_items_count > 0) {
         $element[$component] = array(
@@ -447,6 +518,16 @@ class FeaturesEditForm extends FormBase {
         );
       }
     }
+
+    $element['features_missing'] = array(
+      '#theme' => 'item_list',
+      '#items' => $export['missing'],
+      '#title' => $this->t('Configuration missing from active site:'),
+      '#suffix' => '<div class="description">' .
+        $this->t('Import the feature to create the missing config listed above.') .
+        '</div>',
+    );
+
     $element['features_legend'] = array(
       '#type' => 'fieldset',
       '#title' => $this->t('Legend'),
@@ -536,6 +617,7 @@ class FeaturesEditForm extends FormBase {
     }
 
     // Make a map of the config data already exported to the Feature.
+    $this->missing = array();
     $exported_features_info = array();
     foreach ($this->package->getConfigOrig() as $item_name) {
       // Make sure the extension provided item exists in the active
@@ -547,13 +629,16 @@ class FeaturesEditForm extends FormBase {
         $exported_features_info[$item->getType()][$item->getShortName()] = $item->getLabel();
         // }
       }
+      else {
+        $this->missing[] = $item_name;
+      }
     }
     $exported_features_info['dependencies'] = $this->package->getDependencyInfo();
 
     // Make a map of any config specifically excluded and/or required.
     foreach (array('excluded', 'required') as $constraint) {
       $this->{$constraint} = array();
-      $info = isset($this->package->getFeaturesInfo()[$constraint]) ? $this->package->getFeaturesInfo()[$constraint] : array();
+      $info = !empty($this->package->{'get' . $constraint}()) ? $this->package->{'get' . $constraint}() : array();
       if (($constraint == 'required') && (empty($info) || !is_array($info))) {
         // If required is True or empty array, add all config as required
         $info = $this->package->getConfigOrig();
@@ -648,7 +733,7 @@ class FeaturesEditForm extends FormBase {
               $this->required[$component][$key] = $key;
             }
           }
-          elseif (isset($new_components[$key])) {
+          elseif (isset($new_components[$key]) || isset($config_new[$component][$key])) {
             // Option is in the New exported array.
             if (isset($exported_components[$key])) {
               // Option was already previously exported so it's part of the
@@ -682,7 +767,7 @@ class FeaturesEditForm extends FormBase {
               $section = 'detected';
               $default_value = NULL;
               // Check for item explicitly excluded.
-              if (isset($this->excluded[$component][$key]) && !$form_state->hasValue(array($component, 'detected', $key))) {
+              if (isset($this->excluded[$component][$key]) && !$form_state->isSubmitted()) {
                 $default_value = FALSE;
               }
               else {
@@ -712,12 +797,10 @@ class FeaturesEditForm extends FormBase {
             if (($section == 'detected') && ($default_value === FALSE)) {
               // If this was previously required, we don't need to set it as
               // excluded because it wasn't automatically assigned.
-              if (isset($this->required[$component][$key])) {
-                unset($this->required[$component][$key]);
-              }
-              else {
+              if (!isset($this->required[$component][$key]) || ($this->package->getRequired() === TRUE)) {
                 $this->excluded[$component][$key] = $key;
               }
+              unset($this->required[$component][$key]);
               // Remove excluded item from export.
               if ($component == 'dependencies') {
                 $export['package']->removeDependency($key);
@@ -771,6 +854,7 @@ class FeaturesEditForm extends FormBase {
     $export['features_exclude'] = $this->excluded;
     $export['features_require'] = $this->required;
     $export['conflicts'] = $this->conflicts;
+    $export['missing'] = $this->missing;
 
     return $export;
   }
@@ -786,9 +870,9 @@ class FeaturesEditForm extends FormBase {
    *   The human label for the item.
    */
   protected function configLabel($type, $key, $label) {
-    $value = SafeMarkup::checkPlain($label);
+    $value = Html::escape($label);
     if ($key != $label) {
-      $value .= '  <span class="config-name">(' . SafeMarkup::checkPlain($key) . ')</span>';
+      $value .= '  <span class="config-name">(' . Html::escape($key) . ')</span>';
     }
     if (isset($this->conflicts[$type][$key])) {
       // Show what package the conflict is stored in.
@@ -800,7 +884,7 @@ class FeaturesEditForm extends FormBase {
       if (isset($packages[$package_name])) {
         $package_name = $packages[$package_name]->getMachineName();
       }
-      $value .= '  <span class="config-name">[' . $this->t('in') . ' ' . SafeMarkup::checkPlain($package_name) . ']</span>';
+      $value .= '  <span class="config-name">[' . $this->t('in') . ' ' . Html::escape($package_name) . ']</span>';
     }
     return Xss::filterAdmin($value);
   }
@@ -816,6 +900,7 @@ class FeaturesEditForm extends FormBase {
     $this->package->setMachineName($form_state->getValue('machine_name'));
     $this->package->setDescription($form_state->getValue('description'));
     $this->package->setVersion($form_state->getValue('version'));
+    $this->package->setDirectory($form_state->getValue('directory'));
     $this->package->setBundle($bundle->getMachineName());
     // Save it first just to create it in case it's a new package.
     $this->featuresManager->setPackage($this->package);
@@ -842,7 +927,10 @@ class FeaturesEditForm extends FormBase {
 
     // Set default redirect, but allow generators to change it later.
     $form_state->setRedirect('features.edit', array('featurename' => $this->package->getMachineName()));
-    if (!empty($method_id)) {
+    if ($method_id == 'import_missing') {
+      $this->importMissing();
+    }
+    elseif (!empty($method_id)) {
       $packages = array($this->package->getMachineName());
       $this->generator->generatePackages($method_id, $bundle, $packages);
       $this->generator->applyExportFormSubmit($method_id, $form, $form_state);
@@ -866,6 +954,27 @@ class FeaturesEditForm extends FormBase {
       }
     }
     return $config;
+  }
+
+  /**
+   * Imports the configuration missing from the active store
+   */
+  protected function importMissing() {
+    $config = $this->featuresManager->getConfigCollection();
+    $missing = $this->featuresManager->reorderMissing($this->missing);
+    foreach ($missing as $config_name) {
+      if (!isset($config[$config_name])) {
+        $item = $this->featuresManager->getConfigType($config_name);
+        $type = ConfigurationItem::fromConfigStringToConfigType($item['type']);
+        try {
+          $this->configRevert->import($type, $item['name_short']);
+          drupal_set_message($this->t('Imported @name', array('@name' => $config_name)));
+        } catch (\Exception $e) {
+          drupal_set_message($this->t('Error importing @name : @message',
+            array('@name' => $config_name, '@message' => $e->getMessage())), 'error');
+        }
+      }
+    }
   }
 
   /**

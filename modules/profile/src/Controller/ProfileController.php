@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\profile\Controller\ProfileController.
- */
-
 namespace Drupal\profile\Controller;
 
 use Drupal\Core\Controller\ControllerBase;

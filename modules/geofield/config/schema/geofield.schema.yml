@@ -61,3 +61,11 @@ entity_form_display.field.geofield_bbox:
       label: 'Settings'
       sequence:
         - type: string
+
+field.widget.settings.geofield_latlon:
+  type: mapping
+  label: 'Latitude/Longitude settings'
+  mapping:
+    html5_geolocation:
+      type: boolean
+      label: 'Use HTML5 Geolocation to set default values'

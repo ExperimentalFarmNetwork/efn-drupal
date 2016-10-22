@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder_address\Plugin\Geocoder\Dumper\AddressText.
- */
-
 namespace Drupal\geocoder_address\Plugin\Geocoder\Dumper;
 
 use Drupal\geocoder\DumperBase;
@@ -19,6 +14,7 @@ use Geocoder\Model\Address;
  * )
  */
 class AddressText extends DumperBase {
+
   /**
    * {@inheritdoc}
    */

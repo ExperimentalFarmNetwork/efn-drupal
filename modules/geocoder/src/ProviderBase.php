@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder\ProviderBase.
- */
-
 namespace Drupal\geocoder;
 
 use Drupal\Core\Cache\CacheBackendInterface;
@@ -90,6 +85,7 @@ abstract class ProviderBase extends PluginBase implements ProviderInterface, Con
    *   the longitude.
    *
    * @return \Geocoder\Model\Address|null
+   *   The Address, NULL otherwise.
    */
   protected function process($method, array $data) {
     if ($caching = $this->configFactory->get('geocoder.settings')->get('cache')) {
@@ -119,6 +115,7 @@ abstract class ProviderBase extends PluginBase implements ProviderInterface, Con
    *   The data to be geocoded.
    *
    * @return \Geocoder\Model\Address|null
+   *   The Address, NULL otherwise.
    */
   abstract protected function doGeocode($source);
 
@@ -131,6 +128,7 @@ abstract class ProviderBase extends PluginBase implements ProviderInterface, Con
    *   The longitude.
    *
    * @return \Geocoder\Model\AddressCollection|null
+   *   The AddressCollection, NULL otherwise.
    */
   abstract protected function doReverse($latitude, $longitude);
 

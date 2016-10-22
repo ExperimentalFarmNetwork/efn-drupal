@@ -2,7 +2,7 @@
 
 namespace Drupal\address\Plugin\views\filter;
 
-use CommerceGuys\Addressing\Repository\CountryRepositoryInterface;
+use CommerceGuys\Addressing\Country\CountryRepositoryInterface;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -21,7 +21,7 @@ class CountryCode extends InOperator {
   /**
    * The country repository.
    *
-   * @var \CommerceGuys\Addressing\Repository\CountryRepositoryInterface
+   * @var \CommerceGuys\Addressing\Country\CountryRepositoryInterface
    */
   protected $countryRepository;
 
@@ -48,7 +48,7 @@ class CountryCode extends InOperator {
    *   The plugin_id for the plugin instance.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
-   * @param \CommerceGuys\Addressing\Repository\CountryRepositoryInterface $country_repository
+   * @param \CommerceGuys\Addressing\Country\CountryRepositoryInterface $country_repository
    *   The country repository.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.

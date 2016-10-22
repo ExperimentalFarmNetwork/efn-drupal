@@ -5,7 +5,7 @@ namespace Drupal\Tests\features\Unit;
 use Drupal\features\Entity\FeaturesBundle;
 use Drupal\Tests\UnitTestCase;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
-use Prophecy\Prophet;
+use Drupal\Core\Site\Settings;
 
 /**
  * @coversDefaultClass Drupal\features\Entity\FeaturesBundle
@@ -143,6 +143,47 @@ class FeaturesBundleTest extends UnitTestCase {
       'New enabled assignment status is reflected in settings'
     );
 
+  }
+
+  /**
+   * @covers ::getFullName
+   * @covers ::getShortName
+   * @covers ::SetIsProfile
+   * @covers ::isProfile
+   * @covers ::getProfileName
+   * @covers ::isProfilePackage
+   * @covers ::inBundle
+   */
+  public function testFullname() {
+    $bundle = new FeaturesBundle([
+      'machine_name' => 'mybundle',
+      'profile_name' => 'mybundle'
+    ], 'mybundle');
+    $this->assertFalse($bundle->isProfile());
+    // Settings:get('profile_name') isn't defined in test, so this returns NULL.
+    $this->assertNull($bundle->getProfileName());
+    $this->assertFalse($bundle->isProfilePackage('mybundle'));
+    $this->assertEquals('mybundle_test', $bundle->getFullName('test'));
+    $this->assertEquals('mybundle_test', $bundle->getFullName('mybundle_test'));
+    $this->assertEquals('mybundle_mybundle', $bundle->getFullName('mybundle'));
+    $this->assertEquals('test', $bundle->getShortName('test'));
+    $this->assertEquals('test', $bundle->getShortName('mybundle_test'));
+    $this->assertEquals('mybundle', $bundle->getShortName('mybundle_mybundle'));
+    $this->assertEquals('mybundle', $bundle->getShortName('mybundle'));
+    $this->assertFalse($bundle->inBundle('test'));
+    $this->assertTrue($bundle->inBundle('mybundle_test'));
+    $this->assertFalse($bundle->inBundle('mybundle'));
+
+    // Now test it as a profile bundle.
+    $bundle->setIsProfile(TRUE);
+    $this->assertTrue($bundle->isProfile());
+    $this->assertTrue($bundle->isProfilePackage('mybundle'));
+    $this->assertFalse($bundle->isProfilePackage('standard'));
+    $this->assertEquals('mybundle', $bundle->getProfileName());
+    $this->assertEquals('mybundle', $bundle->getFullName('mybundle'));
+    $this->assertFalse($bundle->inBundle('test'));
+    $this->assertTrue($bundle->inBundle('mybundle_test'));
+    $this->assertTrue($bundle->inBundle('mybundle'));
   }
 
 }

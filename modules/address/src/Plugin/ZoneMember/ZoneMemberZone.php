@@ -2,7 +2,7 @@
 
 namespace Drupal\address\Plugin\ZoneMember;
 
-use CommerceGuys\Addressing\Model\AddressInterface;
+use CommerceGuys\Addressing\AddressInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;

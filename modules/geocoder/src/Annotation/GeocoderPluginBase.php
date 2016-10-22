@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder\Annotation\GeocoderProvider.
- */
-
 namespace Drupal\geocoder\Annotation;
 
 use Drupal\Component\Annotation\Plugin;

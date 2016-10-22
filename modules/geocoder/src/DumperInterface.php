@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder\Plugin\Geocoder\DumperInterface.
- */
-
 namespace Drupal\geocoder;
 
 use Geocoder\Model\Address;

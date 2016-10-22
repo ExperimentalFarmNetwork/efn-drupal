@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder\Plugin\Geocoder\Dumper\Wkb.
- */
-
 namespace Drupal\geocoder\Plugin\Geocoder\Dumper;
 
 use Drupal\geocoder\DumperBase;

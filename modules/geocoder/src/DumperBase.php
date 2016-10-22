@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder\DumperBase.
- */
-
 namespace Drupal\geocoder;
 
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;

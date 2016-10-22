@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder\GeocoderInterface.
- */
-
 namespace Drupal\geocoder;
 
 /**
@@ -24,7 +19,7 @@ interface GeocoderInterface {
    *   plugin id. Defaults to an empty array.
    *
    * @return \Geocoder\Model\AddressCollection|null An address collection or NULL on gecoding failure.
-   * An address collection or NULL on gecoding failure.
+   *   An address collection or NULL on gecoding failure.
    */
   public function geocode($data, array $plugins, array $options = []);
 

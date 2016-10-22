@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\profile\Entity\ProfileTypeInterface.
- */
-
 namespace Drupal\profile\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityInterface;

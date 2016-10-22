@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\profile\ProfileStorageInterface.
- */
-
 namespace Drupal\profile;
 
 use Drupal\Core\Entity\EntityStorageInterface;

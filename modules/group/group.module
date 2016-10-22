@@ -2,11 +2,10 @@
 
 /**
  * @file
- * Contains Drupal\group\group.module
+ * Allows you to group users, content and other entities.
  */
 
 use Drupal\group\Entity\GroupContent;
-use Drupal\Core\Url;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -47,9 +46,6 @@ function group_theme() {
     ],
     'group_content' => [
       'render element' => 'elements',
-    ],
-    'group_add_list' => [
-      'variables' => ['group_types' => NULL],
     ],
   ];
 }
@@ -147,7 +143,7 @@ function template_preprocess_group_content(&$variables) {
 
   // See if we are rendering the group at its canonical route.
   $route_match = \Drupal::routeMatch();
-  if ($route_match->getRouteName() == $group_content->getContentPlugin()->getRouteName('canonical')) {
+  if ($route_match->getRouteName() == 'entity.group_content.canonical') {
     $page_group_content = $route_match->getParameter('group_content');
   }
   $is_page = (!empty($page_group_content) ? $page_group_content->id() == $group_content->id() : FALSE);
@@ -161,100 +157,29 @@ function template_preprocess_group_content(&$variables) {
 }
 
 /**
- * Prepares variables for list of available group type templates.
+ * Gets the group content enabler plugin manager.
  *
- * Default template: group-add-list.html.twig.
+ * @return \Drupal\group\Plugin\GroupContentEnablerManagerInterface
+ *   The group content enabler plugin manager.
  *
- * @param array $variables
- *   An associative array containing:
- *   - group_types: An array of group types.
- *
- * @see group_add_page()
+ * @internal Try to properly inject the service when possible.
  */
-function template_preprocess_group_add_list(&$variables) {
-  $variables['types'] = [];
-
-  if (!empty($variables['group_types'])) {
-    /** @var \Drupal\group\Entity\GroupTypeInterface $group_type */
-    foreach ($variables['group_types'] as $group_type) {
-      $variables['types'][$group_type->id()] = [
-        'type' => $group_type->id(),
-        'url' => Url::fromRoute('entity.group.add_form', ['group_type' => $group_type->id()]),
-        'label' => $group_type->label(),
-        'description' => ['#markup' => $group_type->getDescription()],
-      ];
-    }
-  }
+function _group_content_enabler_manager() {
+  return \Drupal::service('plugin.manager.group_content_enabler');
 }
 
 /**
  * Implements hook_rebuild().
  */
 function group_rebuild() {
-  // Checks if there are any new enforced plugins to install.
-  /** @var \Drupal\group\Plugin\GroupContentEnablerManagerInterface $plugin_manager */
-  $plugin_manager = \Drupal::service('plugin.manager.group_content_enabler');
-  $plugin_manager->installEnforced();
+  _group_content_enabler_manager()->installEnforced();
 }
 
 /**
  * Implements hook_modules_installed().
  */
 function group_modules_installed($modules) {
-  // Checks if there are any new enforced plugins to install.
-  /** @var \Drupal\group\Plugin\GroupContentEnablerManagerInterface $plugin_manager */
-  $plugin_manager = \Drupal::service('plugin.manager.group_content_enabler');
-  $plugin_manager->installEnforced();
-}
-
-/**
- * Implements hook_entity_type_alter().
- */
-function group_entity_type_alter(array &$entity_types) {
-  static $mute_self;
-
-  // Because we load content enabler plugins while rebuilding entity types, we
-  // need to make sure the code below does not keep triggering itself.
-  //
-  // This could happen because content enabler plugins may load entity types to
-  // create derivatives (like gnode does) and because we load all group types to
-  // see which plugins are actually installed.
-  if ($mute_self !== TRUE) {
-    $mute_self = TRUE;
-
-    // Enables extra forms for GroupContent entities as defined by plugins.
-    foreach (_group_get_additional_entity_forms() as $name => $class) {
-      /** @var \Drupal\Core\Entity\EntityTypeInterface[] $entity_types */
-      $entity_types['group_content']->setFormClass($name, $class);
-    }
-
-    $mute_self = FALSE;
-  }
-}
-
-/**
- * Returns a list of additional forms to enable for group content entities.
- *
- * @todo As soon as this gets more usage or we have more similar functionality,
- * this should be moved to a service so we can inject it as a dependency.
- *
- * @return array
- *   An associative array with form names as keys and class names as values.
- *
- * @see group_entity_type_alter()
- */
-function _group_get_additional_entity_forms() {
-  /** @var \Drupal\group\Plugin\GroupContentEnablerManagerInterface $plugin_manager */
-  $plugin_manager = \Drupal::service('plugin.manager.group_content_enabler');
-
-  // Retrieve all possible forms from all installed plugins.
-  $forms = [];
-  foreach ($plugin_manager->getInstalled() as $plugin_id => $plugin) {
-    /** @var \Drupal\group\Plugin\GroupContentEnablerInterface $plugin */
-    $forms = array_merge($forms, $plugin->getEntityForms());
-  }
-
-  return $forms;
+  _group_content_enabler_manager()->installEnforced();
 }
 
 /**
@@ -302,6 +227,11 @@ function group_entity_field_access($operation, FieldDefinitionInterface $field_d
     return AccessResult::neutral();
   }
 
+  // Can't retrieve an entity from an empty item list.
+  if (!isset($items)) {
+    return AccessResult::neutral();
+  }
+
   /** @var \Drupal\group\Entity\GroupContent $group_content */
   $group_content = $items->getEntity();
   $group = $group_content->getGroup();
@@ -314,6 +244,88 @@ function group_entity_field_access($operation, FieldDefinitionInterface $field_d
 
   // Don't show the field if the plugin ID didn't match.
   return AccessResult::forbidden();
+}
+
+/**
+ * Implements hook_user_cancel_methods_alter().
+ */
+function group_user_cancel_methods_alter(&$methods) {
+  $methods['user_cancel_block']['title'] = t('Disable the account and keep its content and groups.');
+  $methods['user_cancel_block']['description'] .= ' ' . t('Groups that were created by you will still list you as the owner.');
+  $methods['user_cancel_block_unpublish']['title'] .= ' ' . t('Does not affect groups.');
+  $methods['user_cancel_block_unpublish']['description'] .= ' ' . t('Groups that were created by you will remain visible.');
+  $methods['user_cancel_reassign']['title'] .= ' ' . t('Reassign its groups to the super administrator.');
+  $methods['user_cancel_reassign']['description'] .= ' ' . t('All of your groups will be assigned to the super administrator.');
+  $methods['user_cancel_delete']['title'] = t('Delete the account, its content and groups.');
+  $methods['user_cancel_delete']['description'] .= ' ' . t('This includes groups that were created by you, including all of their content relationships!');
+}
+
+/**
+ * Implements hook_user_cancel().
+ */
+function group_user_cancel($edit, $account, $method) {
+  // Reassign all groups to the super user.
+  if ($method == 'user_cancel_reassign') {
+    $storage = \Drupal::entityTypeManager()->getStorage('group');
+    $gids = $storage->getQuery()
+      ->condition('uid', $account->id())
+      ->execute();
+
+    // Run this as a batch if there are more than 10 groups.
+    if (count($gids) > 10) {
+      batch_set(['operations' => [['_group_mass_reassign_to_super_user', [$gids]]]]);
+    }
+    // Run it immediately if not.
+    else {
+      foreach ($storage->loadMultiple($gids) as $group) {
+        /** @var \Drupal\group\Entity\GroupInterface $group */
+        $group->set('uid', 1);
+        $storage->save($group);
+      }
+    }
+  }
+}
+
+/**
+ * Implements callback_batch_operation().
+ *
+ * Mass reassigns ownership of groups to the super user.
+ *
+ * @param int[] $ids
+ *   An array of group IDs.
+ */
+function _group_mass_reassign_to_super_user(array $ids, &$context) {
+  if (!isset($context['sandbox']['progress'])) {
+    $context['sandbox']['progress'] = 0;
+    $context['sandbox']['max'] = count($ids);
+    $context['sandbox']['ids'] = $ids;
+  }
+
+  // Try to update 10 groups at a time.
+  $ids = array_slice($context['sandbox']['ids'], $context['sandbox']['progress'], 10);
+
+  $storage = \Drupal::entityTypeManager()->getStorage('group');
+  foreach ($storage->loadMultiple($ids) as $group) {
+    /** @var \Drupal\group\Entity\GroupInterface $group */
+    $group->set('uid', 1);
+    $storage->save($group);
+    $context['sandbox']['progress']++;
+  }
+
+  if ($context['sandbox']['progress'] != $context['sandbox']['max']) {
+    $context['finished'] = $context['sandbox']['progress'] / $context['sandbox']['max'];
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_predelete().
+ */
+function group_user_predelete(EntityInterface $account) {
+  // If a user is deleted, we delete all of their groups too.
+  $storage = \Drupal::entityTypeManager()->getStorage('group');
+  if ($groups = $storage->loadByProperties(['uid' => $account->id()])) {
+    $storage->delete($groups);
+  }
 }
 
 /**

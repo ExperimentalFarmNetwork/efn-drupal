@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\group\Plugin\Validation\Constraint\GroupContentCardinality.
- */
-
 namespace Drupal\group\Plugin\Validation\Constraint;
 
 use Symfony\Component\Validator\Constraint;
@@ -14,12 +9,12 @@ use Symfony\Component\Validator\Constraint;
  *
  * Content enabler plugins may limit the amount of times a single content entity
  * can be added to a group as well as the amount of groups that single entity
- * can be added to. This constraint will enforce that behavior on entity
- * reference fields.
+ * can be added to. This constraint will enforce that behavior.
  *
  * @Constraint(
  *   id = "GroupContentCardinality",
- *   label = @Translation("Group content cardinality check", context = "Validation")
+ *   label = @Translation("Group content cardinality check", context = "Validation"),
+ *   type = "entity:group_content"
  * )
  */
 class GroupContentCardinality extends Constraint {

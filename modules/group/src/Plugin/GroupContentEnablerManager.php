@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\group\Plugin\GroupContentEnablerManager.
- */
-
 namespace Drupal\group\Plugin;
 
 use Drupal\Core\Cache\Cache;
@@ -33,6 +28,20 @@ class GroupContentEnablerManager extends DefaultPluginManager implements GroupCo
   protected $entityTypeManager;
 
   /**
+   * The group type storage handler.
+   *
+   * @var \Drupal\Core\Config\Entity\ConfigEntityStorageInterface
+   */
+  protected $groupTypeStorage;
+
+  /**
+   * A group content type storage handler.
+   *
+   * @var \Drupal\group\Entity\Storage\GroupContentTypeStorageInterface
+   */
+  protected $groupContentTypeStorage;
+
+  /**
    * A collection of vanilla instances of all content enabler plugins.
    *
    * @var \Drupal\group\Plugin\GroupContentEnablerCollection
@@ -40,32 +49,39 @@ class GroupContentEnablerManager extends DefaultPluginManager implements GroupCo
   protected $allPlugins;
 
   /**
-   * A list of all installed content enabler plugin IDs.
+   * An list each group type's installed plugins as plugin collections.
    *
-   * @var string[]
+   * @var \Drupal\group\Plugin\GroupContentEnablerCollection[]
    */
-  protected $installedIds;
-
-  /**
-   * The cache key for the installed content enabler plugin IDs.
-   *
-   * @var string
-   */
-  protected $installedIdsCacheKey;
+  protected $groupTypeInstalled = [];
 
   /**
    * An static cache of group content type IDs per plugin ID.
    *
    * @var array[]
    */
-  protected $groupContentTypeIdMap;
+  protected $pluginGroupContentTypeMap;
 
   /**
-   * The cache key for the group content type ID map.
+   * The cache key for the group content type IDs per plugin ID map.
    *
    * @var string
    */
-  protected $groupContentTypeIdMapCacheKey;
+  protected $pluginGroupContentTypeMapCacheKey;
+
+  /**
+   * An static cache of plugin IDs per group type ID.
+   *
+   * @var array[]
+   */
+  protected $groupTypePluginMap;
+
+  /**
+   * The cache key for the plugin IDs per group type ID map.
+   *
+   * @var string
+   */
+  protected $groupTypePluginMapCacheKey;
 
   /**
    * Constructs a GroupContentEnablerManager object.
@@ -85,10 +101,34 @@ class GroupContentEnablerManager extends DefaultPluginManager implements GroupCo
     $this->alterInfo('group_content_info');
     $this->setCacheBackend($cache_backend, 'group_content_enablers');
     $this->entityTypeManager = $entity_type_manager;
-    $this->installedIdsCacheKey = $this->cacheKey . '_installed';
-    $this->groupContentTypeIdMapCacheKey = $this->cacheKey . '_GCT_map';
+    $this->pluginGroupContentTypeMapCacheKey = $this->cacheKey . '_GCT_map';
+    $this->groupTypePluginMapCacheKey = $this->cacheKey . '_GT_map';
   }
 
+  /**
+   * Returns the group type storage handler.
+   *
+   * @return \Drupal\Core\Config\Entity\ConfigEntityStorageInterface
+   */
+  protected function getGroupTypeStorage() {
+    if (!isset($this->groupTypeStorage)) {
+      $this->groupTypeStorage = $this->entityTypeManager->getStorage('group_type');
+    }
+    return $this->groupTypeStorage;
+  }
+
+  /**
+   * Returns the group content type storage handler.
+   *
+   * @return \Drupal\group\Entity\Storage\GroupContentTypeStorageInterface
+   */
+  protected function getGroupContentTypeStorage() {
+    if (!isset($this->groupContentTypeStorage)) {
+      $this->groupContentTypeStorage = $this->entityTypeManager->getStorage('group_content_type');
+    }
+    return $this->groupContentTypeStorage;
+  }
+  
   /**
    * {@inheritdoc}
    */
@@ -111,10 +151,22 @@ class GroupContentEnablerManager extends DefaultPluginManager implements GroupCo
   /**
    * {@inheritdoc}
    */
-  public function getInstalled() {
+  public function getInstalled(GroupTypeInterface $group_type = NULL) {
+    return !isset($group_type)
+      ? $this->getVanillaInstalled()
+      : $this->getGroupTypeInstalled($group_type);
+  }
+
+  /**
+   * Retrieves a vanilla instance of every installed plugin.
+   *
+   * @return \Drupal\group\Plugin\GroupContentEnablerCollection
+   *   A plugin collection with a vanilla instance of every installed plugin.
+   */
+  protected function getVanillaInstalled() {
     // Retrieve a vanilla instance of all known content enabler plugins.
     $plugins = clone $this->getAll();
-    
+
     // Retrieve all installed content enabler plugin IDs.
     $installed = $this->getInstalledIds();
 
@@ -130,64 +182,63 @@ class GroupContentEnablerManager extends DefaultPluginManager implements GroupCo
   }
 
   /**
-   * {@inheritdoc}
+   * Retrieves fully instantiated plugins for a group type.
+   *
+   * @param \Drupal\group\Entity\GroupTypeInterface $group_type
+   *   The group type to instantiate the installed plugins for.
+   *
+   * @return \Drupal\group\Plugin\GroupContentEnablerCollection
+   *   A plugin collection with fully instantiated plugins for the group type.
    */
-  public function getInstalledIds() {
-    $plugin_ids = $this->getCachedInstalledIDs();
+  protected function getGroupTypeInstalled(GroupTypeInterface $group_type) {
+    if (!isset($this->groupTypeInstalled[$group_type->id()])) {
+      $configurations = [];
+      $group_content_types = $this->getGroupContentTypeStorage()->loadByGroupType($group_type);
 
-    if (!isset($plugin_ids)) {
-      $plugin_ids = [];
+      // Get the plugin config from every group content type for the group type.
+      foreach ($group_content_types as $group_content_type) {
+        $plugin_id = $group_content_type->getContentPluginId();
 
-      // Installed plugins can only live on a group type. By retrieving all of
-      // the group types' plugin configuration array, we can build a list of
-      // installed plugin IDs.
-      /** @var \Drupal\group\Entity\GroupTypeInterface[] $group_types */
-      $group_types = $this->entityTypeManager->getStorage('group_type')->loadMultiple();
-      foreach ($group_types as $group_type) {
-        $plugin_ids = array_merge($plugin_ids, array_keys($group_type->get('content')));
+        // Grab the plugin config from every group content type and amend it
+        // with the group type ID so the plugin knows what group type to use. We
+        // also specify the 'id' key because DefaultLazyPluginCollection throws
+        // an exception if it is not present.
+        $configuration = $group_content_type->get('plugin_config');
+        $configuration['group_type_id'] = $group_type->id();
+        $configuration['id'] = $plugin_id;
+
+        $configurations[$plugin_id] = $configuration;
       }
 
-      $plugin_ids = array_unique($plugin_ids);
-      $this->setCachedInstalledIDs($plugin_ids);
+      $plugins = new GroupContentEnablerCollection($this, $configurations);
+      $plugins->sort();
+
+      $this->groupTypeInstalled[$group_type->id()] = $plugins;
     }
 
-    return $plugin_ids;
+    return $this->groupTypeInstalled[$group_type->id()];
   }
 
   /**
    * {@inheritdoc}
    */
-  public function clearCachedInstalledIDs() {
-    if ($this->cacheBackend) {
-      $this->cacheBackend->delete($this->installedIdsCacheKey);
+  public function getInstalledIds(GroupTypeInterface $group_type = NULL) {
+    // If no group type was provided, we can find all installed plugin IDs by
+    // grabbing the keys from the group content type IDs per plugin ID map.
+    if (!isset($group_type)) {
+      return array_keys($this->getPluginGroupContentTypeMap());
     }
-    $this->installedIds = NULL;
+
+    // Otherwise, we can find the entry in the plugin IDs per group type ID map.
+    $map = $this->getGroupTypePluginMap();
+    return isset($map[$group_type->id()]) ? $map[$group_type->id()] : [];
   }
 
   /**
-   * Returns the cached installed plugin IDs.
-   *
-   * @return array|null
-   *   On success this will return the installed plugin ID list. On failure this
-   *   should return NULL, indicating to other methods that this has not yet
-   *   been defined. Success with no values should return as an empty array.
+   * {@inheritdoc}
    */
-  protected function getCachedInstalledIDs() {
-    if (!isset($this->installedIds) && $cache = $this->cacheGet($this->installedIdsCacheKey)) {
-      $this->installedIds = $cache->data;
-    }
-    return $this->installedIds;
-  }
-
-  /**
-   * Sets a cache of the installed plugin IDs.
-   *
-   * @param array $plugin_ids
-   *   The installed plugin IDs to store in cache.
-   */
-  protected function setCachedInstalledIDs($plugin_ids) {
-    $this->cacheSet($this->installedIdsCacheKey, $plugin_ids, Cache::PERMANENT);
-    $this->installedIds = $plugin_ids;
+  public function clearCachedInstalledIds() {
+    $this->clearCachedPluginMaps();
   }
 
   /**
@@ -205,15 +256,15 @@ class GroupContentEnablerManager extends DefaultPluginManager implements GroupCo
 
     // If no group type was specified, we check all of them.
     /** @var \Drupal\group\Entity\GroupTypeInterface[] $group_types */
-    $group_types = empty($group_type)
-      ? $this->entityTypeManager->getStorage('group_type')->loadMultiple()
-      : [$group_type];
+    $group_types = empty($group_type) ? $this->getGroupTypeStorage()->loadMultiple() : [$group_type];
 
     // Search through all of the enforced plugins and install new ones.
     foreach ($group_types as $group_type) {
+      $installed = $this->getInstalledIds($group_type);
+
       foreach ($enforced as $plugin_id) {
-        if (!$group_type->hasContentPlugin($plugin_id)) {
-          $group_type->installContentPlugin($plugin_id);
+        if (!in_array($plugin_id, $installed)) {
+          $this->getGroupContentTypeStorage()->createFromPlugin($group_type, $plugin_id)->save();
         }
       }
     }
@@ -223,31 +274,36 @@ class GroupContentEnablerManager extends DefaultPluginManager implements GroupCo
    * {@inheritdoc}
    */
   public function getGroupContentTypeIds($plugin_id) {
-    $map = $this->getCachedGroupContentTypeIdMap();
-
-    if (!isset($map)) {
-      $map = [];
-
-      /** @var \Drupal\group\Entity\GroupContentTypeInterface[] $group_content_types */
-      $group_content_types = $this->entityTypeManager->getStorage('group_content_type')->loadMultiple();
-      foreach ($group_content_types as $group_content_type) {
-        $map[$group_content_type->getContentPluginId()][] = $group_content_type->id();
-      }
-
-      $this->setCachedGroupContentTypeIdMap($map);
-    }
-
+    $map = $this->getPluginGroupContentTypeMap();
     return isset($map[$plugin_id]) ? $map[$plugin_id] : [];
   }
 
   /**
    * {@inheritdoc}
    */
-  public function clearCachedGroupContentTypeIdMap() {
-    if ($this->cacheBackend) {
-      $this->cacheBackend->delete($this->groupContentTypeIdMapCacheKey);
+  public function getPluginGroupContentTypeMap() {
+    $map = $this->getCachedPluginGroupContentTypeMap();
+
+    if (!isset($map)) {
+      $map = [];
+
+      /** @var \Drupal\group\Entity\GroupContentTypeInterface[] $group_content_types */
+      $group_content_types = $this->getGroupContentTypeStorage()->loadMultiple();
+      foreach ($group_content_types as $group_content_type) {
+        $map[$group_content_type->getContentPluginId()][] = $group_content_type->id();
+      }
+
+      $this->setCachedPluginGroupContentTypeMap($map);
     }
-    $this->groupContentTypeIdMap = NULL;
+
+    return $map;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function clearCachedGroupContentTypeIdMap() {
+    $this->clearCachedPluginMaps();
   }
 
   /**
@@ -258,11 +314,11 @@ class GroupContentEnablerManager extends DefaultPluginManager implements GroupCo
    *   this should return NULL, indicating to other methods that this has not
    *   yet been defined. Success with no values should return as an empty array.
    */
-  protected function getCachedGroupContentTypeIdMap() {
-    if (!isset($this->groupContentTypeIdMap) && $cache = $this->cacheGet($this->groupContentTypeIdMapCacheKey)) {
-      $this->groupContentTypeIdMap = $cache->data;
+  protected function getCachedPluginGroupContentTypeMap() {
+    if (!isset($this->pluginGroupContentTypeMap) && $cache = $this->cacheGet($this->pluginGroupContentTypeMapCacheKey)) {
+      $this->pluginGroupContentTypeMap = $cache->data;
     }
-    return $this->groupContentTypeIdMap;
+    return $this->pluginGroupContentTypeMap;
   }
 
   /**
@@ -271,9 +327,84 @@ class GroupContentEnablerManager extends DefaultPluginManager implements GroupCo
    * @param array $map
    *   The group content type ID map to store in cache.
    */
-  protected function setCachedGroupContentTypeIdMap($map) {
-    $this->cacheSet($this->groupContentTypeIdMapCacheKey, $map, Cache::PERMANENT);
-    $this->groupContentTypeIdMap = $map;
+  protected function setCachedPluginGroupContentTypeMap($map) {
+    $this->cacheSet($this->pluginGroupContentTypeMapCacheKey, $map, Cache::PERMANENT);
+    $this->pluginGroupContentTypeMap = $map;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getGroupTypePluginMap() {
+    $map = $this->getCachedGroupTypePluginMap();
+
+    if (!isset($map)) {
+      $map = [];
+
+      /** @var \Drupal\group\Entity\GroupContentTypeInterface[] $group_content_types */
+      $group_content_types = $this->getGroupContentTypeStorage()->loadMultiple();
+      foreach ($group_content_types as $group_content_type) {
+        $map[$group_content_type->getGroupTypeId()][] = $group_content_type->getContentPluginId();
+      }
+
+      $this->setCachedGroupTypePluginMap($map);
+    }
+
+    return $map;
+  }
+
+  /**
+   * Returns the cached group type plugin map.
+   *
+   * @return array|null
+   *   On success this will return the group type plugin map (array). On failure
+   *   this should return NULL, indicating to other methods that this has not
+   *   yet been defined. Success with no values should return as an empty array.
+   */
+  protected function getCachedGroupTypePluginMap() {
+    if (!isset($this->groupTypePluginMap) && $cache = $this->cacheGet($this->groupTypePluginMapCacheKey)) {
+      $this->groupTypePluginMap = $cache->data;
+    }
+    return $this->groupTypePluginMap;
+  }
+
+  /**
+   * Sets a cache of the group type plugin map.
+   *
+   * @param array $map
+   *   The group type plugin map to store in cache.
+   */
+  protected function setCachedGroupTypePluginMap($map) {
+    $this->cacheSet($this->groupTypePluginMapCacheKey, $map, Cache::PERMANENT);
+    $this->groupTypePluginMap = $map;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function clearCachedGroupTypeCollections(GroupTypeInterface $group_type = NULL) {
+    if (!isset($group_type)) {
+      $this->groupTypeInstalled = [];
+    }
+    else {
+      $this->groupTypeInstalled[$group_type->id()] = NULL;
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function clearCachedPluginMaps() {
+    if ($this->cacheBackend) {
+      $this->cacheBackend->delete($this->pluginGroupContentTypeMapCacheKey);
+      $this->cacheBackend->delete($this->groupTypePluginMapCacheKey);
+    }
+    $this->pluginGroupContentTypeMap = NULL;
+    $this->groupTypePluginMap = NULL;
+
+    // Also clear the array of per group type plugin collections as it shares
+    // its cache clearing requirements with the group type plugin map.
+    $this->groupTypeInstalled = [];
   }
 
   /**
@@ -286,5 +417,5 @@ class GroupContentEnablerManager extends DefaultPluginManager implements GroupCo
     // definitions change, so we can safely reset that here.
     $this->allPlugins = NULL;
   }
-  
+
 }

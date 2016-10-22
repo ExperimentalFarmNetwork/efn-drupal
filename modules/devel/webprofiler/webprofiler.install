@@ -104,7 +104,7 @@ function webprofiler_requirements($phase) {
       ];
     }
 
-    $has_highlight = _webprofiler_verify_library('webprofiler', 'highlight');
+    $has_highlight = _webprofiler_verify_library('webprofiler', 'highlightjs');
     $requirements['highlightjs'] = [
       'title' => t('highlight.js library'),
       'value' => $has_highlight ? t('Enabled') : t('Not found'),

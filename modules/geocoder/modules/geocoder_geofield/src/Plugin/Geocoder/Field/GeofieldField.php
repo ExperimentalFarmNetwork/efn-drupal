@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder_geofield\Plugin\Geocoder\Field\GeofieldField.
- */
-
 namespace Drupal\geocoder_geofield\Plugin\Geocoder\Field;
 
 use Drupal\Core\Form\FormStateInterface;

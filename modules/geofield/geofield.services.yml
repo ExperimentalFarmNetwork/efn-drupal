@@ -5,3 +5,6 @@ services:
 
   geofield.wkt_generator:
     class: Drupal\geofield\WktGenerator
+
+  geofield.geophp:
+    class: Drupal\geofield\GeoPHP\GeoPHPWrapper

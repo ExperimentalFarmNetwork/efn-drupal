@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder\ProviderInterface.
- */
-
 namespace Drupal\geocoder;
 
 /**
@@ -35,6 +30,7 @@ interface ProviderInterface {
    *   The longitude.
    *
    * @return \Geocoder\Model\AddressCollection|null
+   *   The AddressCollection object, NULL otherwise.
    */
   public function reverse($latitude, $longitude);
 

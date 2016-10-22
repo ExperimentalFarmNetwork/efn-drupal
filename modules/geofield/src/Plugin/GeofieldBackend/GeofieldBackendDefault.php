@@ -3,7 +3,6 @@
 namespace Drupal\geofield\Plugin\GeofieldBackend;
 
 use Drupal\geofield\Plugin\GeofieldBackendBase;
-use geoPHP;
 
 /**
  * Default backend for Geofield.
@@ -33,7 +32,7 @@ class GeofieldBackendDefault extends GeofieldBackendBase {
    * {@inheritdoc}
    */
   public function save($geometry) {
-    $geom = geoPHP::load($geometry);
+    $geom = \Drupal::service('geofield.geophp')->load($geometry);
     return $geom->out('wkt');
   }
 
@@ -41,6 +40,6 @@ class GeofieldBackendDefault extends GeofieldBackendBase {
    * {@inheritdoc}
    */
   public function load($value) {
-    return geoPHP::load($value);
+    return \Drupal::service('geofield.geophp')->load($value);
   }
 }

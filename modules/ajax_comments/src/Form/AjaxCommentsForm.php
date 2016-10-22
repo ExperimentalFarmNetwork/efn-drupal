@@ -142,7 +142,7 @@ class AjaxCommentsForm extends CommentForm {
     // update the temp store values while rebuilding the form, if necessary.
     $this->tempStore->processForm($request, $form, $form_state);
 
-    if ($is_ajax && $route_name === 'ajax_comments.edit') {
+    if ($is_ajax && in_array($route_name, ['ajax_comments.edit', 'ajax_comments.reply'])) {
       $wrapper_html_id = $this->tempStore->getSelectorValue($request, 'wrapper_html_id');
     }
     else {
@@ -230,7 +230,7 @@ class AjaxCommentsForm extends CommentForm {
 
     // Build the ajax submit URLs.
     $ajax_new_comment_url = Url::fromRoute(
-      'ajax_comments.reply',
+      'ajax_comments.add',
       [
         'entity_type' => $commented_entity->getEntityTypeId(),
         'entity' => $commented_entity->id(),
@@ -239,9 +239,18 @@ class AjaxCommentsForm extends CommentForm {
       ]
     );
     $ajax_edit_comment_url = Url::fromRoute(
-      'ajax_comments.update',
+      'ajax_comments.save',
       [
-        'comment' => $comment->id(),
+        'comment' => $cid,
+      ]
+    );
+    $ajax_comment_reply_url = Url::fromRoute(
+      'ajax_comments.save_reply',
+      [
+        'entity_type' => $commented_entity->getEntityTypeId(),
+        'entity' => $commented_entity->id(),
+        'field_name' => $field_name,
+        'pid' => $pid,
       ]
     );
 
@@ -254,7 +263,7 @@ class AjaxCommentsForm extends CommentForm {
         'url' => Url::fromRoute(
           'ajax_comments.cancel',
           [
-            'comment' => $comment->id(),
+            'cid' => $cid,
           ]
         ),
         // We need to wait for ajax_comments_entity_display_build_alter() to run
@@ -286,12 +295,33 @@ class AjaxCommentsForm extends CommentForm {
 
         break;
 
-      case 'ajax_comments.update':
+      case 'ajax_comments.save':
         $element['submit']['#ajax'] = $ajax;
         // If the user attempted to submit the form but there were errors,
         // rebuild the form used at the 'ajax_comments.edit' route.
         if ($editing) {
           $element['submit']['#ajax']['url'] = $ajax_edit_comment_url;
+          $element['cancel'] = $cancel;
+        }
+        // Otherwise, rebuild the 'add comment' form during rebuild of the
+        // comment field.
+        else {
+          $element['submit']['#ajax']['url'] = $ajax_new_comment_url;
+        }
+        break;
+
+      case 'ajax_comments.reply':
+        $element['submit']['#ajax'] = $ajax;
+        $element['submit']['#ajax']['url'] = $ajax_comment_reply_url;
+        $element['cancel'] = $cancel;
+        break;
+
+      case 'ajax_comments.save_reply':
+        $element['submit']['#ajax'] = $ajax;
+        // If the user attempted to submit the form but there were errors,
+        // rebuild the form used at the 'ajax_comments.reply' route.
+        if ($editing) {
+          $element['submit']['#ajax']['url'] = $ajax_comment_reply_url;
           $element['cancel'] = $cancel;
         }
         // Otherwise, rebuild the 'add comment' form during rebuild of the
@@ -319,7 +349,7 @@ class AjaxCommentsForm extends CommentForm {
     $request = $this->requestStack->getCurrentRequest();
     $route_name = $this->currentRouteMatch->getRouteName();
     $this->tempStore->processForm($request, $form, $form_state, $is_validating = TRUE);
-    if ($form_state->hasAnyErrors() && $route_name === 'ajax_comments.update') {
+    if ($form_state->hasAnyErrors() && in_array($route_name, ['ajax_comments.save', 'ajax_comments.save_reply'])) {
       // If we are trying to save an edit to an existing comment, and there is
       // a form error, set the wrapper element ID back to its original value,
       // because we haven't executed a complete replacement of the wrapper
@@ -352,10 +382,14 @@ class AjaxCommentsForm extends CommentForm {
       return;
     }
 
+    // Save the comment id in the private tempStore, so that the controller
+    // can access it in a subsequent HTTP request.
+    $this->tempStore->setCid($comment->id());
+
     // Code adapted from FormSubmitter::redirectForm().
     $request = $this->requestStack->getCurrentRequest();
     $route_name = RouteMatch::createFromRequest($request)->getRouteName();
-    if ($route_name !== 'entity.comment.edit_form') {
+    if (!in_array($route_name, array('entity.comment.edit_form', 'comment.reply'))) {
       $form_state->setRedirect(
         '<current>',
         [],

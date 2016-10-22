@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder\GeocoderPluginManagerBase.
- */
-
 namespace Drupal\geocoder;
 
 use Drupal\Core\Plugin\DefaultPluginManager;

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder\Plugin\Geocoder\Provider\OpenStreetMap.
- */
-
 namespace Drupal\geocoder\Plugin\Geocoder\Provider;
 
 use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;

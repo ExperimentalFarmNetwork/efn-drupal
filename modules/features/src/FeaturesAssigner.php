@@ -305,6 +305,7 @@ class FeaturesAssigner implements FeaturesAssignerInterface {
     $bundle = $default->createDuplicate();
 
     $bundle->setMachineName($machine_name);
+    $name = !empty($name) ? $name : $machine_name;
     $bundle->setName($name);
     if (isset($description)) {
       $bundle->setDescription($description);

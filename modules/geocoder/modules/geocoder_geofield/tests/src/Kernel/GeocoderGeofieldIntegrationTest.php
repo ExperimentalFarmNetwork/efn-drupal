@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\Tests\geocoder_geofield\Kernel\GeocoderGeofieldIntegrationTest.
- */
-
 namespace Drupal\Tests\geocoder_geofield\Kernel;
 
 use Drupal\entity_test\Entity\EntityTest;

@@ -30,3 +30,10 @@ services:
   features.extension_optional_storage:
     class: Drupal\features\FeaturesInstallStorage
     arguments: ['@config.storage', 'config/optional']
+
+  features.config.installer:
+    class: Drupal\features\FeaturesConfigInstaller
+    public: false
+    decorates: config.installer
+    decoration_priority: 9
+    arguments: ['@features.config.installer.inner', '@features.manager', '@config.factory', '@config.storage', '@config.typed', '@config.manager', '@event_dispatcher']

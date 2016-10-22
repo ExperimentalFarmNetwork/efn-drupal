@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\profile\Entity\Profile.
- */
-
 namespace Drupal\profile\Entity;
 
 use Drupal\Core\Cache\Cache;
@@ -59,6 +54,7 @@ use Drupal\user\UserInterface;
  *    "collection" = "/admin/config/people/profiles",
  *    "set-default" = "/profile/{profile}/set-default"
  *   },
+ *   common_reference_target = TRUE,
  * )
  */
 class Profile extends ContentEntityBase implements ProfileInterface {

@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- * The Text Data Prepare plugin.
- */
 
 namespace Drupal\geocoder\Plugin\Geocoder\DataPrepare;
 
@@ -21,6 +17,7 @@ use Drupal\geocoder\Plugin\GeocoderPluginInterface;
  * )
  */
 class Text extends DataPrepareBase implements GeocoderPluginInterface {
+
   /**
    * @inheritDoc
    */

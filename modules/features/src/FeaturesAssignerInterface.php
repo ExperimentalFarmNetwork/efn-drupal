@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\features\FeaturesAssignerInterface.
- */
-
 namespace Drupal\features;
 
 /**

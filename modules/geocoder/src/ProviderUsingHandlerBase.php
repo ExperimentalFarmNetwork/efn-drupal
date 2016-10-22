@@ -1,12 +1,9 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder\ProviderUsingHandlerBase.
- */
-
 namespace Drupal\geocoder;
 
+use Drupal\Core\Cache\CacheBackendInterface;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 
 /**
@@ -24,7 +21,7 @@ abstract class ProviderUsingHandlerBase extends ProviderBase {
   /**
    * {@inheritdoc}
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, \Drupal\Core\Config\ConfigFactoryInterface $config_factory, \Drupal\Core\Cache\CacheBackendInterface $cache_backend) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $config_factory, CacheBackendInterface $cache_backend) {
     if (empty($plugin_definition['handler'])) {
       throw new InvalidPluginDefinitionException($plugin_id, "Plugin '$plugin_id' should define a handler.");
     }
@@ -49,6 +46,7 @@ abstract class ProviderUsingHandlerBase extends ProviderBase {
    * Returns the provider handler.
    *
    * @return \Geocoder\Provider\Provider
+   *   The provider plugin.
    */
   protected function getHandler() {
     if (!isset($this->handler)) {

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder_geofield\Plugin\Geocoder\Dumper\Geohash.
- */
-
 namespace Drupal\geocoder_geofield\Plugin\Geocoder\Dumper;
 
 use Drupal\geocoder\DumperBase;

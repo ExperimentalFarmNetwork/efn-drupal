@@ -68,7 +68,7 @@ abstract class GeofieldElementBase extends FormElement {
    * @param array $complete_form
    *   The complete form structure.
    */
-  function elementValidate(&$element, FormStateInterface $form_state, &$complete_form) {
+  public static function elementValidate(&$element, FormStateInterface $form_state, &$complete_form) {
     $allFilled = TRUE;
     $anyFilled = FALSE;
     $error_label = isset($element['#error_label']) ? $element['#error_label'] : $element['#title'];

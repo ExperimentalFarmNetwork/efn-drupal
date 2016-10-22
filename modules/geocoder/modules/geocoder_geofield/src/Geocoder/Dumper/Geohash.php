@@ -1,16 +1,9 @@
 <?php
 
-/**
- * @file
- */
-
 namespace Drupal\geocoder_geofield\Geocoder\Dumper;
 
-use Drupal\geocoder\DumperInterface;
-use Drupal\geocoder\DumperPluginManager;
 use Geocoder\Dumper\Dumper;
 use Geocoder\Model\Address;
-use Drupal\geofield\geophp\geoPHPInterface;
 
 /**
  * @author Pol Dellaiera <pol.dellaiera@gmail.com>

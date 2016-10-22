@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\features\Tests;
+namespace Drupal\features_ui\Tests;
 
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\features\FeaturesBundleInterface;

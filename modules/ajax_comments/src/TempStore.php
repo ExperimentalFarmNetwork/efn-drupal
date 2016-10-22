@@ -36,6 +36,26 @@ class TempStore {
   }
 
   /**
+   * Store a newly-added comment ID for retrieval across HTTP requests.
+   *
+   * @param mixed $cid
+   *   The comment ID to store for the newly-added comment.
+   */
+  public function setCid($cid) {
+    $this->privateTempStore->set('cid', $cid);
+  }
+
+  /**
+   * Retrieve a newly-added comment ID set in a previous request by setCid().
+   *
+   * @return mixed
+   *   The comment ID saved in ::setCid().
+   */
+  public function getCid() {
+    return $this->privateTempStore->get('cid');
+  }
+
+  /**
    * Get a single selector value, without the '#' prefix.
    *
    * @param \Symfony\Component\HttpFoundation\Request $request
@@ -143,6 +163,7 @@ class TempStore {
       'wrapper_html_id',
       'form_html_id',
       'form_machine_name',
+      'cid',
     ];
     foreach ($values as $value) {
       $this->privateTempStore->delete($value);

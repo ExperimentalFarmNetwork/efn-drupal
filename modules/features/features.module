@@ -28,10 +28,19 @@ function features_help($route_name, RouteMatchInterface $route_match) {
 function features_file_download($uri) {
   $scheme = file_uri_scheme($uri);
   $target = file_uri_target($uri);
+
   if ($scheme == 'temporary' && $target) {
-    return array(
-      'Content-disposition' => 'attachment; filename="' . $target . '"',
-    );
+    $request = \Drupal::request();
+    $route = $request->attributes->get('_route');
+    // Check if we were called by Features download route.
+    // No additional access checking needed here: route requires
+    // "export configuration" permission, token is validated by the controller.
+    // @see \Drupal\features\Controller\FeaturesController::downloadExport()
+    if ($route == 'features.export_download') {
+      return array(
+        'Content-disposition' => 'attachment; filename="' . $target . '"',
+      );
+    }
   }
 }
 

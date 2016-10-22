@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder_field\Plugin\Field\FieldFormatter\GeocodeFormatter.
- */
-
 namespace Drupal\geocoder_field\Plugin\Field\FieldFormatter;
 
 use Drupal\geocoder_field\Plugin\Field\GeocodeFormatterBase;
