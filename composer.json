@@ -8,12 +8,7 @@
         "wikimedia/composer-merge-plugin": "~1.3"
     },
     "replace": {
-        "drupal/core": "~8.0",
-        "drupal/address": "8.*",
-        "drupal/webprofiler": "8.*",
-        "drupal/entity": "8.*",
-        "drupal/geocoder": "8.*",
-        "drupal/profile": "8.*"
+        "drupal/core": "~8.2"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
