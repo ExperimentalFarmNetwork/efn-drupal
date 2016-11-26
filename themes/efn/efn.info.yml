@@ -2,8 +2,8 @@ core: 8.x
 type: theme
 base theme: bootstrap
 
-name: 'Expiremental Farm Network Theme'
-description: 'Uses the Bootstrap framework LESS source files and must be compiled.'
+name: 'Experimental Farm Network'
+description: 'Experimental Farm Theme.'
 package: 'Bootstrap'
 
 regions:
@@ -20,5 +20,5 @@ regions:
   page_bottom: 'Page bottom'
 
 libraries:
-  - 'THEMENAME/global-styling'
-  - 'THEMENAME/bootstrap-scripts'
+  - 'efn/global-styling'
+  - 'efn/bootstrap-scripts'

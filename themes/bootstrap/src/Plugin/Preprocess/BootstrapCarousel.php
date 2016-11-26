@@ -18,7 +18,7 @@ use Drupal\Core\Url;
 /**
  * Pre-processes variables for the "bootstrap_carousel" theme hook.
  *
- * @ingroup theme_preprocess
+ * @ingroup plugins_preprocess
  *
  * @BootstrapPreprocess("bootstrap_carousel")
  */
@@ -27,7 +27,7 @@ class BootstrapCarousel extends PreprocessBase implements PreprocessInterface {
   /**
    * {@inheritdoc}
    */
-  protected function preprocessVariables(Variables $variables, $hook, array $info) {
+  protected function preprocessVariables(Variables $variables) {
     // Retrieve the ID, generating one if needed.
     $id = $variables->getAttribute('id', Html::getUniqueId($variables->offsetGet('id', 'bootstrap-carousel')));
     unset($variables['id']);
@@ -48,7 +48,7 @@ class BootstrapCarousel extends PreprocessBase implements PreprocessInterface {
       $variables->controls = [
         'left' => [
           '#type' => 'link',
-          '#title' => new FormattableMarkup(Element::create($left_icon)->render() . '<span class="sr-only">@text</span>', ['@text' => t('Previous')]),
+          '#title' => new FormattableMarkup(Element::create($left_icon)->renderPlain() . '<span class="sr-only">@text</span>', ['@text' => t('Previous')]),
           '#url' => $url,
           '#attributes' => [
             'class' => ['left', 'carousel-control'],
@@ -58,7 +58,7 @@ class BootstrapCarousel extends PreprocessBase implements PreprocessInterface {
         ],
         'right' => [
           '#type' => 'link',
-          '#title' => new FormattableMarkup(Element::create($right_icon)->render() . '<span class="sr-only">@text</span>', ['@text' => t('Next')]),
+          '#title' => new FormattableMarkup(Element::create($right_icon)->renderPlain() . '<span class="sr-only">@text</span>', ['@text' => t('Next')]),
           '#url' => $url,
           '#attributes' => [
             'class' => ['right', 'carousel-control'],
@@ -81,7 +81,7 @@ class BootstrapCarousel extends PreprocessBase implements PreprocessInterface {
     }
 
     // Ensure all attributes are proper objects.
-    $this->preprocessAttributes($variables, $hook, $info);
+    $this->preprocessAttributes();
   }
 
 }

@@ -17,7 +17,7 @@ use Drupal\file\Entity\File;
 /**
  * Pre-processes variables for the "file_link" theme hook.
  *
- * @ingroup theme_preprocess
+ * @ingroup plugins_preprocess
  *
  * @BootstrapPreprocess("file_link",
  *   replace = "template_preprocess_file_link"
@@ -28,7 +28,7 @@ class FileLink extends PreprocessBase {
   /**
    * {@inheritdoc}
    */
-  public function preprocessVariables(Variables $variables, $hook, array $info) {
+  public function preprocessVariables(Variables $variables) {
     $options = [];
 
     $file = ($variables['file'] instanceof File) ? $variables['file'] : File::load($variables['file']->fid);
@@ -104,6 +104,8 @@ class FileLink extends PreprocessBase {
       ->getArray();
 
     $options['attributes']['title'] = t('Open @mime in new window', ['@mime' => $mime['label']]);
+    $options['attributes']['target'] = '_blank';
+
     if ($this->theme->getSetting('tooltip_enabled')) {
       $options['attributes']['data-toggle'] = 'tooltip';
       $options['attributes']['data-placement'] = 'bottom';
@@ -114,7 +116,7 @@ class FileLink extends PreprocessBase {
     $variables->file_size = format_size($file_size);
 
     // Preprocess attributes.
-    $this->preprocessAttributes($variables, $hook, $info);
+    $this->preprocessAttributes();
   }
 
 }

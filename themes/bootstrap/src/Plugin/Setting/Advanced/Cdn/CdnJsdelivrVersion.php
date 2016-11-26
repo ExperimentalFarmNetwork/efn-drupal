@@ -9,6 +9,7 @@ namespace Drupal\bootstrap\Plugin\Setting\Advanced\Cdn;
 use Drupal\bootstrap\Annotation\BootstrapConstant;
 use Drupal\bootstrap\Annotation\BootstrapSetting;
 use Drupal\bootstrap\Bootstrap;
+use Drupal\bootstrap\Utility\Element;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Annotation\Translation;
 use Drupal\Core\Form\FormStateInterface;
@@ -16,12 +17,15 @@ use Drupal\Core\Form\FormStateInterface;
 /**
  * The "cdn_jsdelivr_version" theme setting.
  *
+ * @ingroup plugins_setting
+ *
  * @BootstrapSetting(
  *   cdn_provider = "jsdelivr",
  *   id = "cdn_jsdelivr_version",
  *   type = "select",
  *   weight = -1,
  *   title = @Translation("Version"),
+ *   description = @Translation("Choose the Bootstrap version from jsdelivr"),
  *   defaultValue = @BootstrapConstant("Drupal\bootstrap\Bootstrap::FRAMEWORK_VERSION"),
  *   groups = {
  *     "advanced" = @Translation("Advanced"),
@@ -35,9 +39,9 @@ class CdnJsdelivrVersion extends CdnProvider {
   /**
    * {@inheritdoc}
    */
-  public function alterForm(array &$form, FormStateInterface $form_state, $form_id = NULL) {
+  public function alterFormElement(Element $form, FormStateInterface $form_state, $form_id = NULL) {
     $plugin_id = Html::cleanCssIdentifier($this->provider->getPluginId());
-    $setting = $this->getElement($form, $form_state);
+    $setting = $this->getSettingElement($form, $form_state);
 
     $setting->setProperty('options', $this->provider->getVersions());
     $setting->setProperty('ajax', [

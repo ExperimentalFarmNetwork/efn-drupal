@@ -14,6 +14,8 @@ use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Manages discovery and instantiation of Bootstrap form process callbacks.
+ *
+ * @ingroup plugins_process
  */
 class ProcessManager extends PluginManager {
 
@@ -66,13 +68,6 @@ class ProcessManager extends PluginManager {
     }
     if ($e->isType(['color', 'date', 'number', 'range', 'tel', 'weight'])) {
       $e->addClass('form-inline', 'wrapper_attributes');
-    }
-
-    // Check for errors and set the "has_error" property flag.
-    $errors = $e->getError();
-    $e->setProperty('errors', $errors);
-    if (isset($errors) || ($e->getProperty('required') && $theme->getSetting('forms_required_has_error'))) {
-      $e->setProperty('has_error', TRUE);
     }
 
     // Process input groups.
@@ -141,7 +136,7 @@ class ProcessManager extends PluginManager {
         '#type' => 'html_tag',
         '#tag' => 'span',
         '#attributes' => $input_group_attributes,
-        '#value' => Element::create($prefix)->render(),
+        '#value' => Element::create($prefix)->renderPlain(),
         '#weight' => -1,
       ]);
     }
@@ -150,7 +145,7 @@ class ProcessManager extends PluginManager {
         '#type' => 'html_tag',
         '#tag' => 'span',
         '#attributes' => $input_group_attributes,
-        '#value' => Element::create($suffix)->render(),
+        '#value' => Element::create($suffix)->renderPlain(),
         '#weight' => 1,
       ]);
     }

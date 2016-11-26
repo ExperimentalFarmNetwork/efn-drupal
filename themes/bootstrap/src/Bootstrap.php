@@ -9,15 +9,19 @@ namespace Drupal\bootstrap;
 use Drupal\bootstrap\Plugin\AlterManager;
 use Drupal\bootstrap\Plugin\FormManager;
 use Drupal\bootstrap\Plugin\PreprocessManager;
+use Drupal\bootstrap\Utility\Element;
 use Drupal\bootstrap\Utility\Unicode;
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Extension\ThemeHandlerInterface;
+use Drupal\Core\Form\FormStateInterface;
 
 /**
  * The primary class for the Drupal Bootstrap base theme.
  *
  * Provides many helper methods.
+ *
+ * @ingroup utility
  */
 class Bootstrap {
 
@@ -180,29 +184,50 @@ class Bootstrap {
     // Extract the alter hook name.
     $hook = Unicode::extractHook($function, 'alter');
 
-    // Handle form alters separately.
-    if (strpos($hook, 'form') === 0) {
+    // Handle form alters as a separate plugin.
+    if (strpos($hook, 'form') === 0 && $context1 instanceof FormStateInterface) {
+      $form_state = $context1;
       $form_id = $context2;
-      if (!$form_id) {
-        $form_id = Unicode::extractHook($function, 'alter', 'form');
-      }
 
       // Due to a core bug that affects admin themes, we should not double
       // process the "system_theme_settings" form twice in the global
       // hook_form_alter() invocation.
       // @see https://drupal.org/node/943212
-      if ($context2 === 'system_theme_settings') {
+      if ($form_id === 'system_theme_settings') {
         return;
+      }
+
+      // Keep track of the form identifiers.
+      $ids = [];
+
+      // Get the build data.
+      $build_info = $form_state->getBuildInfo();
+
+      // Extract the base_form_id.
+      $base_form_id = !empty($build_info['base_form_id']) ? $build_info['base_form_id'] : FALSE;
+      if ($base_form_id) {
+        $ids[] = $base_form_id;
+      }
+
+      // If there was no provided form identifier, extract it.
+      if (!$form_id) {
+        $form_id = !empty($build_info['form_id']) ? $build_info['form_id'] : Unicode::extractHook($function, 'alter', 'form');
+      }
+      if ($form_id) {
+        $ids[] = $form_id;
       }
 
       // Retrieve a list of form definitions.
       $form_manager = new FormManager($theme);
 
-      /** @var \Drupal\bootstrap\Plugin\Form\FormInterface $form */
-      if ($form_manager->hasDefinition($form_id) && ($form = $form_manager->createInstance($form_id, ['theme' => $theme]))) {
-        $data['#submit'][] = [get_class($form), 'submitForm'];
-        $data['#validate'][] = [get_class($form), 'validateForm'];
-        $form->alterForm($data, $context1, $context2);
+      // Iterate over each form identifier and look for a possible plugin.
+      foreach ($ids as $id) {
+        /** @var \Drupal\bootstrap\Plugin\Form\FormInterface $form */
+        if ($form_manager->hasDefinition($id) && ($form = $form_manager->createInstance($id, ['theme' => $theme]))) {
+          $data['#submit'][] = [get_class($form), 'submitForm'];
+          $data['#validate'][] = [get_class($form), 'validateForm'];
+          $form->alterForm($data, $form_state, $form_id);
+        }
       }
     }
     // Process hook alter normally.
@@ -231,10 +256,47 @@ class Bootstrap {
   }
 
   /**
+   * Returns the autoload fix include path.
+   * 
+   * This method assists class based callbacks that normally do not work.
+   * 
+   * If you notice that your class based callback is never invoked, you may try
+   * using this helper method as an "include" or "file" for your callback, if
+   * the callback metadata supports such an option.
+   * 
+   * Depending on when or where a callback is invoked during a request, such as
+   * an ajax or batch request, the theme handler may not yet be fully
+   * initialized.
+   * 
+   * Typically there is little that can be done about this "issue" from core.
+   * It must balance the appropriate level that should be bootstrapped along
+   * with common functionality. Cross-request class based callbacks are not
+   * common in themes.
+   * 
+   * When this file is included, it will attempt to jump start this process.
+   *
+   * Please keep in mind, that it is merely an attempt and does not guarantee
+   * that it will actually work. If it does not appear to work, do not use it.
+   *
+   * @see \Drupal\Core\Extension\ThemeHandler::listInfo
+   * @see \Drupal\Core\Extension\ThemeHandler::systemThemeList
+   * @see system_list
+   * @see system_register()
+   * @see drupal_classloader_register()
+   * 
+   * @return string
+   *   The autoload fix include path, relative to Drupal root.
+   */
+  public static function autoloadFixInclude() {
+    return static::getTheme('bootstrap')->getPath() . '/autoload-fix.php';
+  }
+
+  /**
    * Matches a Bootstrap class based on a string value.
    *
-   * @param string $string
-   *   The string to match classes against.
+   * @param string|array $value
+   *   The string to match against to determine the class. Passed by reference
+   *   in case it is a render array that needs to be rendered and typecast.
    * @param string $default
    *   The default class to return if no match is found.
    *
@@ -242,11 +304,17 @@ class Bootstrap {
    *   The Bootstrap class matched against the value of $haystack or $default
    *   if no match could be made.
    */
-  public static function cssClassFromString($string, $default = '') {
-    $theme = Bootstrap::getTheme();
-    $texts = $theme->getCache('cssClassFromString');
+  public static function cssClassFromString(&$value, $default = '') {
+    static $lang;
+    if (!isset($lang)) {
+      $lang = \Drupal::languageManager()->getCurrentLanguage()->getId();
+    }
 
-    $string = (string) $string;
+    $theme = static::getTheme();
+    $texts = $theme->getCache('cssClassFromString', [$lang]);
+
+    // Ensure it's a string value that was passed.
+    $string = static::toString($value);
 
     if ($texts->isEmpty()) {
       $data = [
@@ -275,6 +343,7 @@ class Bootstrap {
           t('Submit')->render()             => 'primary',
           t('Search')->render()             => 'primary',
           t('Settings')->render()           => 'primary',
+          t('Log in')->render()             => 'primary',
 
           // Danger class.
           t('Delete')->render()             => 'danger',
@@ -549,8 +618,9 @@ class Bootstrap {
   /**
    * Matches a Bootstrap Glyphicon based on a string value.
    *
-   * @param string $string
-   *   The string to match classes against.
+   * @param string $value
+   *   The string to match against to determine the icon. Passed by reference
+   *   in case it is a render array that needs to be rendered and typecast.
    * @param array $default
    *   The default render array to return if no match is found.
    *
@@ -558,11 +628,17 @@ class Bootstrap {
    *   The Bootstrap icon matched against the value of $haystack or $default if
    *   no match could be made.
    */
-  public static function glyphiconFromString($string, $default = []) {
-    $theme = Bootstrap::getTheme();
-    $texts = $theme->getCache('glyphiconFromString');
+  public static function glyphiconFromString(&$value, $default = []) {
+    static $lang;
+    if (!isset($lang)) {
+      $lang = \Drupal::languageManager()->getCurrentLanguage()->getId();
+    }
 
-    $string = (string) $string;
+    $theme = static::getTheme();
+    $texts = $theme->getCache('glyphiconFromString', [$lang]);
+
+    // Ensure it's a string value that was passed.
+    $string = static::toString($value);
 
     if ($texts->isEmpty()) {
       $data = [
@@ -589,6 +665,8 @@ class Bootstrap {
           t('Remove')->render()     => 'trash',
           t('Search')->render()     => 'search',
           t('Upload')->render()     => 'upload',
+          t('Preview')->render()    => 'eye-open',
+          t('Log in')->render()     => 'log-in',
         ],
       ];
 
@@ -994,6 +1072,7 @@ class Bootstrap {
       $variables['theme']['title'] = $theme->getTitle();
       $variables['theme']['settings'] = $theme->settings()->get();
       $variables['theme']['has_glyphicons'] = $theme->hasGlyphicons();
+      $variables['theme']['query_string'] = \Drupal::getContainer()->get('state')->get('system.css_js_query_string') ?: '0';
     }
 
     // Invoke necessary preprocess plugin.
@@ -1004,6 +1083,19 @@ class Bootstrap {
         $class->preprocess($variables, $hook, $info);
       }
     }
+  }
+
+  /**
+   * Ensures a value is typecast to a string, rendering an array if necessary.
+   *
+   * @param string|array $value
+   *   The value to typecast, passed by reference.
+   *
+   * @return string
+   *   The typecast string value.
+   */
+  public static function toString(&$value) {
+    return (string) (Element::isRenderArray($value) ? Element::create($value)->renderPlain() : $value);
   }
 
 }

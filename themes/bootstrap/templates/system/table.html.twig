@@ -29,19 +29,20 @@
  *       table cell.
  *     - content: The string to display in the table cell.
  *     - active_table_sort: A boolean indicating whether the cell is the active
-         table sort.
+ *       table sort.
  * - footer: Table footer rows, in the same format as the rows variable.
  * - empty: The message to display in an extra row if table does not have
  *   any rows.
  * - no_striping: A boolean indicating that the row should receive no striping.
  * - header_columns: The number of columns in the header.
- *
- * @see template_preprocess_table()
+ * - responsive: Whether or not to use the .table-responsive wrapper.
  *
  * @ingroup templates
+ *
+ * @see template_preprocess_table()
  */
 #}
-{% if theme.settings.table_responsive %}
+{% if responsive %}
   <div class="table-responsive">
 {% endif %}
 {% set classes = [
@@ -50,6 +51,7 @@
   context.condensed is not empty or theme.settings.table_condensed ? 'table-condensed',
   context.hover is not empty or theme.settings.table_hover ? 'table-hover',
   context.striped is not empty or theme.settings.table_striped ? 'table-striped',
+  sticky ? 'sticky-enabled',
 ] %}
 <table{{ attributes.addClass(classes) }}>
   {% if caption %}
@@ -123,6 +125,6 @@
     </tfoot>
   {% endif %}
 </table>
-{% if theme.settings.table_responsive %}
+{% if responsive %}
   </div>
 {% endif %}

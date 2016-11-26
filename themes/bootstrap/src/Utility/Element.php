@@ -15,6 +15,8 @@ use Drupal\Core\Form\FormStateInterface;
 /**
  * Provides helper methods for Drupal render elements.
  *
+ * @ingroup utility
+ *
  * @see \Drupal\Core\Render\Element
  */
 class Element extends DrupalAttributes {
@@ -250,13 +252,36 @@ class Element extends DrupalAttributes {
    * @param array|string $element
    *   A render array element or a string.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   The current state of the form.
+   *   A current FormState instance, if any.
    *
    * @return \Drupal\bootstrap\Utility\Element
    *   The newly created element instance.
    */
   public static function create(&$element = [], FormStateInterface $form_state = NULL) {
-    return new self($element, $form_state);
+    return $element instanceof self ? $element : new self($element, $form_state);
+  }
+
+  /**
+   * Creates a new standalone \Drupal\bootstrap\Utility\Element instance.
+   *
+   * It does not reference the original element passed. If an Element instance
+   * is passed, it will clone it so it doesn't affect the original element.
+   *
+   * @param array|string|\Drupal\bootstrap\Utility\Element $element
+   *   A render array element, string or Element instance.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   A current FormState instance, if any.
+   *
+   * @return \Drupal\bootstrap\Utility\Element
+   *   The newly created element instance.
+   */
+  public static function createStandalone($element = [], FormStateInterface $form_state = NULL) {
+    // Immediately return a cloned version if element is already an Element.
+    if ($element instanceof self) {
+      return clone $element;
+    }
+    $standalone = is_object($element) ? clone $element : $element;
+    return static::create($standalone, $form_state);
   }
 
   /**
@@ -275,6 +300,25 @@ class Element extends DrupalAttributes {
    */
   public function &getArray() {
     return $this->array;
+  }
+
+  /**
+   * Retrieves a context value from the #context element property, if any.
+   *
+   * @param string $name
+   *   The name of the context key to retrieve.
+   * @param mixed $default
+   *   Optional. The default value to use if the context $name isn't set.
+   *
+   * @return mixed|NULL
+   *   The context value or the $default value if not set.
+   */
+  public function &getContext($name, $default = NULL) {
+    $context = &$this->getProperty('context', []);
+    if (!isset($context[$name])) {
+      $context[$name] = $default;
+    }
+    return $context[$name];
   }
 
   /**
@@ -377,7 +421,25 @@ class Element extends DrupalAttributes {
    *   Whether the given property on the element is empty.
    */
   public function isPropertyEmpty($name) {
-    return $this->hasProperty($name) && !empty($this->getProperty($name));
+    return $this->hasProperty($name) && empty($this->getProperty($name));
+  }
+
+  /**
+   * Checks if a value is a render array.
+   *
+   * @param mixed $value
+   *   The value to check.
+   *
+   * @return bool
+   *   TRUE if the given value is a render array, otherwise FALSE.
+   */
+  public static function isRenderArray($value) {
+    return is_array($value) && (isset($value['#type']) ||
+      isset($value['#theme']) || isset($value['#theme_wrappers']) ||
+      isset($value['#markup']) || isset($value['#attached']) ||
+      isset($value['#cache']) || isset($value['#lazy_builder']) ||
+      isset($value['#create_placeholder']) || isset($value['#pre_render']) ||
+      isset($value['#post_render']) || isset($value['#process']));
   }
 
   /**
@@ -462,18 +524,41 @@ class Element extends DrupalAttributes {
   }
 
   /**
-   * Renders the element.
+   * Renders the final element HTML.
    *
-   * @return \Drupal\Component\Render\MarkupInterface|string
+   * @return \Drupal\Component\Render\MarkupInterface
    *   The rendered HTML.
    */
   public function render() {
     /** @var \Drupal\Core\Render\Renderer $renderer */
-    static $renderer;
-    if (!isset($renderer)) {
-      $renderer = \Drupal::service('renderer');
-    }
+    $renderer = \Drupal::service('renderer');
     return $renderer->render($this->array);
+  }
+
+  /**
+   * Renders the final element HTML.
+   *
+   * @return \Drupal\Component\Render\MarkupInterface
+   *   The rendered HTML.
+   */
+  public function renderPlain() {
+    /** @var \Drupal\Core\Render\Renderer $renderer */
+    $renderer = \Drupal::service('renderer');
+    return $renderer->renderPlain($this->array);
+  }
+
+  /**
+   * Renders the final element HTML.
+   *
+   * (Cannot be executed within another render context.)
+   *
+   * @return \Drupal\Component\Render\MarkupInterface
+   *   The rendered HTML.
+   */
+  public function renderRoot() {
+    /** @var \Drupal\Core\Render\Renderer $renderer */
+    $renderer = \Drupal::service('renderer');
+    return $renderer->renderRoot($this->array);
   }
 
   /**
@@ -612,6 +697,12 @@ class Element extends DrupalAttributes {
       $target = $this;
     }
 
+    // For "password_confirm" element types, move the target to the first
+    // textfield.
+    if ($target->isType('password_confirm')) {
+      $target = $target->pass1;
+    }
+
     // Retrieve the length limit for smart descriptions.
     if (!isset($length)) {
       // Disable length checking by setting it to FALSE if empty.
@@ -630,12 +721,27 @@ class Element extends DrupalAttributes {
     // Return if element or target shouldn't have "simple" tooltip descriptions.
     $html = FALSE;
     if (($input_only && !$target->hasProperty('input'))
+      // Ignore if the actual element has no #description set.
+      || !$this->hasProperty('description')
+
+      // Ignore if the target element already has a "data-toggle" attribute set.
+      || $target->hasAttribute('data-toggle')
+
+      // Ignore if the target element is #disabled.
+      || $target->hasProperty('disabled')
+
+      // Ignore if either the actual element or target element has an explicit
+      // #smart_description property set to FALSE.
       || !$this->getProperty('smart_description', TRUE)
       || !$target->getProperty('smart_description', TRUE)
-      || !$this->hasProperty('description')
-      || $target->hasAttribute('data-toggle')
+
+      // Ignore if the description is not "simple".
       || !Unicode::isSimple($this->getProperty('description'), $length, $allowed_tags, $html)
     ) {
+      // Set the both the actual element and the target element
+      // #smart_description property to FALSE.
+      $this->setProperty('smart_description', FALSE);
+      $target->setProperty('smart_description', FALSE);
       return $this;
     }
 

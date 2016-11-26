@@ -8,15 +8,17 @@ namespace Drupal\bootstrap\Utility;
 
 /**
  * Class to help modify template variables.
+ *
+ * @ingroup utility
  */
 class Variables extends DrupalAttributes {
 
   /**
    * An element object.
    *
-   * @var \Drupal\bootstrap\Utility\Element
+   * @var \Drupal\bootstrap\Utility\Element|FALSE
    */
-  public $element;
+  public $element = FALSE;
 
   /**
    * Element constructor.
@@ -26,7 +28,12 @@ class Variables extends DrupalAttributes {
    */
   public function __construct(array &$variables) {
     $this->array = &$variables;
-    $this->element = isset($variables['element']) ? Element::create($variables['element']) : FALSE;
+    if (isset($variables['element']) && Element::isRenderArray($variables['element'])) {
+      $this->element = Element::create($variables['element']);
+    }
+    elseif (isset($variables['elements']) && Element::isRenderArray($variables['elements'])) {
+      $this->element = Element::create($variables['elements']);
+    }
   }
 
   /**
@@ -40,6 +47,30 @@ class Variables extends DrupalAttributes {
    */
   public static function create(array &$variables) {
     return new self($variables);
+  }
+
+  /**
+   * Retrieves a context value from the variables array or its element, if any.
+   *
+   * @param string $name
+   *   The name of the context key to retrieve.
+   * @param mixed $default
+   *   Optional. The default value to use if the context $name isn't set.
+   *
+   * @return mixed|NULL
+   *   The context value or the $default value if not set.
+   */
+  public function &getContext($name, $default = NULL) {
+    $context = &$this->offsetGet($this->attributePrefix . 'context', []);
+    if (!isset($context[$name])) {
+      // If there is no context on the variables array but there is an element
+      // present, proxy the method to the element.
+      if ($this->element) {
+        return $this->element->getContext($name, $default);
+      }
+      $context[$name] = $default;
+    }
+    return $context[$name];
   }
 
   /**

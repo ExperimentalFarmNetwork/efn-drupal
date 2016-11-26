@@ -15,6 +15,8 @@ use Drupal\bootstrap\Plugin\ProcessManager;
 /**
  * Implements hook_element_info_alter().
  *
+ * @ingroup plugins_alter
+ *
  * @BootstrapAlter("element_info")
  */
 class ElementInfo extends PluginBase implements AlterInterface {
@@ -32,9 +34,14 @@ class ElementInfo extends PluginBase implements AlterInterface {
     foreach (array_keys($types) as $type) {
       $element = &$types[$type];
 
-      // Ensure elements that have a base type with the #input set match.
-      if (isset($element['#base_type']) && isset($types[$element['#base_type']]) && isset($types[$element['#base_type']]['#input'])) {
-        $element['#input'] = $types[$element['#base_type']]['#input'];
+      // By default, the "checkboxes" and "radios" element types invoke
+      // CompositeFormElementTrait::preRenderCompositeFormElement which wraps
+      // the element in a fieldset and thus ultimately a panel. This isn't
+      // (usually) the desired effect for these elements, so to avoid rendering
+      // them as Bootstrap panels, the #bootstrap_panel should be set to FALSE
+      // by default. This allows those who wish to opt back in to do so.
+      if ($type === 'checkboxes' || $type === 'radios') {
+        $element['#bootstrap_panel'] = FALSE;
       }
 
       // Core does not actually use the "description_display" property on the

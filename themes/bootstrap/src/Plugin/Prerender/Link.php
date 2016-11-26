@@ -15,6 +15,8 @@ use Drupal\Component\Render\FormattableMarkup;
 /**
  * Pre-render callback for the "link" element type.
  *
+ * @ingroup plugins_prerender
+ *
  * @BootstrapPrerender("link",
  *   action = @BootstrapConstant(
  *     "\Drupal\bootstrap\Bootstrap::CALLBACK_PREPEND"
@@ -52,7 +54,7 @@ class Link extends PrerenderBase {
       $position = $element->getProperty('icon_position', 'before');
 
       // Render #icon and trim it (so it doesn't add underlines in whitespace).
-      $rendered_icon = trim(Element::create($icon)->render());
+      $rendered_icon = trim(Element::create($icon)->renderPlain());
 
       // Default position is before.
       $markup = "$rendered_icon@title";
