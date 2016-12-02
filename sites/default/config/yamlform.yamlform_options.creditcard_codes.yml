@@ -1,0 +1,12 @@
+uuid: f6b9b4bb-2dad-4b71-abe4-c7c3875c3ad0
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - yamlform
+_core:
+  default_config_hash: 7QXzxmfBeY_XrwrYnVuGIHzb7iMClAol3Zuyh3vbc8Q
+id: creditcard_codes
+label: 'Credit card codes'
+options: "VI: 'Visa'\nMC: 'Mastercard'\nAE: 'American Express'\nDC: 'Discover'\n"

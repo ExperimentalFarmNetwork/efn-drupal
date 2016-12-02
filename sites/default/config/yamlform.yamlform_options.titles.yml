@@ -1,0 +1,12 @@
+uuid: 5e77a1ff-c508-46ca-8000-e61f07d8be4f
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - yamlform
+_core:
+  default_config_hash: yFXdcLQ2__XtrpAOqmoAg8tD5eidw466VK_v1b_nhXo
+id: titles
+label: Titles
+options: "Miss: Miss\nMs: Ms\nMr: Mr\nMrs: Mrs\nDr: Dr\n"

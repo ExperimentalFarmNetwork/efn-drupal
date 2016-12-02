@@ -1,0 +1,12 @@
+uuid: 222d87f4-c388-4eed-b54a-cd3e3bae48a7
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - yamlform
+_core:
+  default_config_hash: XEU_F10XmnlSw2rfe2mNADx_DvbTc5xPDIMqN9kDi1s
+id: likert_comparison
+label: 'Likert: Comparison'
+options: "1: Strongly Disagree\n2: Disagree\n3: Neutral\n4: Agree\n5: Strongly Agree\n"

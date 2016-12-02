@@ -42,6 +42,7 @@ module:
   user: 0
   views: 0
   views_ui: 0
+  yamlform: 0
   auto_nodetitle: 5
 theme:
   stark: 0

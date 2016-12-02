@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "28d1b9023a511831f0e3c844d6a3a6fe",
-    "content-hash": "5c04429b2aed1bd0ce4919e9e6a14224",
+    "hash": "865524592a09a84745beebb3fc98d601",
+    "content-hash": "14f78681aa598e1a30888a1883afef13",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -2017,6 +2017,55 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/token",
                 "issues": "https://www.drupal.org/project/issues/token"
+            }
+        },
+        {
+            "name": "drupal/yamlform",
+            "version": "1.0.0-beta25",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/yamlform",
+                "reference": "8.x-1.0-beta25"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/yamlform-8.x-1.0-beta25.zip",
+                "reference": null,
+                "shasum": "6300f41b6058189922c687fe9576ad650785fe47"
+            },
+            "require": {
+                "drupal/core": "*"
+            },
+            "suggest": {
+                "drupal/core": "Required by drupal/yamlform_node",
+                "drupal/devel": "Required by drupal/yamlform_devel"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.0-beta25",
+                    "datestamp": "1480364283"
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Jacob Rockowitz (jrockowitz)",
+                    "homepage": "https://www.drupal.org/u/jrockowitz",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "Enables the creation of forms and questionnaires.",
+            "homepage": "https://drupal.org/project/yamlform",
+            "support": {
+                "source": "http://cgit.drupalcode.org/yamlform",
+                "issues": "https://drupal.org/project/issues/yamlform"
             }
         },
         {

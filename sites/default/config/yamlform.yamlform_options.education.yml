@@ -1,0 +1,12 @@
+uuid: db6d7026-3a1b-4eec-b4ab-b4615228d7e5
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - yamlform
+_core:
+  default_config_hash: v3jKBkZNCFZyXazScWNbkdSSYgGsHv1auReOSOCCioA
+id: education
+label: Education
+options: "High School: High School\nAssociate Degree: Associate Degree\nAssociate Degree: Associate Degree\nGraduate or Professional Degree: Graduate or Professional Degree\nSome College: Some College\n"

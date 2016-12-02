@@ -1,0 +1,12 @@
+uuid: eb99db76-e7a7-4aaa-b1b6-18b777050b72
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - yamlform
+_core:
+  default_config_hash: k8ERHaC2TWhAMClx7bYeax6XuoNubUoDpLkTb0gL4gk
+id: months
+label: Months
+options: "January: January\nFebruary: February\nMarch: March\nApril: April\nMay: May\nJune: June\nJuly: July\nAugust: August\nSeptember: September\nOctober: October\nNovember: November\nDecember: December\n"

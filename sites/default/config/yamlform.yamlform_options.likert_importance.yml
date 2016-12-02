@@ -1,0 +1,12 @@
+uuid: d2ea6ac5-6efc-4a20-8e0f-f88273c67640
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - yamlform
+_core:
+  default_config_hash: qPRrt65zzS_W14Bit5-RKffxG727FpmnYd1uMWkGkNY
+id: likert_importance
+label: 'Likert: Importance'
+options: "1: Not at all Important\n2: Somewhat Important\n3: Neutral\n4: Important\n5: Very Important\n"
