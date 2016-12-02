@@ -1,0 +1,11 @@
+uuid: a3d63f94-82d4-485c-ba3b-3b0bd242ec71
+langcode: en
+status: true
+dependencies: {  }
+id: volunteer
+label: 'Volunteer Profile'
+registration: false
+multiple: false
+roles:
+  authenticated: '0'
+weight: 0

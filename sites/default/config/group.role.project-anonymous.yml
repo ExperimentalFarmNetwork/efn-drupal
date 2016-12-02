@@ -1,0 +1,15 @@
+uuid: 2837bd20-da05-47ee-82ff-58ad300a3c96
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.project
+id: project-anonymous
+label: Anonymous
+weight: -102
+internal: true
+group_type: project
+permissions:
+  - 'view project_update node'
+audience: anonymous
+permissions_ui: true

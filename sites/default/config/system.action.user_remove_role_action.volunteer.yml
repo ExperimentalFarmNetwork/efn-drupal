@@ -1,0 +1,14 @@
+uuid: 46f0fd6d-8168-41f4-bd70-acc1e741ab33
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.volunteer
+  module:
+    - user
+id: user_remove_role_action.volunteer
+label: 'Remove the Volunteer role from the selected users'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: volunteer

@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.project
+id: project-member
+label: Member
+weight: -100
+internal: true
+group_type: project
+permissions:
+  0: 'view group_node:project_update content'
+  1: 'create group_node:project_update content'
+  2: 'edit own group_node:project_update content'
+  3: 'delete own group_node:project_update content'
+  4: 'view project_update node'
+  5: 'edit own project_update node'
+  6: 'delete own project_update node'
+  7: 'view group'
+  8: 'create project_update node'
+  10: 'leave group'
+audience: member
+permissions_ui: true

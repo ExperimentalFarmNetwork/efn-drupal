@@ -1,0 +1,16 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.project
+id: project-outsider
+label: Outsider
+weight: -101
+internal: true
+group_type: project
+permissions:
+  0: 'view project_update node'
+  1: 'view group'
+  3: 'join group'
+audience: outsider
+permissions_ui: true

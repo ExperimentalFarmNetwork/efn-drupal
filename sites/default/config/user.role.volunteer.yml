@@ -1,0 +1,11 @@
+uuid: 0238a3da-69bc-40af-9da4-a29f050675e3
+langcode: en
+status: true
+dependencies: {  }
+id: volunteer
+label: Volunteer
+weight: 2
+is_admin: null
+permissions:
+  - 'edit own comments'
+  - 'post comments'

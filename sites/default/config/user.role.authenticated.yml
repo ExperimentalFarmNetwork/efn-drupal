@@ -1,0 +1,14 @@
+uuid: e248c298-96d8-4f5e-8aa8-d0aff163b182
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: dJ0L2DNSj5q6XVZAGsuVDpJTh5UeYkIPwKrUOOpr8YI
+id: authenticated
+label: 'Authenticated user'
+weight: 1
+is_admin: false
+permissions:
+  - 'access content'
+  - 'edit own comments'
+  - 'access comments'

@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.profile.researcher.field_bio
+    - profile.type.researcher
+id: profile.researcher.default
+targetEntityType: profile
+bundle: researcher
+mode: default
+content:
+  field_bio:
+    weight: 3
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+hidden: {  }

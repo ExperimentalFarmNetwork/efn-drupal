@@ -1,0 +1,17 @@
+uuid: f648928a-2416-4c28-98dd-10ccc3b9bb77
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+name: 'Project Update'
+type: project_update
+description: ''
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: true

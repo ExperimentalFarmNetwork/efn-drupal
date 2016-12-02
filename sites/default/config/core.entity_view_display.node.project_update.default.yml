@@ -1,0 +1,46 @@
+uuid: c7c33ba4-3dbc-496c-ac71-d427a9791a77
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.project_update.body
+    - field.field.node.project_update.field_discussion
+    - field.field.node.project_update.field_image
+    - node.type.project_update
+  module:
+    - comment
+    - image
+    - text
+    - user
+id: node.project_update.default
+targetEntityType: node
+bundle: project_update
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 102
+    settings: {  }
+    third_party_settings: {  }
+  field_discussion:
+    weight: 103
+    label: hidden
+    settings:
+      pager_id: 0
+      view_mode: default
+    third_party_settings: {  }
+    type: comment_default
+  field_image:
+    weight: 104
+    label: above
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }

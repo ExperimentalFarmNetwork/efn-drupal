@@ -1,0 +1,21 @@
+uuid: a5a98a38-af9f-4367-b4fd-6b41b46b1c68
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.group.field_narrative
+    - group.type.project
+  module:
+    - text
+id: group.project.field_narrative
+field_name: field_narrative
+entity_type: group
+bundle: project
+label: Narrative
+description: 'Provide an extended explanation and history for your project. No limit on length. '
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

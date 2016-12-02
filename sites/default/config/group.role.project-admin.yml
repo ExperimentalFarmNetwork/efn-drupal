@@ -1,0 +1,36 @@
+uuid: 513b7871-1e14-4557-8fad-48aaaf528013
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.project
+id: project-admin
+label: Administrator
+weight: -99
+internal: false
+group_type: project
+permissions:
+  - 'administer group'
+  - 'delete group'
+  - 'edit group'
+  - 'view group'
+  - 'administer members'
+  - 'access group_membership overview'
+  - 'view group_membership content'
+  - 'edit own group_membership content'
+  - 'leave group'
+  - 'access group_node overview'
+  - 'view group_node:project_update content'
+  - 'create group_node:project_update content'
+  - 'edit own group_node:project_update content'
+  - 'edit any group_node:project_update content'
+  - 'delete own group_node:project_update content'
+  - 'delete any group_node:project_update content'
+  - 'view project_update node'
+  - 'create project_update node'
+  - 'edit own project_update node'
+  - 'edit any project_update node'
+  - 'delete own project_update node'
+  - 'delete any project_update node'
+audience: member
+permissions_ui: true

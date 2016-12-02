@@ -1,0 +1,14 @@
+uuid: ed74ff58-b6db-4c7d-ba21-4922c2d4e08e
+name: 'Experimental Farm Network'
+mail: dafeder@gmail.com
+slogan: ''
+page:
+  403: ''
+  404: ''
+  front: /user/login
+admin_compact_mode: false
+weight_select_max: 100
+langcode: en
+default_langcode: en
+_core:
+  default_config_hash: yXadRE77Va-G6dxhd2kPYapAvbnSvTF6hO4oXiOEynI

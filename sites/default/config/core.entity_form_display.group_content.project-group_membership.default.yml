@@ -1,0 +1,35 @@
+uuid: dbf792a3-630d-4241-bb23-13e46331a536
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.group_content.project-group_membership.field_project_why
+    - field.field.group_content.project-group_membership.group_roles
+    - group.content_type.project-group_membership
+id: group_content.project-group_membership.default
+targetEntityType: group_content
+bundle: project-group_membership
+mode: default
+content:
+  entity_id:
+    type: entity_reference_autocomplete
+    weight: 5
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_project_why:
+    weight: 7
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+  group_roles:
+    type: options_buttons
+    weight: 6
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  uid: true

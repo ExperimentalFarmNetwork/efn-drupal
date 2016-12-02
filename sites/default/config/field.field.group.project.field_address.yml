@@ -1,0 +1,47 @@
+uuid: 85d0980a-6cc7-4d9b-9bc6-70c010a7a32e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.group.field_address
+    - group.type.project
+  module:
+    - address
+id: group.project.field_address
+field_name: field_address
+entity_type: group
+bundle: project
+label: Address
+description: 'Where your project is based.'
+required: false
+translatable: false
+default_value:
+  -
+    langcode: null
+    country_code: US
+    administrative_area: ''
+    locality: ''
+    dependent_locality: null
+    postal_code: ''
+    sorting_code: null
+    address_line1: ''
+    address_line2: ''
+    organization: ''
+    recipient: ''
+default_value_callback: ''
+settings:
+  available_countries: {  }
+  fields:
+    administrativeArea: administrativeArea
+    locality: locality
+    dependentLocality: dependentLocality
+    postalCode: postalCode
+    sortingCode: sortingCode
+    addressLine1: addressLine1
+    addressLine2: addressLine2
+    organization: '0'
+    givenName: ''
+    additionalName: ''
+    familyName: ''
+  langcode_override: ''
+field_type: address

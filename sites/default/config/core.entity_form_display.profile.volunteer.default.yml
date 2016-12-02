@@ -1,0 +1,20 @@
+uuid: d0ca5b7d-9796-4aba-8c27-7632ffc7ed44
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.profile.volunteer.field_bio
+    - profile.type.volunteer
+id: profile.volunteer.default
+targetEntityType: profile
+bundle: volunteer
+mode: default
+content:
+  field_bio:
+    weight: 3
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+hidden: {  }

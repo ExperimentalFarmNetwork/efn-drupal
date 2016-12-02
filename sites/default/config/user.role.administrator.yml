@@ -1,0 +1,12 @@
+uuid: 6c694c29-584c-497c-aaec-3790bd091919
+langcode: en
+status: true
+dependencies: {  }
+id: administrator
+label: Administrator
+weight: 3
+is_admin: null
+permissions:
+  - 'administer comment types'
+  - 'administer comments'
+  - 'post comments'

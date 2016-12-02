@@ -1,0 +1,22 @@
+uuid: 9c0810f2-0d42-491c-95f0-89d18317b091
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - efn
+_core:
+  default_config_hash: 9RnnTUBcn0WRWXfrGOnId2H0Q31uQUeu_F5TnDxl2yg
+id: efn_messages
+theme: efn
+region: header
+weight: -6
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Status messages'
+  provider: system
+  label_display: '0'
+visibility: {  }

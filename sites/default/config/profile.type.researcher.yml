@@ -1,0 +1,11 @@
+uuid: be0247c5-4213-4910-9c2f-fead3d086b16
+langcode: en
+status: true
+dependencies: {  }
+id: researcher
+label: 'Researcher Profile'
+registration: false
+multiple: false
+roles:
+  authenticated: '0'
+weight: 0

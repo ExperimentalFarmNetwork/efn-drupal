@@ -1,0 +1,19 @@
+uuid: be34e1d0-e1df-4925-be70-896369ea3f44
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.profile.researcher.field_bio
+    - profile.type.researcher
+id: profile.researcher.default
+targetEntityType: profile
+bundle: researcher
+mode: default
+content:
+  field_bio:
+    weight: 0
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+hidden: {  }
