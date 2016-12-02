@@ -18,5 +18,8 @@ return array(
     'Doctrine\\Common\\Collections\\' => array($vendorDir . '/doctrine/collections/lib'),
     'Doctrine\\Common\\Annotations\\' => array($vendorDir . '/doctrine/annotations/lib'),
     'Doctrine\\Common\\' => array($vendorDir . '/doctrine/common/lib'),
+    'Dflydev\\PlaceholderResolver' => array($vendorDir . '/dflydev/placeholder-resolver/src'),
+    'Dflydev\\DotAccessData' => array($vendorDir . '/dflydev/dot-access-data/src'),
+    'Dflydev\\DotAccessConfiguration' => array($vendorDir . '/dflydev/dot-access-configuration/src'),
     'Asm89\\Stack' => array($vendorDir . '/asm89/stack-cors/src'),
 );

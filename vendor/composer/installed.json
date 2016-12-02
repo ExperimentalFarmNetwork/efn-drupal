@@ -2687,64 +2687,6 @@
         ]
     },
     {
-        "name": "symfony/dom-crawler",
-        "version": "v3.1.5",
-        "version_normalized": "3.1.5.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/symfony/dom-crawler.git",
-            "reference": "bb7395e8b1db3654de82b9f35d019958276de4d7"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/bb7395e8b1db3654de82b9f35d019958276de4d7",
-            "reference": "bb7395e8b1db3654de82b9f35d019958276de4d7",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.5.9",
-            "symfony/polyfill-mbstring": "~1.0"
-        },
-        "require-dev": {
-            "symfony/css-selector": "~2.8|~3.0"
-        },
-        "suggest": {
-            "symfony/css-selector": ""
-        },
-        "time": "2016-08-05 08:37:39",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "3.1-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Symfony\\Component\\DomCrawler\\": ""
-            },
-            "exclude-from-classmap": [
-                "/Tests/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Fabien Potencier",
-                "email": "fabien@symfony.com"
-            },
-            {
-                "name": "Symfony Community",
-                "homepage": "https://symfony.com/contributors"
-            }
-        ],
-        "description": "Symfony DomCrawler Component",
-        "homepage": "https://symfony.com"
-    },
-    {
         "name": "symfony/css-selector",
         "version": "v2.8.12",
         "version_normalized": "2.8.12.0",
@@ -5357,124 +5299,6 @@
         }
     },
     {
-        "name": "phayes/geophp",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/phayes/geoPHP.git",
-            "reference": "685562416ec6d22b9b3927e02ca0ddacf84ca646"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/phayes/geoPHP/zipball/685562416ec6d22b9b3927e02ca0ddacf84ca646",
-            "reference": "685562416ec6d22b9b3927e02ca0ddacf84ca646",
-            "shasum": ""
-        },
-        "require-dev": {
-            "phpunit/phpunit": "4.1.*"
-        },
-        "time": "2016-03-04 05:42:29",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "classmap": [
-                "geoPHP.inc"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "GPL-2 or New-BSD"
-        ],
-        "authors": [
-            {
-                "name": "Patrick Hayes"
-            }
-        ],
-        "description": "GeoPHP is a open-source native PHP library for doing geometry operations. It is written entirely in PHP and can therefore run on shared hosts. It can read and write a wide variety of formats: WKT (including EWKT), WKB (including EWKB), GeoJSON, KML, GPX, GeoRSS). It works with all Simple-Feature geometries (Point, LineString, Polygon, GeometryCollection etc.) and can be used to get centroids, bounding-boxes, area, and a wide variety of other useful information.",
-        "homepage": "https://github.com/phayes/geoPHP"
-    },
-    {
-        "name": "drupal/geofield",
-        "version": "dev-1.x",
-        "version_normalized": "dev-1.x",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/geofield",
-            "reference": "3b4d26f1945410ad95b7f36593c99db7a47b9f78"
-        },
-        "require": {
-            "drupal/core": "~8.0",
-            "phayes/geophp": "dev-master"
-        },
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-1.x": "1.x-dev"
-            },
-            "drupal": {
-                "version": "8.x-1.0-alpha1+19-dev",
-                "datestamp": "1463282946"
-            }
-        },
-        "installation-source": "source",
-        "notification-url": "https://packages.drupal.org/8/downloads",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "Brandon Morrison",
-                "homepage": "https://www.drupal.org/u/brandonian",
-                "role": "Maintainer"
-            },
-            {
-                "name": "Pablo López",
-                "homepage": "https://www.drupal.org/u/plopesc",
-                "role": "Maintainer"
-            },
-            {
-                "name": "chachasikes",
-                "homepage": "https://www.drupal.org/user/50674"
-            },
-            {
-                "name": "davidseth",
-                "homepage": "https://www.drupal.org/user/254857"
-            },
-            {
-                "name": "dtarc",
-                "homepage": "https://www.drupal.org/user/114087"
-            },
-            {
-                "name": "jherencia",
-                "homepage": "https://www.drupal.org/user/360690"
-            },
-            {
-                "name": "nikhiltri",
-                "homepage": "https://www.drupal.org/user/270223"
-            },
-            {
-                "name": "phayes",
-                "homepage": "https://www.drupal.org/user/47098"
-            },
-            {
-                "name": "plopesc",
-                "homepage": "https://www.drupal.org/user/282415"
-            },
-            {
-                "name": "zzolo",
-                "homepage": "https://www.drupal.org/user/147331"
-            }
-        ],
-        "description": "Stores geographic and location data (points, lines, and polygons).",
-        "homepage": "https://www.drupal.org/project/geofield",
-        "support": {
-            "source": "http://git.drupal.org/project/geofield.git",
-            "issues": "https://www.drupal.org/project/issues/geofield",
-            "irc": "irc://irc.freenode.org/drupal-contribute"
-        }
-    },
-    {
         "name": "drupal/geophp",
         "version": "dev-1.x",
         "version_normalized": "dev-1.x",
@@ -5682,5 +5506,1066 @@
             "source": "http://cgit.drupalcode.org/token",
             "issues": "https://www.drupal.org/project/issues/token"
         }
+    },
+    {
+        "name": "symfony/dom-crawler",
+        "version": "v2.8.11",
+        "version_normalized": "2.8.11.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/dom-crawler.git",
+            "reference": "aac03b7ea2a7adff10a3599d614e79e6101230ab"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/aac03b7ea2a7adff10a3599d614e79e6101230ab",
+            "reference": "aac03b7ea2a7adff10a3599d614e79e6101230ab",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.9",
+            "symfony/polyfill-mbstring": "~1.0"
+        },
+        "require-dev": {
+            "symfony/css-selector": "~2.8|~3.0.0"
+        },
+        "suggest": {
+            "symfony/css-selector": ""
+        },
+        "time": "2016-07-30 07:20:35",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.8-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Component\\DomCrawler\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony DomCrawler Component",
+        "homepage": "https://symfony.com"
+    },
+    {
+        "name": "phayes/geophp",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/phayes/geoPHP.git",
+            "reference": "685562416ec6d22b9b3927e02ca0ddacf84ca646"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/phayes/geoPHP/zipball/685562416ec6d22b9b3927e02ca0ddacf84ca646",
+            "reference": "685562416ec6d22b9b3927e02ca0ddacf84ca646",
+            "shasum": ""
+        },
+        "require-dev": {
+            "phpunit/phpunit": "4.1.*"
+        },
+        "time": "2016-03-04 05:42:29",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "classmap": [
+                "geoPHP.inc"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2 or New-BSD"
+        ],
+        "authors": [
+            {
+                "name": "Patrick Hayes"
+            }
+        ],
+        "description": "GeoPHP is a open-source native PHP library for doing geometry operations. It is written entirely in PHP and can therefore run on shared hosts. It can read and write a wide variety of formats: WKT (including EWKT), WKB (including EWKB), GeoJSON, KML, GPX, GeoRSS). It works with all Simple-Feature geometries (Point, LineString, Polygon, GeometryCollection etc.) and can be used to get centroids, bounding-boxes, area, and a wide variety of other useful information.",
+        "homepage": "https://github.com/phayes/geoPHP"
+    },
+    {
+        "name": "drupal/geofield",
+        "version": "dev-1.x",
+        "version_normalized": "dev-1.x",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/geofield",
+            "reference": "3b4d26f1945410ad95b7f36593c99db7a47b9f78"
+        },
+        "require": {
+            "drupal/core": "~8.0",
+            "phayes/geophp": "dev-master"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.0-alpha1+19-dev",
+                "datestamp": "1463282946"
+            }
+        },
+        "installation-source": "source",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Brandon Morrison",
+                "homepage": "https://www.drupal.org/u/brandonian",
+                "role": "Maintainer"
+            },
+            {
+                "name": "Pablo López",
+                "homepage": "https://www.drupal.org/u/plopesc",
+                "role": "Maintainer"
+            },
+            {
+                "name": "chachasikes",
+                "homepage": "https://www.drupal.org/user/50674"
+            },
+            {
+                "name": "davidseth",
+                "homepage": "https://www.drupal.org/user/254857"
+            },
+            {
+                "name": "dtarc",
+                "homepage": "https://www.drupal.org/user/114087"
+            },
+            {
+                "name": "jherencia",
+                "homepage": "https://www.drupal.org/user/360690"
+            },
+            {
+                "name": "nikhiltri",
+                "homepage": "https://www.drupal.org/user/270223"
+            },
+            {
+                "name": "phayes",
+                "homepage": "https://www.drupal.org/user/47098"
+            },
+            {
+                "name": "plopesc",
+                "homepage": "https://www.drupal.org/user/282415"
+            },
+            {
+                "name": "zzolo",
+                "homepage": "https://www.drupal.org/user/147331"
+            }
+        ],
+        "description": "Stores geographic and location data (points, lines, and polygons).",
+        "homepage": "https://www.drupal.org/project/geofield",
+        "support": {
+            "source": "http://git.drupal.org/project/geofield.git",
+            "issues": "https://www.drupal.org/project/issues/geofield",
+            "irc": "irc://irc.freenode.org/drupal-contribute"
+        }
+    },
+    {
+        "name": "symfony/expression-language",
+        "version": "v2.8.14",
+        "version_normalized": "2.8.14.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/expression-language.git",
+            "reference": "2b667229749832a918e4b1d22e185f4ed98b63ac"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/expression-language/zipball/2b667229749832a918e4b1d22e185f4ed98b63ac",
+            "reference": "2b667229749832a918e4b1d22e185f4ed98b63ac",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.9"
+        },
+        "time": "2016-11-03 07:52:58",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.8-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Component\\ExpressionLanguage\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony ExpressionLanguage Component",
+        "homepage": "https://symfony.com"
+    },
+    {
+        "name": "gabordemooij/redbean",
+        "version": "v4.3.3",
+        "version_normalized": "4.3.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/gabordemooij/redbean.git",
+            "reference": "1c7ec69850e9f7966ff7feb87b01d8f43a9753d3"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/gabordemooij/redbean/zipball/1c7ec69850e9f7966ff7feb87b01d8f43a9753d3",
+            "reference": "1c7ec69850e9f7966ff7feb87b01d8f43a9753d3",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.4"
+        },
+        "time": "2016-10-03 21:25:17",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "RedBeanPHP\\": "RedBeanPHP"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "New BSD and GPLv2"
+        ],
+        "authors": [
+            {
+                "name": "Gabor de Mooij",
+                "email": "gabor@redbeanphp.com",
+                "homepage": "http://redbeanphp.com"
+            }
+        ],
+        "description": "RedBeanPHP ORM",
+        "homepage": "http://redbeanphp.com/",
+        "keywords": [
+            "orm"
+        ]
+    },
+    {
+        "name": "symfony/finder",
+        "version": "v2.8.14",
+        "version_normalized": "2.8.14.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/finder.git",
+            "reference": "0023b024363dfc0cd21262e556f25a291fe8d7fd"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/finder/zipball/0023b024363dfc0cd21262e556f25a291fe8d7fd",
+            "reference": "0023b024363dfc0cd21262e556f25a291fe8d7fd",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.9"
+        },
+        "time": "2016-11-03 07:52:58",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.8-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Component\\Finder\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony Finder Component",
+        "homepage": "https://symfony.com"
+    },
+    {
+        "name": "symfony/filesystem",
+        "version": "v2.8.14",
+        "version_normalized": "2.8.14.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/filesystem.git",
+            "reference": "a3784111af9f95f102b6411548376e1ae7c93898"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/filesystem/zipball/a3784111af9f95f102b6411548376e1ae7c93898",
+            "reference": "a3784111af9f95f102b6411548376e1ae7c93898",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.9"
+        },
+        "time": "2016-10-18 04:28:30",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.8-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Component\\Filesystem\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony Filesystem Component",
+        "homepage": "https://symfony.com"
+    },
+    {
+        "name": "symfony/config",
+        "version": "v2.8.14",
+        "version_normalized": "2.8.14.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/config.git",
+            "reference": "1361bc4e66f97b6202ae83f4190e962c624b5e61"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/config/zipball/1361bc4e66f97b6202ae83f4190e962c624b5e61",
+            "reference": "1361bc4e66f97b6202ae83f4190e962c624b5e61",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.9",
+            "symfony/filesystem": "~2.3|~3.0.0"
+        },
+        "suggest": {
+            "symfony/yaml": "To use the yaml reference dumper"
+        },
+        "time": "2016-11-03 07:52:58",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.8-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Component\\Config\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony Config Component",
+        "homepage": "https://symfony.com"
+    },
+    {
+        "name": "drupal/console-en",
+        "version": "1.0.0-rc9",
+        "version_normalized": "1.0.0.0-RC9",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/hechoendrupal/drupal-console-en.git",
+            "reference": "8a2a490cd99f9e47ff4a3d88d88b6c5044ae20ad"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/hechoendrupal/drupal-console-en/zipball/8a2a490cd99f9e47ff4a3d88d88b6c5044ae20ad",
+            "reference": "8a2a490cd99f9e47ff4a3d88d88b6c5044ae20ad",
+            "shasum": ""
+        },
+        "time": "2016-11-24 06:04:33",
+        "type": "drupal-console-language",
+        "installation-source": "dist",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "David Flores",
+                "email": "dmousex@gmail.com",
+                "homepage": "http://dmouse.net"
+            },
+            {
+                "name": "Jesus Manuel Olivas",
+                "email": "jesus.olivas@gmail.com",
+                "homepage": "http://jmolivas.com"
+            },
+            {
+                "name": "Drupal Console Contributors",
+                "homepage": "https://github.com/hechoendrupal/DrupalConsole/graphs/contributors"
+            },
+            {
+                "name": "Eduardo Garcia",
+                "email": "enzo@enzolutions.com",
+                "homepage": "http://enzolutions.com/"
+            },
+            {
+                "name": "Omar Aguirre",
+                "email": "omersguchigu@gmail.com"
+            }
+        ],
+        "description": "Drupal Console English Language",
+        "homepage": "http://drupalconsole.com/",
+        "keywords": [
+            "console",
+            "development",
+            "drupal",
+            "symfony"
+        ]
+    },
+    {
+        "name": "dflydev/placeholder-resolver",
+        "version": "v1.0.2",
+        "version_normalized": "1.0.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/dflydev/dflydev-placeholder-resolver.git",
+            "reference": "c498d0cae91b1bb36cc7d60906dab8e62bb7c356"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/dflydev/dflydev-placeholder-resolver/zipball/c498d0cae91b1bb36cc7d60906dab8e62bb7c356",
+            "reference": "c498d0cae91b1bb36cc7d60906dab8e62bb7c356",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.2"
+        },
+        "time": "2012-10-28 21:08:28",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Dflydev\\PlaceholderResolver": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Dragonfly Development Inc.",
+                "email": "info@dflydev.com",
+                "homepage": "http://dflydev.com"
+            },
+            {
+                "name": "Beau Simensen",
+                "email": "beau@dflydev.com",
+                "homepage": "http://beausimensen.com"
+            }
+        ],
+        "description": "Given a data source representing key => value pairs, resolve placeholders like ${foo.bar} to the value associated with the 'foo.bar' key in the data source.",
+        "homepage": "https://github.com/dflydev/dflydev-placeholder-resolver",
+        "keywords": [
+            "placeholder",
+            "resolver"
+        ]
+    },
+    {
+        "name": "dflydev/dot-access-data",
+        "version": "v1.0.1",
+        "version_normalized": "1.0.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/dflydev/dflydev-dot-access-data.git",
+            "reference": "7a0960d088119818ce7687d200c363b01d183cbe"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/dflydev/dflydev-dot-access-data/zipball/7a0960d088119818ce7687d200c363b01d183cbe",
+            "reference": "7a0960d088119818ce7687d200c363b01d183cbe",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.2"
+        },
+        "time": "2015-08-13 03:51:18",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Dflydev\\DotAccessData": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Dragonfly Development Inc.",
+                "email": "info@dflydev.com",
+                "homepage": "http://dflydev.com"
+            },
+            {
+                "name": "Beau Simensen",
+                "email": "beau@dflydev.com",
+                "homepage": "http://beausimensen.com"
+            }
+        ],
+        "description": "Given a deep data structure, access data by dot notation.",
+        "homepage": "https://github.com/dflydev/dflydev-dot-access-data",
+        "keywords": [
+            "access",
+            "data",
+            "dot",
+            "notation"
+        ]
+    },
+    {
+        "name": "dflydev/dot-access-configuration",
+        "version": "v1.0.1",
+        "version_normalized": "1.0.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/dflydev/dflydev-dot-access-configuration.git",
+            "reference": "9b65c83159c9003e00284ea1144ad96b69d9c8b9"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/dflydev/dflydev-dot-access-configuration/zipball/9b65c83159c9003e00284ea1144ad96b69d9c8b9",
+            "reference": "9b65c83159c9003e00284ea1144ad96b69d9c8b9",
+            "shasum": ""
+        },
+        "require": {
+            "dflydev/dot-access-data": "1.*",
+            "dflydev/placeholder-resolver": "1.*",
+            "php": ">=5.3.2"
+        },
+        "require-dev": {
+            "symfony/yaml": "~2.1"
+        },
+        "suggest": {
+            "symfony/yaml": "Required for using the YAML Configuration Builders"
+        },
+        "time": "2014-11-14 03:26:12",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Dflydev\\DotAccessConfiguration": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Dragonfly Development Inc.",
+                "email": "info@dflydev.com",
+                "homepage": "http://dflydev.com"
+            },
+            {
+                "name": "Beau Simensen",
+                "email": "beau@dflydev.com",
+                "homepage": "http://beausimensen.com"
+            }
+        ],
+        "description": "Given a deep data structure representing a configuration, access configuration by dot notation.",
+        "homepage": "https://github.com/dflydev/dflydev-dot-access-configuration",
+        "keywords": [
+            "config",
+            "configuration"
+        ]
+    },
+    {
+        "name": "webflo/drupal-finder",
+        "version": "0.2.1",
+        "version_normalized": "0.2.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/webflo/drupal-finder.git",
+            "reference": "4bd98f7e7b1d30e284e55f51d5d0c8712f676348"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/webflo/drupal-finder/zipball/4bd98f7e7b1d30e284e55f51d5d0c8712f676348",
+            "reference": "4bd98f7e7b1d30e284e55f51d5d0c8712f676348",
+            "shasum": ""
+        },
+        "require-dev": {
+            "mikey179/vfsstream": "^1.6",
+            "phpunit/phpunit": "^4.8"
+        },
+        "time": "2016-11-28 18:50:45",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "src/DrupalFinder.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Florian Weber",
+                "email": "florian@webflo.org"
+            }
+        ],
+        "description": "Helper class to locate a Drupal installation from a given path."
+    },
+    {
+        "name": "stecman/symfony-console-completion",
+        "version": "0.7.0",
+        "version_normalized": "0.7.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/stecman/symfony-console-completion.git",
+            "reference": "5461d43e53092b3d3b9dbd9d999f2054730f4bbb"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/stecman/symfony-console-completion/zipball/5461d43e53092b3d3b9dbd9d999f2054730f4bbb",
+            "reference": "5461d43e53092b3d3b9dbd9d999f2054730f4bbb",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.2",
+            "symfony/console": "~2.3 || ~3.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "~4.4"
+        },
+        "time": "2016-02-24 05:08:54",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "0.6.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Stecman\\Component\\Symfony\\Console\\BashCompletion\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Stephen Holdaway",
+                "email": "stephen@stecman.co.nz"
+            }
+        ],
+        "description": "Automatic BASH completion for Symfony Console Component based applications."
+    },
+    {
+        "name": "phpseclib/phpseclib",
+        "version": "2.0.4",
+        "version_normalized": "2.0.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/phpseclib/phpseclib.git",
+            "reference": "ab8028c93c03cc8d9c824efa75dc94f1db2369bf"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/ab8028c93c03cc8d9c824efa75dc94f1db2369bf",
+            "reference": "ab8028c93c03cc8d9c824efa75dc94f1db2369bf",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "require-dev": {
+            "phing/phing": "~2.7",
+            "phpunit/phpunit": "~4.0",
+            "sami/sami": "~2.0",
+            "squizlabs/php_codesniffer": "~2.0"
+        },
+        "suggest": {
+            "ext-gmp": "Install the GMP (GNU Multiple Precision) extension in order to speed up arbitrary precision integer arithmetic operations.",
+            "ext-libsodium": "SSH2/SFTP can make use of some algorithms provided by the libsodium-php extension.",
+            "ext-mcrypt": "Install the Mcrypt extension in order to speed up a few other cryptographic operations.",
+            "ext-openssl": "Install the OpenSSL extension in order to speed up a wide variety of cryptographic operations."
+        },
+        "time": "2016-10-04 00:57:04",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "phpseclib/bootstrap.php"
+            ],
+            "psr-4": {
+                "phpseclib\\": "phpseclib/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Jim Wigginton",
+                "email": "terrafrost@php.net",
+                "role": "Lead Developer"
+            },
+            {
+                "name": "Patrick Monnerat",
+                "email": "pm@datasphere.ch",
+                "role": "Developer"
+            },
+            {
+                "name": "Andreas Fischer",
+                "email": "bantu@phpbb.com",
+                "role": "Developer"
+            },
+            {
+                "name": "Hans-Jürgen Petrich",
+                "email": "petrich@tronic-media.com",
+                "role": "Developer"
+            },
+            {
+                "name": "Graham Campbell",
+                "email": "graham@alt-three.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "PHP Secure Communications Library - Pure-PHP implementations of RSA, AES, SSH2, SFTP, X.509 etc.",
+        "homepage": "http://phpseclib.sourceforge.net",
+        "keywords": [
+            "BigInteger",
+            "aes",
+            "asn.1",
+            "asn1",
+            "blowfish",
+            "crypto",
+            "cryptography",
+            "encryption",
+            "rsa",
+            "security",
+            "sftp",
+            "signature",
+            "signing",
+            "ssh",
+            "twofish",
+            "x.509",
+            "x509"
+        ]
+    },
+    {
+        "name": "drupal/console-core",
+        "version": "1.0.0-rc10",
+        "version_normalized": "1.0.0.0-RC10",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/hechoendrupal/drupal-console-core.git",
+            "reference": "45cb9ef7777540de23fd727e9c76d21b8e82cc2b"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/hechoendrupal/drupal-console-core/zipball/45cb9ef7777540de23fd727e9c76d21b8e82cc2b",
+            "reference": "45cb9ef7777540de23fd727e9c76d21b8e82cc2b",
+            "shasum": ""
+        },
+        "require": {
+            "dflydev/dot-access-configuration": "1.*",
+            "drupal/console-en": "~1.0",
+            "php": "^5.5.9 || ^7.0",
+            "phpseclib/phpseclib": "2.*",
+            "stecman/symfony-console-completion": "~0.7",
+            "symfony/config": "~2.8",
+            "symfony/console": "~2.8",
+            "symfony/dependency-injection": "~2.8",
+            "symfony/event-dispatcher": "~2.8",
+            "symfony/filesystem": "~2.8",
+            "symfony/finder": "~2.8",
+            "symfony/process": "~2.8",
+            "symfony/translation": "~2.8",
+            "symfony/yaml": "~2.8",
+            "twig/twig": "^1.23.1",
+            "webflo/drupal-finder": "0.*"
+        },
+        "time": "2016-11-24 07:06:28",
+        "type": "project",
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "src/constants.php",
+                "src/functions.php"
+            ],
+            "psr-4": {
+                "Drupal\\Console\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "David Flores",
+                "email": "dmousex@gmail.com",
+                "homepage": "http://dmouse.net"
+            },
+            {
+                "name": "Jesus Manuel Olivas",
+                "email": "jesus.olivas@gmail.com",
+                "homepage": "http://jmolivas.com"
+            },
+            {
+                "name": "Drupal Console Contributors",
+                "homepage": "https://github.com/hechoendrupal/DrupalConsole/graphs/contributors"
+            },
+            {
+                "name": "Eduardo Garcia",
+                "email": "enzo@enzolutions.com",
+                "homepage": "http://enzolutions.com/"
+            },
+            {
+                "name": "Omar Aguirre",
+                "email": "omersguchigu@gmail.com"
+            }
+        ],
+        "description": "Drupal Console Core",
+        "homepage": "http://drupalconsole.com/",
+        "keywords": [
+            "console",
+            "development",
+            "drupal",
+            "symfony"
+        ]
+    },
+    {
+        "name": "alchemy/zippy",
+        "version": "0.3.5",
+        "version_normalized": "0.3.5.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/alchemy-fr/Zippy.git",
+            "reference": "92c773f7bbe47fdb30c61dbaea3dcbf4dd13a40a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/alchemy-fr/Zippy/zipball/92c773f7bbe47fdb30c61dbaea3dcbf4dd13a40a",
+            "reference": "92c773f7bbe47fdb30c61dbaea3dcbf4dd13a40a",
+            "shasum": ""
+        },
+        "require": {
+            "doctrine/collections": "~1.0",
+            "ext-mbstring": "*",
+            "php": ">=5.3.3",
+            "symfony/filesystem": "^2.0.5|^3.0",
+            "symfony/process": "^2.1|^3.0"
+        },
+        "require-dev": {
+            "ext-zip": "*",
+            "guzzle/guzzle": "~3.0",
+            "phpunit/phpunit": "^4.0|^5.0",
+            "symfony/finder": "^2.0.5|^3.0"
+        },
+        "suggest": {
+            "ext-zip": "To use the ZipExtensionAdapter",
+            "guzzle/guzzle": "To use the GuzzleTeleporter"
+        },
+        "time": "2016-02-15 22:46:40",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "0.2.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Alchemy\\Zippy\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Alchemy",
+                "email": "dev.team@alchemy.fr",
+                "homepage": "http://www.alchemy.fr/"
+            }
+        ],
+        "description": "Zippy, the archive manager companion",
+        "keywords": [
+            "bzip",
+            "compression",
+            "tar",
+            "zip"
+        ]
+    },
+    {
+        "name": "drupal/console",
+        "version": "1.0.0-rc10",
+        "version_normalized": "1.0.0.0-RC10",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/hechoendrupal/DrupalConsole.git",
+            "reference": "9ec28866068f902220a2ee0aeb36526488a3b0e1"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/hechoendrupal/DrupalConsole/zipball/9ec28866068f902220a2ee0aeb36526488a3b0e1",
+            "reference": "9ec28866068f902220a2ee0aeb36526488a3b0e1",
+            "shasum": ""
+        },
+        "require": {
+            "alchemy/zippy": "0.3.5",
+            "composer/installers": "~1.0",
+            "dflydev/placeholder-resolver": "~1.0",
+            "doctrine/annotations": "1.2.*",
+            "drupal/console-core": "~1.0",
+            "gabordemooij/redbean": "~4.3",
+            "guzzlehttp/guzzle": "~6.1",
+            "php": "^5.5.9 || ^7.0",
+            "symfony/css-selector": "~2.7|~2.8",
+            "symfony/debug": "~2.6|~2.8",
+            "symfony/dom-crawler": "~2.7|~2.8",
+            "symfony/expression-language": "^2.8",
+            "symfony/http-foundation": "~2.8"
+        },
+        "time": "2016-11-24 07:23:06",
+        "bin": [
+            "bin/drupal"
+        ],
+        "type": "project",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Drupal\\Console\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "David Flores",
+                "email": "dmousex@gmail.com",
+                "homepage": "http://dmouse.net"
+            },
+            {
+                "name": "Jesus Manuel Olivas",
+                "email": "jesus.olivas@gmail.com",
+                "homepage": "http://jmolivas.com"
+            },
+            {
+                "name": "Drupal Console Contributors",
+                "homepage": "https://github.com/hechoendrupal/DrupalConsole/graphs/contributors"
+            },
+            {
+                "name": "Eduardo Garcia",
+                "email": "enzo@enzolutions.com",
+                "homepage": "http://enzolutions.com/"
+            },
+            {
+                "name": "Omar Aguirre",
+                "email": "omersguchigu@gmail.com"
+            }
+        ],
+        "description": "The Drupal CLI. A tool to generate boilerplate code, interact with and debug Drupal.",
+        "homepage": "http://drupalconsole.com/",
+        "keywords": [
+            "console",
+            "development",
+            "drupal",
+            "symfony"
+        ]
     }
 ]
