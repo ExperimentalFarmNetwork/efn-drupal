@@ -1,0 +1,52 @@
+// Default variables.
+@import "default-variables";
+
+// Bootstrap Framework.
+@import '../bootstrap/assets/stylesheets/bootstrap';
+
+
+// Base-theme overrides.
+@import 'overrides';
+
+
+// Sections
+// body{
+// 	background-image: url(/themes/minimus/images/seedsbakmj.png);
+// 	background-repeat:repeat-x;
+		
+// }
+// Header
+header.navbar-default{
+	.navbar-header{
+		.logo img{
+			width:50px;
+		}
+	}
+}
+
+// Project Updates
+.page-node-type-project-update{
+	.field--name-body{
+
+	}
+	#node-project-update-field-discussion{
+
+	}
+
+}
+
+// sidebar
+#block-views-block-project-updates-block-1-2{
+	// background:yellow;
+	.item-list ul {
+		padding-left:0;
+		li {
+		    list-style-type: none;
+		    margin-bottom: 1em;
+		    footer{
+		    	color:$gray-light;
+		    	font-size:.8em;
+		    }
+		}
+	}
+}

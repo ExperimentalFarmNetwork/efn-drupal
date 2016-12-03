@@ -7,9 +7,9 @@ dependencies:
     - group
     - views
   theme:
-    - efn
+    - minimus
 id: efn_views_block__project_updates_block_1
-theme: efn
+theme: minimus
 region: sidebar_second
 weight: -6
 provider: null
