@@ -1,0 +1,39 @@
+{
+    "name": "drmonty/chosen",
+    "description": "Chosen is a library for making long, unwieldy select boxes more friendly.",
+    "type": "component",
+    "homepage": "http://harvesthq.github.io/chosen/",
+    "license": "MIT",
+    "keywords": [
+        "select",
+        "multiselect",
+        "dropdown",
+        "form",
+        "input",
+        "ui"
+    ],
+    "author": {
+        "url": "http://getharvest.com",
+        "name": "harvest"
+    },
+    "require": {
+        "robloach/component-installer": "*",
+        "components/jquery": ">=1.4.4"
+    },
+    "extra": {
+        "component": {
+            "scripts": [
+                "chosen.jquery.js"
+            ],
+            "files": [
+                "js/chosen.jquery.min.js",
+                "js/chosen.proto.min.js",
+                "css/chosen.min.css",
+                "css/*.png"
+            ],
+            "shim": {
+                "deps": ["jquery"]
+            }
+        }
+    }
+}

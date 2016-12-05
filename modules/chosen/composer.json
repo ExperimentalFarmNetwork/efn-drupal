@@ -1,0 +1,40 @@
+{
+  "name": "drupal/chosen",
+  "description": "Makes select elements more friendly using the Chosen jQuery plugin",
+  "type": "drupal-module",
+  "license": "GPL-2.0+",
+  "support": {
+    "issues": "https://drupal.org/project/issues/chosen",
+    "source": "https://drupal.org/project/chosen"
+  },
+  "keywords": [
+    "Drupal",
+    "Chosen"
+  ],
+  "repositories": [
+    {
+      "type": "package",
+      "package": {
+        "name": "drmonty/chosen",
+        "version": "1.6.1",
+        "type": "drupal-library",
+        "dist": {
+          "url": "https://github.com/harvesthq/chosen/releases/download/v1.6.1/chosen_v1.6.1.zip",
+          "type": "zip"
+        },
+        "require": {
+          "composer/installers": "~1.0"
+        }
+      }
+    }
+  ],
+  "require": {
+    "drmonty/chosen": "~1.6"
+  },
+  "autoload": {
+    "psr-4": {
+      "Drupal\\chosen\\": "src/"
+    }
+  },
+  "minimum-stability": "dev"
+}
