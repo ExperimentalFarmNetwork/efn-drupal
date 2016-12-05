@@ -47,10 +47,8 @@ module:
   yamlform_ui: 0
   auto_nodetitle: 5
 theme:
-  stark: 0
   stable: 0
   classy: 0
-  bartik: 0
   seven: 0
   bootstrap: 0
   efn: 0

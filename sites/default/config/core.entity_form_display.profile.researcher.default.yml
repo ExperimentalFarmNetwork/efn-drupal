@@ -4,6 +4,10 @@ status: true
 dependencies:
   config:
     - field.field.profile.researcher.field_bio
+    - field.field.profile.researcher.field_donating
+    - field.field.profile.researcher.field_email
+    - field.field.profile.researcher.field_full_name
+    - field.field.profile.researcher.field_zipcode
     - profile.type.researcher
 id: profile.researcher.default
 targetEntityType: profile
@@ -17,4 +21,30 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textarea
+  field_donating:
+    weight: 7
+    settings: {  }
+    third_party_settings: {  }
+    type: options_buttons
+  field_email:
+    weight: 5
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: email_default
+  field_full_name:
+    weight: 4
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+  field_zipcode:
+    weight: 6
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
 hidden: {  }

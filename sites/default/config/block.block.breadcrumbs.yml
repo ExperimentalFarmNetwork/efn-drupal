@@ -1,17 +1,15 @@
-uuid: 275fd367-3131-4648-818b-da589eb30928
+uuid: 136f2f3b-8a09-4819-8cc4-3578d1d4869f
 langcode: en
-status: false
+status: true
 dependencies:
   module:
     - system
   theme:
-    - minimus
-_core:
-  default_config_hash: wDR9JKEATSWldBjw8du8s3G2zjEYeQf88nlld11hMLo
-id: minimus_breadcrumbs
-theme: minimus
-region: '-1'
-weight: -7
+    - seven
+id: breadcrumbs
+theme: seven
+region: breadcrumb
+weight: 0
 provider: null
 plugin: system_breadcrumb_block
 settings:
