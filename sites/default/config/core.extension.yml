@@ -26,6 +26,7 @@ module:
   group: 0
   help: 0
   image: 0
+  kint: 0
   link: 0
   menu_link_content: 0
   menu_ui: 0
@@ -45,7 +46,6 @@ module:
   views_ui: 0
   yamlform: 0
   yamlform_ui: 0
-  auto_nodetitle: 5
 theme:
   stable: 0
   classy: 0

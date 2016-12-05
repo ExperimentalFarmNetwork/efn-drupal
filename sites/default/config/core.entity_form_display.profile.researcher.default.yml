@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.profile.researcher.field_bio
     - field.field.profile.researcher.field_donating
+    - field.field.profile.researcher.field_donating_other
     - field.field.profile.researcher.field_email
     - field.field.profile.researcher.field_full_name
     - field.field.profile.researcher.field_zipcode
@@ -26,6 +27,13 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: options_buttons
+  field_donating_other:
+    weight: 8
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
   field_email:
     weight: 5
     settings:
