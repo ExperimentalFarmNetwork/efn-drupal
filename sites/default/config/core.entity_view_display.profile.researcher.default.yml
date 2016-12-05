@@ -7,6 +7,10 @@ dependencies:
     - field.field.profile.researcher.field_donating
     - field.field.profile.researcher.field_donating_other
     - field.field.profile.researcher.field_email
+    - field.field.profile.researcher.field_farmland
+    - field.field.profile.researcher.field_farmland_details
+    - field.field.profile.researcher.field_farmland_have
+    - field.field.profile.researcher.field_farmland_have_details
     - field.field.profile.researcher.field_full_name
     - field.field.profile.researcher.field_zipcode
     - profile.type.researcher
@@ -42,6 +46,32 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: basic_string
+  field_farmland:
+    weight: 6
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+  field_farmland_details:
+    weight: 7
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+  field_farmland_have:
+    weight: 8
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+  field_farmland_have_details:
+    weight: 9
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
   field_full_name:
     weight: 1
     label: above

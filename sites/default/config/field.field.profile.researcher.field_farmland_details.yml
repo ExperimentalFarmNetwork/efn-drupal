@@ -1,21 +1,21 @@
-uuid: fefd80cc-9a6b-4afc-9b46-a406b33f7650
+uuid: 7ae9f490-191b-4291-a27f-13043fbb9265
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.profile.field_donating_other
+    - field.storage.profile.field_farmland_details
     - profile.type.researcher
   module:
     - profile
 third_party_settings:
   profile:
     profile_private: true
-id: profile.researcher.field_donating_other
-field_name: field_donating_other
+id: profile.researcher.field_farmland_details
+field_name: field_farmland_details
 entity_type: profile
 bundle: researcher
-label: Other
-description: 'Donation types not listed above'
+label: Details
+description: 'Provide any additional details on what kind of land you''re looking for.'
 required: false
 translatable: false
 default_value: {  }
