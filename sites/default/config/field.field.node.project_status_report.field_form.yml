@@ -1,0 +1,27 @@
+uuid: 173566f3-6b4a-400d-bda2-042eb895e0c4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_form
+    - node.type.project_status_report
+  module:
+    - yamlform
+id: node.project_status_report.field_form
+field_name: field_form
+entity_type: node
+bundle: project_status_report
+label: Form
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:yamlform'
+  handler_settings:
+    target_bundles: null
+    auto_create: false
+  default_data: ''
+  status: true
+field_type: yamlform

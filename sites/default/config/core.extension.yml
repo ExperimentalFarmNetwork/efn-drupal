@@ -32,6 +32,7 @@ module:
   node: 0
   options: 0
   page_cache: 0
+  path: 0
   profile: 0
   quickedit: 0
   system: 0
@@ -43,6 +44,7 @@ module:
   views: 0
   views_ui: 0
   yamlform: 0
+  yamlform_ui: 0
   auto_nodetitle: 5
 theme:
   stark: 0
