@@ -2,8 +2,8 @@ core: 8.x
 type: theme
 base theme: bootstrap
 
-name: 'Experimental Farm Network'
-description: 'Experimental Farm Theme.'
+name: 'Minimus'
+description: 'Minimus - A poetic pig theme for the Experimental Farm Network.'
 package: 'Bootstrap'
 
 regions:
@@ -20,5 +20,5 @@ regions:
   page_bottom: 'Page bottom'
 
 libraries:
-  - 'efn/global-styling'
-  - 'efn/bootstrap-scripts'
+  - 'minimus/global-styling'
+  - 'minimus/bootstrap-scripts'

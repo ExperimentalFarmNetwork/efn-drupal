@@ -1,5 +1,5 @@
 # Schema for the theme setting configuration file of the THEMETITLE theme.
 
-efn.settings:
+minimus.settings:
   type: theme_settings
-  label: 'EFN settings'
+  label: 'Minimus settings'
