@@ -1,9 +1,0 @@
-id: auto_nodetitle_update_action
-label: 'Update automatic nodetitles'
-status: true
-langcode: en
-type: node
-plugin: auto_nodetitle_update_action
-dependencies:
-  module:
-    - node

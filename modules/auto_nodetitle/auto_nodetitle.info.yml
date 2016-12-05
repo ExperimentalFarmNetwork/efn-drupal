@@ -1,6 +1,0 @@
-name: Automatic Nodetitles
-description: Allows hiding of the content title field and automatic title creation.
-core: 8.x
-type: module
-package: Other
-version: VERSION
