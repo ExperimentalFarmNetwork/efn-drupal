@@ -24,7 +24,7 @@
         "drupal/yamlform": "^1.0",
         "drupal/default_content": "1.0-alpha3",
         "drupal/chosen": "2.1",
-        "drupal/select_or_other": "3.x-dev"
+        "drupal/select_or_other": "1.x-dev"
     },
     "replace": {
         "drupal/core": "~8.2"

@@ -7075,12 +7075,12 @@
     },
     {
         "name": "drupal/select_or_other",
-        "version": "dev-3.x",
-        "version_normalized": "dev-3.x",
+        "version": "dev-1.x",
+        "version_normalized": "dev-1.x",
         "source": {
             "type": "git",
             "url": "https://git.drupal.org/project/select_or_other",
-            "reference": "1e1e6708240117206ab239eab51ec2ede7dc5cdb"
+            "reference": "fdd608713af1c91bcb615d4aef0a5119937cc301"
         },
         "require": {
             "drupal/core": "~8.0"
@@ -7088,11 +7088,11 @@
         "type": "drupal-module",
         "extra": {
             "branch-alias": {
-                "dev-3.x": "3.x-dev"
+                "dev-1.x": "1.x-dev"
             },
             "drupal": {
-                "version": "8.x-3.x-dev",
-                "datestamp": "1467836568"
+                "version": "8.x-1.0-alpha2+5-dev",
+                "datestamp": "1476170339"
             }
         },
         "installation-source": "source",

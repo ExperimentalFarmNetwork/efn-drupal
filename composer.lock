@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6219fcbc49185b4ea7441122048b1651",
-    "content-hash": "d4771c17640b587e87b394c7befcc8ff",
+    "hash": "3d4e74a36cf9d5a8517577de5feedccb",
+    "content-hash": "4df4336b864cd39b9841f4997cb01c8c",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -2279,11 +2279,11 @@
         },
         {
             "name": "drupal/select_or_other",
-            "version": "dev-3.x",
+            "version": "dev-1.x",
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/select_or_other",
-                "reference": "1e1e6708240117206ab239eab51ec2ede7dc5cdb"
+                "reference": "fdd608713af1c91bcb615d4aef0a5119937cc301"
             },
             "require": {
                 "drupal/core": "~8.0"
@@ -2291,11 +2291,11 @@
             "type": "drupal-module",
             "extra": {
                 "branch-alias": {
-                    "dev-3.x": "3.x-dev"
+                    "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-3.x-dev",
-                    "datestamp": "1467836568"
+                    "version": "8.x-1.0-alpha2+5-dev",
+                    "datestamp": "1476170339"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -2325,7 +2325,7 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/select_or_other"
             },
-            "time": "2015-12-21 15:53:15"
+            "time": "2016-10-11 07:14:52"
         },
         {
             "name": "drupal/token",
