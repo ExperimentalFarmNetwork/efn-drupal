@@ -1,0 +1,22 @@
+uuid: e01c6b9b-bce7-4ef9-8995-a926a4395559
+langcode: en
+status: true
+dependencies:
+  theme:
+    - minimus
+_core:
+  default_config_hash: qHdtze2DZ2mFfaJadxjZz6epm92_SN9SAFY4yJGl8Fo
+id: minimus_local_tasks
+theme: minimus
+region: header
+weight: -5
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: Tabs
+  provider: core
+  label_display: '0'
+  primary: true
+  secondary: true
+visibility: {  }

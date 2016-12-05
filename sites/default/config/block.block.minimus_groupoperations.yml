@@ -1,0 +1,29 @@
+uuid: 05aa1255-6ca1-4129-933a-f592086459b5
+langcode: en
+status: true
+dependencies:
+  module:
+    - group
+  theme:
+    - minimus
+id: minimus_groupoperations
+theme: minimus
+region: footer
+weight: -8
+provider: null
+plugin: group_operations
+settings:
+  id: group_operations
+  label: 'Group operations'
+  provider: group
+  label_display: '0'
+  context_mapping:
+    group: '@group.group_route_context:group'
+visibility:
+  group_type:
+    id: group_type
+    group_types:
+      project: project
+    negate: false
+    context_mapping:
+      group: '@group.group_route_context:group'

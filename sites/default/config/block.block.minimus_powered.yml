@@ -1,0 +1,22 @@
+uuid: 70de4afd-f7a2-42d3-8795-c76c3ac74454
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - minimus
+_core:
+  default_config_hash: iggZSiUKz4mYP1YPJ8SsUfFu79HIgOTt6IDy3Up59aM
+id: minimus_powered
+theme: minimus
+region: footer
+weight: -7
+provider: null
+plugin: system_powered_by_block
+settings:
+  id: system_powered_by_block
+  label: 'Powered by Drupal'
+  provider: system
+  label_display: '0'
+visibility: {  }

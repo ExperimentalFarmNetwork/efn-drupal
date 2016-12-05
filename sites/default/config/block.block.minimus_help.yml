@@ -1,0 +1,22 @@
+uuid: c58b1703-e7f7-490a-af8e-9ffb397bb5c3
+langcode: en
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - minimus
+_core:
+  default_config_hash: MhtNdV__HKRTab0ZPjkPNfYL4Ng4UPBucDLoC7Rg5Eo
+id: minimus_help
+theme: minimus
+region: help
+weight: -8
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  provider: help
+  label_display: '0'
+visibility: {  }

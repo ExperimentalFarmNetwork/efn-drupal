@@ -1,0 +1,20 @@
+uuid: 4c4e3eeb-07b0-42db-90ba-eae5a49f7eff
+langcode: en
+status: true
+dependencies:
+  theme:
+    - minimus
+_core:
+  default_config_hash: ffxthelqQF8xcr4GTG4HlaNNsluiHftN0pujmQpW0bQ
+id: minimus_local_actions
+theme: minimus
+region: header
+weight: -7
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  provider: core
+  label_display: '0'
+visibility: {  }

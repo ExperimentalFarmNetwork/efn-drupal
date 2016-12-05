@@ -1,0 +1,22 @@
+uuid: 30d83d3e-2c21-4359-86bc-79526e4ef78d
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - minimus
+_core:
+  default_config_hash: fNNLN48MSGSLiqwIFywCuxH2Dk_IxDbaP0kYhg_IPrg
+id: minimus_content
+theme: minimus
+region: content
+weight: -6
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  provider: system
+  label_display: '0'
+visibility: {  }
