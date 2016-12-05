@@ -1,0 +1,21 @@
+uuid: c29f8a96-41dd-4bb8-8d62-e34e8b6d2ae3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.group.field_multiyear
+    - group.type.project
+  module:
+    - options
+id: group.project.field_multiyear
+field_name: field_multiyear
+entity_type: group
+bundle: project
+label: 'Is this a multi-year project?'
+description: 'Perhaps you''re asking volunteers to grow seeds for a biennal crop (such as cabbage or carrot), or you''re testing a perennial crop over many years.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

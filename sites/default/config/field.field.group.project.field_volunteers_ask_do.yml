@@ -1,0 +1,19 @@
+uuid: 47217910-515b-4e6c-86ac-d78b04c1c744
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.group.field_volunteers_ask_do
+    - group.type.project
+id: group.project.field_volunteers_ask_do
+field_name: field_volunteers_ask_do
+entity_type: group
+bundle: project
+label: 'What will you ask volunteers to do?'
+description: 'Describe the tasks volunteers will need to perform, including data collection, reporting requirements, etc. Include any special responsibilities for volunteers, such as isolation distances, hand-pollination needs, portion of seed to be sent back, etc.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

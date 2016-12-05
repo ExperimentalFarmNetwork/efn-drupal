@@ -1,0 +1,21 @@
+uuid: 7861e7b5-05b7-4b89-8ef7-8c5d3166a73c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.group.field_researcher_background
+    - group.type.project
+  module:
+    - text
+id: group.project.field_researcher_background
+field_name: field_researcher_background
+entity_type: group
+bundle: project
+label: 'Researcher background'
+description: 'Please briefly describe yourself. What kind of experience do you have with this type of research? Why are you leading this particular project?'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

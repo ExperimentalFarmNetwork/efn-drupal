@@ -1,0 +1,27 @@
+uuid: bdc536b0-6aab-4f98-b7a2-b664b1b21d53
+langcode: en
+status: true
+dependencies:
+  module:
+    - group
+    - options
+id: group.field_seeking_volunteers
+field_name: field_seeking_volunteers
+entity_type: group
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: growers
+      label: 'Yes, seeking volunteer growers'
+    -
+      value: 'no'
+      label: 'No, do not require volunteers.'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

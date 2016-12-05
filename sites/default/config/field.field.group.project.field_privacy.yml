@@ -1,0 +1,21 @@
+uuid: caabcf39-2091-484f-b2f1-b7413cda2f99
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.group.field_privacy
+    - group.type.project
+  module:
+    - options
+id: group.project.field_privacy
+field_name: field_privacy
+entity_type: group
+bundle: project
+label: Privacy
+description: 'Can EFN organizers discuss this project in public, in the context of publicizing the broader work of EFN?'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

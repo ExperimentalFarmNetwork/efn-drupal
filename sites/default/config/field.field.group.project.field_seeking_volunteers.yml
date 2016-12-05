@@ -1,0 +1,23 @@
+uuid: a7eb035f-8736-4917-8b80-2765ee4aa9bc
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.group.field_seeking_volunteers
+    - group.type.project
+  module:
+    - options
+id: group.project.field_seeking_volunteers
+field_name: field_seeking_volunteers
+entity_type: group
+bundle: project
+label: 'Are you seeking volunteer growers? Or other types of volunteers (if so, please describe in "Other" field)?'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: growers
+default_value_callback: ''
+settings: {  }
+field_type: list_string

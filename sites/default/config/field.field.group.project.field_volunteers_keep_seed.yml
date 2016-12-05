@@ -1,0 +1,21 @@
+uuid: dd663a4e-d146-494c-8903-7195c15e2919
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.group.field_volunteers_keep_seed
+    - group.type.project
+  module:
+    - options
+id: group.project.field_volunteers_keep_seed
+field_name: field_volunteers_keep_seed
+entity_type: group
+bundle: project
+label: 'Can volunteers expect to be able to keep some germplasm (seeds, bulbs, cuttings, spores, etc) at the close of the project?'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string
