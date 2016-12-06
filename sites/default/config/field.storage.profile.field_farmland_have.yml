@@ -1,0 +1,39 @@
+uuid: 2147334c-007c-4fbc-8766-674cd6f7da67
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - profile
+id: profile.field_farmland_have
+field_name: field_farmland_have
+entity_type: profile
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: housing
+      label: 'Yes, with housing available'
+    -
+      value: nohousing
+      label: 'Yes, without housing available'
+    -
+      value: camp
+      label: 'Yes, with a willingness to allow farmer(s) to camp on the property'
+    -
+      value: 'yes'
+      label: 'Yes, for the right would-be farmer(s)'
+    -
+      value: maybe
+      label: Maybe
+    -
+      value: 'no'
+      label: 'No'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

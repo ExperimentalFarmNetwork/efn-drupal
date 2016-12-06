@@ -1,0 +1,19 @@
+uuid: ff4705a1-922d-4c44-a67e-b6c52b22f0f8
+langcode: en
+status: true
+dependencies:
+  module:
+    - group
+id: group.field_volunteers_ask_do
+field_name: field_volunteers_ask_do
+entity_type: group
+type: string_long
+settings:
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

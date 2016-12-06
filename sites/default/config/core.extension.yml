@@ -4,6 +4,9 @@ module:
   ajax_comments: 0
   block: 0
   breakpoint: 0
+  chosen: 0
+  chosen_field: 0
+  chosen_lib: 0
   ckeditor: 0
   comment: 0
   config: 0
@@ -26,15 +29,19 @@ module:
   group: 0
   help: 0
   image: 0
+  kint: 0
   link: 0
   menu_link_content: 0
   menu_ui: 0
   node: 0
   options: 0
   page_cache: 0
+  path: 0
   profile: 0
   quickedit: 0
+  select_or_other: 0
   system: 0
+  taxonomy: 0
   text: 0
   token: 0
   toolbar: 0
@@ -43,15 +50,12 @@ module:
   views: 0
   views_ui: 0
   yamlform: 0
-  auto_nodetitle: 5
+  yamlform_ui: 0
 theme:
-  stark: 0
   stable: 0
   classy: 0
-  bartik: 0
   seven: 0
   bootstrap: 0
-  efn: 0
   minimus: 0
 _core:
   default_config_hash: m2GVq11UAOVuNgj8x0t5fMOPujpvQQ_zxLoaly1BMEU

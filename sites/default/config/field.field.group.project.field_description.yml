@@ -1,0 +1,21 @@
+uuid: 5061a40d-f283-4a7b-a621-5164c7e2f133
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.group.field_description
+    - group.type.project
+  module:
+    - text
+id: group.project.field_description
+field_name: field_description
+entity_type: group
+bundle: project
+label: Description
+description: 'Please describe the goal(s) of your project and the basic methods you intend to follow.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

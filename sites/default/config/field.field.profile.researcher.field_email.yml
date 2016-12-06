@@ -1,0 +1,24 @@
+uuid: 5a4e259f-64a8-4632-82cd-17e589701701
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_email
+    - profile.type.researcher
+  module:
+    - profile
+third_party_settings:
+  profile:
+    profile_private: true
+id: profile.researcher.field_email
+field_name: field_email
+entity_type: profile
+bundle: researcher
+label: 'Email Address'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: email

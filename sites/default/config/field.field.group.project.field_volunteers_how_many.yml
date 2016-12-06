@@ -1,0 +1,23 @@
+uuid: 7fd91226-c1ea-470a-b165-f3b5efe3e427
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.group.field_volunteers_how_many
+    - group.type.project
+id: group.project.field_volunteers_how_many
+field_name: field_volunteers_how_many
+entity_type: group
+bundle: project
+label: 'How many volunteers do you need?'
+description: 'Please estimate the number of volunteers required to fulfill the goals of your project (in a perfect world).'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

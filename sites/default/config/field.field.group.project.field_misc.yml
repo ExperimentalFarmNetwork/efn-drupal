@@ -1,0 +1,19 @@
+uuid: 75044888-4368-450a-a104-aa1df70e17c7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.group.field_misc
+    - group.type.project
+id: group.project.field_misc
+field_name: field_misc
+entity_type: group
+bundle: project
+label: 'Anything else?'
+description: 'Is there anything else you''d like to tell us about yourself or your project?'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

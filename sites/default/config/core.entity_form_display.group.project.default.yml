@@ -4,11 +4,25 @@ status: true
 dependencies:
   config:
     - field.field.group.project.field_address
-    - field.field.group.project.field_narrative
+    - field.field.group.project.field_description
+    - field.field.group.project.field_misc
+    - field.field.group.project.field_multiyear
+    - field.field.group.project.field_privacy
     - field.field.group.project.field_project_summary
+    - field.field.group.project.field_project_type
+    - field.field.group.project.field_project_type_other
+    - field.field.group.project.field_researcher_background
+    - field.field.group.project.field_seeking_volunteers
+    - field.field.group.project.field_tags
+    - field.field.group.project.field_volunteers_ask_do
+    - field.field.group.project.field_volunteers_how_many
+    - field.field.group.project.field_volunteers_keep_seed
+    - field.field.group.project.field_volunteers_other_reqs
     - group.type.project
   module:
     - address
+    - path
+    - select_or_other
     - text
 id: group.project.default
 targetEntityType: group
@@ -21,17 +35,97 @@ content:
       default_country: US
     third_party_settings: {  }
     type: address_default
-  field_narrative:
+  field_description:
     weight: 2
     settings:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
     type: text_textarea
+  field_misc:
+    weight: 16
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+  field_multiyear:
+    weight: 13
+    settings: {  }
+    third_party_settings: {  }
+    type: options_buttons
+  field_privacy:
+    weight: 15
+    settings:
+      select_element_type: select_or_other_buttons
+      sort_options: ''
+    third_party_settings: {  }
+    type: select_or_other_list
   field_project_summary:
     weight: 1
     settings:
       rows: 2
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+  field_project_type:
+    weight: 6
+    settings: {  }
+    third_party_settings: {  }
+    type: options_buttons
+  field_project_type_other:
+    weight: 7
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+  field_researcher_background:
+    weight: 8
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+  field_seeking_volunteers:
+    weight: 9
+    settings:
+      select_element_type: select_or_other_select
+      sort_options: ''
+    third_party_settings: {  }
+    type: select_or_other_list
+  field_tags:
+    weight: 5
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete_tags
+  field_volunteers_ask_do:
+    weight: 11
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+  field_volunteers_how_many:
+    weight: 10
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+  field_volunteers_keep_seed:
+    weight: 14
+    settings:
+      select_element_type: select_or_other_buttons
+      sort_options: ''
+    third_party_settings: {  }
+    type: select_or_other_list
+  field_volunteers_other_reqs:
+    weight: 12
+    settings:
+      rows: 5
       placeholder: ''
     third_party_settings: {  }
     type: string_textarea
@@ -41,6 +135,11 @@ content:
     settings:
       size: 60
       placeholder: ''
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 4
+    settings: {  }
     third_party_settings: {  }
 hidden:
   uid: true

@@ -1,0 +1,36 @@
+uuid: 40342084-74d1-403f-8609-8224b780cd64
+langcode: en
+status: true
+dependencies:
+  module:
+    - group
+    - options
+id: group.field_volunteers_keep_seed
+field_name: field_volunteers_keep_seed
+entity_type: group
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: 'yes'
+      label: 'Yes, of course'
+    -
+      value: likely
+      label: 'Most likely'
+    -
+      value: maybe
+      label: Maybe.
+    -
+      value: probablynot
+      label: 'Probably not'
+    -
+      value: 'no'
+      label: 'No'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,22 @@
+uuid: b9f5f74b-67de-4f4a-83ee-126319614d79
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.project_status_report
+  module:
+    - text
+id: node.project_status_report.body
+field_name: body
+entity_type: node
+bundle: project_status_report
+label: Body
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: true
+field_type: text_with_summary

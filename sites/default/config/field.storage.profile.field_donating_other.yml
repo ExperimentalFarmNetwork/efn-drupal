@@ -1,0 +1,21 @@
+uuid: 55864425-f5d2-474c-89be-2d1d95f303f4
+langcode: en
+status: true
+dependencies:
+  module:
+    - profile
+id: profile.field_donating_other
+field_name: field_donating_other
+entity_type: profile
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

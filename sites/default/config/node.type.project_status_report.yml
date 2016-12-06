@@ -1,0 +1,17 @@
+uuid: 4d4fb7bb-e1fd-41ee-bde4-b36f68977f0b
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+name: 'Project Status Report'
+type: project_status_report
+description: 'A request for information from project participants'
+help: ''
+new_revision: true
+preview_mode: 0
+display_submitted: true

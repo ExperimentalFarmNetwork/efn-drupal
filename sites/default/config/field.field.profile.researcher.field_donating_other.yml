@@ -1,0 +1,24 @@
+uuid: fefd80cc-9a6b-4afc-9b46-a406b33f7650
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_donating_other
+    - profile.type.researcher
+  module:
+    - profile
+third_party_settings:
+  profile:
+    profile_private: true
+id: profile.researcher.field_donating_other
+field_name: field_donating_other
+entity_type: profile
+bundle: researcher
+label: Other
+description: 'Donation types not listed above'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,34 @@
+uuid: df6be795-f181-4b90-8c6d-244d3b5ef7d9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.project_status_report.body
+    - field.field.node.project_status_report.field_form
+    - node.type.project_status_report
+  module:
+    - text
+    - user
+    - yamlform
+id: node.project_status_report.default
+targetEntityType: node
+bundle: project_status_report
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 101
+    settings: {  }
+    third_party_settings: {  }
+  field_form:
+    weight: 102
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: yamlform_entity_reference_entity_view
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }
