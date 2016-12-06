@@ -14,7 +14,7 @@
         "drupal/entity": "1.x-dev",
         "drupal/features": "3.x-dev",
         "drupal/geocoder": "2.x-dev",
-        "drupal/geofield": "1.x-dev",
+        "drupal/geofield": "1.0-alpha2",
         "drupal/geophp": "1.x-dev",
         "drupal/group": "1.x-dev",
         "drupal/profile": "1.x-dev",

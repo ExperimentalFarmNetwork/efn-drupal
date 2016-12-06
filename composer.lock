@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "13201f254c8a7c088b18b0523da6c315",
-    "content-hash": "029515bf6270603177d996b23f63dbce",
+    "hash": "f60fa399eaaeb3217fc2baa2f822b7ba",
+    "content-hash": "40330516dbe15b374d7b6f108294c39c",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -2057,11 +2057,17 @@
         },
         {
             "name": "drupal/geofield",
-            "version": "dev-1.x",
+            "version": "1.0.0-alpha2",
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/geofield",
-                "reference": "3b4d26f1945410ad95b7f36593c99db7a47b9f78"
+                "reference": "8.x-1.0-alpha2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/geofield-8.x-1.0-alpha2.zip",
+                "reference": null,
+                "shasum": "312100e9f087c6b178eb971c6a8a70919edff7f0"
             },
             "require": {
                 "drupal/core": "~8.0",
@@ -2073,8 +2079,8 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.0-alpha1+19-dev",
-                    "datestamp": "1463282946"
+                    "version": "8.x-1.0-alpha2",
+                    "datestamp": "1464201846"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -2131,8 +2137,7 @@
                 "source": "http://git.drupal.org/project/geofield.git",
                 "issues": "https://www.drupal.org/project/issues/geofield",
                 "irc": "irc://irc.freenode.org/drupal-contribute"
-            },
-            "time": "2016-05-15 04:00:26"
+            }
         },
         {
             "name": "drupal/geophp",
@@ -2177,7 +2182,8 @@
             "homepage": "https://www.drupal.org/project/geophp",
             "support": {
                 "source": "http://cgit.drupalcode.org/geophp"
-            }
+            },
+            "time": "2016-05-12 20:20:11"
         },
         {
             "name": "drupal/group",
@@ -2324,8 +2330,7 @@
             "homepage": "https://www.drupal.org/project/select_or_other",
             "support": {
                 "source": "http://cgit.drupalcode.org/select_or_other"
-            },
-            "time": "2016-10-11 07:14:52"
+            }
         },
         {
             "name": "drupal/token",
@@ -6905,7 +6910,6 @@
         "drupal/entity": 20,
         "drupal/features": 20,
         "drupal/geocoder": 20,
-        "drupal/geofield": 20,
         "drupal/geophp": 20,
         "drupal/group": 20,
         "drupal/profile": 20,
