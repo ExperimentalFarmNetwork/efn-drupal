@@ -3,9 +3,11 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_display.comment.content_comment.default
     - field.field.node.project_update.body
     - field.field.node.project_update.field_discussion
     - field.field.node.project_update.field_image
+    - image.style.large
     - node.type.project_update
   module:
     - comment
@@ -20,11 +22,11 @@ content:
   body:
     label: hidden
     type: text_default
-    weight: 102
+    weight: 1
     settings: {  }
     third_party_settings: {  }
   field_discussion:
-    weight: 103
+    weight: 3
     label: hidden
     settings:
       pager_id: 0
@@ -32,15 +34,15 @@ content:
     third_party_settings: {  }
     type: comment_default
   field_image:
-    weight: 104
-    label: above
+    weight: 2
+    label: hidden
     settings:
-      image_style: ''
-      image_link: ''
+      image_style: large
+      image_link: file
     third_party_settings: {  }
     type: image
   links:
-    weight: 100
+    weight: 0
     settings: {  }
     third_party_settings: {  }
 hidden: {  }
