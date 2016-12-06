@@ -1,3 +1,4 @@
+uuid: null
 langcode: en
 status: true
 dependencies:
@@ -718,10 +719,9 @@ display:
         description: ''
         expanded: false
         parent: ''
-        weight: 20
+        weight: -3
         context: '0'
         menu_name: main
-        enabled: true
     cache_metadata:
       max-age: 0
       contexts:

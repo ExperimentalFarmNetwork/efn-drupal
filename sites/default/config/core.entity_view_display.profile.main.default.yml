@@ -1,0 +1,24 @@
+uuid: 59d79ee7-c2e2-4bc9-a6bd-d188106b5794
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.profile.main.field_user_image
+    - image.style.large
+    - profile.type.main
+  module:
+    - image
+id: profile.main.default
+targetEntityType: profile
+bundle: main
+mode: default
+content:
+  field_user_image:
+    weight: 0
+    label: hidden
+    settings:
+      image_style: large
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+hidden: {  }

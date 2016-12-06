@@ -1,0 +1,23 @@
+uuid: 8afb5e4a-610b-4e31-b9c2-f0ed8ccf7379
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.profile.main.field_user_image
+    - image.style.thumbnail
+    - profile.type.main
+  module:
+    - image
+id: profile.main.default
+targetEntityType: profile
+bundle: main
+mode: default
+content:
+  field_user_image:
+    weight: 3
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+hidden: {  }

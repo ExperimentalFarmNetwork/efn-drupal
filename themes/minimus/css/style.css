@@ -6340,8 +6340,24 @@ p:last-child,
   .help-block:first-child, .control-group .help-inline:first-child {
     margin-top: 0; }
 
+div.main-container {
+  width: 90%; }
+
 header.navbar-default .navbar-header .logo img {
   width: 50px; }
+
+.view-project .views-row .views-col {
+  border: #eeeeee thin solid;
+  backgorund: #eeeeee;
+  padding: 1em;
+  border-radius: 5px;
+  margin: .5rem;
+  height: 250px; }
+
+.btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
+  font-size: 2rem;
+  border-radius: 5px;
+  padding: 1rem 2rem; }
 
 .page-node-type-project-update .views-field-changed, .view-id-project_updates_page .views-field-changed {
   color: #777777;
