@@ -7023,57 +7023,6 @@
         }
     },
     {
-        "name": "drupal/select_or_other",
-        "version": "dev-1.x",
-        "version_normalized": "dev-1.x",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/select_or_other",
-            "reference": "fdd608713af1c91bcb615d4aef0a5119937cc301"
-        },
-        "require": {
-            "drupal/core": "~8.0"
-        },
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-1.x": "1.x-dev"
-            },
-            "drupal": {
-                "version": "8.x-1.0-alpha2+5-dev",
-                "datestamp": "1476170339"
-            }
-        },
-        "installation-source": "source",
-        "notification-url": "https://packages.drupal.org/8/downloads",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "danielb",
-                "homepage": "https://www.drupal.org/user/134005"
-            },
-            {
-                "name": "haydeniv",
-                "homepage": "https://www.drupal.org/user/149501"
-            },
-            {
-                "name": "legolasbo",
-                "homepage": "https://www.drupal.org/user/2480548"
-            },
-            {
-                "name": "vlad.ua",
-                "homepage": "https://www.drupal.org/user/2696261"
-            }
-        ],
-        "description": "Provides a select box form element with additional option 'Other' to give a textfield.",
-        "homepage": "https://www.drupal.org/project/select_or_other",
-        "support": {
-            "source": "http://cgit.drupalcode.org/select_or_other"
-        }
-    },
-    {
         "name": "drupal/yamlform",
         "version": "1.0.0-beta25",
         "version_normalized": "1.0.0.0-beta25",
@@ -7122,6 +7071,57 @@
         "support": {
             "source": "http://cgit.drupalcode.org/yamlform",
             "issues": "https://drupal.org/project/issues/yamlform"
+        }
+    },
+    {
+        "name": "drupal/select_or_other",
+        "version": "dev-1.x",
+        "version_normalized": "dev-1.x",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/select_or_other",
+            "reference": "fdd608713af1c91bcb615d4aef0a5119937cc301"
+        },
+        "require": {
+            "drupal/core": "~8.0"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.0-alpha2+5-dev",
+                "datestamp": "1476170339"
+            }
+        },
+        "installation-source": "source",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "danielb",
+                "homepage": "https://www.drupal.org/user/134005"
+            },
+            {
+                "name": "haydeniv",
+                "homepage": "https://www.drupal.org/user/149501"
+            },
+            {
+                "name": "legolasbo",
+                "homepage": "https://www.drupal.org/user/2480548"
+            },
+            {
+                "name": "vlad.ua",
+                "homepage": "https://www.drupal.org/user/2696261"
+            }
+        ],
+        "description": "Provides a select box form element with additional option 'Other' to give a textfield.",
+        "homepage": "https://www.drupal.org/project/select_or_other",
+        "support": {
+            "source": "http://cgit.drupalcode.org/select_or_other"
         }
     }
 ]

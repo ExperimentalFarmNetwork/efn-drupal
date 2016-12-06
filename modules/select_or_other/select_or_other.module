@@ -1,0 +1,18 @@
+<?php
+/**
+ * @file
+ * Contains some hook implementations for the select or other module
+ */
+
+/**
+ * Implements hook_validation_constraint_alter().
+ *
+ * @param &$definitions
+ *   An associative array of definitions and classes that use them.
+ */
+function select_or_other_validation_constraint_alter(&$definitions) {
+  // Work around core issue #2643308 by overriding the AllowedValuesConstraint.
+  $definition = &$definitions['AllowedValues'];
+  $definition['class'] = 'Drupal\select_or_other\Plugin\Validation\AllowedValuesConstraint';
+  $definition['provider'] = 'select_or_other';
+}
