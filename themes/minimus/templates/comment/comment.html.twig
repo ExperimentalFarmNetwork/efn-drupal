@@ -66,6 +66,7 @@
  * @ingroup themeable
  */
 #}
+<!-- {{kint(submitted)}} -->
 
 <article{{ attributes.addClass('js-comment') }}>
   {#
@@ -73,12 +74,21 @@
     server which comments are new for the user. Rendering the final "new"
     indicator here would break the render cache.
   #}
+  <div class="userinfo">
+    <p class="userpic">{{ user_picture }}</p>
+  </div>
+
   <mark class="hidden" data-comment-timestamp="{{ new_indicator_timestamp }}"></mark>
-
-  <footer>
-    {{ user_picture }}
-    <p>{{ submitted }}</p>
-
+  <div{{ content_attributes }}>
+    {% if title %}
+      {{ title_prefix }}
+      <h4{{ title_attributes }}>{{ author }} says:</h4>
+      {{ title_suffix }}
+    {% endif %}
+    {{ content }}
+    <p class="submitted">{{ submitted }}  <span class="pLink">{{ permalink }}</span></p>
+  </div>
+    <footer>
     {#
       Indicate the semantic relationship between parent and child comments for
       accessibility. The list is difficult to navigate in a screen reader
@@ -87,16 +97,5 @@
     {% if parent %}
       <p class="visually-hidden">{{ parent }}</p>
     {% endif %}
-
-    {{ permalink }}
   </footer>
-
-  <div{{ content_attributes }}>
-    {% if title %}
-      {{ title_prefix }}
-      <h3{{ title_attributes }}>{{ author }}</h3>
-      {{ title_suffix }}
-    {% endif %}
-    {{ content }}
-  </div>
 </article>

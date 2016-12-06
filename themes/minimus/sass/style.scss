@@ -25,18 +25,66 @@ header.navbar-default{
 }
 
 // Project Updates
-.page-node-type-project-update{
+.page-node-type-project-update, .view-id-project_updates_page{
 	.field--name-body{
 
 	}
+	.views-field-changed{
+		color: $gray-light;
+		margin-bottom:.8rem;
+	}
+	.views-field-field-image{
+		float:right;
+		margin:.5rem;
+	}
 	// comments
 	#node-project-update-field-discussion{
-		footer{
-			float:right;
+		.js-comment{
+			clear:both;
+			border-top:$gray-lighter thin dashed;
+			margin-bottom:1em;
+			// display:flex;
+			.field--name-field-comment-body{
+				margin-bottom: 1em;
+			}
+			.form-item{
+				h4.label{
+				    font-size: 1em;
+				    font-weight: inherit;
+				    padding-right: 0;
+				}
+			}
+			.view-display-id-user_view{
+						display:none;
+					}
+			.userinfo{
+				// font-size:1rem;
+				float:right;
+				clear:both;
+				width:200px;
+				border:$gray-lighter thin solid;
+				padding:.5rem;
+
+				.userpic{
+					width:70px;
+					height:100px;
+					background: $gray;
+				}
+				p.submitted{
+					color:$gray-light;
+				}
+				.form-type-item{
+					font-size:1.3rem;
+				}
+			}
+		}
+		h2{
+			clear:both;
 		}
 	}	
 
 }
+
 
 // sidebar
 #block-views-block-project-updates-block-1-2{
