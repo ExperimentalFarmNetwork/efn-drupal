@@ -6343,6 +6343,9 @@ p:last-child,
 header.navbar-default .navbar-header .logo img {
   width: 50px; }
 
+.page-node-type-project-update #node-project-update-field-discussion footer {
+  float: right; }
+
 #block-views-block-project-updates-block-1-2 .item-list ul {
   padding-left: 0; }
   #block-views-block-project-updates-block-1-2 .item-list ul li {
