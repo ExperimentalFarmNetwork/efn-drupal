@@ -1,0 +1,195 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the YAML Form module.
+ */
+
+use Drupal\Component\Render\FormattableMarkup;
+use Drupal\Core\Serialization\Yaml;
+use Drupal\yamlform\Entity\YamlForm;
+use Drupal\yamlform\Plugin\YamlFormElement\ManagedFile;
+
+// Using include_once instead of module_load_include() to make sure all
+// update hooks are loaded even when a module is not fully installed.
+// @see https://www.drupal.org/node/2813333
+include_once 'includes/yamlform.update.inc';
+
+/**
+ * Implements hook_uninstall().
+ */
+function yamlform_uninstall() {
+  // Issue #2793597: uninstall error You have requested a non-existent service
+  // "yamlform.email_provider".
+  // Workaround: Don't use the yamlform.email_provider in hook_uninstall().
+  // @see \Drupal\yamlform\YamlFormEmailProvider::uninstall()
+  $config = \Drupal::configFactory()->getEditable('system.mail');
+  $mail_plugins = $config->get('interface');
+  unset($mail_plugins['yamlform']);
+  $config->set('interface', $mail_plugins)->save();
+}
+
+/**
+ * Implements hook_requirements().
+ */
+function yamlform_requirements($phase) {
+  if ($phase != 'runtime') {
+    return [];
+  }
+
+  $requirements = [];
+
+  // Check HTML email handling.
+  /** @var \Drupal\yamlform\YamlFormEmailProviderInterface $email_provider */
+  $email_provider = \Drupal::service('yamlform.email_provider');
+  $email_provider->check();
+  $module = $email_provider->getModuleName();
+  $mail_plugin_id = $email_provider->getMailPluginId();
+  $mail_plugin_definition = $email_provider->getMailPluginDefinition();
+  if ($module || $mail_plugin_id) {
+    $t_args = [
+      '@module' => $module,
+      '@plugin_id' => $mail_plugin_id,
+      '@plugin_label' => $mail_plugin_definition['label'],
+      '@plugin_description' => $mail_plugin_definition['description'],
+    ];
+    $requirements['yamlform_email'] = [
+      'title' => t('YAML Form: HTML email support'),
+      'value' => ($module) ? t('Provided by the @module module.', $t_args) : t('Provided by @plugin_id mail plugin.', $t_args),
+      'description' => new FormattableMarkup('@plugin_label: @plugin_description', $t_args),
+      'severity' => REQUIREMENT_OK,
+    ];
+  }
+  else {
+    $requirements['yamlform_email'] = [
+      'title' => t('YAML Form: HTML email support'),
+      'value' => t('Unable to determine email module and/or provider'),
+      'severity' => REQUIREMENT_ERROR,
+    ];
+  }
+
+  // Check private file upload.
+  $scheme_options = ManagedFile::getVisibleStreamWrappers();
+  if (isset($scheme_options['private'])) {
+    $requirements['yamlform_file_private'] = [
+      'title' => t('YAML Form: Private files'),
+      'value' => t('Private file system is set.'),
+    ];
+  }
+  else {
+    $requirements['yamlform_file_private'] = [
+      'title' => t('YAML Form: Private files'),
+      'value' => t('Private file system is not set.'),
+      'description' => t('This must be changed in <a href="https://www.drupal.org/documentation/modules/file">settings.php</a>. For more information see: <a href="https://www.drupal.org/psa-2016-003">DRUPAL-PSA-2016-003</a>'),
+      'severity' => REQUIREMENT_WARNING,
+    ];
+  }
+
+  // Check third party libraries status.
+  /** @var \Drupal\yamlform\YamlFormLibrariesManagerInterface $libraries_manager */
+  $libraries_manager = \Drupal::service('yamlform.libraries_manager');
+  $requirements += $libraries_manager->requirements();
+
+  return $requirements;
+}
+
+/******************************************************************************/
+// Helper functions
+/******************************************************************************/
+
+/**
+ * Update admin settings to reflect changes in the default settings.
+ *
+ * This function is used to apply new admin settings (in yamlform.settings.yml).
+ * If you are moving or updating any admin settings this must be explicitly
+ * done via an update hook.
+ */
+function _yamlform_update_admin_settings() {
+  $admin_config = \Drupal::configFactory()->getEditable('yamlform.settings');
+
+  $current_settings = $admin_config->getRawData();
+  $admin_settings = Yaml::decode(file_get_contents(drupal_get_path('module', 'yamlform') . '/config/install/yamlform.settings.yml'));
+  // Note, admin settings are always grouped into associative array,
+  // except for the langcode.
+  foreach ($admin_settings as $group => $settings) {
+    // Handle the rare case the we are adding a new group the admin settings.
+    if (!isset($current_settings[$group])) {
+      continue;
+    }
+
+    // Completely copy the format, langcode, and third_party_settings.
+    if (in_array($group, ['format', 'langcode', 'third_party_settings'])) {
+      if (isset($current_settings[$group])) {
+        $admin_settings[$group] = $current_settings[$group];
+      }
+    }
+    else {
+      // Loop through the group's settings and apply all existing settings to
+      // the default admin settings.
+      foreach ($settings as $name => $value) {
+        if (isset($current_settings[$group][$name])) {
+          $admin_settings[$group][$name] = $current_settings[$group][$name];
+        }
+      }
+    }
+  }
+  $admin_config->setData($admin_settings)->save();
+}
+
+/**
+ * Update form setting to reflect changes in the default settings.
+ *
+ * This function can be used to apply new form settings to all existing
+ * forms.
+ *
+ * @see \Drupal\yamlform\Entity\YamlForm::setSettings
+ */
+function _yamlform_update_form_settings() {
+  $default_properties = [
+    'langcode' => 'en',
+    'status' => TRUE,
+    'dependencies' => [],
+    'uid' => '',
+    'template' => FALSE,
+    'id' => '',
+    'title' => '',
+    'description' => '',
+    'elements' => '',
+    'css' => '',
+    'javascript' => '',
+    'settings' => [],
+    'access' => [],
+    'handlers' => [],
+  ];
+
+  $default_settings = YamlForm::getDefaultSettings();
+  $config_factory = \Drupal::configFactory();
+  // Update 'yamlform.yamlform.*' configuration.
+  foreach ($config_factory->listAll('yamlform.yamlform.') as $yamlform_config_name) {
+    $yamlform_config = $config_factory->getEditable($yamlform_config_name);
+
+    // Get data.
+    $data = $yamlform_config->getRawData();
+
+    // Always apply the default properties.
+    $properties = $default_properties;
+    // Now apply defined properties.
+    foreach ($data as $name => $value) {
+      $properties[$name] = $value;
+    }
+    // Set properties.
+    $data = $properties;
+
+    // Always apply the default settings.
+    $settings = $default_settings;
+    // Now apply custom settings.
+    foreach ($data['settings'] as $name => $value) {
+      $settings[$name] = $value;
+    }
+    // Set settings.
+    $data['settings'] = $settings;
+
+    // Save data.
+    $yamlform_config->setData($data)->save();
+  }
+}

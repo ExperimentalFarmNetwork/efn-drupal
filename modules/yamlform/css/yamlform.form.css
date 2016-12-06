@@ -1,0 +1,33 @@
+/**
+ * @file
+ * Form styles.
+ */
+
+/**
+ * Container inline
+ */
+.form-item .container-inline {
+  margin: 2px 0;
+}
+
+/**
+ * Element inline
+ */
+.yamlform-element--title-inline label {
+  display: inline;
+}
+
+.yamlform-element--title-inline label {
+  padding-right: 0.5em;
+}
+
+.yamlform-element--title-inline label::after {
+  content: ':';
+}
+
+/**
+ * Readonly
+ */
+.yamlform-readonly {
+  background-color: #f0f0f0;
+}

@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - yamlform
+id: time_zones
+label: 'Time zones'
+options: ''

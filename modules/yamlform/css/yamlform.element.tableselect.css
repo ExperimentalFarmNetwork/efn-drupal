@@ -1,0 +1,9 @@
+/**
+ * @file
+ * Table select element styles.
+ */
+
+.tableselect th:first-child,
+.tableselect td:first-child {
+  width: 1px;
+}

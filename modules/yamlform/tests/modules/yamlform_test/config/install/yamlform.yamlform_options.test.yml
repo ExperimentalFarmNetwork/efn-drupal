@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - yamlform_test
+id: test
+label: Test
+options: ''
