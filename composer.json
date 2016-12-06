@@ -24,7 +24,8 @@
         "drupal/yamlform": "1.0-beta25",
         "drupal/default_content": "1.0-alpha3",
         "drupal/chosen": "2.1",
-        "drupal/select_or_other": "1.x-dev"
+        "drupal/select_or_other": "1.x-dev",
+        "drupal/leaflet": "1.x-dev"
     },
     "replace": {
         "drupal/core": "~8.2"
@@ -64,6 +65,18 @@
         "drupal": {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
+        },
+        "leaflet": {
+            "type": "package",
+            "package": {
+                "name": "leaflet/leaflet",
+                "version": "v0.7.7",
+                "type": "drupal-library",
+                "dist": {
+                    "url": "https://github.com/Leaflet/Leaflet/archive/v0.7.7.zip",
+                    "type": "zip"
+                }
+            }
         }
     }
 }
