@@ -1,0 +1,9 @@
+/**
+ * @file
+ * image file styles.
+ */
+
+img.yamlform-image-file {
+  max-width: 100%;
+  height: auto;
+}

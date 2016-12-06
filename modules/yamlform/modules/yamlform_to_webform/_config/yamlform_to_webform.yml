@@ -1,0 +1,77 @@
+replace:
+  pre_strings:
+    'YAMLFORM': 'WEBFORM'
+    'YAML Form': 'Webform'
+    'YAML form': 'Webform'
+    'YamlForm': 'Webform'
+    'Yamlform': 'Webform'
+    'yamlform': 'webform'
+
+  pre_paths: { }
+
+  post_strings:
+    # Code
+    '"webform" = {': '"form" = {'
+    "$this->assertCssSelect('webform": "$this->assertCssSelect('form"
+    # Text
+    'Webform validation': 'Form validation'
+    'Webform API (FAPI)': 'Form API (FAPI)'
+    'structure of the webform.': 'structure of the form.'
+    'The current state of the webform.': 'The current state of the form.'
+    'This webform is closed.': 'This form is closed.'
+    'This webform is confidential': 'This form is confidential'
+    'A partially-completed webform was found.': 'A partially-completed form was found.'
+    'Sorry...This webform is closed to new submissions.': 'Sorry...This form is closed to new submissions.'
+    'Go back to webform': 'Go back to form'
+    'Back to webform': 'Back to form'
+    'Webform display': 'Form display'
+    '<p>This is only displayed on the webform view.</p>': '<p>This is only displayed on the form view.</p>'
+    '<p>This is displayed on the both the webform and submission view.</p>': '<p>This is displayed on the both the form and submission view.</p>'
+
+  post_paths:
+    'webform.links.task.yml':
+      "title: 'Webforms'": "title: 'Forms'"
+    'webform.api.php':
+      'String representing the name of the webform itself.': 'String representing the name of the form itself.'
+      'webform submission webform': 'webform submission form'
+      'Nested array of webform elements that comprise the webform.': 'Nested array of form elements that comprise the webform.'
+    'config/install/webform.settings.yml':
+      ' webform ': ' form '
+    'drush/webform.drush.inc':
+      "'aliases' => ['yf": "'aliases' => ['wf"
+    'includes/webform.help.inc':
+      "  'youtube_id' => '": "  // 'youtube_id' => '"
+      'The Webforms page lists all available webforms,': 'The Forms page lists all available webforms,'
+    'modules/webform_ui/webform_ui.module':
+      "$handlers['webform']": "$handlers['form']"
+      "setHandlerClass('webform', $handlers['form']);": "setHandlerClass('form', $handlers['form']);"
+    'modules/webform_devel/webform_devel.module':
+      "$handlers['webform']": "$handlers['form']"
+      "setHandlerClass('webform', $handlers['form']);": "setHandlerClass('form', $handlers['form']);"
+      'The Export (form) page': 'The Export (Webform) page'
+    'src/WebformAddonsManager.php':
+      'Webform Queue': 'YAML Form Queue'
+      'webform_queue': 'yamlform_queue'
+      'webform_migrate': 'yamlform_migrate'
+      'Webform Migrate': 'YAML Form Migrate'
+      'webform submissions': 'form submissions'
+      'Drupal 6 Webform module': ' Drupal 6 YAML Form module'
+      'Drupal 8 Webform module': ' Drupal 8 YAML Form module'
+      'Webform MailChimp': 'YAML Form MailChimp'
+      'webform_mailchimp': 'yamlform_mailchimp'
+      ' webforms': ' forms'
+      ' Webforms': ' Forms'
+    'src/WebformEntitySettingsForm.php':
+      'Webform attributes': 'Form attributes'
+      'Webform CSS': 'Form CSS'
+      'The HTTP method with which the webform will be submitted.': 'The HTTP method with which the form will be submitted.'
+    'src/Plugin/WebformElement/WebformMarkupBase.php':
+      "'webform'": "'form'"
+      'webform only': 'form only'
+      "both webform and": "both form and"
+    'src/Tests/WebformSubmissionFormElementTest.php':
+      'Webform prefix': 'Form prefix'
+      'Webform suffix': 'Form suffix'
+    'tests/modules/webform_test/config/install/webform.webform.test_form_properties.yml':
+      'Webform prefix': 'Form prefix'
+      'Webform suffix': 'Form suffix'

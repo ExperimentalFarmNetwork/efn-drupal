@@ -1,0 +1,6 @@
+yamlform_test.remote_post:
+  path: '/yamlform_test/remote_post/{type}'
+  defaults:
+    _controller: '\Drupal\yamlform_test\Controller\YamlFormTestRemotePostController::index'
+  requirements:
+    _access: 'TRUE'

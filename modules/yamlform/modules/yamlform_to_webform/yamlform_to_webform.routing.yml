@@ -1,0 +1,7 @@
+yamlform_to_webform.migrate:
+  path: '/admin/structure/yamlform/migrate'
+  defaults:
+    _form: '\Drupal\yamlform_to_webform\Form\YamlFormToWebformMigrateForm'
+    _title: 'Forms'
+  requirements:
+    _permission: 'administer yamlform'

@@ -1,0 +1,4 @@
+yamlform_to_webform.migrate:
+  title: 'Migrate'
+  route_name: yamlform_to_webform.migrate
+  base_route: entity.yamlform.collection

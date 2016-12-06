@@ -1,0 +1,11 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - yamlform
+id: yes_no
+label: Yes/No
+options: |
+  Yes: Yes
+  No: No

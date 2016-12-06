@@ -1,0 +1,30 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the YAML Form Test module.
+ */
+
+use Drupal\yamlform\Entity\YamlForm;
+
+/**
+ * Implements hook_install().
+ */
+function yamlform_test_install() {
+  global $base_url;
+
+  // Update 'Test: Handler: Remote post' URLs.
+  /** @var \Drupal\yamlform\YamlFormInterface $remote_post_yamlform */
+  $remote_post_yamlform = YamlForm::load('test_handler_remote_post');
+
+  /** @var \Drupal\yamlform\Plugin\YamlFormHandler\RemotePostYamlFormHandler $remote_post_handler */
+  $remote_post_handler = $remote_post_yamlform->getHandler('remote_post');
+  $remote_post_configuration = $remote_post_handler->getConfiguration();
+
+  $remote_post_configuration['settings']['insert_url'] = $base_url . 'yamlform_test/remote_post/insert';
+  $remote_post_configuration['settings']['update_url'] = $base_url . 'yamlform_test/remote_post/update';
+  $remote_post_configuration['settings']['delete_url'] = $base_url . 'yamlform_test/remote_post/delete';
+  $remote_post_handler->setConfiguration($remote_post_configuration);
+
+  $remote_post_yamlform->save();
+}
