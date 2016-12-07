@@ -12,3 +12,7 @@ permissions:
   - 'access content'
   - 'edit own comments'
   - 'access comments'
+  - 'masquerade as any user'
+  - 'masquerade as administrator'
+  - 'masquerade as authenticated'
+  - 'masquerade as volunteer'

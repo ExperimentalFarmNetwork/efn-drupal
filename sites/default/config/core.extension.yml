@@ -15,6 +15,7 @@ module:
   datetime: 0
   dblog: 0
   devel: 0
+  devel_generate: 0
   dynamic_page_cache: 0
   editor: 0
   entity: 0
@@ -31,6 +32,7 @@ module:
   image: 0
   kint: 0
   link: 0
+  masquerade: 0
   menu_link_content: 0
   menu_ui: 0
   node: 0

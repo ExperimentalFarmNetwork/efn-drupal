@@ -1,0 +1,20 @@
+uuid: 04a1fbcf-a12d-4f5d-944a-d1d80364fbcc
+langcode: en
+status: true
+dependencies:
+  module:
+    - masquerade
+  theme:
+    - minimus
+id: masquerade
+theme: minimus
+region: footer
+weight: 0
+provider: null
+plugin: masquerade
+settings:
+  id: masquerade
+  label: Masquerade
+  provider: masquerade
+  label_display: visible
+visibility: {  }
