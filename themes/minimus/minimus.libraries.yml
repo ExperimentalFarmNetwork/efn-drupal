@@ -2,6 +2,8 @@ global-styling:
   css:
     theme:
       css/style.css: {}
+  js:
+    js/skripto.js: {}
 
 bootstrap-scripts:
   js:
