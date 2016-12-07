@@ -1,22 +1,22 @@
-uuid: 6264939c-65ac-472d-88d7-f2e14a57e9b5
+uuid: 84c14a95-9b7f-45f4-97cf-b39ae7fab19b
 langcode: en
 status: true
 dependencies:
   config:
-    - views.view.project_updates
+    - views.view.members_block
   module:
     - group
     - views
   theme:
-    - efn
-id: efn_views_block__project_updates_block_1
-theme: efn
+    - minimus
+id: views_block__members_block_block_1
+theme: minimus
 region: sidebar_second
-weight: -6
+weight: -7
 provider: null
-plugin: 'views_block:project_updates-block_1'
+plugin: 'views_block:members_block-block_1'
 settings:
-  id: 'views_block:project_updates-block_1'
+  id: 'views_block:members_block-block_1'
   label: ''
   provider: views
   label_display: visible

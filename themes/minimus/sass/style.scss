@@ -15,6 +15,11 @@
 // 	background-repeat:repeat-x;
 		
 // }
+
+div.main-container{
+	width:90%;
+}
+
 // Header
 header.navbar-default{
 	.navbar-header{
@@ -24,16 +29,87 @@ header.navbar-default{
 	}
 }
 
+// Project front page
+.view-project{
+	.views-row{
+		.views-col{
+			border: $gray-lighter thin solid;
+			backgorund: $gray-lighter;
+			padding:1em;
+			border-radius:5px;
+			margin:.5rem;	
+			height:250px;
+		}
+	}
+}
+
+.btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle){	
+    font-size: 2rem;
+    border-radius: 5px;
+    padding: 1rem 2rem;
+}
+
 // Project Updates
-.page-node-type-project-update{
+.page-node-type-project-update, .view-id-project_updates_page{
 	.field--name-body{
 
 	}
-	#node-project-update-field-discussion{
-
+	.views-field-changed{
+		color: $gray-light;
+		margin-bottom:.8rem;
 	}
+	.views-field-field-image{
+		float:right;
+		margin:.5rem;
+	}
+	// comments
+	#node-project-update-field-discussion{
+		.js-comment{
+			clear:both;
+			border-top:$gray-lighter thin dashed;
+			margin-bottom:1em;
+			// display:flex;
+			.field--name-field-comment-body{
+				margin-bottom: 1em;
+			}
+			.form-item{
+				h4.label{
+				    font-size: 1em;
+				    font-weight: inherit;
+				    padding-right: 0;
+				}
+			}
+			.view-display-id-user_view{
+						display:none;
+					}
+			.userinfo{
+				// font-size:1rem;
+				float:right;
+				clear:both;
+				width:200px;
+				border:$gray-lighter thin solid;
+				padding:.5rem;
+
+				.userpic{
+					width:70px;
+					height:100px;
+					background: $gray;
+				}
+				p.submitted{
+					color:$gray-light;
+				}
+				.form-type-item{
+					font-size:1.3rem;
+				}
+			}
+		}
+		h2{
+			clear:both;
+		}
+	}	
 
 }
+
 
 // sidebar
 #block-views-block-project-updates-block-1-2{
@@ -50,3 +126,4 @@ header.navbar-default{
 		}
 	}
 }
+

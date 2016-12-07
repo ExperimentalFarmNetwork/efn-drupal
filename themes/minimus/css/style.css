@@ -4219,7 +4219,7 @@ tbody.collapse.in {
   font-size: 75%;
   font-weight: bold;
   line-height: 1;
-  color: #fff;
+  color: #777777;
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
@@ -6340,8 +6340,59 @@ p:last-child,
   .help-block:first-child, .control-group .help-inline:first-child {
     margin-top: 0; }
 
+div.main-container {
+  width: 90%; }
+
 header.navbar-default .navbar-header .logo img {
   width: 50px; }
+
+.view-project .views-row .views-col {
+  border: #eeeeee thin solid;
+  backgorund: #eeeeee;
+  padding: 1em;
+  border-radius: 5px;
+  margin: .5rem;
+  height: 250px; }
+
+.btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
+  font-size: 2rem;
+  border-radius: 5px;
+  padding: 1rem 2rem; }
+
+.page-node-type-project-update .views-field-changed, .view-id-project_updates_page .views-field-changed {
+  color: #777777;
+  margin-bottom: .8rem; }
+.page-node-type-project-update .views-field-field-image, .view-id-project_updates_page .views-field-field-image {
+  float: right;
+  margin: .5rem; }
+.page-node-type-project-update #node-project-update-field-discussion .js-comment, .view-id-project_updates_page #node-project-update-field-discussion .js-comment {
+  clear: both;
+  border-top: #eeeeee thin dashed;
+  margin-bottom: 1em; }
+  .page-node-type-project-update #node-project-update-field-discussion .js-comment .field--name-field-comment-body, .view-id-project_updates_page #node-project-update-field-discussion .js-comment .field--name-field-comment-body {
+    margin-bottom: 1em; }
+  .page-node-type-project-update #node-project-update-field-discussion .js-comment .form-item h4.label, .view-id-project_updates_page #node-project-update-field-discussion .js-comment .form-item h4.label {
+    font-size: 1em;
+    font-weight: inherit;
+    padding-right: 0; }
+  .page-node-type-project-update #node-project-update-field-discussion .js-comment .view-display-id-user_view, .view-id-project_updates_page #node-project-update-field-discussion .js-comment .view-display-id-user_view {
+    display: none; }
+  .page-node-type-project-update #node-project-update-field-discussion .js-comment .userinfo, .view-id-project_updates_page #node-project-update-field-discussion .js-comment .userinfo {
+    float: right;
+    clear: both;
+    width: 200px;
+    border: #eeeeee thin solid;
+    padding: .5rem; }
+    .page-node-type-project-update #node-project-update-field-discussion .js-comment .userinfo .userpic, .view-id-project_updates_page #node-project-update-field-discussion .js-comment .userinfo .userpic {
+      width: 70px;
+      height: 100px;
+      background: #555555; }
+    .page-node-type-project-update #node-project-update-field-discussion .js-comment .userinfo p.submitted, .view-id-project_updates_page #node-project-update-field-discussion .js-comment .userinfo p.submitted {
+      color: #777777; }
+    .page-node-type-project-update #node-project-update-field-discussion .js-comment .userinfo .form-type-item, .view-id-project_updates_page #node-project-update-field-discussion .js-comment .userinfo .form-type-item {
+      font-size: 1.3rem; }
+.page-node-type-project-update #node-project-update-field-discussion h2, .view-id-project_updates_page #node-project-update-field-discussion h2 {
+  clear: both; }
 
 #block-views-block-project-updates-block-1-2 .item-list ul {
   padding-left: 0; }

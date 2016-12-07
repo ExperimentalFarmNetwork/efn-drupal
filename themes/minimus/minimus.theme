@@ -5,3 +5,10 @@
  *
  * Place your custom PHP code in this file.
  */
+
+// function minimus_preprocess_page(&$variables) {
+// 	kint($variables['node']);
+//   if(isset($variables['node']) && ($variables['node']['values']->type == "project_update") {
+  	
+//   }
+// }

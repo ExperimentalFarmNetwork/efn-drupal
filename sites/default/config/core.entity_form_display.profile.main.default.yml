@@ -12,9 +12,12 @@ dependencies:
     - field.field.profile.main.field_full_name
     - field.field.profile.main.field_location
     - field.field.profile.main.field_location_geo
+    - field.field.profile.main.field_user_image
+    - image.style.thumbnail
     - profile.type.main
   module:
     - address
+    - image
 id: profile.main.default
 targetEntityType: profile
 bundle: main
@@ -84,5 +87,12 @@ content:
       default_country: US
     third_party_settings: {  }
     type: address_default
+  field_user_image:
+    weight: 1
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
 hidden:
   field_location_geo: true

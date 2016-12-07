@@ -12,10 +12,13 @@ dependencies:
     - field.field.profile.main.field_full_name
     - field.field.profile.main.field_location
     - field.field.profile.main.field_location_geo
+    - field.field.profile.main.field_user_image
+    - image.style.large
     - profile.type.main
   module:
     - address
     - leaflet
+    - image
     - options
 id: profile.main.default
 targetEntityType: profile
@@ -101,4 +104,12 @@ content:
           'y': 0
     third_party_settings: {  }
     type: leaflet_formatter_default
+  field_user_image:
+    weight: 0
+    label: hidden
+    settings:
+      image_style: large
+      image_link: ''
+    third_party_settings: {  }
+    type: image
 hidden: {  }
