@@ -1,0 +1,32 @@
+uuid: 1d92d14b-cb49-43e7-b67a-0e66182102fc
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_phone
+    - profile.type.researcher
+  module:
+    - geocoder_field
+third_party_settings:
+  geocoder_field:
+    method: none
+    field: field_address
+    plugins: {  }
+    dumper: wkt
+    delta_handling: default
+    failure:
+      handling: preserve
+      status_message: true
+      log: true
+id: profile.researcher.field_phone
+field_name: field_phone
+entity_type: profile
+bundle: researcher
+label: Phone
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

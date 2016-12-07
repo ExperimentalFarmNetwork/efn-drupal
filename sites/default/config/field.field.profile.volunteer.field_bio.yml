@@ -9,9 +9,9 @@ id: profile.volunteer.field_bio
 field_name: field_bio
 entity_type: profile
 bundle: volunteer
-label: Bio
-description: 'Please provide a short description of your background, skills, interests, and why you are excited about working with EFN.'
-required: false
+label: 'Volunteer Background'
+description: 'Please briefly describe yourself.'
+required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''

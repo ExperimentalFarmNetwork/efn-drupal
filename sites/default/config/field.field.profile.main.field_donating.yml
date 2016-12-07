@@ -1,0 +1,25 @@
+uuid: a222c025-f21b-4d00-8b00-d59010fc847a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_donating
+    - profile.type.main
+  module:
+    - options
+    - profile
+third_party_settings:
+  profile:
+    profile_private: true
+id: profile.main.field_donating
+field_name: field_donating
+entity_type: profile
+bundle: main
+label: Donating
+description: 'Any and all resources donated to EFN are tax-deductible and will be used to further the goals of the network, including preserving farmland, supporting small farmers, and connecting would-be farmers with land and mentorship opportunities. Please check all that apply and include relevant details in "Other" field. Thank you.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

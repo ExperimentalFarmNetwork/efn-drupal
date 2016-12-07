@@ -1,0 +1,54 @@
+{
+    "_links": {
+        "self": {
+            "href": "http:\/\/default\/taxonomy\/term\/37?_format=hal_json"
+        },
+        "type": {
+            "href": "http:\/\/drupal.org\/rest\/type\/taxonomy_term\/growing_location_descriptors"
+        }
+    },
+    "tid": [
+        {
+            "value": "37"
+        }
+    ],
+    "uuid": [
+        {
+            "value": "38fefec1-9ab0-4442-9b00-8887d457589f"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en",
+            "lang": "en"
+        }
+    ],
+    "vid": [
+        {
+            "target_id": "growing_location_descriptors"
+        }
+    ],
+    "name": [
+        {
+            "value": "Have seasonal greenhouse space available",
+            "lang": "en"
+        }
+    ],
+    "weight": [
+        {
+            "value": "12"
+        }
+    ],
+    "changed": [
+        {
+            "value": "1481135520",
+            "lang": "en"
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": "1",
+            "lang": "en"
+        }
+    ]
+}

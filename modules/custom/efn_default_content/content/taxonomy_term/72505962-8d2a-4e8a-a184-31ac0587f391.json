@@ -1,0 +1,54 @@
+{
+    "_links": {
+        "self": {
+            "href": "http:\/\/default\/taxonomy\/term\/43?_format=hal_json"
+        },
+        "type": {
+            "href": "http:\/\/drupal.org\/rest\/type\/taxonomy_term\/gmos"
+        }
+    },
+    "tid": [
+        {
+            "value": "43"
+        }
+    ],
+    "uuid": [
+        {
+            "value": "72505962-8d2a-4e8a-a184-31ac0587f391"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en",
+            "lang": "en"
+        }
+    ],
+    "vid": [
+        {
+            "target_id": "gmos"
+        }
+    ],
+    "name": [
+        {
+            "value": "Cotton within 1\/4 mile",
+            "lang": "en"
+        }
+    ],
+    "weight": [
+        {
+            "value": "4"
+        }
+    ],
+    "changed": [
+        {
+            "value": "1481136047",
+            "lang": "en"
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": "1",
+            "lang": "en"
+        }
+    ]
+}

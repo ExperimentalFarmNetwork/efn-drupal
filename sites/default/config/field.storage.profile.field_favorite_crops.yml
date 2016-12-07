@@ -1,0 +1,19 @@
+uuid: 068e8fc3-94ff-4a9e-a440-0a81138eea82
+langcode: en
+status: true
+dependencies:
+  module:
+    - profile
+id: profile.field_favorite_crops
+field_name: field_favorite_crops
+entity_type: profile
+type: string_long
+settings:
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

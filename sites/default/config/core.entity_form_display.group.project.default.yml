@@ -10,7 +10,6 @@ dependencies:
     - field.field.group.project.field_privacy
     - field.field.group.project.field_project_summary
     - field.field.group.project.field_project_type
-    - field.field.group.project.field_project_type_other
     - field.field.group.project.field_researcher_background
     - field.field.group.project.field_seeking_volunteers
     - field.field.group.project.field_tags
@@ -73,13 +72,6 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: options_buttons
-  field_project_type_other:
-    weight: 7
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
   field_researcher_background:
     weight: 8
     settings:

@@ -1,0 +1,54 @@
+{
+    "_links": {
+        "self": {
+            "href": "http:\/\/default\/taxonomy\/term\/46?_format=hal_json"
+        },
+        "type": {
+            "href": "http:\/\/drupal.org\/rest\/type\/taxonomy_term\/gmos"
+        }
+    },
+    "tid": [
+        {
+            "value": "46"
+        }
+    ],
+    "uuid": [
+        {
+            "value": "7f323d1a-bc2b-4a65-bd66-e744fc09a876"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en",
+            "lang": "en"
+        }
+    ],
+    "vid": [
+        {
+            "target_id": "gmos"
+        }
+    ],
+    "name": [
+        {
+            "value": "Other known or suspected GMO crops",
+            "lang": "en"
+        }
+    ],
+    "weight": [
+        {
+            "value": "8"
+        }
+    ],
+    "changed": [
+        {
+            "value": "1481136047",
+            "lang": "en"
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": "1",
+            "lang": "en"
+        }
+    ]
+}

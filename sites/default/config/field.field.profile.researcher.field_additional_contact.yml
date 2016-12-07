@@ -1,0 +1,19 @@
+uuid: cdf881bf-41d7-42e9-8df2-f76075b3c1ea
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_additional_contact
+    - profile.type.researcher
+id: profile.researcher.field_additional_contact
+field_name: field_additional_contact
+entity_type: profile
+bundle: researcher
+label: 'Additional Contact Information'
+description: 'Any details for your public contact information not provided in the previous fields.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

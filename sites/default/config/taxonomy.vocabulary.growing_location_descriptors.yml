@@ -1,0 +1,9 @@
+uuid: c048d3dd-82f3-4c84-8f71-332acc4fa42d
+langcode: en
+status: true
+dependencies: {  }
+name: 'Growing Location Descriptors'
+vid: growing_location_descriptors
+description: ''
+hierarchy: 0
+weight: 0

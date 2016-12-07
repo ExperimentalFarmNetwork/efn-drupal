@@ -14,7 +14,7 @@
         "drupal/entity": "1.x-dev",
         "drupal/features": "3.x-dev",
         "drupal/geocoder": "2.x-dev",
-        "drupal/geofield": "1.x-dev",
+        "drupal/geofield": "1.0-alpha2",
         "drupal/geophp": "1.x-dev",
         "drupal/group": "1.x-dev",
         "drupal/profile": "1.x-dev",
@@ -24,7 +24,11 @@
         "drupal/yamlform": "1.0-beta25",
         "drupal/default_content": "1.0-alpha3",
         "drupal/chosen": "2.1",
-        "drupal/select_or_other": "1.x-dev"
+        "drupal/select_or_other": "1.x-dev",
+        "drupal/leaflet": "1.x-dev",
+        "drupal/field_group": "1.0-rc6",
+        "drupal/field_states_ui": "1.x-dev",
+        "doctrine/common": "2.5.3"
     },
     "replace": {
         "drupal/core": "~8.2"
@@ -64,6 +68,18 @@
         "drupal": {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
+        },
+        "leaflet": {
+            "type": "package",
+            "package": {
+                "name": "leaflet/leaflet",
+                "version": "v0.7.7",
+                "type": "drupal-library",
+                "dist": {
+                    "url": "https://github.com/Leaflet/Leaflet/archive/v0.7.7.zip",
+                    "type": "zip"
+                }
+            }
         }
     }
 }

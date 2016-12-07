@@ -1,0 +1,32 @@
+uuid: 759cf0f3-952e-44fc-9de1-29742b457d6a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_crops_quarter_mile
+    - profile.type.volunteer
+  module:
+    - geocoder_field
+third_party_settings:
+  geocoder_field:
+    method: none
+    field: field_location
+    plugins: {  }
+    dumper: wkt
+    delta_handling: default
+    failure:
+      handling: preserve
+      status_message: true
+      log: true
+id: profile.volunteer.field_crops_quarter_mile
+field_name: field_crops_quarter_mile
+entity_type: profile
+bundle: volunteer
+label: 'Neighbors'' Crops (within 1/4 mile)'
+description: 'What crops do you know your neighbors grow within 1/4 mile of your growing location?'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

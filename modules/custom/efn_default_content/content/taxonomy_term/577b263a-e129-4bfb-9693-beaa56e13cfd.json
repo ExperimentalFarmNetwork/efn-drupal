@@ -1,0 +1,54 @@
+{
+    "_links": {
+        "self": {
+            "href": "http:\/\/default\/taxonomy\/term\/26?_format=hal_json"
+        },
+        "type": {
+            "href": "http:\/\/drupal.org\/rest\/type\/taxonomy_term\/growing_location_descriptors"
+        }
+    },
+    "tid": [
+        {
+            "value": "26"
+        }
+    ],
+    "uuid": [
+        {
+            "value": "577b263a-e129-4bfb-9693-beaa56e13cfd"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en",
+            "lang": "en"
+        }
+    ],
+    "vid": [
+        {
+            "target_id": "growing_location_descriptors"
+        }
+    ],
+    "name": [
+        {
+            "value": "Partial shade",
+            "lang": "en"
+        }
+    ],
+    "weight": [
+        {
+            "value": "1"
+        }
+    ],
+    "changed": [
+        {
+            "value": "1481135520",
+            "lang": "en"
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": "1",
+            "lang": "en"
+        }
+    ]
+}

@@ -1,0 +1,34 @@
+uuid: 9669423f-7f37-4de6-98cf-e9c2c826b68d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_location_geo
+    - profile.type.main
+  module:
+    - geocoder_field
+    - geofield
+third_party_settings:
+  geocoder_field:
+    method: source
+    field: field_location
+    plugins:
+      - googlemaps
+    dumper: wkt
+    delta_handling: default
+    failure:
+      handling: preserve
+      status_message: true
+      log: true
+id: profile.main.field_location_geo
+field_name: field_location_geo
+entity_type: profile
+bundle: main
+label: Location
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: geofield

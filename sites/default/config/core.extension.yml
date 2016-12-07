@@ -14,23 +14,32 @@ module:
   contextual: 0
   datetime: 0
   dblog: 0
+  default_content: 0
   devel: 0
   devel_generate: 0
   dynamic_page_cache: 0
   editor: 0
+  efn_default_content: 0
   entity: 0
   field: 0
+  field_group: 0
+  field_states_ui: 0
   field_ui: 0
   file: 0
   filter: 0
   geocoder: 0
+  geocoder_address: 0
+  geocoder_field: 0
+  geocoder_geofield: 0
   geofield: 0
   geophp: 0
   gnode: 0
   group: 0
+  hal: 0
   help: 0
   image: 0
   kint: 0
+  leaflet: 0
   link: 0
   masquerade: 0
   menu_link_content: 0
@@ -41,7 +50,9 @@ module:
   path: 0
   profile: 0
   quickedit: 0
+  rest: 0
   select_or_other: 0
+  serialization: 0
   system: 0
   taxonomy: 0
   text: 0

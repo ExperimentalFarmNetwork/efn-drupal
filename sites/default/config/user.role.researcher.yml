@@ -1,0 +1,9 @@
+uuid: 3ac00c01-ec10-4ee5-873f-3deab0faef05
+langcode: en
+status: true
+dependencies: {  }
+id: researcher
+label: Researcher
+weight: 4
+is_admin: null
+permissions: {  }

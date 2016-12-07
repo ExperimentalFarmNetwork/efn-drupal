@@ -1,0 +1,54 @@
+{
+    "_links": {
+        "self": {
+            "href": "http:\/\/default\/taxonomy\/term\/36?_format=hal_json"
+        },
+        "type": {
+            "href": "http:\/\/drupal.org\/rest\/type\/taxonomy_term\/growing_location_descriptors"
+        }
+    },
+    "tid": [
+        {
+            "value": "36"
+        }
+    ],
+    "uuid": [
+        {
+            "value": "8ba66714-60b7-4be8-80af-68c8d70df5d2"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en",
+            "lang": "en"
+        }
+    ],
+    "vid": [
+        {
+            "target_id": "growing_location_descriptors"
+        }
+    ],
+    "name": [
+        {
+            "value": "Rural",
+            "lang": "en"
+        }
+    ],
+    "weight": [
+        {
+            "value": "11"
+        }
+    ],
+    "changed": [
+        {
+            "value": "1481135520",
+            "lang": "en"
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": "1",
+            "lang": "en"
+        }
+    ]
+}

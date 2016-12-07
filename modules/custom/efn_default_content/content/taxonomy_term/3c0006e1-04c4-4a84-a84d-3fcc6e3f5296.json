@@ -1,0 +1,54 @@
+{
+    "_links": {
+        "self": {
+            "href": "http:\/\/default\/taxonomy\/term\/28?_format=hal_json"
+        },
+        "type": {
+            "href": "http:\/\/drupal.org\/rest\/type\/taxonomy_term\/growing_location_descriptors"
+        }
+    },
+    "tid": [
+        {
+            "value": "28"
+        }
+    ],
+    "uuid": [
+        {
+            "value": "3c0006e1-04c4-4a84-a84d-3fcc6e3f5296"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en",
+            "lang": "en"
+        }
+    ],
+    "vid": [
+        {
+            "target_id": "growing_location_descriptors"
+        }
+    ],
+    "name": [
+        {
+            "value": "Wet",
+            "lang": "en"
+        }
+    ],
+    "weight": [
+        {
+            "value": "3"
+        }
+    ],
+    "changed": [
+        {
+            "value": "1481135520",
+            "lang": "en"
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": "1",
+            "lang": "en"
+        }
+    ]
+}

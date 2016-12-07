@@ -10,7 +10,6 @@ dependencies:
     - field.field.group.project.field_privacy
     - field.field.group.project.field_project_summary
     - field.field.group.project.field_project_type
-    - field.field.group.project.field_project_type_other
     - field.field.group.project.field_researcher_background
     - field.field.group.project.field_seeking_volunteers
     - field.field.group.project.field_tags
@@ -71,13 +70,6 @@ content:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
-  field_project_type_other:
-    weight: 7
-    label: above
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
   field_researcher_background:
     weight: 8
     label: above

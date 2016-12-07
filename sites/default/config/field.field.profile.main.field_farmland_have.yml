@@ -1,0 +1,25 @@
+uuid: 1ed13d91-3caf-40fd-9de2-694e50dc5e9b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_farmland_have
+    - profile.type.main
+  module:
+    - options
+    - profile
+third_party_settings:
+  profile:
+    profile_private: true
+id: profile.main.field_farmland_have
+field_name: field_farmland_have
+entity_type: profile
+bundle: main
+label: 'Do you have farmland in need of people to farm it?'
+description: 'Check all that apply. Provide details in "Other" field.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

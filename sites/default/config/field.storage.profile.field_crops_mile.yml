@@ -1,0 +1,21 @@
+uuid: 64ebf887-948a-466f-8d7f-2924a1bb2098
+langcode: en
+status: true
+dependencies:
+  module:
+    - profile
+id: profile.field_crops_mile
+field_name: field_crops_mile
+entity_type: profile
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

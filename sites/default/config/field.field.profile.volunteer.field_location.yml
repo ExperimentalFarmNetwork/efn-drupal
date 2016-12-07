@@ -1,0 +1,49 @@
+uuid: 6c033357-6140-4457-9c18-a434e08f8d1d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_location
+    - profile.type.volunteer
+  module:
+    - address
+id: profile.volunteer.field_location
+field_name: field_location
+entity_type: profile
+bundle: volunteer
+label: 'Growing Location'
+description: 'Help us map the network and make suitable matches'
+required: true
+translatable: true
+default_value:
+  -
+    langcode: null
+    country_code: US
+    administrative_area: ''
+    locality: ''
+    dependent_locality: null
+    postal_code: ''
+    sorting_code: null
+    address_line1: ''
+    address_line2: ''
+    organization: ''
+    given_name: ''
+    additional_name: null
+    family_name: ''
+default_value_callback: ''
+settings:
+  available_countries: {  }
+  fields:
+    postalCode: postalCode
+    administrativeArea: '0'
+    locality: '0'
+    dependentLocality: '0'
+    sortingCode: '0'
+    addressLine1: '0'
+    addressLine2: '0'
+    organization: '0'
+    givenName: '0'
+    additionalName: '0'
+    familyName: '0'
+  langcode_override: ''
+field_type: address

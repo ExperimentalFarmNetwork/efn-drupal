@@ -1,0 +1,28 @@
+uuid: 9077c4b0-4eeb-4fdf-82a4-fd78cc250285
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_soil_type
+    - profile.type.volunteer
+    - taxonomy.vocabulary.soil_type
+id: profile.volunteer.field_soil_type
+field_name: field_soil_type
+entity_type: profile
+bundle: volunteer
+label: 'Soil Type'
+description: 'Which of these best describe your soil? Check all that apply. If you don''t know, check the USDA''s Web Soil Survey: Go to http://bit.ly/25Fsvav and first type in your address. Then use either red "AOI" tool on the interactive map to define the borders of the area you want to examine. Once you''ve done that, click on the "Soil Map" tab at the top of the page to access your results. Please include details in "Other."'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      soil_type: soil_type
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -1739,81 +1739,6 @@
         ]
     },
     {
-        "name": "doctrine/common",
-        "version": "v2.5.3",
-        "version_normalized": "2.5.3.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/doctrine/common.git",
-            "reference": "10f1f19651343f87573129ca970aef1a47a6f29e"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/doctrine/common/zipball/10f1f19651343f87573129ca970aef1a47a6f29e",
-            "reference": "10f1f19651343f87573129ca970aef1a47a6f29e",
-            "shasum": ""
-        },
-        "require": {
-            "doctrine/annotations": "1.*",
-            "doctrine/cache": "1.*",
-            "doctrine/collections": "1.*",
-            "doctrine/inflector": "1.*",
-            "doctrine/lexer": "1.*",
-            "php": ">=5.3.2"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "~3.7"
-        },
-        "time": "2015-12-25 13:10:16",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.5.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "Doctrine\\Common\\": "lib/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Roman Borschel",
-                "email": "roman@code-factory.org"
-            },
-            {
-                "name": "Benjamin Eberlei",
-                "email": "kontakt@beberlei.de"
-            },
-            {
-                "name": "Guilherme Blanco",
-                "email": "guilhermeblanco@gmail.com"
-            },
-            {
-                "name": "Jonathan Wage",
-                "email": "jonwage@gmail.com"
-            },
-            {
-                "name": "Johannes Schmitt",
-                "email": "schmittjoh@gmail.com"
-            }
-        ],
-        "description": "Common Library for Doctrine projects",
-        "homepage": "http://www.doctrine-project.org",
-        "keywords": [
-            "annotations",
-            "collections",
-            "eventmanager",
-            "persistence",
-            "spl"
-        ]
-    },
-    {
         "name": "symfony/routing",
         "version": "v2.8.12",
         "version_normalized": "2.8.12.0",
@@ -5299,53 +5224,6 @@
         }
     },
     {
-        "name": "drupal/geophp",
-        "version": "dev-1.x",
-        "version_normalized": "dev-1.x",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/geophp",
-            "reference": "fdcb4343ce3c4cf71a8ea0f0fd0948038b5ab442"
-        },
-        "require": {
-            "drupal/core": "~8.0"
-        },
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-1.x": "1.x-dev"
-            },
-            "drupal": {
-                "version": "8.x-1.0-beta1+6-dev",
-                "datestamp": "1463084639"
-            }
-        },
-        "installation-source": "source",
-        "notification-url": "https://packages.drupal.org/8/downloads",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "Brandonian",
-                "homepage": "https://www.drupal.org/user/77766"
-            },
-            {
-                "name": "phayes",
-                "homepage": "https://www.drupal.org/user/47098"
-            },
-            {
-                "name": "plopesc",
-                "homepage": "https://www.drupal.org/user/282415"
-            }
-        ],
-        "description": "Wraps the geoPHP library: advanced geometry operations in PHP",
-        "homepage": "https://www.drupal.org/project/geophp",
-        "support": {
-            "source": "http://cgit.drupalcode.org/geophp"
-        }
-    },
-    {
         "name": "drupal/group",
         "version": "dev-1.x",
         "version_normalized": "dev-1.x",
@@ -5602,86 +5480,6 @@
         ],
         "description": "GeoPHP is a open-source native PHP library for doing geometry operations. It is written entirely in PHP and can therefore run on shared hosts. It can read and write a wide variety of formats: WKT (including EWKT), WKB (including EWKB), GeoJSON, KML, GPX, GeoRSS). It works with all Simple-Feature geometries (Point, LineString, Polygon, GeometryCollection etc.) and can be used to get centroids, bounding-boxes, area, and a wide variety of other useful information.",
         "homepage": "https://github.com/phayes/geoPHP"
-    },
-    {
-        "name": "drupal/geofield",
-        "version": "dev-1.x",
-        "version_normalized": "dev-1.x",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/geofield",
-            "reference": "3b4d26f1945410ad95b7f36593c99db7a47b9f78"
-        },
-        "require": {
-            "drupal/core": "~8.0",
-            "phayes/geophp": "dev-master"
-        },
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-1.x": "1.x-dev"
-            },
-            "drupal": {
-                "version": "8.x-1.0-alpha1+19-dev",
-                "datestamp": "1463282946"
-            }
-        },
-        "installation-source": "source",
-        "notification-url": "https://packages.drupal.org/8/downloads",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "Brandon Morrison",
-                "homepage": "https://www.drupal.org/u/brandonian",
-                "role": "Maintainer"
-            },
-            {
-                "name": "Pablo López",
-                "homepage": "https://www.drupal.org/u/plopesc",
-                "role": "Maintainer"
-            },
-            {
-                "name": "chachasikes",
-                "homepage": "https://www.drupal.org/user/50674"
-            },
-            {
-                "name": "davidseth",
-                "homepage": "https://www.drupal.org/user/254857"
-            },
-            {
-                "name": "dtarc",
-                "homepage": "https://www.drupal.org/user/114087"
-            },
-            {
-                "name": "jherencia",
-                "homepage": "https://www.drupal.org/user/360690"
-            },
-            {
-                "name": "nikhiltri",
-                "homepage": "https://www.drupal.org/user/270223"
-            },
-            {
-                "name": "phayes",
-                "homepage": "https://www.drupal.org/user/47098"
-            },
-            {
-                "name": "plopesc",
-                "homepage": "https://www.drupal.org/user/282415"
-            },
-            {
-                "name": "zzolo",
-                "homepage": "https://www.drupal.org/user/147331"
-            }
-        ],
-        "description": "Stores geographic and location data (points, lines, and polygons).",
-        "homepage": "https://www.drupal.org/project/geofield",
-        "support": {
-            "source": "http://git.drupal.org/project/geofield.git",
-            "issues": "https://www.drupal.org/project/issues/geofield",
-            "irc": "irc://irc.freenode.org/drupal-contribute"
-        }
     },
     {
         "name": "symfony/expression-language",
@@ -7123,5 +6921,448 @@
         "support": {
             "source": "http://cgit.drupalcode.org/select_or_other"
         }
+    },
+    {
+        "name": "drupal/geofield",
+        "version": "1.0.0-alpha2",
+        "version_normalized": "1.0.0.0-alpha2",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/geofield",
+            "reference": "8.x-1.0-alpha2"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/geofield-8.x-1.0-alpha2.zip",
+            "reference": null,
+            "shasum": "312100e9f087c6b178eb971c6a8a70919edff7f0"
+        },
+        "require": {
+            "drupal/core": "~8.0",
+            "phayes/geophp": "dev-master"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.0-alpha2",
+                "datestamp": "1464201846"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Brandon Morrison",
+                "homepage": "https://www.drupal.org/u/brandonian",
+                "role": "Maintainer"
+            },
+            {
+                "name": "Pablo López",
+                "homepage": "https://www.drupal.org/u/plopesc",
+                "role": "Maintainer"
+            },
+            {
+                "name": "chachasikes",
+                "homepage": "https://www.drupal.org/user/50674"
+            },
+            {
+                "name": "davidseth",
+                "homepage": "https://www.drupal.org/user/254857"
+            },
+            {
+                "name": "dtarc",
+                "homepage": "https://www.drupal.org/user/114087"
+            },
+            {
+                "name": "jherencia",
+                "homepage": "https://www.drupal.org/user/360690"
+            },
+            {
+                "name": "nikhiltri",
+                "homepage": "https://www.drupal.org/user/270223"
+            },
+            {
+                "name": "phayes",
+                "homepage": "https://www.drupal.org/user/47098"
+            },
+            {
+                "name": "plopesc",
+                "homepage": "https://www.drupal.org/user/282415"
+            },
+            {
+                "name": "zzolo",
+                "homepage": "https://www.drupal.org/user/147331"
+            }
+        ],
+        "description": "Stores geographic and location data (points, lines, and polygons).",
+        "homepage": "https://www.drupal.org/project/geofield",
+        "support": {
+            "source": "http://git.drupal.org/project/geofield.git",
+            "issues": "https://www.drupal.org/project/issues/geofield",
+            "irc": "irc://irc.freenode.org/drupal-contribute"
+        }
+    },
+    {
+        "name": "drupal/geophp",
+        "version": "dev-1.x",
+        "version_normalized": "dev-1.x",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/geophp",
+            "reference": "fdcb4343ce3c4cf71a8ea0f0fd0948038b5ab442"
+        },
+        "require": {
+            "drupal/core": "~8.0"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.0-beta1+6-dev",
+                "datestamp": "1463084639"
+            }
+        },
+        "installation-source": "source",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Brandonian",
+                "homepage": "https://www.drupal.org/user/77766"
+            },
+            {
+                "name": "phayes",
+                "homepage": "https://www.drupal.org/user/47098"
+            },
+            {
+                "name": "plopesc",
+                "homepage": "https://www.drupal.org/user/282415"
+            }
+        ],
+        "description": "Wraps the geoPHP library: advanced geometry operations in PHP",
+        "homepage": "https://www.drupal.org/project/geophp",
+        "support": {
+            "source": "http://cgit.drupalcode.org/geophp"
+        }
+    },
+    {
+        "name": "leaflet/leaflet",
+        "version": "v0.7.7",
+        "version_normalized": "0.7.7.0",
+        "dist": {
+            "type": "zip",
+            "url": "https://github.com/Leaflet/Leaflet/archive/v0.7.7.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "type": "drupal-library",
+        "installation-source": "dist"
+    },
+    {
+        "name": "drupal/leaflet",
+        "version": "dev-1.x",
+        "version_normalized": "dev-1.x",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/leaflet",
+            "reference": "dce98f4b630252375090db05c1789fc060d7f93c"
+        },
+        "require": {
+            "drupal/core": "~8.0",
+            "leaflet/leaflet": "^0.7.7"
+        },
+        "suggest": {
+            "drupal/core": "Required by drupal/leaflet_views"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.0-beta1+1-dev",
+                "datestamp": "1476171839"
+            }
+        },
+        "installation-source": "source",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Peter Vanhee (pvhee)",
+                "homepage": "https://www.drupal.org/u/pvhee",
+                "role": "Maintainer"
+            },
+            {
+                "name": "Rik de Boer (RdeBoer)",
+                "homepage": "https://www.drupal.org/u/rdeboer",
+                "role": "Maintainer"
+            },
+            {
+                "name": "Gabriel Carleton-Barnes (gcb)",
+                "homepage": "https://www.drupal.org/u/gcb",
+                "role": "Maintainer"
+            },
+            {
+                "name": "Lev Tsypin (levelos)",
+                "homepage": "https://www.drupal.org/u/levelos",
+                "role": "Maintainer"
+            },
+            {
+                "name": "Sean Larkin (seanberto)",
+                "homepage": "https://www.drupal.org/u/seanberto",
+                "role": "Maintainer"
+            }
+        ],
+        "description": "Integration with the Leaflet map scripting library.",
+        "homepage": "https://www.drupal.org/project/leaflet",
+        "support": {
+            "source": "http://cgit.drupalcode.org/leaflet",
+            "issues": "https://www.drupal.org/project/issues/leaflet"
+        }
+    },
+    {
+        "name": "drupal/field_group",
+        "version": "1.0.0-rc6",
+        "version_normalized": "1.0.0.0-RC6",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/field_group",
+            "reference": "8.x-1.0-rc6"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/field_group-8.x-1.0-rc6.zip",
+            "reference": null,
+            "shasum": "1ce3c6387e745a04a1099956a5bf39bb50096d44"
+        },
+        "require": {
+            "drupal/core": "*"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.0-rc6",
+                "datestamp": "1480365484"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Hydra",
+                "homepage": "https://www.drupal.org/user/647364"
+            },
+            {
+                "name": "Stalski",
+                "homepage": "https://www.drupal.org/user/322618"
+            },
+            {
+                "name": "jyve",
+                "homepage": "https://www.drupal.org/user/591438"
+            },
+            {
+                "name": "swentel",
+                "homepage": "https://www.drupal.org/user/107403"
+            },
+            {
+                "name": "zuuperman",
+                "homepage": "https://www.drupal.org/user/361625"
+            }
+        ],
+        "description": "Provides the field_group module.",
+        "homepage": "https://www.drupal.org/project/field_group",
+        "support": {
+            "source": "http://cgit.drupalcode.org/field_group"
+        }
+    },
+    {
+        "name": "cweagans/composer-patches",
+        "version": "1.6.0",
+        "version_normalized": "1.6.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/cweagans/composer-patches.git",
+            "reference": "7cd5c6eb7e68b8f7436ce1a7b9fffa4418bf59c6"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/cweagans/composer-patches/zipball/7cd5c6eb7e68b8f7436ce1a7b9fffa4418bf59c6",
+            "reference": "7cd5c6eb7e68b8f7436ce1a7b9fffa4418bf59c6",
+            "shasum": ""
+        },
+        "require": {
+            "composer-plugin-api": "^1.0",
+            "php": ">=5.3.0"
+        },
+        "require-dev": {
+            "composer/composer": "~1.0",
+            "phpunit/phpunit": "~4.6"
+        },
+        "time": "2016-12-01 01:19:32",
+        "type": "composer-plugin",
+        "extra": {
+            "class": "cweagans\\Composer\\Patches"
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "cweagans\\Composer\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-2-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Cameron Eagans",
+                "email": "me@cweagans.net"
+            }
+        ],
+        "description": "Provides a way to patch Composer packages."
+    },
+    {
+        "name": "drupal/field_states_ui",
+        "version": "dev-1.x",
+        "version_normalized": "dev-1.x",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/field_states_ui",
+            "reference": "41af038d8f571212c7268b20508b36d0e0b7ed62"
+        },
+        "require": {
+            "cweagans/composer-patches": "~1.0",
+            "drupal/core": "8.x"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.0-rc2+3-dev",
+                "datestamp": "1478529239"
+            },
+            "patches": {
+                "drupal/core": {
+                    "multi-value field widget hook": "https://www.drupal.org/files/issues/no_hook_to_edit-2822460-2.patch"
+                }
+            }
+        },
+        "installation-source": "source",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Nick Wilde",
+                "homepage": "https://www.drupal.org/u/nickwilde"
+            },
+            {
+                "name": "See other contributors",
+                "homepage": "https://www.drupal.org/node/2776325/committers"
+            }
+        ],
+        "description": "Provides a UI for applying field states.",
+        "homepage": "https://www.drupal.org/project/field_states_ui",
+        "support": {
+            "source": "http://git.drupal.org/project/field_states_ui.git",
+            "issues": "https://www.drupal.org/project/issues/field_states_ui"
+        }
+    },
+    {
+        "name": "doctrine/common",
+        "version": "v2.5.3",
+        "version_normalized": "2.5.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/doctrine/common.git",
+            "reference": "10f1f19651343f87573129ca970aef1a47a6f29e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/doctrine/common/zipball/10f1f19651343f87573129ca970aef1a47a6f29e",
+            "reference": "10f1f19651343f87573129ca970aef1a47a6f29e",
+            "shasum": ""
+        },
+        "require": {
+            "doctrine/annotations": "1.*",
+            "doctrine/cache": "1.*",
+            "doctrine/collections": "1.*",
+            "doctrine/inflector": "1.*",
+            "doctrine/lexer": "1.*",
+            "php": ">=5.3.2"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "~3.7"
+        },
+        "time": "2015-12-25 13:10:16",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.5.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Doctrine\\Common\\": "lib/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Roman Borschel",
+                "email": "roman@code-factory.org"
+            },
+            {
+                "name": "Benjamin Eberlei",
+                "email": "kontakt@beberlei.de"
+            },
+            {
+                "name": "Guilherme Blanco",
+                "email": "guilhermeblanco@gmail.com"
+            },
+            {
+                "name": "Jonathan Wage",
+                "email": "jonwage@gmail.com"
+            },
+            {
+                "name": "Johannes Schmitt",
+                "email": "schmittjoh@gmail.com"
+            }
+        ],
+        "description": "Common Library for Doctrine projects",
+        "homepage": "http://www.doctrine-project.org",
+        "keywords": [
+            "annotations",
+            "collections",
+            "eventmanager",
+            "persistence",
+            "spl"
+        ]
     }
 ]

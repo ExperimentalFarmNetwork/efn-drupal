@@ -4,7 +4,24 @@ status: true
 dependencies:
   config:
     - field.field.profile.volunteer.field_bio
+    - field.field.profile.volunteer.field_crops_mile
+    - field.field.profile.volunteer.field_crops_quarter_mile
+    - field.field.profile.volunteer.field_details
+    - field.field.profile.volunteer.field_favorite_crops
+    - field.field.profile.volunteer.field_gmos
+    - field.field.profile.volunteer.field_growing_experience
+    - field.field.profile.volunteer.field_location
+    - field.field.profile.volunteer.field_location_descriptors
+    - field.field.profile.volunteer.field_location_geo
+    - field.field.profile.volunteer.field_other_limitations
+    - field.field.profile.volunteer.field_soil_details
+    - field.field.profile.volunteer.field_soil_type
+    - field.field.profile.volunteer.field_space_available
+    - field.field.profile.volunteer.field_time_commitment
     - profile.type.volunteer
+  module:
+    - leaflet
+    - options
 id: profile.volunteer.default
 targetEntityType: profile
 bundle: volunteer
@@ -16,4 +33,111 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: basic_string
-hidden: {  }
+  field_crops_mile:
+    weight: 12
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+  field_crops_quarter_mile:
+    weight: 11
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+  field_details:
+    weight: 14
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+  field_favorite_crops:
+    weight: 1
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+  field_gmos:
+    weight: 13
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+  field_growing_experience:
+    weight: 2
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+  field_location_descriptors:
+    weight: 10
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+  field_location_geo:
+    weight: 5
+    label: above
+    settings:
+      leaflet_map: 'OSM Mapnik'
+      height: 400
+      zoom: 10
+      minPossibleZoom: 0
+      maxPossibleZoom: 18
+      minZoom: 0
+      maxZoom: 18
+      popup: false
+      icon:
+        icon_url: ''
+        shadow_url: ''
+        icon_size:
+          x: 0
+          'y': 0
+        icon_anchor:
+          x: 0
+          'y': 0
+        shadow_anchor:
+          x: 0
+          'y': 0
+        popup_anchor:
+          x: 0
+          'y': 0
+    third_party_settings: {  }
+    type: leaflet_formatter_default
+  field_other_limitations:
+    weight: 15
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+  field_soil_details:
+    weight: 8
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+  field_soil_type:
+    weight: 9
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+  field_space_available:
+    weight: 6
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+  field_time_commitment:
+    weight: 3
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+hidden:
+  field_location: true

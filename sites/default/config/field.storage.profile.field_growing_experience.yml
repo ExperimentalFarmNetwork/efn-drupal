@@ -1,0 +1,39 @@
+uuid: c9fd6253-0064-4794-9e85-de9fcc8016d3
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - profile
+id: profile.field_growing_experience
+field_name: field_growing_experience
+entity_type: profile
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: food
+      label: 'Growing food'
+    -
+      value: seeds
+      label: 'Starting seeds'
+    -
+      value: perennials
+      label: 'Growing perennials'
+    -
+      value: pollination
+      label: 'Hand pollination'
+    -
+      value: saving
+      label: Seed-saving
+    -
+      value: breeding
+      label: 'Plant breeding'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

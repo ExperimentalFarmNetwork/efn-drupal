@@ -1,0 +1,54 @@
+{
+    "_links": {
+        "self": {
+            "href": "http:\/\/default\/taxonomy\/term\/48?_format=hal_json"
+        },
+        "type": {
+            "href": "http:\/\/drupal.org\/rest\/type\/taxonomy_term\/gmos"
+        }
+    },
+    "tid": [
+        {
+            "value": "48"
+        }
+    ],
+    "uuid": [
+        {
+            "value": "de8dbaa2-c452-4b0e-a74b-f81bc076d6bc"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en",
+            "lang": "en"
+        }
+    ],
+    "vid": [
+        {
+            "target_id": "gmos"
+        }
+    ],
+    "name": [
+        {
+            "value": "No GMO crops being grown in my neck of the woods",
+            "lang": "en"
+        }
+    ],
+    "weight": [
+        {
+            "value": "9"
+        }
+    ],
+    "changed": [
+        {
+            "value": "1481136047",
+            "lang": "en"
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": "1",
+            "lang": "en"
+        }
+    ]
+}

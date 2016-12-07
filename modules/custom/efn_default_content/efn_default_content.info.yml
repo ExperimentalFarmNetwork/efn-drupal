@@ -1,0 +1,58 @@
+name: 'EFN Default Content'
+type: module
+hidden: FALSE
+description: 'Provides default taxonomy terms and initial dummy content.'
+package: EFN
+core: 8.x
+dependencies:
+  - default_content
+default_content:
+  taxonomy_term:
+    - 01dee834-6cc0-4bd3-b12c-185aede4f3cf
+    - 023ed018-913f-4093-bf75-ee4964f12b9b
+    - 09c99406-8ca8-4caa-a9d2-d88a68239b4e
+    - 0b7f40f5-ffb0-4d4d-9683-8f8ee1680e77
+    - 18e4388d-159b-45ba-98a3-5ae22543e52b
+    - 20d1fe89-804d-4d88-b131-492da45d8347
+    - 279328c5-491d-469c-9086-e6c223b490ec
+    - 3fa9bfa4-5b61-4bf9-a24b-7bd7ed1b601f
+    - 5fc2210b-d7f3-4570-940d-1d9fdfb2f5ee
+    - 61f54274-a586-4cae-beab-fab98db2c13a
+    - 62cba4e9-e70b-47ab-89d4-7e0097c26b40
+    - 73ff643d-55ef-4c58-a5a8-f589673f1e49
+    - 78c7f1e0-5e2a-440c-a074-e42ffe635e52
+    - 89008359-8fae-4cfc-9de0-a53294beb5ea
+    - 89bcb14e-414f-4344-b7dc-ed89c12c453d
+    - 8de7539a-3f5b-4a4a-9dde-f40f2cb8fb4c
+    - 932fd471-7f82-4986-a611-ae1869c83a95
+    - 95680579-2380-4e6a-ab92-5dd32b624153
+    - 9d0be145-a129-4df1-ab33-38b2e815193a
+    - 9dfa6b41-276f-4dbe-b1eb-7641149914d0
+    - ae5e6eaf-a09d-4f60-a3f9-b083a274c7e1
+    - c1542978-d935-405d-8f94-eeee269e3433
+    - cca67309-6957-499b-bc03-60db39fb13f2
+    - fdfbb3aa-126e-432c-afbb-144eaecfc443
+    - bbade4b3-db09-463a-ae01-318bb573fc76
+    - 577b263a-e129-4bfb-9693-beaa56e13cfd
+    - c2076d14-12b4-4757-85b5-b30607618d7a
+    - 3c0006e1-04c4-4a84-a84d-3fcc6e3f5296
+    - 26cf9342-5588-4bb1-840f-df0bd87c41a4
+    - 92cc8fb7-6fc9-48e3-a702-ba9ec347547c
+    - 71f306db-1c61-4e25-8d23-e3493e7a5c3a
+    - bbb6796d-bcdf-4429-8017-efb756f23819
+    - d3d3dfe8-3ddb-4ddc-bd66-e18f8141c0f9
+    - 6f5e0950-dadd-4bdb-8c75-8e1605d7b6b1
+    - cd345880-2324-4ea2-9168-6da86704c0f3
+    - 8ba66714-60b7-4be8-80af-68c8d70df5d2
+    - 38fefec1-9ab0-4442-9b00-8887d457589f
+    - b2c243c8-a83e-4632-8b0c-2e52b4db9446
+    - 607a04c6-cb17-49f8-9793-21e6e01a738e
+    - 8e8ac8c2-b078-4553-8018-4a56dbba6685
+    - 31452a5f-ea9c-47a9-8724-f5417a51fd0c
+    - 5650e330-4822-45ab-9f92-6b6454fcd1b1
+    - 72505962-8d2a-4e8a-a184-31ac0587f391
+    - 901d6c99-ab40-42db-8d34-962f66af1a9a
+    - 60a81356-f07d-41ea-8c5f-45121a8a1b27
+    - 22916840-5e40-460d-91ea-3adc55478196
+    - 7f323d1a-bc2b-4a65-bd66-e744fc09a876
+    - de8dbaa2-c452-4b0e-a74b-f81bc076d6bc

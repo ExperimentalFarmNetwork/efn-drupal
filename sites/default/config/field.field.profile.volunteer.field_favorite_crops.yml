@@ -1,0 +1,19 @@
+uuid: 1d7685d0-ea31-480d-90e4-4ba42fb9fb32
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_favorite_crops
+    - profile.type.volunteer
+id: profile.volunteer.field_favorite_crops
+field_name: field_favorite_crops
+entity_type: profile
+bundle: volunteer
+label: 'Favorite Crops & Least Favorite Crops'
+description: 'What do you like to grow? What grows well for you? What do you not like growing/grows poorly for you?'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

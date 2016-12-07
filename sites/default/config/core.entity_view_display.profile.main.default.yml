@@ -1,18 +1,109 @@
-uuid: 59d79ee7-c2e2-4bc9-a6bd-d188106b5794
+uuid: 7693d8f8-a9e4-4115-a912-c1cd16a17f15
 langcode: en
 status: true
 dependencies:
   config:
+    - field.field.profile.main.field_donating
+    - field.field.profile.main.field_donating_other
+    - field.field.profile.main.field_farmland
+    - field.field.profile.main.field_farmland_details
+    - field.field.profile.main.field_farmland_have
+    - field.field.profile.main.field_farmland_have_details
+    - field.field.profile.main.field_full_name
+    - field.field.profile.main.field_location
+    - field.field.profile.main.field_location_geo
     - field.field.profile.main.field_user_image
     - image.style.large
     - profile.type.main
   module:
+    - address
+    - leaflet
     - image
+    - options
 id: profile.main.default
 targetEntityType: profile
 bundle: main
 mode: default
 content:
+  field_donating:
+    weight: 3
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+  field_donating_other:
+    weight: 6
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+  field_farmland:
+    weight: 4
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+  field_farmland_details:
+    weight: 9
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+  field_farmland_have:
+    weight: 5
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+  field_farmland_have_details:
+    weight: 8
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+  field_full_name:
+    weight: 2
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+  field_location:
+    weight: 0
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: address_default
+  field_location_geo:
+    weight: 1
+    label: above
+    settings:
+      leaflet_map: 'OSM Mapnik'
+      height: 400
+      zoom: 10
+      minPossibleZoom: 0
+      maxPossibleZoom: 18
+      minZoom: 0
+      maxZoom: 18
+      popup: false
+      icon:
+        icon_url: ''
+        shadow_url: ''
+        icon_size:
+          x: 0
+          'y': 0
+        icon_anchor:
+          x: 0
+          'y': 0
+        shadow_anchor:
+          x: 0
+          'y': 0
+        popup_anchor:
+          x: 0
+          'y': 0
+    third_party_settings: {  }
+    type: leaflet_formatter_default
   field_user_image:
     weight: 0
     label: hidden

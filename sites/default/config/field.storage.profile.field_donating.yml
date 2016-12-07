@@ -35,6 +35,9 @@ settings:
     -
       value: money
       label: Money
+    -
+      value: other
+      label: Other
   allowed_values_function: ''
 module: options
 locked: false

@@ -1,4 +1,4 @@
-uuid: e8446d2c-3867-442a-86a6-a74759261fad
+uuid: f22a8bf7-8263-4ab1-a8f1-24d90ec66ddf
 langcode: en
 status: true
 dependencies:
@@ -7,10 +7,8 @@ dependencies:
 id: profile.field_farmland_have_details
 field_name: field_farmland_have_details
 entity_type: profile
-type: string
+type: string_long
 settings:
-  max_length: 255
-  is_ascii: false
   case_sensitive: false
 module: core
 locked: false

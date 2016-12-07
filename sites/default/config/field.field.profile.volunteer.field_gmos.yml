@@ -1,0 +1,28 @@
+uuid: 629f50b5-fc7b-4a8a-b9a1-a5883c38e3ff
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_gmos
+    - profile.type.volunteer
+    - taxonomy.vocabulary.gmos
+id: profile.volunteer.field_gmos
+field_name: field_gmos
+entity_type: profile
+bundle: volunteer
+label: 'Possible GMOs in the neighborhood...'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      gmos: gmos
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

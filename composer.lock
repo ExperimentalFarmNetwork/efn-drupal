@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "13201f254c8a7c088b18b0523da6c315",
-    "content-hash": "029515bf6270603177d996b23f63dbce",
+    "hash": "276b90141afcec690cf1d6ea940ab1bb",
+    "content-hash": "40e23355e510311a62cd713e2710d7b6",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -513,6 +513,50 @@
                 "versioning"
             ],
             "time": "2016-08-30 16:08:34"
+        },
+        {
+            "name": "cweagans/composer-patches",
+            "version": "1.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cweagans/composer-patches.git",
+                "reference": "7cd5c6eb7e68b8f7436ce1a7b9fffa4418bf59c6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cweagans/composer-patches/zipball/7cd5c6eb7e68b8f7436ce1a7b9fffa4418bf59c6",
+                "reference": "7cd5c6eb7e68b8f7436ce1a7b9fffa4418bf59c6",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "composer/composer": "~1.0",
+                "phpunit/phpunit": "~4.6"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "cweagans\\Composer\\Patches"
+            },
+            "autoload": {
+                "psr-4": {
+                    "cweagans\\Composer\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Cameron Eagans",
+                    "email": "me@cweagans.net"
+                }
+            ],
+            "description": "Provides a way to patch Composer packages.",
+            "time": "2016-12-01 01:19:32"
         },
         {
             "name": "dflydev/dot-access-configuration",
@@ -1977,6 +2021,114 @@
             }
         },
         {
+            "name": "drupal/field_group",
+            "version": "1.0.0-rc6",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/field_group",
+                "reference": "8.x-1.0-rc6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/field_group-8.x-1.0-rc6.zip",
+                "reference": null,
+                "shasum": "1ce3c6387e745a04a1099956a5bf39bb50096d44"
+            },
+            "require": {
+                "drupal/core": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.0-rc6",
+                    "datestamp": "1480365484"
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Hydra",
+                    "homepage": "https://www.drupal.org/user/647364"
+                },
+                {
+                    "name": "Stalski",
+                    "homepage": "https://www.drupal.org/user/322618"
+                },
+                {
+                    "name": "jyve",
+                    "homepage": "https://www.drupal.org/user/591438"
+                },
+                {
+                    "name": "swentel",
+                    "homepage": "https://www.drupal.org/user/107403"
+                },
+                {
+                    "name": "zuuperman",
+                    "homepage": "https://www.drupal.org/user/361625"
+                }
+            ],
+            "description": "Provides the field_group module.",
+            "homepage": "https://www.drupal.org/project/field_group",
+            "support": {
+                "source": "http://cgit.drupalcode.org/field_group"
+            }
+        },
+        {
+            "name": "drupal/field_states_ui",
+            "version": "dev-1.x",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/field_states_ui",
+                "reference": "41af038d8f571212c7268b20508b36d0e0b7ed62"
+            },
+            "require": {
+                "cweagans/composer-patches": "~1.0",
+                "drupal/core": "8.x"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.0-rc2+3-dev",
+                    "datestamp": "1478529239"
+                },
+                "patches": {
+                    "drupal/core": {
+                        "multi-value field widget hook": "https://www.drupal.org/files/issues/no_hook_to_edit-2822460-2.patch"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Nick Wilde",
+                    "homepage": "https://www.drupal.org/u/nickwilde"
+                },
+                {
+                    "name": "See other contributors",
+                    "homepage": "https://www.drupal.org/node/2776325/committers"
+                }
+            ],
+            "description": "Provides a UI for applying field states.",
+            "homepage": "https://www.drupal.org/project/field_states_ui",
+            "support": {
+                "source": "http://git.drupal.org/project/field_states_ui.git",
+                "issues": "https://www.drupal.org/project/issues/field_states_ui"
+            },
+            "time": "2016-11-07 14:32:46"
+        },
+        {
             "name": "drupal/geocoder",
             "version": "dev-2.x",
             "source": {
@@ -2057,11 +2209,17 @@
         },
         {
             "name": "drupal/geofield",
-            "version": "dev-1.x",
+            "version": "1.0.0-alpha2",
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/geofield",
-                "reference": "3b4d26f1945410ad95b7f36593c99db7a47b9f78"
+                "reference": "8.x-1.0-alpha2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/geofield-8.x-1.0-alpha2.zip",
+                "reference": null,
+                "shasum": "312100e9f087c6b178eb971c6a8a70919edff7f0"
             },
             "require": {
                 "drupal/core": "~8.0",
@@ -2073,8 +2231,8 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.0-alpha1+19-dev",
-                    "datestamp": "1463282946"
+                    "version": "8.x-1.0-alpha2",
+                    "datestamp": "1464201846"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -2131,8 +2289,7 @@
                 "source": "http://git.drupal.org/project/geofield.git",
                 "issues": "https://www.drupal.org/project/issues/geofield",
                 "irc": "irc://irc.freenode.org/drupal-contribute"
-            },
-            "time": "2016-05-15 04:00:26"
+            }
         },
         {
             "name": "drupal/geophp",
@@ -2177,7 +2334,8 @@
             "homepage": "https://www.drupal.org/project/geophp",
             "support": {
                 "source": "http://cgit.drupalcode.org/geophp"
-            }
+            },
+            "time": "2016-05-12 20:20:11"
         },
         {
             "name": "drupal/group",
@@ -2222,6 +2380,70 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/group"
             }
+        },
+        {
+            "name": "drupal/leaflet",
+            "version": "dev-1.x",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/leaflet",
+                "reference": "dce98f4b630252375090db05c1789fc060d7f93c"
+            },
+            "require": {
+                "drupal/core": "~8.0",
+                "leaflet/leaflet": "^0.7.7"
+            },
+            "suggest": {
+                "drupal/core": "Required by drupal/leaflet_views"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.0-beta1+1-dev",
+                    "datestamp": "1476171839"
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Peter Vanhee (pvhee)",
+                    "homepage": "https://www.drupal.org/u/pvhee",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Rik de Boer (RdeBoer)",
+                    "homepage": "https://www.drupal.org/u/rdeboer",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Gabriel Carleton-Barnes (gcb)",
+                    "homepage": "https://www.drupal.org/u/gcb",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Lev Tsypin (levelos)",
+                    "homepage": "https://www.drupal.org/u/levelos",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Sean Larkin (seanberto)",
+                    "homepage": "https://www.drupal.org/u/seanberto",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "Integration with the Leaflet map scripting library.",
+            "homepage": "https://www.drupal.org/project/leaflet",
+            "support": {
+                "source": "http://cgit.drupalcode.org/leaflet",
+                "issues": "https://www.drupal.org/project/issues/leaflet"
+            },
+            "time": "2016-10-11 07:58:10"
         },
         {
             "name": "drupal/profile",
@@ -2324,8 +2546,7 @@
             "homepage": "https://www.drupal.org/project/select_or_other",
             "support": {
                 "source": "http://cgit.drupalcode.org/select_or_other"
-            },
-            "time": "2016-10-11 07:14:52"
+            }
         },
         {
             "name": "drupal/token",
@@ -3002,6 +3223,17 @@
                 "minification"
             ],
             "time": "2015-11-12 13:51:40"
+        },
+        {
+            "name": "leaflet/leaflet",
+            "version": "v0.7.7",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/Leaflet/Leaflet/archive/v0.7.7.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "drupal-library"
         },
         {
             "name": "masterminds/html5",
@@ -6905,12 +7137,13 @@
         "drupal/entity": 20,
         "drupal/features": 20,
         "drupal/geocoder": 20,
-        "drupal/geofield": 20,
         "drupal/geophp": 20,
         "drupal/group": 20,
         "drupal/profile": 20,
         "drupal/token": 20,
-        "drupal/select_or_other": 20
+        "drupal/select_or_other": 20,
+        "drupal/leaflet": 20,
+        "drupal/field_states_ui": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
