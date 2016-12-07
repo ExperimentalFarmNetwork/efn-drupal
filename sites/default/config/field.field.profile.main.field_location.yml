@@ -1,0 +1,39 @@
+uuid: 1306bd31-d066-4021-ab6c-dcbdff94c836
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_location
+    - profile.type.main
+  module:
+    - address
+    - profile
+third_party_settings:
+  profile:
+    profile_private: true
+id: profile.main.field_location
+field_name: field_location
+entity_type: profile
+bundle: main
+label: 'Where are you located?'
+description: 'Please provide your zipcode (and country, if outside US) to help us map our membership. This may be displayed anonymously on public pages and will be visible on your profile page to other members.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  available_countries: {  }
+  fields:
+    postalCode: postalCode
+    administrativeArea: '0'
+    locality: '0'
+    dependentLocality: '0'
+    sortingCode: '0'
+    addressLine1: '0'
+    addressLine2: '0'
+    organization: '0'
+    givenName: '0'
+    additionalName: '0'
+    familyName: '0'
+  langcode_override: ''
+field_type: address

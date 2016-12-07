@@ -1,16 +1,20 @@
-uuid: b15b006a-1144-42dc-9b1e-45a97a60c36c
+uuid: a7b12d42-b0ba-4cea-bba9-73d02bea562f
 langcode: en
 status: true
 dependencies:
   module:
+    - file
     - profile
-id: profile.field_farmland_details
-field_name: field_farmland_details
+id: profile.field_cv
+field_name: field_cv
 entity_type: profile
-type: string_long
+type: file
 settings:
-  case_sensitive: false
-module: core
+  display_field: false
+  display_default: false
+  uri_scheme: public
+  target_type: file
+module: file
 locked: false
 cardinality: 1
 translatable: true

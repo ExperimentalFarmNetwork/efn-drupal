@@ -1,0 +1,34 @@
+uuid: f957e282-811a-4add-a744-3d8a167fb30a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_location_geo
+    - profile.type.volunteer
+  module:
+    - geocoder_field
+    - geofield
+third_party_settings:
+  geocoder_field:
+    method: source
+    field: field_location
+    plugins:
+      - googlemaps
+    dumper: wkt
+    delta_handling: default
+    failure:
+      handling: preserve
+      status_message: true
+      log: true
+id: profile.volunteer.field_location_geo
+field_name: field_location_geo
+entity_type: profile
+bundle: volunteer
+label: 'Growing Location'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: geofield

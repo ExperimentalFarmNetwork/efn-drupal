@@ -1,0 +1,48 @@
+uuid: 241d91c8-f4f1-4003-b5fe-fa111fb5c297
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - profile
+id: profile.field_space_available
+field_name: field_space_available
+entity_type: profile
+type: list_integer
+settings:
+  allowed_values:
+    -
+      value: 10
+      label: 'Just a few square feet (less than 10 sq. ft)'
+    -
+      value: 40
+      label: 'A bed or two (11-40 sq. ft)'
+    -
+      value: 100
+      label: 'Kitchen-garden''s worth (41 to 100 sq. ft)'
+    -
+      value: 400
+      label: 'Small lot (101 - 400 sq. ft)'
+    -
+      value: 2500
+      label: 'Nice backyard (401 - 2500 sq. ft)'
+    -
+      value: 10000
+      label: 'Big backyard (2501 - 10,000 sq. ft)'
+    -
+      value: 43560
+      label: 'Small field (10,001 sq. ft. - 1 acre)'
+    -
+      value: 217800
+      label: 'Big field (1 - 5 acre)'
+    -
+      value: 217801
+      label: 'Really big field (5+ acres)'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

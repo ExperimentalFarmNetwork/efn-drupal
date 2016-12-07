@@ -6,7 +6,10 @@ _core:
   default_config_hash: W_juYGrlSmIgxXlC9oJRIoIB5ZklI5crAEeIcwRijcI
 id: main
 label: 'Personal information'
-registration: false
+registration: true
 multiple: false
-roles: {  }
+roles:
+  authenticated: '0'
+  volunteer: '0'
+  administrator: '0'
 weight: 0

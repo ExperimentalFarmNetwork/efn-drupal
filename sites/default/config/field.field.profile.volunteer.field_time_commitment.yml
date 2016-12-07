@@ -1,0 +1,21 @@
+uuid: f05d6f92-0c80-4851-8ef4-2ce2e573fa16
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_time_commitment
+    - profile.type.volunteer
+  module:
+    - options
+id: profile.volunteer.field_time_commitment
+field_name: field_time_commitment
+entity_type: profile
+bundle: volunteer
+label: 'Time Commitment'
+description: 'How much time can you commit on a weekly basis to an EFN project?'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

@@ -1,24 +1,24 @@
-uuid: 887cf591-eb00-4dd0-ade2-38dae6cd979c
+uuid: 8d3a5b5d-7190-4215-9155-d8fa62bcb1da
 langcode: en
 status: true
 dependencies:
   config:
     - field.storage.profile.field_farmland
-    - profile.type.researcher
+    - profile.type.main
   module:
     - options
     - profile
 third_party_settings:
   profile:
     profile_private: true
-id: profile.researcher.field_farmland
+id: profile.main.field_farmland
 field_name: field_farmland
 entity_type: profile
-bundle: researcher
+bundle: main
 label: 'Are you looking for farmland?'
-description: ''
+description: 'Check all that apply. Provide details in "Other" field.'
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings: {  }

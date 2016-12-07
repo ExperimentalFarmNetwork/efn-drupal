@@ -1,16 +1,16 @@
-uuid: b15b006a-1144-42dc-9b1e-45a97a60c36c
+uuid: d68f00ad-c637-4fa9-83c2-e0d38d2645f7
 langcode: en
 status: true
 dependencies:
   module:
+    - geofield
     - profile
-id: profile.field_farmland_details
-field_name: field_farmland_details
+id: profile.field_location_geo
+field_name: field_location_geo
 entity_type: profile
-type: string_long
-settings:
-  case_sensitive: false
-module: core
+type: geofield
+settings: {  }
+module: geofield
 locked: false
 cardinality: 1
 translatable: true

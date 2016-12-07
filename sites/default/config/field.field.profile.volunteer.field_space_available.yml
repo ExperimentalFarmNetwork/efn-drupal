@@ -1,0 +1,21 @@
+uuid: 3bfa27c3-d058-4975-baae-6d44f46e97dd
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_space_available
+    - profile.type.volunteer
+  module:
+    - options
+id: profile.volunteer.field_space_available
+field_name: field_space_available
+entity_type: profile
+bundle: volunteer
+label: 'Space Available'
+description: 'How much garden or field space can you spare for an EFN project or projects?'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_integer

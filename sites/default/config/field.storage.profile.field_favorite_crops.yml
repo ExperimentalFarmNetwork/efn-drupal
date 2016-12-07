@@ -1,16 +1,14 @@
-uuid: c8aeec6a-ccc6-4ba0-9c3d-a90aa76d25f1
+uuid: 068e8fc3-94ff-4a9e-a440-0a81138eea82
 langcode: en
 status: true
 dependencies:
   module:
-    - group
-id: group.field_project_type_other
-field_name: field_project_type_other
-entity_type: group
-type: string
+    - profile
+id: profile.field_favorite_crops
+field_name: field_favorite_crops
+entity_type: profile
+type: string_long
 settings:
-  max_length: 255
-  is_ascii: false
   case_sensitive: false
 module: core
 locked: false

@@ -1,0 +1,19 @@
+uuid: aa7735ce-5965-466c-b566-bccdc27a811b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_soil_details
+    - profile.type.volunteer
+id: profile.volunteer.field_soil_details
+field_name: field_soil_details
+entity_type: profile
+bundle: volunteer
+label: 'Soil Details'
+description: 'Include any clarifying details about the soil you''re growing in.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

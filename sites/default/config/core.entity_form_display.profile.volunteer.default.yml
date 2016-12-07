@@ -4,17 +4,112 @@ status: true
 dependencies:
   config:
     - field.field.profile.volunteer.field_bio
+    - field.field.profile.volunteer.field_crops_mile
+    - field.field.profile.volunteer.field_crops_quarter_mile
+    - field.field.profile.volunteer.field_details
+    - field.field.profile.volunteer.field_favorite_crops
+    - field.field.profile.volunteer.field_gmos
+    - field.field.profile.volunteer.field_growing_experience
+    - field.field.profile.volunteer.field_location
+    - field.field.profile.volunteer.field_location_descriptors
+    - field.field.profile.volunteer.field_location_geo
+    - field.field.profile.volunteer.field_other_limitations
+    - field.field.profile.volunteer.field_soil_details
+    - field.field.profile.volunteer.field_soil_type
+    - field.field.profile.volunteer.field_space_available
+    - field.field.profile.volunteer.field_time_commitment
     - profile.type.volunteer
+  module:
+    - address
 id: profile.volunteer.default
 targetEntityType: profile
 bundle: volunteer
 mode: default
 content:
   field_bio:
-    weight: 3
+    weight: 0
     settings:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
     type: string_textarea
-hidden: {  }
+  field_crops_mile:
+    weight: 10
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+  field_crops_quarter_mile:
+    weight: 9
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+  field_details:
+    weight: 12
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+  field_favorite_crops:
+    weight: 1
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+  field_gmos:
+    weight: 11
+    settings: {  }
+    third_party_settings: {  }
+    type: options_buttons
+  field_growing_experience:
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+    type: options_buttons
+  field_location:
+    weight: 4
+    settings:
+      default_country: US
+    third_party_settings: {  }
+    type: address_default
+  field_location_descriptors:
+    weight: 8
+    settings: {  }
+    third_party_settings: {  }
+    type: options_buttons
+  field_other_limitations:
+    weight: 13
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+  field_soil_details:
+    weight: 7
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+  field_soil_type:
+    weight: 6
+    settings: {  }
+    third_party_settings: {  }
+    type: options_buttons
+  field_space_available:
+    weight: 5
+    settings: {  }
+    third_party_settings: {  }
+    type: options_buttons
+  field_time_commitment:
+    weight: 3
+    settings: {  }
+    third_party_settings: {  }
+    type: options_buttons
+hidden:
+  field_location_geo: true

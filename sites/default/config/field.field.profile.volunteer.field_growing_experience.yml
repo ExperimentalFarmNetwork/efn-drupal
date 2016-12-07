@@ -1,0 +1,21 @@
+uuid: cf085637-2882-4d23-b7f5-317e4eb960ae
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_growing_experience
+    - profile.type.volunteer
+  module:
+    - options
+id: profile.volunteer.field_growing_experience
+field_name: field_growing_experience
+entity_type: profile
+bundle: volunteer
+label: 'Growing Experience'
+description: 'Please check all that apply. Do you have any experience with the following:'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

@@ -1,14 +1,16 @@
-uuid: b15b006a-1144-42dc-9b1e-45a97a60c36c
+uuid: 64ebf887-948a-466f-8d7f-2924a1bb2098
 langcode: en
 status: true
 dependencies:
   module:
     - profile
-id: profile.field_farmland_details
-field_name: field_farmland_details
+id: profile.field_crops_mile
+field_name: field_crops_mile
 entity_type: profile
-type: string_long
+type: string
 settings:
+  max_length: 255
+  is_ascii: false
   case_sensitive: false
 module: core
 locked: false

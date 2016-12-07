@@ -1,0 +1,23 @@
+uuid: 8d585c9b-f044-40fd-aab5-0f8001b646bb
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_website
+    - profile.type.researcher
+  module:
+    - link
+id: profile.researcher.field_website
+field_name: field_website
+entity_type: profile
+bundle: researcher
+label: Website(s)
+description: 'Enter one or more websites where other volunteers can see your work.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 16
+  title: 2
+field_type: link

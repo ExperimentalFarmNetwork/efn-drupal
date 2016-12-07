@@ -1,16 +1,16 @@
-uuid: b15b006a-1144-42dc-9b1e-45a97a60c36c
+uuid: 9815c63f-db99-4afd-80a7-f06b4e477090
 langcode: en
 status: true
 dependencies:
   module:
+    - address
     - profile
-id: profile.field_farmland_details
-field_name: field_farmland_details
+id: profile.field_location
+field_name: field_location
 entity_type: profile
-type: string_long
-settings:
-  case_sensitive: false
-module: core
+type: address
+settings: {  }
+module: address
 locked: false
 cardinality: 1
 translatable: true

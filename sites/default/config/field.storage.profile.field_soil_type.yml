@@ -1,18 +1,19 @@
-uuid: b15b006a-1144-42dc-9b1e-45a97a60c36c
+uuid: 790ba3b6-a4c9-4bfd-bc06-31d6e22dc425
 langcode: en
 status: true
 dependencies:
   module:
     - profile
-id: profile.field_farmland_details
-field_name: field_farmland_details
+    - taxonomy
+id: profile.field_soil_type
+field_name: field_soil_type
 entity_type: profile
-type: string_long
+type: entity_reference
 settings:
-  case_sensitive: false
+  target_type: taxonomy_term
 module: core
 locked: false
-cardinality: 1
+cardinality: -1
 translatable: true
 indexes: {  }
 persist_with_no_fields: false

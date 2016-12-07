@@ -1,0 +1,19 @@
+uuid: 78cc8725-009c-42ce-ba82-8aa135054b2d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_details
+    - profile.type.volunteer
+id: profile.volunteer.field_details
+field_name: field_details
+entity_type: profile
+bundle: volunteer
+label: Details
+description: 'Please provide additional details on any GMOs near your growing space.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

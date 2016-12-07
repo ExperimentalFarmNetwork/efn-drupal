@@ -1,0 +1,27 @@
+uuid: 47e03f99-b6f3-4a1d-b40e-e4eb84a58bfd
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_cv
+    - profile.type.researcher
+  module:
+    - file
+id: profile.researcher.field_cv
+field_name: field_cv
+entity_type: profile
+bundle: researcher
+label: C.V.
+description: 'Upload a copy of your C.V./résumé to be included on your profile.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  file_directory: '[current-user:account-name]/uploads'
+  file_extensions: 'pdf doc txt odf docx'
+  max_filesize: ''
+  description_field: false
+  handler: 'default:file'
+  handler_settings: {  }
+field_type: file

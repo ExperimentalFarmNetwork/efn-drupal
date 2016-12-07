@@ -1,0 +1,33 @@
+uuid: 6a97ffd3-ccd1-47b7-b17d-1cae01ce8781
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - profile
+id: profile.field_time_commitment
+field_name: field_time_commitment
+entity_type: profile
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: 0-2
+      label: '0-2 hours'
+    -
+      value: 2-5
+      label: '2-5 hrs'
+    -
+      value: 5-10
+      label: '5-10 hrs'
+    -
+      value: 10+
+      label: 'Over 10 hrs'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

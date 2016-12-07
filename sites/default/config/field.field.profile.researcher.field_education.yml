@@ -1,19 +1,21 @@
-uuid: 6063ce5e-d437-41b1-9e99-6dba1136e64d
+uuid: 43eda0bc-d95a-41ca-8344-4175f3645acd
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.profile.field_zipcode
+    - field.storage.profile.field_education
     - profile.type.researcher
-id: profile.researcher.field_zipcode
-field_name: field_zipcode
+  module:
+    - text
+id: profile.researcher.field_education
+field_name: field_education
 entity_type: profile
 bundle: researcher
-label: 'Zip Code (or country, if outside US)'
+label: 'Educational Background'
 description: ''
 required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
 settings: {  }
-field_type: string
+field_type: text_long

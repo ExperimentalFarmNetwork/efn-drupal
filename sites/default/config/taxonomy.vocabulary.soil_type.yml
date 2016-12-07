@@ -1,0 +1,9 @@
+uuid: 22491bed-f41c-4371-8422-1d8260e91d7f
+langcode: en
+status: true
+dependencies: {  }
+name: 'Soil Type'
+vid: soil_type
+description: ''
+hierarchy: 0
+weight: 0

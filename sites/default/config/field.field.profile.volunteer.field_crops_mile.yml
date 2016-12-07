@@ -1,0 +1,32 @@
+uuid: b4908c57-903b-4ec1-8f39-997a57795046
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_crops_mile
+    - profile.type.volunteer
+  module:
+    - geocoder_field
+third_party_settings:
+  geocoder_field:
+    method: none
+    field: field_crops_quarter_mile
+    plugins: {  }
+    dumper: wkt
+    delta_handling: default
+    failure:
+      handling: preserve
+      status_message: true
+      log: true
+id: profile.volunteer.field_crops_mile
+field_name: field_crops_mile
+entity_type: profile
+bundle: volunteer
+label: 'Neighbors'' crops (within 1 mile)'
+description: 'What crops do you know your neighbors grow within 1 mile of your growing location?'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

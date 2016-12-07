@@ -1,11 +1,11 @@
-uuid: a8369163-e268-427d-a552-1a048a05a33f
+uuid: d50358df-a27b-4d25-8d5d-bb86e4c9e956
 langcode: en
 status: true
 dependencies:
   module:
     - profile
-id: profile.field_zipcode
-field_name: field_zipcode
+id: profile.field_phone
+field_name: field_phone
 entity_type: profile
 type: string
 settings:
