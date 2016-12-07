@@ -1,8 +1,0 @@
-name: 'Content Comment'
-description: 'Provides Content Comment comment type and related configuration. '
-type: module
-core: 8.x
-dependencies:
-  - comment
-  - field
-package: efn
