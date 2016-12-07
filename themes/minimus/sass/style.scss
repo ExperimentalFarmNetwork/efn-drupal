@@ -22,6 +22,10 @@ div.main-container{
 
 // Header
 header.navbar-default{
+	background:url('/themes/minimus/images/seedsbakmj.png');
+	background:url('/themes/minimus/images/efn_bri.png');
+
+	background-repeat:repeat-x;
 	.navbar-header{
 		.logo img{
 			width:50px;
@@ -39,20 +43,50 @@ header.navbar-default{
 			border-radius:5px;
 			margin:.5rem;	
 			height:250px;
+		    width: 23% !important;
 		}
 	}
 }
 
-.btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle){	
+	.path-group .region-content{
+		.field{
+			padding-bottom:2em;
+			padding-top:2em;
+			border-bottom: thin $gray-lighter solid;
+			.field--label{
+			    width: 45%;
+			    display: inline-table;
+			    text-transform:uppercase;
+			    font-weight:normal;
+
+			}
+			.field--item{
+			    width: 45%;
+			    display: inline-table;
+			}
+		}
+	}
+
+.js-form-submit[value='Join group'], .btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle){	
     font-size: 2rem;
     border-radius: 5px;
     padding: 1rem 2rem;
 }
 
 // Project Updates
-.page-node-type-project-update, .view-id-project_updates_page{
-	.field--name-body{
-
+.page-node-type-project-update article, .view-id-project_updates_page{
+	.field--name-field-image{
+		float:right;
+	}
+	.author{
+		margin-bottom:1em;
+		color:$gray;
+		a{
+			color:$gray-darker;
+		}
+	}
+	.views-row{
+		clear:both;	
 	}
 	.views-field-changed{
 		color: $gray-light;
@@ -62,6 +96,7 @@ header.navbar-default{
 		float:right;
 		margin:.5rem;
 	}
+
 	// comments
 	#node-project-update-field-discussion{
 		.js-comment{
@@ -126,4 +161,3 @@ header.navbar-default{
 		}
 	}
 }
-

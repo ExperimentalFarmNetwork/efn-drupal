@@ -16,6 +16,7 @@ module:
   dblog: 0
   default_content: 0
   devel: 0
+  devel_generate: 0
   dynamic_page_cache: 0
   editor: 0
   efn_default_content: 0
@@ -40,6 +41,7 @@ module:
   kint: 0
   leaflet: 0
   link: 0
+  masquerade: 0
   menu_link_content: 0
   menu_ui: 0
   node: 0
