@@ -1,0 +1,54 @@
+{
+    "_links": {
+        "self": {
+            "href": "http:\/\/default\/taxonomy\/term\/47?_format=hal_json"
+        },
+        "type": {
+            "href": "http:\/\/drupal.org\/rest\/type\/taxonomy_term\/gmos"
+        }
+    },
+    "tid": [
+        {
+            "value": "47"
+        }
+    ],
+    "uuid": [
+        {
+            "value": "22916840-5e40-460d-91ea-3adc55478196"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en",
+            "lang": "en"
+        }
+    ],
+    "vid": [
+        {
+            "target_id": "gmos"
+        }
+    ],
+    "name": [
+        {
+            "value": "Canola (or other brassicas) within 3 miles",
+            "lang": "en"
+        }
+    ],
+    "weight": [
+        {
+            "value": "7"
+        }
+    ],
+    "changed": [
+        {
+            "value": "1481136047",
+            "lang": "en"
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": "1",
+            "lang": "en"
+        }
+    ]
+}
