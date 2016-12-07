@@ -25,7 +25,9 @@
         "drupal/default_content": "1.0-alpha3",
         "drupal/chosen": "2.1",
         "drupal/select_or_other": "1.x-dev",
-        "drupal/leaflet": "1.x-dev"
+        "drupal/leaflet": "1.x-dev",
+        "drupal/field_group": "1.0-rc6",
+        "drupal/field_states_ui": "1.x-dev"
     },
     "replace": {
         "drupal/core": "~8.2"
