@@ -1,0 +1,12 @@
+field_state:
+  type: mapping
+  mapping:
+    target:
+      type: string
+      label: 'Target field'
+    comparison:
+      type: string
+      label: 'Comparison type'
+    value:
+      type: string
+      label: 'Value to compare'

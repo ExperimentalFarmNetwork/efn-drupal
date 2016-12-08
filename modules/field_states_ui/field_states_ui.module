@@ -1,0 +1,56 @@
+<?php
+
+/**
+ * @file
+ * Main module file for Field States UI.
+ */
+
+use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\Core\Field\WidgetInterface;
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_field_widget_third_party_settings_form().
+ */
+function field_states_ui_field_widget_third_party_settings_form(WidgetInterface $plugin, FieldDefinitionInterface $field_definition, $form_mode, $form, FormStateInterface $form_state) {
+  $form_state->loadInclude('field_states_ui', 'inc', 'field_states_ui.admin');
+  return field_states_ui_settings_form($plugin, $field_definition, $form_mode, $form, $form_state);
+}
+
+/**
+ * Implements hook_field_widget_settings_summary_alter().
+ */
+function field_states_ui_field_widget_settings_summary_alter(&$summary, $context) {
+  $field_states = $context['widget']->getThirdPartySettings('field_states_ui');
+  if (!empty($field_states['field_states'])) {
+    $summary[] = t('Field States applied.');
+  }
+}
+
+/**
+ * Implements hook_field_widget_form_alter().
+ */
+function field_states_ui_field_widget_form_alter(&$element, FormStateInterface $form_state, $context) {
+  Drupal::service('module_handler')->loadInclude('field_states_ui', 'inc', 'field_states_ui.form');
+  field_states_ui_field_widget_alter($element, $form_state, $context);
+}
+
+/**
+ * Implements hook_field_widget_multiple_form_alter().
+ */
+function field_states_ui_field_widget_multiple_form_alter(&$elements, FormStateInterface $form_state, $context) {
+  Drupal::service('module_handler')->loadInclude('field_states_ui', 'inc', 'field_states_ui.form');
+  $context['multiple'] = TRUE;
+  field_states_ui_field_widget_alter($elements, $form_state, $context);
+}
+
+/**
+ * Implements hook_theme().
+ */
+function field_states_ui_theme() {
+  return [
+    'field_states_ui_summary' => [
+      'variables' => ['data' => []],
+    ],
+  ];
+}

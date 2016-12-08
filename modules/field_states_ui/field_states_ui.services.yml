@@ -1,0 +1,4 @@
+services:
+  plugin.manager.field_states_ui.fieldstate:
+    class: Drupal\field_states_ui\FieldStateManager
+    parent: default_plugin_manager

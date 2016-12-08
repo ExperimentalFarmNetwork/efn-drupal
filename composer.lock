@@ -2442,8 +2442,7 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/leaflet",
                 "issues": "https://www.drupal.org/project/issues/leaflet"
-            },
-            "time": "2016-10-11 07:58:10"
+            }
         },
         {
             "name": "drupal/profile",

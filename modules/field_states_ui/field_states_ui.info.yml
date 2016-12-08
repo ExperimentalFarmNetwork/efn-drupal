@@ -1,0 +1,5 @@
+name: 'Field States UI'
+type: module
+description: 'Provides a user interface for using the States API on form fields.'
+core: 8.x
+package: fields

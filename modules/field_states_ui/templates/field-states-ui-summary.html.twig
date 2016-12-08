@@ -1,0 +1,24 @@
+{#
+/**
+ * @file
+ * Default theme implementation for a summary of a field state.
+ *
+ * Available variables:
+ * - data: The current configuration for this field state, including:
+ *   - target: The field being monitored to apply states on the current field.
+ *   - comparison: What type of comparison to run on the target.
+ *   - value: If the comparison is by value, the value to compare with.
+ *
+ * @ingroup themeable
+ */
+#}
+{% trans %}
+Target: {{ data.target }} <br />
+Comparison type: {{ data.comparison }}
+{% endtrans %}
+{% if data.comparison == 'value' %}
+  <br />
+  {% trans %}
+    Value: {{ data.value }}.
+  {% endtrans %}
+{% endif %}

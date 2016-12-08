@@ -7138,56 +7138,6 @@
         "description": "Provides a way to patch Composer packages."
     },
     {
-        "name": "drupal/field_states_ui",
-        "version": "dev-1.x",
-        "version_normalized": "dev-1.x",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/field_states_ui",
-            "reference": "41af038d8f571212c7268b20508b36d0e0b7ed62"
-        },
-        "require": {
-            "cweagans/composer-patches": "~1.0",
-            "drupal/core": "8.x"
-        },
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-1.x": "1.x-dev"
-            },
-            "drupal": {
-                "version": "8.x-1.0-rc2+3-dev",
-                "datestamp": "1478529239"
-            },
-            "patches": {
-                "drupal/core": {
-                    "multi-value field widget hook": "https://www.drupal.org/files/issues/no_hook_to_edit-2822460-2.patch"
-                }
-            }
-        },
-        "installation-source": "source",
-        "notification-url": "https://packages.drupal.org/8/downloads",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "Nick Wilde",
-                "homepage": "https://www.drupal.org/u/nickwilde"
-            },
-            {
-                "name": "See other contributors",
-                "homepage": "https://www.drupal.org/node/2776325/committers"
-            }
-        ],
-        "description": "Provides a UI for applying field states.",
-        "homepage": "https://www.drupal.org/project/field_states_ui",
-        "support": {
-            "source": "http://git.drupal.org/project/field_states_ui.git",
-            "issues": "https://www.drupal.org/project/issues/field_states_ui"
-        }
-    },
-    {
         "name": "doctrine/common",
         "version": "v2.5.3",
         "version_normalized": "2.5.3.0",
@@ -7363,6 +7313,56 @@
         "support": {
             "source": "http://cgit.drupalcode.org/leaflet",
             "issues": "https://www.drupal.org/project/issues/leaflet"
+        }
+    },
+    {
+        "name": "drupal/field_states_ui",
+        "version": "dev-1.x",
+        "version_normalized": "dev-1.x",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/field_states_ui",
+            "reference": "41af038d8f571212c7268b20508b36d0e0b7ed62"
+        },
+        "require": {
+            "cweagans/composer-patches": "~1.0",
+            "drupal/core": "8.x"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.0-rc2+3-dev",
+                "datestamp": "1478529239"
+            },
+            "patches": {
+                "drupal/core": {
+                    "multi-value field widget hook": "https://www.drupal.org/files/issues/no_hook_to_edit-2822460-2.patch"
+                }
+            }
+        },
+        "installation-source": "source",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Nick Wilde",
+                "homepage": "https://www.drupal.org/u/nickwilde"
+            },
+            {
+                "name": "See other contributors",
+                "homepage": "https://www.drupal.org/node/2776325/committers"
+            }
+        ],
+        "description": "Provides a UI for applying field states.",
+        "homepage": "https://www.drupal.org/project/field_states_ui",
+        "support": {
+            "source": "http://git.drupal.org/project/field_states_ui.git",
+            "issues": "https://www.drupal.org/project/issues/field_states_ui"
         }
     }
 ]
