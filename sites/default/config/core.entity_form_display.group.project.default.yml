@@ -3,8 +3,9 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.group.project.field_address
     - field.field.group.project.field_description
+    - field.field.group.project.field_location
+    - field.field.group.project.field_location_geo
     - field.field.group.project.field_misc
     - field.field.group.project.field_multiyear
     - field.field.group.project.field_privacy
@@ -21,45 +22,42 @@ dependencies:
   module:
     - address
     - path
-    - select_or_other
     - text
 id: group.project.default
 targetEntityType: group
 bundle: project
 mode: default
 content:
-  field_address:
-    weight: 3
-    settings:
-      default_country: US
-    third_party_settings: {  }
-    type: address_default
   field_description:
-    weight: 2
+    weight: 3
     settings:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
     type: text_textarea
+  field_location:
+    weight: 2
+    settings:
+      default_country: null
+    third_party_settings: {  }
+    type: address_default
   field_misc:
-    weight: 16
+    weight: 15
     settings:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
     type: string_textarea
   field_multiyear:
-    weight: 13
+    weight: 12
     settings: {  }
     third_party_settings: {  }
     type: options_buttons
   field_privacy:
-    weight: 15
-    settings:
-      select_element_type: select_or_other_buttons
-      sort_options: ''
+    weight: 14
+    settings: {  }
     third_party_settings: {  }
-    type: select_or_other_list
+    type: options_buttons
   field_project_summary:
     weight: 1
     settings:
@@ -73,19 +71,17 @@ content:
     third_party_settings: {  }
     type: options_buttons
   field_researcher_background:
-    weight: 8
+    weight: 7
     settings:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
     type: text_textarea
   field_seeking_volunteers:
-    weight: 9
-    settings:
-      select_element_type: select_or_other_select
-      sort_options: ''
+    weight: 8
+    settings: {  }
     third_party_settings: {  }
-    type: select_or_other_list
+    type: options_buttons
   field_tags:
     weight: 5
     settings:
@@ -95,27 +91,25 @@ content:
     third_party_settings: {  }
     type: entity_reference_autocomplete_tags
   field_volunteers_ask_do:
-    weight: 11
+    weight: 10
     settings:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
     type: string_textarea
   field_volunteers_how_many:
-    weight: 10
+    weight: 9
     settings:
       placeholder: ''
     third_party_settings: {  }
     type: number
   field_volunteers_keep_seed:
-    weight: 14
-    settings:
-      select_element_type: select_or_other_buttons
-      sort_options: ''
+    weight: 13
+    settings: {  }
     third_party_settings: {  }
-    type: select_or_other_list
+    type: options_buttons
   field_volunteers_other_reqs:
-    weight: 12
+    weight: 11
     settings:
       rows: 5
       placeholder: ''
@@ -134,4 +128,5 @@ content:
     settings: {  }
     third_party_settings: {  }
 hidden:
+  field_location_geo: true
   uid: true

@@ -5,18 +5,13 @@ dependencies:
   config:
     - field.storage.profile.field_email
     - profile.type.researcher
-  module:
-    - profile
-third_party_settings:
-  profile:
-    profile_private: true
 id: profile.researcher.field_email
 field_name: field_email
 entity_type: profile
 bundle: researcher
 label: 'Email Address'
 description: ''
-required: true
+required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''

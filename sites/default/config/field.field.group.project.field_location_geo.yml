@@ -1,10 +1,10 @@
-uuid: 9669423f-7f37-4de6-98cf-e9c2c826b68d
+uuid: db4bcf1f-39f3-4de1-bfd5-b702a35c6193
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.profile.field_location_geo
-    - profile.type.main
+    - field.storage.group.field_location_geo
+    - group.type.project
   module:
     - geocoder_field
     - geofield
@@ -20,11 +20,11 @@ third_party_settings:
       handling: preserve
       status_message: true
       log: true
-id: profile.main.field_location_geo
+id: group.project.field_location_geo
 field_name: field_location_geo
-entity_type: profile
-bundle: main
-label: Location
+entity_type: group
+bundle: project
+label: 'Location Geo'
 description: ''
 required: false
 translatable: false

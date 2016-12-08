@@ -3,8 +3,9 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.group.project.field_address
     - field.field.group.project.field_description
+    - field.field.group.project.field_location
+    - field.field.group.project.field_location_geo
     - field.field.group.project.field_misc
     - field.field.group.project.field_multiyear
     - field.field.group.project.field_privacy
@@ -20,6 +21,7 @@ dependencies:
     - group.type.project
   module:
     - address
+    - leaflet
     - options
     - text
 id: group.project.default
@@ -27,18 +29,47 @@ targetEntityType: group
 bundle: project
 mode: default
 content:
-  field_address:
-    weight: 3
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    type: address_default
   field_description:
     weight: 4
     label: above
     settings: {  }
     third_party_settings: {  }
     type: text_default
+  field_location:
+    weight: 17
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: address_default
+  field_location_geo:
+    weight: 18
+    label: hidden
+    settings:
+      leaflet_map: 'OSM Mapnik'
+      height: 400
+      zoom: 10
+      minPossibleZoom: 0
+      maxPossibleZoom: 18
+      minZoom: 0
+      maxZoom: 18
+      popup: false
+      icon:
+        icon_url: ''
+        shadow_url: ''
+        icon_size:
+          x: 0
+          'y': 0
+        icon_anchor:
+          x: 0
+          'y': 0
+        shadow_anchor:
+          x: 0
+          'y': 0
+        popup_anchor:
+          x: 0
+          'y': 0
+    third_party_settings: {  }
+    type: leaflet_formatter_default
   field_misc:
     weight: 16
     label: above

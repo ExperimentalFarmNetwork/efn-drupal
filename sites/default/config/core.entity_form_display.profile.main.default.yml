@@ -10,13 +10,10 @@ dependencies:
     - field.field.profile.main.field_farmland_have
     - field.field.profile.main.field_farmland_have_details
     - field.field.profile.main.field_full_name
-    - field.field.profile.main.field_location
-    - field.field.profile.main.field_location_geo
     - field.field.profile.main.field_user_image
     - image.style.thumbnail
     - profile.type.main
   module:
-    - address
     - image
 id: profile.main.default
 targetEntityType: profile
@@ -81,12 +78,6 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
-  field_location:
-    weight: 1
-    settings:
-      default_country: US
-    third_party_settings: {  }
-    type: address_default
   field_user_image:
     weight: 1
     settings:
@@ -94,5 +85,4 @@ content:
       preview_image_style: thumbnail
     third_party_settings: {  }
     type: image_image
-hidden:
-  field_location_geo: true
+hidden: {  }

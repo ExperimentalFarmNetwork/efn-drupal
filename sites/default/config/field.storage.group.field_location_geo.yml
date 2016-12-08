@@ -1,16 +1,16 @@
-uuid: 7647cdbc-0b31-4c52-a286-00f109402618
+uuid: a6ae0119-d962-4ea6-a77c-fa44d07207ef
 langcode: en
 status: true
 dependencies:
   module:
-    - address
+    - geofield
     - group
-id: group.field_address
-field_name: field_address
+id: group.field_location_geo
+field_name: field_location_geo
 entity_type: group
-type: address
+type: geofield
 settings: {  }
-module: address
+module: geofield
 locked: false
 cardinality: 1
 translatable: true

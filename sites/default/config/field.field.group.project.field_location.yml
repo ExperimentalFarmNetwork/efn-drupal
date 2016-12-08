@@ -1,22 +1,18 @@
-uuid: 1306bd31-d066-4021-ab6c-dcbdff94c836
+uuid: c6b7303e-e35c-46c2-81c4-c5385c0cc47f
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.profile.field_location
-    - profile.type.main
+    - field.storage.group.field_location
+    - group.type.project
   module:
     - address
-    - profile
-third_party_settings:
-  profile:
-    profile_private: true
-id: profile.main.field_location
+id: group.project.field_location
 field_name: field_location
-entity_type: profile
-bundle: main
-label: 'Where are you located?'
-description: 'Please provide your zipcode (and country, if outside US) to help us map our membership. This may be displayed anonymously on public pages and will be visible on your profile page to other members.'
+entity_type: group
+bundle: project
+label: 'Project Location'
+description: 'Where is your project based? Help us map our network!'
 required: true
 translatable: false
 default_value: {  }

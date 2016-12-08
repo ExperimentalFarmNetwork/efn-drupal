@@ -11,7 +11,7 @@ id: group.project.field_seeking_volunteers
 field_name: field_seeking_volunteers
 entity_type: group
 bundle: project
-label: 'Are you seeking volunteer growers? Or other types of volunteers (if so, please describe in "Other" field)?'
+label: 'Are you seeking volunteer growers or other types of volunteers?'
 description: ''
 required: true
 translatable: false

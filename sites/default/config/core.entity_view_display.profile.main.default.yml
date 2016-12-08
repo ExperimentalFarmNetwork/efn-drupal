@@ -10,14 +10,10 @@ dependencies:
     - field.field.profile.main.field_farmland_have
     - field.field.profile.main.field_farmland_have_details
     - field.field.profile.main.field_full_name
-    - field.field.profile.main.field_location
-    - field.field.profile.main.field_location_geo
     - field.field.profile.main.field_user_image
     - image.style.large
     - profile.type.main
   module:
-    - address
-    - leaflet
     - image
     - options
 id: profile.main.default
@@ -69,41 +65,6 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
-  field_location:
-    weight: 0
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    type: address_default
-  field_location_geo:
-    weight: 1
-    label: above
-    settings:
-      leaflet_map: 'OSM Mapnik'
-      height: 400
-      zoom: 10
-      minPossibleZoom: 0
-      maxPossibleZoom: 18
-      minZoom: 0
-      maxZoom: 18
-      popup: false
-      icon:
-        icon_url: ''
-        shadow_url: ''
-        icon_size:
-          x: 0
-          'y': 0
-        icon_anchor:
-          x: 0
-          'y': 0
-        shadow_anchor:
-          x: 0
-          'y': 0
-        popup_anchor:
-          x: 0
-          'y': 0
-    third_party_settings: {  }
-    type: leaflet_formatter_default
   field_user_image:
     weight: 0
     label: hidden

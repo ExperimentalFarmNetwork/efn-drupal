@@ -23,7 +23,7 @@ field_name: field_donating_other
 entity_type: profile
 bundle: main
 label: Other
-description: ''
+description: 'Provide a donation not listed above or any additional details about the donation you''re interested in making.'
 required: false
 translatable: true
 default_value: {  }

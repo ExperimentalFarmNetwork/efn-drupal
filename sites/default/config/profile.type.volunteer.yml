@@ -4,10 +4,11 @@ status: true
 dependencies: {  }
 id: volunteer
 label: 'Volunteer Profile'
-registration: true
+registration: false
 multiple: false
 roles:
   authenticated: '0'
   volunteer: '0'
   administrator: '0'
+  researcher: '0'
 weight: 0
