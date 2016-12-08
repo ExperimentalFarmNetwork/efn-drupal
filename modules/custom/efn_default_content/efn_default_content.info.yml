@@ -56,3 +56,19 @@ default_content:
     - 22916840-5e40-460d-91ea-3adc55478196
     - 7f323d1a-bc2b-4a65-bd66-e744fc09a876
     - de8dbaa2-c452-4b0e-a74b-f81bc076d6bc
+  group:
+    - ac4d58e3-6742-4331-83cb-56caa2f61485
+  user:
+    - e21085aa-d940-47f5-856a-ea80ef15615e
+    - 1b7b4300-0184-419a-b3bc-a4353503625f
+  profile:
+    - 603789fc-4cf9-49f1-88bd-a7e289d5a192
+    - 4e520cf1-5998-4cb0-8ac7-f9d290597c82
+    - 752fc1e3-29f0-4c03-b888-71b576ca565e
+    - 4fe633cf-ac00-49b4-9329-5d4d07ebfd82
+  group_content:
+    - 69cc9160-8769-4221-8c5d-2fbf6d283786
+    - aef3e940-3bff-4d57-8162-2b55fe79ddf1
+    - d75be67c-acd8-44be-b11e-300d6764e8e0
+  node:
+    - 22c1341c-74b5-478e-8ba6-aa7a8e0ab2c6

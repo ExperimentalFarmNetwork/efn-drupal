@@ -1,0 +1,92 @@
+{
+    "_links": {
+        "self": {
+            "href": "http:\/\/default\/profile\/4?_format=hal_json"
+        },
+        "type": {
+            "href": "http:\/\/drupal.org\/rest\/type\/profile\/main"
+        },
+        "http:\/\/drupal.org\/rest\/relation\/profile\/main\/uid": [
+            {
+                "href": "http:\/\/default\/user\/7?_format=hal_json"
+            }
+        ]
+    },
+    "profile_id": [
+        {
+            "value": "4"
+        }
+    ],
+    "uuid": [
+        {
+            "value": "603789fc-4cf9-49f1-88bd-a7e289d5a192"
+        }
+    ],
+    "revision_id": [
+        {
+            "value": "4"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "type": [
+        {
+            "target_id": "main"
+        }
+    ],
+    "_embedded": {
+        "http:\/\/drupal.org\/rest\/relation\/profile\/main\/uid": [
+            {
+                "_links": {
+                    "self": {
+                        "href": "http:\/\/default\/user\/7?_format=hal_json"
+                    },
+                    "type": {
+                        "href": "http:\/\/drupal.org\/rest\/type\/user\/user"
+                    }
+                },
+                "uuid": [
+                    {
+                        "value": "1b7b4300-0184-419a-b3bc-a4353503625f"
+                    }
+                ]
+            }
+        ]
+    },
+    "status": [
+        {
+            "value": "1"
+        }
+    ],
+    "created": [
+        {
+            "value": "1481223671"
+        }
+    ],
+    "changed": [
+        {
+            "value": "1481223671"
+        }
+    ],
+    "field_donating": [
+        {
+            "value": "education",
+            "lang": "en"
+        }
+    ],
+    "field_farmland_have": [
+        {
+            "value": "maybe",
+            "lang": "en"
+        }
+    ],
+    "field_full_name": [
+        {
+            "value": "Dr. Tomato Head",
+            "lang": "en"
+        }
+    ]
+}

@@ -1,0 +1,92 @@
+{
+    "_links": {
+        "self": {
+            "href": "http:\/\/default\/profile\/5?_format=hal_json"
+        },
+        "type": {
+            "href": "http:\/\/drupal.org\/rest\/type\/profile\/main"
+        },
+        "http:\/\/drupal.org\/rest\/relation\/profile\/main\/uid": [
+            {
+                "href": "http:\/\/default\/user\/8?_format=hal_json"
+            }
+        ]
+    },
+    "profile_id": [
+        {
+            "value": "5"
+        }
+    ],
+    "uuid": [
+        {
+            "value": "4e520cf1-5998-4cb0-8ac7-f9d290597c82"
+        }
+    ],
+    "revision_id": [
+        {
+            "value": "5"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "type": [
+        {
+            "target_id": "main"
+        }
+    ],
+    "_embedded": {
+        "http:\/\/drupal.org\/rest\/relation\/profile\/main\/uid": [
+            {
+                "_links": {
+                    "self": {
+                        "href": "http:\/\/default\/user\/8?_format=hal_json"
+                    },
+                    "type": {
+                        "href": "http:\/\/drupal.org\/rest\/type\/user\/user"
+                    }
+                },
+                "uuid": [
+                    {
+                        "value": "e21085aa-d940-47f5-856a-ea80ef15615e"
+                    }
+                ]
+            }
+        ]
+    },
+    "status": [
+        {
+            "value": "1"
+        }
+    ],
+    "created": [
+        {
+            "value": "1481223728"
+        }
+    ],
+    "changed": [
+        {
+            "value": "1481223728"
+        }
+    ],
+    "field_farmland": [
+        {
+            "value": "rent",
+            "lang": "en"
+        }
+    ],
+    "field_farmland_have": [
+        {
+            "value": "no",
+            "lang": "en"
+        }
+    ],
+    "field_full_name": [
+        {
+            "value": "Jane Doe",
+            "lang": "en"
+        }
+    ]
+}

@@ -1,0 +1,152 @@
+{
+    "_links": {
+        "self": {
+            "href": "http:\/\/default\/profile\/7?_format=hal_json"
+        },
+        "type": {
+            "href": "http:\/\/drupal.org\/rest\/type\/profile\/researcher"
+        },
+        "http:\/\/drupal.org\/rest\/relation\/profile\/researcher\/uid": [
+            {
+                "href": "http:\/\/default\/user\/7?_format=hal_json"
+            }
+        ],
+        "http:\/\/drupal.org\/rest\/relation\/profile\/researcher\/field_cv": [
+            {
+                "href": "http:\/\/default\/sites\/default\/files\/admin\/uploads\/CV_Postdoc_Cellbiology2013_0.pdf"
+            }
+        ]
+    },
+    "profile_id": [
+        {
+            "value": "7"
+        }
+    ],
+    "uuid": [
+        {
+            "value": "4fe633cf-ac00-49b4-9329-5d4d07ebfd82"
+        }
+    ],
+    "revision_id": [
+        {
+            "value": "7"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "type": [
+        {
+            "target_id": "researcher"
+        }
+    ],
+    "_embedded": {
+        "http:\/\/drupal.org\/rest\/relation\/profile\/researcher\/uid": [
+            {
+                "_links": {
+                    "self": {
+                        "href": "http:\/\/default\/user\/7?_format=hal_json"
+                    },
+                    "type": {
+                        "href": "http:\/\/drupal.org\/rest\/type\/user\/user"
+                    }
+                },
+                "uuid": [
+                    {
+                        "value": "1b7b4300-0184-419a-b3bc-a4353503625f"
+                    }
+                ]
+            }
+        ],
+        "http:\/\/drupal.org\/rest\/relation\/profile\/researcher\/field_cv": [
+            {
+                "_links": {
+                    "self": {
+                        "href": "http:\/\/default\/sites\/default\/files\/admin\/uploads\/CV_Postdoc_Cellbiology2013_0.pdf"
+                    },
+                    "type": {
+                        "href": "http:\/\/drupal.org\/rest\/type\/file\/file"
+                    }
+                },
+                "uuid": [
+                    {
+                        "value": "83ad4b64-604f-4866-9ea9-cbf2c6861c2e"
+                    }
+                ],
+                "uri": [
+                    {
+                        "value": "http:\/\/default\/sites\/default\/files\/admin\/uploads\/CV_Postdoc_Cellbiology2013_0.pdf"
+                    }
+                ]
+            }
+        ]
+    },
+    "status": [
+        {
+            "value": "1"
+        }
+    ],
+    "is_default": [
+        {
+            "value": "1"
+        }
+    ],
+    "created": [
+        {
+            "value": "1481234549"
+        }
+    ],
+    "changed": [
+        {
+            "value": "1481234549"
+        }
+    ],
+    "field_address": [
+        {
+            "langcode": null,
+            "country_code": "US",
+            "administrative_area": "NY",
+            "locality": "New York",
+            "dependent_locality": null,
+            "postal_code": "10000",
+            "sorting_code": null,
+            "address_line1": "20 1st St.",
+            "address_line2": "",
+            "organization": "",
+            "given_name": "",
+            "additional_name": null,
+            "family_name": ""
+        }
+    ],
+    "field_bio": [
+        {
+            "value": "Nulla molestie venenatis leo. Aenean quis dapibus neque. Sed laoreet tincidunt luctus. Phasellus id mi elit. Aenean accumsan placerat consectetur. Maecenas congue tortor enim, quis consequat nisl tincidunt pellentesque. Sed eu sagittis ligula. Nulla viverra, nulla tempus viverra auctor, massa ipsum faucibus velit, in efficitur ex libero a ex. Proin tristique, erat ac dignissim ultrices, enim mauris efficitur orci, eu malesuada tortor tortor quis lacus. Morbi non ex ac neque viverra mollis. Integer pretium porta metus, id mattis metus fringilla at. Praesent lobortis odio leo, eget placerat ante facilisis quis. Vivamus facilisis massa et viverra cursus. Praesent vitae elementum nisi, ut porta magna. Aliquam erat volutpat.",
+            "lang": "en"
+        }
+    ],
+    "field_education": [
+        {
+            "value": "Aenean tincidunt lacus in risus volutpat, eu bibendum metus iaculis. Curabitur sit amet luctus odio. Cras id enim facilisis, placerat metus eget, laoreet nunc. Pellentesque magna risus, cursus eu interdum sit amet, volutpat in nulla. In velit massa, tincidunt in commodo mollis, porta sed ipsum. Etiam iaculis sed justo sit amet gravida. Aliquam vulputate nisl sit amet lorem blandit ultrices. Vivamus convallis nulla libero, eget vestibulum mauris pretium ac. Integer at diam id eros dignissim lobortis ut at odio. Nulla facilisi.",
+            "format": "plain_text"
+        }
+    ],
+    "field_email": [
+        {
+            "value": "doctor@tomato.com"
+        }
+    ],
+    "field_phone": [
+        {
+            "value": "555-555-5555"
+        }
+    ],
+    "field_website": [
+        {
+            "uri": "http:\/\/mytomato.com",
+            "title": "Tomato Project Home",
+            "options": []
+        }
+    ]
+}

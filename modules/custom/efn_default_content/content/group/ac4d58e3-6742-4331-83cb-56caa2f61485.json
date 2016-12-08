@@ -1,0 +1,222 @@
+{
+    "_links": {
+        "self": {
+            "href": "http:\/\/default\/group\/3?_format=hal_json"
+        },
+        "type": {
+            "href": "http:\/\/drupal.org\/rest\/type\/group\/project"
+        },
+        "http:\/\/drupal.org\/rest\/relation\/group\/project\/uid": [
+            {
+                "href": "http:\/\/default\/user\/1?_format=hal_json",
+                "lang": "en"
+            }
+        ],
+        "http:\/\/drupal.org\/rest\/relation\/group\/project\/field_project_type": [
+            {
+                "href": "http:\/\/default\/taxonomy\/term\/4?_format=hal_json"
+            },
+            {
+                "href": "http:\/\/default\/taxonomy\/term\/1?_format=hal_json"
+            },
+            {
+                "href": "http:\/\/default\/taxonomy\/term\/12?_format=hal_json"
+            }
+        ]
+    },
+    "id": [
+        {
+            "value": "3"
+        }
+    ],
+    "uuid": [
+        {
+            "value": "ac4d58e3-6742-4331-83cb-56caa2f61485"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en",
+            "lang": "en"
+        }
+    ],
+    "type": [
+        {
+            "target_id": "project"
+        }
+    ],
+    "label": [
+        {
+            "value": "Crazy Exotic Little Tomatoes",
+            "lang": "en"
+        }
+    ],
+    "_embedded": {
+        "http:\/\/drupal.org\/rest\/relation\/group\/project\/uid": [
+            {
+                "_links": {
+                    "self": {
+                        "href": "http:\/\/default\/user\/1?_format=hal_json"
+                    },
+                    "type": {
+                        "href": "http:\/\/drupal.org\/rest\/type\/user\/user"
+                    }
+                },
+                "uuid": [
+                    {
+                        "value": "f1b0e78b-7470-42c9-a550-268ae1979846"
+                    }
+                ],
+                "lang": "en"
+            }
+        ],
+        "http:\/\/drupal.org\/rest\/relation\/group\/project\/field_project_type": [
+            {
+                "_links": {
+                    "self": {
+                        "href": "http:\/\/default\/taxonomy\/term\/4?_format=hal_json"
+                    },
+                    "type": {
+                        "href": "http:\/\/drupal.org\/rest\/type\/taxonomy_term\/project_type"
+                    }
+                },
+                "uuid": [
+                    {
+                        "value": "3fa9bfa4-5b61-4bf9-a24b-7bd7ed1b601f"
+                    }
+                ]
+            },
+            {
+                "_links": {
+                    "self": {
+                        "href": "http:\/\/default\/taxonomy\/term\/1?_format=hal_json"
+                    },
+                    "type": {
+                        "href": "http:\/\/drupal.org\/rest\/type\/taxonomy_term\/project_type"
+                    }
+                },
+                "uuid": [
+                    {
+                        "value": "932fd471-7f82-4986-a611-ae1869c83a95"
+                    }
+                ]
+            },
+            {
+                "_links": {
+                    "self": {
+                        "href": "http:\/\/default\/taxonomy\/term\/12?_format=hal_json"
+                    },
+                    "type": {
+                        "href": "http:\/\/drupal.org\/rest\/type\/taxonomy_term\/project_type"
+                    }
+                },
+                "uuid": [
+                    {
+                        "value": "fdfbb3aa-126e-432c-afbb-144eaecfc443"
+                    }
+                ]
+            }
+        ]
+    },
+    "created": [
+        {
+            "value": "1481233181",
+            "lang": "en"
+        }
+    ],
+    "changed": [
+        {
+            "value": "1481233464",
+            "lang": "en"
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": "1",
+            "lang": "en"
+        }
+    ],
+    "field_description": [
+        {
+            "value": "Proin aliquet nulla vitae mi pharetra, vel fringilla sem convallis. Nunc vitae diam tempus, porta libero ac, euismod ante. Nulla ornare ut justo in commodo. Sed eu viverra turpis, quis egestas elit. Nulla facilisi. Phasellus neque dolor, imperdiet at venenatis ac, iaculis vel risus. Aliquam sed facilisis risus. Vestibulum placerat fermentum felis sed tincidunt.",
+            "format": "plain_text"
+        }
+    ],
+    "field_location": [
+        {
+            "langcode": null,
+            "country_code": "US",
+            "administrative_area": "",
+            "locality": "",
+            "dependent_locality": null,
+            "postal_code": "03049",
+            "sorting_code": null,
+            "address_line1": "",
+            "address_line2": "",
+            "organization": "",
+            "given_name": "",
+            "additional_name": null,
+            "family_name": ""
+        }
+    ],
+    "field_location_geo": [
+        {
+            "value": "POINT(-71.596133 42.727236)",
+            "geo_type": "Point",
+            "lat": 42.727236,
+            "lon": -71.596133,
+            "left": -71.596133,
+            "top": 42.727236,
+            "right": -71.596133,
+            "bottom": 42.727236,
+            "geohash": "drt54f321njf",
+            "latlon": "42.727236,-71.596133"
+        }
+    ],
+    "field_multiyear": [
+        {
+            "value": "yes"
+        }
+    ],
+    "field_privacy": [
+        {
+            "value": "yes"
+        }
+    ],
+    "field_project_summary": [
+        {
+            "value": "We found these little tomato seeds on the moon and want to cultivate them."
+        }
+    ],
+    "field_researcher_background": [
+        {
+            "value": "Duis sit amet lobortis felis. Pellentesque nec neque dui. Integer eleifend interdum malesuada. Nam nec ultricies augue. Nam a efficitur neque. In nec pretium ante, nec maximus dui. Aenean augue eros, sodales ac maximus eu, lobortis blandit eros. Praesent vitae tempus ex, a volutpat ligula.",
+            "format": "plain_text"
+        }
+    ],
+    "field_seeking_volunteers": [
+        {
+            "value": "growers"
+        }
+    ],
+    "field_volunteers_ask_do": [
+        {
+            "value": "Proin nec tortor in erat euismod pellentesque. Aenean sed est non nibh facilisis commodo. Curabitur ut consequat orci. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur commodo tellus et lorem pretium, a bibendum justo dapibus. Nunc rhoncus mi ullamcorper aliquam tempor. Morbi aliquam mi non pharetra suscipit. Aliquam erat volutpat. Proin porttitor nunc non elit aliquet elementum."
+        }
+    ],
+    "field_volunteers_how_many": [
+        {
+            "value": "29"
+        }
+    ],
+    "field_volunteers_keep_seed": [
+        {
+            "value": "yes"
+        }
+    ],
+    "field_volunteers_other_reqs": [
+        {
+            "value": "Morbi tincidunt tempus rhoncus. Integer semper fermentum augue condimentum dapibus. Vivamus tempus efficitur nunc ac dictum. Fusce eu magna bibendum, tincidunt nibh vel, elementum ex. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Etiam odio justo, consectetur eget viverra sed, vestibulum vel ipsum. Sed euismod ipsum eget sem eleifend iaculis."
+        }
+    ]
+}

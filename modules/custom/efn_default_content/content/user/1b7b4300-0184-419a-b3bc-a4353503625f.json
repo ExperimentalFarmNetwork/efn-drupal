@@ -1,0 +1,48 @@
+{
+    "_links": {
+        "self": {
+            "href": "http:\/\/default\/user\/7?_format=hal_json"
+        },
+        "type": {
+            "href": "http:\/\/drupal.org\/rest\/type\/user\/user"
+        }
+    },
+    "uid": [
+        {
+            "value": "7"
+        }
+    ],
+    "uuid": [
+        {
+            "value": "1b7b4300-0184-419a-b3bc-a4353503625f"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en",
+            "lang": "en"
+        }
+    ],
+    "name": [
+        {
+            "value": "projectlead"
+        }
+    ],
+    "created": [
+        {
+            "value": "1481223671"
+        }
+    ],
+    "changed": [
+        {
+            "value": "1481223671",
+            "lang": "en"
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": "1",
+            "lang": "en"
+        }
+    ]
+}

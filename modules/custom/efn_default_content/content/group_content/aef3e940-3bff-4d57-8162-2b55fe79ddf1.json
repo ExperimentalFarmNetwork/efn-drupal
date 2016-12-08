@@ -1,0 +1,125 @@
+{
+    "_links": {
+        "self": {
+            "href": "http:\/\/default\/group\/3\/content\/11?_format=hal_json"
+        },
+        "type": {
+            "href": "http:\/\/drupal.org\/rest\/type\/group_content\/project-group_membership"
+        },
+        "http:\/\/drupal.org\/rest\/relation\/group_content\/project-group_membership\/gid": [
+            {
+                "href": "http:\/\/default\/group\/3?_format=hal_json"
+            }
+        ],
+        "http:\/\/drupal.org\/rest\/relation\/group_content\/project-group_membership\/entity_id": [
+            {
+                "href": "http:\/\/default\/user\/7?_format=hal_json"
+            }
+        ],
+        "http:\/\/drupal.org\/rest\/relation\/group_content\/project-group_membership\/uid": [
+            {
+                "href": "http:\/\/default\/user\/1?_format=hal_json",
+                "lang": "en"
+            }
+        ]
+    },
+    "id": [
+        {
+            "value": "11"
+        }
+    ],
+    "uuid": [
+        {
+            "value": "aef3e940-3bff-4d57-8162-2b55fe79ddf1"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en",
+            "lang": "en"
+        }
+    ],
+    "type": [
+        {
+            "target_id": "project-group_membership"
+        }
+    ],
+    "_embedded": {
+        "http:\/\/drupal.org\/rest\/relation\/group_content\/project-group_membership\/gid": [
+            {
+                "_links": {
+                    "self": {
+                        "href": "http:\/\/default\/group\/3?_format=hal_json"
+                    },
+                    "type": {
+                        "href": "http:\/\/drupal.org\/rest\/type\/group\/project"
+                    }
+                },
+                "uuid": [
+                    {
+                        "value": "ac4d58e3-6742-4331-83cb-56caa2f61485"
+                    }
+                ]
+            }
+        ],
+        "http:\/\/drupal.org\/rest\/relation\/group_content\/project-group_membership\/entity_id": [
+            {
+                "_links": {
+                    "self": {
+                        "href": "http:\/\/default\/user\/7?_format=hal_json"
+                    },
+                    "type": {
+                        "href": "http:\/\/drupal.org\/rest\/type\/user\/user"
+                    }
+                },
+                "uuid": [
+                    {
+                        "value": "1b7b4300-0184-419a-b3bc-a4353503625f"
+                    }
+                ]
+            }
+        ],
+        "http:\/\/drupal.org\/rest\/relation\/group_content\/project-group_membership\/uid": [
+            {
+                "_links": {
+                    "self": {
+                        "href": "http:\/\/default\/user\/1?_format=hal_json"
+                    },
+                    "type": {
+                        "href": "http:\/\/drupal.org\/rest\/type\/user\/user"
+                    }
+                },
+                "uuid": [
+                    {
+                        "value": "f1b0e78b-7470-42c9-a550-268ae1979846"
+                    }
+                ],
+                "lang": "en"
+            }
+        ]
+    },
+    "label": [
+        {
+            "value": "projectlead",
+            "lang": "en"
+        }
+    ],
+    "created": [
+        {
+            "value": "1481234996",
+            "lang": "en"
+        }
+    ],
+    "changed": [
+        {
+            "value": "1481234996",
+            "lang": "en"
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": "1",
+            "lang": "en"
+        }
+    ]
+}

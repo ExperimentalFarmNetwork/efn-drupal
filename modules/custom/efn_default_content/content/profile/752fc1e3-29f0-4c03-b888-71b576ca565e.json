@@ -1,0 +1,285 @@
+{
+    "_links": {
+        "self": {
+            "href": "http:\/\/default\/profile\/6?_format=hal_json"
+        },
+        "type": {
+            "href": "http:\/\/drupal.org\/rest\/type\/profile\/volunteer"
+        },
+        "http:\/\/drupal.org\/rest\/relation\/profile\/volunteer\/uid": [
+            {
+                "href": "http:\/\/default\/user\/8?_format=hal_json"
+            }
+        ],
+        "http:\/\/drupal.org\/rest\/relation\/profile\/volunteer\/field_gmos": [
+            {
+                "href": "http:\/\/default\/taxonomy\/term\/42?_format=hal_json"
+            }
+        ],
+        "http:\/\/drupal.org\/rest\/relation\/profile\/volunteer\/field_location_descriptors": [
+            {
+                "href": "http:\/\/default\/taxonomy\/term\/28?_format=hal_json"
+            },
+            {
+                "href": "http:\/\/default\/taxonomy\/term\/30?_format=hal_json"
+            },
+            {
+                "href": "http:\/\/default\/taxonomy\/term\/31?_format=hal_json"
+            }
+        ],
+        "http:\/\/drupal.org\/rest\/relation\/profile\/volunteer\/field_soil_type": [
+            {
+                "href": "http:\/\/default\/taxonomy\/term\/24?_format=hal_json"
+            },
+            {
+                "href": "http:\/\/default\/taxonomy\/term\/13?_format=hal_json"
+            }
+        ]
+    },
+    "profile_id": [
+        {
+            "value": "6"
+        }
+    ],
+    "uuid": [
+        {
+            "value": "752fc1e3-29f0-4c03-b888-71b576ca565e"
+        }
+    ],
+    "revision_id": [
+        {
+            "value": "6"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "type": [
+        {
+            "target_id": "volunteer"
+        }
+    ],
+    "_embedded": {
+        "http:\/\/drupal.org\/rest\/relation\/profile\/volunteer\/uid": [
+            {
+                "_links": {
+                    "self": {
+                        "href": "http:\/\/default\/user\/8?_format=hal_json"
+                    },
+                    "type": {
+                        "href": "http:\/\/drupal.org\/rest\/type\/user\/user"
+                    }
+                },
+                "uuid": [
+                    {
+                        "value": "e21085aa-d940-47f5-856a-ea80ef15615e"
+                    }
+                ]
+            }
+        ],
+        "http:\/\/drupal.org\/rest\/relation\/profile\/volunteer\/field_gmos": [
+            {
+                "_links": {
+                    "self": {
+                        "href": "http:\/\/default\/taxonomy\/term\/42?_format=hal_json"
+                    },
+                    "type": {
+                        "href": "http:\/\/drupal.org\/rest\/type\/taxonomy_term\/gmos"
+                    }
+                },
+                "uuid": [
+                    {
+                        "value": "5650e330-4822-45ab-9f92-6b6454fcd1b1"
+                    }
+                ]
+            }
+        ],
+        "http:\/\/drupal.org\/rest\/relation\/profile\/volunteer\/field_location_descriptors": [
+            {
+                "_links": {
+                    "self": {
+                        "href": "http:\/\/default\/taxonomy\/term\/28?_format=hal_json"
+                    },
+                    "type": {
+                        "href": "http:\/\/drupal.org\/rest\/type\/taxonomy_term\/growing_location_descriptors"
+                    }
+                },
+                "uuid": [
+                    {
+                        "value": "3c0006e1-04c4-4a84-a84d-3fcc6e3f5296"
+                    }
+                ]
+            },
+            {
+                "_links": {
+                    "self": {
+                        "href": "http:\/\/default\/taxonomy\/term\/30?_format=hal_json"
+                    },
+                    "type": {
+                        "href": "http:\/\/drupal.org\/rest\/type\/taxonomy_term\/growing_location_descriptors"
+                    }
+                },
+                "uuid": [
+                    {
+                        "value": "92cc8fb7-6fc9-48e3-a702-ba9ec347547c"
+                    }
+                ]
+            },
+            {
+                "_links": {
+                    "self": {
+                        "href": "http:\/\/default\/taxonomy\/term\/31?_format=hal_json"
+                    },
+                    "type": {
+                        "href": "http:\/\/drupal.org\/rest\/type\/taxonomy_term\/growing_location_descriptors"
+                    }
+                },
+                "uuid": [
+                    {
+                        "value": "71f306db-1c61-4e25-8d23-e3493e7a5c3a"
+                    }
+                ]
+            }
+        ],
+        "http:\/\/drupal.org\/rest\/relation\/profile\/volunteer\/field_soil_type": [
+            {
+                "_links": {
+                    "self": {
+                        "href": "http:\/\/default\/taxonomy\/term\/24?_format=hal_json"
+                    },
+                    "type": {
+                        "href": "http:\/\/drupal.org\/rest\/type\/taxonomy_term\/soil_type"
+                    }
+                },
+                "uuid": [
+                    {
+                        "value": "09c99406-8ca8-4caa-a9d2-d88a68239b4e"
+                    }
+                ]
+            },
+            {
+                "_links": {
+                    "self": {
+                        "href": "http:\/\/default\/taxonomy\/term\/13?_format=hal_json"
+                    },
+                    "type": {
+                        "href": "http:\/\/drupal.org\/rest\/type\/taxonomy_term\/soil_type"
+                    }
+                },
+                "uuid": [
+                    {
+                        "value": "01dee834-6cc0-4bd3-b12c-185aede4f3cf"
+                    }
+                ]
+            }
+        ]
+    },
+    "status": [
+        {
+            "value": "1"
+        }
+    ],
+    "is_default": [
+        {
+            "value": "1"
+        }
+    ],
+    "created": [
+        {
+            "value": "1481223921"
+        }
+    ],
+    "changed": [
+        {
+            "value": "1481223921"
+        }
+    ],
+    "field_bio": [
+        {
+            "value": "Cras in ante at ligula euismod condimentum gravida pretium risus. Donec tempor feugiat fermentum. Nunc enim lorem, tincidunt sed porta blandit, consequat vitae ipsum. Morbi nec interdum tortor. Nunc luctus erat a magna feugiat imperdiet. Praesent finibus condimentum nisi, sit amet tempus orci interdum a. Ut turpis nulla, porttitor quis vehicula id, efficitur et dui. Nulla leo dui, vestibulum in consectetur in, rutrum a nulla. Nam efficitur velit eu orci lobortis congue."
+        }
+    ],
+    "field_crops_mile": [
+        {
+            "value": "Raspberries"
+        }
+    ],
+    "field_crops_quarter_mile": [
+        {
+            "value": "Strawberries"
+        }
+    ],
+    "field_details": [
+        {
+            "value": "Proin efficitur tortor vel tellus vestibulum rhoncus."
+        }
+    ],
+    "field_favorite_crops": [
+        {
+            "value": "Phasellus risus turpis, rhoncus eget placerat a."
+        }
+    ],
+    "field_growing_experience": [
+        {
+            "value": "food"
+        },
+        {
+            "value": "seeds"
+        }
+    ],
+    "field_location": [
+        {
+            "langcode": null,
+            "country_code": "US",
+            "administrative_area": "",
+            "locality": "",
+            "dependent_locality": null,
+            "postal_code": "19143",
+            "sorting_code": null,
+            "address_line1": "",
+            "address_line2": "",
+            "organization": "",
+            "given_name": "",
+            "additional_name": null,
+            "family_name": "",
+            "lang": "en"
+        }
+    ],
+    "field_location_geo": [
+        {
+            "value": "POINT(-75.218735 39.941288)",
+            "geo_type": "Point",
+            "lat": 39.941288,
+            "lon": -75.218735,
+            "left": -75.218735,
+            "top": 39.941288,
+            "right": -75.218735,
+            "bottom": 39.941288,
+            "geohash": "dr4e0r56u7wp",
+            "latlon": "39.941288,-75.218735",
+            "lang": "en"
+        }
+    ],
+    "field_other_limitations": [
+        {
+            "value": "Proin elementum mattis pretium. Praesent tincidunt lectus."
+        }
+    ],
+    "field_soil_details": [
+        {
+            "value": "Phasellus tempor at eros sed finibus. Vestibulum."
+        }
+    ],
+    "field_space_available": [
+        {
+            "value": "43560"
+        }
+    ],
+    "field_time_commitment": [
+        {
+            "value": "2-5"
+        }
+    ]
+}

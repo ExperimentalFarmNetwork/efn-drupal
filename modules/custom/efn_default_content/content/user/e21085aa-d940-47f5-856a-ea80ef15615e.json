@@ -1,0 +1,48 @@
+{
+    "_links": {
+        "self": {
+            "href": "http:\/\/default\/user\/8?_format=hal_json"
+        },
+        "type": {
+            "href": "http:\/\/drupal.org\/rest\/type\/user\/user"
+        }
+    },
+    "uid": [
+        {
+            "value": "8"
+        }
+    ],
+    "uuid": [
+        {
+            "value": "e21085aa-d940-47f5-856a-ea80ef15615e"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en",
+            "lang": "en"
+        }
+    ],
+    "name": [
+        {
+            "value": "participant"
+        }
+    ],
+    "created": [
+        {
+            "value": "1481223728"
+        }
+    ],
+    "changed": [
+        {
+            "value": "1481224048",
+            "lang": "en"
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": "1",
+            "lang": "en"
+        }
+    ]
+}

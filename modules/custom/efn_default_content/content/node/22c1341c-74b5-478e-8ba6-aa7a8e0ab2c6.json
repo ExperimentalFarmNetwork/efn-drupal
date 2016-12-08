@@ -1,0 +1,145 @@
+{
+    "_links": {
+        "self": {
+            "href": "http:\/\/default\/node\/8?_format=hal_json"
+        },
+        "type": {
+            "href": "http:\/\/drupal.org\/rest\/type\/node\/project_update"
+        },
+        "http:\/\/drupal.org\/rest\/relation\/node\/project_update\/uid": [
+            {
+                "href": "http:\/\/default\/user\/8?_format=hal_json",
+                "lang": "en"
+            }
+        ],
+        "http:\/\/drupal.org\/rest\/relation\/node\/project_update\/revision_uid": [
+            {
+                "href": "http:\/\/default\/user\/1?_format=hal_json"
+            }
+        ]
+    },
+    "nid": [
+        {
+            "value": "8"
+        }
+    ],
+    "uuid": [
+        {
+            "value": "22c1341c-74b5-478e-8ba6-aa7a8e0ab2c6"
+        }
+    ],
+    "vid": [
+        {
+            "value": "8"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en",
+            "lang": "en"
+        }
+    ],
+    "type": [
+        {
+            "target_id": "project_update"
+        }
+    ],
+    "title": [
+        {
+            "value": "Plants are dying!",
+            "lang": "en"
+        }
+    ],
+    "_embedded": {
+        "http:\/\/drupal.org\/rest\/relation\/node\/project_update\/uid": [
+            {
+                "_links": {
+                    "self": {
+                        "href": "http:\/\/default\/user\/8?_format=hal_json"
+                    },
+                    "type": {
+                        "href": "http:\/\/drupal.org\/rest\/type\/user\/user"
+                    }
+                },
+                "uuid": [
+                    {
+                        "value": "e21085aa-d940-47f5-856a-ea80ef15615e"
+                    }
+                ],
+                "lang": "en"
+            }
+        ],
+        "http:\/\/drupal.org\/rest\/relation\/node\/project_update\/revision_uid": [
+            {
+                "_links": {
+                    "self": {
+                        "href": "http:\/\/default\/user\/1?_format=hal_json"
+                    },
+                    "type": {
+                        "href": "http:\/\/drupal.org\/rest\/type\/user\/user"
+                    }
+                },
+                "uuid": [
+                    {
+                        "value": "f1b0e78b-7470-42c9-a550-268ae1979846"
+                    }
+                ]
+            }
+        ]
+    },
+    "status": [
+        {
+            "value": "1",
+            "lang": "en"
+        }
+    ],
+    "created": [
+        {
+            "value": "1481234705",
+            "lang": "en"
+        }
+    ],
+    "changed": [
+        {
+            "value": "1481234908",
+            "lang": "en"
+        }
+    ],
+    "promote": [
+        {
+            "value": "0",
+            "lang": "en"
+        }
+    ],
+    "sticky": [
+        {
+            "value": "0",
+            "lang": "en"
+        }
+    ],
+    "revision_timestamp": [
+        {
+            "value": "1481234723"
+        }
+    ],
+    "revision_translation_affected": [
+        {
+            "value": "1",
+            "lang": "en"
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": "1",
+            "lang": "en"
+        }
+    ],
+    "body": [
+        {
+            "value": "Duis sit amet lobortis felis. Pellentesque nec neque dui. Integer eleifend interdum malesuada. Nam nec ultricies augue. Nam a efficitur neque. In nec pretium ante, nec maximus dui. Aenean augue eros, sodales ac maximus eu, lobortis blandit eros. Praesent vitae tempus ex, a volutpat ligula.",
+            "format": "plain_text",
+            "summary": "",
+            "lang": "en"
+        }
+    ]
+}

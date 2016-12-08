@@ -1,0 +1,125 @@
+{
+    "_links": {
+        "self": {
+            "href": "http:\/\/default\/group\/3\/content\/9?_format=hal_json"
+        },
+        "type": {
+            "href": "http:\/\/drupal.org\/rest\/type\/group_content\/group_content_type_43c14e35a52cb"
+        },
+        "http:\/\/drupal.org\/rest\/relation\/group_content\/group_content_type_43c14e35a52cb\/gid": [
+            {
+                "href": "http:\/\/default\/group\/3?_format=hal_json"
+            }
+        ],
+        "http:\/\/drupal.org\/rest\/relation\/group_content\/group_content_type_43c14e35a52cb\/entity_id": [
+            {
+                "href": "http:\/\/default\/node\/8?_format=hal_json"
+            }
+        ],
+        "http:\/\/drupal.org\/rest\/relation\/group_content\/group_content_type_43c14e35a52cb\/uid": [
+            {
+                "href": "http:\/\/default\/user\/1?_format=hal_json",
+                "lang": "en"
+            }
+        ]
+    },
+    "id": [
+        {
+            "value": "9"
+        }
+    ],
+    "uuid": [
+        {
+            "value": "69cc9160-8769-4221-8c5d-2fbf6d283786"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en",
+            "lang": "en"
+        }
+    ],
+    "type": [
+        {
+            "target_id": "group_content_type_43c14e35a52cb"
+        }
+    ],
+    "_embedded": {
+        "http:\/\/drupal.org\/rest\/relation\/group_content\/group_content_type_43c14e35a52cb\/gid": [
+            {
+                "_links": {
+                    "self": {
+                        "href": "http:\/\/default\/group\/3?_format=hal_json"
+                    },
+                    "type": {
+                        "href": "http:\/\/drupal.org\/rest\/type\/group\/project"
+                    }
+                },
+                "uuid": [
+                    {
+                        "value": "ac4d58e3-6742-4331-83cb-56caa2f61485"
+                    }
+                ]
+            }
+        ],
+        "http:\/\/drupal.org\/rest\/relation\/group_content\/group_content_type_43c14e35a52cb\/entity_id": [
+            {
+                "_links": {
+                    "self": {
+                        "href": "http:\/\/default\/node\/8?_format=hal_json"
+                    },
+                    "type": {
+                        "href": "http:\/\/drupal.org\/rest\/type\/node\/project_update"
+                    }
+                },
+                "uuid": [
+                    {
+                        "value": "22c1341c-74b5-478e-8ba6-aa7a8e0ab2c6"
+                    }
+                ]
+            }
+        ],
+        "http:\/\/drupal.org\/rest\/relation\/group_content\/group_content_type_43c14e35a52cb\/uid": [
+            {
+                "_links": {
+                    "self": {
+                        "href": "http:\/\/default\/user\/1?_format=hal_json"
+                    },
+                    "type": {
+                        "href": "http:\/\/drupal.org\/rest\/type\/user\/user"
+                    }
+                },
+                "uuid": [
+                    {
+                        "value": "f1b0e78b-7470-42c9-a550-268ae1979846"
+                    }
+                ],
+                "lang": "en"
+            }
+        ]
+    },
+    "label": [
+        {
+            "value": "Plants are dying!",
+            "lang": "en"
+        }
+    ],
+    "created": [
+        {
+            "value": "1481234725",
+            "lang": "en"
+        }
+    ],
+    "changed": [
+        {
+            "value": "1481234854",
+            "lang": "en"
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": "1",
+            "lang": "en"
+        }
+    ]
+}
