@@ -10,8 +10,3 @@ permissions:
   - 'administer comment types'
   - 'administer comments'
   - 'post comments'
-  - 'masquerade as any user'
-  - 'masquerade as super user'
-  - 'masquerade as administrator'
-  - 'masquerade as authenticated'
-  - 'masquerade as volunteer'

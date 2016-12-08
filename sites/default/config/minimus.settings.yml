@@ -9,10 +9,6 @@ favicon:
 schemas:
   bootstrap: 8000
   minimus: 8000
-fluid_container: 1
-table_responsive: '-1'
-table: ''
-navbar_position: ''
 features:
   comment_user_picture: true
   comment_user_verification: true
@@ -22,3 +18,6 @@ logo:
   path: ''
   url: ''
   use_default: true
+fluid_container: 1
+table_responsive: '-1'
+table: ''
