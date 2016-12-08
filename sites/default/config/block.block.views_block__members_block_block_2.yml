@@ -1,21 +1,21 @@
-uuid: a2ca0cac-9b36-4bea-913f-f3c4cba29cdc
+uuid: 870a7d4d-3b27-4ff5-81d1-26c0ce811614
 langcode: en
 status: true
 dependencies:
   config:
-    - views.view.project_updates
+    - views.view.members_block
   module:
     - views
   theme:
     - minimus
-id: views_block__project_updates_block_1
+id: views_block__members_block_block_2
 theme: minimus
 region: sidebar_second
-weight: 0
+weight: -7
 provider: null
-plugin: 'views_block:project_updates-block_1'
+plugin: 'views_block:members_block-block_2'
 settings:
-  id: 'views_block:project_updates-block_1'
+  id: 'views_block:members_block-block_2'
   label: ''
   provider: views
   label_display: visible

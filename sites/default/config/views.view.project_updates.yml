@@ -1,15 +1,17 @@
-uuid: 09df9437-4549-4a33-9c9f-d9c93da8772a
+uuid: 6543e8b0-a64f-49a7-b472-ccdeae6bbbcc
 langcode: en
 status: true
 dependencies:
   config:
     - group.content_type.group_content_type_43c14e35a52cb
+    - group.type.project
   module:
     - group
+    - node
 id: project_updates
 label: 'Project Updates'
 module: views
-description: 'A list of updates for project pages'
+description: 'Little block with titles for sidebar'
 tag: ''
 base_table: group_content_field_data
 base_field: id
@@ -51,27 +53,15 @@ display:
           items_per_page: 5
           offset: 0
       style:
-        type: html_list
-        options:
-          grouping: {  }
-          row_class: ''
-          default_row_class: true
-          type: ul
-          wrapper_class: item-list
-          class: ''
+        type: default
       row:
         type: fields
-        options:
-          default_field_elements: true
-          inline: {  }
-          separator: ''
-          hide_empty: false
       fields:
-        entity_id:
-          id: entity_id
-          table: group_content_field_data
-          field: entity_id
-          relationship: none
+        title:
+          id: title
+          table: node_field_data
+          field: title
+          relationship: gc__node
           group_type: group
           admin_label: ''
           label: ''
@@ -115,11 +105,11 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          click_sort_column: target_id
-          type: entity_reference_entity_view
+          click_sort_column: value
+          type: string
           settings:
-            view_mode: teaser
-          group_column: target_id
+            link_to_entity: true
+          group_column: value
           group_columns: {  }
           group_rows: true
           delta_limit: 0
@@ -129,47 +119,16 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: group_content
-          entity_field: entity_id
+          entity_type: node
+          entity_field: title
           plugin_id: field
       filters:
         type:
           id: type
           table: group_content_field_data
           field: type
-          relationship: none
-          group_type: group
-          admin_label: ''
-          operator: in
           value:
             group_content_type_43c14e35a52cb: group_content_type_43c14e35a52cb
-          group: 1
-          exposed: false
-          expose:
-            operator_id: ''
-            label: ''
-            description: ''
-            use_operator: false
-            operator: ''
-            identifier: ''
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
           entity_type: group_content
           entity_field: type
           plugin_id: bundle
@@ -178,7 +137,31 @@ display:
       header: {  }
       footer: {  }
       empty: {  }
-      relationships: {  }
+      relationships:
+        gc__node:
+          id: gc__node
+          table: group_content_field_data
+          field: gc__node
+          relationship: none
+          group_type: group
+          admin_label: 'Group content Content'
+          required: true
+          group_content_plugins:
+            'group_node:project_update': 'group_node:project_update'
+            'group_node:project_status_report': '0'
+          entity_type: group_content
+          plugin_id: group_content_to_entity
+        gid:
+          id: gid
+          table: group_content_field_data
+          field: gid
+          relationship: none
+          group_type: group
+          admin_label: Group
+          required: true
+          entity_type: group_content
+          entity_field: gid
+          plugin_id: standard
       arguments:
         gid:
           id: gid
@@ -206,16 +189,21 @@ display:
             sort_order: asc
             number_of_records: 0
             format: default_summary
-          specify_validation: false
+          specify_validation: true
           validate:
-            type: none
+            type: 'entity:group'
             fail: 'not found'
-          validate_options: {  }
+          validate_options:
+            bundles:
+              project: project
+            operation: view
+            multiple: 0
+            access: false
           break_phrase: false
           not: false
           entity_type: group_content
           entity_field: gid
-          plugin_id: numeric
+          plugin_id: group_id
       display_extenders: {  }
     cache_metadata:
       max-age: -1
