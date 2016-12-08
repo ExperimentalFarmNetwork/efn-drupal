@@ -84,4 +84,6 @@ content:
       target: ''
     third_party_settings: {  }
     type: link
-hidden: {  }
+hidden:
+  field_farmland_details: true
+  field_farmland_have_details: true
