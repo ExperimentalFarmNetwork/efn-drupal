@@ -6329,79 +6329,6 @@
         ]
     },
     {
-        "name": "drupal/default_content",
-        "version": "1.0.0-alpha3",
-        "version_normalized": "1.0.0.0-alpha3",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/default_content",
-            "reference": "8.x-1.0-alpha3"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/default_content-8.x-1.0-alpha3.zip",
-            "reference": null,
-            "shasum": "6834ce4134fd20df56e7294e9aad033f1500d7dd"
-        },
-        "require": {
-            "drupal/core": "*"
-        },
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-1.x": "1.x-dev"
-            },
-            "drupal": {
-                "version": "8.x-1.0-alpha3",
-                "datestamp": "1473976439"
-            }
-        },
-        "installation-source": "dist",
-        "notification-url": "https://packages.drupal.org/8/downloads",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "Berdir",
-                "homepage": "https://www.drupal.org/user/214652"
-            },
-            {
-                "name": "Sam152",
-                "homepage": "https://www.drupal.org/user/1485048"
-            },
-            {
-                "name": "andypost",
-                "homepage": "https://www.drupal.org/user/118908"
-            },
-            {
-                "name": "benjy",
-                "homepage": "https://www.drupal.org/user/1852732"
-            },
-            {
-                "name": "dawehner",
-                "homepage": "https://www.drupal.org/user/99340"
-            },
-            {
-                "name": "jibran",
-                "homepage": "https://www.drupal.org/user/1198144"
-            },
-            {
-                "name": "larowlan",
-                "homepage": "https://www.drupal.org/user/395439"
-            },
-            {
-                "name": "matslats",
-                "homepage": "https://www.drupal.org/user/140053"
-            }
-        ],
-        "description": "Imports default content when a module is enabled",
-        "homepage": "https://www.drupal.org/project/default_content",
-        "support": {
-            "source": "http://cgit.drupalcode.org/default_content"
-        }
-    },
-    {
         "name": "components/jquery",
         "version": "3.1.1",
         "version_normalized": "3.1.1.0",
@@ -7363,6 +7290,82 @@
         "support": {
             "source": "http://git.drupal.org/project/field_states_ui.git",
             "issues": "https://www.drupal.org/project/issues/field_states_ui"
+        }
+    },
+    {
+        "name": "drupal/default_content",
+        "version": "1.0.0-alpha3",
+        "version_normalized": "1.0.0.0-alpha3",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/default_content",
+            "reference": "8.x-1.0-alpha3"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/default_content-8.x-1.0-alpha3.zip",
+            "reference": null,
+            "shasum": "6834ce4134fd20df56e7294e9aad033f1500d7dd"
+        },
+        "require": {
+            "drupal/core": "*"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.0-alpha3",
+                "datestamp": "1473976439"
+            },
+            "patches_applied": {
+                "Allow manual imports": "https://www.drupal.org/files/issues/allow_manual_imports-2640734-11.patch"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Berdir",
+                "homepage": "https://www.drupal.org/user/214652"
+            },
+            {
+                "name": "Sam152",
+                "homepage": "https://www.drupal.org/user/1485048"
+            },
+            {
+                "name": "andypost",
+                "homepage": "https://www.drupal.org/user/118908"
+            },
+            {
+                "name": "benjy",
+                "homepage": "https://www.drupal.org/user/1852732"
+            },
+            {
+                "name": "dawehner",
+                "homepage": "https://www.drupal.org/user/99340"
+            },
+            {
+                "name": "jibran",
+                "homepage": "https://www.drupal.org/user/1198144"
+            },
+            {
+                "name": "larowlan",
+                "homepage": "https://www.drupal.org/user/395439"
+            },
+            {
+                "name": "matslats",
+                "homepage": "https://www.drupal.org/user/140053"
+            }
+        ],
+        "description": "Imports default content when a module is enabled",
+        "homepage": "https://www.drupal.org/project/default_content",
+        "support": {
+            "source": "http://cgit.drupalcode.org/default_content"
         }
     }
 ]

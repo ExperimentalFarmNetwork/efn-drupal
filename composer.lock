@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "276b90141afcec690cf1d6ea940ab1bb",
-    "content-hash": "40e23355e510311a62cd713e2710d7b6",
+    "hash": "20ec68dae1d3d074a7932b25220aa56e",
+    "content-hash": "6f6bec1c1dbca4b95c237e13cbfd1dfb",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -1779,6 +1779,9 @@
                 "drupal": {
                     "version": "8.x-1.0-alpha3",
                     "datestamp": "1473976439"
+                },
+                "patches_applied": {
+                    "Allow manual imports": "https://www.drupal.org/files/issues/allow_manual_imports-2640734-11.patch"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -2125,8 +2128,7 @@
             "support": {
                 "source": "http://git.drupal.org/project/field_states_ui.git",
                 "issues": "https://www.drupal.org/project/issues/field_states_ui"
-            },
-            "time": "2016-11-07 14:32:46"
+            }
         },
         {
             "name": "drupal/geocoder",

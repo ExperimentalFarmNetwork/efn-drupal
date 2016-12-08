@@ -146,7 +146,7 @@ class DefaultContentManager implements DefaultContentManagerInterface {
   /**
    * {@inheritdoc}
    */
-  public function importContent($module) {
+  public function importContent($module, $update_existing = FALSE) {
     $created = array();
     $folder = drupal_get_path('module', $module) . "/content";
 
@@ -219,8 +219,25 @@ class DefaultContentManager implements DefaultContentManagerInterface {
           $class = $definition['serialization_class'];
           $entity = $this->serializer->deserialize($contents, $class, 'hal_json', array('request_method' => 'POST'));
           $entity->enforceIsNew(TRUE);
-          $entity->save();
-          $created[$entity->uuid()] = $entity;
+          
+          // Allow existing entities overwrite.
+          if ($old_entity = $this->entityRepository->loadEntityByUuid($entity_type_id, $entity->uuid())) {
+            if ($update_existing) {
+              $entity->{$entity->getEntityType()->getKey('id')} = $old_entity->id();
+              $entity->setOriginalId($old_entity->id());
+              $entity->enforceIsNew(FALSE);
+              try {
+                $entity->setNewRevision(FALSE);
+              } catch (\LogicException $e) {}
+            }
+          }
+          else {
+            $entity->enforceIsNew(TRUE);
+          }
+          if (!$old_entity || $update_existing) {
+            $entity->save();
+            $created[$entity->uuid()] = $entity;
+          }
         }
       }
       $this->eventDispatcher->dispatch(DefaultContentEvents::IMPORT, new ImportEvent($created, $module));

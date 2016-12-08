@@ -51,6 +51,11 @@
             "recurse": false,
             "replace": false,
             "merge-extra": false
+        },
+        "patches": {
+            "drupal/default_content": {
+                "Allow manual imports": "https://www.drupal.org/files/issues/allow_manual_imports-2640734-11.patch"
+            }
         }
     },
     "autoload": {
