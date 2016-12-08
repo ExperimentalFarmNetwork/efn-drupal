@@ -7031,71 +7031,6 @@
         "installation-source": "dist"
     },
     {
-        "name": "drupal/leaflet",
-        "version": "dev-1.x",
-        "version_normalized": "dev-1.x",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/leaflet",
-            "reference": "dce98f4b630252375090db05c1789fc060d7f93c"
-        },
-        "require": {
-            "drupal/core": "~8.0",
-            "leaflet/leaflet": "^0.7.7"
-        },
-        "suggest": {
-            "drupal/core": "Required by drupal/leaflet_views"
-        },
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-1.x": "1.x-dev"
-            },
-            "drupal": {
-                "version": "8.x-1.0-beta1+1-dev",
-                "datestamp": "1476171839"
-            }
-        },
-        "installation-source": "source",
-        "notification-url": "https://packages.drupal.org/8/downloads",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "Peter Vanhee (pvhee)",
-                "homepage": "https://www.drupal.org/u/pvhee",
-                "role": "Maintainer"
-            },
-            {
-                "name": "Rik de Boer (RdeBoer)",
-                "homepage": "https://www.drupal.org/u/rdeboer",
-                "role": "Maintainer"
-            },
-            {
-                "name": "Gabriel Carleton-Barnes (gcb)",
-                "homepage": "https://www.drupal.org/u/gcb",
-                "role": "Maintainer"
-            },
-            {
-                "name": "Lev Tsypin (levelos)",
-                "homepage": "https://www.drupal.org/u/levelos",
-                "role": "Maintainer"
-            },
-            {
-                "name": "Sean Larkin (seanberto)",
-                "homepage": "https://www.drupal.org/u/seanberto",
-                "role": "Maintainer"
-            }
-        ],
-        "description": "Integration with the Leaflet map scripting library.",
-        "homepage": "https://www.drupal.org/project/leaflet",
-        "support": {
-            "source": "http://cgit.drupalcode.org/leaflet",
-            "issues": "https://www.drupal.org/project/issues/leaflet"
-        }
-    },
-    {
         "name": "drupal/field_group",
         "version": "1.0.0-rc6",
         "version_normalized": "1.0.0.0-RC6",
@@ -7364,5 +7299,70 @@
         ],
         "description": "GeoPHP is a open-source native PHP library for doing geometry operations. It is written entirely in PHP and can therefore run on shared hosts. It can read and write a wide variety of formats: WKT (including EWKT), WKB (including EWKB), GeoJSON, KML, GPX, GeoRSS). It works with all Simple-Feature geometries (Point, LineString, Polygon, GeometryCollection etc.) and can be used to get centroids, bounding-boxes, area, and a wide variety of other useful information.",
         "homepage": "https://github.com/phayes/geoPHP"
+    },
+    {
+        "name": "drupal/leaflet",
+        "version": "dev-1.x",
+        "version_normalized": "dev-1.x",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/leaflet",
+            "reference": "dce98f4b630252375090db05c1789fc060d7f93c"
+        },
+        "require": {
+            "drupal/core": "~8.0",
+            "leaflet/leaflet": "^0.7.7"
+        },
+        "suggest": {
+            "drupal/core": "Required by drupal/leaflet_views"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.0-beta1+1-dev",
+                "datestamp": "1476171839"
+            }
+        },
+        "installation-source": "source",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Peter Vanhee (pvhee)",
+                "homepage": "https://www.drupal.org/u/pvhee",
+                "role": "Maintainer"
+            },
+            {
+                "name": "Rik de Boer (RdeBoer)",
+                "homepage": "https://www.drupal.org/u/rdeboer",
+                "role": "Maintainer"
+            },
+            {
+                "name": "Gabriel Carleton-Barnes (gcb)",
+                "homepage": "https://www.drupal.org/u/gcb",
+                "role": "Maintainer"
+            },
+            {
+                "name": "Lev Tsypin (levelos)",
+                "homepage": "https://www.drupal.org/u/levelos",
+                "role": "Maintainer"
+            },
+            {
+                "name": "Sean Larkin (seanberto)",
+                "homepage": "https://www.drupal.org/u/seanberto",
+                "role": "Maintainer"
+            }
+        ],
+        "description": "Integration with the Leaflet map scripting library.",
+        "homepage": "https://www.drupal.org/project/leaflet",
+        "support": {
+            "source": "http://cgit.drupalcode.org/leaflet",
+            "issues": "https://www.drupal.org/project/issues/leaflet"
+        }
     }
 ]

@@ -1,0 +1,9 @@
+name: Leaflet Views
+type: module
+description: Views integration for the Leaflet module.
+core: 8.x
+version: VERSION
+package: Views
+dependencies:
+  - leaflet
+  - views

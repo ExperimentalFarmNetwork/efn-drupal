@@ -1,0 +1,71 @@
+# Schema for the views style plugins.
+
+views.style.leafet_map:
+  type: views_style
+  label: 'Leaflet map'
+  mapping:
+    data_source:
+      type: string
+      label: 'Data source'
+    name_field:
+      type: string
+      label: 'Title field'
+    description_field:
+      type: string
+      label: 'Description field'
+    map:
+      type: string
+      label: 'Map'
+    height:
+      type: string
+      label: 'Map height'
+    icon:
+      type: mapping
+      label: 'Map icon'
+      mapping:
+        iconUrl:
+          type: string
+          label: 'Icon URL'
+        shadowUrl:
+          type: string
+          label: 'Icon shadow URL'
+        iconSize:
+          type: mapping
+          label: 'Icon size'
+          mapping:
+            x:
+              type: string
+              label: 'Width'
+            y:
+              type: string
+              label: 'Height'
+        iconAnchor:
+          type: mapping
+          label: 'Icon anchor'
+          mapping:
+            x:
+              type: string
+              label: 'X'
+            y:
+              type: string
+              label: 'Y'
+        shadowAnchor:
+          type: mapping
+          label: 'Shadow anchor'
+          mapping:
+            x:
+              type: string
+              label: 'X'
+            y:
+              type: string
+              label: 'Y'
+        popupAnchor:
+          type: mapping
+          label: 'Popup anchor'
+          mapping:
+            x:
+              type: string
+              label: 'X'
+            y:
+              type: string
+              label: 'Y'
