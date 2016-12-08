@@ -156,4 +156,5 @@ content:
 hidden:
   changed: true
   created: true
+  field_project_type_other: true
   uid: true

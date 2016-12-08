@@ -6350,6 +6350,9 @@ header.navbar-default {
   header.navbar-default .navbar-header .logo img {
     width: 50px; }
 
+.region-sidebar-second h2 {
+  font-size: 24px; }
+
 .view-project .views-row .views-col {
   border: #eeeeee thin solid;
   backgorund: #eeeeee;
