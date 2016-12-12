@@ -66,7 +66,6 @@
  * @ingroup themeable
  */
 #}
-
 <!-- FILE NAME SUGGESTIONS:
    * comment--field-discussion--project-update.html.twig
    * comment--field-discussion.html.twig
@@ -83,11 +82,11 @@
   <div{{ content_attributes }}>
     {% if title %}
       {{ title_prefix }}
-      <h4{{ title_attributes }} id="comment-form">{{ author }} says:</h4>
+      <div class="commentAuthor"{{ title_attributes }} id="comment-form"> {{ user_picture }} {{ author }} says:</div>
       {{ title_suffix }}
     {% endif %}
-    {{ content }}
-    <p class="submitted">{{ submitted }}  <span class="pLink">{{ permalink }}</span></p>
+    {{ content.field_comment_body }}
+
   </div>
     <footer>
     {#

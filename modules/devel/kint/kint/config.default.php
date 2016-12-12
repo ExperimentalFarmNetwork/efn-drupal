@@ -75,7 +75,7 @@ $_kintSettings['charEncodings'] = array(
 
 
 /** @var int max array/object levels to go deep, if zero no limits are applied */
-$_kintSettings['maxLevels'] = 7;
+$_kintSettings['maxLevels'] = 5;
 
 
 /** @var string name of theme for rich view */

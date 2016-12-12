@@ -111,10 +111,10 @@ div.main-container{
 	}
 
 }
-
+ 
 // group main page
 .path-group .region-content{
-	.field{
+	.field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body){
 		padding-bottom:2em;
 		padding-top:2em;
 		border-bottom: thin $gray-lighter solid;
@@ -144,8 +144,9 @@ div.main-container{
     padding: 1rem 2rem;
 }
 
+
 // Project Updates
-.page-node-type-project-update article, .view-id-project_updates_page{
+.page-node-type-project-update article, .path-group{
 	.field--name-field-image{
 		float:right;
 	}
@@ -156,6 +157,7 @@ div.main-container{
 			color:$gray-darker;
 		}
 	}
+
 	.views-row{
 		clear:both;	
 		&:first-of-type {
@@ -174,45 +176,44 @@ div.main-container{
 	}
 
 	// comments
-	#node-project-update-field-discussion{
+	#node-project-update-field-discussion, .views-field-field-discussion{
+		margin-top:1em;
+		margin-left:2em;
 		.js-comment{
 			clear:both;
-			border-top:$gray-lighter thin dashed;
+			border:$gray-light thin dashed;
+			padding:1em;
 			margin-bottom:1em;
-			// display:flex;
-			.field--name-field-comment-body{
-				margin-bottom: 1em;
-			}
-			// .form-item{
-			// 	h4.label{
-			// 	    font-size: 1em;
-			// 	    font-weight: inherit;
-			// 	    padding-right: 0;
-			// 	}
-			// }
-			.view-display-id-user_view{
-						display:none;
+
+			.commentAuthor{
+				// float:left;
+				color:$gray-light;
+				article{
+					float:left;
+					margin-right: 1em;
+				}
+				.view-display-id-user_view{
+					font-size:.001em;
+					img.img-responsive{
+						width:40px;
+						display:block !important;
 					}
+					
+				}
+				.views-col{
+					width:100% !important;
+				}
+			}
+			// display:flex;
+			// .field--name-field-comment-body{
+			// 	margin-bottom: 1em;
+			// }
+			// .view-display-id-user_view{
+			// 	display:none;
+			// }
 			p.submitted{
 				color:$gray-light;
 				font-size: $font-size-small;
-			}
-			.userinfo{
-				// font-size:1rem;
-				float:right;
-				clear:both;
-				width:200px;
-				border:$gray-lighter thin solid;
-				padding:.5rem;
-
-				.userpic{
-					width:70px;
-					height:100px;
-					background: $gray;
-				}
-				.form-type-item{
-					font-size:1.3rem;
-				}
 			}
 		}
 		h4{
@@ -222,6 +223,12 @@ div.main-container{
 			label.control-label{
 				display:none;
 			}
+			.views-col{
+				width:100% !important;
+			}
+		}
+		.form-type-textarea{
+			clear:both;
 		}
 	}	
 

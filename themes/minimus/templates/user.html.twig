@@ -20,6 +20,6 @@
 #}
 <article{{ attributes }}>
   {% if content %}
-    {{- content -}}
+    {{ content| without('member_for','profile_researcher', 'profile_volunteer')}}
   {% endif %}
 </article>
