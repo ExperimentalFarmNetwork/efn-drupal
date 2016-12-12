@@ -67,7 +67,11 @@
  */
 #}
 
-<article{{ attributes.addClass('js-comment') }}>
+<!-- FILE NAME SUGGESTIONS:
+   * comment--field-discussion--project-update.html.twig
+   * comment--field-discussion.html.twig
+   x comment.html.twig
+--><article{{ attributes.addClass('js-comment') }}>
   {#
     Hide the "new" indicator by default, let a piece of JavaScript ask the
     server which comments are new for the user. Rendering the final "new"
@@ -79,7 +83,7 @@
   <div{{ content_attributes }}>
     {% if title %}
       {{ title_prefix }}
-      <h4{{ title_attributes }}>{{ author }} says:</h4>
+      <h4{{ title_attributes }} id="comment-form">{{ author }} says:</h4>
       {{ title_suffix }}
     {% endif %}
     {{ content }}

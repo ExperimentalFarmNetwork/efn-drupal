@@ -10,33 +10,89 @@
 
 
 // Sections
-// body{
-// 	background-image: url(/themes/minimus/images/seedsbakmj.png);
+body{
 // 	background-repeat:repeat-x;
-		
-// }
+	// background-size:cover;
+	// background-size: contain;
+ //    background-repeat: no-repeat;
+ //    background-position-y: 175px;		
+}
 
-div.main-container{
-	width:90%;
+a{
+	color:$link-color ;
 }
 
 // Header
 header.navbar-default{
-	background:url('/themes/minimus/images/seedsbakmj.png');
-	background:url('/themes/minimus/images/efn_bri.png');
-
-	background-repeat:repeat-x;
+	background: $du-dark;
+	border-bottom: $du-gold 3px solid;
+	.container-fluid{
+		width:90%;
+	}
 	.navbar-header{
 		.logo img{
-			width:50px;
+			width:150px;
+			margin: 1em;
+			transition:.3s cubic-bezier(0.4, 0, 0.2, 1); 
+
 		}
 	}
+	ul.navbar-nav{
+		margin-left:2em;
+		margin-top:3.5em;
+		li{
+			a{
+				color: $du-green;
+				text-transform: uppercase;
+				border-bottom:thin solid $du-asparagus;
+				padding:10px 15px 0 0;
+				&:hover{
+					color:$du-orange;
+				}
+			}
+		}
+	   > .active > a {
+	      &,
+	      &:hover,
+	      &:focus {
+	        color: $du-green;
+	        background-color: inherit;
+	        border-bottom: $du-asparagus thin solid;
+	      }
+	    }
+ 
+	}
+	&.navbar-fixed-top{
+		.logo img{
+			width:70px;
+			margin: .3em 1em;
+		}
+		ul.navbar-nav {
+		    margin-top: .5em;
+		}
+	}
+}
+
+// Main
+div.main-container{
+	width:90%;
+	margin-top:2.5em; //put this in mediaquery
 }
 
 // Sidebar
 .region-sidebar-second{
 	h2{
 		font-size:$font-size-h4;
+	}
+}
+
+// Front page
+.path-frontpage{
+	.bnrPic{
+		background:url('/themes/minimus/images/seed_nodes.png');
+		height:370px;
+	    background-size: cover;
+	    background-position-y: 360px;
 	}
 }
 
@@ -53,26 +109,34 @@ header.navbar-default{
 		    width: 23% !important;
 		}
 	}
+
 }
 
-	.path-group .region-content{
-		.field{
-			padding-bottom:2em;
-			padding-top:2em;
-			border-bottom: thin $gray-lighter solid;
-			.field--label{
-			    width: 45%;
-			    display: inline-table;
-			    text-transform:uppercase;
-			    font-weight:normal;
+// group main page
+.path-group .region-content{
+	.field{
+		padding-bottom:2em;
+		padding-top:2em;
+		border-bottom: thin $gray-lighter solid;
+		// display:none; // uncomment when js ready please
 
-			}
-			.field--item{
-			    width: 45%;
-			    display: inline-table;
-			}
+		.field--label{
+		    width: 45%;
+		    display: inline-table;
+		    text-transform:uppercase;
+		    font-weight:normal;
+
+		}
+		.field--item{
+		    width: 45%;
+		    display: inline-table;
+		}
+		// show just the summary with js show rest link
+		&.field--name-field-project-summary{
+			display:block;
 		}
 	}
+}
 
 .js-form-submit[value='Join group'], .btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle){	
     font-size: 2rem;
@@ -94,6 +158,11 @@ header.navbar-default{
 	}
 	.views-row{
 		clear:both;	
+		&:first-of-type {
+			h3{
+				margin-top:0;
+			}
+		}
 	}
 	.views-field-changed{
 		color: $gray-light;
@@ -114,16 +183,20 @@ header.navbar-default{
 			.field--name-field-comment-body{
 				margin-bottom: 1em;
 			}
-			.form-item{
-				h4.label{
-				    font-size: 1em;
-				    font-weight: inherit;
-				    padding-right: 0;
-				}
-			}
+			// .form-item{
+			// 	h4.label{
+			// 	    font-size: 1em;
+			// 	    font-weight: inherit;
+			// 	    padding-right: 0;
+			// 	}
+			// }
 			.view-display-id-user_view{
 						display:none;
 					}
+			p.submitted{
+				color:$gray-light;
+				font-size: $font-size-small;
+			}
 			.userinfo{
 				// font-size:1rem;
 				float:right;
@@ -137,18 +210,21 @@ header.navbar-default{
 					height:100px;
 					background: $gray;
 				}
-				p.submitted{
-					color:$gray-light;
-				}
 				.form-type-item{
 					font-size:1.3rem;
 				}
 			}
 		}
-		h2{
+		h4{
 			clear:both;
 		}
+		.commentForm{
+			label.control-label{
+				display:none;
+			}
+		}
 	}	
+
 
 }
 
