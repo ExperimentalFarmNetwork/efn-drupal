@@ -20,4 +20,9 @@ $("button.toggleVerbose").click(function(event) {
     $('.path-group .region-content .field').toggleClass('toggleVFields','1000');
 });
 
+$("textarea.form-textarea").attr("placeholder", "Comment here ...").click(function(event) {
+    $(this).attr('placeholder', 'yes do it');
+    $('.js-form-submit').css('display', 'block');
+});;
+
 })(jQuery, Drupal);

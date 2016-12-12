@@ -6441,11 +6441,11 @@ div.main-container {
   float: right;
   margin: .5rem; }
 .page-node-type-project-update article #node-project-update-field-discussion, .page-node-type-project-update article .views-field-field-discussion, .path-group #node-project-update-field-discussion, .path-group .views-field-field-discussion {
-  margin-top: 1em;
-  margin-left: 2em; }
+  margin: 1em 0 2em 2em; }
   .page-node-type-project-update article #node-project-update-field-discussion .js-comment, .page-node-type-project-update article .views-field-field-discussion .js-comment, .path-group #node-project-update-field-discussion .js-comment, .path-group .views-field-field-discussion .js-comment {
     clear: both;
-    border: #777777 thin dashed;
+    border: #eeeeee thin solid;
+    border-radius: 5px;
     padding: 1em;
     margin-bottom: 1em; }
     .page-node-type-project-update article #node-project-update-field-discussion .js-comment .commentAuthor, .page-node-type-project-update article .views-field-field-discussion .js-comment .commentAuthor, .path-group #node-project-update-field-discussion .js-comment .commentAuthor, .path-group .views-field-field-discussion .js-comment .commentAuthor {
@@ -6465,12 +6465,14 @@ div.main-container {
       font-size: 17px; }
   .page-node-type-project-update article #node-project-update-field-discussion h4, .page-node-type-project-update article .views-field-field-discussion h4, .path-group #node-project-update-field-discussion h4, .path-group .views-field-field-discussion h4 {
     clear: both; }
-  .page-node-type-project-update article #node-project-update-field-discussion .commentForm label.control-label, .page-node-type-project-update article .views-field-field-discussion .commentForm label.control-label, .path-group #node-project-update-field-discussion .commentForm label.control-label, .path-group .views-field-field-discussion .commentForm label.control-label {
-    display: none; }
-  .page-node-type-project-update article #node-project-update-field-discussion .commentForm .views-col, .page-node-type-project-update article .views-field-field-discussion .commentForm .views-col, .path-group #node-project-update-field-discussion .commentForm .views-col, .path-group .views-field-field-discussion .commentForm .views-col {
-    width: 100% !important; }
-  .page-node-type-project-update article #node-project-update-field-discussion .form-type-textarea, .page-node-type-project-update article .views-field-field-discussion .form-type-textarea, .path-group #node-project-update-field-discussion .form-type-textarea, .path-group .views-field-field-discussion .form-type-textarea {
+  .page-node-type-project-update article #node-project-update-field-discussion .commentForm, .page-node-type-project-update article #node-project-update-field-discussion .form-type-textarea, .page-node-type-project-update article .views-field-field-discussion .commentForm, .page-node-type-project-update article .views-field-field-discussion .form-type-textarea, .path-group #node-project-update-field-discussion .commentForm, .path-group #node-project-update-field-discussion .form-type-textarea, .path-group .views-field-field-discussion .commentForm, .path-group .views-field-field-discussion .form-type-textarea {
     clear: both; }
+    .page-node-type-project-update article #node-project-update-field-discussion .commentForm label.control-label, .page-node-type-project-update article #node-project-update-field-discussion .form-type-textarea label.control-label, .page-node-type-project-update article .views-field-field-discussion .commentForm label.control-label, .page-node-type-project-update article .views-field-field-discussion .form-type-textarea label.control-label, .path-group #node-project-update-field-discussion .commentForm label.control-label, .path-group #node-project-update-field-discussion .form-type-textarea label.control-label, .path-group .views-field-field-discussion .commentForm label.control-label, .path-group .views-field-field-discussion .form-type-textarea label.control-label {
+      display: none; }
+    .page-node-type-project-update article #node-project-update-field-discussion .commentForm .views-col, .page-node-type-project-update article #node-project-update-field-discussion .form-type-textarea .views-col, .page-node-type-project-update article .views-field-field-discussion .commentForm .views-col, .page-node-type-project-update article .views-field-field-discussion .form-type-textarea .views-col, .path-group #node-project-update-field-discussion .commentForm .views-col, .path-group #node-project-update-field-discussion .form-type-textarea .views-col, .path-group .views-field-field-discussion .commentForm .views-col, .path-group .views-field-field-discussion .form-type-textarea .views-col {
+      width: 100% !important; }
+  .page-node-type-project-update article #node-project-update-field-discussion .js-form-submit, .page-node-type-project-update article .views-field-field-discussion .js-form-submit, .path-group #node-project-update-field-discussion .js-form-submit, .path-group .views-field-field-discussion .js-form-submit {
+    display: none; }
 
 #block-views-block-project-updates-block-1-2 .item-list ul {
   padding-left: 0; }

@@ -191,11 +191,11 @@ div.main-container{
 
 	// comments
 	#node-project-update-field-discussion, .views-field-field-discussion{
-		margin-top:1em;
-		margin-left:2em;
+		margin:1em 0 2em 2em;
 		.js-comment{
 			clear:both;
-			border:$gray-light thin dashed;
+			border:$gray-lighter thin solid;
+			border-radius: 5px;
 			padding:1em;
 			margin-bottom:1em;
 
@@ -227,7 +227,8 @@ div.main-container{
 		h4{
 			clear:both;
 		}
-		.commentForm{
+		.commentForm, .form-type-textarea{
+			clear:both;
 			label.control-label{
 				display:none;
 			}
@@ -235,8 +236,8 @@ div.main-container{
 				width:100% !important;
 			}
 		}
-		.form-type-textarea{
-			clear:both;
+		.js-form-submit{
+			display:none;
 		}
 	}	
 
