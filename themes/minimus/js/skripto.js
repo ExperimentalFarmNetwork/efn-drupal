@@ -16,5 +16,8 @@ var navbar=$('header.navbar-default');
       navbar.removeClass('navbar-fixed-top');
     }
   });
+$("button.toggleVerbose").click(function(event) {
+    $('.path-group .region-content .field').toggleClass('toggleVFields','1000');
+});
 
 })(jQuery, Drupal);

@@ -114,12 +114,26 @@ div.main-container{
  
 // group main page
 .path-group .region-content{
+	// move contextual menu for logged in use
+	.block-views-blockproject-updates-block-2{
+
+	}
+
+	button.toggleVerbose{
+		margin: 0 auto;
+		z-index:999;
+	    position: absolute;
+	    right: 1em;
+	}
 	.field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body){
 		padding-bottom:2em;
 		padding-top:2em;
 		border-bottom: thin $gray-lighter solid;
-		// display:none; // uncomment when js ready please
-
+		transition:5s cubic-bezier(0.4, 0, 0.2, 1); 
+		display:none;
+		&.toggleVFields{
+			display:block; // uncomment when js ready please
+		}
 		.field--label{
 		    width: 45%;
 		    display: inline-table;
@@ -147,6 +161,7 @@ div.main-container{
 
 // Project Updates
 .page-node-type-project-update article, .path-group{
+
 	.field--name-field-image{
 		float:right;
 	}
@@ -157,7 +172,6 @@ div.main-container{
 			color:$gray-darker;
 		}
 	}
-
 	.views-row{
 		clear:both;	
 		&:first-of-type {
@@ -204,13 +218,7 @@ div.main-container{
 					width:100% !important;
 				}
 			}
-			// display:flex;
-			// .field--name-field-comment-body{
-			// 	margin-bottom: 1em;
-			// }
-			// .view-display-id-user_view{
-			// 	display:none;
-			// }
+
 			p.submitted{
 				color:$gray-light;
 				font-size: $font-size-small;
