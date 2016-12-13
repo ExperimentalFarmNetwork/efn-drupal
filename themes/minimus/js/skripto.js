@@ -17,7 +17,7 @@
         $('.path-group .region-content .field').toggleClass('toggleVFields','1000');
     });
 
-    $("textarea.form-textarea").attr("placeholder", "Comment here ...").click(function(event) {
+    $(".views-field-field-discussion textarea.form-textarea, #node-project-update-field-discussion textarea.form-textarea").attr("placeholder", "Comment here ...").click(function(event) {
         $(this).attr('placeholder', 'yes do it');
         $('.js-form-submit').css('display', 'block');
     });

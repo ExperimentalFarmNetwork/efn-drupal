@@ -11,11 +11,7 @@
 
 // Sections
 body{
-// 	background-repeat:repeat-x;
-	// background-size:cover;
-	// background-size: contain;
- //    background-repeat: no-repeat;
- //    background-position-y: 175px;		
+	margin-top:0;	
 }
 
 a{
@@ -31,7 +27,7 @@ header.navbar-default{
 	}
 	.navbar-header{
 		.logo img{
-			width:150px;
+			height:70px;
 			margin: 1em;
 			transition:.3s cubic-bezier(0.4, 0, 0.2, 1); 
 
@@ -39,7 +35,7 @@ header.navbar-default{
 	}
 	ul.navbar-nav{
 		margin-left:2em;
-		margin-top:3.5em;
+		margin-top: .5em;
 		li{
 			a{
 				color: $du-green;
@@ -62,15 +58,15 @@ header.navbar-default{
 	    }
  
 	}
-	&.navbar-fixed-top{
-		.logo img{
-			width:70px;
-			margin: .3em 1em;
-		}
-		ul.navbar-nav {
-		    margin-top: .5em;
-		}
-	}
+	// &.navbar-fixed-top{
+	// 	.logo img{
+	// 		width:70px;
+	// 		margin: .3em 1em;
+	// 	}
+	// 	ul.navbar-nav {
+	// 	    margin-top: .5em;
+	// 	}
+	// }
 }
 
 // Main
