@@ -9,6 +9,7 @@ dependencies:
     - field.field.group.project.field_misc
     - field.field.group.project.field_multiyear
     - field.field.group.project.field_privacy
+    - field.field.group.project.field_project_image
     - field.field.group.project.field_project_summary
     - field.field.group.project.field_project_type
     - field.field.group.project.field_researcher_background
@@ -19,8 +20,10 @@ dependencies:
     - field.field.group.project.field_volunteers_keep_seed
     - field.field.group.project.field_volunteers_other_reqs
     - group.type.project
+    - image.style.project_banner
   module:
     - address
+    - image
     - leaflet
     - options
     - text
@@ -30,19 +33,19 @@ bundle: project
 mode: default
 content:
   field_description:
-    weight: 4
+    weight: 3
     label: above
     settings: {  }
     third_party_settings: {  }
     type: text_default
   field_location:
-    weight: 17
+    weight: 15
     label: above
     settings: {  }
     third_party_settings: {  }
     type: address_default
   field_location_geo:
-    weight: 18
+    weight: 16
     label: hidden
     settings:
       leaflet_map: 'OSM Mapnik'
@@ -71,23 +74,31 @@ content:
     third_party_settings: {  }
     type: leaflet_formatter_default
   field_misc:
-    weight: 16
+    weight: 14
     label: above
     settings: {  }
     third_party_settings: {  }
     type: basic_string
   field_multiyear:
-    weight: 13
+    weight: 11
     label: above
     settings: {  }
     third_party_settings: {  }
     type: list_default
   field_privacy:
-    weight: 15
+    weight: 13
     label: above
     settings: {  }
     third_party_settings: {  }
     type: list_default
+  field_project_image:
+    weight: 2
+    label: hidden
+    settings:
+      image_style: project_banner
+      image_link: ''
+    third_party_settings: {  }
+    type: image
   field_project_summary:
     weight: 1
     label: hidden
@@ -95,39 +106,39 @@ content:
     third_party_settings: {  }
     type: basic_string
   field_project_type:
-    weight: 6
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
-  field_researcher_background:
-    weight: 8
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    type: text_default
-  field_seeking_volunteers:
-    weight: 9
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    type: list_default
-  field_tags:
     weight: 5
     label: above
     settings:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
+  field_researcher_background:
+    weight: 6
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+  field_seeking_volunteers:
+    weight: 7
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+  field_tags:
+    weight: 4
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
   field_volunteers_ask_do:
-    weight: 11
+    weight: 9
     label: above
     settings: {  }
     third_party_settings: {  }
     type: basic_string
   field_volunteers_how_many:
-    weight: 10
+    weight: 8
     label: above
     settings:
       thousand_separator: ''
@@ -135,13 +146,13 @@ content:
     third_party_settings: {  }
     type: number_integer
   field_volunteers_keep_seed:
-    weight: 14
+    weight: 12
     label: above
     settings: {  }
     third_party_settings: {  }
     type: list_default
   field_volunteers_other_reqs:
-    weight: 12
+    weight: 10
     label: above
     settings: {  }
     third_party_settings: {  }

@@ -113,41 +113,42 @@ div.main-container{
 }
  
 // group main page
-.path-group .region-content{
-	// move contextual menu for logged in use
-	.block-views-blockproject-updates-block-2{
+body.path-group{
 
-	}
+	.region-content{
+		background:white;
+		padding:1em;
+		border-radius:5px;
+		button.toggleVerbose{
+			margin: 0 auto;
+			z-index:999;
+		    position: absolute;
+		    right: 1em;
+		}
+		.field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body){
+			padding-bottom:2em;
+			padding-top:2em;
+			border-bottom: thin $gray-lighter solid;
+			transition:5s cubic-bezier(0.4, 0, 0.2, 1); 
+			display:none;
+			&.toggleVFields{
+				display:block; // uncomment when js ready please
+			}
+			.field--label{
+			    width: 45%;
+			    display: inline-table;
+			    text-transform:uppercase;
+			    font-weight:normal;
 
-	button.toggleVerbose{
-		margin: 0 auto;
-		z-index:999;
-	    position: absolute;
-	    right: 1em;
-	}
-	.field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body){
-		padding-bottom:2em;
-		padding-top:2em;
-		border-bottom: thin $gray-lighter solid;
-		transition:5s cubic-bezier(0.4, 0, 0.2, 1); 
-		display:none;
-		&.toggleVFields{
-			display:block; // uncomment when js ready please
-		}
-		.field--label{
-		    width: 45%;
-		    display: inline-table;
-		    text-transform:uppercase;
-		    font-weight:normal;
-
-		}
-		.field--item{
-		    width: 45%;
-		    display: inline-table;
-		}
-		// show just the summary with js show rest link
-		&.field--name-field-project-summary{
-			display:block;
+			}
+			.field--item{
+			    width: 45%;
+			    display: inline-table;
+			}
+			// show just the summary with js show rest link
+			&.field--name-field-project-summary{
+				display:block;
+			}
 		}
 	}
 }

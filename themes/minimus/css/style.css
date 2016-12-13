@@ -6394,29 +6394,33 @@ div.main-container {
   height: 250px;
   width: 23% !important; }
 
-.path-group .region-content button.toggleVerbose {
-  margin: 0 auto;
-  z-index: 999;
-  position: absolute;
-  right: 1em; }
-.path-group .region-content .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body) {
-  padding-bottom: 2em;
-  padding-top: 2em;
-  border-bottom: thin #eeeeee solid;
-  transition: 5s cubic-bezier(0.4, 0, 0.2, 1);
-  display: none; }
-  .path-group .region-content .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body).toggleVFields {
-    display: block; }
-  .path-group .region-content .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body) .field--label {
-    width: 45%;
-    display: inline-table;
-    text-transform: uppercase;
-    font-weight: normal; }
-  .path-group .region-content .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body) .field--item {
-    width: 45%;
-    display: inline-table; }
-  .path-group .region-content .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body).field--name-field-project-summary {
-    display: block; }
+body.path-group .region-content {
+  background: white;
+  padding: 1em;
+  border-radius: 5px; }
+  body.path-group .region-content button.toggleVerbose {
+    margin: 0 auto;
+    z-index: 999;
+    position: absolute;
+    right: 1em; }
+  body.path-group .region-content .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body) {
+    padding-bottom: 2em;
+    padding-top: 2em;
+    border-bottom: thin #eeeeee solid;
+    transition: 5s cubic-bezier(0.4, 0, 0.2, 1);
+    display: none; }
+    body.path-group .region-content .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body).toggleVFields {
+      display: block; }
+    body.path-group .region-content .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body) .field--label {
+      width: 45%;
+      display: inline-table;
+      text-transform: uppercase;
+      font-weight: normal; }
+    body.path-group .region-content .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body) .field--item {
+      width: 45%;
+      display: inline-table; }
+    body.path-group .region-content .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body).field--name-field-project-summary {
+      display: block; }
 
 .js-form-submit[value='Join group'], .btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
   font-size: 2rem;

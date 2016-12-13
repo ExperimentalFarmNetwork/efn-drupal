@@ -1,0 +1,14 @@
+uuid: 35e83108-51e5-4f8d-912b-1cec63b53b9d
+langcode: en
+status: true
+dependencies: {  }
+name: project_banner
+label: 'Project banner'
+effects:
+  21d60a89-c239-4f75-83ee-92095e479956:
+    uuid: 21d60a89-c239-4f75-83ee-92095e479956
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 1900
+      height: 500
