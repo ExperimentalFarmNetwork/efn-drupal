@@ -3,12 +3,16 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_display.comment.content_comment.default
     - core.entity_view_mode.node.teaser
     - field.field.node.project_update.body
     - field.field.node.project_update.field_discussion
     - field.field.node.project_update.field_image
+    - image.style.medium
     - node.type.project_update
   module:
+    - comment
+    - image
     - text
     - user
 id: node.project_update.teaser
@@ -18,12 +22,28 @@ mode: teaser
 content:
   body:
     label: hidden
-    type: text_summary_or_trimmed
-    weight: 0
-    settings:
-      trim_length: 1000
+    type: text_default
+    weight: 1
+    settings: {  }
     third_party_settings: {  }
-hidden:
-  field_discussion: true
-  field_image: true
-  links: true
+  field_discussion:
+    type: comment_default
+    weight: 2
+    label: above
+    settings:
+      view_mode: default
+      pager_id: 0
+    third_party_settings: {  }
+  field_image:
+    type: image
+    weight: 0
+    label: hidden
+    settings:
+      image_style: medium
+      image_link: content
+    third_party_settings: {  }
+  links:
+    weight: 3
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }

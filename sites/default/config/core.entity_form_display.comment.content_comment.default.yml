@@ -10,10 +10,6 @@ targetEntityType: comment
 bundle: content_comment
 mode: default
 content:
-  author:
-    weight: 0
-    settings: {  }
-    third_party_settings: {  }
   field_comment_body:
     weight: 3
     settings:
@@ -22,4 +18,5 @@ content:
     third_party_settings: {  }
     type: string_textarea
 hidden:
+  author: true
   subject: true

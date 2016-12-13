@@ -3,6 +3,7 @@ module:
   admin_toolbar: 0
   ajax_comments: 0
   block: 0
+  block_content: 0
   breakpoint: 0
   chosen: 0
   chosen_field: 0

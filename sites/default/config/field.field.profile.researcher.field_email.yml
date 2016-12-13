@@ -5,6 +5,9 @@ dependencies:
   config:
     - field.storage.profile.field_email
     - profile.type.researcher
+third_party_settings:
+  profile:
+    profile_private: true
 id: profile.researcher.field_email
 field_name: field_email
 entity_type: profile

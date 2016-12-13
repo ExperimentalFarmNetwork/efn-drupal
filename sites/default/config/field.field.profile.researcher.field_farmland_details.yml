@@ -1,0 +1,24 @@
+uuid: 7ae9f490-191b-4291-a27f-13043fbb9265
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_farmland_details
+    - profile.type.researcher
+  module:
+    - profile
+third_party_settings:
+  profile:
+    profile_private: true
+id: profile.researcher.field_farmland_details
+field_name: field_farmland_details
+entity_type: profile
+bundle: researcher
+label: Details
+description: 'Provide any additional details on what kind of land you''re looking for.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

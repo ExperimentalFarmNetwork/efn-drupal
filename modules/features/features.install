@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Contains install and update functions for Features.
+ */
+
+/**
+ * Rebuild the container to add a parameter to the features.manager service.
+ */
+function features_update_8300() {
+  // Empty update to cause a cache rebuild so that the container is rebuilt.
+}

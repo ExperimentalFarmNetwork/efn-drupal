@@ -1,4 +1,4 @@
-uuid: 4f141a40-a09f-4084-91ef-fdd10607b5bb
+uuid: 303dcdba-705f-4d83-9768-637c8e6f18af
 langcode: en
 status: true
 dependencies:
@@ -7,13 +7,14 @@ dependencies:
     - field.storage.node.field_image
     - image.style.medium
   module:
+    - comment
     - gnode
     - group
     - image
     - node
     - text
-id: project_updates_page
-label: 'Project Updates Page'
+id: project_updates_verbose_block
+label: 'Project Updates Verbose Block'
 module: gnode
 description: 'Lists all of the nodes that have been added to a group.'
 tag: ''
@@ -541,14 +542,6 @@ display:
           id: entity_group
           table: views
           field: entity_group
-          relationship: none
-          group_type: group
-          admin_label: ''
-          empty: false
-          tokenize: true
-          target: '{{ raw_arguments.gid }} '
-          view_mode: default
-          bypass_access: false
           plugin_id: entity
       footer: {  }
       empty:
@@ -572,9 +565,17 @@ display:
           group_type: group
           admin_label: 'Content relation'
           required: true
-          group_content_plugins: {  }
+          group_content_plugins:
+            'group_node:project_update': 'group_node:project_update'
+            'group_node:project_status_report': '0'
           entity_type: node
           plugin_id: group_content_to_entity_reverse
+        field_discussion_cid:
+          id: field_discussion_cid
+          table: node_field_data
+          field: field_discussion_cid
+          entity_type: node
+          plugin_id: standard
       arguments:
         gid:
           id: gid
@@ -627,23 +628,14 @@ display:
       tags:
         - 'config:field.storage.node.body'
         - 'config:field.storage.node.field_image'
-  page_1:
-    display_plugin: page
-    id: page_1
-    display_title: Page
-    position: 1
+  block_1:
+    display_plugin: block
+    id: block_1
+    display_title: Block
+    position: 2
     display_options:
       display_extenders: {  }
-      path: group/%group/updates
-      menu:
-        type: tab
-        title: Updates
-        description: ''
-        expanded: false
-        parent: ''
-        weight: -2
-        context: '0'
-        menu_name: main
+      block_description: 'Project Updates Verbose Block'
     cache_metadata:
       max-age: -1
       contexts:

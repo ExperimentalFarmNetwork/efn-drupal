@@ -1,0 +1,32 @@
+<?php
+
+/**
+ * @file
+ * Geocoder Module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function geocoder_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the gss module.
+    case 'help.page.geocoder':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('This module will geocode just about anything you throw at it including addresses, GPX files, geo-tagged images, and KML files.') . '</p>';
+      $output .= '<p>' . t('It is commonly used to automatically geocode Addressfield addresses into Geofield points for display on Openlayers Maps. It also supports the geolocation, and location modules.') . '</p>';
+      $output .= '<p>' . t('This module also makes available an API to convert the information you already have into geographic information. It support a variety of input formats and runs them through pluggable backends to produce geographic information. In addition to Latitude / Longitude points, this API also supports more complex geographies such as lines and polygons.') . '</p>';
+      $output .= '<p>' . t('This is a complete rewrite of the code, based on the <a href"@link">Geocoder PHP library</a>.', array('@link' => 'http://geocoder-php.org/')) . '</p>';
+      $output .= '<h3>' . t('Features') . '</h3>';
+      $output .= '<p>' . t('- Solid API based on Geocoder PHP library</br>- Geocode and Reverse Geocode using one or multiple providers (list)</br>- Results can be dumped into multiple formats (list)</br>- Submodule Geocoder Field: provides Drupal fields widgets and formatters, with even more options.</br>- Submodule Geocoder Services: provides a Geocoding and reverse geocoding service through the contrib module Services.</br>- File geocoding, Addressfield integration, caching enabled by default.') . '</p>';
+
+      return $output;
+
+    default:
+      return '';
+  }
+
+}
