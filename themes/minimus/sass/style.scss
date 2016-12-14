@@ -35,7 +35,7 @@ header.navbar-default{
 	}
 	ul.navbar-nav{
 		margin-left:2em;
-		margin-top: .5em;
+		margin-top: 1.5em;
 		li{
 			a{
 				color: $du-green;
@@ -90,23 +90,69 @@ div.main-container{
 	    background-size: cover;
 	    background-position-y: 360px;
 	}
-}
-
-// Project front page
-.view-project{
-	.views-row{
-		.views-col{
-			border: $gray-lighter thin solid;
-			backgorund: $gray-lighter;
-			padding:1em;
-			border-radius:5px;
-			margin:.5rem;	
-			height:250px;
-		    width: 23% !important;
-		}
+	.main-container{
+		margin-top:-3em;
+	}
+	.navbar{
+		margin-top:0;
 	}
 
+	// Project front page
+	.view-project{
+		.views-row{
+			.views-col{
+				border: $gray-dark thin solid;
+				background: $gray-lighter;
+				padding:80px 1em 1em 1em;
+				border-radius:5px;
+				margin:.5rem;	
+				height:300px;
+			    width: 23% !important;
+
+			    h2.field-content{
+			    	font-size: 1em;
+				    text-transform: uppercase;
+				    background: $gray-lighter;
+				    display: inline-block;
+				    padding: .2em .6em;
+				    margin:0;
+				    border-top: 1px solid $gray-dark;
+				    border-bottom: 1px solid $gray-dark;
+
+			        // border-radius: 5px 5px 0 0;
+			        // border-bottom-style:none;
+				    a{
+				    	// color:$du-orange;
+				    	color:$gray-dark;
+				    }
+			    }
+			    .views-field-uid{
+			    	color:$gray-light;
+			    	font-size:.8em;
+			    }
+			    .views-field-field-project-image{
+			    	display:none;
+			    }
+			    .views-field-field-project-summary{
+			    	padding:.2em;
+			    	margin-top:0;
+			    	background:$gray-lighter;
+			    }
+			    .views-field-field-location{
+			    	font-size:.8em;
+			    	border-top:1px dashed $gray-dark;
+			    	margin-top:1em;
+			    	p.address{
+			    		display:inline;
+
+			    	}
+			    }
+			}
+		}
+
+	}
 }
+
  
 // group main page
 body.path-group{

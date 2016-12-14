@@ -34,6 +34,18 @@
     var hdrHt=$("body.path-group .navbar-default").height(),
         hdrMargin=hdrHt+100;
     $("body.path-group").css('background-position-y', hdrMargin+'px');
-    console.log(hdrMargin);
 
+    // front page image to background of card
+    if ($("body").hasClass('path-frontpage')){
+        $(".view-id-project .views-col").each(function(index, el) {
+            var cardPic = $(this).find(".views-field-field-project-image img").attr('src');
+ 
+            $(this).css({
+                background: 'url('+cardPic+')',
+                'background-repeat': 'no-repeat',
+                'background-color': '#eeeeee' 
+
+            });
+        });
+    }
 })(jQuery, Drupal);
