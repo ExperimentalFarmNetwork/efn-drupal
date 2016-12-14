@@ -11,7 +11,7 @@ _core:
 id: minimus_powered
 theme: minimus
 region: '-1'
-weight: -6
+weight: -9
 provider: null
 plugin: system_powered_by_block
 settings:

@@ -1,0 +1,34 @@
+uuid: dcdd77d1-c1d3-4d93-8599-40deaf2ff865
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.basic_block
+    - field.storage.block_content.body
+  module:
+    - geocoder_field
+    - text
+third_party_settings:
+  geocoder_field:
+    method: none
+    field: info
+    plugins: {  }
+    dumper: wkt
+    delta_handling: default
+    failure:
+      handling: preserve
+      status_message: false
+      log: false
+id: block_content.basic_block.body
+field_name: body
+entity_type: block_content
+bundle: basic_block
+label: Body
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: false
+field_type: text_with_summary

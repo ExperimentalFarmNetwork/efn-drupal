@@ -102,8 +102,8 @@ div.main-container{
 		.views-row{
 			.views-col{
 				border: $gray-dark thin solid;
-				background: $gray-lighter;
-				padding:80px 1em 1em 1em;
+				background: white ;
+				padding:115px 1em 1em 1em;
 				border-radius:5px;
 				margin:.5rem;	
 				height:300px;
@@ -112,15 +112,14 @@ div.main-container{
 			    h2.field-content{
 			    	font-size: 1em;
 				    text-transform: uppercase;
-				    background: $gray-lighter;
+				    font-weight:bold;
+				    // background: $gray-lighter;
 				    display: inline-block;
-				    padding: .2em .6em;
+				    padding: .2em .6em 0 0;
 				    margin:0;
-				    border-top: 1px solid $gray-dark;
-				    border-bottom: 1px solid $gray-dark;
 
-			        // border-radius: 5px 5px 0 0;
-			        // border-bottom-style:none;
+				    // border-top: 1px solid $gray-dark;
+				    // border-bottom: 1px solid $gray-dark;
 				    a{
 				    	// color:$du-orange;
 				    	color:$gray-dark;
@@ -136,7 +135,7 @@ div.main-container{
 			    .views-field-field-project-summary{
 			    	padding:.2em;
 			    	margin-top:0;
-			    	background:$gray-lighter;
+			    	// background:$gray-lighter;
 			    }
 			    .views-field-field-location{
 			    	font-size:.8em;
@@ -300,6 +299,25 @@ body.path-group{
 		    	color:$gray-light;
 		    	font-size:.8em;
 		    }
+		}
+	}
+}
+
+
+// footer
+
+footer{
+	background: $du-asparagus;
+	#block-sociallinks{
+		padding-bottom:2em;
+		.field--name-body{
+			text-align:center;
+			p{
+				img{
+					width:80px;
+					margin:1em;
+				}
+			}
 		}
 	}
 }
