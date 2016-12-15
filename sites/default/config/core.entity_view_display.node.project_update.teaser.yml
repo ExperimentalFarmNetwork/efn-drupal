@@ -42,8 +42,5 @@ content:
       image_style: medium
       image_link: content
     third_party_settings: {  }
-  links:
-    weight: 3
-    settings: {  }
-    third_party_settings: {  }
-hidden: {  }
+hidden:
+  links: true

@@ -160,21 +160,36 @@ body.path-group{
 		background:white;
 		padding:1em;
 		border-radius:5px;
+		.field--name-field-project-image,
+		.field--name-field-description,
+		.field--name-field-project-type,
+		.field--name-field-researcher-background,
+		.field--name-field-seeking-volunteers,
+		.field--name-field-volunteers-how-many,
+		.field--name-field-volunteers-ask-do,
+		.field--name-field-volunteers-other-reqs,
+		.field--name-field-multiyear,
+		.field--name-field-volunteers-keep-seed,
+		.field--name-field-privacy,
+		.field--name-field-misc,
+		.field--name-field-location,
+		.field--name-field-location-geo{
+			display:none;
+			transition:5s cubic-bezier(0.4, 0, 0.2, 1); 
+			&.toggleVFields{
+				display:block; // uncomment when js ready please
+			}
+		}
 		button.toggleVerbose{
 			margin: 0 auto;
 			z-index:999;
 		    position: absolute;
 		    right: 1em;
 		}
-		.field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body){
+		.field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image){
 			padding-bottom:2em;
 			padding-top:2em;
 			border-bottom: thin $gray-lighter solid;
-			transition:5s cubic-bezier(0.4, 0, 0.2, 1); 
-			display:none;
-			&.toggleVFields{
-				display:block; // uncomment when js ready please
-			}
 			.field--label{
 			    width: 45%;
 			    display: inline-table;
@@ -205,15 +220,15 @@ body.path-group{
 .page-node-type-project-update article, .path-group{
 
 	.field--name-field-image{
-		float:right;
+		// float:right;
 	}
-	.author{
-		margin-bottom:1em;
-		color:$gray;
-		a{
-			color:$gray-darker;
-		}
-	}
+	// .author{
+	// 	margin-bottom:1em;
+	// 	color:$gray;
+	// 	a{
+	// 		color:$gray-darker;
+	// 	}
+	// }
 	.views-row{
 		clear:both;	
 		&:first-of-type {
@@ -232,7 +247,7 @@ body.path-group{
 	}
 
 	// comments
-	#node-project-update-field-discussion, .views-field-field-discussion{
+	section[id^="node-project-update-field-discussion-"],#node-project-update-field-discussion, .views-field-field-discussion{
 		margin:1em 0 2em 2em;
 		.js-comment{
 			clear:both;
@@ -248,11 +263,12 @@ body.path-group{
 					float:left;
 					margin-right: 1em;
 				}
-				.view-display-id-user_view{
+				.view-display-id-user_view, .field--name-field-user-image{
 					font-size:.001em;
 					img.img-responsive{
-						width:40px;
+						width:50px;
 						display:block !important;
+						border-radius:50%;
 					}
 					
 				}
@@ -306,7 +322,7 @@ body.path-group{
 
 // footer
 
-footer{
+footer.footer{
 	background: $du-asparagus;
 	#block-sociallinks{
 		padding-bottom:2em;

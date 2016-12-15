@@ -6422,28 +6422,55 @@ body.path-group .region-content {
   background: white;
   padding: 1em;
   border-radius: 5px; }
+  body.path-group .region-content .field--name-field-project-image,
+  body.path-group .region-content .field--name-field-description,
+  body.path-group .region-content .field--name-field-project-type,
+  body.path-group .region-content .field--name-field-researcher-background,
+  body.path-group .region-content .field--name-field-seeking-volunteers,
+  body.path-group .region-content .field--name-field-volunteers-how-many,
+  body.path-group .region-content .field--name-field-volunteers-ask-do,
+  body.path-group .region-content .field--name-field-volunteers-other-reqs,
+  body.path-group .region-content .field--name-field-multiyear,
+  body.path-group .region-content .field--name-field-volunteers-keep-seed,
+  body.path-group .region-content .field--name-field-privacy,
+  body.path-group .region-content .field--name-field-misc,
+  body.path-group .region-content .field--name-field-location,
+  body.path-group .region-content .field--name-field-location-geo {
+    display: none;
+    transition: 5s cubic-bezier(0.4, 0, 0.2, 1); }
+    body.path-group .region-content .field--name-field-project-image.toggleVFields,
+    body.path-group .region-content .field--name-field-description.toggleVFields,
+    body.path-group .region-content .field--name-field-project-type.toggleVFields,
+    body.path-group .region-content .field--name-field-researcher-background.toggleVFields,
+    body.path-group .region-content .field--name-field-seeking-volunteers.toggleVFields,
+    body.path-group .region-content .field--name-field-volunteers-how-many.toggleVFields,
+    body.path-group .region-content .field--name-field-volunteers-ask-do.toggleVFields,
+    body.path-group .region-content .field--name-field-volunteers-other-reqs.toggleVFields,
+    body.path-group .region-content .field--name-field-multiyear.toggleVFields,
+    body.path-group .region-content .field--name-field-volunteers-keep-seed.toggleVFields,
+    body.path-group .region-content .field--name-field-privacy.toggleVFields,
+    body.path-group .region-content .field--name-field-misc.toggleVFields,
+    body.path-group .region-content .field--name-field-location.toggleVFields,
+    body.path-group .region-content .field--name-field-location-geo.toggleVFields {
+      display: block; }
   body.path-group .region-content button.toggleVerbose {
     margin: 0 auto;
     z-index: 999;
     position: absolute;
     right: 1em; }
-  body.path-group .region-content .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body) {
+  body.path-group .region-content .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image) {
     padding-bottom: 2em;
     padding-top: 2em;
-    border-bottom: thin #eeeeee solid;
-    transition: 5s cubic-bezier(0.4, 0, 0.2, 1);
-    display: none; }
-    body.path-group .region-content .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body).toggleVFields {
-      display: block; }
-    body.path-group .region-content .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body) .field--label {
+    border-bottom: thin #eeeeee solid; }
+    body.path-group .region-content .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image) .field--label {
       width: 45%;
       display: inline-table;
       text-transform: uppercase;
       font-weight: normal; }
-    body.path-group .region-content .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body) .field--item {
+    body.path-group .region-content .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image) .field--item {
       width: 45%;
       display: inline-table; }
-    body.path-group .region-content .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body).field--name-field-project-summary {
+    body.path-group .region-content .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image).field--name-field-project-summary {
       display: block; }
 
 .js-form-submit[value='Join group'], .btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
@@ -6451,13 +6478,6 @@ body.path-group .region-content {
   border-radius: 5px;
   padding: 1rem 2rem; }
 
-.page-node-type-project-update article .field--name-field-image, .path-group .field--name-field-image {
-  float: right; }
-.page-node-type-project-update article .author, .path-group .author {
-  margin-bottom: 1em;
-  color: #555555; }
-  .page-node-type-project-update article .author a, .path-group .author a {
-    color: #222222; }
 .page-node-type-project-update article .views-row, .path-group .views-row {
   clear: both; }
   .page-node-type-project-update article .views-row:first-of-type h3, .path-group .views-row:first-of-type h3 {
@@ -6468,38 +6488,39 @@ body.path-group .region-content {
 .page-node-type-project-update article .views-field-field-image, .path-group .views-field-field-image {
   float: right;
   margin: .5rem; }
-.page-node-type-project-update article #node-project-update-field-discussion, .page-node-type-project-update article .views-field-field-discussion, .path-group #node-project-update-field-discussion, .path-group .views-field-field-discussion {
+.page-node-type-project-update article section[id^="node-project-update-field-discussion-"], .page-node-type-project-update article #node-project-update-field-discussion, .page-node-type-project-update article .views-field-field-discussion, .path-group section[id^="node-project-update-field-discussion-"], .path-group #node-project-update-field-discussion, .path-group .views-field-field-discussion {
   margin: 1em 0 2em 2em; }
-  .page-node-type-project-update article #node-project-update-field-discussion .js-comment, .page-node-type-project-update article .views-field-field-discussion .js-comment, .path-group #node-project-update-field-discussion .js-comment, .path-group .views-field-field-discussion .js-comment {
+  .page-node-type-project-update article section[id^="node-project-update-field-discussion-"] .js-comment, .page-node-type-project-update article #node-project-update-field-discussion .js-comment, .page-node-type-project-update article .views-field-field-discussion .js-comment, .path-group section[id^="node-project-update-field-discussion-"] .js-comment, .path-group #node-project-update-field-discussion .js-comment, .path-group .views-field-field-discussion .js-comment {
     clear: both;
     border: #eeeeee thin solid;
     border-radius: 5px;
     padding: 1em;
     margin-bottom: 1em; }
-    .page-node-type-project-update article #node-project-update-field-discussion .js-comment .commentAuthor, .page-node-type-project-update article .views-field-field-discussion .js-comment .commentAuthor, .path-group #node-project-update-field-discussion .js-comment .commentAuthor, .path-group .views-field-field-discussion .js-comment .commentAuthor {
+    .page-node-type-project-update article section[id^="node-project-update-field-discussion-"] .js-comment .commentAuthor, .page-node-type-project-update article #node-project-update-field-discussion .js-comment .commentAuthor, .page-node-type-project-update article .views-field-field-discussion .js-comment .commentAuthor, .path-group section[id^="node-project-update-field-discussion-"] .js-comment .commentAuthor, .path-group #node-project-update-field-discussion .js-comment .commentAuthor, .path-group .views-field-field-discussion .js-comment .commentAuthor {
       color: #777777; }
-      .page-node-type-project-update article #node-project-update-field-discussion .js-comment .commentAuthor article, .page-node-type-project-update article .views-field-field-discussion .js-comment .commentAuthor article, .path-group #node-project-update-field-discussion .js-comment .commentAuthor article, .path-group .views-field-field-discussion .js-comment .commentAuthor article {
+      .page-node-type-project-update article section[id^="node-project-update-field-discussion-"] .js-comment .commentAuthor article, .page-node-type-project-update article #node-project-update-field-discussion .js-comment .commentAuthor article, .page-node-type-project-update article .views-field-field-discussion .js-comment .commentAuthor article, .path-group section[id^="node-project-update-field-discussion-"] .js-comment .commentAuthor article, .path-group #node-project-update-field-discussion .js-comment .commentAuthor article, .path-group .views-field-field-discussion .js-comment .commentAuthor article {
         float: left;
         margin-right: 1em; }
-      .page-node-type-project-update article #node-project-update-field-discussion .js-comment .commentAuthor .view-display-id-user_view, .page-node-type-project-update article .views-field-field-discussion .js-comment .commentAuthor .view-display-id-user_view, .path-group #node-project-update-field-discussion .js-comment .commentAuthor .view-display-id-user_view, .path-group .views-field-field-discussion .js-comment .commentAuthor .view-display-id-user_view {
+      .page-node-type-project-update article section[id^="node-project-update-field-discussion-"] .js-comment .commentAuthor .view-display-id-user_view, .page-node-type-project-update article section[id^="node-project-update-field-discussion-"] .js-comment .commentAuthor .field--name-field-user-image, .page-node-type-project-update article #node-project-update-field-discussion .js-comment .commentAuthor .view-display-id-user_view, .page-node-type-project-update article #node-project-update-field-discussion .js-comment .commentAuthor .field--name-field-user-image, .page-node-type-project-update article .views-field-field-discussion .js-comment .commentAuthor .view-display-id-user_view, .page-node-type-project-update article .views-field-field-discussion .js-comment .commentAuthor .field--name-field-user-image, .path-group section[id^="node-project-update-field-discussion-"] .js-comment .commentAuthor .view-display-id-user_view, .path-group section[id^="node-project-update-field-discussion-"] .js-comment .commentAuthor .field--name-field-user-image, .path-group #node-project-update-field-discussion .js-comment .commentAuthor .view-display-id-user_view, .path-group #node-project-update-field-discussion .js-comment .commentAuthor .field--name-field-user-image, .path-group .views-field-field-discussion .js-comment .commentAuthor .view-display-id-user_view, .path-group .views-field-field-discussion .js-comment .commentAuthor .field--name-field-user-image {
         font-size: .001em; }
-        .page-node-type-project-update article #node-project-update-field-discussion .js-comment .commentAuthor .view-display-id-user_view img.img-responsive, .page-node-type-project-update article .views-field-field-discussion .js-comment .commentAuthor .view-display-id-user_view img.img-responsive, .path-group #node-project-update-field-discussion .js-comment .commentAuthor .view-display-id-user_view img.img-responsive, .path-group .views-field-field-discussion .js-comment .commentAuthor .view-display-id-user_view img.img-responsive {
-          width: 40px;
-          display: block !important; }
-      .page-node-type-project-update article #node-project-update-field-discussion .js-comment .commentAuthor .views-col, .page-node-type-project-update article .views-field-field-discussion .js-comment .commentAuthor .views-col, .path-group #node-project-update-field-discussion .js-comment .commentAuthor .views-col, .path-group .views-field-field-discussion .js-comment .commentAuthor .views-col {
+        .page-node-type-project-update article section[id^="node-project-update-field-discussion-"] .js-comment .commentAuthor .view-display-id-user_view img.img-responsive, .page-node-type-project-update article section[id^="node-project-update-field-discussion-"] .js-comment .commentAuthor .field--name-field-user-image img.img-responsive, .page-node-type-project-update article #node-project-update-field-discussion .js-comment .commentAuthor .view-display-id-user_view img.img-responsive, .page-node-type-project-update article #node-project-update-field-discussion .js-comment .commentAuthor .field--name-field-user-image img.img-responsive, .page-node-type-project-update article .views-field-field-discussion .js-comment .commentAuthor .view-display-id-user_view img.img-responsive, .page-node-type-project-update article .views-field-field-discussion .js-comment .commentAuthor .field--name-field-user-image img.img-responsive, .path-group section[id^="node-project-update-field-discussion-"] .js-comment .commentAuthor .view-display-id-user_view img.img-responsive, .path-group section[id^="node-project-update-field-discussion-"] .js-comment .commentAuthor .field--name-field-user-image img.img-responsive, .path-group #node-project-update-field-discussion .js-comment .commentAuthor .view-display-id-user_view img.img-responsive, .path-group #node-project-update-field-discussion .js-comment .commentAuthor .field--name-field-user-image img.img-responsive, .path-group .views-field-field-discussion .js-comment .commentAuthor .view-display-id-user_view img.img-responsive, .path-group .views-field-field-discussion .js-comment .commentAuthor .field--name-field-user-image img.img-responsive {
+          width: 50px;
+          display: block !important;
+          border-radius: 50%; }
+      .page-node-type-project-update article section[id^="node-project-update-field-discussion-"] .js-comment .commentAuthor .views-col, .page-node-type-project-update article #node-project-update-field-discussion .js-comment .commentAuthor .views-col, .page-node-type-project-update article .views-field-field-discussion .js-comment .commentAuthor .views-col, .path-group section[id^="node-project-update-field-discussion-"] .js-comment .commentAuthor .views-col, .path-group #node-project-update-field-discussion .js-comment .commentAuthor .views-col, .path-group .views-field-field-discussion .js-comment .commentAuthor .views-col {
         width: 100% !important; }
-    .page-node-type-project-update article #node-project-update-field-discussion .js-comment p.submitted, .page-node-type-project-update article .views-field-field-discussion .js-comment p.submitted, .path-group #node-project-update-field-discussion .js-comment p.submitted, .path-group .views-field-field-discussion .js-comment p.submitted {
+    .page-node-type-project-update article section[id^="node-project-update-field-discussion-"] .js-comment p.submitted, .page-node-type-project-update article #node-project-update-field-discussion .js-comment p.submitted, .page-node-type-project-update article .views-field-field-discussion .js-comment p.submitted, .path-group section[id^="node-project-update-field-discussion-"] .js-comment p.submitted, .path-group #node-project-update-field-discussion .js-comment p.submitted, .path-group .views-field-field-discussion .js-comment p.submitted {
       color: #777777;
       font-size: 17px; }
-  .page-node-type-project-update article #node-project-update-field-discussion h4, .page-node-type-project-update article .views-field-field-discussion h4, .path-group #node-project-update-field-discussion h4, .path-group .views-field-field-discussion h4 {
+  .page-node-type-project-update article section[id^="node-project-update-field-discussion-"] h4, .page-node-type-project-update article #node-project-update-field-discussion h4, .page-node-type-project-update article .views-field-field-discussion h4, .path-group section[id^="node-project-update-field-discussion-"] h4, .path-group #node-project-update-field-discussion h4, .path-group .views-field-field-discussion h4 {
     clear: both; }
-  .page-node-type-project-update article #node-project-update-field-discussion .commentForm, .page-node-type-project-update article #node-project-update-field-discussion .form-type-textarea, .page-node-type-project-update article .views-field-field-discussion .commentForm, .page-node-type-project-update article .views-field-field-discussion .form-type-textarea, .path-group #node-project-update-field-discussion .commentForm, .path-group #node-project-update-field-discussion .form-type-textarea, .path-group .views-field-field-discussion .commentForm, .path-group .views-field-field-discussion .form-type-textarea {
+  .page-node-type-project-update article section[id^="node-project-update-field-discussion-"] .commentForm, .page-node-type-project-update article section[id^="node-project-update-field-discussion-"] .form-type-textarea, .page-node-type-project-update article #node-project-update-field-discussion .commentForm, .page-node-type-project-update article #node-project-update-field-discussion .form-type-textarea, .page-node-type-project-update article .views-field-field-discussion .commentForm, .page-node-type-project-update article .views-field-field-discussion .form-type-textarea, .path-group section[id^="node-project-update-field-discussion-"] .commentForm, .path-group section[id^="node-project-update-field-discussion-"] .form-type-textarea, .path-group #node-project-update-field-discussion .commentForm, .path-group #node-project-update-field-discussion .form-type-textarea, .path-group .views-field-field-discussion .commentForm, .path-group .views-field-field-discussion .form-type-textarea {
     clear: both; }
-    .page-node-type-project-update article #node-project-update-field-discussion .commentForm label.control-label, .page-node-type-project-update article #node-project-update-field-discussion .form-type-textarea label.control-label, .page-node-type-project-update article .views-field-field-discussion .commentForm label.control-label, .page-node-type-project-update article .views-field-field-discussion .form-type-textarea label.control-label, .path-group #node-project-update-field-discussion .commentForm label.control-label, .path-group #node-project-update-field-discussion .form-type-textarea label.control-label, .path-group .views-field-field-discussion .commentForm label.control-label, .path-group .views-field-field-discussion .form-type-textarea label.control-label {
+    .page-node-type-project-update article section[id^="node-project-update-field-discussion-"] .commentForm label.control-label, .page-node-type-project-update article section[id^="node-project-update-field-discussion-"] .form-type-textarea label.control-label, .page-node-type-project-update article #node-project-update-field-discussion .commentForm label.control-label, .page-node-type-project-update article #node-project-update-field-discussion .form-type-textarea label.control-label, .page-node-type-project-update article .views-field-field-discussion .commentForm label.control-label, .page-node-type-project-update article .views-field-field-discussion .form-type-textarea label.control-label, .path-group section[id^="node-project-update-field-discussion-"] .commentForm label.control-label, .path-group section[id^="node-project-update-field-discussion-"] .form-type-textarea label.control-label, .path-group #node-project-update-field-discussion .commentForm label.control-label, .path-group #node-project-update-field-discussion .form-type-textarea label.control-label, .path-group .views-field-field-discussion .commentForm label.control-label, .path-group .views-field-field-discussion .form-type-textarea label.control-label {
       display: none; }
-    .page-node-type-project-update article #node-project-update-field-discussion .commentForm .views-col, .page-node-type-project-update article #node-project-update-field-discussion .form-type-textarea .views-col, .page-node-type-project-update article .views-field-field-discussion .commentForm .views-col, .page-node-type-project-update article .views-field-field-discussion .form-type-textarea .views-col, .path-group #node-project-update-field-discussion .commentForm .views-col, .path-group #node-project-update-field-discussion .form-type-textarea .views-col, .path-group .views-field-field-discussion .commentForm .views-col, .path-group .views-field-field-discussion .form-type-textarea .views-col {
+    .page-node-type-project-update article section[id^="node-project-update-field-discussion-"] .commentForm .views-col, .page-node-type-project-update article section[id^="node-project-update-field-discussion-"] .form-type-textarea .views-col, .page-node-type-project-update article #node-project-update-field-discussion .commentForm .views-col, .page-node-type-project-update article #node-project-update-field-discussion .form-type-textarea .views-col, .page-node-type-project-update article .views-field-field-discussion .commentForm .views-col, .page-node-type-project-update article .views-field-field-discussion .form-type-textarea .views-col, .path-group section[id^="node-project-update-field-discussion-"] .commentForm .views-col, .path-group section[id^="node-project-update-field-discussion-"] .form-type-textarea .views-col, .path-group #node-project-update-field-discussion .commentForm .views-col, .path-group #node-project-update-field-discussion .form-type-textarea .views-col, .path-group .views-field-field-discussion .commentForm .views-col, .path-group .views-field-field-discussion .form-type-textarea .views-col {
       width: 100% !important; }
-  .page-node-type-project-update article #node-project-update-field-discussion .js-form-submit, .page-node-type-project-update article .views-field-field-discussion .js-form-submit, .path-group #node-project-update-field-discussion .js-form-submit, .path-group .views-field-field-discussion .js-form-submit {
+  .page-node-type-project-update article section[id^="node-project-update-field-discussion-"] .js-form-submit, .page-node-type-project-update article #node-project-update-field-discussion .js-form-submit, .page-node-type-project-update article .views-field-field-discussion .js-form-submit, .path-group section[id^="node-project-update-field-discussion-"] .js-form-submit, .path-group #node-project-update-field-discussion .js-form-submit, .path-group .views-field-field-discussion .js-form-submit {
     display: none; }
 
 #block-views-block-project-updates-block-1-2 .item-list ul {
@@ -6511,13 +6532,13 @@ body.path-group .region-content {
       color: #777777;
       font-size: .8em; }
 
-footer {
+footer.footer {
   background: #3B4A59; }
-  footer #block-sociallinks {
+  footer.footer #block-sociallinks {
     padding-bottom: 2em; }
-    footer #block-sociallinks .field--name-body {
+    footer.footer #block-sociallinks .field--name-body {
       text-align: center; }
-      footer #block-sociallinks .field--name-body p img {
+      footer.footer #block-sociallinks .field--name-body p img {
         width: 80px;
         margin: 1em; }
 
