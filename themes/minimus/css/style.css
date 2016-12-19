@@ -6397,6 +6397,7 @@ div.main-container {
 .path-frontpage .view-project .views-row .views-col {
   border: #333333 thin solid;
   background: white;
+  background-size: cover;
   padding: 115px 1em 1em 1em;
   border-radius: 5px;
   margin: .5rem;

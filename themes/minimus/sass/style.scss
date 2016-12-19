@@ -100,12 +100,13 @@ div.main-container{
 		margin-top:0;
 	}
 
-	// Project front page
+	// Project front page cards
 	.view-project{
 		.views-row{
 			.views-col{
 				border: $gray-dark thin solid;
 				background: white ;
+				background-size: cover;
 				padding:115px 1em 1em 1em;
 				border-radius:5px;
 				margin:.5rem;	

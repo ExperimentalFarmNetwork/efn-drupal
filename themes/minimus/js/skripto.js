@@ -43,7 +43,8 @@
             $(this).css({
                 background: 'url('+cardPic+')',
                 'background-repeat': 'no-repeat',
-                'background-color': '#fff' 
+                'background-color': '#fff' ,
+                'background-size' : '100%'
             });
         });
     }
