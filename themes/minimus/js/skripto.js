@@ -47,4 +47,7 @@
             });
         });
     }
+    $("[data-drupal-link-system-path='user']").before('<a href="/user" class="glyphicon glyphicon-user"></a>');
+    $("[data-drupal-link-system-path='user/logout']").before('<a href="/user" class="glyphicon glyphicon-log-out"></a>');;
+
 })(jQuery, Drupal);

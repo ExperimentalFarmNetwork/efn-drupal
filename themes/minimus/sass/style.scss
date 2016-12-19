@@ -45,6 +45,17 @@ header.navbar-default{
 				&:hover{
 					color:$du-orange;
 				}
+				&.glyphicon-user,&.glyphicon-log-out{
+					text-align:center;
+					border-bottom:0;
+					color:$gray-light;
+				}
+				&[data-drupal-link-system-path='user'], &[data-drupal-link-system-path='user/logout']{
+					font-size:.7em;
+					border-bottom:0;
+					padding-top:.2em;
+
+				}
 			}
 		}
 	   > .active > a {
@@ -58,15 +69,7 @@ header.navbar-default{
 	    }
  
 	}
-	// &.navbar-fixed-top{
-	// 	.logo img{
-	// 		width:70px;
-	// 		margin: .3em 1em;
-	// 	}
-	// 	ul.navbar-nav {
-	// 	    margin-top: .5em;
-	// 	}
-	// }
+
 }
 
 // Main
@@ -193,7 +196,7 @@ body.path-group{
 			.field--label{
 			    width: 45%;
 			    display: inline-table;
-			    text-transform:uppercase;
+			    text-transform:uppercase;																																																																																		
 			    font-weight:normal;
 
 			}
@@ -221,7 +224,7 @@ body.path-group{
 
 	.field--name-field-image{
 		// float:right;
-	}
+																																																																																																																																																																																																					}
 	// .author{
 	// 	margin-bottom:1em;
 	// 	color:$gray;

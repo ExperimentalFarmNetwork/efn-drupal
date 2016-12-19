@@ -6365,6 +6365,14 @@ header.navbar-default {
       padding: 10px 15px 0 0; }
       header.navbar-default ul.navbar-nav li a:hover {
         color: #FFA100; }
+      header.navbar-default ul.navbar-nav li a.glyphicon-user, header.navbar-default ul.navbar-nav li a.glyphicon-log-out {
+        text-align: center;
+        border-bottom: 0;
+        color: #777777; }
+      header.navbar-default ul.navbar-nav li a[data-drupal-link-system-path='user'], header.navbar-default ul.navbar-nav li a[data-drupal-link-system-path='user/logout'] {
+        font-size: .7em;
+        border-bottom: 0;
+        padding-top: .2em; }
     header.navbar-default ul.navbar-nav > .active > a, header.navbar-default ul.navbar-nav > .active > a:hover, header.navbar-default ul.navbar-nav > .active > a:focus {
       color: #418261;
       background-color: inherit;
