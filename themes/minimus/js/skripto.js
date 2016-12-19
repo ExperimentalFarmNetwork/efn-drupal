@@ -37,7 +37,7 @@
 
     // front page image to background of card
     if ($("body").hasClass('path-frontpage')){
-        $(".view-id-project .views-col").each(function(index, el) {
+        $(".view-id-project .views-row").each(function(index, el) {
             var cardPic = $(this).find(".views-field-field-project-image img").attr('src');
  
             $(this).css({

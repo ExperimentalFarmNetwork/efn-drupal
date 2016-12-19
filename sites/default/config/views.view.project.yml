@@ -72,7 +72,11 @@ display:
             offset: false
             offset_label: Offset
       style:
-        type: grid
+        type: default
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
       row:
         type: fields
       fields:

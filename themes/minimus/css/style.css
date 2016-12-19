@@ -6394,37 +6394,37 @@ div.main-container {
   margin-top: -3em; }
 .path-frontpage .navbar {
   margin-top: 0; }
-.path-frontpage .view-project .views-row .views-col {
+.path-frontpage .view-project .views-row {
   border: #333333 thin solid;
-  background: white;
-  background-size: cover;
-  padding: 115px 1em 1em 1em;
+  padding: 100px 1em 1em 1em;
   border-radius: 5px;
   margin: .5rem;
   height: 300px;
-  width: 23% !important; }
-  .path-frontpage .view-project .views-row .views-col h2.field-content {
+  width: 350px !important;
+  display: inline-block;
+  vertical-align: top; }
+  .path-frontpage .view-project .views-row h2.field-content {
     font-size: 1em;
     text-transform: uppercase;
     font-weight: bold;
     display: inline-block;
     padding: .2em .6em 0 0;
     margin: 0; }
-    .path-frontpage .view-project .views-row .views-col h2.field-content a {
+    .path-frontpage .view-project .views-row h2.field-content a {
       color: #333333; }
-  .path-frontpage .view-project .views-row .views-col .views-field-uid {
+  .path-frontpage .view-project .views-row .views-field-uid {
     color: #777777;
     font-size: .8em; }
-  .path-frontpage .view-project .views-row .views-col .views-field-field-project-image {
+  .path-frontpage .view-project .views-row .views-field-field-project-image {
     display: none; }
-  .path-frontpage .view-project .views-row .views-col .views-field-field-project-summary {
+  .path-frontpage .view-project .views-row .views-field-field-project-summary {
     padding: .2em;
     margin-top: 0; }
-  .path-frontpage .view-project .views-row .views-col .views-field-field-location {
+  .path-frontpage .view-project .views-row .views-field-field-location {
     font-size: .8em;
     border-top: 1px dashed #333333;
     margin-top: 1em; }
-    .path-frontpage .view-project .views-row .views-col .views-field-field-location p.address {
+    .path-frontpage .view-project .views-row .views-field-field-location p.address {
       display: inline; }
 
 body.path-group .region-content {
