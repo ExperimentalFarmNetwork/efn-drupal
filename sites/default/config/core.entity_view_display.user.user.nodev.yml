@@ -1,0 +1,22 @@
+uuid: 031bf14f-3ef8-4c58-aafb-48c314bc9f8c
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.user.nodev
+  module:
+    - user
+id: user.user.nodev
+targetEntityType: user
+bundle: user
+mode: nodev
+content:
+  member_for:
+    weight: 5
+  profile_main:
+    weight: 10
+  profile_researcher:
+    weight: 10
+  profile_volunteer:
+    weight: 10
+hidden: {  }

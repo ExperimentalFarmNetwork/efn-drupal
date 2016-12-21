@@ -1,0 +1,10 @@
+uuid: c42e2836-fcb6-4b4b-94fe-a2d6c174cac5
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: user.nodev
+label: nodeview
+targetEntityType: user
+cache: true

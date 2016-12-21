@@ -23,7 +23,7 @@ content:
   body:
     label: hidden
     type: text_default
-    weight: 1
+    weight: 0
     settings: {  }
     third_party_settings: {  }
   field_discussion:
@@ -36,7 +36,7 @@ content:
     third_party_settings: {  }
   field_image:
     type: image
-    weight: 0
+    weight: 1
     label: hidden
     settings:
       image_style: medium

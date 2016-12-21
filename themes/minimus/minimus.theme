@@ -6,9 +6,15 @@
  * Place your custom PHP code in this file.
  */
 
-// function minimus_preprocess_page(&$variables) {
-// 	kint($variables['node']);
-//   if(isset($variables['node']) && ($variables['node']['values']->type == "project_update") {
-  	
-//   }
-// }
+function minimus_preprocess_node(&$variables) {
+ //  if(isset($variables['node']) && ($variables['node']['values']->type == "project_update") {
+ // //  	$node = \Drupal::entityTypeManager()->getStorage('node')->load($nid);
+	// // $author = $node->getOwner();
+
+ //  }
+
+	// a little help from http://drupal.stackexchange.com/a/205375/61845
+	$variables['author'] = \Drupal::entityTypeManager()->getViewBuilder('user')->view($variables['node']->getOwner(), 'nodeview');
+}
+
+
