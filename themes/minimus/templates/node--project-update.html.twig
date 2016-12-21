@@ -60,7 +60,7 @@
  *
  *
  * @ingroup templates
- *
+ *new displa
  * @see template_preprocess_node()
  *
  * @todo Remove the id attribute (or make it a class), because if that gets
@@ -83,7 +83,7 @@
 <article{{ attributes.addClass(classes) }}>
   {{ title_prefix }}
   {% if not page %}
-    <h3 title_attributes }}>
+    <h3 {{ title_attributes }}>
       <a href="{{ url }}" rel="bookmark">{{ label }}</a>
     </h3>
   {% endif %}

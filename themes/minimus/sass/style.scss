@@ -18,6 +18,16 @@ a{
 	color:$link-color ;
 }
 
+// fix for overlapping main container
+.col-sm-12{
+	float:none;
+	background:#fff;
+	border-radius:5px 5px 0 0;
+	h1{
+		margin-bottom:0;
+	}
+}
+
 // Header
 header.navbar-default{
 	background: $du-dark;
@@ -84,6 +94,8 @@ div.main-container{
 		font-size:$font-size-h4;
 	}
 }
+
+
 
 // Front page
 .path-frontpage{
@@ -159,54 +171,58 @@ body.path-group{
 	.region-content{
 		background:white;
 		padding:1em;
-		border-radius:5px;
-		.field--name-field-project-image,
-		.field--name-field-description,
-		.field--name-field-project-type,
-		.field--name-field-researcher-background,
-		.field--name-field-seeking-volunteers,
-		.field--name-field-volunteers-how-many,
-		.field--name-field-volunteers-ask-do,
-		.field--name-field-volunteers-other-reqs,
-		.field--name-field-multiyear,
-		.field--name-field-volunteers-keep-seed,
-		.field--name-field-privacy,
-		.field--name-field-misc,
-		.field--name-field-location,
-		.field--name-field-location-geo{
-			&:not([data-drupal-selector]){
-				display:none;
-			}
-			
-			transition:5s cubic-bezier(0.4, 0, 0.2, 1); 
-			&.toggleVFields{
-				display:block; // uncomment when js ready please
-			}
-		}
-		button.toggleVerbose{
-			margin: 0 auto;
-			z-index:999;
-		    position: absolute;
-		    right: 1em;
-		}
-		.field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image){
-			padding-bottom:2em;
-			padding-top:2em;
-			border-bottom: thin $gray-lighter solid;
-			.field--label{
-			    width: 45%;
-			    display: inline-table;
-			    text-transform:uppercase;																																																																																		
-			    font-weight:normal;
+		.groupWrapper{
 
+			.field--name-field-project-image,
+			.field--name-field-description,
+			.field--name-field-project-type,
+			.field--name-field-researcher-background,
+			.field--name-field-seeking-volunteers,
+			.field--name-field-volunteers-how-many,
+			.field--name-field-volunteers-ask-do,
+			.field--name-field-volunteers-other-reqs,
+			.field--name-field-multiyear,
+			.field--name-field-volunteers-keep-seed,
+			.field--name-field-privacy,
+			.field--name-field-misc,
+			.field--name-field-location,
+			.field--name-field-location-geo{
+				&:not([data-drupal-selector]){
+					display:none;
+				}
+				
+				transition:5s cubic-bezier(0.4, 0, 0.2, 1); 
+				&.toggleVFields{
+					display:block; // uncomment when js ready please
+				}
 			}
-			.field--item{
-			    width: 45%;
-			    display: inline-table;
+			button.toggleVerbose{
+				margin: 0 auto;
+				z-index:999;
+			    position: absolute;
+			    right: 1em;
+			    bottom:0em;
 			}
-			// show just the summary with js show rest link
-			&.field--name-field-project-summary{
-				display:block;
+			.field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image){
+				padding-bottom:2em;
+				padding-top:2em;
+				border-bottom: thin $gray-lighter solid;
+				.field--label{
+				    width: 45%;
+				    display: inline-table;
+				    text-transform:uppercase;																																																																																		
+				    font-weight:normal;
+				}
+				.field--item{
+				    width: 45%;
+				    display: inline-table;
+				}
+				// show just the summary with js show rest link
+				&.field--name-field-project-summary{
+					display:block;
+					padding-top:0;
+
+				}
 			}
 		}
 	}
@@ -221,22 +237,35 @@ body.path-group{
 
 // Project Updates
 .page-node-type-project-update article, .path-group{
-
-
+	h1{
+		font-size: $font-size-h3;
+		margin-top:.5em;
+	}
+	h3{
+		font-size: $font-size-h4;
+	    letter-spacing: -1px;
+	    line-height: 30px;
+	    tab-size: 48px;
+	    text-size-adjust: 100%;
+	    font-weight: bold;
+	    display:inline-table;
+	}
 	.nodeAuthor{
 		float:right;
 		font-size:.8em;
 		text-align:center;
+
 		.view-profiles{
 			font-size:.00001em;
 			color:transparent;
+		    display: inline-block;
 		}
 		.views-col.col-1{
 			width:100% !important;
 		}
 		.field--name-field-user-image{
-			width: 200px;
-			height: 200px;
+			width: 80px;
+			height: 80px;
 			overflow: hidden;
 			margin: 10px;
 			position: relative;
@@ -260,6 +289,7 @@ body.path-group{
 	}
 
 	.field--name-field-image{
+		margin-top:1em;
 		div.field--item{
 			display:inline-block;
 			margin-right:5px;

@@ -1220,7 +1220,7 @@ h1, .h1 {
   font-size: 49px; }
 
 h2, .h2 {
-  font-size: 40px; }
+  font-size: 32px; }
 
 h3, .h3 {
   font-size: 33px; }
@@ -6346,6 +6346,13 @@ body {
 a {
   color: #242029; }
 
+.col-sm-12 {
+  float: none;
+  background: #fff;
+  border-radius: 5px 5px 0 0; }
+  .col-sm-12 h1 {
+    margin-bottom: 0; }
+
 header.navbar-default {
   background: #242029;
   border-bottom: #A4AD23 3px solid; }
@@ -6429,90 +6436,103 @@ div.main-container {
 
 body.path-group .region-content {
   background: white;
-  padding: 1em;
-  border-radius: 5px; }
-  body.path-group .region-content .field--name-field-project-image,
-  body.path-group .region-content .field--name-field-description,
-  body.path-group .region-content .field--name-field-project-type,
-  body.path-group .region-content .field--name-field-researcher-background,
-  body.path-group .region-content .field--name-field-seeking-volunteers,
-  body.path-group .region-content .field--name-field-volunteers-how-many,
-  body.path-group .region-content .field--name-field-volunteers-ask-do,
-  body.path-group .region-content .field--name-field-volunteers-other-reqs,
-  body.path-group .region-content .field--name-field-multiyear,
-  body.path-group .region-content .field--name-field-volunteers-keep-seed,
-  body.path-group .region-content .field--name-field-privacy,
-  body.path-group .region-content .field--name-field-misc,
-  body.path-group .region-content .field--name-field-location,
-  body.path-group .region-content .field--name-field-location-geo {
+  padding: 1em; }
+  body.path-group .region-content .groupWrapper .field--name-field-project-image,
+  body.path-group .region-content .groupWrapper .field--name-field-description,
+  body.path-group .region-content .groupWrapper .field--name-field-project-type,
+  body.path-group .region-content .groupWrapper .field--name-field-researcher-background,
+  body.path-group .region-content .groupWrapper .field--name-field-seeking-volunteers,
+  body.path-group .region-content .groupWrapper .field--name-field-volunteers-how-many,
+  body.path-group .region-content .groupWrapper .field--name-field-volunteers-ask-do,
+  body.path-group .region-content .groupWrapper .field--name-field-volunteers-other-reqs,
+  body.path-group .region-content .groupWrapper .field--name-field-multiyear,
+  body.path-group .region-content .groupWrapper .field--name-field-volunteers-keep-seed,
+  body.path-group .region-content .groupWrapper .field--name-field-privacy,
+  body.path-group .region-content .groupWrapper .field--name-field-misc,
+  body.path-group .region-content .groupWrapper .field--name-field-location,
+  body.path-group .region-content .groupWrapper .field--name-field-location-geo {
     transition: 5s cubic-bezier(0.4, 0, 0.2, 1); }
-    body.path-group .region-content .field--name-field-project-image:not([data-drupal-selector]),
-    body.path-group .region-content .field--name-field-description:not([data-drupal-selector]),
-    body.path-group .region-content .field--name-field-project-type:not([data-drupal-selector]),
-    body.path-group .region-content .field--name-field-researcher-background:not([data-drupal-selector]),
-    body.path-group .region-content .field--name-field-seeking-volunteers:not([data-drupal-selector]),
-    body.path-group .region-content .field--name-field-volunteers-how-many:not([data-drupal-selector]),
-    body.path-group .region-content .field--name-field-volunteers-ask-do:not([data-drupal-selector]),
-    body.path-group .region-content .field--name-field-volunteers-other-reqs:not([data-drupal-selector]),
-    body.path-group .region-content .field--name-field-multiyear:not([data-drupal-selector]),
-    body.path-group .region-content .field--name-field-volunteers-keep-seed:not([data-drupal-selector]),
-    body.path-group .region-content .field--name-field-privacy:not([data-drupal-selector]),
-    body.path-group .region-content .field--name-field-misc:not([data-drupal-selector]),
-    body.path-group .region-content .field--name-field-location:not([data-drupal-selector]),
-    body.path-group .region-content .field--name-field-location-geo:not([data-drupal-selector]) {
+    body.path-group .region-content .groupWrapper .field--name-field-project-image:not([data-drupal-selector]),
+    body.path-group .region-content .groupWrapper .field--name-field-description:not([data-drupal-selector]),
+    body.path-group .region-content .groupWrapper .field--name-field-project-type:not([data-drupal-selector]),
+    body.path-group .region-content .groupWrapper .field--name-field-researcher-background:not([data-drupal-selector]),
+    body.path-group .region-content .groupWrapper .field--name-field-seeking-volunteers:not([data-drupal-selector]),
+    body.path-group .region-content .groupWrapper .field--name-field-volunteers-how-many:not([data-drupal-selector]),
+    body.path-group .region-content .groupWrapper .field--name-field-volunteers-ask-do:not([data-drupal-selector]),
+    body.path-group .region-content .groupWrapper .field--name-field-volunteers-other-reqs:not([data-drupal-selector]),
+    body.path-group .region-content .groupWrapper .field--name-field-multiyear:not([data-drupal-selector]),
+    body.path-group .region-content .groupWrapper .field--name-field-volunteers-keep-seed:not([data-drupal-selector]),
+    body.path-group .region-content .groupWrapper .field--name-field-privacy:not([data-drupal-selector]),
+    body.path-group .region-content .groupWrapper .field--name-field-misc:not([data-drupal-selector]),
+    body.path-group .region-content .groupWrapper .field--name-field-location:not([data-drupal-selector]),
+    body.path-group .region-content .groupWrapper .field--name-field-location-geo:not([data-drupal-selector]) {
       display: none; }
-    body.path-group .region-content .field--name-field-project-image.toggleVFields,
-    body.path-group .region-content .field--name-field-description.toggleVFields,
-    body.path-group .region-content .field--name-field-project-type.toggleVFields,
-    body.path-group .region-content .field--name-field-researcher-background.toggleVFields,
-    body.path-group .region-content .field--name-field-seeking-volunteers.toggleVFields,
-    body.path-group .region-content .field--name-field-volunteers-how-many.toggleVFields,
-    body.path-group .region-content .field--name-field-volunteers-ask-do.toggleVFields,
-    body.path-group .region-content .field--name-field-volunteers-other-reqs.toggleVFields,
-    body.path-group .region-content .field--name-field-multiyear.toggleVFields,
-    body.path-group .region-content .field--name-field-volunteers-keep-seed.toggleVFields,
-    body.path-group .region-content .field--name-field-privacy.toggleVFields,
-    body.path-group .region-content .field--name-field-misc.toggleVFields,
-    body.path-group .region-content .field--name-field-location.toggleVFields,
-    body.path-group .region-content .field--name-field-location-geo.toggleVFields {
+    body.path-group .region-content .groupWrapper .field--name-field-project-image.toggleVFields,
+    body.path-group .region-content .groupWrapper .field--name-field-description.toggleVFields,
+    body.path-group .region-content .groupWrapper .field--name-field-project-type.toggleVFields,
+    body.path-group .region-content .groupWrapper .field--name-field-researcher-background.toggleVFields,
+    body.path-group .region-content .groupWrapper .field--name-field-seeking-volunteers.toggleVFields,
+    body.path-group .region-content .groupWrapper .field--name-field-volunteers-how-many.toggleVFields,
+    body.path-group .region-content .groupWrapper .field--name-field-volunteers-ask-do.toggleVFields,
+    body.path-group .region-content .groupWrapper .field--name-field-volunteers-other-reqs.toggleVFields,
+    body.path-group .region-content .groupWrapper .field--name-field-multiyear.toggleVFields,
+    body.path-group .region-content .groupWrapper .field--name-field-volunteers-keep-seed.toggleVFields,
+    body.path-group .region-content .groupWrapper .field--name-field-privacy.toggleVFields,
+    body.path-group .region-content .groupWrapper .field--name-field-misc.toggleVFields,
+    body.path-group .region-content .groupWrapper .field--name-field-location.toggleVFields,
+    body.path-group .region-content .groupWrapper .field--name-field-location-geo.toggleVFields {
       display: block; }
-  body.path-group .region-content button.toggleVerbose {
+  body.path-group .region-content .groupWrapper button.toggleVerbose {
     margin: 0 auto;
     z-index: 999;
     position: absolute;
-    right: 1em; }
-  body.path-group .region-content .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image) {
+    right: 1em;
+    bottom: 0em; }
+  body.path-group .region-content .groupWrapper .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image) {
     padding-bottom: 2em;
     padding-top: 2em;
     border-bottom: thin #eeeeee solid; }
-    body.path-group .region-content .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image) .field--label {
+    body.path-group .region-content .groupWrapper .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image) .field--label {
       width: 45%;
       display: inline-table;
       text-transform: uppercase;
       font-weight: normal; }
-    body.path-group .region-content .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image) .field--item {
+    body.path-group .region-content .groupWrapper .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image) .field--item {
       width: 45%;
       display: inline-table; }
-    body.path-group .region-content .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image).field--name-field-project-summary {
-      display: block; }
+    body.path-group .region-content .groupWrapper .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image).field--name-field-project-summary {
+      display: block;
+      padding-top: 0; }
 
 .js-form-submit[value='Join group'], .btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
   font-size: 2rem;
   border-radius: 5px;
   padding: 1rem 2rem; }
 
+.page-node-type-project-update article h1, .path-group h1 {
+  font-size: 33px;
+  margin-top: .5em; }
+.page-node-type-project-update article h3, .path-group h3 {
+  font-size: 24px;
+  letter-spacing: -1px;
+  line-height: 30px;
+  tab-size: 48px;
+  text-size-adjust: 100%;
+  font-weight: bold;
+  display: inline-table; }
 .page-node-type-project-update article .nodeAuthor, .path-group .nodeAuthor {
   float: right;
   font-size: .8em;
   text-align: center; }
   .page-node-type-project-update article .nodeAuthor .view-profiles, .path-group .nodeAuthor .view-profiles {
     font-size: .00001em;
-    color: transparent; }
+    color: transparent;
+    display: inline-block; }
   .page-node-type-project-update article .nodeAuthor .views-col.col-1, .path-group .nodeAuthor .views-col.col-1 {
     width: 100% !important; }
   .page-node-type-project-update article .nodeAuthor .field--name-field-user-image, .path-group .nodeAuthor .field--name-field-user-image {
-    width: 200px;
-    height: 200px;
+    width: 80px;
+    height: 80px;
     overflow: hidden;
     margin: 10px;
     position: relative; }
@@ -6527,10 +6547,12 @@ body.path-group .region-content {
       margin: auto;
       min-height: 100%;
       min-width: 100%; }
-.page-node-type-project-update article .field--name-field-image div.field--item, .path-group .field--name-field-image div.field--item {
-  display: inline-block;
-  margin-right: 5px;
-  vertical-align: top; }
+.page-node-type-project-update article .field--name-field-image, .path-group .field--name-field-image {
+  margin-top: 1em; }
+  .page-node-type-project-update article .field--name-field-image div.field--item, .path-group .field--name-field-image div.field--item {
+    display: inline-block;
+    margin-right: 5px;
+    vertical-align: top; }
 .page-node-type-project-update article .views-row, .path-group .views-row {
   clear: both; }
   .page-node-type-project-update article .views-row:first-of-type h3, .path-group .views-row:first-of-type h3 {
