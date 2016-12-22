@@ -13,14 +13,9 @@ fluid_container: 1
 table_responsive: '-1'
 table: ''
 logo:
-  path: themes/minimus/images/efn_logo.png
+  path: themes/minimus/images/efn_logo_long_bold.png
   url: ''
   use_default: false
-features:
-  comment_user_picture: true
-  comment_user_verification: true
-  favicon: true
-  node_user_picture: false
 region_wells:
   navigation: ''
   navigation_collapsible: ''
@@ -31,3 +26,8 @@ region_wells:
   sidebar_first: ''
   sidebar_second: ''
   footer: ''
+features:
+  comment_user_picture: true
+  comment_user_verification: true
+  favicon: true
+  node_user_picture: false
