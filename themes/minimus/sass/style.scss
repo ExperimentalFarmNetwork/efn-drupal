@@ -37,21 +37,24 @@ header.navbar-default{
 	}
 	.navbar-header{
 		.logo img{
-			height:70px;
-			margin: 1em;
+			height:50px;
+			margin: 5px;
 			transition:.3s cubic-bezier(0.4, 0, 0.2, 1); 
-
 		}
 	}
 	ul.navbar-nav{
 		margin-left:2em;
-		margin-top: 1.5em;
+		margin-top:15px;
+		&.navbar-right{
+			margin-top:8px;
+		}
 		li{
 			a{
 				color: $du-green;
 				text-transform: uppercase;
 				border-bottom:thin solid $du-asparagus;
-				padding:10px 15px 0 0;
+				margin-right: 15px;
+				padding:0;
 				&:hover{
 					color:$du-orange;
 				}
@@ -59,6 +62,7 @@ header.navbar-default{
 					text-align:center;
 					border-bottom:0;
 					color:$gray-light;
+				    margin-right:15px;
 				}
 				&[data-drupal-link-system-path='user'], &[data-drupal-link-system-path='user/logout']{
 					font-size:.7em;
@@ -402,6 +406,8 @@ body.path-group{
 
 footer.footer{
 	background: $du-asparagus;
+	background-image:url(../images/seeds_bak.svg);
+	background-size:cover;
 	#block-sociallinks{
 		padding-bottom:2em;
 		.field--name-body{

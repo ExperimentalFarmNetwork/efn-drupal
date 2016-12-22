@@ -6359,23 +6359,27 @@ header.navbar-default {
   header.navbar-default .container-fluid {
     width: 90%; }
   header.navbar-default .navbar-header .logo img {
-    height: 70px;
-    margin: 1em;
+    height: 50px;
+    margin: 5px;
     transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
   header.navbar-default ul.navbar-nav {
     margin-left: 2em;
-    margin-top: 1.5em; }
+    margin-top: 15px; }
+    header.navbar-default ul.navbar-nav.navbar-right {
+      margin-top: 8px; }
     header.navbar-default ul.navbar-nav li a {
       color: #418261;
       text-transform: uppercase;
       border-bottom: thin solid #3B4A59;
-      padding: 10px 15px 0 0; }
+      margin-right: 15px;
+      padding: 0; }
       header.navbar-default ul.navbar-nav li a:hover {
         color: #FFA100; }
       header.navbar-default ul.navbar-nav li a.glyphicon-user, header.navbar-default ul.navbar-nav li a.glyphicon-log-out {
         text-align: center;
         border-bottom: 0;
-        color: #777777; }
+        color: #777777;
+        margin-right: 15px; }
       header.navbar-default ul.navbar-nav li a[data-drupal-link-system-path='user'], header.navbar-default ul.navbar-nav li a[data-drupal-link-system-path='user/logout'] {
         font-size: .7em;
         border-bottom: 0;
@@ -6609,7 +6613,9 @@ body.path-group .region-content {
       font-size: .8em; }
 
 footer.footer {
-  background: #3B4A59; }
+  background: #3B4A59;
+  background-image: url(../images/seeds_bak.svg);
+  background-size: cover; }
   footer.footer #block-sociallinks {
     padding-bottom: 2em; }
     footer.footer #block-sociallinks .field--name-body {
