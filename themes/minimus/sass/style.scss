@@ -89,7 +89,7 @@ header.navbar-default{
 // Main
 div.main-container{
 	width:90%;
-	margin-top:13em; //put this in mediaquery
+	margin-top:18em; //put this in mediaquery
 }
 
 // Sidebar
@@ -107,7 +107,7 @@ div.main-container{
 		background:url('/themes/minimus/images/seed_nodes.png');
 		height:370px;
 	    background-size: cover;
-	    background-position-y: 360px;
+	    background-position-y: 395px;
 	}
 	.main-container{
 		margin-top:-3em;
