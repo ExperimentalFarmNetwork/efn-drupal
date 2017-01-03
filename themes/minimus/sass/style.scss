@@ -89,7 +89,7 @@ header.navbar-default{
 // Main
 div.main-container{
 	width:90%;
-	margin-top:18em; //put this in mediaquery
+	
 }
 
 // Sidebar
@@ -108,12 +108,25 @@ div.main-container{
 		height:370px;
 	    background-size: cover;
 	    background-position-y: 395px;
+	    .btns{
+	    	width: 500px;
+	    	margin-top:85px;
+	    	margin-right:100px;
+	    	text-transform:uppercase;
+	    	a{
+	    		margin-bottom:.5em;
+	    	}
+	    }
 	}
 	.main-container{
-		margin-top:-3em;
+		margin-top:-2em;
+		.col-sm-12{
+			background:transparent;
+		}
 	}
 	.navbar{
 		margin-top:0;
+		margin-bottom:0;
 	}
 
 	// Project front page cards
@@ -171,10 +184,20 @@ div.main-container{
  
 // group main page
 body.path-group{
+	.main-container{
+		margin-top:18em; //put this in mediaquery
+	}
 
 	.region-content{
 		background:white;
 		padding:1em;
+		button.toggleVerbose{
+			margin: 0 auto;
+			z-index:999;
+		    position: absolute;
+		    right: 2em;
+		    top:86px;
+		}
 		.groupWrapper{
 
 			.field--name-field-project-image,
@@ -199,13 +222,6 @@ body.path-group{
 				&.toggleVFields{
 					display:block; // uncomment when js ready please
 				}
-			}
-			button.toggleVerbose{
-				margin: 0 auto;
-				z-index:999;
-			    position: absolute;
-			    right: 1em;
-			    bottom:0em;
 			}
 			.field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image){
 				padding-bottom:2em;
