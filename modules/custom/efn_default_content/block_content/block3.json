@@ -1,0 +1,97 @@
+{
+    "_links": {
+        "self": {
+            "href": "http:\/\/default\/block\/3?_format=hal_json"
+        },
+        "type": {
+            "href": "http:\/\/drupal.org\/rest\/type\/block_content\/basic_block"
+        },
+        "http:\/\/drupal.org\/rest\/relation\/block_content\/basic_block\/revision_user": [
+            {
+                "href": "http:\/\/default\/user\/1?_format=hal_json"
+            }
+        ]
+    },
+    "id": [
+        {
+            "value": "3"
+        }
+    ],
+    "uuid": [
+        {
+            "value": "6504b919-c5f4-46ec-b830-fce8d8d49f14"
+        }
+    ],
+    "revision_id": [
+        {
+            "value": "3"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en",
+            "lang": "en"
+        }
+    ],
+    "type": [
+        {
+            "target_id": "basic_block"
+        }
+    ],
+    "info": [
+        {
+            "value": "Social Links",
+            "lang": "en"
+        }
+    ],
+    "changed": [
+        {
+            "value": "1481753794",
+            "lang": "en"
+        }
+    ],
+    "revision_created": [
+        {
+            "value": "1481753096"
+        }
+    ],
+    "_embedded": {
+        "http:\/\/drupal.org\/rest\/relation\/block_content\/basic_block\/revision_user": [
+            {
+                "_links": {
+                    "self": {
+                        "href": "http:\/\/default\/user\/1?_format=hal_json"
+                    },
+                    "type": {
+                        "href": "http:\/\/drupal.org\/rest\/type\/user\/user"
+                    }
+                },
+                "uuid": [
+                    {
+                        "value": "f1b0e78b-7470-42c9-a550-268ae1979846"
+                    }
+                ]
+            }
+        ]
+    },
+    "revision_translation_affected": [
+        {
+            "value": "1",
+            "lang": "en"
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": "1",
+            "lang": "en"
+        }
+    ],
+    "body": [
+        {
+            "value": "<p>&nbsp;<\/p>\r\n\r\n<p><a data-entity-type=\"\" data-entity-uuid=\"\" href=\"https:\/\/www.facebook.com\/ExperimentalFarmNetwork\"><img alt=\"facebook\" data-entity-type=\"\" data-entity-uuid=\"\" src=\"\/themes\/minimus\/images\/icons\/Facebook.svg\" \/><\/a> &nbsp;<a data-entity-type=\"\" data-entity-uuid=\"\" href=\"https:\/\/github.com\/ExperimentalFarmNetwork\/efn-drupal\"><img alt=\"github\" data-entity-type=\"\" data-entity-uuid=\"\" src=\"\/themes\/minimus\/images\/icons\/GitHub.svg\" \/><\/a><\/p>\r\n",
+            "format": "raw_html",
+            "summary": "",
+            "lang": "en"
+        }
+    ]
+}
