@@ -6397,14 +6397,31 @@ div.main-container {
 
 .path-frontpage .bnrPic {
   background: url("/themes/minimus/images/seed_nodes.png");
+  background: url("/themes/minimus/images/project_default.png");
   height: 370px;
   background-size: cover;
   background-position-y: 395px; }
+  .path-frontpage .bnrPic .efntxt_frnt {
+    width: 50%;
+    margin-top: 2em;
+    display: inline-block; }
+    .path-frontpage .bnrPic .efntxt_frnt p {
+      color: #418261;
+      background: white;
+      border-bottom: thin solid #A4AD23;
+      font-size: 4em;
+      line-height: 1em;
+      padding: 0 10px;
+      margin-left: 2em;
+      display: table;
+      text-transform: lowercase;
+      font-weight: 50; }
   .path-frontpage .bnrPic .btns {
-    width: 500px;
+    width: 35%;
     margin-top: 85px;
     margin-right: 100px;
-    text-transform: uppercase; }
+    text-transform: uppercase;
+    display: inline-block; }
     .path-frontpage .bnrPic .btns a {
       margin-bottom: .5em; }
 .path-frontpage .main-container {

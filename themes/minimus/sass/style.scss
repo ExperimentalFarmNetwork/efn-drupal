@@ -105,14 +105,34 @@ div.main-container{
 .path-frontpage{
 	.bnrPic{
 		background:url('/themes/minimus/images/seed_nodes.png');
+		background:url('/themes/minimus/images/project_default.png');
 		height:370px;
 	    background-size: cover;
 	    background-position-y: 395px;
+	    .efntxt_frnt{
+	    	width:50%;
+		    margin-top: 2em;
+    		display: inline-block;
+	    	p{
+	    		color: $du-green;
+	    		background:white;
+	    		border-bottom: thin solid $du-gold;
+	    		font-size:4em;
+	    		line-height:1em;
+			    padding: 0 10px;
+			    margin-left: 2em;
+			    display:table;
+			    text-transform:lowercase;
+			    font-weight:50;	
+	    	}
+
+	    }
 	    .btns{
-	    	width: 500px;
+	    	width: 35%;
 	    	margin-top:85px;
 	    	margin-right:100px;
 	    	text-transform:uppercase;
+	    	display:inline-block;
 	    	a{
 	    		margin-bottom:.5em;
 	    	}
