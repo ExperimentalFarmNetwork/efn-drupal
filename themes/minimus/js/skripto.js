@@ -18,7 +18,7 @@
     });
 
     $(".views-field-field-discussion textarea.form-textarea, #node-project-update-field-discussion textarea.form-textarea, [id^=node-project-update-field-discussion] textarea.form-textarea").attr("placeholder", "Comment here ...").click(function(event) {
-        $(this).attr('placeholder', 'yes do it');
+        $(this).attr('placeholder', 'mmhmmm');
         $('.js-form-submit').css('display', 'block');
     });
 
@@ -30,22 +30,23 @@
         'background-repeat':'no-repeat'
     });
 
-    // set project update inititial background offset
-    var hdrHt=$("body.path-group .navbar-default").height(),
-        hdrMargin=hdrHt+100;
-    $("body.path-group").css('background-position-y', hdrMargin+'px');
+    // set project update initial background offset
+    var $nbar = $("#navbar"),
+        bottom = $nbar.position().top + $nbar.offset().top + $nbar.outerHeight(true);
+        // console.log("bottom:" + bottom + " pos:" + ($nbar.position().top) + " offset: " + ($nbar.offset().top) +" nb oH:"+($nbar.outerHeight(true)));
+    $("body.path-group").css('background-position-y', bottom+'px');
 
     // front page image to background of card
     if ($("body").hasClass('path-frontpage')){
         $(".view-id-project .views-row").each(function(index, el) {
-            var cardPic = $(this).find(".views-field-field-project-image img").attr('src');
- 
-            $(this).css({
-                background: 'url('+cardPic+')',
-                'background-repeat': 'no-repeat',
-                'background-color': '#fff' ,
-                'background-size' : '100%'
-            });
+        var cardPic = $(this).find(".views-field-field-project-image img").attr('src');
+
+        $(this).css({
+            background: 'url('+cardPic+')',
+            'background-repeat': 'no-repeat',
+            'background-color': '#fff' ,
+            'background-size' : '100%'
+        });
         });
     }
     $("[data-drupal-link-system-path='user']").before('<a href="/user" class="glyphicon glyphicon-user"></a>');
