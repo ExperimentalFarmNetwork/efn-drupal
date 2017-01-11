@@ -128,7 +128,7 @@ div.main-container{
 
 	    }
 	    .btns{
-	    	width: 35%;
+	    	width: 500px;
 	    	margin-top:85px;
 	    	margin-right:100px;
 	    	text-transform:uppercase;
@@ -428,6 +428,11 @@ body.user-logged-in.path-group{
 
 
 // sidebar
+.region-sidebar-second{
+	background:#fff;
+	border-radius:5px;
+	padding:5px;
+}
 #block-views-block-project-updates-block-1-2{
 	// background:yellow;
 	.item-list ul {

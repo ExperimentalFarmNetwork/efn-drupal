@@ -6417,7 +6417,7 @@ div.main-container {
       text-transform: lowercase;
       font-weight: 50; }
   .path-frontpage .bnrPic .btns {
-    width: 35%;
+    width: 500px;
     margin-top: 85px;
     margin-right: 100px;
     text-transform: uppercase;
@@ -6634,6 +6634,11 @@ body.user-logged-in.path-group .region-content {
       width: 100% !important; }
   .page-node-type-project-update article section[id^="node-project-update-field-discussion-"] .js-form-submit, .page-node-type-project-update article #node-project-update-field-discussion .js-form-submit, .page-node-type-project-update article .views-field-field-discussion .js-form-submit, .path-group section[id^="node-project-update-field-discussion-"] .js-form-submit, .path-group #node-project-update-field-discussion .js-form-submit, .path-group .views-field-field-discussion .js-form-submit {
     display: none; }
+
+.region-sidebar-second {
+  background: #fff;
+  border-radius: 5px;
+  padding: 5px; }
 
 #block-views-block-project-updates-block-1-2 .item-list ul {
   padding-left: 0; }
