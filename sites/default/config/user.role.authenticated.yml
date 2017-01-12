@@ -12,3 +12,5 @@ permissions:
   - 'access content'
   - 'edit own comments'
   - 'access comments'
+  - 'edit own main profile'
+  - 'view any main profile'

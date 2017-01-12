@@ -148,7 +148,20 @@ display:
             label: ''
           granularity: second
       title: 'Project Updates by node'
-      header: {  }
+      header:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: false
+          tokenize: false
+          content:
+            value: '<h3 class="pu-header">Project Updates</h3>'
+            format: raw_html
+          plugin_id: text
       footer: {  }
       empty: {  }
       relationships:

@@ -636,7 +636,7 @@ display:
       display_extenders: {  }
       path: group/%group/updates
       menu:
-        type: tab
+        type: none
         title: Updates
         description: ''
         expanded: false

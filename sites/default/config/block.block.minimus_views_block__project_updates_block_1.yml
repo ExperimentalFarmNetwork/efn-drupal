@@ -1,6 +1,6 @@
 uuid: 6dee4d68-e185-4e95-bc63-6b4ce319e602
 langcode: en
-status: true
+status: false
 dependencies:
   config:
     - views.view.project_updates
@@ -11,8 +11,8 @@ dependencies:
     - minimus
 id: minimus_views_block__project_updates_block_1
 theme: minimus
-region: sidebar_second
-weight: -6
+region: '-1'
+weight: -8
 provider: null
 plugin: 'views_block:project_updates-block_1'
 settings:

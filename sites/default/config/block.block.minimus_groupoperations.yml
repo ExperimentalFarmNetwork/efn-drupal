@@ -4,12 +4,13 @@ status: true
 dependencies:
   module:
     - group
+    - system
   theme:
     - minimus
 id: minimus_groupoperations
 theme: minimus
 region: sidebar_second
-weight: -8
+weight: -10
 provider: null
 plugin: group_operations
 settings:
@@ -27,3 +28,8 @@ visibility:
     negate: false
     context_mapping:
       group: '@group.group_route_context:group'
+  request_path:
+    id: request_path
+    pages: create/project_update
+    negate: true
+    context_mapping: {  }
