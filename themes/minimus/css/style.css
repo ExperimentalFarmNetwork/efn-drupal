@@ -6576,8 +6576,7 @@ body.user-logged-in.path-group .region-content {
 
 .page-node-type-project-update article h1, .path-group h1 {
   font-size: 33px;
-  background: #3B4A59;
-  color: #fff;
+  font-weight: bold;
   margin-top: 1em;
   display: inline-block;
   padding: 5px;

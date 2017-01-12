@@ -327,8 +327,9 @@ body.user-logged-in.path-group{
 .page-node-type-project-update article, .path-group{
 	h1{
 		font-size: $font-size-h3;
-		background: $du-asparagus;
-		color: #fff;
+		font-weight:bold;
+		// background: $du-asparagus;
+		// color: #fff;
 		margin-top: 1em;
 		display:inline-block;
 		padding:5px;
