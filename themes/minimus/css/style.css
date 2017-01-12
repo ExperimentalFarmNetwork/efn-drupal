@@ -6346,6 +6346,35 @@ body {
 a {
   color: #242029; }
 
+nav.tabs {
+  position: relative;
+  top: -35px;
+  left: 17px;
+  float: right; }
+  nav.tabs ul.nav-tabs {
+    border-bottom: 0; }
+    nav.tabs ul.nav-tabs > li > a {
+      padding: 5px 10px;
+      font-size: 12px;
+      -ms-touch-action: manipulation;
+      touch-action: manipulation;
+      cursor: pointer;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      background-image: none;
+      border-radius: 4px;
+      background: #eeeeee;
+      color: #777777;
+      filter: alpha(Opacity=60);
+      opacity: 0.6;
+      transition: all ease-in-out; }
+      nav.tabs ul.nav-tabs > li > a:hover {
+        filter: alpha(Opacity=100);
+        opacity: 1;
+        color: #3B4A59; }
+
 .col-sm-12 {
   float: none;
   background: #fff;
@@ -6478,7 +6507,7 @@ body.user-logged-in.path-group .region-content {
     z-index: 999;
     position: absolute;
     right: 2em;
-    top: 86px; }
+    top: 21px; }
   body.user-logged-in.path-group .region-content .groupWrapper .field--name-field-project-image,
   body.user-logged-in.path-group .region-content .groupWrapper .field--name-field-description,
   body.user-logged-in.path-group .region-content .groupWrapper .field--name-field-project-type,
@@ -6547,7 +6576,13 @@ body.user-logged-in.path-group .region-content {
 
 .page-node-type-project-update article h1, .path-group h1 {
   font-size: 33px;
-  margin-top: .5em; }
+  background: #3B4A59;
+  color: #fff;
+  margin-top: 1em;
+  display: inline-block;
+  padding: 5px;
+  margin-top: .5em;
+  border-bottom: 0; }
 .page-node-type-project-update article h3, .path-group h3 {
   font-size: 24px;
   letter-spacing: -1px;

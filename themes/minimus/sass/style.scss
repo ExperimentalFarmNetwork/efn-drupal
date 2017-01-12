@@ -18,6 +18,48 @@ a{
 	color:$link-color ;
 }
 
+// tabs 
+nav.tabs{
+		position: relative;
+	    top: -35px;
+	    left:17px;
+
+	 float:right;
+	ul.nav-tabs {
+		border-bottom:0;
+
+		> li{
+			// float:none;
+			// margin-bottom:5px;
+			> a{
+				padding: 5px 10px;
+			    // margin-bottom: 0;
+			    font-size: 12px;
+			    -ms-touch-action: manipulation;
+			    touch-action: manipulation;
+			    cursor: pointer;
+			    -webkit-user-select: none;
+			    -moz-user-select: none;
+			    -ms-user-select: none;
+			    user-select: none;
+			    background-image: none;
+			    border-radius: 4px;
+			    background: $gray-lighter;
+			    color: $gray-light;
+			    filter: alpha(Opacity=60);
+				opacity: 0.6;
+				transition: all ease-in-out;
+				&:hover{
+				    filter: alpha(Opacity=100);
+					opacity: 1;
+					color:$du-asparagus;			
+					}			}
+		} 
+
+			
+	}
+}
+
 // fix for overlapping main container
 .col-sm-12{
 	float:none;
@@ -222,7 +264,7 @@ body.user-logged-in.path-group{
 			z-index:999;
 		    position: absolute;
 		    right: 2em;
-		    top:86px;
+		    top:21px;
 		}
 		.groupWrapper{
 
@@ -285,7 +327,14 @@ body.user-logged-in.path-group{
 .page-node-type-project-update article, .path-group{
 	h1{
 		font-size: $font-size-h3;
+		background: $du-asparagus;
+		color: #fff;
+		margin-top: 1em;
+		display:inline-block;
+		padding:5px;
+		// margin-bottom:1em;
 		margin-top:.5em;
+		border-bottom:0;
 	}
 	h3{
 		font-size: $font-size-h4;

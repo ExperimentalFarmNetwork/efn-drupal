@@ -33,7 +33,7 @@
     // set project update initial background offset
     var $nbar = $("#navbar"),
         bottom = $nbar.position().top + $nbar.offset().top + $nbar.outerHeight(true);
-        // console.log("bottom:" + bottom + " pos:" + ($nbar.position().top) + " offset: " + ($nbar.offset().top) +" nb oH:"+($nbar.outerHeight(true)));
+        console.log("bottom:" + bottom + " pos:" + ($nbar.position().top) + " offset: " + ($nbar.offset().top) +" nb oH:"+($nbar.outerHeight(true)));
     $("body.path-group").css('background-position-y', bottom+'px');
 
     // front page image to background of card
