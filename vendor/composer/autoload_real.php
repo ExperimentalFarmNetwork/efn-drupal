@@ -23,16 +23,10 @@ class ComposerAutoloaderInitDrupal8
         self::$loader = $loader = new \Composer\Autoload\ClassLoader();
         spl_autoload_unregister(array('ComposerAutoloaderInitDrupal8', 'loadClassLoader'));
 
-        $useStaticLoader = PHP_VERSION_ID >= 50600 && !defined('HHVM_VERSION') && (!function_exists('zend_loader_file_encoded') || !zend_loader_file_encoded());
-        if ($useStaticLoader) {
-            require_once __DIR__ . '/autoload_static.php';
-
-            call_user_func(\Composer\Autoload\ComposerStaticInitDrupal8::getInitializer($loader));
-        } else {
-            $map = require __DIR__ . '/autoload_namespaces.php';
-            foreach ($map as $namespace => $path) {
-                $loader->set($namespace, $path);
-            }
+        $map = require __DIR__ . '/autoload_namespaces.php';
+        foreach ($map as $namespace => $path) {
+            $loader->set($namespace, $path);
+        }
 
         $map = require __DIR__ . '/autoload_psr4.php';
         foreach ($map as $namespace => $path) {
