@@ -1,0 +1,6 @@
+patterns: ''
+default_width: 700
+skip_admin_paths: true
+renderer: drupal_colorbox
+_core:
+  default_config_hash: Dq8n-HYQwGnZeUGM4UINJGOvjwtlZLI0RrMYydeue3o

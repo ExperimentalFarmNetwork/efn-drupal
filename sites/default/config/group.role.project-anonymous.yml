@@ -8,8 +8,9 @@ id: project-anonymous
 label: Anonymous
 weight: -102
 internal: true
+audience: anonymous
 group_type: project
+permissions_ui: true
 permissions:
   - 'view project_update node'
-audience: anonymous
-permissions_ui: true
+  - 'view group'

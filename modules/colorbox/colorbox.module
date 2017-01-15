@@ -1,0 +1,22 @@
+<?php
+
+/**
+ * @file
+ * A light-weight, customizable lightbox plugin.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function colorbox_theme() {
+  return array(
+    'colorbox_formatter' => array(
+      'variables' => array(
+        'item' => NULL,
+        'entity' => NULL,
+        'settings' => NULL,
+      ),
+      'file' => 'colorbox.theme.inc',
+    ),
+  );
+}

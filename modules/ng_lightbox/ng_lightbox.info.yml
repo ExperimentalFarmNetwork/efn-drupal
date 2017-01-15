@@ -1,0 +1,15 @@
+name: NG Lightbox
+description: A path based lightbox solution using CSS 3 properties.
+type: module
+# core: 8.x
+package: NG
+configure: ng_lightbox.settings
+
+files:
+  - ng_lightbox.test
+
+# Information added by Drupal.org packaging script on 2016-02-13
+version: '8.x-1.0-beta2'
+core: '8.x'
+project: 'ng_lightbox'
+datestamp: 1455407341

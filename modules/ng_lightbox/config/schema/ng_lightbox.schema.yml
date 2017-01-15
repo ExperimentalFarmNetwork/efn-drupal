@@ -1,0 +1,16 @@
+ng_lightbox.settings:
+  type: config_object
+  label: 'NG Lightbox settings.'
+  mapping:
+    patterns:
+      type: string
+      label: 'The path patterns to try match.'
+    default_width:
+      type: integer
+      label: 'The default width of the lightbox'
+    skip_admin_paths:
+      type: boolean
+      label: 'Whether to disable the lightbox on admin pages.'
+    renderer:
+      type: string
+      label: 'The renderer used to launch a the lightbox.'
