@@ -42,8 +42,13 @@ content:
   field_location:
     weight: 3
     settings:
-      default_country: null
-    third_party_settings: {  }
+      default_country: US
+    third_party_settings:
+      field_states_ui:
+        form:
+          type: ''
+          list: ''
+          add: Add
     type: address_default
   field_misc:
     weight: 16

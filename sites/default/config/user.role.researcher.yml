@@ -6,4 +6,7 @@ id: researcher
 label: Researcher
 weight: 4
 is_admin: null
-permissions: {  }
+permissions:
+  - 'add own researcher profile'
+  - 'delete any researcher profile'
+  - 'delete own researcher profile'

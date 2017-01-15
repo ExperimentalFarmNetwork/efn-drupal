@@ -13,10 +13,13 @@ mode: nodev
 content:
   member_for:
     weight: 5
+    settings: {  }
+    third_party_settings: {  }
   profile_main:
     weight: 10
-  profile_researcher:
-    weight: 10
-  profile_volunteer:
-    weight: 10
-hidden: {  }
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  masquerade: true
+  profile_researcher: true
+  profile_volunteer: true
