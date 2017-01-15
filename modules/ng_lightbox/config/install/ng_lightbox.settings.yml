@@ -1,0 +1,4 @@
+patterns: ''
+default_width: 700
+skip_admin_paths: true
+renderer: 'drupal_modal'

@@ -1,0 +1,7 @@
+ng_lightbox.settings:
+  path: '/admin/config/media/ng-lightbox'
+  defaults:
+    _form: '\Drupal\ng_lightbox\Form\NgLightboxSettingsForm'
+    _title: 'NG Lightbox'
+  requirements:
+    _permission: 'administer ng lightbox'

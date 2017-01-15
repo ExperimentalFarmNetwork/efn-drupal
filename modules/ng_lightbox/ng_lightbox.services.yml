@@ -1,0 +1,4 @@
+services:
+  ng_lightbox:
+    class: Drupal\ng_lightbox\NgLightbox
+    arguments: ['@path.matcher', '@path.alias_manager', '@config.factory', '@router.admin_context']

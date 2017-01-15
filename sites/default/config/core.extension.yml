@@ -9,6 +9,8 @@ module:
   chosen_field: 0
   chosen_lib: 0
   ckeditor: 0
+  colorbox: 0
+  colorbox_load: 0
   comment: 0
   config: 0
   config_update: 0
@@ -44,6 +46,7 @@ module:
   link: 0
   menu_link_content: 0
   menu_ui: 0
+  ng_lightbox: 0
   node: 0
   options: 0
   page_cache: 0

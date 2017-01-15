@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Colorbox load file.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function colorbox_load_install() {
+  $config = \Drupal::configFactory()->getEditable('ng_lightbox.settings');
+  $config->set('renderer', 'drupal_colorbox');
+  $config->save();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function colorbox_load_uninstall() {
+  $config = \Drupal::configFactory()->getEditable('ng_lightbox.settings');
+  $config->set('renderer', NULL);
+  $config->save();
+}
