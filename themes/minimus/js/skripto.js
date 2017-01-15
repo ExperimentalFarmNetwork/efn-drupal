@@ -4,21 +4,21 @@
 
     // resize navbar on scroll
     var navbar=$('header.navbar-default');
-        $(window).scroll(function () {
+    $(window).scroll(function () {
         if ($(window).scrollTop() > 160) {
           navbar.addClass('navbar-fixed-top');
-        }
-        if ($(window).scrollTop() < 161) {
+      }
+      if ($(window).scrollTop() < 161) {
           navbar.removeClass('navbar-fixed-top');
-        }
-      });
+      }
+  });
 
     $("button.toggleVerbose").click(function(event) {
         $('.path-group .region-content .field').toggleClass('toggleVFields','1000');
     });
 
     $(".views-field-field-discussion textarea.form-textarea, #node-project-update-field-discussion textarea.form-textarea, [id^=node-project-update-field-discussion] textarea.form-textarea").attr("placeholder", "Comment here ...").click(function(event) {
-        $(this).attr('placeholder', 'mmhmmm');
+        $(this).attr('placeholder', '...');
         $('.js-form-submit').css('display', 'block');
     });
 
@@ -32,9 +32,15 @@
 
     // set project update initial background offset
     var $nbar = $("#navbar"),
-        bottom = $nbar.position().top + $nbar.offset().top + $nbar.outerHeight(true);
-        console.log("bottom:" + bottom + " pos:" + ($nbar.position().top) + " offset: " + ($nbar.offset().top) +" nb oH:"+($nbar.outerHeight(true)));
-    $("body.path-group").css('background-position-y', bottom+'px');
+    $toolbar = $("#toolbar-bar"),
+    $toolTray = $(".toolbar-tray-horizontal"),
+    bottom = ($nbar.position().top) + $nbar.offset().top + $nbar.outerHeight();
+        // bottom = $nbar.height() + $toolbar.height() + $toolTray.height();
+
+
+        console.log("bottom:" + bottom + " pos:" + ($nbar.position().top) + " offset: " + ($nbar.offset().top) +" nb oH:"+($nbar.outerHeight()));
+        // console.log("bottom: "+ bottom + "nbar: "+$nbar.height() +"toolbar: " +$toolbar.height() +"tooltray: "+ $toolTray.height());
+        // $("body.path-group").css('background-position-y', bottom+'px');
 
     // front page image to background of card
     if ($("body").hasClass('path-frontpage')){
