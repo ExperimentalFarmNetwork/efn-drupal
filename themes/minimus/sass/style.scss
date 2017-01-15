@@ -45,7 +45,7 @@ header.navbar-default{
 	}
 	ul.navbar-nav{
 		margin-left:2em;
-		margin-top:15px;
+		margin-top:22px;
 		&.navbar-right{
 			margin-top:8px;
 		}
@@ -204,7 +204,8 @@ div.main-container{
 
  
 // group main page
-body.user-logged-in.path-group{
+body.path-group{
+	background-position-y:73px;
 	.navbar{
 		margin-bottom:0;
 	}
@@ -212,7 +213,7 @@ body.user-logged-in.path-group{
 		margin-bottom:1em;
 	}
 	.main-container{
-		margin-top:18em; //put this in mediaquery
+		margin-top:250px; //put this in mediaquery
 	}
 
 	.region-content{
@@ -250,7 +251,7 @@ body.user-logged-in.path-group{
 					display:block; // uncomment when js ready please
 				}
 			}
-			.field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image){
+			.field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image):not(.field--name-field-location-geo){
 				padding-bottom:2em;
 				padding-top:2em;
 				border-bottom: thin $gray-lighter solid;
