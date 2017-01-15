@@ -519,6 +519,7 @@ display:
         type: normal
         title: Projects
         menu_name: main
+        enabled: false
     cache_metadata:
       max-age: -1
       contexts:

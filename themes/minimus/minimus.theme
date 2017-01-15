@@ -18,3 +18,10 @@ function minimus_preprocess_node(&$variables) {
 }
 
 
+// function minimus_preprocess_user(&$variables){
+
+// 	$variables['thing'] =\Drupal::entityTypeManager()->getDefinitions();
+
+// 	// $variables['nodeId'] = \Drupal::entityTypeManager()->getStorage('user');
+
+// }
