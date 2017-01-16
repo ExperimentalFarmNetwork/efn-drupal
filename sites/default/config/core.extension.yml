@@ -23,6 +23,7 @@ module:
   dynamic_page_cache: 0
   editor: 0
   efn_default_content: 0
+  efn_users: 0
   entity: 0
   field: 0
   field_group: 0
