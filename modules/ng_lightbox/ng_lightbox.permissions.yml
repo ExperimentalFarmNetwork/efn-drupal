@@ -1,0 +1,4 @@
+administer ng lightbox:
+  title: 'Administer NG Lightbox'
+  description: 'Allow users to administer the NG Lightbox settings.'
+  restrict access: true

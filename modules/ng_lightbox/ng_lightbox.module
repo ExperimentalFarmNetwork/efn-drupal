@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * @file
+ * The NG Lightbox module.
+ */
+
+/**
+ * Implements hook_link_alter().
+ */
+function ng_lightbox_link_alter(&$vars) {
+  /** @var \Drupal\ng_lightbox\NgLightbox $lightbox */
+  $lightbox = \Drupal::service('ng_lightbox');
+  if ($lightbox->isNgLightboxEnabledPath($vars['url'])) {
+    $lightbox->addLightbox($vars);
+  }
+
+  // If you've enabled/disabled the modal for admin paths this allows you to
+  // override it for one off paths.
+  \Drupal::moduleHandler()->alter('ng_lightbox_ajax_path', $vars);
+}
+
+/**
+ * Implements hook_page_attachments().
+ */
+function ng_lightbox_page_attachments(array &$attachments) {
+  $attachments['#attached']['library'][] = 'ng_lightbox/ng_lightbox';
+}

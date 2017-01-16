@@ -1,0 +1,5 @@
+services:
+  colorbox_load.renderer:
+      class: Drupal\colorbox_load\Renderer
+      tags:
+        - { name: render.main_content_renderer, format: drupal_colorbox, ng_lightbox: Colorbox }

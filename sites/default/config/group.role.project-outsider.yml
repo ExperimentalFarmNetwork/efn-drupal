@@ -8,10 +8,10 @@ id: project-outsider
 label: Outsider
 weight: -101
 internal: true
-group_type: project
-permissions:
-  0: 'view project_update node'
-  1: 'view group'
-  3: 'join group'
 audience: outsider
+group_type: project
 permissions_ui: true
+permissions:
+  - 'view project_update node'
+  - 'view group'
+  - 'join group'

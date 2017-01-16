@@ -8,17 +8,17 @@ id: project-member
 label: Member
 weight: -100
 internal: true
-group_type: project
-permissions:
-  0: 'view group_node:project_update content'
-  1: 'create group_node:project_update content'
-  2: 'edit own group_node:project_update content'
-  3: 'delete own group_node:project_update content'
-  4: 'view project_update node'
-  5: 'edit own project_update node'
-  6: 'delete own project_update node'
-  7: 'view group'
-  8: 'create project_update node'
-  10: 'leave group'
 audience: member
+group_type: project
 permissions_ui: true
+permissions:
+  - 'view group_node:project_update content'
+  - 'create group_node:project_update content'
+  - 'edit own group_node:project_update content'
+  - 'delete own group_node:project_update content'
+  - 'view project_update node'
+  - 'edit own project_update node'
+  - 'delete own project_update node'
+  - 'view group'
+  - 'create project_update node'
+  - 'leave group'

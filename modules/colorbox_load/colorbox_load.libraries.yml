@@ -1,0 +1,6 @@
+colorbox_load:
+  js:
+    js/colorbox_load.js: {}
+  dependencies:
+    - core/drupal.ajax
+    - colorbox/colorbox
