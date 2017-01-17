@@ -31,3 +31,4 @@ features:
   comment_user_verification: true
   favicon: true
   node_user_picture: false
+breadcrumb: '0'
