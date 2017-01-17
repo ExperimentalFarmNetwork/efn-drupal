@@ -6,20 +6,26 @@ use Geocoder\Dumper\Dumper;
 use Geocoder\Model\Address;
 
 /**
- * @author Pol Dellaiera <pol.dellaiera@gmail.com>
+ * Class for Geohash.
  */
 class Geohash extends Geometry implements Dumper {
   /**
+   * Dumper.
+   *
    * @var \Geocoder\Dumper\Dumper
    */
   protected $dumper;
 
   /**
+   * Geophp.
+   *
    * @var GeoPHPWrapper
    */
   protected $geophp;
 
   /**
+   * Address.
+   *
    * @inheritdoc
    */
   public function dump(Address $address) {

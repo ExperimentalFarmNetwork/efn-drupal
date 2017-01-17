@@ -71,6 +71,20 @@ class GroupContentEnabler extends Plugin {
   public $pretty_path_key;
 
   /**
+   * (optional) The label for the entity reference field.
+   *
+   * @var string
+   */
+  public $reference_label;
+
+  /**
+   * (optional) The description for the entity reference field.
+   *
+   * @var string
+   */
+  public $reference_description;
+
+  /**
    * (optional) Whether this plugin is always on.
    *
    * @var bool

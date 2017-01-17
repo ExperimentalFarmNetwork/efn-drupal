@@ -318,9 +318,9 @@ function _group_mass_reassign_to_super_user(array $ids, &$context) {
 }
 
 /**
- * Implements hook_ENTITY_TYPE_predelete().
+ * Implements hook_ENTITY_TYPE_delete().
  */
-function group_user_predelete(EntityInterface $account) {
+function group_user_delete(EntityInterface $account) {
   // If a user is deleted, we delete all of their groups too.
   $storage = \Drupal::entityTypeManager()->getStorage('group');
   if ($groups = $storage->loadByProperties(['uid' => $account->id()])) {

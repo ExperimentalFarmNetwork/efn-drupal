@@ -22,13 +22,6 @@ class VarDumper extends DevelDumperBase {
   /**
    * {@inheritdoc}
    */
-  public function dump($input, $name = NULL) {
-    echo (string) $this->export($input, $name);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function export($input, $name = NULL) {
     $cloner = new VarCloner();
     $dumper = 'cli' === PHP_SAPI ? new CliDumper() : new HtmlDumper();
@@ -36,6 +29,10 @@ class VarDumper extends DevelDumperBase {
     $output = fopen('php://memory', 'r+b');
     $dumper->dump($cloner->cloneVar($input), $output);
     $output = stream_get_contents($output, -1, 0);
+
+    if ($name) {
+      $output = $name . ' => ' . $output;
+    }
 
     return $this->setSafeMarkup($output);
   }

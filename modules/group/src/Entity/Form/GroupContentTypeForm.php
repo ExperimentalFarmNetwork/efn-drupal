@@ -9,7 +9,7 @@ use Drupal\group\Plugin\GroupContentEnablerManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Form controller for group type forms.
+ * Form controller for group content type forms.
  */
 class GroupContentTypeForm extends EntityForm {
 
@@ -170,7 +170,7 @@ class GroupContentTypeForm extends EntityForm {
         'content_plugin' => $route_match->getRawParameter('plugin_id'),
       ];
     }
-    return $entity = $this->entityTypeManager->getStorage($entity_type_id)->create($values);
+    return $this->entityTypeManager->getStorage($entity_type_id)->create($values);
   }
 
 }

@@ -15,12 +15,12 @@ use Drupal\Console\Command\Shared\ModuleTrait;
 use Drupal\Console\Command\Shared\MenuTrait;
 use Drupal\Console\Command\Shared\FormTrait;
 use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Style\DrupalStyle;
-use Drupal\Console\Command\Shared\ContainerAwareCommandTrait;
+use Drupal\Console\Core\Style\DrupalStyle;
+use Drupal\Console\Core\Command\Shared\ContainerAwareCommandTrait;
 use Drupal\Console\Generator\FormGenerator;
 use Drupal\Console\Extension\Manager;
-use Drupal\Console\Utils\ChainQueue;
-use Drupal\Console\Utils\StringConverter;
+use Drupal\Console\Core\Utils\ChainQueue;
+use Drupal\Console\Core\Utils\StringConverter;
 use Drupal\Core\Render\ElementInfoManager;
 use Drupal\Core\Routing\RouteProviderInterface;
 
@@ -35,13 +35,19 @@ abstract class FormCommand extends Command
     private $formType;
     private $commandName;
 
-    /** @var Manager  */
+    /**
+ * @var Manager
+*/
     protected $extensionManager;
 
-    /** @var FormGenerator  */
+    /**
+ * @var FormGenerator
+*/
     protected $generator;
 
-    /** @var ChainQueue */
+    /**
+ * @var ChainQueue
+*/
     protected $chainQueue;
 
     /**
@@ -62,6 +68,7 @@ abstract class FormCommand extends Command
 
     /**
      * FormCommand constructor.
+     *
      * @param Manager                $extensionManager
      * @param FormGenerator          $generator
      * @param ChainQueue             $chainQueue

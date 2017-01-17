@@ -10,14 +10,26 @@ use Drupal\KernelTests\KernelTestBase;
 /**
  * Tests the integration between geocoder with geofield.
  *
- * @group geocoder
+ * @group Geocoder
  */
 class GeocoderGeofieldIntegrationTest extends KernelTestBase {
 
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['geophp', 'geofield', 'field', 'geocoder_geofield', 'geocoder_geofield_test', 'geocoder', 'geocoder_field', 'entity_test', 'text', 'user', 'filter'];
+  public static $modules = [
+    'geophp',
+    'geofield',
+    'field',
+    'geocoder_geofield',
+    'geocoder_geofield_test',
+    'geocoder',
+    'geocoder_field',
+    'entity_test',
+    'text',
+    'user',
+    'filter',
+  ];
 
   /**
    * Tests the geocoding on Geofield field type.
@@ -42,7 +54,7 @@ class GeocoderGeofieldIntegrationTest extends KernelTestBase {
       'type' => 'geofield',
       'field_name' => 'bar',
     ])->save();
-    /** @var \Drupal\field\FieldConfigInterface $field */
+    /** @var \Drupal\Core\Field\FieldConfigInterface $field */
     $field = FieldConfig::create([
       'entity_type' => 'entity_test',
       'bundle' => 'entity_test',

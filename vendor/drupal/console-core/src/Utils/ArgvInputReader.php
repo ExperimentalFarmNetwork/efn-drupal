@@ -1,6 +1,10 @@
 <?php
+/**
+ * @file
+ * Contains \Drupal\Console\Core\Utils\ArgvInputReader.
+ */
 
-namespace Drupal\Console\Utils;
+namespace Drupal\Console\Core\Utils;
 
 use Symfony\Component\Console\Input\ArgvInput;
 
@@ -108,7 +112,7 @@ class ArgvInputReader
     }
 
     /**
-     * SetPlaceHolderAsOption.
+     * setOptionsFromPlaceHolders.
      */
     private function setOptionsFromPlaceHolders()
     {
@@ -199,6 +203,9 @@ class ArgvInputReader
         return $this->options;
     }
 
+    /**
+     * setOptionsAsArgv
+     */
     public function setOptionsAsArgv()
     {
         foreach ($this->options as $optionName => $optionValue) {
@@ -219,6 +226,9 @@ class ArgvInputReader
         }
     }
 
+    /**
+     * @return array
+     */
     public function restoreOriginalArgvValues()
     {
         return $_SERVER['argv'] = $this->originalArgvValues;

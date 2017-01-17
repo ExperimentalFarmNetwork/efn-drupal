@@ -18,6 +18,8 @@ use Symfony\Component\Routing\Route;
  *   description = @Translation("Adds nodes to groups both publicly and privately."),
  *   entity_type_id = "node",
  *   pretty_path_key = "node",
+ *   reference_label = @Translation("Title"),
+ *   reference_description = @Translation("The title of the node to add to the group"),
  *   deriver = "Drupal\gnode\Plugin\GroupContentEnabler\GroupNodeDeriver"
  * )
  */
@@ -134,7 +136,9 @@ class GroupNode extends GroupContentEnablerBase {
    * {@inheritdoc}
    */
   public function calculateDependencies() {
-    return ['config' => ['node.type.' . $this->getEntityBundle()]];
+    $dependencies = parent::calculateDependencies();
+    $dependencies['config'][] = 'node.type.' . $this->getEntityBundle();
+    return $dependencies;
   }
 
 }

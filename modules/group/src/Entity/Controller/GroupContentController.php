@@ -73,8 +73,9 @@ class GroupContentController extends ControllerBase {
    * @param \Drupal\group\Entity\GroupInterface $group
    *   The group to add the group content to.
    *
-   * @return array
-   *   The group content creation overview page.
+   * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+   *   The group content creation overview page or a redirect to the form for
+   *   adding group content if there is only one group content type.
    */
   public function addPage(GroupInterface $group) {
     $build = ['#theme' => 'entity_add_list', '#bundles' => []];

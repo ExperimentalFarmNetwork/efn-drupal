@@ -2,10 +2,10 @@
 
 namespace Drupal\geocoder_field\Plugin\Geocoder\Field;
 
+use Drupal\Core\Field\FieldConfigInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Plugin\PluginBase;
-use Drupal\field\FieldConfigInterface;
 use Drupal\geocoder\DumperPluginManager;
 use Drupal\geocoder\ProviderPluginManager;
 use Drupal\geocoder_field\GeocoderFieldPluginInterface;
@@ -105,12 +105,20 @@ class DefaultField extends PluginBase implements GeocoderFieldPluginInterface, C
       ],
       '#default_value' => $field->getThirdPartySetting('geocoder_field', 'method', 'none'),
     ];
+
+    $invisible_state = [
+      'invisible' => [
+        ':input[name="third_party_settings[geocoder_field][method]"]' => ['value' => 'none'],
+      ],
+    ];
+
     $element['field'] = [
       '#type' => 'select',
       '#title' => $this->t('Geocode from an existing field'),
       '#description' => $this->t('Select which field you would like to use.'),
       '#default_value' => $field->getThirdPartySetting('geocoder_field', 'field'),
       '#options' => $this->fieldPluginManager->getSourceFields($field->getTargetEntityTypeId(), $field->getTargetBundle(), $field->getName()),
+      '#states' => $invisible_state,
     ];
     $element['plugins'] = [
       '#type' => 'table',
@@ -122,6 +130,9 @@ class DefaultField extends PluginBase implements GeocoderFieldPluginInterface, C
       ],
       ],
       '#caption' => $this->t('Select the Geocoder plugins to use, you can reorder them. The first one to return a valid value will be used.'),
+      // We need this class for #states to hide the entire table.
+      '#attributes' => ['class' => ['js-form-item']],
+      '#states' => $invisible_state,
     ];
 
     $default_plugins = (array) $field->getThirdPartySetting('geocoder_field', 'plugins');
@@ -153,6 +164,7 @@ class DefaultField extends PluginBase implements GeocoderFieldPluginInterface, C
       '#default_value' => $field->getThirdPartySetting('geocoder_field', 'dumper', 'wkt'),
       '#options' => $this->dumperPluginManager->getPluginsAsOptions(),
       '#description' => $this->t('Set the output format of the value. Ex, for a geofield, the format must be set to WKT.'),
+      '#states' => $invisible_state,
     ];
     $element['delta_handling'] = [
       '#type' => 'select',
@@ -176,6 +188,7 @@ class DefaultField extends PluginBase implements GeocoderFieldPluginInterface, C
         'c_to_s' => $this->t('Concatenate to Single'),
         'c_to_m' => $this->t('Concatenate to Multiple'),
       ],
+      '#states' => $invisible_state,
     ];
     $failure = (array) $field->getThirdPartySetting('geocoder_field', 'failure') + [
       'handling' => 'preserve',
@@ -191,16 +204,19 @@ class DefaultField extends PluginBase implements GeocoderFieldPluginInterface, C
         'empty' => $this->t('Empty the field value'),
       ],
       '#default_value' => $failure['handling'],
+      '#states' => $invisible_state,
     ];
     $element['failure']['status_message'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Show a status message warning in case of geo-coding failure.'),
       '#default_value' => $failure['status_message'],
+      '#states' => $invisible_state,
     ];
     $element['failure']['log'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Log the geo-coding failure.'),
       '#default_value' => $failure['log'],
+      '#states' => $invisible_state,
     ];
 
     return $element;

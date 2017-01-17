@@ -12,13 +12,14 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Command\Shared\CommandTrait;
+use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Utils\Create\TermData;
 use Drupal\Console\Utils\DrupalApi;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class TermsCommand
+ *
  * @package Drupal\Console\Command\Generate
  */
 class TermsCommand extends Command
@@ -36,6 +37,7 @@ class TermsCommand extends Command
 
     /**
      * TermsCommand constructor.
+     *
      * @param DrupalApi $drupalApi
      * @param TermData  $createTermData
      */

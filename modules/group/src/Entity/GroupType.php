@@ -25,6 +25,9 @@ use Drupal\Core\Entity\EntityStorageInterface;
  *       "edit" = "Drupal\group\Entity\Form\GroupTypeForm",
  *       "delete" = "Drupal\group\Entity\Form\GroupTypeDeleteForm"
  *     },
+ *     "route_provider" = {
+ *       "html" = "Drupal\group\Entity\Routing\GroupTypeRouteProvider",
+ *     },
  *     "list_builder" = "Drupal\group\Entity\Controller\GroupTypeListBuilder",
  *   },
  *   admin_permission = "administer group",
@@ -36,10 +39,11 @@ use Drupal\Core\Entity\EntityStorageInterface;
  *     "label" = "label"
  *   },
  *   links = {
+ *     "add-form" = "/admin/group/types/add",
  *     "collection" = "/admin/group/types",
- *     "edit-form" = "/admin/group/types/manage/{group_type}",
- *     "delete-form" = "/admin/group/types/manage/{group_type}/delete",
  *     "content-plugins" = "/admin/group/types/manage/{group_type}/content",
+ *     "delete-form" = "/admin/group/types/manage/{group_type}/delete",
+ *     "edit-form" = "/admin/group/types/manage/{group_type}",
  *     "permissions-form" = "/admin/group/types/manage/{group_type}/permissions"
  *   },
  *   config_export = {

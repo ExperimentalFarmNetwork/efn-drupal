@@ -15,11 +15,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class GroupNodeFormStep2 extends GroupContentForm {
 
   /**
-   * The private store for temporary group nodes.
+   * The private temporary store factory.
    *
-   * @var \Drupal\user\PrivateTempStore
+   * @var \Drupal\user\PrivateTempStoreFactory
    */
-  protected $privateTempStore;
+  protected $tempStoreFactory;
 
   /**
    * Constructs a GroupNodeFormStep2 object.
@@ -27,11 +27,11 @@ class GroupNodeFormStep2 extends GroupContentForm {
    * @param \Drupal\Core\Entity\EntityManagerInterface $entity_manager
    *   The entity manager.
    * @param \Drupal\user\PrivateTempStoreFactory $temp_store_factory
-   *   The factory for the temp store object.
+   *   The temporary store factory.
    */
   public function __construct(EntityManagerInterface $entity_manager, PrivateTempStoreFactory $temp_store_factory) {
     parent::__construct($entity_manager);
-    $this->privateTempStore = $temp_store_factory->get('gnode_add_temp');
+    $this->tempStoreFactory = $temp_store_factory;
   }
 
   /**
@@ -75,15 +75,16 @@ class GroupNodeFormStep2 extends GroupContentForm {
    */
   public function save(array $form, FormStateInterface $form_state) {
     $storage_id = $form_state->get('storage_id');
+    $store = $this->tempStoreFactory->get('gnode_add_temp');
 
     // We can now safely save the node and set its ID on the group content.
-    $node = $this->privateTempStore->get("$storage_id:node");
+    $node = $store->get("$storage_id:node");
     $node->save();
     $this->entity->set('entity_id', $node->id());
 
     // We also clear the private store so we can start fresh next time around.
-    $this->privateTempStore->delete("$storage_id:step");
-    $this->privateTempStore->delete("$storage_id:node");
+    $store->delete("$storage_id:step");
+    $store->delete("$storage_id:node");
 
     return parent::save($form, $form_state);
   }
@@ -101,7 +102,8 @@ class GroupNodeFormStep2 extends GroupContentForm {
    */
   public function back(array &$form, FormStateInterface $form_state) {
     $storage_id = $form_state->get('storage_id');
-    $this->privateTempStore->set("$storage_id:step", 1);
+    $store = $this->tempStoreFactory->get('gnode_add_temp');
+    $store->set("$storage_id:step", 1);
 
     // Disable any URL-based redirect when going back to the previous step.
     $request = $this->getRequest();

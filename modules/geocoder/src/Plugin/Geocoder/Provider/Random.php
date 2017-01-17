@@ -49,6 +49,8 @@ class Random extends ProviderBase {
   }
 
   /**
+   * Get Random Country info.
+   *
    * @todo [cc]: Tidy-up, document, etc.
    */
   private function getRandomCountryInfo($type = NULL) {
@@ -72,15 +74,28 @@ class Random extends ProviderBase {
   }
 
   /**
-   * @todo [cc]: Tidi-up, document, etc.
-   *
    * Generate a fake random address array.
    *
+   * @todo [cc]: Tidi-up, document, etc.
+   *
    * @return array
+   *   Return array of dta such as latitude, longitude, etc.
    */
   protected function getRandomResult() {
     $country = $this->getRandomCountryInfo();
-    $streetTypes = array('street', 'avenue', 'square', 'road', 'way', 'drive', 'lane', 'place', 'hill', 'gardens', 'park');
+    $streetTypes = array(
+      'street',
+      'avenue',
+      'square',
+      'road',
+      'way',
+      'drive',
+      'lane',
+      'place',
+      'hill',
+      'gardens',
+      'park',
+    );
 
     return array(
       'latitude' => mt_rand(0, 90) + mt_rand() / mt_getrandmax(),
@@ -98,6 +113,7 @@ class Random extends ProviderBase {
    * Returns the address factory.
    *
    * @return \Geocoder\Model\AddressFactory
+   *   Return the address Factory.
    */
   protected function getAddressFactory() {
     if (!isset($this->addressFactory)) {
@@ -110,6 +126,7 @@ class Random extends ProviderBase {
    * Returns the module handler service.
    *
    * @return \Drupal\Core\Extension\ModuleHandlerInterface
+   *   Return the module Handler.
    */
   protected function getModuleHandler() {
     if (!isset($this->moduleHandler)) {

@@ -2,16 +2,25 @@
 
 namespace Drupal\webprofiler\Command;
 
-use Drupal\Console\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Drupal\Console\Core\Command\Shared\ContainerAwareCommandTrait;
+use Drupal\Console\Annotations\DrupalCommand;
 
 /**
  * Class ListCommand
+ **
+ * @DrupalCommand (
+ *     extension="webprofiler",
+ *     extensionType="module"
+ * )
  */
-class ListCommand extends ContainerAwareCommand {
+class ListCommand extends Command {
+
+  use ContainerAwareCommandTrait;
 
   /**
    * {@inheritdoc}
@@ -36,7 +45,7 @@ class ListCommand extends ContainerAwareCommand {
     $limit = $input->getOption('limit');
 
     /** @var \Drupal\webprofiler\Profiler\Profiler $profiler */
-    $profiler = $this->getContainer()->get('profiler');
+    $profiler = $this->container->get('profiler');
     $profiles = $profiler->find($ip, $url, $limit, $method, '', '');
 
     $rows = [];

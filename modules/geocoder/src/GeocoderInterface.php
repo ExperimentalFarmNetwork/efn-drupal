@@ -10,7 +10,7 @@ interface GeocoderInterface {
   /**
    * Geocodes a string.
    *
-   * @param $data
+   * @param string $data
    *   The string to geocoded.
    * @param string[] $plugins
    *   A list of plugin identifiers to use.
@@ -18,7 +18,7 @@ interface GeocoderInterface {
    *   (optional) An associative array with plugin options, keyed plugin by the
    *   plugin id. Defaults to an empty array.
    *
-   * @return \Geocoder\Model\AddressCollection|null An address collection or NULL on gecoding failure.
+   * @return \Geocoder\Model\AddressCollection|null
    *   An address collection or NULL on gecoding failure.
    */
   public function geocode($data, array $plugins, array $options = []);
@@ -37,7 +37,8 @@ interface GeocoderInterface {
    *   plugin id. Defaults to an empty array.
    *
    * @return \Geocoder\Model\AddressCollection|null
+   *   An address collection or NULL on gecoding failure.
    */
-  public function reverse($latitude, $longitude, array $plugins, array $options = []);
+  public function reverse(\double $latitude, \double $longitude, array $plugins, array $options = []);
 
 }

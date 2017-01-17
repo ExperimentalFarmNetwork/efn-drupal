@@ -2,17 +2,22 @@
 
 namespace Drupal\Console;
 
+use Doctrine\Common\Annotations\AnnotationRegistry;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Console\Annotations\DrupalCommandAnnotationReader;
 use Drupal\Console\Utils\AnnotationValidator;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Style\DrupalStyle;
+use Drupal\Console\Core\Application as BaseApplication;
 
 /**
  * Class Application
+ *
  * @package Drupal\Console
  */
-class Application extends ConsoleApplication
+class Application extends BaseApplication
 {
     /**
      * @var string
@@ -22,7 +27,7 @@ class Application extends ConsoleApplication
     /**
      * @var string
      */
-    const VERSION = '1.0.0-rc10';
+    const VERSION = '1.0.0-rc14';
 
     public function __construct(ContainerInterface $container)
     {
@@ -34,8 +39,14 @@ class Application extends ConsoleApplication
      */
     public function doRun(InputInterface $input, OutputInterface $output)
     {
+        $io = new DrupalStyle($input, $output);
         $this->registerGenerators();
         $this->registerCommands();
+//        for ($lines = 0; $lines < 2; $lines++) {
+//            $io->write("\r\033[K\033[1A\r");
+//        }
+//        $io->clearCurrentLine();
+
         $clear = $this->container->get('console.configuration_manager')
             ->getConfiguration()
             ->get('application.clear')?:false;
@@ -44,7 +55,6 @@ class Application extends ConsoleApplication
         }
         parent::doRun($input, $output);
         if ($this->getCommandName($input) == 'list' && $this->container->hasParameter('console.warning')) {
-            $io = new DrupalStyle($input, $output);
             $io->warning(
                 $this->trans($this->container->getParameter('console.warning'))
             );
@@ -68,7 +78,13 @@ class Application extends ConsoleApplication
                 continue;
             }
 
-            $generator = $this->container->get($name);
+            try {
+                $generator = $this->container->get($name);
+            } catch (\Exception $e) {
+                echo $name . ' - ' . $e->getMessage() . PHP_EOL;
+
+                continue;
+            }
 
             if (!$generator) {
                 continue;
@@ -90,7 +106,6 @@ class Application extends ConsoleApplication
 
     private function registerCommands()
     {
-        $logger = $this->container->get('console.logger');
         if ($this->container->hasParameter('drupal.commands')) {
             $consoleCommands = $this->container->getParameter(
                 'drupal.commands'
@@ -103,15 +118,20 @@ class Application extends ConsoleApplication
                 'console.warning',
                 'application.site.errors.settings'
             );
-
-            $logger->writeln($this->trans('application.site.errors.settings'));
         }
 
         $serviceDefinitions = [];
         $annotationValidator = null;
+        $annotationCommandReader = null;
         if ($this->container->hasParameter('console.service_definitions')) {
             $serviceDefinitions = $this->container
                 ->getParameter('console.service_definitions');
+
+            /**
+             * @var DrupalCommandAnnotationReader $annotationCommandReader
+             */
+            $annotationCommandReader = $this->container
+                ->get('console.annotation_command_reader');
 
             /**
              * @var AnnotationValidator $annotationValidator
@@ -125,13 +145,29 @@ class Application extends ConsoleApplication
             ->get('application.commands.aliases')?:[];
 
         foreach ($consoleCommands as $name) {
+            AnnotationRegistry::reset();
+            AnnotationRegistry::registerLoader(
+                [
+                    $this->container->get('class_loader'),
+                    "loadClass"
+                ]
+            );
+
             if (!$this->container->has($name)) {
                 continue;
             }
 
-            if ($annotationValidator) {
+            if ($annotationValidator && $annotationCommandReader) {
                 if (!$serviceDefinition = $serviceDefinitions[$name]) {
                     continue;
+                }
+
+                if ($annotation = $annotationCommandReader->readAnnotation($serviceDefinition->getClass())) {
+                    $this->container->get('console.translator_manager')
+                        ->addResourceTranslationsByExtension(
+                            $annotation['extension'],
+                            $annotation['extensionType']
+                        );
                 }
 
                 if (!$annotationValidator->isValidCommand($serviceDefinition->getClass())) {
@@ -142,7 +178,8 @@ class Application extends ConsoleApplication
             try {
                 $command = $this->container->get($name);
             } catch (\Exception $e) {
-                $logger->writeln($e->getMessage());
+                echo $name . ' - ' . $e->getMessage() . PHP_EOL;
+
                 continue;
             }
 
@@ -184,7 +221,6 @@ class Application extends ConsoleApplication
             'help',
             'init',
             'list',
-        //            'self-update',
             'server'
         ];
         $languages = $this->container->get('console.configuration_manager')
@@ -198,8 +234,8 @@ class Application extends ConsoleApplication
 
         $namespaces = array_filter(
             $this->getNamespaces(), function ($item) {
-                return (strpos($item, ':')<=0);
-            }
+            return (strpos($item, ':')<=0);
+        }
         );
         sort($namespaces);
         array_unshift($namespaces, 'misc');
@@ -208,8 +244,8 @@ class Application extends ConsoleApplication
             $commands = $this->all($namespace);
             usort(
                 $commands, function ($cmd1, $cmd2) {
-                    return strcmp($cmd1->getName(), $cmd2->getName());
-                }
+                return strcmp($cmd1->getName(), $cmd2->getName());
+            }
             );
 
             foreach ($commands as $command) {
@@ -337,5 +373,12 @@ class Application extends ConsoleApplication
         ];
 
         return $data;
+    }
+
+    public function setContainer($container)
+    {
+        $this->container = $container;
+        $this->registerGenerators();
+        $this->registerCommands();
     }
 }

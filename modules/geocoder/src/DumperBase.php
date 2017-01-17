@@ -37,6 +37,7 @@ abstract class DumperBase extends PluginBase implements DumperInterface, Contain
    * Returns the dumper handler.
    *
    * @return \Geocoder\Dumper\Dumper
+   *   Returns dumper handler.
    */
   protected function getHandler() {
     if (!isset($this->handler)) {

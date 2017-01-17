@@ -33,7 +33,7 @@ class ConfigUpdateTest extends WebTestBase {
     parent::setUp();
 
     // Create user and log in.
-    $this->adminUser = $this->drupalCreateUser(['access administration pages', 'administer search', 'view config updates report', 'synchronize configuration', 'export configuration', 'import configuration', 'revert configuration', 'delete configuration']);
+    $this->adminUser = $this->drupalCreateUser(['access administration pages', 'administer search', 'view config updates report', 'synchronize configuration', 'export configuration', 'import configuration', 'revert configuration', 'delete configuration', 'administer filters']);
     $this->drupalLogin($this->adminUser);
 
     // Make sure local tasks and page title are showing.
@@ -128,12 +128,12 @@ class ConfigUpdateTest extends WebTestBase {
     // Add a new search page from the search UI and verify report.
     $this->drupalPostForm('admin/config/search/pages', [
       'search_type' => 'node_search',
-    ], 'Add new page');
+    ], 'Add search page');
     $this->drupalPostForm(NULL, [
       'label' => 'test',
       'id'    => 'test',
       'path'  => 'test',
-    ], 'Add search page');
+    ], 'Save');
     $this->drupalGet('admin/config/development/configuration/report/type/search_page');
     $added = ['search.page.test' => 'test'];
     $this->assertReport('Search page', [], $added, [], []);
@@ -181,6 +181,15 @@ class ConfigUpdateTest extends WebTestBase {
 
     $this->drupalGet('admin/config/development/configuration/report/module/search');
     $this->assertReport('Search module', [], [], [], [], ['added']);
+
+    // Edit the plain_text filter from the filter UI and verify report.
+    // The filter_format config type uses a label key other than 'label'.
+    $this->drupalPostForm('admin/config/content/formats/manage/plain_text', [
+      'name' => 'New label',
+    ], 'Save configuration');
+    $changed = ['filter.format.plain_text' => 'New label'];
+    $this->drupalGet('admin/config/development/configuration/report/type/filter_format');
+    $this->assertReport('Text format', [], [], $changed, []);
   }
 
   /**

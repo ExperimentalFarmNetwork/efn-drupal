@@ -230,6 +230,7 @@ abstract class GeocodeFormatterBase extends FormatterBase implements ContainerFa
    * Get the list of enabled Provider plugins.
    *
    * @return array
+   *   Provider plugin IDs.
    */
   public function getEnabledProviderPlugins() {
     $provider_plugin_ids = array();

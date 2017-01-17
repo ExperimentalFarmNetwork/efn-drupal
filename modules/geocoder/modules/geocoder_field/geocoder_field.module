@@ -7,15 +7,15 @@
 
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Field\FieldConfigInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Form\FormState;
-use Drupal\field\FieldConfigInterface;
 
 /**
  * Implements hook_form_FORM_ID_alter().
  */
 function geocoder_field_form_field_config_edit_form_alter(array &$form, FormStateInterface $form_state, $form_id) {
-  /** @var \Drupal\field\FieldConfigInterface $field */
+  /** @var \Drupal\Core\Field\FieldConfigInterface $field */
   $field = $form_state->getFormObject()->getEntity();
   /** @var \Drupal\geocoder_field\GeocoderFieldPluginInterface $field_plugin */
   if (!$field_plugin = \Drupal::service('geocoder_field.plugin.manager.field')->getPluginByFieldType($field->getType())) {
@@ -78,7 +78,7 @@ function geocoder_field_entity_presave(EntityInterface $entity) {
   $dumper_manager = \Drupal::service('plugin.manager.geocoder.dumper');
 
   foreach ($entity->getFields() as $field_name => $field) {
-    /** @var \Drupal\field\FieldConfigInterface $field_config */
+    /** @var \Drupal\Core\Field\FieldConfigInterface $field_config */
     if (!($field_config = $field->getFieldDefinition()) instanceof FieldConfigInterface) {
       // Only configurable fields are subject of geocoding.
       continue;
@@ -90,7 +90,6 @@ function geocoder_field_entity_presave(EntityInterface $entity) {
     }
 
     // @todo [cc]: Check here for malformed $geocode and throw exceptions.
-
     $remote_field = $entity->get($geocoder['field']);
     if (empty($remote_field->getValue())) {
       if ($geocoder['failure']['handling'] == 'preserve') {
@@ -107,7 +106,7 @@ function geocoder_field_entity_presave(EntityInterface $entity) {
     $default_values = $entity->get($field_name);
     $result = [];
     foreach ($remote_field->getValue() as $delta => $value) {
-      if ($address_collection = \Drupal::service('geocoder')->geocode($value['value'], $geocoder['plugins'])) {
+      if ($address_collection = \Drupal::service('geocoder')->geocode($value['value'], array_fill_keys($geocoder['plugins'], $geocoder['plugins']))) {
         $result[$delta] = $dumper->dump($address_collection->first());
         continue;
       }

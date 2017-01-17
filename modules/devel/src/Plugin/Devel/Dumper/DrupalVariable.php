@@ -19,15 +19,6 @@ class DrupalVariable extends DevelDumperBase {
   /**
    * {@inheritdoc}
    */
-  public function dump($input, $name = NULL) {
-    $name = $name ? $name . ' => ' : '';
-    $output = Variable::export($input);
-    echo '<pre>' . $name . print_r($output) . '</pre>';
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function export($input, $name = NULL) {
     $name = $name ? $name . ' => ' : '';
     $dump = '<pre>' . $name . Variable::export($input) . '</pre>';

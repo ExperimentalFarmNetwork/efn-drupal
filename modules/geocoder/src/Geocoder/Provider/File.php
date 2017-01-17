@@ -48,6 +48,7 @@ class File extends AbstractProvider implements Provider {
    *   The hemisphere.
    *
    * @return float
+   *   Return value based on coordinate and Hemisphere.
    */
   protected function getGpsExif($coordinate, $hemisphere) {
     for ($i = 0; $i < 3; $i++) {

@@ -32,6 +32,6 @@ class GeocoderField extends Plugin {
    *
    * @var array
    */
-  public $field_types;
+  public $fieldTypes;
 
 }

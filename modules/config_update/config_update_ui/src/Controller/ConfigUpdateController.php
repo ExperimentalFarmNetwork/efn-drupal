@@ -241,7 +241,7 @@ class ConfigUpdateController extends ControllerBase {
     $definitions = $this->configList->listTypes();
     $links = [];
     foreach ($definitions as $entity_type => $definition) {
-      $links['type_' . $entity_type] = [
+      $links['report_type_' . $entity_type] = [
         'title' => $definition->getLabel(),
         'url' => Url::fromRoute('config_update_ui.report', ['report_type' => 'type', 'name' => $entity_type]),
       ];
@@ -250,11 +250,11 @@ class ConfigUpdateController extends ControllerBase {
     uasort($links, [$this, 'sortLinks']);
 
     $links = [
-      'type_all' => [
+      'report_type_all' => [
         'title' => $this->t('All types'),
         'url' => Url::fromRoute('config_update_ui.report', ['report_type' => 'type', 'name' => 'system.all']),
       ],
-      'type_system.simple' => [
+      'report_type_system.simple' => [
         'title' => $this->t('Simple configuration'),
         'url' => Url::fromRoute('config_update_ui.report', ['report_type' => 'type', 'name' => 'system.simple']),
       ],
@@ -276,7 +276,7 @@ class ConfigUpdateController extends ControllerBase {
     $links = [];
     foreach ($modules as $machine_name => $module) {
       if ($machine_name != $profile) {
-        $links['module_' . $machine_name] = [
+        $links['report_module_' . $machine_name] = [
           'title' => $this->moduleHandler->getName($machine_name),
           'url' => Url::fromRoute('config_update_ui.report', ['report_type' => 'module', 'name' => $machine_name]),
         ];
@@ -298,7 +298,7 @@ class ConfigUpdateController extends ControllerBase {
     $themes = $this->themeHandler->listInfo();
     $links = [];
     foreach ($themes as $machine_name => $theme) {
-      $links['theme_' . $machine_name] = [
+      $links['report_theme_' . $machine_name] = [
         'title' => $this->themeHandler->getName($machine_name),
         'url' => Url::fromRoute('config_update_ui.report', ['report_type' => 'theme', 'name' => $machine_name]),
       ];
@@ -317,7 +317,7 @@ class ConfigUpdateController extends ControllerBase {
 
     // Profile is just one option.
     $links = [];
-    $links['profile_' . $profile] = [
+    $links['report_profile_' . $profile] = [
       'title' => $this->moduleHandler->getName($profile),
       'url' => Url::fromRoute('config_update_ui.report', ['report_type' => 'profile']),
     ];
@@ -510,6 +510,7 @@ class ConfigUpdateController extends ControllerBase {
       if (!$entity_type) {
         // This is simple config.
         $id = $name;
+        $label = '';
         $type_label = $this->t('Simple configuration');
         $entity_type = 'system.simple';
       }
@@ -517,10 +518,17 @@ class ConfigUpdateController extends ControllerBase {
         $definition = $this->configList->getType($entity_type);
         $id_key = $definition->getKey('id');
         $id = $config[$id_key];
+        // The label key is not required.
+        if ($label_key = $definition->getKey('label')) {
+          $label = $config[$label_key];
+        }
+        else {
+          $label = '';
+        }
+
         $type_label = $definition->getLabel();
       }
 
-      $label = (isset($config['label'])) ? $config['label'] : '';
       $row[] = $name;
       $row[] = $label;
       $row[] = $type_label;

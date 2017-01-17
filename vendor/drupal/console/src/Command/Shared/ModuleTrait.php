@@ -7,17 +7,18 @@
 
 namespace Drupal\Console\Command\Shared;
 
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class ModuleTrait
+ *
  * @package Drupal\Console\Command
  */
 trait ModuleTrait
 {
     /**
-     * @param \Drupal\Console\Style\DrupalStyle $io
-     * @param bool|true                         $showProfile
+     * @param \Drupal\Console\Core\Style\DrupalStyle $io
+     * @param bool|true                              $showProfile
      * @return string
      * @throws \Exception
      */
@@ -57,7 +58,7 @@ trait ModuleTrait
         foreach ($module as $module_name) {
             module_load_install($module_name);
 
-            if ($requirements = \Drupal::moduleHandler()->invoke($module_name, 'requirements', array('install'))) {
+            if ($requirements = \Drupal::moduleHandler()->invoke($module_name, 'requirements', ['install'])) {
                 foreach ($requirements as $requirement) {
                     throw new \Exception($module_name .' can not be installed: ' . $requirement['description']);
                 }

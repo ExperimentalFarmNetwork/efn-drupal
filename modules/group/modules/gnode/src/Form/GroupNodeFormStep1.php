@@ -14,11 +14,11 @@ use Drupal\Core\Entity\EntityManagerInterface;
 class GroupNodeFormStep1 extends NodeForm {
 
   /**
-   * The private store for temporary group nodes.
+   * The private temporary store factory.
    *
-   * @var \Drupal\user\PrivateTempStore
+   * @var \Drupal\user\PrivateTempStoreFactory
    */
-  protected $privateTempStore;
+  protected $tempStoreFactory;
 
   /**
    * Constructs a GroupNodeFormStep1 object.
@@ -26,11 +26,11 @@ class GroupNodeFormStep1 extends NodeForm {
    * @param \Drupal\Core\Entity\EntityManagerInterface $entity_manager
    *   The entity manager.
    * @param \Drupal\user\PrivateTempStoreFactory $temp_store_factory
-   *   The factory for the temp store object.
+   *   The temporary store factory.
    */
   public function __construct(EntityManagerInterface $entity_manager, PrivateTempStoreFactory $temp_store_factory) {
     parent::__construct($entity_manager, $temp_store_factory);
-    $this->privateTempStore = $temp_store_factory->get('gnode_add_temp');
+    $this->tempStoreFactory = $temp_store_factory;
   }
 
   /**
@@ -67,8 +67,9 @@ class GroupNodeFormStep1 extends NodeForm {
   public function saveTemporary(array &$form, FormStateInterface $form_state) {
     $storage_id = $form_state->get('storage_id');
 
-    $this->privateTempStore->set("$storage_id:node", $this->entity);
-    $this->privateTempStore->set("$storage_id:step", 2);
+    $store = $this->tempStoreFactory->get('gnode_add_temp');
+    $store->set("$storage_id:node", $this->entity);
+    $store->set("$storage_id:step", 2);
 
     // Disable any URL-based redirect until the final step.
     $request = $this->getRequest();
@@ -91,7 +92,8 @@ class GroupNodeFormStep1 extends NodeForm {
     $group = $form_state->get('group');
 
     $storage_id = $form_state->get('storage_id');
-    $this->privateTempStore->delete("$storage_id:node");
+    $store = $this->tempStoreFactory->get('gnode_add_temp');
+    $store->delete("$storage_id:node");
 
     // Redirect to the group page if no destination was set in the URL.
     $form_state->setRedirect('entity.group.canonical', ['group' => $group->id()]);

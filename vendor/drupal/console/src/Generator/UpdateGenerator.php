@@ -7,15 +7,19 @@
 
 namespace Drupal\Console\Generator;
 
+use Drupal\Console\Core\Generator\Generator;
 use Drupal\Console\Extension\Manager;
 
 class UpdateGenerator extends Generator
 {
-    /** @var Manager  */
+    /**
+     * @var Manager
+     */
     protected $extensionManager;
 
     /**
      * AuthenticationProviderGenerator constructor.
+     *
      * @param Manager $extensionManager
      */
     public function __construct(
@@ -41,7 +45,7 @@ class UpdateGenerator extends Generator
 
         $this->renderFile(
             'module/src/update.php.twig',
-            $module_path .'/'.$module.'.module',
+            $module_path .'/'.$module.'.install',
             $parameters,
             FILE_APPEND
         );

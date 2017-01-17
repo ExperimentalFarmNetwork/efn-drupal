@@ -10,28 +10,34 @@ namespace Drupal\Console\Command\Config;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Drupal\Component\Serialization\Yaml;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Style\DrupalStyle;
 use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Command\Shared\CommandTrait;
+use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Core\Site\Settings;
 
 /**
  * Class DebugCommand
+ *
  * @package Drupal\Console\Command\Config
  */
 class SettingsDebugCommand extends Command
 {
     use CommandTrait;
 
-    /** @var Settings  */
+    /**
+     * @var Settings
+     */
     protected $settings;
 
     /**
      * SettingsDebugCommand constructor.
+     *
      * @param Settings $settings
      */
-    public function __construct(Settings $settings) {
-        $this->settings = $settings;;
+    public function __construct(Settings $settings)
+    {
+        $this->settings = $settings;
+        ;
         parent::__construct();
     }
     /**

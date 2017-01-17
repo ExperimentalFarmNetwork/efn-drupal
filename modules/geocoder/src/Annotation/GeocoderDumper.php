@@ -14,7 +14,7 @@ class GeocoderDumper extends GeocoderPluginBase {
    *
    * This is the fully qualified class name of the plugin handler.
    *
-   * @var stringoptional
+   * @var string
    */
   public $handler = NULL;
 

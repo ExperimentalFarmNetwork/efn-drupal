@@ -51,21 +51,6 @@ class GroupContentRouteProvider extends DefaultHtmlRouteProvider {
   /**
    * {@inheritdoc}
    */
-  public function getRoutes(EntityTypeInterface $entity_type) {
-    $collection = parent::getRoutes($entity_type);
-
-    // May be provided by default later on, remove this method when it is.
-    // @todo https://www.drupal.org/node/2744657
-    if ($collection_route = $this->getCollectionRoute($entity_type)) {
-      $collection->add("entity.group_content.collection", $collection_route);
-    }
-
-    return $collection;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   protected function getAddPageRoute(EntityTypeInterface $entity_type) {
     if ($entity_type->hasLinkTemplate('add-page') && $entity_type->getKey('bundle')) {
       $route = new Route($entity_type->getLinkTemplate('add-page'));

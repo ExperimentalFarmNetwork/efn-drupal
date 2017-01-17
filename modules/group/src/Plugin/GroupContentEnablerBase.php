@@ -73,6 +73,16 @@ abstract class GroupContentEnablerBase extends PluginBase implements GroupConten
   }
 
   /**
+   * Returns the entity type provider.
+   *
+   * @return string
+   */
+  public function getEntityTypeProvider() {
+    $entity_type = \Drupal::entityTypeManager()->getDefinition($this->getEntityTypeId());
+    return $entity_type->getProvider();
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function getEntityBundle() {
@@ -306,6 +316,24 @@ abstract class GroupContentEnablerBase extends PluginBase implements GroupConten
   /**
    * {@inheritdoc}
    */
+  public function getEntityReferenceLabel() {
+    return isset($this->pluginDefinition['reference_label'])
+      ? $this->pluginDefinition['reference_label']
+      : NULL;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getEntityReferenceDescription() {
+    return isset($this->pluginDefinition['reference_description'])
+      ? $this->pluginDefinition['reference_description']
+      : NULL;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getEntityReferenceSettings() {
     $settings['target_type'] = $this->getEntityTypeId();
     if ($bundle = $this->getEntityBundle()) {
@@ -427,7 +455,9 @@ abstract class GroupContentEnablerBase extends PluginBase implements GroupConten
    * {@inheritdoc}
    */
   public function calculateDependencies() {
-    return [];
+    $dependencies['module'][] = $this->getProvider();
+    $dependencies['module'][] = $this->getEntityTypeProvider();
+    return $dependencies;
   }
 
 }

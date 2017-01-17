@@ -347,3 +347,18 @@ function group_update_8009() {
     $group_type->save(TRUE);
   }
 }
+
+/**
+ * Change the path field to computed for group entities.
+ */
+function group_update_8010() {
+  $entity_definition_update_manager = \Drupal::entityDefinitionUpdateManager();
+  if ($entity_definition_update_manager->getEntityType('group')) {
+    // Computed field definitions are not tracked by the entity definition
+    // update manager, so remove them.
+    $storage_definition = $entity_definition_update_manager->getFieldStorageDefinition('path', 'group');
+    if ($storage_definition) {
+      $entity_definition_update_manager->uninstallFieldStorageDefinition($storage_definition);
+    }
+  }
+}

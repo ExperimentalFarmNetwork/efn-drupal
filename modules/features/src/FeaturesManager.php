@@ -14,6 +14,7 @@ use Drupal\Core\Extension\Extension;
 use Drupal\Core\Extension\ExtensionDiscovery;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\config_update\ConfigRevertInterface;
 
 /**
  * The FeaturesManager provides helper functions for building packages.
@@ -62,6 +63,13 @@ class FeaturesManager implements FeaturesManagerInterface {
    * @var \Drupal\Core\Extension\ModuleHandlerInterface
    */
   protected $moduleHandler;
+
+  /**
+   * The config reverter.
+   *
+   * @var \Drupal\config_update\ConfigRevertInterface
+   */
+  protected $configReverter;
 
   /**
    * The Features settings.
@@ -127,16 +135,18 @@ class FeaturesManager implements FeaturesManagerInterface {
    *   The configuration manager.
    * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
    *   The module handler.
+   * @param \Drupal\config_update\ConfigRevertInterface $config_reverter
    */
   public function __construct($root, EntityManagerInterface $entity_manager, ConfigFactoryInterface $config_factory,
                               StorageInterface $config_storage, ConfigManagerInterface $config_manager,
-                              ModuleHandlerInterface $module_handler) {
+                              ModuleHandlerInterface $module_handler, ConfigRevertInterface $config_reverter) {
     $this->root = $root;
     $this->entityManager = $entity_manager;
     $this->configStorage = $config_storage;
     $this->configManager = $config_manager;
     $this->moduleHandler = $module_handler;
     $this->configFactory = $config_factory;
+    $this->configReverter = $config_reverter;
     $this->settings = $config_factory->getEditable('features.settings');
     $this->extensionStorages = new FeaturesExtensionStorages($this->configStorage);
     $this->extensionStorages->addStorage(InstallStorage::CONFIG_INSTALL_DIRECTORY);
@@ -191,7 +201,7 @@ class FeaturesManager implements FeaturesManagerInterface {
       'name_short' => '',
     );
     $prefix = FeaturesManagerInterface::SYSTEM_SIMPLE_CONFIG . '.';
-    if (strpos($fullname, $prefix)) {
+    if (strpos($fullname, $prefix) !== FALSE) {
       $result['type'] = FeaturesManagerInterface::SYSTEM_SIMPLE_CONFIG;
       $result['name_short'] = substr($fullname, strlen($prefix));
     }
@@ -284,6 +294,25 @@ class FeaturesManager implements FeaturesManagerInterface {
     if ($package->getMachineName()) {
       $this->packages[$package->getMachineName()] = $package;
     }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function loadPackage($module_name, $any = FALSE) {
+    $package = $this->getPackage($module_name);
+    if ($any && !isset($package)) {
+      // See if this is a non-features module.
+      $module_list = $this->moduleHandler->getModuleList();
+      if (!empty($module_list[$module_name])) {
+        $extension = $module_list[$module_name];
+        $package = $this->initPackageFromExtension($extension);
+        $config = $this->listExtensionConfig($extension);
+        $package->setConfig($config);
+        $package->setStatus(FeaturesManagerInterface::STATUS_INSTALLED);
+      }
+    }
+    return $package;
   }
 
   /**
@@ -602,9 +631,13 @@ class FeaturesManager implements FeaturesManagerInterface {
       '/block\.block\..*_page_title/',
     ];
     $config_collection = $this->getConfigCollection();
-    // Reverse sort by key so that child package will claim items before parent
-    // package. E.g., event_registration will claim before event.
-    krsort($config_collection);
+    // Sort by key so that specific package will claim items before general
+    // package. E.g., event_registration and registration_event will claim
+    // before event.
+    uksort($patterns, function($a, $b) {
+      // Count underscores to determine specificity of the package.
+      return (int) (substr_count($a, '_') <= substr_count($b, '_'));
+    });
     foreach ($patterns as $pattern => $machine_name) {
       if (isset($this->packages[$machine_name])) {
         foreach ($config_collection as $item_name => $item) {
@@ -615,7 +648,7 @@ class FeaturesManager implements FeaturesManagerInterface {
             }
           }
 
-          if (!$item->getPackage() && preg_match('/[_\-.]' . $pattern . '[_\-.]/', '.' . $item->getShortName() . '.')) {
+          if (!$item->getPackage() && preg_match('/(\.|-|_|^)' . $pattern . '(\.|-|_|$)/', $item->getShortName())) {
             try {
               $this->assignConfigPackage($machine_name, [$item_name]);
             }
@@ -945,23 +978,7 @@ class FeaturesManager implements FeaturesManagerInterface {
       // Add configuration files.
       foreach ($package->getConfig() as $name) {
         $config = $config_collection[$name];
-        $data = $config->getData();
-        // The _core is site-specific, so don't export it.
-        unset($data['_core']);
-        // The UUID is site-specfic, so don't export it.
-        if ($entity_type_id = $this->configManager->getEntityTypeIdByName($name)) {
-          unset($data['uuid']);
-        }
-        $config->setData($data);
-        // User roles include all permissions currently assigned to them. To
-        // avoid extraneous additions, reset permissions.
-        if ($config->getType() == 'user_role') {
-          $data = $config->getData();
-          // Unset and not empty permissions data to prevent loss of configured
-          // role permissions in the event of a feature revert.
-          unset($data['permissions']);
-          $config->setData($data);
-        }
+
         $package->appendFile([
           'filename' => $config->getName() . '.yml',
           'subdirectory' => $config->getSubdirectory(),
@@ -1306,6 +1323,44 @@ class FeaturesManager implements FeaturesManagerInterface {
     }
     $this->featureInfoCache[$module_name] = $features_info;
     return $features_info;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function import($modules, $any = FALSE) {
+    $result = [
+      'new' => [],
+      'updated' => []
+    ];
+    $config = $this->getConfigCollection();
+
+    foreach ($modules as $module_name) {
+      $package = $this->loadPackage($module_name, $any);
+      $components = isset($package) ? $package->getConfigOrig() : [];
+      if (empty($components)) {
+        continue;
+      }
+
+      foreach ($components as $component) {
+        if (!isset($config[$component])) {
+          // Import missing component.
+          $item = $this->getConfigType($component);
+          $type = ConfigurationItem::fromConfigStringToConfigType($item['type']);
+          $this->configReverter->import($type, $item['name_short']);
+          $config[$component] = $item;
+          $result['new'][] = $component;
+        }
+        else {
+          // Revert existing component.
+          $item = $config[$component];
+          $type = ConfigurationItem::fromConfigStringToConfigType($item->getType());
+          $this->configReverter->revert($type, $item->getShortName());
+          $result['updated'][] = $component;
+        }
+      }
+    }
+    return $result;
   }
 
 }

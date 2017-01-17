@@ -40,6 +40,7 @@ use Drupal\user\UserInterface;
  *     },
  *     "access" = "Drupal\group\Entity\Access\GroupAccessControlHandler",
  *   },
+ *   admin_permission = "administer group",
  *   base_table = "groups",
  *   data_table = "groups_field_data",
  *   translatable = TRUE,
@@ -54,7 +55,7 @@ use Drupal\user\UserInterface;
  *     "add-form" = "/group/add/{group_type}",
  *     "add-page" = "/group/add",
  *     "canonical" = "/group/{group}",
- *     "collection" = "/group/list",
+ *     "collection" = "/admin/group",
  *     "edit-form" = "/group/{group}/edit",
  *     "delete-form" = "/group/{group}/delete"
  *   },
@@ -305,7 +306,7 @@ class Group extends ContentEntityBase implements GroupInterface {
           'weight' => 30,
         ))
         ->setDisplayConfigurable('form', TRUE)
-        ->setCustomStorage(TRUE);
+        ->setComputed(TRUE);
     }
 
     return $fields;

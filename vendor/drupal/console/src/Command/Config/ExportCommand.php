@@ -14,23 +14,26 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Filesystem\Filesystem;
-use Drupal\Console\Command\Shared\CommandTrait;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Command\Shared\CommandTrait;
+use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Core\Config\ConfigManager;
-
 
 class ExportCommand extends Command
 {
     use CommandTrait;
 
-    /** @var ConfigManager  */
+    /**
+     * @var ConfigManager
+     */
     protected $configManager;
 
     /**
      * ExportCommand constructor.
+     *
      * @param ConfigManager $configManager
      */
-    public function __construct(ConfigManager $configManager ) {
+    public function __construct(ConfigManager $configManager)
+    {
         $this->configManager = $configManager;
         parent::__construct();
     }
@@ -59,6 +62,11 @@ class ExportCommand extends Command
                 '',
                 InputOption::VALUE_NONE,
                 $this->trans('commands.config.export.single.options.remove-uuid')
+            )->addOption(
+                'remove-config-hash',
+                '',
+                InputOption::VALUE_NONE,
+                $this->trans('commands.config.export.single.options.remove-config-hash')
             );
     }
 
@@ -72,16 +80,25 @@ class ExportCommand extends Command
         $directory = $input->getOption('directory');
         $tar = $input->getOption('tar');
         $removeUuid = $input->getOption('remove-uuid');
-
+        $removeHash = $input->getOption('remove-config-hash');
+        
         if (!$directory) {
             $directory = config_get_config_directory(CONFIG_SYNC_DIRECTORY);
         }
 
-        if ($tar) {
-            if (!is_dir($directory)) {
-                mkdir($directory, 0777, true);
-            }
+        $fileSystem = new Filesystem();
+        try {
+            $fileSystem->mkdir($directory);
+        } catch (IOExceptionInterface $e) {
+            $io->error(
+                sprintf(
+                    $this->trans('commands.config.export.messages.error'),
+                    $e->getPath()
+                )
+            );
+        }
 
+        if ($tar) {
             $dateTime = new \DateTime();
 
             $archiveFile = sprintf(
@@ -98,11 +115,12 @@ class ExportCommand extends Command
                 $configData = $this->configManager->getConfigFactory()->get($name)->getRawData();
                 $configName =  sprintf('%s.yml', $name);
 
-                // The _core is site-specific, so don't export it.
-                unset($configData['_core']);
-
                 if ($removeUuid) {
                     unset($configData['uuid']);
+                }
+                
+                if ($removeHash) {
+                    unset($configData['_core']['default_config_hash']);
                 }
 
                 $ymlData = Yaml::encode($configData);
@@ -117,17 +135,6 @@ class ExportCommand extends Command
 
                 $configFileName =  sprintf('%s/%s', $directory, $configName);
 
-                $fileSystem = new Filesystem();
-                try {
-                    $fileSystem->mkdir($directory);
-                } catch (IOExceptionInterface $e) {
-                    $io->error(
-                        sprintf(
-                            $this->trans('commands.config.export.messages.error'),
-                            $e->getPath()
-                        )
-                    );
-                }
                 file_put_contents($configFileName, $ymlData);
             }
         } catch (\Exception $e) {
@@ -135,9 +142,9 @@ class ExportCommand extends Command
         }
 
         $io->info(
-          sprintf(
-            $this->trans('commands.config.export.messages.directory'),
-              $directory
+            sprintf(
+                $this->trans('commands.config.export.messages.directory'),
+                $directory
             )
         );
     }

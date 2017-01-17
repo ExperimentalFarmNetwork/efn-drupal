@@ -49,7 +49,6 @@ class FeaturesAssignmentBaseType extends FeaturesAssignmentMethodBase {
           catch (\Exception $exception) {
             \Drupal::logger('features')->error($exception->getMessage());
           }
-          $this->featuresManager->assignConfigDependents([$item_name]);
         }
       }
     }

@@ -23,6 +23,8 @@ use Drupal\Core\Session\AccountInterface;
  *   description = @Translation("Adds users to groups as members."),
  *   entity_type_id = "user",
  *   pretty_path_key = "member",
+ *   reference_label = @Translation("Username"),
+ *   reference_description = @Translation("The name of the user you want to make a member"),
  *   enforced = TRUE
  * )
  */
@@ -228,13 +230,6 @@ class GroupMembership extends GroupContentEnablerBase {
     $form['entity_cardinality']['#description'] .= '<br /><em>' . $info . '</em>';
 
     return $form;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function calculateDependencies() {
-    return ['module' => ['user']];
   }
 
 }

@@ -20,13 +20,6 @@ class GroupTypeForm extends BundleEntityFormBase {
     $form = parent::form($form, $form_state);
     $type = $this->entity;
 
-    if ($this->operation == 'add') {
-      $form['#title'] = $this->t('Add group type');
-    }
-    else {
-      $form['#title'] = $this->t('Edit %label group type', ['%label' => $type->label()]);
-    }
-
     $form['label'] = [
       '#title' => $this->t('Name'),
       '#type' => 'textfield',

@@ -6,20 +6,27 @@ use Geocoder\Dumper\Dumper;
 use Geocoder\Model\Address;
 
 /**
- * @author Pol Dellaiera <pol.dellaiera@gmail.com>
+ * Dumper.
  */
 class Geometry implements Dumper {
+
   /**
+   * Dumper.
+   *
    * @var \Geocoder\Dumper\Dumper
    */
   private $dumper;
 
   /**
+   * Geophp interface.
+   *
    * @var \Drupal\geofield\geophp\geoPHPInterface
    */
   private $geophp;
 
   /**
+   * Address.
+   *
    * @inheritdoc
    */
   public function dump(Address $address) {
@@ -27,7 +34,7 @@ class Geometry implements Dumper {
   }
 
   /**
-   * @inheritDoc
+   * {@inheritdoc}
    */
   public function __construct() {
     $this->dumper = \Drupal::service('plugin.manager.geocoder.dumper')->createInstance('geojson');

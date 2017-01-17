@@ -30,6 +30,8 @@ interface PreprocessorInterface {
   public function preprocess();
 
   /**
+   * Get prepared reverse geocode values.
+   *
    * @todo [cc]: When fixing reverse operation, clarify the interface for this
    *   method, including the method name.
    */

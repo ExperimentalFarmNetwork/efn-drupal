@@ -18,6 +18,13 @@ abstract class DevelDumperBase extends PluginBase implements DevelDumperInterfac
   /**
    * {@inheritdoc}
    */
+  public function dump($input, $name = NULL) {
+    echo (string) $this->export($input, $name);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function exportAsRenderable($input, $name = NULL) {
     return ['#markup' => $this->export($input, $name)];
   }

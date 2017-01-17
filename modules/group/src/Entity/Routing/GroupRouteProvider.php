@@ -50,4 +50,16 @@ class GroupRouteProvider extends DefaultHtmlRouteProvider {
     }
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  protected function getCollectionRoute(EntityTypeInterface $entity_type) {
+    // @todo Remove this method when https://www.drupal.org/node/2767025 lands.
+    if ($route = parent::getCollectionRoute($entity_type)) {
+      $route->setDefault('_title', 'Groups');
+      $route->setDefault('_title_arguments', []);
+      return $route;
+    }
+  }
+
 }

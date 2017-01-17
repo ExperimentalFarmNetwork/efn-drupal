@@ -2,14 +2,18 @@
 
 /**
  * @file
- * Contains \Drupal\Console\Generator\Generator.
+ * Contains \Drupal\Console\Core\Generator\Generator.
  */
 
-namespace Drupal\Console\Generator;
+namespace Drupal\Console\Core\Generator;
 
-use Drupal\Console\Utils\TwigRenderer;
-use Drupal\Console\Utils\FileQueue;
+use Drupal\Console\Core\Utils\TwigRenderer;
+use Drupal\Console\Core\Utils\FileQueue;
 
+/**
+ * Class Generator
+ * @package Drupal\Console\Core\Generator
+ */
 abstract class Generator
 {
     /**

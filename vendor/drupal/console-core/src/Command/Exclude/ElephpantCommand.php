@@ -2,24 +2,32 @@
 
 /**
  * @file
- * Contains \Drupal\Console\Command\Exclude\ElephpantCommand.
+ * Contains \Drupal\Console\Core\Command\Exclude\ElephpantCommand.
  */
 
-namespace Drupal\Console\Command\Exclude;
+namespace Drupal\Console\Core\Command\Exclude;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Finder\Finder;
-use Drupal\Console\Command\Shared\CommandTrait;
-use Drupal\Console\Utils\TwigRenderer;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Command\Shared\CommandTrait;
+use Drupal\Console\Core\Utils\TwigRenderer;
+use Drupal\Console\Core\Style\DrupalStyle;
 
+/**
+ * Class ElephpantCommand
+ * @package Drupal\Console\Core\Command\Exclude
+ */
 class ElephpantCommand extends Command
 {
     use CommandTrait;
 
+    /**
+     * @var string
+     */
     protected $appRoot;
+
     /**
      * @var TwigRenderer
      */
@@ -39,6 +47,9 @@ class ElephpantCommand extends Command
         parent::__construct();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function configure()
     {
         $this
@@ -46,6 +57,9 @@ class ElephpantCommand extends Command
             ->setDescription($this->trans('application.commands.elephpant.description'));
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new DrupalStyle($input, $output);
@@ -74,5 +88,6 @@ class ElephpantCommand extends Command
         );
 
         $io->writeln($elephpant);
+        return 0;
     }
 }

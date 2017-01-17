@@ -11,10 +11,10 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Command\Shared\CommandTrait;
+use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Annotations\DrupalCommand;
 use Drupal\rest\RestResourceConfigInterface;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Command\Shared\RestTrait;
 use Drupal\rest\Plugin\Type\ResourcePluginManager;
 use Drupal\Core\Authentication\AuthenticationCollector;
@@ -43,7 +43,7 @@ class EnableCommand extends Command
     protected $authenticationCollector;
 
     /**
-     * @var ConfigFactory  
+     * @var ConfigFactory
      */
     protected $configFactory;
 
@@ -63,10 +63,11 @@ class EnableCommand extends Command
 
     /**
      * EnableCommand constructor.
-     * @param ResourcePluginManager   $pluginManagerRest
-     * @param AuthenticationCollector $authenticationCollector
-     * @param ConfigFactory           $configFactory
-     * @param array $formats
+     *
+     * @param ResourcePluginManager                      $pluginManagerRest
+     * @param AuthenticationCollector                    $authenticationCollector
+     * @param ConfigFactory                              $configFactory
+     * @param array                                      $formats
      *   The available serialization formats.
      * @param \Drupal\Core\Entity\EntityManagerInterface $entity_manager
      *   The entity manager.
@@ -162,11 +163,13 @@ class EnableCommand extends Command
         $format_resource_id = str_replace(':', '.', $resource_id);
         $config = $this->entityManager->getStorage('rest_resource_config')->load($format_resource_id);
         if (!$config) {
-            $config = $this->entityManager->getStorage('rest_resource_config')->create([
-               'id' => $format_resource_id,
-               'granularity' => RestResourceConfigInterface::METHOD_GRANULARITY,
-               'configuration' => []
-            ]);
+            $config = $this->entityManager->getStorage('rest_resource_config')->create(
+                [
+                'id' => $format_resource_id,
+                'granularity' => RestResourceConfigInterface::METHOD_GRANULARITY,
+                'configuration' => []
+                ]
+            );
         }
         $configuration = $config->get('configuration') ?: [];
         $configuration[$method] = [

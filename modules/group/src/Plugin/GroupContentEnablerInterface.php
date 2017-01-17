@@ -223,10 +223,32 @@ interface GroupContentEnablerInterface extends PluginInspectionInterface, Deriva
   public function checkAccess(GroupContentInterface $group_content, $operation, AccountInterface $account);
 
   /**
+   * Returns the label for the entity reference field.
+   *
+   * This allows you to specify the label for the entity reference field
+   * pointing to the entity that is to become group content.
+   *
+   * @return string|null
+   *   The label for the entity reference field or NULL if none was set.
+   */
+  public function getEntityReferenceLabel();
+
+  /**
+   * Returns the description for the entity reference field.
+   *
+   * This allows you to specify the description for the entity reference field
+   * pointing to the entity that is to become group content.
+   *
+   * @return string|null
+   *   The description for the entity reference field or NULL if none was set.
+   */
+  public function getEntityReferenceDescription();
+
+  /**
    * Returns a list of entity reference field settings.
    *
    * This allows you to provide some handler settings for the entity reference
-   * field referencing the entity that is to become group content. You could
+   * field pointing to the entity that is to become group content. You could
    * even change the handler being used, all without having to alter the bundle
    * field settings yourself through an alter hook.
    *

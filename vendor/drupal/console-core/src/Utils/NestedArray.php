@@ -2,11 +2,15 @@
 
 /**
  * @file
- * Contains Drupal\Console\NestedArray.
+ * Contains Drupal\Console\Core\NestedArray.
  */
 
-namespace Drupal\Console\Utils;
+namespace Drupal\Console\Core\Utils;
 
+/**
+ * Class NestedArray
+ * @package Drupal\Console\Core\Utils
+ */
 class NestedArray
 {
     /**

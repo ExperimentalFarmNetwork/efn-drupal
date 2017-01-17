@@ -27,13 +27,6 @@ class Kint extends DevelDumperBase {
   /**
    * {@inheritdoc}
    */
-  public function dump($input, $name = NULL) {
-    echo (string) $this->export($input, $name);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function export($input, $name = NULL) {
     ob_start();
     \Kint::dump($input);

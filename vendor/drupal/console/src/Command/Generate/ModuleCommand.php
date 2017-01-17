@@ -14,10 +14,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Drupal\Console\Generator\ModuleGenerator;
 use Drupal\Console\Command\Shared\ConfirmationTrait;
 use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Utils\Validator;
-use Drupal\Console\Command\Shared\CommandTrait;
-use Drupal\Console\Utils\StringConverter;
+use Drupal\Console\Core\Command\Shared\CommandTrait;
+use Drupal\Console\Core\Utils\StringConverter;
 use Drupal\Console\Utils\DrupalApi;
 use GuzzleHttp\Client;
 use Drupal\Console\Utils\Site;
@@ -28,10 +28,14 @@ class ModuleCommand extends Command
     use ConfirmationTrait;
     use CommandTrait;
 
-    /** @var ModuleGenerator  */
+    /**
+ * @var ModuleGenerator
+*/
     protected $generator;
 
-    /** @var Validator  */
+    /**
+ * @var Validator
+*/
     protected $validator;
 
     /**
@@ -59,16 +63,23 @@ class ModuleCommand extends Command
      */
     protected $site;
 
+    /**
+     * @var string
+     */
+    protected $twigtemplate;
+
 
     /**
      * ModuleCommand constructor.
+     *
      * @param ModuleGenerator $generator
      * @param Validator       $validator
-     * @param                 $appRoot
+     * @param $appRoot
      * @param StringConverter $stringConverter
      * @param DrupalApi       $drupalApi
      * @param Client          $httpClient
      * @param Site            $site
+     * @param $twigtemplate
      */
     public function __construct(
         ModuleGenerator $generator,
@@ -77,7 +88,8 @@ class ModuleCommand extends Command
         StringConverter $stringConverter,
         DrupalApi $drupalApi,
         Client $httpClient,
-        Site $site
+        Site $site,
+        $twigtemplate = null
     ) {
         $this->generator = $generator;
         $this->validator = $validator;
@@ -86,6 +98,7 @@ class ModuleCommand extends Command
         $this->drupalApi = $drupalApi;
         $this->httpClient = $httpClient;
         $this->site = $site;
+        $this->twigtemplate = $twigtemplate;
         parent::__construct();
     }
 
@@ -159,10 +172,16 @@ class ModuleCommand extends Command
                 $this->trans('commands.generate.module.options.dependencies')
             )
             ->addOption(
-              'test',
-              '',
-              InputOption::VALUE_OPTIONAL,
-              $this->trans('commands.generate.module.options.test')
+                'test',
+                '',
+                InputOption::VALUE_OPTIONAL,
+                $this->trans('commands.generate.module.options.test')
+            )
+            ->addOption(
+                'twigtemplate',
+                '',
+                InputOption::VALUE_OPTIONAL,
+                $this->trans('commands.generate.module.options.twigtemplate')
             );
     }
 
@@ -192,6 +211,7 @@ class ModuleCommand extends Command
         $featuresBundle = $input->getOption('features-bundle');
         $composer = $input->getOption('composer');
         $test = $input->getOption('test');
+        $twigtemplate = $input->getOption('twigtemplate');
 
          // Modules Dependencies, re-factor and share with other commands
         $dependencies = $this->validator->validateModuleDependencies($input->getOption('dependencies'));
@@ -220,7 +240,8 @@ class ModuleCommand extends Command
             $featuresBundle,
             $composer,
             $dependencies,
-            $test
+            $test,
+            $twigtemplate
         );
     }
 
@@ -231,7 +252,7 @@ class ModuleCommand extends Command
     private function checkDependencies(array $dependencies, DrupalStyle $io)
     {
         $this->site->loadLegacyFile('/core/modules/system/system.module');
-        $localModules = array();
+        $localModules = [];
 
         $modules = system_rebuild_module_data();
         foreach ($modules as $module_id => $module) {
@@ -433,6 +454,15 @@ class ModuleCommand extends Command
                 true
             );
             $input->setOption('test', $test);
+        }
+
+        $twigtemplate = $input->getOption('twigtemplate');
+        if (!$twigtemplate) {
+            $twigtemplate = $io->confirm(
+                $this->trans('commands.generate.module.questions.twigtemplate'),
+                true
+            );
+            $input->setOption('twigtemplate', $twigtemplate);
         }
     }
 

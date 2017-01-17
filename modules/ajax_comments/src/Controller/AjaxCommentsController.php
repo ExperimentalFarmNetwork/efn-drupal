@@ -544,14 +544,42 @@ class AjaxCommentsController extends ControllerBase {
       return $response;
     }
 
-    // Build the updated comment field and insert into a replaceWith response.
-    // Also prepend any status messages in the response.
-    $response = $this->buildCommentFieldResponse(
-      $request,
-      $response,
-      $entity,
-      $field_name
-    );
+    // Build the comment entity form.
+    // This approach is very similar to the one taken in
+    // \Drupal\comment\CommentLazyBuilders::renderForm().
+    $comment = $this->entityTypeManager()->getStorage('comment')->create(array(
+      'entity_id' => $entity->id(),
+      'pid' => $pid,
+      'entity_type' => $entity->getEntityTypeId(),
+      'field_name' => $field_name,
+    ));
+
+    // Rebuild the form to trigger form submission.
+    $form = $this->entityFormBuilder()->getForm($comment);
+
+    // Check for errors.
+    if (empty(drupal_get_messages('error', FALSE))) {
+      // If there are no errors, set the ajax-updated
+      // selector value for the form.
+      $this->tempStore->setSelector('form_html_id', $form['#attributes']['id']);
+
+      // Build the updated comment field and insert into a replaceWith
+      // response.
+      $response = $this->buildCommentFieldResponse(
+        $request,
+        $response,
+        $entity,
+        $field_name
+      );
+    }
+    else {
+      // Retrieve the selector values for use in building the response.
+      $selectors = $this->tempStore->getSelectors($request, $overwrite = TRUE);
+      $wrapper_html_id = $selectors['wrapper_html_id'];
+
+      // If there are errors, remove old messages.
+      $response->addCommand(new RemoveCommand($wrapper_html_id . ' .js-ajax-comments-messages'));
+    }
 
     // The form_html_id should have been updated by the form constructor when
     // $this->buildCommentFieldResponse() was called, so retrieve the updated
@@ -559,12 +587,14 @@ class AjaxCommentsController extends ControllerBase {
     $selectors = $this->tempStore->getSelectors($request);
     $form_html_id = $selectors['form_html_id'];
 
+    // Prepend any status messages in the response.
     $response = $this->addMessages(
       $request,
       $response,
       $form_html_id,
       'before'
     );
+
     // Clear out the tempStore variables.
     $this->tempStore->deleteAll();
 

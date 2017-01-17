@@ -14,11 +14,11 @@ use Symfony\Component\Console\Command\Command;
 use Drupal\Core\State\StateInterface;
 use Drupal\Core\Extension\ModuleHandler;
 use Drupal\Core\Update\UpdateRegistry;
-use Drupal\Console\Command\Shared\CommandTrait;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Command\Shared\CommandTrait;
+use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Utils\Site;
 use Drupal\Console\Extension\Manager;
-use Drupal\Console\Utils\ChainQueue;
+use Drupal\Console\Core\Utils\ChainQueue;
 
 class ExecuteCommand extends Command
 {
@@ -45,7 +45,9 @@ class ExecuteCommand extends Command
     protected $postUpdateRegistry;
 
 
-    /** @var Manager  */
+    /**
+ * @var Manager
+*/
     protected $extensionManager;
 
     /**
@@ -65,11 +67,12 @@ class ExecuteCommand extends Command
 
     /**
      * EntitiesCommand constructor.
+     *
      * @param Site           $site
-     * @param StateInterface          $state
+     * @param StateInterface $state
      * @param ModuleHandler  $moduleHandler
      * @param UpdateRegistry $postUpdateRegistry
-     * @param Manager $extensionManager
+     * @param Manager        $extensionManager
      * @param ChainQueue     $chainQueue
      */
     public function __construct(
@@ -145,7 +148,7 @@ class ExecuteCommand extends Command
     }
 
     /**
-     * @param \Drupal\Console\Style\DrupalStyle $io
+     * @param \Drupal\Console\Core\Style\DrupalStyle $io
      */
     private function checkUpdates(DrupalStyle $io)
     {
@@ -176,14 +179,20 @@ class ExecuteCommand extends Command
     }
 
     /**
-     * @param \Drupal\Console\Style\DrupalStyle $io
+     * @param \Drupal\Console\Core\Style\DrupalStyle $io
      * @param $updates
      */
     private function runUpdates(DrupalStyle $io, $updates)
     {
         foreach ($updates as $module_name => $module_updates) {
-            $this->site
-                ->loadLegacyFile($this->extensionManager->getModule($module_name)->getPath() . '/'. $module_name . '.install', false);
+            $extension = $this->extensionManager->getModule($module_name);
+            if (!$extension) {
+                $extension = $this->extensionManager->getProfile($module_name);
+            }
+            if ($extension) {
+                $this->site
+                    ->loadLegacyFile($extension->getPath() . '/'. $module_name . '.install', false);
+            }
 
             foreach ($module_updates['pending'] as $update_number => $update) {
                 if ($this->module != 'all' && $this->update_n !== null && $this->update_n != $update_number) {
@@ -219,7 +228,7 @@ class ExecuteCommand extends Command
     }
 
     /**
-     * @param \Drupal\Console\Style\DrupalStyle $io
+     * @param \Drupal\Console\Core\Style\DrupalStyle $io
      */
     private function runPostUpdates(DrupalStyle $io)
     {

@@ -11,31 +11,43 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 abstract class DataPrepareBase extends GeocoderPluginBase implements DataPrepareInterface {
   /**
+   * Entity.
+   *
    * @var EntityInterface
    */
   private $entity;
 
   /**
+   * Field Id.
+   *
    * @var string
    */
-  private $field_id;
+  private $fieldId;
 
   /**
+   * Array of Values.
+   *
    * @var array
    */
   private $values;
 
   /**
+   * Widget Id.
+   *
    * @var string[]
    */
-  private $widget_ids;
+  private $widgetIds;
 
   /**
+   * Widget Configuration.
+   *
    * @var array
    */
-  private $widget_configuration;
+  private $widgetConfiguration;
 
   /**
+   * Set Entity.
+   *
    * @inheritDoc
    */
   public function setEntity(EntityInterface $entity) {
@@ -45,6 +57,8 @@ abstract class DataPrepareBase extends GeocoderPluginBase implements DataPrepare
   }
 
   /**
+   * Get Entity.
+   *
    * @inheritDoc
    */
   public function getEntity() {
@@ -52,6 +66,8 @@ abstract class DataPrepareBase extends GeocoderPluginBase implements DataPrepare
   }
 
   /**
+   * Set Wiget ID.
+   *
    * @inheritDoc
    */
   public function setWidgetIds(array $widgets = array()) {
@@ -61,6 +77,8 @@ abstract class DataPrepareBase extends GeocoderPluginBase implements DataPrepare
   }
 
   /**
+   * Get widget ID.
+   *
    * @inheritDoc
    */
   public function getWidgetIds() {
@@ -68,6 +86,8 @@ abstract class DataPrepareBase extends GeocoderPluginBase implements DataPrepare
   }
 
   /**
+   * Set Values.
+   *
    * @inheritDoc
    */
   public function setValues(array $values = array()) {
@@ -77,6 +97,8 @@ abstract class DataPrepareBase extends GeocoderPluginBase implements DataPrepare
   }
 
   /**
+   * Get Values.
+   *
    * @inheritDoc
    */
   public function getValues() {
@@ -84,6 +106,8 @@ abstract class DataPrepareBase extends GeocoderPluginBase implements DataPrepare
   }
 
   /**
+   * Set the Widget Configuration.
+   *
    * @inheritDoc
    */
   public function setWidgetConfiguration(array $settings = array()) {
@@ -93,6 +117,8 @@ abstract class DataPrepareBase extends GeocoderPluginBase implements DataPrepare
   }
 
   /**
+   * Get the widget configuration.
+   *
    * @inheritDoc
    */
   public function getWidgetConfiguration() {
@@ -100,22 +126,28 @@ abstract class DataPrepareBase extends GeocoderPluginBase implements DataPrepare
   }
 
   /**
+   * Set the Current Field.
+   *
    * @inheritDoc
    */
-  public function setCurrentField($field_id) {
-    $this->field_id = $field_id;
+  public function setCurrentField($fieldId) {
+    $this->fieldId = $fieldId;
 
     return $this;
   }
 
   /**
+   * Get the current field.
+   *
    * @inheritDoc
    */
   public function getCurrentField() {
-    return $this->field_id;
+    return $this->$fieldId;
   }
 
   /**
+   * Get prepared Geocode Values.
+   *
    * @inheritDoc
    */
   public function getPreparedGeocodeValues(array $values = array()) {
@@ -123,6 +155,8 @@ abstract class DataPrepareBase extends GeocoderPluginBase implements DataPrepare
   }
 
   /**
+   * Get reverse geocode values.
+   *
    * @inheritDoc
    */
   public function getPreparedReverseGeocodeValues(array $values = array()) {
@@ -130,6 +164,8 @@ abstract class DataPrepareBase extends GeocoderPluginBase implements DataPrepare
   }
 
   /**
+   * Create function.
+   *
    * @inheritdoc
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {

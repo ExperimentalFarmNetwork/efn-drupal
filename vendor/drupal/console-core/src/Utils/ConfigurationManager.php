@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Console\Utils;
+namespace Drupal\Console\Core\Utils;
 
 use Symfony\Component\Yaml\Yaml;
 use Dflydev\DotAccessConfiguration\YamlFileConfigurationBuilder;
@@ -38,6 +38,11 @@ class ConfigurationManager
      */
     public function loadConfiguration($applicationDirectory)
     {
+        $homeConfig = $this->getHomeDirectory() . '/.console/';
+        if (!is_dir($homeConfig)) {
+            mkdir($homeConfig, 0777);
+        }
+
         $this->applicationDirectory = $applicationDirectory;
         $input = new ArgvInput();
         $root = $input->getParameterOption(['--root'], null);
@@ -269,11 +274,33 @@ class ConfigurationManager
                 );
             }
         }
-        if (array_key_exists('commands',$aliases) && array_key_exists('aliases',$aliases['commands'])) {
+        if (array_key_exists('commands', $aliases) && array_key_exists('aliases', $aliases['commands'])) {
             $this->configuration->set(
                 'application.commands.aliases',
                 $aliases['commands']['aliases']
             );
         }
+    }
+
+    public function loadExtendLibraries()
+    {
+        $directory = $this->getHomeDirectory() . '/.console/extend/';
+        if (!is_dir($directory)) {
+            return null;
+        }
+
+        $autoloadFile = $directory . 'vendor/autoload.php';
+        if (!is_file($autoloadFile)) {
+            return null;
+        }
+        include_once $autoloadFile;
+
+        $extendFile = $directory . 'extend.yml';
+        if (!is_file($extendFile)) {
+            return null;
+        }
+        $builder = new YamlFileConfigurationBuilder([$extendFile]);
+
+        $this->configuration->import($builder->build());
     }
 }

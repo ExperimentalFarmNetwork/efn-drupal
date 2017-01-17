@@ -7,12 +7,15 @@
 
 namespace Drupal\Console\Generator;
 
+use Drupal\Console\Core\Generator\Generator;
 use Drupal\Console\Extension\Manager;
-use Drupal\Console\Utils\StringConverter;
+use Drupal\Console\Core\Utils\StringConverter;
 
 class FormGenerator extends Generator
 {
-    /** @var Manager  */
+    /**
+     * @var Manager
+     */
     protected $extensionManager;
 
     /**
@@ -22,7 +25,8 @@ class FormGenerator extends Generator
 
     /**
      * AuthenticationProviderGenerator constructor.
-     * @param Manager $extensionManager
+     *
+     * @param Manager         $extensionManager
      * @param StringConverter $stringConverter
      */
     public function __construct(
@@ -52,7 +56,7 @@ class FormGenerator extends Generator
             $this->stringConverter->removeSuffix($class_name)
         );
 
-        $parameters = array(
+        $parameters = [
           'class_name' => $class_name,
           'services' => $services,
           'inputs' => $inputs,
@@ -64,7 +68,7 @@ class FormGenerator extends Generator
           'menu_parent' => $menu_parent,
           'menu_link_desc' => $menu_link_desc,
           'class_name_short'  => $class_name_short
-        );
+        ];
 
         if ($form_type == 'ConfigFormBase') {
             $template = 'module/src/Form/form-config.php.twig';

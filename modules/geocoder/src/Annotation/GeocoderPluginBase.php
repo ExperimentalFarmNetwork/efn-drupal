@@ -19,9 +19,9 @@ class GeocoderPluginBase extends Plugin {
   /**
    * The human-readable name of the geocoder plugin.
    *
-   * @ingroup plugin_translatable
-   *
    * @var \Drupal\Core\Annotation\Translation
+   *
+   * @ingroup plugin_translatable
    */
   public $name;
 

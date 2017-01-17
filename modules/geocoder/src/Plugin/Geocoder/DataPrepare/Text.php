@@ -19,6 +19,8 @@ use Drupal\geocoder\Plugin\GeocoderPluginInterface;
 class Text extends DataPrepareBase implements GeocoderPluginInterface {
 
   /**
+   * Get the prepared reverse geocode values.
+   *
    * @inheritDoc
    */
   public function getPreparedReverseGeocodeValues(array $values = array()) {

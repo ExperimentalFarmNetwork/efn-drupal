@@ -1,11 +1,20 @@
 <?php
 
-namespace Drupal\Console\Bootstrap;
+/**
+ * @file
+ * Contains \Drupal\Console\Core\Bootstrap.
+ */
+
+namespace Drupal\Console\Core\Bootstrap;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
+/**
+ * Class DrupalConsoleCore
+ * @package Drupal\Console\Core\Bootstrap
+ */
 class DrupalConsoleCore
 {
     /**
@@ -17,6 +26,7 @@ class DrupalConsoleCore
      * @var string
      */
     protected $appRoot;
+
     /**
      * DrupalConsole constructor.
      * @param $root
@@ -28,6 +38,9 @@ class DrupalConsoleCore
         $this->appRoot = $appRoot;
     }
 
+    /**
+     * @return ContainerBuilder
+     */
     public function boot()
     {
         $container = new ContainerBuilder();
@@ -50,17 +63,19 @@ class DrupalConsoleCore
         $container->get('console.translator_manager')
             ->loadCoreLanguage('en', $this->root);
 
+        $appRoot = $this->appRoot?$this->appRoot:$this->root;
         $container->set(
             'app.root',
-            $this->appRoot?$this->appRoot:$this->root
+            $appRoot
         );
-
+        $consoleRoot = $appRoot;
         if (stripos($this->root, '/bin/') <= 0) {
-            $container->set(
-                'console.root',
-                $this->root
-            );
+            $consoleRoot = $this->root;
         }
+        $container->set(
+            'console.root',
+            $consoleRoot
+        );
 
         $container->get('console.renderer')
             ->setSkeletonDirs(

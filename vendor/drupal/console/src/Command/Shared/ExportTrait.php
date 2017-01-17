@@ -8,10 +8,11 @@
 namespace Drupal\Console\Command\Shared;
 
 use Drupal\Component\Serialization\Yaml;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class ConfigExportTrait
+ *
  * @package Drupal\Console\Command
  */
 trait ExportTrait
@@ -21,18 +22,20 @@ trait ExportTrait
      * @param bool|false $uuid
      * @return mixed
      */
-    protected function getConfiguration($configName, $uuid = false)
+    protected function getConfiguration($configName, $uuid = false, $hash = false)
     {
         $config = $this->configStorage->read($configName);
 
         // Exclude uuid base in parameter, useful to share configurations.
-        if (!$uuid) {
+        if ($uuid) {
             unset($config['uuid']);
         }
-
-        // The _core is site-specific, so don't export it.
-        unset($config['_core']);
-
+        
+        // Exclude default_config_hash inside _core is site-specific.
+        if ($hash) {
+            unset($config['_core']['default_config_hash']);
+        }
+        
         return $config;
     }
 
@@ -119,7 +122,7 @@ trait ExportTrait
     {
         foreach ($dependencies as $dependency) {
             if (!array_key_exists($dependency, $this->configExport)) {
-                $this->configExport[$dependency] = array('data' => $this->getConfiguration($dependency), 'optional' => $optional);
+                $this->configExport[$dependency] = ['data' => $this->getConfiguration($dependency), 'optional' => $optional];
                 if ($dependencies = $this->fetchDependencies($this->configExport[$dependency], 'config')) {
                     $this->resolveDependencies($dependencies, $optional);
                 }
