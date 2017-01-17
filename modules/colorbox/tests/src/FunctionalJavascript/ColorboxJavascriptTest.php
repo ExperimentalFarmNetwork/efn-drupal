@@ -34,6 +34,8 @@ class ColorboxJavascriptTest extends JavascriptTestBase {
   const COLORBOX_WAIT_TIMEOUT = 500;
 
   /**
+   * Node var.
+   *
    * @var \Drupal\node\NodeInterface
    */
   protected $node;
@@ -84,7 +86,7 @@ class ColorboxJavascriptTest extends JavascriptTestBase {
   }
 
   /**
-   * Test the mobile detection
+   * Test the mobile detection.
    */
   public function testMobileDetection() {
     $this->changeSetting('advanced.mobile_detect', TRUE);
@@ -177,7 +179,7 @@ class ColorboxJavascriptTest extends JavascriptTestBase {
           'target_id' => $file_b->id(),
           'alt' => 'Image alt 2',
           'title' => 'Image title 2',
-        ]
+        ],
       ],
     ]);
   }

@@ -125,7 +125,7 @@ class ColorboxFormatter extends ImageFormatterBase implements ContainerFactoryPl
       '#empty_option' => $this->t('None (original image)'),
       '#options' => $image_styles_hide,
       '#description' => $description_link->toRenderable() + [
-        '#access' => $this->currentUser->hasPermission('administer image styles')
+        '#access' => $this->currentUser->hasPermission('administer image styles'),
       ],
     );
     $element['colorbox_node_style_first'] = array(
@@ -135,7 +135,7 @@ class ColorboxFormatter extends ImageFormatterBase implements ContainerFactoryPl
       '#empty_option' => $this->t('No special style.'),
       '#options' => $image_styles,
       '#description' => $description_link->toRenderable() + [
-        '#access' => $this->currentUser->hasPermission('administer image styles')
+        '#access' => $this->currentUser->hasPermission('administer image styles'),
       ],
     );
     $element['colorbox_image_style'] = array(
@@ -145,7 +145,7 @@ class ColorboxFormatter extends ImageFormatterBase implements ContainerFactoryPl
       '#empty_option' => $this->t('None (original image)'),
       '#options' => $image_styles,
       '#description' => $description_link->toRenderable() + [
-        '#access' => $this->currentUser->hasPermission('administer image styles')
+        '#access' => $this->currentUser->hasPermission('administer image styles'),
       ],
     );
 
@@ -203,7 +203,7 @@ class ColorboxFormatter extends ImageFormatterBase implements ContainerFactoryPl
     }
 
     $caption = array(
-      'auto' =>  $this->t('Automatic'),
+      'auto' => $this->t('Automatic'),
       'title' => $this->t('Title text'),
       'alt' => $this->t('Alt text'),
       'entity_title' => $this->t('Content title'),
@@ -215,7 +215,7 @@ class ColorboxFormatter extends ImageFormatterBase implements ContainerFactoryPl
       '#type' => 'select',
       '#default_value' => $this->getSetting('colorbox_caption'),
       '#options' => $caption,
-      '#description' => $this->t('Automatic will use the first none empty value of the title, the alt text and the content title.'),
+      '#description' => $this->t('Automatic will use the first non-empty value out of the title, the alt text and the content title.'),
     );
     $element['colorbox_caption_custom'] = array(
       '#title' => $this->t('Custom caption'),
@@ -301,7 +301,7 @@ class ColorboxFormatter extends ImageFormatterBase implements ContainerFactoryPl
     }
 
     $caption = array(
-      'auto' =>  $this->t('Automatic'),
+      'auto' => $this->t('Automatic'),
       'title' => $this->t('Title text'),
       'alt' => $this->t('Alt text'),
       'entity_title' => $this->t('Content title'),
@@ -418,9 +418,10 @@ class ColorboxFormatter extends ImageFormatterBase implements ContainerFactoryPl
       if ($style_id && $style = ImageStyle::load($style_id)) {
         if (!empty($dependencies[$style->getConfigDependencyKey()][$style->getConfigDependencyName()])) {
           $replacement_id = $this->imageStyleStorage->getReplacementId($style_id);
-          // If a valid replacement has been provided in the storage, replace the
-          // image style with the replacement and signal that the formatter plugin
-          // settings were updated.
+          // If a valid replacement has been provided in the storage,
+          // replace the image style with the replacement and signal
+          // that the formatter plugin.
+          // Settings were updated.
           if ($replacement_id && ImageStyle::load($replacement_id)) {
             $this->setSetting($name, $replacement_id);
             $changed = TRUE;

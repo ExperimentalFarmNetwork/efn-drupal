@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Drupal\colorbox\ActivationCheckInterface.
- */
-
 namespace Drupal\colorbox;
 
 /**

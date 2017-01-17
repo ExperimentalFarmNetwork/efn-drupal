@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains Drupal\colorbox\PageAttachmentInterface.
- */
-
 namespace Drupal\colorbox;
 
 use Drupal\Core\Extension\ModuleHandlerInterface;
@@ -45,7 +40,7 @@ class ColorboxAttachment implements ElementAttachmentInterface {
   public function __construct(ActivationCheckInterface $activation, ModuleHandlerInterface $module_handler, ConfigFactoryInterface $config) {
     $this->activation = $activation;
     $this->moduleHandler = $module_handler;
-    $this->settings = $config->get('colorbox.settings');;
+    $this->settings = $config->get('colorbox.settings');
   }
 
   /**
@@ -102,14 +97,15 @@ class ColorboxAttachment implements ElementAttachmentInterface {
 
     $style = $this->settings->get('custom.style');
 
-    // Give other modules the possibility to override Colorbox settings and style.
+    // Give other modules the possibility to override Colorbox
+    // settings and style.
     $this->moduleHandler->alter('colorbox_settings', $js_settings, $style);
 
     // Add colorbox js settings.
     $page['#attached']['drupalSettings']['colorbox'] = $js_settings;
 
     // Add and initialise the Colorbox plugin.
-    if ($this->settings->get('advanced.compression_type' == 'minified')) {
+    if ($this->settings->get('advanced.compression_type') == 'minified') {
       $page['#attached']['library'][] = 'colorbox/colorbox';
     }
     else {

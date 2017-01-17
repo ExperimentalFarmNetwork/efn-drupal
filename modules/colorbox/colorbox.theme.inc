@@ -38,7 +38,7 @@ function template_preprocess_colorbox_formatter(&$variables) {
   $entity_bundle = $entity->bundle();
 
   switch ($settings['colorbox_caption']) {
-     case 'auto':
+    case 'auto':
       // If the title is empty use alt or the entity title in that order.
       if (!empty($item->title)) {
         $caption = $item->title;
@@ -53,24 +53,30 @@ function template_preprocess_colorbox_formatter(&$variables) {
         $caption = '';
       }
       break;
+
     case 'title':
       $caption = $item->title;
       break;
+
     case 'alt':
       $caption = $item->alt;
       break;
+
     case 'entity_title':
       $caption = $entity_title;
       break;
+
     case 'custom':
       $token_service = \Drupal::token();
       $caption = $token_service->replace($settings['colorbox_caption_custom'], array($entity_type => $entity, 'file' => $item), array('clear' => TRUE));
       break;
+
     default:
       $caption = '';
   }
 
-  // Shorten the caption for the example styles or when caption shortening is active.
+  // Shorten the caption for the example styles or when caption
+  // shortening is active.
   $config = \Drupal::config('colorbox.settings');
   $colorbox_style = $config->get('colorbox_style');
   $trim_length = $config->get('colorbox_caption_trim_length');
@@ -87,26 +93,33 @@ function template_preprocess_colorbox_formatter(&$variables) {
     case 'post':
       $gallery_id = 'gallery-' . $entity_id;
       break;
+
     case 'page':
       $gallery_id = 'gallery-all';
       break;
+
     case 'field_post':
       $gallery_id = 'gallery-' . $entity_id . '-' . $field_name;
       break;
+
     case 'field_page':
       $gallery_id = 'gallery-' . $field_name;
       break;
+
     case 'custom':
       $token_service = \Drupal::token();
       $gallery_id = $token_service->replace($settings['colorbox_gallery_custom'], array($entity_type => $entity, 'file' => $item), array('clear' => TRUE));
       break;
+
     default:
       $gallery_id = '';
   }
 
-  // If gallery id is not empty add unique per-request token to avoid images being added manually to galleries.
+  // If gallery id is not empty add unique per-request token to avoid
+  // images being added manually to galleries.
   if (!empty($gallery_id) && $config->get('advanced.unique_token')) {
-    // Check if gallery token has already been set, we need to reuse the token for the whole request.
+    // Check if gallery token has already been set, we need to reuse
+    // the token for the whole request.
     if (is_null($gallery_token)) {
       // We use a short token since randomness is not critical.
       $gallery_token = Crypt::randomBytesBase64(8);
@@ -154,18 +167,18 @@ function template_preprocess_colorbox_formatter(&$variables) {
     $variables['url'] = file_create_url($image_uri);
   }
 
-  // if File Entity module is enabled, load attribute values from file entity.
-  if(\Drupal::moduleHandler()->moduleExists('file_entity')) {
-    // file id of the save file.
+  // If File Entity module is enabled, load attribute values from file entity.
+  if (\Drupal::moduleHandler()->moduleExists('file_entity')) {
+    // File id of the save file.
     $fid = $item->target_id;
-    // load file object
+    // Load file object.
     $file_obj = file_load($fid);
     $file_array = $file_obj->toArray();
-    // populate the image title
+    // Populate the image title.
     if (!empty($file_array['field_image_title_text'][0]['value']) && empty($item->title) && $settings['colorbox_caption'] == 'title') {
       $caption = $file_array['field_image_title_text'][0]['value'];
     }
-    // populate the image alt text.
+    // Populate the image alt text.
     if (!empty($file_array['field_image_alt_text'][0]['value']) && empty($item->alt) && $settings['colorbox_caption'] == 'alt') {
       $caption = $file_array['field_image_alt_text'][0]['value'];
     }

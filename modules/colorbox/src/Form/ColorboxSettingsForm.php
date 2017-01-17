@@ -23,15 +23,15 @@ class ColorboxSettingsForm extends ConfigFormBase {
   /**
    * {@inheritdoc}
    */
-  public function getFormID() {
+  public function getFormId() {
     return 'colorbox_admin_settings_form';
   }
 
- /**
+  /**
    * {@inheritdoc}
    */
   protected function getEditableConfigNames() {
-    return ['colorbox.settings',];
+    return ['colorbox.settings'];
   }
 
   /**
@@ -74,7 +74,11 @@ class ColorboxSettingsForm extends ConfigFormBase {
     $form['colorbox_custom_settings']['colorbox_transition_type'] = array(
       '#type' => 'radios',
       '#title' => $this->t('Transition type'),
-      '#options' => array('elastic' => $this->t('Elastic'), 'fade' => $this->t('Fade'), 'none' => $this->t('None')),
+      '#options' => array(
+        'elastic' => $this->t('Elastic'),
+        'fade' => $this->t('Fade'),
+        'none' => $this->t('None'),
+      ),
       '#default_value' => $config->get('custom.transition_type'),
       '#description' => $this->t('The transition type.'),
       '#states' => $this->getState(static::STATE_CUSTOM_SETTINGS),
@@ -177,7 +181,7 @@ class ColorboxSettingsForm extends ConfigFormBase {
       '#type' => 'checkbox',
       '#title' => $this->t('Fixed'),
       '#default_value' => $config->get('custom.fixed'),
-      '#description' => $this->t('If the Colorbox should be displayed in a fixed position within the visitor\'s viewport or relative to the document.'),
+      '#description' => $this->t("If the Colorbox should be displayed in a fixed position within the visitor's viewport or relative to the document."),
       '#states' => $this->getState(static::STATE_CUSTOM_SETTINGS),
     );
     $form['colorbox_custom_settings']['colorbox_scrolling'] = array(
@@ -303,7 +307,7 @@ class ColorboxSettingsForm extends ConfigFormBase {
     $config = $this->configFactory->getEditable('colorbox.settings');
 
     $config
-      ->set('custom.style',  $form_state->getValue('colorbox_style'))
+      ->set('custom.style', $form_state->getValue('colorbox_style'))
       ->set('custom.activate', $form_state->getValue('colorbox_custom_settings_activate'))
       ->set('custom.transition_type', $form_state->getValue('colorbox_transition_type'))
       ->set('custom.transition_speed', $form_state->getValue('colorbox_transition_speed'))
@@ -363,7 +367,7 @@ class ColorboxSettingsForm extends ConfigFormBase {
       ],
       static::STATE_SLIDESHOW_ENABLED => [
         'visible' => [
-          ':input[name="colorbox_slideshow"]' => ['value' => '1']
+          ':input[name="colorbox_slideshow"]' => ['value' => '1'],
         ],
       ],
     ];
@@ -373,11 +377,11 @@ class ColorboxSettingsForm extends ConfigFormBase {
   /**
    * Create a range for a series of options.
    *
-   * @param number $start
+   * @param int $start
    *   The start of the range.
-   * @param number $end
+   * @param int $end
    *   The end of the range.
-   * @param number $step
+   * @param int $step
    *   The interval between elements.
    *
    * @return array
