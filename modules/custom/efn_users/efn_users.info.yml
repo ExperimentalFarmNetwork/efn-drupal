@@ -1,0 +1,5 @@
+name: EFN Users
+type: module
+description: 'User-related functionality for Expiremental Farm Network'
+package: Development
+core: 8.x
