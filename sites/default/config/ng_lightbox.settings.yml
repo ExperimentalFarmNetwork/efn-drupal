@@ -1,6 +1,6 @@
-patterns: ''
+patterns: "/group/*/join\r\n/group/*/edit"
 default_width: 700
 skip_admin_paths: true
-renderer: drupal_colorbox
+renderer: drupal_modal
 _core:
   default_config_hash: Dq8n-HYQwGnZeUGM4UINJGOvjwtlZLI0RrMYydeue3o

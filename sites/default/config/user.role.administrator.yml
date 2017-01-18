@@ -151,3 +151,4 @@ permissions:
   - 'edit own yamlform'
   - 'view any yamlform submission'
   - 'edit yamlform source'
+  - 'administer ng lightbox'

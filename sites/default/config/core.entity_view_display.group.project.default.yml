@@ -24,7 +24,6 @@ dependencies:
   module:
     - address
     - image
-    - leaflet
     - options
     - text
 id: group.project.default
@@ -44,35 +43,6 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: address_default
-  field_location_geo:
-    weight: 16
-    label: hidden
-    settings:
-      leaflet_map: 'OSM Mapnik'
-      zoom: '10'
-      minZoom: '1'
-      maxZoom: '18'
-      height: '400'
-      icon:
-        icon_url: ''
-        shadow_url: ''
-        icon_size:
-          x: '0'
-          'y': '0'
-        icon_anchor:
-          x: '0'
-          'y': '0'
-        shadow_anchor:
-          x: '0'
-          'y': '0'
-        popup_anchor:
-          x: '0'
-          'y': '0'
-      popup: 0
-      minPossibleZoom: 0
-      maxPossibleZoom: 18
-    third_party_settings: {  }
-    type: leaflet_formatter_default
   field_misc:
     weight: 14
     label: above
@@ -167,5 +137,6 @@ content:
 hidden:
   changed: true
   created: true
+  field_location_geo: true
   field_project_type_other: true
   uid: true

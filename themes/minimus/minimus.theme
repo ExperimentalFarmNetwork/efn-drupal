@@ -18,10 +18,26 @@ function minimus_preprocess_node(&$variables) {
 }
 
 
-// function minimus_preprocess_user(&$variables){
+// function minimus_preprocess_group(&$variables, $hook){
+// 	if($variables['group']){
 
-// 	$variables['thing'] =\Drupal::entityTypeManager()->getDefinitions();
+// 		$group=$variables['group'];
 
-// 	// $variables['nodeId'] = \Drupal::entityTypeManager()->getStorage('user');
+// 		$group_banner=$group->get('field_project_image');
 
+// 		$banner_uri = $group_banner->entity->url();
+// 		$variables['project_banner'] = $banner_uri;
+
+// 		$nid = \Drupal::routeMatch()->getRawParameter('group');
+// 		$url = Drupal\Core\Url::fromRoute('<current>')->getInternalPath();
+// 		// $variables['route']=$url;
+
+// 	}
+// }
+
+// function minimus_preprocess(&$variables, $hook){
+	
+// 		$url = Drupal\Core\Url::fromRoute('<current>')->getInternalPath();
+// 		$variables['route']=$url;
+// 		$variables['cosa']="cosa";
 // }
