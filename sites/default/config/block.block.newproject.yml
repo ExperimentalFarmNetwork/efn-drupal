@@ -1,0 +1,36 @@
+uuid: d1f91bec-77b3-4880-8ca5-9be1c2b2ef46
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic_block:11977787-638a-4ecb-8f51-69785234af30'
+  module:
+    - block_content
+    - user
+  theme:
+    - minimus
+id: newproject
+theme: minimus
+region: navigation_collapsible
+weight: -8
+provider: null
+plugin: 'block_content:11977787-638a-4ecb-8f51-69785234af30'
+settings:
+  id: 'block_content:11977787-638a-4ecb-8f51-69785234af30'
+  label: 'New project'
+  provider: block_content
+  label_display: '0'
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  user_role:
+    id: user_role
+    roles:
+      authenticated: authenticated
+      volunteer: volunteer
+      administrator: administrator
+      researcher: researcher
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'

@@ -96,7 +96,7 @@ content:
     type: list_default
   field_tags:
     weight: 4
-    label: above
+    label: hidden
     settings:
       link: true
     third_party_settings: {  }

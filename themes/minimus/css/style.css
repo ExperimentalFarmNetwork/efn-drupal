@@ -6355,13 +6355,24 @@ a {
 
 header.navbar-default {
   background: #242029;
-  border-bottom: #A4AD23 3px solid; }
+  border-bottom: #A4AD23 3px solid;
+  text-align: right; }
   header.navbar-default .container-fluid {
     width: 90%; }
   header.navbar-default .navbar-header .logo img {
     height: 50px;
     margin: 5px;
     transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+  header.navbar-default #block-minimus-account-menu, header.navbar-default #block-newproject {
+    display: inline-table; }
+  header.navbar-default #block-newproject {
+    bottom: 10px; }
+    header.navbar-default #block-newproject .field--name-body a {
+      background: #3B4A59;
+      color: #A4AD23; }
+      header.navbar-default #block-newproject .field--name-body a:hover {
+        background: #418261;
+        color: #242029; }
   header.navbar-default ul.navbar-nav {
     margin-left: 2em;
     margin-top: 22px; }

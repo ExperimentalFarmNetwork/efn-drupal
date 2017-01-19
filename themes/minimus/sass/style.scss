@@ -33,6 +33,7 @@ a{
 header.navbar-default{
 	background: $du-dark;
 	border-bottom: $du-gold 3px solid;
+	text-align:right;
 	.container-fluid{
 		width:90%;
 	}
@@ -43,6 +44,27 @@ header.navbar-default{
 			transition:.3s cubic-bezier(0.4, 0, 0.2, 1); 
 		}
 	}
+	#block-minimus-account-menu, #block-newproject{
+		display:inline-table;
+
+	}
+	#block-newproject{
+		bottom:10px;
+		.field--name-body{
+			a{
+					background:$du-asparagus;
+					color:$du-gold;
+				&:hover{
+				background: $du-green;
+				color:$du-dark;
+				}
+			}
+		}
+
+	}
+	// #block-minimus-account-menu{
+	// 	float
+	// }
 	ul.navbar-nav{
 		margin-left:2em;
 		margin-top:22px;
