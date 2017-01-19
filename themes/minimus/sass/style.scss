@@ -251,7 +251,7 @@ body.path-group{
 					display:block; // uncomment when js ready please
 				}
 			}
-			.field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image):not(.field--name-field-location-geo){
+			.field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image):not(.field--name-field-location-geo):not(.field--name-field-tags){
 				padding-bottom:2em;
 				padding-top:2em;
 				border-bottom: thin $gray-lighter solid;
@@ -270,6 +270,25 @@ body.path-group{
 					display:block;
 					padding-top:0;
 
+				}
+			}
+			.field--name-field-tags{
+				margin-top:1em;
+				.field--item{
+					display:inline-block;
+					background: $gray-lighter;
+					line-height: initial;
+				    margin-bottom: 5px;
+					a{
+						color:$gray;
+					}
+					&:hover{
+						background:$du-green;
+						a{
+							color:$gray-lighter;
+							text-decoration:none;
+						}
+					}
 				}
 			}
 		}

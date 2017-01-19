@@ -6526,21 +6526,35 @@ body.path-group {
       body.path-group .region-content .groupWrapper .field--name-field-location.toggleVFields,
       body.path-group .region-content .groupWrapper .field--name-field-location-geo.toggleVFields {
         display: block; }
-    body.path-group .region-content .groupWrapper .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image):not(.field--name-field-location-geo) {
+    body.path-group .region-content .groupWrapper .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image):not(.field--name-field-location-geo):not(.field--name-field-tags) {
       padding-bottom: 2em;
       padding-top: 2em;
       border-bottom: thin #eeeeee solid; }
-      body.path-group .region-content .groupWrapper .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image):not(.field--name-field-location-geo) .field--label {
+      body.path-group .region-content .groupWrapper .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image):not(.field--name-field-location-geo):not(.field--name-field-tags) .field--label {
         width: 45%;
         display: inline-table;
         text-transform: uppercase;
         font-weight: normal; }
-      body.path-group .region-content .groupWrapper .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image):not(.field--name-field-location-geo) .field--item {
+      body.path-group .region-content .groupWrapper .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image):not(.field--name-field-location-geo):not(.field--name-field-tags) .field--item {
         width: 45%;
         display: inline-table; }
-      body.path-group .region-content .groupWrapper .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image):not(.field--name-field-location-geo).field--name-field-project-summary {
+      body.path-group .region-content .groupWrapper .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image):not(.field--name-field-location-geo):not(.field--name-field-tags).field--name-field-project-summary {
         display: block;
         padding-top: 0; }
+    body.path-group .region-content .groupWrapper .field--name-field-tags {
+      margin-top: 1em; }
+      body.path-group .region-content .groupWrapper .field--name-field-tags .field--item {
+        display: inline-block;
+        background: #eeeeee;
+        line-height: initial;
+        margin-bottom: 5px; }
+        body.path-group .region-content .groupWrapper .field--name-field-tags .field--item a {
+          color: #555555; }
+        body.path-group .region-content .groupWrapper .field--name-field-tags .field--item:hover {
+          background: #418261; }
+          body.path-group .region-content .groupWrapper .field--name-field-tags .field--item:hover a {
+            color: #eeeeee;
+            text-decoration: none; }
 
 .js-form-submit[value='Join group'], .btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
   font-size: 2rem;
