@@ -35,11 +35,11 @@
  */
 function hook_profile_access($op, Drupal\profile\Entity\Profile $profile, Drupal\user\Entity\User $account) {
   // Explicitly deny access for a 'secret' profile type.
-  if ($profile->getType() == 'secret' && !\Drupal::currentUser()->hasPermission('custom permission')) {
+  if ($profile->bundle() == 'secret' && !\Drupal::currentUser()->hasPermission('custom permission')) {
     return FALSE;
   }
   // For profiles other than the default profile grant access.
-  if ($profile->getType() != 'main' && \Drupal::currentUser()->hasPermission('custom permission')) {
+  if ($profile->bundle() != 'main' && \Drupal::currentUser()->hasPermission('custom permission')) {
     return TRUE;
   }
   // In other cases do not alter access.

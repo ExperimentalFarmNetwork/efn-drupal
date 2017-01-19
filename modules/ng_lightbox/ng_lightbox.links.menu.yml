@@ -1,5 +1,0 @@
-ng_lightbox.settings:
-  title: NG Lightbox
-  description: 'Configure the NG Lightbox settings.'
-  route_name: ng_lightbox.settings
-  parent: system.admin_config_media

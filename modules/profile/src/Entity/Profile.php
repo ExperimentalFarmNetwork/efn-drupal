@@ -8,6 +8,8 @@ use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\ContentEntityBase;
+use Drupal\profile\Event\ProfileEvents;
+use Drupal\profile\Event\ProfileLabelEvent;
 use Drupal\user\UserInterface;
 
 
@@ -64,74 +66,19 @@ class Profile extends ContentEntityBase implements ProfileInterface {
   /**
    * {@inheritdoc}
    */
-  public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
-    $fields = parent::baseFieldDefinitions($entity_type);
-
-    $fields['uid'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(t('Owner'))
-      ->setDescription(t('The user that owns this profile.'))
-      ->setRevisionable(TRUE)
-      ->setSetting('target_type', 'user')
-      ->setSetting('handler', 'default');
-
-    $fields['status'] = BaseFieldDefinition::create('boolean')
-      ->setLabel(t('Active status'))
-      ->setDescription(t('A boolean indicating whether the profile is active.'))
-      ->setDefaultValue(TRUE)
-      ->setRevisionable(TRUE);
-
-    $fields['is_default'] = BaseFieldDefinition::create('boolean')
-       ->setLabel(t('Default'))
-       ->setDescription(t('A boolean indicating whether the profile is the default one.'))
-       ->setRevisionable(TRUE);
-
-    $fields['created'] = BaseFieldDefinition::create('created')
-      ->setLabel(t('Created'))
-      ->setDescription(t('The time that the profile was created.'))
-      ->setRevisionable(TRUE);
-
-    $fields['changed'] = BaseFieldDefinition::create('changed')
-      ->setLabel(t('Changed'))
-      ->setDescription(t('The time that the profile was last edited.'))
-      ->setRevisionable(TRUE);
-
-    return $fields;
-  }
-
-  /**
-   * Overrides Entity::id().
-   */
-  public function id() {
-    return $this->get('profile_id')->value;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function label() {
     $profile_type = ProfileType::load($this->bundle());
-    return
-      t('@type profile of @username (uid: @uid)',
-        [
-          '@type' => $profile_type->label(),
-          '@username' => $this->getOwner()->getDisplayName(),
-          '@uid' => $this->getOwnerId(),
-        ]);
-  }
+    $label = t('@type profile #@id', [
+      '@type' => $profile_type->label(),
+      '@id' => $this->id(),
+    ]);
+    // Allow the label to be overridden.
+    $event = new ProfileLabelEvent($this, $label);
+    $event_dispatcher = \Drupal::service('event_dispatcher');
+    $event_dispatcher->dispatch(ProfileEvents::PROFILE_LABEL, $event);
+    $label = $event->getLabel();
 
-  /**
-   * {@inheritdoc}
-   */
-  public function getType() {
-    return $this->bundle();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setType($type) {
-    $this->set('type', $this->bundle());
-    return $this;
+    return $label;
   }
 
   /**
@@ -161,6 +108,36 @@ class Profile extends ContentEntityBase implements ProfileInterface {
    */
   public function setOwner(UserInterface $account) {
     $this->set('uid', $account->id());
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function isActive() {
+    return (bool) $this->get('status')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setActive($active) {
+    $this->set('status', (bool) $active);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function isDefault() {
+    return (bool) $this->get('is_default')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setDefault($is_default) {
+    $this->set('is_default', (bool) $is_default);
     return $this;
   }
 
@@ -212,36 +189,6 @@ class Profile extends ContentEntityBase implements ProfileInterface {
   /**
    * {@inheritdoc}
    */
-  public function isActive() {
-    return (bool) $this->get('status')->value;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setActive($active) {
-    $this->set('status', $active ? PROFILE_ACTIVE : PROFILE_NOT_ACTIVE);
-    return $this;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function isDefault() {
-    return (bool) $this->get('is_default')->value;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setDefault($is_default) {
-    $this->set('is_default', $is_default ? PROFILE_DEFAULT : PROFILE_NOT_DEFAULT);
-    return $this;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function getCacheTagsToInvalidate() {
     $tags = parent::getCacheTagsToInvalidate();
     return Cache::mergeTags($tags, [
@@ -260,7 +207,7 @@ class Profile extends ContentEntityBase implements ProfileInterface {
     // Check if this profile is, or became the default.
     if ($this->isDefault()) {
       /** @var \Drupal\profile\Entity\ProfileInterface[] $profiles */
-      $profiles = $storage->loadMultipleByUser($this->getOwner(), $this->getType());
+      $profiles = $storage->loadMultipleByUser($this->getOwner(), $this->bundle());
 
       // Ensure that all other profiles are set to not default.
       foreach ($profiles as $profile) {
@@ -270,6 +217,43 @@ class Profile extends ContentEntityBase implements ProfileInterface {
         }
       }
     }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
+    $fields = parent::baseFieldDefinitions($entity_type);
+
+    $fields['uid'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Owner'))
+      ->setDescription(t('The user that owns this profile.'))
+      ->setRevisionable(TRUE)
+      ->setSetting('target_type', 'user')
+      ->setSetting('handler', 'default');
+
+    $fields['status'] = BaseFieldDefinition::create('boolean')
+      ->setLabel(t('Active'))
+      ->setDescription(t('Whether the profile is active.'))
+      ->setDefaultValue(TRUE)
+      ->setRevisionable(TRUE);
+
+    $fields['is_default'] = BaseFieldDefinition::create('boolean')
+      ->setLabel(t('Default'))
+      ->setDescription(t('Whether this is the default profile.'))
+      ->setRevisionable(TRUE);
+
+    $fields['created'] = BaseFieldDefinition::create('created')
+      ->setLabel(t('Created'))
+      ->setDescription(t('The time when the profile was created.'))
+      ->setRevisionable(TRUE);
+
+    $fields['changed'] = BaseFieldDefinition::create('changed')
+      ->setLabel(t('Changed'))
+      ->setDescription(t('The time when the profile was last edited.'))
+      ->setRevisionable(TRUE);
+
+    return $fields;
   }
 
 }

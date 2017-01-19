@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "0a99e7a9b1da3d652a24a6bfe67204be",
+    "content-hash": "17c07d6ea4531046c0c621d26017b3c8",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -1529,122 +1529,18 @@
             }
         },
         {
-            "name": "drupal/colorbox",
-            "version": "dev-1.x",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupal.org/project/colorbox",
-                "reference": "bf511a8594ef69cbba37ef1ea0e72fb9727d15f6"
-            },
-            "require": {
-                "drupal/core": "*"
-            },
-            "type": "drupal-module",
-            "extra": {
-                "branch-alias": {
-                    "dev-1.x": "1.x-dev"
-                },
-                "drupal": {
-                    "version": "8.x-1.2+5-dev",
-                    "datestamp": "1483955042"
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "authors": [
-                {
-                    "name": "Sam152",
-                    "homepage": "https://www.drupal.org/user/1485048"
-                },
-                {
-                    "name": "frjo",
-                    "homepage": "https://www.drupal.org/user/5546"
-                },
-                {
-                    "name": "grisendo",
-                    "homepage": "https://www.drupal.org/user/848238"
-                },
-                {
-                    "name": "jdwfly",
-                    "homepage": "https://www.drupal.org/user/298179"
-                },
-                {
-                    "name": "podarok",
-                    "homepage": "https://www.drupal.org/user/116002"
-                }
-            ],
-            "description": "A light-weight, customizable lightbox plugin for jQuery.",
-            "homepage": "https://www.drupal.org/project/colorbox",
-            "support": {
-                "source": "https://cgit.drupalcode.org/colorbox",
-                "issues": "https://www.drupal.org/project/colorbox"
-            },
-            "time": "2017-01-09 09:39:17"
-        },
-        {
-            "name": "drupal/colorbox_load",
-            "version": "1.0.0-rc2",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupal.org/project/colorbox_load",
-                "reference": "8.x-1.0-rc2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/colorbox_load-8.x-1.0-rc2.zip",
-                "reference": "8.x-1.0-rc2",
-                "shasum": "5597f044d8eddb1280d480d096177852f21f7ebf"
-            },
-            "require": {
-                "drupal/colorbox": "*",
-                "drupal/core": "~8.0",
-                "drupal/ng_lightbox": "*"
-            },
-            "type": "drupal-module",
-            "extra": {
-                "branch-alias": {
-                    "dev-1.x": "1.x-dev"
-                },
-                "drupal": {
-                    "version": "8.x-1.0-rc2",
-                    "datestamp": "1467852839"
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "authors": [
-                {
-                    "name": "Sam152",
-                    "homepage": "https://www.drupal.org/user/1485048"
-                },
-                {
-                    "name": "benjy",
-                    "homepage": "https://www.drupal.org/user/1852732"
-                }
-            ],
-            "description": "Allow you to load any content in a colorbox.",
-            "homepage": "https://www.drupal.org/project/colorbox_load",
-            "support": {
-                "source": "http://cgit.drupalcode.org/colorbox_load"
-            }
-        },
-        {
             "name": "drupal/config_update",
-            "version": "1.2.0",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/config_update",
-                "reference": "8.x-1.2"
+                "reference": "8.x-1.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/config_update-8.x-1.2.zip",
-                "reference": "8.x-1.2",
-                "shasum": "9490c58d1b7e58c5c08533c93d5565f356144591"
+                "url": "https://ftp.drupal.org/files/projects/config_update-8.x-1.3.zip",
+                "reference": null,
+                "shasum": "4fc57add91c090ea3c9ed4848579b450253b1eed"
             },
             "require": {
                 "drupal/core": "*"
@@ -1655,8 +1551,8 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.2",
-                    "datestamp": "1477674962"
+                    "version": "8.x-1.3",
+                    "datestamp": "1484770683"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -2153,7 +2049,7 @@
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/devel",
-                "reference": "70f62fd0773082a1a4305c6a7c2bccc649bc98a2"
+                "reference": "a492f4b150f190bdc62ac3fc9018da82fe1305d5"
             },
             "require": {
                 "drupal/core": "~8.0"
@@ -2167,8 +2063,8 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.0-beta1+24-dev",
-                    "datestamp": "1483990143"
+                    "version": "8.x-1.0-beta1+25-dev",
+                    "datestamp": "1484815082"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -2230,7 +2126,7 @@
                 "issues": "http://drupal.org/project/devel",
                 "irc": "irc://irc.freenode.org/drupal-contribute"
             },
-            "time": "2017-01-09 19:24:05"
+            "time": "2017-01-19 08:35:20"
         },
         {
             "name": "drupal/entity",
@@ -2769,59 +2665,12 @@
             }
         },
         {
-            "name": "drupal/ng_lightbox",
-            "version": "1.0.0-beta2",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupal.org/project/ng_lightbox",
-                "reference": "8.x-1.0-beta2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/ng_lightbox-8.x-1.0-beta2.zip",
-                "reference": "8.x-1.0-beta2",
-                "shasum": "67ca521c7217f211b3d4cf881edfc79d0f8f071d"
-            },
-            "require": {
-                "drupal/core": "~8.0"
-            },
-            "type": "drupal-module",
-            "extra": {
-                "branch-alias": {
-                    "dev-1.x": "1.x-dev"
-                },
-                "drupal": {
-                    "version": "8.x-1.0-beta2",
-                    "datestamp": "1455407339"
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "authors": [
-                {
-                    "name": "Sam152",
-                    "homepage": "https://www.drupal.org/user/1485048"
-                },
-                {
-                    "name": "benjy",
-                    "homepage": "https://www.drupal.org/user/1852732"
-                }
-            ],
-            "description": "A path based lightbox solution using CSS 3 properties.",
-            "homepage": "https://www.drupal.org/project/ng_lightbox",
-            "support": {
-                "source": "http://cgit.drupalcode.org/ng_lightbox"
-            }
-        },
-        {
             "name": "drupal/profile",
             "version": "dev-1.x",
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/profile",
-                "reference": "13f8026a7d1bcc67b15002cafe1276d67b140363"
+                "reference": "c4d1ad2fddfb801d714bcecca784d8cc0ddb8083"
             },
             "require": {
                 "drupal/core": "~8.1",
@@ -2833,8 +2682,8 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.0-alpha5+12-dev",
-                    "datestamp": "1473852239"
+                    "version": "8.x-1.0-alpha5+13-dev",
+                    "datestamp": "1484833683"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -2867,7 +2716,8 @@
             "homepage": "http://drupal.org/project/profile",
             "support": {
                 "source": "http://cgit.drupalcode.org/profile"
-            }
+            },
+            "time": "2017-01-19 16:50:30"
         },
         {
             "name": "drupal/select_or_other",
@@ -7812,9 +7662,7 @@
         "drupal/token": 20,
         "drupal/select_or_other": 20,
         "drupal/leaflet": 20,
-        "drupal/field_states_ui": 20,
-        "drupal/colorbox_load": 5,
-        "drupal/ng_lightbox": 10
+        "drupal/field_states_ui": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

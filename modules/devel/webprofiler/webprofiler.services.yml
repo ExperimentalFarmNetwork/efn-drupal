@@ -253,7 +253,6 @@ services:
 # parameter converter service for profile token
   webprofiler.token_converter:
     class: Drupal\webprofiler\Routing\TokenConverter
-    arguments: ['@profiler']
     tags:
       - { name: paramconverter }
 

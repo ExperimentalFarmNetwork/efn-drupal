@@ -81,7 +81,6 @@ class ProfileTest extends EntityKernelTestBase {
       $types[$id]->save();
     }
 
-
     // Create a new profile.
     /** @var \Drupal\profile\Entity\ProfileInterface $profile */
     $profile = $this->profileStorage->create($expected = [
@@ -89,13 +88,6 @@ class ProfileTest extends EntityKernelTestBase {
       'uid' => $this->user1->id(),
     ]);
 
-    $expected_label = new TranslatableMarkup('@type profile of @username (uid: @uid)', [
-      '@type' => $types['profile_type_0']->label(),
-      '@username' => $this->user1->getDisplayName(),
-      '@uid' => $this->user1->id(),
-    ]);
-
-    $this->assertEquals($expected_label, $profile->label());
     $this->assertEquals($profile->getOwnerId(), $this->user1->id());
     $this->assertEquals($profile->getCreatedTime(), REQUEST_TIME);
     $this->assertEquals($profile->getChangedTime(), REQUEST_TIME);
@@ -103,6 +95,11 @@ class ProfileTest extends EntityKernelTestBase {
     // Save the profile.
     $profile->save();
     $this->assertEquals(REQUEST_TIME, $profile->getChangedTime());
+    $expected_label = new TranslatableMarkup('@type profile #@id', [
+      '@type' => $types['profile_type_0']->label(),
+      '@id' => $profile->id(),
+    ]);
+    $this->assertEquals($expected_label, $profile->label());
 
     // List profiles for the user and verify that the new profile appears.
     $list = $this->profileStorage->loadByProperties(['uid' => $this->user1->id()]);
@@ -164,7 +161,7 @@ class ProfileTest extends EntityKernelTestBase {
     $profile1->save();
     $this->assertTrue($profile1->isActive());
 
-    $profile1->setActive(PROFILE_NOT_ACTIVE);
+    $profile1->setActive(FALSE);
     $profile1->save();
 
     $this->assertFalse($profile1->isActive());

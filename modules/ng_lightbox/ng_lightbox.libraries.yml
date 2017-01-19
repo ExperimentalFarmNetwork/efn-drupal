@@ -1,5 +1,0 @@
-ng_lightbox:
-  version: VERSION
-  js: {}
-  dependencies:
-    - core/drupal.ajax
