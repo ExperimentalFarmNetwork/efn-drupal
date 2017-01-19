@@ -96,8 +96,6 @@
     </header>
   {% endblock %}
 {% endif %}
-{# Group Header #}
-<div class="group-header"></div>
 {# Main #}
 {% block main %}
   <div role="main" class="main-container {{ container }} js-quickedit-main-content">
@@ -154,7 +152,7 @@
         {# Header #}
         {% if page.header %}
           {% block header %}
-            <div role="heading" class="bump-title">
+            <div class="col-sm-12" role="heading">
               {{ page.header }}
             </div>
           {% endblock %}

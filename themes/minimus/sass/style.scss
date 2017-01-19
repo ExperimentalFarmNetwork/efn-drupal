@@ -234,20 +234,34 @@ body.path-group{
 	.group-content-project-group-membership-group-join-form{
 		margin-bottom:1em;
 	}
-	.main-container{
-		margin-top:250px; //put this in mediaquery
+	.group-header{
+		height:400px; //put this in mediaquery
 	}
+	.bump-title{
+		h1{
+			position:absolute;
+			top:-90px;
+			left:30px;
+			background:$du-dark;
+			color:$du-gold;
+			padding:5px 10px;
+			font-weight:100;
+			border-bottom: $du-orange thin solid;
 
+		}
+	}
 	.region-content{
 		background:white;
 		padding:1em;
+
 		button.toggleVerbose{
 			margin: 0 auto;
 			z-index:999;
-		    position: absolute;
-		    right: 2em;
-		    top:21px;
+		    position: relative;
+		    float:right;
+		    margin-top:5px;
 		}
+
 		.groupWrapper{
 
 			.field--name-field-project-image,
@@ -328,35 +342,42 @@ body.path-group{
 .page-node-type-project-update article, .path-group{
 	// tabs 
 	nav.tabs{
-			position: relative;
-		    top: -35px;
-		    left:17px;
+			// position: relative;
+		 //    top: -35px;
+		 //    left:17px;
 
-		 float:right;
+		 // float:right;
 		ul.nav-tabs {
 			border-bottom:0;
+			display:inline-block;
 
 			> li{
 				// float:none;
 				// margin-bottom:5px;
+				&.active > a{
+					border:0;
+					border-bottom: 2px $du-asparagus solid;
+
+				}
 				> a{
-					padding: 5px 10px;
-				    // margin-bottom: 0;
-				    font-size: 12px;
-				    -ms-touch-action: manipulation;
-				    touch-action: manipulation;
-				    cursor: pointer;
-				    -webkit-user-select: none;
-				    -moz-user-select: none;
-				    -ms-user-select: none;
-				    user-select: none;
-				    background-image: none;
-				    border-radius: 4px;
-				    background: $gray-lighter;
-				    color: $gray-light;
-				    filter: alpha(Opacity=60);
-					opacity: 0.6;
-					transition: all ease-in-out;
+					// padding: 5px 10px;
+				 //    // margin-bottom: 0;
+				    font-size: $font-size-small;
+				 //    -ms-touch-action: manipulation;
+				 //    touch-action: manipulation;
+				 //    cursor: pointer;
+				 //    -webkit-user-select: none;
+				 //    -moz-user-select: none;
+				 //    -ms-user-select: none;
+				 //    user-select: none;
+				 //    background-image: none;
+				 //    border-radius: 4px;
+				 //    background: $gray-lighter;
+				 //    color: $gray-light;
+				 //    filter: alpha(Opacity=60);
+					// opacity: 0.6;
+					// transition: all ease-in-out;
+					// border-bottom:thin $du-asparagus solid;
 					&:hover{
 					    filter: alpha(Opacity=100);
 						opacity: 1;

@@ -15,32 +15,29 @@
 
     $("button.toggleVerbose").click(function(event) {
         $('.path-group .region-content .field').toggleClass('toggleVFields','1000');
+        $(this).find('.glyphicon').toggleClass('glyphicon-collapse-up');
     });
 
     $(".views-field-field-discussion textarea.form-textarea, #node-project-update-field-discussion textarea.form-textarea, [id^=node-project-update-field-discussion] textarea.form-textarea").attr("placeholder", "Comment here ...").click(function(event) {
-        $(this).attr('placeholder', '...');
+        $(this).attr('placeholder', '!');
         $('.js-form-submit').css('display', 'block');
     });
 
     // Put header image in background of group pages
-    var headerImg = $(".path-group .field--name-field-project-image img").attr('src');
-    $("body.path-group").css({
-        'background': 'url('+headerImg+')',
-        'background-size':' contain',
-        'background-repeat':'no-repeat'
-    });
 
-    // set project update initial background offset
-    var $nbar = $("#navbar"),
-    $toolbar = $("#toolbar-bar"),
-    $toolTray = $(".toolbar-tray-horizontal"),
-    bottom = ($nbar.position().top) + $nbar.offset().top + $nbar.outerHeight();
-        // bottom = $nbar.height() + $toolbar.height() + $toolTray.height();
+    if (($("body").hasClass('path-group')) && $('.field--name-field-project-image')){
+        var headerImg = $(".path-group .field--name-field-project-image img").attr('src');
+        $(".group-header").css({
+            'background': 'url('+headerImg+')',
+            'background-size':' cover',
+            'background-repeat':'no-repeat'
+        });
 
-
-        console.log("bottom:" + bottom + " pos:" + ($nbar.position().top) + " offset: " + ($nbar.offset().top) +" nb oH:"+($nbar.outerHeight()));
-        // console.log("bottom: "+ bottom + "nbar: "+$nbar.height() +"toolbar: " +$toolbar.height() +"tooltray: "+ $toolTray.height());
-        // $("body.path-group").css('background-position-y', bottom+'px');
+    } 
+    if (! $('.field--name-field-project-image').length){
+        $(".group-header").remove();
+        console.log("gone");
+    }
 
     // front page image to background of card
     if ($("body").hasClass('path-frontpage')){

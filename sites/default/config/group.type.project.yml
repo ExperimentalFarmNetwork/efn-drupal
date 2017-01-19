@@ -5,4 +5,5 @@ dependencies: {  }
 id: project
 label: Project
 description: ''
-creator_roles: {  }
+creator_roles:
+  - project-admin

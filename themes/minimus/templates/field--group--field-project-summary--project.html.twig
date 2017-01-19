@@ -61,7 +61,9 @@
     </div>
   {% else %}
     {% for item in items %}
-      <div{{ attributes.addClass(classes, 'field--item') }}>{{ item.content }}</div>
+      <div{{ attributes.addClass(classes, 'field--item') }}>{{ item.content }}
+      <button class="button btn icon-before btn-xs toggleVerbose"><span class="glyphicon glyphicon-collapse-down"></span><span class="morelesstxt">more project info</span></button>
+</div>
     {% endfor %}
   {% endif %}
 {% else %}
@@ -74,6 +76,7 @@
       <div{{ item.attributes.addClass('field--item') }}>{{ item.content }}</div>
     {% endfor %}
     {% if multiple %}
+    <button class="button btn icon-before btn-xs toggleVerbose">more/less project info</button>
       </div>
     {% endif %}
   </div>

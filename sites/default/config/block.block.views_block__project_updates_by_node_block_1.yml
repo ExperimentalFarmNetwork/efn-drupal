@@ -5,6 +5,7 @@ dependencies:
   config:
     - views.view.project_updates_by_node
   module:
+    - system
     - views
   theme:
     - minimus
@@ -21,4 +22,9 @@ settings:
   label_display: '0'
   views_label: ''
   items_per_page: none
-visibility: {  }
+visibility:
+  request_path:
+    id: request_path
+    pages: "/group/*/join\r\n/group/*/members\r\n/group/*/content\r\n/group/*/nodes"
+    negate: true
+    context_mapping: {  }

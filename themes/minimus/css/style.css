@@ -6481,17 +6481,26 @@ body.path-group {
     margin-bottom: 0; }
   body.path-group .group-content-project-group-membership-group-join-form {
     margin-bottom: 1em; }
-  body.path-group .main-container {
-    margin-top: 250px; }
+  body.path-group .group-header {
+    height: 400px; }
+  body.path-group .bump-title h1 {
+    position: absolute;
+    top: -90px;
+    left: 30px;
+    background: #242029;
+    color: #A4AD23;
+    padding: 5px 10px;
+    font-weight: 100;
+    border-bottom: #FFA100 thin solid; }
   body.path-group .region-content {
     background: white;
     padding: 1em; }
     body.path-group .region-content button.toggleVerbose {
       margin: 0 auto;
       z-index: 999;
-      position: absolute;
-      right: 2em;
-      top: 21px; }
+      position: relative;
+      float: right;
+      margin-top: 5px; }
     body.path-group .region-content .groupWrapper .field--name-field-project-image,
     body.path-group .region-content .groupWrapper .field--name-field-description,
     body.path-group .region-content .groupWrapper .field--name-field-project-type,
@@ -6572,34 +6581,18 @@ body.path-group {
   border-radius: 5px;
   padding: 1rem 2rem; }
 
-.page-node-type-project-update article nav.tabs, .path-group nav.tabs {
-  position: relative;
-  top: -35px;
-  left: 17px;
-  float: right; }
-  .page-node-type-project-update article nav.tabs ul.nav-tabs, .path-group nav.tabs ul.nav-tabs {
-    border-bottom: 0; }
-    .page-node-type-project-update article nav.tabs ul.nav-tabs > li > a, .path-group nav.tabs ul.nav-tabs > li > a {
-      padding: 5px 10px;
-      font-size: 12px;
-      -ms-touch-action: manipulation;
-      touch-action: manipulation;
-      cursor: pointer;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      background-image: none;
-      border-radius: 4px;
-      background: #eeeeee;
-      color: #777777;
-      filter: alpha(Opacity=60);
-      opacity: 0.6;
-      transition: all ease-in-out; }
-      .page-node-type-project-update article nav.tabs ul.nav-tabs > li > a:hover, .path-group nav.tabs ul.nav-tabs > li > a:hover {
-        filter: alpha(Opacity=100);
-        opacity: 1;
-        color: #3B4A59; }
+.page-node-type-project-update article nav.tabs ul.nav-tabs, .path-group nav.tabs ul.nav-tabs {
+  border-bottom: 0;
+  display: inline-block; }
+  .page-node-type-project-update article nav.tabs ul.nav-tabs > li.active > a, .path-group nav.tabs ul.nav-tabs > li.active > a {
+    border: 0;
+    border-bottom: 2px #3B4A59 solid; }
+  .page-node-type-project-update article nav.tabs ul.nav-tabs > li > a, .path-group nav.tabs ul.nav-tabs > li > a {
+    font-size: 17px; }
+    .page-node-type-project-update article nav.tabs ul.nav-tabs > li > a:hover, .path-group nav.tabs ul.nav-tabs > li > a:hover {
+      filter: alpha(Opacity=100);
+      opacity: 1;
+      color: #3B4A59; }
 .page-node-type-project-update article h1, .path-group h1 {
   font-size: 33px;
   font-weight: bold;
