@@ -19,7 +19,6 @@ function minimus_preprocess_node(&$variables) {
 
 
 function minimus_preprocess_group(&$variables, $hook){
-	kint(\Drupal::routeMatch()->getRouteName());
 
 	// add title styling to view and edit of group pages
 
