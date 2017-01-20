@@ -6483,6 +6483,11 @@ body.path-group {
     margin-bottom: 1em; }
   body.path-group .group-header {
     height: 400px; }
+  body.path-group .nu-project-header {
+    background: url("/themes/minimus/images/project_default.png") no-repeat;
+    background-size: cover;
+    height: 300px;
+    background-repeat: repeat-x; }
   body.path-group .region-content {
     background: white;
     padding: 1em; }

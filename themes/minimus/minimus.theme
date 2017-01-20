@@ -46,10 +46,12 @@ function minimus_preprocess_group(&$variables, $hook){
 function minimus_preprocess(&$variables, $hook){
 	$url = Drupal\Core\Url::fromRoute('<current>')->getInternalPath();
 	$variables['route']=$url;
+
+	// kint(\Drupal::routeMatch()->getRouteName());
 	
 
 	// add title styling to view and edit of group pages 
-	if (\Drupal::routeMatch()->getRouteName() === 'entity.group.edit_form'){
+	if ((\Drupal::routeMatch()->getRouteName() === 'entity.group.edit_form') || (\Drupal::routeMatch()->getRouteName() === 'entity.group.add_form')){
 		$variables['#attached']['library'][] = 'minimus/group-view';
 	}
 }

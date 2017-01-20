@@ -50,7 +50,7 @@ set groupclass = [
     {{ title_prefix }}
     {% if not page %}
         <h3{{ title_attributes }}>
-            <a href="{{ url }}" rel="bookmark">{{ label }}</a>
+            <a id="{{ url }}" rel="bookmark">{{ label }}</a>
         </h3>
     {% endif %}
     {{ title_suffix }}

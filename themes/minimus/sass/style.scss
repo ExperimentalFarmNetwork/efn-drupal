@@ -237,6 +237,12 @@ body.path-group{
 	.group-header{
 		height:400px; //put this in mediaquery
 	}
+	.nu-project-header{
+		background: url("/themes/minimus/images/project_default.png") no-repeat; 
+		background-size:cover;
+		height:300px;
+	    background-repeat: repeat-x;
+	}
 	.bump-title{
 		h1{
 			// position:absolute;
