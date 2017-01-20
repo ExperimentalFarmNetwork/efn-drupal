@@ -6,7 +6,6 @@ dependencies:
     - field.storage.profile.field_bio
     - field.storage.profile.field_user_image
     - group.type.project
-    - image.style.large
     - image.style.thumbnail
   module:
     - comment
@@ -491,7 +490,7 @@ display:
   block_2:
     display_plugin: block
     id: block_2
-    display_title: Block
+    display_title: 'Project Creator'
     position: 2
     display_options:
       display_extenders: {  }
@@ -594,7 +593,7 @@ display:
           click_sort_column: target_id
           type: image
           settings:
-            image_style: large
+            image_style: thumbnail
             image_link: content
           group_column: ''
           group_columns: {  }
@@ -752,6 +751,7 @@ display:
           separator: ''
           hide_empty: false
           default_field_elements: true
+      display_description: ''
     cache_metadata:
       max-age: -1
       contexts:

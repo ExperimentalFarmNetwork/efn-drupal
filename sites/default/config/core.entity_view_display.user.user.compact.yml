@@ -1,0 +1,21 @@
+uuid: d1e4144f-b422-488b-86cd-2b5094d01874
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.user.compact
+  module:
+    - user
+id: user.user.compact
+targetEntityType: user
+bundle: user
+mode: compact
+content:
+  profile_main:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  member_for: true
+  profile_researcher: true
+  profile_volunteer: true
