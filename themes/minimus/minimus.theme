@@ -51,7 +51,7 @@ function minimus_preprocess(&$variables, $hook){
 	
 
 	// add title styling to view and edit of group pages 
-	if ((\Drupal::routeMatch()->getRouteName() === 'entity.group.edit_form') || (\Drupal::routeMatch()->getRouteName() === 'entity.group.add_form')){
+	if (\Drupal::routeMatch()->getRouteName() === 'entity.group.edit_form'){
 		$variables['#attached']['library'][] = 'minimus/group-view';
 	}
 }
