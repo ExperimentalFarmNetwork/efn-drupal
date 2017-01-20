@@ -48,7 +48,7 @@ header.navbar-default{
 		display:inline-table;
 
 	}
-	#block-newproject{
+	#block-newproject, #block-newprojectbutton{
 		bottom:10px;
 		.field--name-body{
 			a{
@@ -239,14 +239,14 @@ body.path-group{
 	}
 	.bump-title{
 		h1{
-			position:absolute;
-			top:-90px;
-			left:30px;
-			background:$du-dark;
-			color:$du-gold;
-			padding:5px 10px;
-			font-weight:100;
-			border-bottom: $du-orange thin solid;
+			// position:absolute;
+			// top:-90px;
+			// left:30px;
+			// background:$du-dark;
+			// color:$du-gold;
+			// padding:5px 10px;
+			// font-weight:100;
+			// border-bottom: $du-orange thin solid;
 
 		}
 	}

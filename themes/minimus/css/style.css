@@ -6365,12 +6365,12 @@ header.navbar-default {
     transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
   header.navbar-default #block-minimus-account-menu, header.navbar-default #block-newproject {
     display: inline-table; }
-  header.navbar-default #block-newproject {
+  header.navbar-default #block-newproject, header.navbar-default #block-newprojectbutton {
     bottom: 10px; }
-    header.navbar-default #block-newproject .field--name-body a {
+    header.navbar-default #block-newproject .field--name-body a, header.navbar-default #block-newprojectbutton .field--name-body a {
       background: #3B4A59;
       color: #A4AD23; }
-      header.navbar-default #block-newproject .field--name-body a:hover {
+      header.navbar-default #block-newproject .field--name-body a:hover, header.navbar-default #block-newprojectbutton .field--name-body a:hover {
         background: #418261;
         color: #242029; }
   header.navbar-default ul.navbar-nav {
@@ -6483,15 +6483,6 @@ body.path-group {
     margin-bottom: 1em; }
   body.path-group .group-header {
     height: 400px; }
-  body.path-group .bump-title h1 {
-    position: absolute;
-    top: -90px;
-    left: 30px;
-    background: #242029;
-    color: #A4AD23;
-    padding: 5px 10px;
-    font-weight: 100;
-    border-bottom: #FFA100 thin solid; }
   body.path-group .region-content {
     background: white;
     padding: 1em; }

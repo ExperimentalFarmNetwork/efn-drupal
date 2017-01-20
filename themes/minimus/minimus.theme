@@ -18,8 +18,16 @@ function minimus_preprocess_node(&$variables) {
 }
 
 
-// function minimus_preprocess_group(&$variables, $hook){
-// 	if($variables['group']){
+function minimus_preprocess_group(&$variables, $hook){
+	kint(\Drupal::routeMatch()->getRouteName());
+
+	// add title styling to view and edit of group pages
+
+	if ((\Drupal::routeMatch()->getRouteName() === 'entity.group.canonical' || \Drupal::routeMatch()->getRouteName() === 'entity.group.edit_form')) {
+		$variables['#attached']['library'][] = 'minimus/group-view';
+		// kint(\Drupal::routeMatch()->getRouteName());
+
+// banner stuff .. not working ??
 
 // 		$group=$variables['group'];
 
@@ -32,12 +40,17 @@ function minimus_preprocess_node(&$variables) {
 // 		$url = Drupal\Core\Url::fromRoute('<current>')->getInternalPath();
 // 		// $variables['route']=$url;
 
-// 	}
-// }
+	}
 
-// function minimus_preprocess(&$variables, $hook){
+}
+
+function minimus_preprocess(&$variables, $hook){
+	$url = Drupal\Core\Url::fromRoute('<current>')->getInternalPath();
+	$variables['route']=$url;
 	
-// 		$url = Drupal\Core\Url::fromRoute('<current>')->getInternalPath();
-// 		$variables['route']=$url;
-// 		$variables['cosa']="cosa";
-// }
+
+	// add title styling to view and edit of group pages 
+	if (\Drupal::routeMatch()->getRouteName() === 'entity.group.edit_form'){
+		$variables['#attached']['library'][] = 'minimus/group-view';
+	}
+}
