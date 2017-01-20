@@ -6363,7 +6363,7 @@ header.navbar-default {
     height: 50px;
     margin: 5px;
     transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-  header.navbar-default #block-minimus-account-menu, header.navbar-default #block-newproject {
+  header.navbar-default #block-minimus-account-menu, header.navbar-default #block-newproject, header.navbar-default #block-newprojectbutton {
     display: inline-table; }
   header.navbar-default #block-newproject, header.navbar-default #block-newprojectbutton {
     bottom: 10px; }
