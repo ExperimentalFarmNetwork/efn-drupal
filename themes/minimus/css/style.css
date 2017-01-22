@@ -6475,6 +6475,9 @@ div.main-container {
     .path-frontpage .view-project .views-row .views-field-field-location p.address {
       display: inline; }
 
+.path-user .table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: #fff; }
+
 body.path-group {
   background-position-y: 73px; }
   body.path-group .navbar {

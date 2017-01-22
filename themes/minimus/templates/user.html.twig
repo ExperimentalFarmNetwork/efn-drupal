@@ -20,6 +20,11 @@
 #}
 <article{{ attributes }}>
   {% if content %}
-    {{ content| without('member_for','profile_researcher', 'profile_volunteer')}}
+	  {% if _context.elements['#view_mode'] == "full" %}
+	    {{ content}}
+	   {% else %}	   
+	   	 {{ content|without('member_for', 'profile_researcher','profile_volunteer')}}
+	  {% endif %}
   {% endif %}
 </article>
+

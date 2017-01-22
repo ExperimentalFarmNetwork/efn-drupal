@@ -223,7 +223,14 @@ div.main-container{
 	}
 }
 
+// Profile
 
+// override shit in _tables.scss
+.path-user{
+	.table-striped > tbody > tr:nth-of-type(odd){
+	    background-color: #fff;
+		   }
+}
  
 // group main page
 body.path-group{
