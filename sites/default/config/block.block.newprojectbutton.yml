@@ -1,0 +1,25 @@
+uuid: 5373be30-b6ac-44c6-b928-42271ba87cbc
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic_block:c1aff9f9-8287-40e6-9f0d-282496371a16'
+  module:
+    - block_content
+  theme:
+    - minimus
+id: newprojectbutton
+theme: minimus
+region: navigation_collapsible
+weight: -9
+provider: null
+plugin: 'block_content:c1aff9f9-8287-40e6-9f0d-282496371a16'
+settings:
+  id: 'block_content:c1aff9f9-8287-40e6-9f0d-282496371a16'
+  label: 'New Project button'
+  provider: block_content
+  label_display: '0'
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

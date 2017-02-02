@@ -6372,7 +6372,8 @@ header.navbar-default {
   header.navbar-default #block-minimus-account-menu, header.navbar-default #block-newproject, header.navbar-default #block-newprojectbutton {
     display: inline-table; }
   header.navbar-default #block-newproject, header.navbar-default #block-newprojectbutton {
-    bottom: 10px; }
+    bottom: 10px;
+    padding-top: 15px; }
     header.navbar-default #block-newproject .field--name-body a, header.navbar-default #block-newprojectbutton .field--name-body a {
       background: #3B4A59;
       color: #A4AD23; }

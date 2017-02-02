@@ -13,7 +13,7 @@ _core:
 id: minimus_main_menu
 theme: minimus
 region: navigation_collapsible
-weight: -9
+weight: -10
 provider: null
 plugin: 'system_menu_block:main'
 settings:
