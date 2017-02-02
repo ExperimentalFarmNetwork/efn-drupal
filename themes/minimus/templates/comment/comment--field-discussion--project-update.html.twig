@@ -66,11 +66,8 @@
  * @ingroup themeable
  */
 #}
-<!-- FILE NAME SUGGESTIONS:
-   * comment--field-discussion--project-update.html.twig
-   * comment--field-discussion.html.twig
-   x comment.html.twig
---><article{{ attributes.addClass('js-comment') }}>
+
+<article{{ attributes.addClass('js-comment') }}>
   {#
     Hide the "new" indicator by default, let a piece of JavaScript ask the
     server which comments are new for the user. Rendering the final "new"
@@ -79,15 +76,12 @@
 
 
   <mark class="hidden" data-comment-timestamp="{{ new_indicator_timestamp }}"></mark>
-  <div{{ content_attributes }}>
     {% if title %}
-      {{ title_prefix }}
-      <div class="commentAuthor"{{ title_attributes }} id="comment-form"> {{ user_picture }} {{ author }} says:</div>
-      {{ title_suffix }}
+      <div class="commentAuthor"{{ title_attributes }} id="comment-form"><img src="{{ file_url(authpic) }}"><br/> 
+      </div>
     {% endif %}
+    <div class="authsays">{{ author }}says:</div>
     {{ content.field_comment_body }}
-
-  </div>
     <footer>
     {#
       Indicate the semantic relationship between parent and child comments for

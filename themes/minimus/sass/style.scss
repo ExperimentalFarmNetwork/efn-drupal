@@ -18,6 +18,9 @@ a{
 	color:$link-color ;
 }
 
+// h1.page-header, button, nav, h2, h3{
+// 	font-family: "open_sanslight", "Helvetica Neue", Helvetica, Arial, sans-serif;
+// }
 
 // fix for overlapping main container
 .col-sm-12{
@@ -226,10 +229,19 @@ div.main-container{
 // Profile
 
 // override shit in _tables.scss
-.path-user{
-	.table-striped > tbody > tr:nth-of-type(odd){
+.path-user, body.path-group{
+	.table-striped, table{
+		margin-bottom:0;
+		> tbody > tr, .table-striped > tbody > tr:nth-of-type(odd){
 	    background-color: #fff;
+	    td{
+	    	border-top:0;
+	    	padding:0;
+	    }
+
 		   }
+
+		} 
 }
  
 // group main page
@@ -352,7 +364,22 @@ body.path-group{
 
 
 // Project Updates
+
+
 .page-node-type-project-update article, .path-group{
+
+	// PU Header
+	// .view-project-updates-by-node .view-header{
+	// 	background: $du-green;
+
+	// 	h3.pu-header{
+	// 		color:$du-dark;
+	// 		text-transform: uppercase;
+	// 		font-size: $font-size-base;
+	// 		padding: 0 10px;
+	// 	}
+	// }
+
 	// tabs 
 	nav.tabs{
 			// position: relative;
@@ -427,38 +454,12 @@ body.path-group{
 		float:right;
 		font-size:.8em;
 		text-align:center;
-
-		.view-profiles{
-			font-size:.00001em;
-			color:transparent;
-		    display: inline-block;
+		color:$gray-light;
+		img{
+			border-radius:50%;
+			border: thin solid $gray-lighter;
+			padding: 3px;
 		}
-		.views-col.col-1{
-			width:100% !important;
-		}
-		.field--name-field-user-image{
-			width: 80px;
-			height: 80px;
-			overflow: hidden;
-			margin: 10px;
-			position: relative;
-
-			img.img-responsive{
-				// width:200px;
-				display:block !important;
-				border-radius:50%;
-
-				position: absolute;
-				left: -1000%;
-				right: -1000%;
-				top: -1000%;
-				bottom: -1000%;
-				margin: auto;
-				min-height: 100%;
-				min-width: 100%;
-			}
-
-		} 
 	}
 
 	.field--name-field-image{
@@ -468,16 +469,8 @@ body.path-group{
 			margin-right:5px;
 			vertical-align:top;
 		}
+	}
 
-		// float:right;
-																																																																																																																																																																																																					}
-	// .author{
-	// 	margin-bottom:1em;
-	// 	color:$gray;
-	// 	a{
-	// 		color:$gray-darker;
-	// 	}
-	// }
 	.views-row{
 		clear:both;	
 		&:first-of-type {
@@ -505,29 +498,30 @@ body.path-group{
 			border-radius: 5px;
 			padding:1em;
 			margin-bottom:1em;
+			overflow: auto;
 
-			.commentAuthor{
-				// float:left;
+			.authsays{
+				font-size: $font-size-small;
 				color:$gray-light;
+			}
+			.commentAuthor{
+				float:left;
 				article{
-					float:left;
 					margin-right: 1em;
 				}
-				.view-display-id-user_view, .field--name-field-user-image{
-					font-size:.001em;
-					color:transparent;
-					img.img-responsive{
-						width:50px;
-						display:block !important;
-						border-radius:50%;
-					}
-					
+				img{
+					width:50px;
+					border-radius:50%;
+					border: thin solid $gray-lighter;
+					padding: 3px;
+					margin-right:1em;
+					float:left;
 				}
+					
 				.views-col{
 					width:100% !important;
 				}
 			}
-
 			p.submitted{
 				color:$gray-light;
 				font-size: $font-size-small;

@@ -22,7 +22,9 @@
   {% if content %}
 	  {% if _context.elements['#view_mode'] == "full" %}
 	    {{ content}}
-	   {% else %}	   
+	   {% elseif _context.elements['#view_mode'] == "compact" %}
+	    {{ content|without('member_for', 'profile_researcher','profile_volunteer')}}
+	   {% elseif _context.elements['#view_mode'] == "nodeview" %}
 	   	 {{ content|without('member_for', 'profile_researcher','profile_volunteer')}}
 	  {% endif %}
   {% endif %}

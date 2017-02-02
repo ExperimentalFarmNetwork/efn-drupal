@@ -15,6 +15,12 @@
  * Copyright 2011-2016 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
+@font-face {
+  font-family: 'open_sanslight';
+  src: url("../fonts/OpenSans-Light-webfont.eot");
+  src: url("../fonts/OpenSans-Light-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/OpenSans-Light-webfont.woff") format("woff"), url("../fonts/OpenSans-Light-webfont.ttf") format("truetype"), url("../fonts/OpenSans-Light-webfont.svg#open_sanslight") format("svg");
+  font-weight: normal;
+  font-style: normal; }
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 html {
   font-family: sans-serif;
@@ -6475,8 +6481,13 @@ div.main-container {
     .path-frontpage .view-project .views-row .views-field-field-location p.address {
       display: inline; }
 
-.path-user .table-striped > tbody > tr:nth-of-type(odd) {
-  background-color: #fff; }
+.path-user .table-striped, .path-user table, body.path-group .table-striped, body.path-group table {
+  margin-bottom: 0; }
+  .path-user .table-striped > tbody > tr, .path-user .table-striped .table-striped > tbody > tr:nth-of-type(odd), .path-user table > tbody > tr, .path-user table .table-striped > tbody > tr:nth-of-type(odd), body.path-group .table-striped > tbody > tr, body.path-group .table-striped .table-striped > tbody > tr:nth-of-type(odd), body.path-group table > tbody > tr, body.path-group table .table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #fff; }
+    .path-user .table-striped > tbody > tr td, .path-user .table-striped .table-striped > tbody > tr:nth-of-type(odd) td, .path-user table > tbody > tr td, .path-user table .table-striped > tbody > tr:nth-of-type(odd) td, body.path-group .table-striped > tbody > tr td, body.path-group .table-striped .table-striped > tbody > tr:nth-of-type(odd) td, body.path-group table > tbody > tr td, body.path-group table .table-striped > tbody > tr:nth-of-type(odd) td {
+      border-top: 0;
+      padding: 0; }
 
 body.path-group {
   background-position-y: 73px; }
@@ -6611,30 +6622,12 @@ body.path-group {
 .page-node-type-project-update article .nodeAuthor, .path-group .nodeAuthor {
   float: right;
   font-size: .8em;
-  text-align: center; }
-  .page-node-type-project-update article .nodeAuthor .view-profiles, .path-group .nodeAuthor .view-profiles {
-    font-size: .00001em;
-    color: transparent;
-    display: inline-block; }
-  .page-node-type-project-update article .nodeAuthor .views-col.col-1, .path-group .nodeAuthor .views-col.col-1 {
-    width: 100% !important; }
-  .page-node-type-project-update article .nodeAuthor .field--name-field-user-image, .path-group .nodeAuthor .field--name-field-user-image {
-    width: 80px;
-    height: 80px;
-    overflow: hidden;
-    margin: 10px;
-    position: relative; }
-    .page-node-type-project-update article .nodeAuthor .field--name-field-user-image img.img-responsive, .path-group .nodeAuthor .field--name-field-user-image img.img-responsive {
-      display: block !important;
-      border-radius: 50%;
-      position: absolute;
-      left: -1000%;
-      right: -1000%;
-      top: -1000%;
-      bottom: -1000%;
-      margin: auto;
-      min-height: 100%;
-      min-width: 100%; }
+  text-align: center;
+  color: #777777; }
+  .page-node-type-project-update article .nodeAuthor img, .path-group .nodeAuthor img {
+    border-radius: 50%;
+    border: thin solid #eeeeee;
+    padding: 3px; }
 .page-node-type-project-update article .field--name-field-image, .path-group .field--name-field-image {
   margin-top: 1em; }
   .page-node-type-project-update article .field--name-field-image div.field--item, .path-group .field--name-field-image div.field--item {
@@ -6658,19 +6651,22 @@ body.path-group {
     border: #eeeeee thin solid;
     border-radius: 5px;
     padding: 1em;
-    margin-bottom: 1em; }
-    .page-node-type-project-update article section[id^="node-project-update-field-discussion-"] .js-comment .commentAuthor, .page-node-type-project-update article #node-project-update-field-discussion .js-comment .commentAuthor, .page-node-type-project-update article .views-field-field-discussion .js-comment .commentAuthor, .path-group section[id^="node-project-update-field-discussion-"] .js-comment .commentAuthor, .path-group #node-project-update-field-discussion .js-comment .commentAuthor, .path-group .views-field-field-discussion .js-comment .commentAuthor {
+    margin-bottom: 1em;
+    overflow: auto; }
+    .page-node-type-project-update article section[id^="node-project-update-field-discussion-"] .js-comment .authsays, .page-node-type-project-update article #node-project-update-field-discussion .js-comment .authsays, .page-node-type-project-update article .views-field-field-discussion .js-comment .authsays, .path-group section[id^="node-project-update-field-discussion-"] .js-comment .authsays, .path-group #node-project-update-field-discussion .js-comment .authsays, .path-group .views-field-field-discussion .js-comment .authsays {
+      font-size: 17px;
       color: #777777; }
+    .page-node-type-project-update article section[id^="node-project-update-field-discussion-"] .js-comment .commentAuthor, .page-node-type-project-update article #node-project-update-field-discussion .js-comment .commentAuthor, .page-node-type-project-update article .views-field-field-discussion .js-comment .commentAuthor, .path-group section[id^="node-project-update-field-discussion-"] .js-comment .commentAuthor, .path-group #node-project-update-field-discussion .js-comment .commentAuthor, .path-group .views-field-field-discussion .js-comment .commentAuthor {
+      float: left; }
       .page-node-type-project-update article section[id^="node-project-update-field-discussion-"] .js-comment .commentAuthor article, .page-node-type-project-update article #node-project-update-field-discussion .js-comment .commentAuthor article, .page-node-type-project-update article .views-field-field-discussion .js-comment .commentAuthor article, .path-group section[id^="node-project-update-field-discussion-"] .js-comment .commentAuthor article, .path-group #node-project-update-field-discussion .js-comment .commentAuthor article, .path-group .views-field-field-discussion .js-comment .commentAuthor article {
-        float: left;
         margin-right: 1em; }
-      .page-node-type-project-update article section[id^="node-project-update-field-discussion-"] .js-comment .commentAuthor .view-display-id-user_view, .page-node-type-project-update article section[id^="node-project-update-field-discussion-"] .js-comment .commentAuthor .field--name-field-user-image, .page-node-type-project-update article #node-project-update-field-discussion .js-comment .commentAuthor .view-display-id-user_view, .page-node-type-project-update article #node-project-update-field-discussion .js-comment .commentAuthor .field--name-field-user-image, .page-node-type-project-update article .views-field-field-discussion .js-comment .commentAuthor .view-display-id-user_view, .page-node-type-project-update article .views-field-field-discussion .js-comment .commentAuthor .field--name-field-user-image, .path-group section[id^="node-project-update-field-discussion-"] .js-comment .commentAuthor .view-display-id-user_view, .path-group section[id^="node-project-update-field-discussion-"] .js-comment .commentAuthor .field--name-field-user-image, .path-group #node-project-update-field-discussion .js-comment .commentAuthor .view-display-id-user_view, .path-group #node-project-update-field-discussion .js-comment .commentAuthor .field--name-field-user-image, .path-group .views-field-field-discussion .js-comment .commentAuthor .view-display-id-user_view, .path-group .views-field-field-discussion .js-comment .commentAuthor .field--name-field-user-image {
-        font-size: .001em;
-        color: transparent; }
-        .page-node-type-project-update article section[id^="node-project-update-field-discussion-"] .js-comment .commentAuthor .view-display-id-user_view img.img-responsive, .page-node-type-project-update article section[id^="node-project-update-field-discussion-"] .js-comment .commentAuthor .field--name-field-user-image img.img-responsive, .page-node-type-project-update article #node-project-update-field-discussion .js-comment .commentAuthor .view-display-id-user_view img.img-responsive, .page-node-type-project-update article #node-project-update-field-discussion .js-comment .commentAuthor .field--name-field-user-image img.img-responsive, .page-node-type-project-update article .views-field-field-discussion .js-comment .commentAuthor .view-display-id-user_view img.img-responsive, .page-node-type-project-update article .views-field-field-discussion .js-comment .commentAuthor .field--name-field-user-image img.img-responsive, .path-group section[id^="node-project-update-field-discussion-"] .js-comment .commentAuthor .view-display-id-user_view img.img-responsive, .path-group section[id^="node-project-update-field-discussion-"] .js-comment .commentAuthor .field--name-field-user-image img.img-responsive, .path-group #node-project-update-field-discussion .js-comment .commentAuthor .view-display-id-user_view img.img-responsive, .path-group #node-project-update-field-discussion .js-comment .commentAuthor .field--name-field-user-image img.img-responsive, .path-group .views-field-field-discussion .js-comment .commentAuthor .view-display-id-user_view img.img-responsive, .path-group .views-field-field-discussion .js-comment .commentAuthor .field--name-field-user-image img.img-responsive {
-          width: 50px;
-          display: block !important;
-          border-radius: 50%; }
+      .page-node-type-project-update article section[id^="node-project-update-field-discussion-"] .js-comment .commentAuthor img, .page-node-type-project-update article #node-project-update-field-discussion .js-comment .commentAuthor img, .page-node-type-project-update article .views-field-field-discussion .js-comment .commentAuthor img, .path-group section[id^="node-project-update-field-discussion-"] .js-comment .commentAuthor img, .path-group #node-project-update-field-discussion .js-comment .commentAuthor img, .path-group .views-field-field-discussion .js-comment .commentAuthor img {
+        width: 50px;
+        border-radius: 50%;
+        border: thin solid #eeeeee;
+        padding: 3px;
+        margin-right: 1em;
+        float: left; }
       .page-node-type-project-update article section[id^="node-project-update-field-discussion-"] .js-comment .commentAuthor .views-col, .page-node-type-project-update article #node-project-update-field-discussion .js-comment .commentAuthor .views-col, .page-node-type-project-update article .views-field-field-discussion .js-comment .commentAuthor .views-col, .path-group section[id^="node-project-update-field-discussion-"] .js-comment .commentAuthor .views-col, .path-group #node-project-update-field-discussion .js-comment .commentAuthor .views-col, .path-group .views-field-field-discussion .js-comment .commentAuthor .views-col {
         width: 100% !important; }
     .page-node-type-project-update article section[id^="node-project-update-field-discussion-"] .js-comment p.submitted, .page-node-type-project-update article #node-project-update-field-discussion .js-comment p.submitted, .page-node-type-project-update article .views-field-field-discussion .js-comment p.submitted, .path-group section[id^="node-project-update-field-discussion-"] .js-comment p.submitted, .path-group #node-project-update-field-discussion .js-comment p.submitted, .path-group .views-field-field-discussion .js-comment p.submitted {
