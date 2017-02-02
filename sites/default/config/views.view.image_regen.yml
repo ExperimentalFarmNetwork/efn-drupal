@@ -9,9 +9,11 @@ dependencies:
     - image.style.large
     - image.style.thumbnail
     - profile.type.main
+    - user.role.administrator
   module:
     - image
     - profile
+    - user
 id: image_regen
 label: image_regen
 module: views
@@ -28,8 +30,10 @@ display:
     position: 0
     display_options:
       access:
-        type: none
-        options: {  }
+        type: role
+        options:
+          role:
+            administrator: administrator
       cache:
         type: tag
         options: {  }
@@ -354,6 +358,7 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url.query_args
+        - user.roles
       tags:
         - 'config:field.storage.profile.field_user_image'
   page_1:
@@ -370,5 +375,6 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url.query_args
+        - user.roles
       tags:
         - 'config:field.storage.profile.field_user_image'
