@@ -17,7 +17,6 @@ module:
   dblog: 0
   default_content: 0
   devel: 0
-  devel_generate: 0
   dynamic_page_cache: 0
   editor: 0
   efn_default_content: 0
@@ -71,5 +70,6 @@ theme:
   seven: 0
   bootstrap: 0
   minimus: 0
+  bartik: 0
 _core:
   default_config_hash: m2GVq11UAOVuNgj8x0t5fMOPujpvQQ_zxLoaly1BMEU

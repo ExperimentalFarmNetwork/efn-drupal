@@ -13,6 +13,7 @@ dependencies:
     - address
     - group
     - image
+    - taxonomy
     - user
 id: project
 label: Project
@@ -494,7 +495,18 @@ display:
       header: {  }
       footer: {  }
       empty: {  }
-      relationships: {  }
+      relationships:
+        uid:
+          id: uid
+          table: groups_field_data
+          field: uid
+          relationship: none
+          group_type: group
+          admin_label: User
+          required: true
+          entity_type: group
+          entity_field: uid
+          plugin_id: standard
       arguments: {  }
       display_extenders: {  }
     cache_metadata:
@@ -510,7 +522,7 @@ display:
   page_1:
     display_plugin: page
     id: page_1
-    display_title: Page
+    display_title: 'Main project page'
     position: 1
     display_options:
       display_extenders: {  }
@@ -520,11 +532,98 @@ display:
         title: Projects
         menu_name: main
         enabled: false
+      display_description: ''
     cache_metadata:
       max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
+        - url.query_args
+      tags:
+        - 'config:field.storage.group.field_location'
+        - 'config:field.storage.group.field_project_image'
+        - 'config:field.storage.group.field_project_summary'
+  page_2:
+    display_plugin: page
+    id: page_2
+    display_title: 'Project Tags'
+    position: 2
+    display_options:
+      display_extenders: {  }
+      display_description: 'project tags to replace default taxonomy'
+      relationships:
+        uid:
+          id: uid
+          table: groups_field_data
+          field: uid
+          relationship: none
+          group_type: group
+          admin_label: User
+          required: true
+          entity_type: group
+          entity_field: uid
+          plugin_id: standard
+        field_project_type:
+          id: field_project_type
+          table: group__field_project_type
+          field: field_project_type
+          relationship: none
+          group_type: group
+          admin_label: 'field_project_type: Taxonomy term'
+          required: true
+          plugin_id: standard
+      defaults:
+        relationships: false
+        arguments: false
+      path: taxonomy/term/%
+      arguments:
+        tid:
+          id: tid
+          table: taxonomy_term_field_data
+          field: tid
+          relationship: field_project_type
+          group_type: group
+          admin_label: ''
+          default_action: 'not found'
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: true
+          title: '{{ arguments.tid }}'
+          default_argument_type: fixed
+          default_argument_options:
+            argument: ''
+          default_argument_skip_url: false
+          summary_options:
+            base_path: ''
+            count: true
+            items_per_page: 25
+            override: false
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: true
+          validate:
+            type: 'entity:taxonomy_term'
+            fail: 'not found'
+          validate_options:
+            access: true
+            operation: view
+            multiple: 0
+            bundles: {  }
+          break_phrase: false
+          not: false
+          entity_type: taxonomy_term
+          entity_field: tid
+          plugin_id: taxonomy
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
         - url.query_args
       tags:
         - 'config:field.storage.group.field_location'

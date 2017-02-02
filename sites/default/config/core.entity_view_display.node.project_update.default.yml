@@ -10,6 +10,7 @@ dependencies:
     - image.style.large
     - node.type.project_update
   module:
+    - ajax_comments
     - comment
     - image
     - text
@@ -29,9 +30,11 @@ content:
     weight: 3
     label: hidden
     settings:
-      pager_id: 0
+      pager_id: 1
       view_mode: default
-    third_party_settings: {  }
+    third_party_settings:
+      ajax_comments:
+        enable_ajax_comments: '1'
     type: comment_default
   field_image:
     weight: 2

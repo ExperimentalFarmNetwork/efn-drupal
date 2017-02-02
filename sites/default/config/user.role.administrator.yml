@@ -152,3 +152,6 @@ permissions:
   - 'view any yamlform submission'
   - 'edit yamlform source'
   - 'administer ng lightbox'
+  - 'execute php code'
+  - 'access webprofiler'
+  - 'view webprofiler toolbar'

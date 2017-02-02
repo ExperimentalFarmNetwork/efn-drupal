@@ -34,3 +34,4 @@ permissions:
   - 'edit any project_update node'
   - 'delete own project_update node'
   - 'delete any project_update node'
+  - 'access content overview'

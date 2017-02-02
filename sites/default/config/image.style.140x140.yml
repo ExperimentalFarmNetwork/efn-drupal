@@ -1,0 +1,14 @@
+uuid: 0a52d7fd-707b-4368-8001-c0ac4edc8e25
+langcode: en
+status: true
+dependencies: {  }
+name: 140x140
+label: 140x140
+effects:
+  fee9c3df-f2d8-4739-87c0-15ddf00517b8:
+    uuid: fee9c3df-f2d8-4739-87c0-15ddf00517b8
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 140
+      height: 140

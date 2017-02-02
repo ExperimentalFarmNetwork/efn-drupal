@@ -2,10 +2,10 @@ cdn_provider: ''
 _core:
   default_config_hash: _5qrDuRmWmRVjW00si3U1s1NrgrocA4N653EYGRfgEE
 favicon:
-  mimetype: image/vnd.microsoft.icon
-  path: ''
-  url: 'http://efn.localhost/themes/minimus/favicon.ico'
-  use_default: true
+  mimetype: image/png
+  path: 'public://bean_0.png'
+  url: 'http://efn.localhost/sites/default/files/bean.png'
+  use_default: false
 schemas:
   bootstrap: 8000
   minimus: 8000
@@ -26,9 +26,9 @@ region_wells:
   sidebar_first: ''
   sidebar_second: ''
   footer: ''
+breadcrumb: '0'
 features:
   comment_user_picture: true
   comment_user_verification: true
   favicon: true
   node_user_picture: false
-breadcrumb: '0'
