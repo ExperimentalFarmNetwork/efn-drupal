@@ -14,7 +14,6 @@ dependencies:
     - field.field.group.project.field_project_type
     - field.field.group.project.field_researcher_background
     - field.field.group.project.field_seeking_volunteers
-    - field.field.group.project.field_tags
     - field.field.group.project.field_volunteers_ask_do
     - field.field.group.project.field_volunteers_how_many
     - field.field.group.project.field_volunteers_keep_seed
@@ -103,14 +102,6 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: options_buttons
-  field_tags:
-    weight: 6
-    settings:
-      match_operator: CONTAINS
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: entity_reference_autocomplete_tags
   field_volunteers_ask_do:
     weight: 11
     settings:
