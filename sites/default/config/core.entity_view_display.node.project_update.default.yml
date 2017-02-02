@@ -44,8 +44,5 @@ content:
       image_link: file
     third_party_settings: {  }
     type: image
-  links:
-    weight: 0
-    settings: {  }
-    third_party_settings: {  }
-hidden: {  }
+hidden:
+  links: true

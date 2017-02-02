@@ -1,0 +1,24 @@
+uuid: 35c1194c-cc0c-4a6b-bbb6-68a4a79dad72
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.project_updates_by_node
+  module:
+    - views
+  theme:
+    - bootstrap
+id: views_block__project_updates_by_node_block_1_3
+theme: bootstrap
+region: content
+weight: 0
+provider: null
+plugin: 'views_block:project_updates_by_node-block_1'
+settings:
+  id: 'views_block:project_updates_by_node-block_1'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: none
+visibility: {  }

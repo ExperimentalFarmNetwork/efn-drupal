@@ -3,26 +3,30 @@
     $(".block-group-operations button.btn-xs").removeClass('btn-xs btn-default').addClass('btn-lg btn-success');
 
     // resize navbar on scroll
-    var navbar=$('header.navbar-default');
-    $(window).scroll(function () {
-        if ($(window).scrollTop() > 160) {
-          navbar.addClass('navbar-fixed-top');
-      }
-      if ($(window).scrollTop() < 161) {
-          navbar.removeClass('navbar-fixed-top');
-      }
-  });
+  //   var navbar=$('header.navbar-default');
+  //   $(window).scroll(function () {
+  //       if ($(window).scrollTop() > 160) {
+  //         navbar.addClass('navbar-fixed-top');
+  //     }
+  //     if ($(window).scrollTop() < 161) {
+  //         navbar.removeClass('navbar-fixed-top');
+  //     }
+  // });
 
+// Toggle hidden fields on project page
     $("button.toggleVerbose").click(function(event) {
         $('.path-group .region-content .field').toggleClass('toggleVFields','1000');
         $(this).find('.glyphicon').toggleClass('glyphicon-collapse-up');
     });
 
+Drupal.behaviors.commentThing = {
+  attach: function (context, settings) {
     $(".views-field-field-discussion textarea.form-textarea, #node-project-update-field-discussion textarea.form-textarea, [id^=node-project-update-field-discussion] textarea.form-textarea").attr("placeholder", "Comment here ...").click(function(event) {
         $(this).attr('placeholder', '!');
         $('.js-form-submit').css('display', 'block');
-    });
-
+        });
+    }
+}
     // Put header image in background of group pages
 
     if (($("body").hasClass('path-group')) && $('.field--name-field-project-image')){

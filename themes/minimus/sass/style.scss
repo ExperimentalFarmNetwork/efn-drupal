@@ -369,16 +369,20 @@ body.path-group{
 .page-node-type-project-update article, .path-group{
 
 	// PU Header
-	// .view-project-updates-by-node .view-header{
-	// 	background: $du-green;
+	.view-project-updates-by-node .view-header{
+		border-top: thin $du-green solid;
+		border-bottom: thin $du-green solid;
+		margin: 1em 0;
 
-	// 	h3.pu-header{
-	// 		color:$du-dark;
-	// 		text-transform: uppercase;
-	// 		font-size: $font-size-base;
-	// 		padding: 0 10px;
-	// 	}
-	// }
+		h3.pu-header{
+			color:$du-green;
+			text-transform: uppercase;
+			font-size: $font-size-base;
+			padding: 0 10px;
+			margin:0;
+			line-height:initial;
+		}
+	}
 
 	// tabs 
 	nav.tabs{
@@ -540,7 +544,7 @@ body.path-group{
 			}
 		}
 		.js-form-submit{
-			display:none;
+			// display:none;
 		}
 	}	
 

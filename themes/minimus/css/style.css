@@ -6591,6 +6591,17 @@ body.path-group {
   border-radius: 5px;
   padding: 1rem 2rem; }
 
+.page-node-type-project-update article .view-project-updates-by-node .view-header, .path-group .view-project-updates-by-node .view-header {
+  border-top: thin #418261 solid;
+  border-bottom: thin #418261 solid;
+  margin: 1em 0; }
+  .page-node-type-project-update article .view-project-updates-by-node .view-header h3.pu-header, .path-group .view-project-updates-by-node .view-header h3.pu-header {
+    color: #418261;
+    text-transform: uppercase;
+    font-size: 19px;
+    padding: 0 10px;
+    margin: 0;
+    line-height: initial; }
 .page-node-type-project-update article nav.tabs ul.nav-tabs, .path-group nav.tabs ul.nav-tabs {
   border-bottom: 0;
   display: inline-block; }
@@ -6680,8 +6691,6 @@ body.path-group {
       display: none; }
     .page-node-type-project-update article section[id^="node-project-update-field-discussion-"] .commentForm .views-col, .page-node-type-project-update article section[id^="node-project-update-field-discussion-"] .form-type-textarea .views-col, .page-node-type-project-update article #node-project-update-field-discussion .commentForm .views-col, .page-node-type-project-update article #node-project-update-field-discussion .form-type-textarea .views-col, .page-node-type-project-update article .views-field-field-discussion .commentForm .views-col, .page-node-type-project-update article .views-field-field-discussion .form-type-textarea .views-col, .path-group section[id^="node-project-update-field-discussion-"] .commentForm .views-col, .path-group section[id^="node-project-update-field-discussion-"] .form-type-textarea .views-col, .path-group #node-project-update-field-discussion .commentForm .views-col, .path-group #node-project-update-field-discussion .form-type-textarea .views-col, .path-group .views-field-field-discussion .commentForm .views-col, .path-group .views-field-field-discussion .form-type-textarea .views-col {
       width: 100% !important; }
-  .page-node-type-project-update article section[id^="node-project-update-field-discussion-"] .js-form-submit, .page-node-type-project-update article #node-project-update-field-discussion .js-form-submit, .page-node-type-project-update article .views-field-field-discussion .js-form-submit, .path-group section[id^="node-project-update-field-discussion-"] .js-form-submit, .path-group #node-project-update-field-discussion .js-form-submit, .path-group .views-field-field-discussion .js-form-submit {
-    display: none; }
 
 .region-sidebar-second {
   background: #fff;
