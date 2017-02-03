@@ -1,0 +1,14 @@
+uuid: 5e9cdb89-cd4c-4db2-82db-1975d2b198e3
+langcode: en
+status: true
+dependencies: {  }
+name: 220x220
+label: 220x220
+effects:
+  827383ef-abba-4199-b0af-c74590f159d1:
+    uuid: 827383ef-abba-4199-b0af-c74590f159d1
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 220
+      height: 220

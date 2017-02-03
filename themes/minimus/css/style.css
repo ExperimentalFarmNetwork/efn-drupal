@@ -6593,8 +6593,8 @@ body.path-group {
   padding: 1rem 2rem; }
 
 .page-node-type-project-update article .view-project-updates-by-node .view-header, .path-group .view-project-updates-by-node .view-header {
-  border-top: thin #418261 solid;
-  border-bottom: thin #418261 solid;
+  border-top: thin #A4AD23 solid;
+  border-bottom: thin #A4AD23 solid;
   margin: 1em 0; }
   .page-node-type-project-update article .view-project-updates-by-node .view-header h3.pu-header, .path-group .view-project-updates-by-node .view-header h3.pu-header {
     color: #242029;
