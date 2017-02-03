@@ -6597,10 +6597,10 @@ body.path-group {
   border-bottom: thin #418261 solid;
   margin: 1em 0; }
   .page-node-type-project-update article .view-project-updates-by-node .view-header h3.pu-header, .path-group .view-project-updates-by-node .view-header h3.pu-header {
-    color: #418261;
+    color: #242029;
     text-transform: uppercase;
     font-size: 19px;
-    padding: 0 10px;
+    padding: 10px 0;
     margin: 0;
     line-height: initial; }
 .page-node-type-project-update article nav.tabs ul.nav-tabs, .path-group nav.tabs ul.nav-tabs {
@@ -6696,16 +6696,22 @@ body.path-group {
 .region-sidebar-second {
   background: #fff;
   border-radius: 5px;
-  padding: 5px; }
-
-#block-views-block-project-updates-block-1-2 .item-list ul {
-  padding-left: 0; }
-  #block-views-block-project-updates-block-1-2 .item-list ul li {
-    list-style-type: none;
-    margin-bottom: 1em; }
-    #block-views-block-project-updates-block-1-2 .item-list ul li footer {
-      color: #777777;
-      font-size: .8em; }
+  padding: 5px;
+  margin-top: 10px; }
+  .region-sidebar-second section.block {
+    margin-bottom: 30px; }
+  .region-sidebar-second #block-minimus-groupoperations {
+    text-align: center; }
+  .region-sidebar-second .view-members-block {
+    font-size: .8em;
+    text-align: center;
+    color: #777777; }
+    .region-sidebar-second .view-members-block .views-field-field-user-image {
+      display: inline-block; }
+      .region-sidebar-second .view-members-block .views-field-field-user-image img {
+        border-radius: 50%;
+        border: thin solid #eeeeee;
+        padding: 10px; }
 
 footer.footer {
   background: #3B4A59;

@@ -5,6 +5,8 @@ dependencies:
   config:
     - field.storage.profile.field_user_image
     - group.type.project
+    - image.style.220x220
+    - image.style.80x80
     - image.style.thumbnail
   module:
     - comment
@@ -271,8 +273,8 @@ display:
             value: all
             title_enable: false
             title: All
-          title_enable: true
-          title: '{{ arguments.gid|placeholder }} members'
+          title_enable: false
+          title: ''
           default_argument_type: group_id_from_url
           default_argument_options: {  }
           default_argument_skip_url: false
@@ -398,7 +400,7 @@ display:
           click_sort_column: target_id
           type: image
           settings:
-            image_style: thumbnail
+            image_style: 80x80
             image_link: content
           group_column: ''
           group_columns: {  }
@@ -534,6 +536,8 @@ display:
         fields: false
         style: false
         row: false
+        arguments: false
+        empty: false
       pager:
         type: some
         options:
@@ -592,7 +596,7 @@ display:
           click_sort_column: target_id
           type: image
           settings:
-            image_style: thumbnail
+            image_style: 220x220
             image_link: content
           group_column: ''
           group_columns: {  }
@@ -615,8 +619,8 @@ display:
           label: ''
           exclude: false
           alter:
-            alter_text: false
-            text: ''
+            alter_text: true
+            text: 'Project owner: {{ name }} '
             make_link: false
             path: ''
             absolute: false
@@ -689,6 +693,60 @@ display:
           hide_empty: false
           default_field_elements: true
       display_description: ''
+      arguments:
+        gid:
+          id: gid
+          table: group_content_field_data
+          field: gid
+          relationship: none
+          group_type: group
+          admin_label: ''
+          default_action: default
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: true
+          title: '{{ arguments.gid|placeholder }} owner'
+          default_argument_type: group_id_from_url
+          default_argument_options: {  }
+          default_argument_skip_url: false
+          summary_options:
+            base_path: ''
+            count: true
+            items_per_page: 25
+            override: false
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: true
+          validate:
+            type: 'entity:group'
+            fail: 'not found'
+          validate_options:
+            bundles:
+              project: project
+            access: true
+            operation: view
+            multiple: 0
+          break_phrase: false
+          not: false
+          entity_type: group_content
+          entity_field: gid
+          plugin_id: numeric
+      empty:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: true
+          tokenize: false
+          content: 'No project creator available.'
+          plugin_id: text_custom
     cache_metadata:
       max-age: -1
       contexts:
