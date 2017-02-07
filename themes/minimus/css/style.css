@@ -6724,5 +6724,14 @@ footer.footer {
       footer.footer #block-sociallinks .field--name-body p img {
         width: 80px;
         margin: 1em; }
+  footer.footer section {
+    position: relative;
+    min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px; }
+    @media (min-width: 1200px) {
+      footer.footer section {
+        float: left;
+        width: 25%; } }
 
 /*# sourceMappingURL=style.css.map */
