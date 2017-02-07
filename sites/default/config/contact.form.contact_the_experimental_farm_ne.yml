@@ -1,0 +1,13 @@
+uuid: b88fa168-9ea6-46d1-9d35-b2fdb41bad65
+langcode: en
+status: true
+dependencies: {  }
+id: contact_the_experimental_farm_ne
+label: 'Contact the Experimental Farm Network'
+recipients:
+  - nathankleinman@gmail.com
+  - onion@riseup.net
+reply: ''
+weight: 0
+message: ''
+redirect: /contact/thank_you
