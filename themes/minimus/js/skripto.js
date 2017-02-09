@@ -2,6 +2,10 @@
     // change bootstrap button for add project update
     $(".block-group-operations button.btn-xs").removeClass('btn-xs btn-default').addClass('btn-lg btn-success');
 
+    // footer buttons
+    $("#block-donate li a").addClass('btn-lg btn-success');
+    $("#block-footerblock1 a").addClass('btn-lg btn-success');
+
     // resize navbar on scroll
   //   var navbar=$('header.navbar-default');
   //   $(window).scroll(function () {
@@ -57,6 +61,9 @@ Drupal.behaviors.commentThing = {
         });
     }
     $("[data-drupal-link-system-path='user']").before('<a href="/user" class="glyphicon glyphicon-user"></a>');
-    $("[data-drupal-link-system-path='user/logout']").before('<a href="/user" class="glyphicon glyphicon-log-out"></a>');;
+    $("[data-drupal-link-system-path='user/logout']").before('<a href="/user" class="glyphicon glyphicon-log-out"></a>');
+
+
+
 
 })(jQuery, Drupal);

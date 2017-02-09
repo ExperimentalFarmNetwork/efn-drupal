@@ -589,27 +589,69 @@ body.path-group{
 // 	}
 // }
 
-
 // footer
 
 footer.footer{
+	color:$du-green;
 	background: $du-asparagus;
-	background-image:url(../images/seeds_bak.svg);
+	// background-image:url(../images/seeds_bak.svg);
 	background-size:cover;
+
+	.region-footer{
+		// @include make-row();
+			width:90%;
+			margin-left:auto;
+			margin-right:auto;
+		section, nav{
+			@include make-lg-column(3);
+			text-align:center;
+		}
+	}
+	#block-footerblock1{
+		img{
+			width:100%;
+			margin-bottom:1em;
+		}
+	}
 	#block-sociallinks{
+		text-align:center;
 		padding-bottom:2em;
 		.field--name-body{
-			text-align:center;
-			p{
-				img{
-					width:80px;
-					margin:1em;
-				}
+			// text-align:center;
+			img{
+				width:65px;
+				margin:5px 10px;
 			}
+		}
+		p:nth-of-type(1) {
+			margin-bottom:3em;
+		};
+
+		a[href="/contact"]{
+			background: $du-dark;
+			color: $du-green;
+		    padding: 20px 40px;	
+		    margin-top:2em;
 		}
 	}
 
-	section{
-		@include make-lg-column(3);
+	#block-donate{
+		text-align:center;
+		 a{
+			background: $du-dark;
+			color: $du-orange;
+		    padding: 20px 40px;
+		}
+	}
+
+	.nav > li {
+		display:block;
+		float:none;
+		> a {
+			display:inline-block;
+			&:hover{
+				background:none;
+			}
+		}
 	}
 }

@@ -6714,24 +6714,51 @@ body.path-group {
         padding: 10px; }
 
 footer.footer {
+  color: #418261;
   background: #3B4A59;
-  background-image: url(../images/seeds_bak.svg);
   background-size: cover; }
-  footer.footer #block-sociallinks {
-    padding-bottom: 2em; }
-    footer.footer #block-sociallinks .field--name-body {
+  footer.footer .region-footer {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto; }
+    footer.footer .region-footer section, footer.footer .region-footer nav {
+      position: relative;
+      min-height: 1px;
+      padding-left: 15px;
+      padding-right: 15px;
       text-align: center; }
-      footer.footer #block-sociallinks .field--name-body p img {
-        width: 80px;
-        margin: 1em; }
-  footer.footer section {
-    position: relative;
-    min-height: 1px;
-    padding-left: 15px;
-    padding-right: 15px; }
-    @media (min-width: 1200px) {
-      footer.footer section {
-        float: left;
-        width: 25%; } }
+      @media (min-width: 1200px) {
+        footer.footer .region-footer section, footer.footer .region-footer nav {
+          float: left;
+          width: 25%; } }
+  footer.footer #block-footerblock1 img {
+    width: 100%;
+    margin-bottom: 1em; }
+  footer.footer #block-sociallinks {
+    text-align: center;
+    padding-bottom: 2em; }
+    footer.footer #block-sociallinks .field--name-body img {
+      width: 65px;
+      margin: 5px 10px; }
+    footer.footer #block-sociallinks p:nth-of-type(1) {
+      margin-bottom: 3em; }
+    footer.footer #block-sociallinks a[href="/contact"] {
+      background: #242029;
+      color: #418261;
+      padding: 20px 40px;
+      margin-top: 2em; }
+  footer.footer #block-donate {
+    text-align: center; }
+    footer.footer #block-donate a {
+      background: #242029;
+      color: #FFA100;
+      padding: 20px 40px; }
+  footer.footer .nav > li {
+    display: block;
+    float: none; }
+    footer.footer .nav > li > a {
+      display: inline-block; }
+      footer.footer .nav > li > a:hover {
+        background: none; }
 
 /*# sourceMappingURL=style.css.map */
