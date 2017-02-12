@@ -605,19 +605,21 @@ footer.footer{
 			margin-left:auto;
 			margin-right:auto;
 		section, nav{
-			@include make-lg-column(3);
+			// @include make-lg-column(3);
 			// text-align:center;
 		}
 	}
 	#block-footerblock1{
+		@include make-lg-column(4);
 		img{
 			width:100%;
 			margin-bottom:1em;
 		}
 	}
 	#block-sociallinks{
+		@include make-lg-column(4);
 		text-align:center;
-		padding-bottom:2em;
+		padding-top:45px;
 		.field--name-body{
 			// text-align:center;
 			img{
@@ -635,25 +637,41 @@ footer.footer{
 		    padding: 20px 40px;	
 		    margin-top:2em;
 		}
-	}
+		.field--name-body{
 
-	#block-donate{
-		text-align:center;
-		 a{
-			background: $du-dark;
-			color: $du-orange;
-		    padding: 20px 40px;
 		}
 	}
 
-	.nav > li {
-		display:block;
-		float:none;
-		> a {
-			display:inline-block;
-			&:hover{
-				background:none;
+	// #block-donate{
+	// 	text-align:center;
+	// 	 a{
+	// 		background: $du-dark;
+	// 		color: $du-orange;
+	// 	    padding: 20px 40px;
+	// 	}
+	// }
+	#block-mainnavigation{
+		@include make-lg-column(4);
+		padding-top:45px;
+		.nav{
+				width:100%;	
+				> li {
+				display:block;
+				float:none;
+				> a {
+					display:block;
+					color:$du-green;
+					font-size:1.3em;
+				    margin: 0 auto;
+				    width: 6em;
+				    font-weight:bold;
+				    text-transform:lowercase;
+					&:hover{
+						background:none;
+					}
+				}
 			}
+
 		}
 	}
 }

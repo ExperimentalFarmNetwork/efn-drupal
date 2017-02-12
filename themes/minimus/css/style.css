@@ -6725,21 +6725,29 @@ footer.footer {
     width: 90%;
     margin-left: auto;
     margin-right: auto; }
-    footer.footer .region-footer section, footer.footer .region-footer nav {
-      position: relative;
-      min-height: 1px;
-      padding-left: 15px;
-      padding-right: 15px; }
-      @media (min-width: 1200px) {
-        footer.footer .region-footer section, footer.footer .region-footer nav {
-          float: left;
-          width: 25%; } }
-  footer.footer #block-footerblock1 img {
-    width: 100%;
-    margin-bottom: 1em; }
+  footer.footer #block-footerblock1 {
+    position: relative;
+    min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px; }
+    @media (min-width: 1200px) {
+      footer.footer #block-footerblock1 {
+        float: left;
+        width: 33.33333%; } }
+    footer.footer #block-footerblock1 img {
+      width: 100%;
+      margin-bottom: 1em; }
   footer.footer #block-sociallinks {
+    position: relative;
+    min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px;
     text-align: center;
-    padding-bottom: 2em; }
+    padding-top: 45px; }
+    @media (min-width: 1200px) {
+      footer.footer #block-sociallinks {
+        float: left;
+        width: 33.33333%; } }
     footer.footer #block-sociallinks .field--name-body img {
       width: 65px;
       margin: 5px 10px; }
@@ -6750,18 +6758,30 @@ footer.footer {
       color: #418261;
       padding: 20px 40px;
       margin-top: 2em; }
-  footer.footer #block-donate {
-    text-align: center; }
-    footer.footer #block-donate a {
-      background: #242029;
-      color: #FFA100;
-      padding: 20px 40px; }
-  footer.footer .nav > li {
-    display: block;
-    float: none; }
-    footer.footer .nav > li > a {
-      display: inline-block; }
-      footer.footer .nav > li > a:hover {
-        background: none; }
+  footer.footer #block-mainnavigation {
+    position: relative;
+    min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 45px; }
+    @media (min-width: 1200px) {
+      footer.footer #block-mainnavigation {
+        float: left;
+        width: 33.33333%; } }
+    footer.footer #block-mainnavigation .nav {
+      width: 100%; }
+      footer.footer #block-mainnavigation .nav > li {
+        display: block;
+        float: none; }
+        footer.footer #block-mainnavigation .nav > li > a {
+          display: block;
+          color: #418261;
+          font-size: 1.3em;
+          margin: 0 auto;
+          width: 6em;
+          font-weight: bold;
+          text-transform: lowercase; }
+          footer.footer #block-mainnavigation .nav > li > a:hover {
+            background: none; }
 
 /*# sourceMappingURL=style.css.map */
