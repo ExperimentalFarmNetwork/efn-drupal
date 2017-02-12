@@ -12,15 +12,17 @@
 // Sections
 body{
 	margin-top:0;	
+	font-family: "open_sanslight", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
 }
 
 a{
 	color:$link-color ;
 }
 
-// h1.page-header, button, nav, h2, h3{
-// 	font-family: "open_sanslight", "Helvetica Neue", Helvetica, Arial, sans-serif;
-// }
+h1.page-header, button, nav, h2, h3{
+	font-family: "open_sanslight", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
 
 // fix for overlapping main container
 .col-sm-12{
@@ -604,7 +606,7 @@ footer.footer{
 			margin-right:auto;
 		section, nav{
 			@include make-lg-column(3);
-			text-align:center;
+			// text-align:center;
 		}
 	}
 	#block-footerblock1{

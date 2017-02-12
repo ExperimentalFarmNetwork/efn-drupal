@@ -4,7 +4,7 @@
 
     // footer buttons
     $("#block-donate li a").addClass('btn-lg btn-success');
-    $("#block-footerblock1 a").addClass('btn-lg btn-success');
+    $('#block-sociallinks a[href="/contact"').addClass('btn-lg btn-success');
 
     // resize navbar on scroll
   //   var navbar=$('header.navbar-default');
