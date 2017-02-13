@@ -1,0 +1,25 @@
+uuid: 2e848f91-0348-41a4-a65b-b6e700a7fed1
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic_block:e930ce1d-d57d-42a0-bb6f-26f020693991'
+  module:
+    - block_content
+  theme:
+    - minimus
+id: footerblock1
+theme: minimus
+region: footer
+weight: -13
+provider: null
+plugin: 'block_content:e930ce1d-d57d-42a0-bb6f-26f020693991'
+settings:
+  id: 'block_content:e930ce1d-d57d-42a0-bb6f-26f020693991'
+  label: 'Footer block 1'
+  provider: block_content
+  label_display: '0'
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

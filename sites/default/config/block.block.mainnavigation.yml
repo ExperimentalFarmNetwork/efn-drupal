@@ -1,0 +1,24 @@
+uuid: 8eb545a0-24d5-4d43-a6a3-6dbe1fac1650
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.main
+  module:
+    - system
+  theme:
+    - minimus
+id: mainnavigation
+theme: minimus
+region: footer
+weight: -12
+provider: null
+plugin: 'system_menu_block:main'
+settings:
+  id: 'system_menu_block:main'
+  label: 'Main navigation'
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 0
+visibility: {  }

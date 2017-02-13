@@ -1,0 +1,8 @@
+uuid: 94fb42c6-6ebe-4c32-be1b-7975571eed5c
+langcode: en
+status: true
+dependencies: {  }
+id: donate
+label: Donate
+description: 'button for footer'
+locked: false
