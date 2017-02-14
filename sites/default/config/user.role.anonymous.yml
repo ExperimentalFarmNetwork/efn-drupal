@@ -12,3 +12,4 @@ permissions:
   - 'access content'
   - 'edit own main profile'
   - 'view any main profile'
+  - 'access site-wide contact form'

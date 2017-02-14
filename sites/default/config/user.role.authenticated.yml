@@ -25,3 +25,5 @@ permissions:
   - 'edit own volunteer profile'
   - 'view any volunteer profile'
   - 'view own volunteer profile'
+  - 'access site-wide contact form'
+  - 'access user contact forms'
