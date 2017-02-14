@@ -631,7 +631,7 @@ footer.footer{
 			margin-bottom:3em;
 		};
 
-		a[href="/contact"]{
+		a[href="/donate"]{
 			background: $du-dark;
 			color: $du-green;
 		    padding: 20px 40px;	
@@ -650,7 +650,7 @@ footer.footer{
 	// 	    padding: 20px 40px;
 	// 	}
 	// }
-	#block-mainnavigation{
+	#block-minimus-footer{
 		@include make-lg-column(4);
 		padding-top:45px;
 		.nav{
@@ -661,7 +661,7 @@ footer.footer{
 				> a {
 					display:block;
 					color:$du-green;
-					font-size:1.3em;
+					font-size:1.2em;
 				    margin: 0 auto;
 				    width: 6em;
 				    font-weight:bold;
