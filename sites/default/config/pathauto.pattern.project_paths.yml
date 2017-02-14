@@ -1,0 +1,23 @@
+uuid: 197232f2-4a03-453d-8740-c5ba65711bbe
+langcode: en
+status: true
+dependencies:
+  module:
+    - ctools
+    - group
+id: project_paths
+label: 'Project Paths'
+type: 'canonical_entities:group'
+pattern: 'project/[group:id]'
+selection_criteria:
+  e16e4a46-d26a-414b-b5a4-7fd5fa3aac43:
+    id: 'entity_bundle:group'
+    bundles:
+      project: project
+    negate: false
+    context_mapping:
+      group: group
+    uuid: e16e4a46-d26a-414b-b5a4-7fd5fa3aac43
+selection_logic: and
+weight: -5
+relationships: {  }

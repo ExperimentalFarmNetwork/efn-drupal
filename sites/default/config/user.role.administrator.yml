@@ -161,3 +161,5 @@ permissions:
   - 'administer contact_message display'
   - 'administer contact_message fields'
   - 'administer contact_message form display'
+  - 'administer pathauto'
+  - 'notify of path changes'

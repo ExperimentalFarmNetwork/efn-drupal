@@ -14,6 +14,7 @@ module:
   config_update: 0
   contact: 0
   contextual: 0
+  ctools: 0
   datetime: 0
   dblog: 0
   default_content: 0
@@ -65,6 +66,7 @@ module:
   views_ui: 0
   yamlform: 0
   yamlform_ui: 0
+  pathauto: 1
 theme:
   stable: 0
   classy: 0

@@ -1,0 +1,23 @@
+uuid: 80ddb1e6-3da8-4e5d-b497-239ddb53e7b5
+langcode: en
+status: true
+dependencies:
+  module:
+    - ctools
+    - group
+id: project_update_paths
+label: 'Project update paths'
+type: 'canonical_entities:group_content'
+pattern: 'project/[group_content:gid]/[group_content:id]'
+selection_criteria:
+  935bf388-31b7-4827-be7b-f1ac0a24192f:
+    id: 'entity_bundle:group_content'
+    bundles:
+      group_content_type_43c14e35a52cb: group_content_type_43c14e35a52cb
+    negate: false
+    context_mapping:
+      group_content: group_content
+    uuid: 935bf388-31b7-4827-be7b-f1ac0a24192f
+selection_logic: and
+weight: -5
+relationships: {  }

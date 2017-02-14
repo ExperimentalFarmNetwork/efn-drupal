@@ -7664,6 +7664,55 @@
         ]
     },
     {
+        "name": "drupal/config_update",
+        "version": "1.3.0",
+        "version_normalized": "1.3.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/config_update",
+            "reference": "8.x-1.3"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/config_update-8.x-1.3.zip",
+            "reference": "8.x-1.3",
+            "shasum": "4fc57add91c090ea3c9ed4848579b450253b1eed"
+        },
+        "require": {
+            "drupal/core": "*"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.3",
+                "datestamp": "1484770683"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "jhodgdon",
+                "homepage": "https://www.drupal.org/user/155601"
+            },
+            {
+                "name": "nedjo",
+                "homepage": "https://www.drupal.org/user/4481"
+            }
+        ],
+        "description": "Provides basic revert and update functionality for other modules",
+        "homepage": "https://www.drupal.org/project/config_update",
+        "support": {
+            "source": "http://cgit.drupalcode.org/config_update"
+        }
+    },
+    {
         "name": "drupal/core",
         "version": "8.2.5",
         "version_normalized": "8.2.5.0",
@@ -7848,31 +7897,31 @@
         "description": "Drupal is an open source content management platform powering millions of websites and applications."
     },
     {
-        "name": "drupal/config_update",
-        "version": "1.3.0",
-        "version_normalized": "1.3.0.0",
+        "name": "drupal/ctools",
+        "version": "3.0.0-alpha27",
+        "version_normalized": "3.0.0.0-alpha27",
         "source": {
             "type": "git",
-            "url": "https://git.drupal.org/project/config_update",
-            "reference": "8.x-1.3"
+            "url": "https://git.drupal.org/project/ctools",
+            "reference": "8.x-3.0-alpha27"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/config_update-8.x-1.3.zip",
-            "reference": null,
-            "shasum": "4fc57add91c090ea3c9ed4848579b450253b1eed"
+            "url": "https://ftp.drupal.org/files/projects/ctools-8.x-3.0-alpha27.zip",
+            "reference": "8.x-3.0-alpha27",
+            "shasum": "3e069c46902dd05c2a4e0caf7b185942e9b53238"
         },
         "require": {
-            "drupal/core": "*"
+            "drupal/core": "~8.0"
         },
         "type": "drupal-module",
         "extra": {
             "branch-alias": {
-                "dev-1.x": "1.x-dev"
+                "dev-3.x": "3.x-dev"
             },
             "drupal": {
-                "version": "8.x-1.3",
-                "datestamp": "1484770683"
+                "version": "8.x-3.0-alpha27",
+                "datestamp": "1471723439"
             }
         },
         "installation-source": "dist",
@@ -7882,18 +7931,109 @@
         ],
         "authors": [
             {
-                "name": "jhodgdon",
-                "homepage": "https://www.drupal.org/user/155601"
+                "name": "EclipseGc",
+                "homepage": "https://www.drupal.org/user/61203"
             },
             {
-                "name": "nedjo",
-                "homepage": "https://www.drupal.org/user/4481"
+                "name": "damiankloip",
+                "homepage": "https://www.drupal.org/user/1037976"
+            },
+            {
+                "name": "dawehner",
+                "homepage": "https://www.drupal.org/user/99340"
+            },
+            {
+                "name": "esmerel",
+                "homepage": "https://www.drupal.org/user/164022"
+            },
+            {
+                "name": "japerry",
+                "homepage": "https://www.drupal.org/user/45640"
+            },
+            {
+                "name": "merlinofchaos",
+                "homepage": "https://www.drupal.org/user/26979"
+            },
+            {
+                "name": "neclimdul",
+                "homepage": "https://www.drupal.org/user/48673"
+            },
+            {
+                "name": "sdboyer",
+                "homepage": "https://www.drupal.org/user/146719"
+            },
+            {
+                "name": "sun",
+                "homepage": "https://www.drupal.org/user/54136"
+            },
+            {
+                "name": "tim.plunkett",
+                "homepage": "https://www.drupal.org/user/241634"
             }
         ],
-        "description": "Provides basic revert and update functionality for other modules",
-        "homepage": "https://www.drupal.org/project/config_update",
+        "description": "Provides a number of utility and helper APIs for Drupal developers and site builders.",
+        "homepage": "https://www.drupal.org/project/ctools",
         "support": {
-            "source": "http://cgit.drupalcode.org/config_update"
+            "source": "http://cgit.drupalcode.org/ctools"
+        }
+    },
+    {
+        "name": "drupal/pathauto",
+        "version": "1.0.0-rc1",
+        "version_normalized": "1.0.0.0-RC1",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/pathauto",
+            "reference": "8.x-1.0-rc1"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/pathauto-8.x-1.0-rc1.zip",
+            "reference": null,
+            "shasum": "2460339ac8739317b3c4e66e9ce7142cc02adac3"
+        },
+        "require": {
+            "drupal/core": "*",
+            "drupal/ctools": "*",
+            "drupal/token": "*"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.0-rc1",
+                "datestamp": "1485702484"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Berdir",
+                "homepage": "https://www.drupal.org/user/214652"
+            },
+            {
+                "name": "Dave Reid",
+                "homepage": "https://www.drupal.org/user/53892"
+            },
+            {
+                "name": "Freso",
+                "homepage": "https://www.drupal.org/user/27504"
+            },
+            {
+                "name": "greggles",
+                "homepage": "https://www.drupal.org/user/36762"
+            }
+        ],
+        "description": "Provides a mechanism for modules to automatically generate aliases for the content they manage.",
+        "homepage": "https://www.drupal.org/project/pathauto",
+        "support": {
+            "source": "http://cgit.drupalcode.org/pathauto"
         }
     }
 ]
