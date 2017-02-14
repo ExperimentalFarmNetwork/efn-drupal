@@ -3,14 +3,12 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.group.field_location
     - field.storage.group.field_project_image
     - field.storage.group.field_project_summary
     - group.type.project
     - image.style.card_project_banner
     - system.menu.main
   module:
-    - address
     - group
     - image
     - taxonomy
@@ -153,7 +151,7 @@ display:
           group_type: group
           admin_label: ''
           label: ''
-          exclude: false
+          exclude: true
           alter:
             alter_text: false
             text: ''
@@ -218,10 +216,10 @@ display:
           group_type: group
           admin_label: ''
           label: ''
-          exclude: false
+          exclude: true
           alter:
             alter_text: false
-            text: ''
+            text: "<h2>{{ label }}</h2> \n{{ field_project_summary }}"
             make_link: false
             path: ''
             absolute: false
@@ -236,7 +234,7 @@ display:
             suffix: ''
             target: ''
             nl2br: false
-            max_length: 70
+            max_length: 220
             word_boundary: true
             ellipsis: true
             more_link: false
@@ -246,14 +244,14 @@ display:
             trim: true
             preserve_tags: ''
             html: false
-          element_type: ''
-          element_class: ''
+          element_type: div
+          element_class: prjct_summary
           element_label_type: ''
           element_label_class: ''
           element_label_colon: false
           element_wrapper_type: ''
           element_wrapper_class: ''
-          element_default_classes: true
+          element_default_classes: false
           empty: ''
           hide_empty: false
           empty_zero: false
@@ -271,73 +269,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          plugin_id: field
-        created:
-          id: created
-          table: groups_field_data
-          field: created
-          relationship: none
-          group_type: group
-          admin_label: ''
-          label: ''
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: timestamp
-          settings:
-            date_format: html_date
-            custom_date_format: ''
-            timezone: ''
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          entity_type: group
-          entity_field: created
           plugin_id: field
         uid:
           id: uid
@@ -403,10 +334,10 @@ display:
           entity_type: group
           entity_field: uid
           plugin_id: field
-        field_location:
-          id: field_location
-          table: group__field_location
-          field: field_location
+        field_project_summary_1:
+          id: field_project_summary_1
+          table: group__field_project_summary
+          field: field_project_summary
           relationship: none
           group_type: group
           admin_label: ''
@@ -414,7 +345,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: '{{ field_location }} on {{ created }} by {{ uid }} '
+            text: "<h2>{{ label }}</h2> \n{{ field_project_summary }}"
             make_link: false
             path: ''
             absolute: false
@@ -429,14 +360,14 @@ display:
             suffix: ''
             target: ''
             nl2br: false
-            max_length: 0
+            max_length: 200
             word_boundary: true
             ellipsis: true
             more_link: false
             more_link_text: ''
             more_link_path: ''
             strip_tags: false
-            trim: false
+            trim: true
             preserve_tags: ''
             html: false
           element_type: ''
@@ -451,10 +382,10 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          click_sort_column: langcode
-          type: address_plain
+          click_sort_column: value
+          type: basic_string
           settings: {  }
-          group_column: ''
+          group_column: value
           group_columns: {  }
           group_rows: true
           delta_limit: 0
@@ -516,7 +447,6 @@ display:
         - 'languages:language_interface'
         - url.query_args
       tags:
-        - 'config:field.storage.group.field_location'
         - 'config:field.storage.group.field_project_image'
         - 'config:field.storage.group.field_project_summary'
   page_1:
@@ -540,7 +470,6 @@ display:
         - 'languages:language_interface'
         - url.query_args
       tags:
-        - 'config:field.storage.group.field_location'
         - 'config:field.storage.group.field_project_image'
         - 'config:field.storage.group.field_project_summary'
   page_2:
@@ -626,6 +555,5 @@ display:
         - url
         - url.query_args
       tags:
-        - 'config:field.storage.group.field_location'
         - 'config:field.storage.group.field_project_image'
         - 'config:field.storage.group.field_project_summary'

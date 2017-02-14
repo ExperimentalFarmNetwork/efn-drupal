@@ -52,12 +52,12 @@ Drupal.behaviors.commentThing = {
         $(".view-id-project .views-row").each(function(index, el) {
         var cardPic = $(this).find(".views-field-field-project-image img").attr('src');
 
-        $(this).css({
-            background: 'url('+cardPic+')',
-            'background-repeat': 'no-repeat',
-            'background-color': '#fff' ,
-            'background-size' : '100%'
-        });
+        // $(this).css({
+        //     background: 'url('+cardPic+')',
+        //     'background-repeat': 'no-repeat',
+        //     'background-color': '#fff' ,
+        //     'background-size' : '100%'
+        // });
         });
     }
     $("[data-drupal-link-system-path='user']").before('<a href="/user" class="glyphicon glyphicon-user"></a>');

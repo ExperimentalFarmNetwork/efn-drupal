@@ -181,49 +181,46 @@ div.main-container{
 	// Project front page cards
 
 	.view-project{
+		text-align: center;
 		
 		.views-row{
 			border: $gray-dark thin solid;
-			padding:100px 1em 1em 1em;
 			border-radius:5px;
-			margin:.5rem;	
+			margin:15px;	
 			height:300px;
 		    width: 350px !important;
 		    display:inline-block;
 		    vertical-align:top;
+		    overflow:hidden;
+	    	text-overflow: ellipsis;
+	    	word-wrap:break-word;
 
-		    h2.field-content{
-		    	font-size: 1em;
-			    text-transform: uppercase;
-			    font-weight:bold;
-			    display: inline-block;
-			    padding: .2em .6em 0 0;
-			    margin:0;
-			    a{
-			    	color:$gray-dark;
-			    }
-		    }
-
-		    .views-field-uid{
-		    	color:$gray-light;
-		    	font-size:.8em;
-		    }
 		    .views-field-field-project-image{
-		    	display:none;
+		    	border-bottom: thin solid $du-orange;
 		    }
-		    .views-field-field-project-summary{
-		    	padding:.2em;
-		    	margin-top:0;
-		    	// background:$gray-lighter;
-		    }
-		    .views-field-field-location{
-		    	font-size:.8em;
-		    	border-top:1px dashed $gray-dark;
-		    	margin-top:1em;
-		    	p.address{
-		    		display:inline;
 
-		    	}
+
+		    .views-field-field-project-summary-1{
+		    	text-align:center;
+		    	margin:0 1em 0 1em;
+
+		    	line-height:1.3em;
+		    	// max-height: 7em;
+		    	font-size:$font-size-small;
+			    h2{
+			    	font-size: $font-size-base;
+				    text-transform: uppercase;
+				    font-weight:bold;
+				    padding: .2em .6em 0 0;
+				    margin:6px 0 6px;
+				    line-height:normal;
+				    a{
+				    	color:$gray-dark;
+				    	
+				    }
+			    }
+		    	
+
 		    }
 		}
 	}

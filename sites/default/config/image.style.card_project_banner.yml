@@ -3,12 +3,12 @@ langcode: en
 status: true
 dependencies: {  }
 name: card_project_banner
-label: 'Card project banner 382'
+label: 'Card project banner'
 effects:
   b684ad46-3f7f-4807-81d4-9b94adf40a38:
     uuid: b684ad46-3f7f-4807-81d4-9b94adf40a38
     id: image_scale_and_crop
     weight: 1
     data:
-      width: 382
-      height: 97
+      width: 350
+      height: 150
