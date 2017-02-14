@@ -6453,9 +6453,10 @@ div.main-container {
 .path-frontpage .navbar {
   margin-top: 0;
   margin-bottom: 0; }
-.path-frontpage .view-project {
+
+.view-project {
   text-align: center; }
-  .path-frontpage .view-project .views-row {
+  .view-project .views-row {
     border: #333333 thin solid;
     border-radius: 5px;
     margin: 15px;
@@ -6466,21 +6467,21 @@ div.main-container {
     overflow: hidden;
     text-overflow: ellipsis;
     word-wrap: break-word; }
-    .path-frontpage .view-project .views-row .views-field-field-project-image {
+    .view-project .views-row .views-field-field-project-image {
       border-bottom: thin solid #FFA100; }
-    .path-frontpage .view-project .views-row .views-field-field-project-summary-1 {
+    .view-project .views-row .views-field-field-project-summary-1 {
       text-align: center;
       margin: 0 1em 0 1em;
       line-height: 1.3em;
       font-size: 17px; }
-      .path-frontpage .view-project .views-row .views-field-field-project-summary-1 h2 {
+      .view-project .views-row .views-field-field-project-summary-1 h2 {
         font-size: 19px;
         text-transform: uppercase;
         font-weight: bold;
         padding: .2em .6em 0 0;
         margin: 6px 0 6px;
         line-height: normal; }
-        .path-frontpage .view-project .views-row .views-field-field-project-summary-1 h2 a {
+        .view-project .views-row .views-field-field-project-summary-1 h2 a {
           color: #333333; }
 
 .path-user .table-striped, .path-user table, body.path-group .table-striped, body.path-group table {

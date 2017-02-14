@@ -462,6 +462,7 @@ display:
         title: Projects
         menu_name: main
         enabled: false
+        weight: -46
       display_description: ''
     cache_metadata:
       max-age: -1
@@ -553,6 +554,55 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
+        - url.query_args
+      tags:
+        - 'config:field.storage.group.field_project_image'
+        - 'config:field.storage.group.field_project_summary'
+  page_3:
+    display_plugin: page
+    id: page_3
+    display_title: 'All Projects page'
+    position: 3
+    display_options:
+      display_extenders: {  }
+      path: projects
+      pager:
+        type: mini
+        options:
+          items_per_page: 24
+          offset: 0
+          id: 0
+          total_pages: null
+          tags:
+            previous: ‹‹
+            next: ››
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: true
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+      defaults:
+        pager: false
+        title: false
+      display_description: ''
+      title: Projects
+      menu:
+        type: normal
+        title: Projects
+        description: ''
+        expanded: false
+        parent: ''
+        weight: -50
+        context: '0'
+        menu_name: main
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
         - url.query_args
       tags:
         - 'config:field.storage.group.field_project_image'
