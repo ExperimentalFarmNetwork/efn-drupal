@@ -18,7 +18,7 @@
   // });
 
 // Toggle hidden fields on project page
-    $("button.toggleVerbose").click(function(event) {
+    $(".toggleVerbose").click(function(event) {
         $('.path-group .region-content .field').toggleClass('toggleVFields','1000');
         $(this).find('.glyphicon').toggleClass('glyphicon-collapse-up');
     });

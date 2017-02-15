@@ -8,6 +8,26 @@
 // Base-theme overrides.
 @import 'overrides';
 
+@mixin tag-buttons {
+	padding: .5em 1em;
+	background: $gray-lighter;
+	margin-right: .5em;
+	color: $gray;
+	border-radius: 5px;
+	text-transform: uppercase;
+	line-height: 3em;
+	font-size: 14px;
+	cursor: pointer;
+	&.bef-link-active{
+		background:$du-dark;
+	}
+	&:hover{
+		background:$du-asparagus;
+		color: $gray-lighter;
+		text-decoration:none;
+	}
+}
+
 
 // Sections
 body{
@@ -179,7 +199,7 @@ div.main-container{
 	}
 
 }
-	// Project front page cards
+	// Project cards
 
 	.view-project{
 		text-align: center;
@@ -270,19 +290,19 @@ body.path-group{
 		background:white;
 		padding:1em;
 
-		button.toggleVerbose{
-			margin: 0 auto;
-			z-index:999;
-		    position: relative;
-		    float:right;
-		    margin-top:5px;
+		.toggleVerbose{
+			margin-top:24px;
+			border-bottom: thin $gray-lighter solid;
+			border-top: thin $gray-lighter solid;
+			padding: 5px;
+			width:100%;
+			text-align:center;
+			cursor: pointer;
 		}
 
 		.groupWrapper{
-
 			.field--name-field-project-image,
 			.field--name-field-description,
-			.field--name-field-project-type,
 			.field--name-field-researcher-background,
 			.field--name-field-seeking-volunteers,
 			.field--name-field-volunteers-how-many,
@@ -303,7 +323,16 @@ body.path-group{
 					display:block; // uncomment when js ready please
 				}
 			}
-			.field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image):not(.field--name-field-location-geo):not(.field--name-field-tags){
+
+			.field--name-field-project-type{
+				.field--item{
+					display:inline-block;
+					a{
+						@include tag-buttons;
+					}
+				}
+			}
+			.field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image):not(.field--name-field-location-geo):not(.field--name-field-project-type){
 				padding-bottom:2em;
 				padding-top:2em;
 				border-bottom: thin $gray-lighter solid;
@@ -321,6 +350,8 @@ body.path-group{
 				&.field--name-field-project-summary{
 					display:block;
 					padding-top:0;
+					padding-bottom:1em;
+					border-bottom:0;
 
 				}
 			}
@@ -542,6 +573,29 @@ body.path-group{
 
 }
 
+// Projects page
+
+.path-projects{
+
+		label.control-label{
+			display:none;
+		}
+		form#views-exposed-form-project-page-3{
+			#edit-actions{
+				margin-left:15px;
+			}
+			.form-item-field-project-type-target-id{
+				margin-bottom:10px;
+			}
+			text-align:left;
+			#edit-field-project-type-target-id{
+				.form-group a{
+					@include tag-buttons;
+				}
+			}
+		}
+	
+}
 
 // sidebar
 .region-sidebar-second{

@@ -30,7 +30,8 @@
         "drupal/field_group": "1.0-rc6",
         "drupal/field_states_ui": "1.x-dev",
         "doctrine/common": "2.5.3",
-        "drupal/pathauto": "^1.0@RC"
+        "drupal/pathauto": "^1.0@RC",
+        "drupal/better_exposed_filters": "^3.0@alpha"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
