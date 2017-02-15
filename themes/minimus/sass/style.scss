@@ -332,7 +332,7 @@ body.path-group{
 					}
 				}
 			}
-			.field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image):not(.field--name-field-location-geo):not(.field--name-field-project-type){
+			.field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image):not(.field--name-field-description):not(.field--name-field-project-type){
 				padding-bottom:2em;
 				padding-top:2em;
 				border-bottom: thin $gray-lighter solid;
@@ -372,6 +372,13 @@ body.path-group{
 							text-decoration:none;
 						}
 					}
+				}
+			}
+			.field--name-field-description{
+				.field--label{
+					text-transform:uppercase;																																																																																		
+					font-weight:normal;
+					margin-bottom:1em;
 				}
 			}
 		}
@@ -582,7 +589,7 @@ body.path-group{
 		}
 		form#views-exposed-form-project-page-3{
 			#edit-actions{
-				margin-left:15px;
+				margin-top:10px;
 			}
 			.form-item-field-project-type-target-id{
 				margin-bottom:10px;
@@ -591,6 +598,12 @@ body.path-group{
 			#edit-field-project-type-target-id{
 				.form-group a{
 					@include tag-buttons;
+				}
+			}
+			.form-type-textfield{
+				width:100%;
+				input{
+					width:100%;
 				}
 			}
 		}
@@ -672,7 +685,6 @@ footer.footer{
 		text-align:center;
 		padding-top:45px;
 		.field--name-body{
-			// text-align:center;
 			img{
 				width:65px;
 				margin:5px 10px;
@@ -684,23 +696,20 @@ footer.footer{
 
 		a[href="/donate"]{
 			background: $du-dark;
-			color: $du-green;
+			color: $du-gold;
 		    padding: 20px 40px;	
 		    margin-top:2em;
+		    border-radius:5px;
+		    font-weight:bold;
+		    &:hover{
+		    	background:$du-gold;
+		    	color:$du-dark;
+		    	text-transform:none;
+		    }
 		}
-		.field--name-body{
 
-		}
 	}
 
-	// #block-donate{
-	// 	text-align:center;
-	// 	 a{
-	// 		background: $du-dark;
-	// 		color: $du-orange;
-	// 	    padding: 20px 40px;
-	// 	}
-	// }
 	#block-minimus-footer{
 		@include make-lg-column(4);
 		padding-top:45px;
@@ -717,7 +726,7 @@ footer.footer{
 				    width: 6em;
 				    font-weight:bold;
 				    text-transform:lowercase;
-					&:hover{
+					&:hover, &:focus{
 						background:none;
 					}
 				}

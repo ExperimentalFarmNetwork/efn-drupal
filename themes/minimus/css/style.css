@@ -6576,19 +6576,19 @@ body.path-group {
           background: #3B4A59;
           color: #eeeeee;
           text-decoration: none; }
-    body.path-group .region-content .groupWrapper .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image):not(.field--name-field-location-geo):not(.field--name-field-project-type) {
+    body.path-group .region-content .groupWrapper .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image):not(.field--name-field-description):not(.field--name-field-project-type) {
       padding-bottom: 2em;
       padding-top: 2em;
       border-bottom: thin #eeeeee solid; }
-      body.path-group .region-content .groupWrapper .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image):not(.field--name-field-location-geo):not(.field--name-field-project-type) .field--label {
+      body.path-group .region-content .groupWrapper .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image):not(.field--name-field-description):not(.field--name-field-project-type) .field--label {
         width: 45%;
         display: inline-table;
         text-transform: uppercase;
         font-weight: normal; }
-      body.path-group .region-content .groupWrapper .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image):not(.field--name-field-location-geo):not(.field--name-field-project-type) .field--item {
+      body.path-group .region-content .groupWrapper .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image):not(.field--name-field-description):not(.field--name-field-project-type) .field--item {
         width: 45%;
         display: inline-table; }
-      body.path-group .region-content .groupWrapper .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image):not(.field--name-field-location-geo):not(.field--name-field-project-type).field--name-field-project-summary {
+      body.path-group .region-content .groupWrapper .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image):not(.field--name-field-description):not(.field--name-field-project-type).field--name-field-project-summary {
         display: block;
         padding-top: 0;
         padding-bottom: 1em;
@@ -6607,6 +6607,10 @@ body.path-group {
           body.path-group .region-content .groupWrapper .field--name-field-tags .field--item:hover a {
             color: #eeeeee;
             text-decoration: none; }
+    body.path-group .region-content .groupWrapper .field--name-field-description .field--label {
+      text-transform: uppercase;
+      font-weight: normal;
+      margin-bottom: 1em; }
 
 .js-form-submit[value='Join group'], .btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
   font-size: 2rem;
@@ -6719,7 +6723,7 @@ body.path-group {
 .path-projects form#views-exposed-form-project-page-3 {
   text-align: left; }
   .path-projects form#views-exposed-form-project-page-3 #edit-actions {
-    margin-left: 15px; }
+    margin-top: 10px; }
   .path-projects form#views-exposed-form-project-page-3 .form-item-field-project-type-target-id {
     margin-bottom: 10px; }
   .path-projects form#views-exposed-form-project-page-3 #edit-field-project-type-target-id .form-group a {
@@ -6738,6 +6742,10 @@ body.path-group {
       background: #3B4A59;
       color: #eeeeee;
       text-decoration: none; }
+  .path-projects form#views-exposed-form-project-page-3 .form-type-textfield {
+    width: 100%; }
+    .path-projects form#views-exposed-form-project-page-3 .form-type-textfield input {
+      width: 100%; }
 
 .region-sidebar-second {
   background: #fff;
@@ -6797,9 +6805,15 @@ footer.footer {
       margin-bottom: 3em; }
     footer.footer #block-sociallinks a[href="/donate"] {
       background: #242029;
-      color: #418261;
+      color: #A4AD23;
       padding: 20px 40px;
-      margin-top: 2em; }
+      margin-top: 2em;
+      border-radius: 5px;
+      font-weight: bold; }
+      footer.footer #block-sociallinks a[href="/donate"]:hover {
+        background: #A4AD23;
+        color: #242029;
+        text-transform: none; }
   footer.footer #block-minimus-footer {
     position: relative;
     min-height: 1px;
@@ -6823,7 +6837,7 @@ footer.footer {
           width: 6em;
           font-weight: bold;
           text-transform: lowercase; }
-          footer.footer #block-minimus-footer .nav > li > a:hover {
+          footer.footer #block-minimus-footer .nav > li > a:hover, footer.footer #block-minimus-footer .nav > li > a:focus {
             background: none; }
 
 /*# sourceMappingURL=style.css.map */

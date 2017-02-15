@@ -427,7 +427,12 @@ display:
       title: Project
       header: {  }
       footer: {  }
-      empty: {  }
+      empty:
+        area:
+          id: area
+          table: views
+          field: area
+          plugin_id: text
       relationships:
         uid:
           id: uid
@@ -594,6 +599,7 @@ display:
         sorts: false
         exposed_form: false
         use_ajax: false
+        empty: false
       display_description: ''
       title: Projects
       menu:
@@ -757,6 +763,20 @@ display:
                   filter_rewrite_values: ''
       use_ajax: true
       exposed_block: true
+      empty:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: true
+          tokenize: false
+          content:
+            value: 'Your search results are nothing :('
+            format: raw_html
+          plugin_id: text
     cache_metadata:
       max-age: -1
       contexts:

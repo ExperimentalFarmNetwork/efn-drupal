@@ -22,13 +22,13 @@ settings:
   file_extensions: 'png gif jpg jpeg'
   max_filesize: ''
   max_resolution: ''
-  min_resolution: 425x125
+  min_resolution: 850x250
   alt_field: false
   alt_field_required: false
   title_field: false
   title_field_required: false
   default_image:
-    uuid: 5263f1f2-2f85-474f-93d3-394043d9ea5c
+    uuid: f003639c-f0af-4b4d-930c-b1dbf469eb92
     alt: 'Project image'
     title: 'Project image'
     width: 1487

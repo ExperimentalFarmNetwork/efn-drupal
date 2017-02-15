@@ -3,8 +3,8 @@ name: 'Experimental Farm Network'
 mail: dafeder@gmail.com
 slogan: ''
 page:
-  403: ''
-  404: ''
+  403: /node/13
+  404: /node/12
   front: /project
 admin_compact_mode: false
 weight_select_max: 100
