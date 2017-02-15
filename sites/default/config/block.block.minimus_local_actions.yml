@@ -9,7 +9,7 @@ _core:
 id: minimus_local_actions
 theme: minimus
 region: header
-weight: -9
+weight: -11
 provider: null
 plugin: local_actions_block
 settings:

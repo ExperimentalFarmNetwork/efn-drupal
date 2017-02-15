@@ -3,30 +3,18 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.profile.main.field_donating
     - field.field.profile.main.field_donating_other
-    - field.field.profile.main.field_farmland
-    - field.field.profile.main.field_farmland_details
-    - field.field.profile.main.field_farmland_have
-    - field.field.profile.main.field_farmland_have_details
     - field.field.profile.main.field_full_name
     - field.field.profile.main.field_user_image
     - image.style.large
     - profile.type.main
   module:
     - image
-    - options
 id: profile.main.default
 targetEntityType: profile
 bundle: main
 mode: default
 content:
-  field_donating:
-    weight: 3
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    type: list_default
   field_donating_other:
     weight: 6
     label: above
@@ -34,30 +22,6 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
-  field_farmland:
-    weight: 4
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    type: list_default
-  field_farmland_details:
-    weight: 9
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    type: basic_string
-  field_farmland_have:
-    weight: 5
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    type: list_default
-  field_farmland_have_details:
-    weight: 8
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    type: basic_string
   field_full_name:
     weight: 2
     label: above

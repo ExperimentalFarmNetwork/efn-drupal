@@ -11,7 +11,7 @@ _core:
 id: minimus_breadcrumbs
 theme: minimus
 region: content
-weight: -10
+weight: -12
 provider: null
 plugin: system_breadcrumb_block
 settings:

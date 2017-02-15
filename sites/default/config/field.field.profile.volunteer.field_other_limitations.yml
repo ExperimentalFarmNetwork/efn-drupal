@@ -9,7 +9,7 @@ id: profile.volunteer.field_other_limitations
 field_name: field_other_limitations
 entity_type: profile
 bundle: volunteer
-label: 'Other limitations?'
+label: 'Other relevant information'
 description: 'Is there anything else about you or your growing situation that might be relevant to researchers who may want to enlist you? Long vacation planned? Wicked Blister Beetle problem? Scorching downy mildew? Deer? Groundhogs? Etc.'
 required: false
 translatable: false

@@ -29,6 +29,9 @@ settings:
     -
       value: breeding
       label: 'Plant breeding'
+    -
+      value: other
+      label: Other
   allowed_values_function: ''
 module: options
 locked: false

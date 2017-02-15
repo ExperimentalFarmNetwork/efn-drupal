@@ -4,7 +4,7 @@ _core:
 favicon:
   mimetype: image/png
   path: 'public://bean_0.png'
-  url: 'http://efn.localhost/sites/default/files/bean.png'
+  url: 'http://efn.localhost/sites/default/files/bean_0.png'
   use_default: false
 schemas:
   bootstrap: 8000
@@ -32,3 +32,4 @@ features:
   comment_user_verification: true
   favicon: true
   node_user_picture: false
+tooltip_enabled: 0

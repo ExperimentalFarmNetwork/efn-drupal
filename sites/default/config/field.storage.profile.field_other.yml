@@ -1,12 +1,12 @@
-uuid: 609820af-dd17-44a5-80cb-284448c71b63
+uuid: 9bb33f23-abc7-4e7b-be96-60b110856a16
 langcode: en
 status: true
 dependencies:
   module:
-    - group
-id: group.field_researcher_background
-field_name: field_researcher_background
-entity_type: group
+    - profile
+id: profile.field_other
+field_name: field_other
+entity_type: profile
 type: string_long
 settings:
   case_sensitive: false

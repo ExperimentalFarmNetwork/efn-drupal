@@ -11,7 +11,7 @@ _core:
 id: minimus_branding
 theme: minimus
 region: navigation
-weight: 0
+weight: -12
 provider: null
 plugin: system_branding_block
 settings:

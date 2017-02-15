@@ -1,12 +1,10 @@
-uuid: 7861e7b5-05b7-4b89-8ef7-8c5d3166a73c
+uuid: c3733d71-0499-482b-9e7b-716febb346d9
 langcode: en
 status: true
 dependencies:
   config:
     - field.storage.group.field_researcher_background
     - group.type.project
-  module:
-    - text
 id: group.project.field_researcher_background
 field_name: field_researcher_background
 entity_type: group
@@ -18,4 +16,4 @@ translatable: false
 default_value: {  }
 default_value_callback: ''
 settings: {  }
-field_type: text_long
+field_type: string_long

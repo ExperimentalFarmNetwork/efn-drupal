@@ -8,7 +8,6 @@ dependencies:
     - field.field.group.project.field_location_geo
     - field.field.group.project.field_misc
     - field.field.group.project.field_multiyear
-    - field.field.group.project.field_privacy
     - field.field.group.project.field_project_image
     - field.field.group.project.field_project_summary
     - field.field.group.project.field_project_type
@@ -54,12 +53,6 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: list_default
-  field_privacy:
-    weight: 10
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    type: list_default
   field_project_image:
     weight: 13
     label: hidden
@@ -82,11 +75,11 @@ content:
     third_party_settings: {  }
     type: entity_reference_label
   field_researcher_background:
-    weight: 3
+    weight: 15
     label: above
     settings: {  }
     third_party_settings: {  }
-    type: text_default
+    type: basic_string
   field_seeking_volunteers:
     weight: 4
     label: above

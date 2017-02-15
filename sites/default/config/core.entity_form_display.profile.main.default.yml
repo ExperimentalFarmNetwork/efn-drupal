@@ -3,12 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.profile.main.field_donating
     - field.field.profile.main.field_donating_other
-    - field.field.profile.main.field_farmland
-    - field.field.profile.main.field_farmland_details
-    - field.field.profile.main.field_farmland_have
-    - field.field.profile.main.field_farmland_have_details
     - field.field.profile.main.field_full_name
     - field.field.profile.main.field_user_image
     - image.style.thumbnail
@@ -20,11 +15,6 @@ targetEntityType: profile
 bundle: main
 mode: default
 content:
-  field_donating:
-    weight: 2
-    settings: {  }
-    third_party_settings: {  }
-    type: options_buttons
   field_donating_other:
     weight: 3
     settings:
@@ -47,30 +37,6 @@ content:
               value: other
               submit: 'Add Cancel'
     type: string_textfield
-  field_farmland:
-    weight: 4
-    settings: {  }
-    third_party_settings: {  }
-    type: options_buttons
-  field_farmland_details:
-    weight: 5
-    settings:
-      rows: 5
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textarea
-  field_farmland_have:
-    weight: 6
-    settings: {  }
-    third_party_settings: {  }
-    type: options_buttons
-  field_farmland_have_details:
-    weight: 7
-    settings:
-      rows: 4
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textarea
   field_full_name:
     weight: 0
     settings:

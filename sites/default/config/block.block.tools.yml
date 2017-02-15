@@ -1,4 +1,4 @@
-uuid: 61952e7c-98b0-4950-bdd7-a87742c389ae
+uuid: b3b61639-6e17-45ea-99a5-9f4cd18cce47
 langcode: en
 status: false
 dependencies:
@@ -6,21 +6,27 @@ dependencies:
     - system.menu.tools
   module:
     - system
+    - user
   theme:
     - minimus
-_core:
-  default_config_hash: f3Dd5TnUiFDjFZp9yEGJInwt6cUzs7O6SvLTFTATSlU
-id: minimus_tools
+id: tools
 theme: minimus
 region: '-1'
-weight: -9
+weight: -8
 provider: null
 plugin: 'system_menu_block:tools'
 settings:
   id: 'system_menu_block:tools'
-  label: Tools
+  label: 'Admin links:'
   provider: system
   label_display: visible
   level: 1
   depth: 0
-visibility: {  }
+visibility:
+  user_role:
+    id: user_role
+    roles:
+      administrator: administrator
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'

@@ -7,8 +7,10 @@ dependencies:
     - field.field.profile.researcher.field_address
     - field.field.profile.researcher.field_bio
     - field.field.profile.researcher.field_cv
-    - field.field.profile.researcher.field_education
+    - field.field.profile.researcher.field_educational_background
     - field.field.profile.researcher.field_email
+    - field.field.profile.researcher.field_farmland_details
+    - field.field.profile.researcher.field_farmland_have_details
     - field.field.profile.researcher.field_phone
     - field.field.profile.researcher.field_website
     - profile.type.researcher
@@ -16,7 +18,6 @@ dependencies:
     - address
     - file
     - link
-    - text
 id: profile.researcher.default
 targetEntityType: profile
 bundle: researcher
@@ -46,12 +47,12 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: file_default
-  field_education:
-    weight: 10
+  field_educational_background:
+    weight: 16
     label: above
     settings: {  }
     third_party_settings: {  }
-    type: text_default
+    type: basic_string
   field_email:
     weight: 2
     label: above

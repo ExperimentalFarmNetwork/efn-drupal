@@ -1,14 +1,12 @@
-uuid: 43eda0bc-d95a-41ca-8344-4175f3645acd
+uuid: 2a014628-43b6-4d48-a016-a96cb58606a1
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.profile.field_education
+    - field.storage.profile.field_educational_background
     - profile.type.researcher
-  module:
-    - text
-id: profile.researcher.field_education
-field_name: field_education
+id: profile.researcher.field_educational_background
+field_name: field_educational_background
 entity_type: profile
 bundle: researcher
 label: 'Educational Background'
@@ -18,4 +16,4 @@ translatable: false
 default_value: {  }
 default_value_callback: ''
 settings: {  }
-field_type: text_long
+field_type: string_long

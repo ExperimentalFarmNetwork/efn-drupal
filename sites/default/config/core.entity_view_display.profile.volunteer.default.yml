@@ -13,6 +13,7 @@ dependencies:
     - field.field.profile.volunteer.field_location
     - field.field.profile.volunteer.field_location_descriptors
     - field.field.profile.volunteer.field_location_geo
+    - field.field.profile.volunteer.field_other
     - field.field.profile.volunteer.field_other_limitations
     - field.field.profile.volunteer.field_soil_details
     - field.field.profile.volunteer.field_soil_type
@@ -108,6 +109,12 @@ content:
           'y': 0
     third_party_settings: {  }
     type: leaflet_formatter_default
+  field_other:
+    weight: 16
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
   field_other_limitations:
     weight: 15
     label: above

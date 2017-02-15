@@ -11,7 +11,7 @@ dependencies:
 id: newprojectbutton
 theme: minimus
 region: navigation_collapsible
-weight: -9
+weight: -11
 provider: null
 plugin: 'block_content:c1aff9f9-8287-40e6-9f0d-282496371a16'
 settings:

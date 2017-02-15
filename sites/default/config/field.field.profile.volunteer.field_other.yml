@@ -1,0 +1,19 @@
+uuid: 6cff3704-dd31-425e-b225-45a5e72c2b61
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_other
+    - profile.type.volunteer
+id: profile.volunteer.field_other
+field_name: field_other
+entity_type: profile
+bundle: volunteer
+label: Other
+description: 'Please list other growing experience here'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

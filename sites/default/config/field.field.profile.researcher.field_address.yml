@@ -12,10 +12,24 @@ field_name: field_address
 entity_type: profile
 bundle: researcher
 label: 'Mailing Address'
-description: ''
+description: 'This will not be shared publicly, but is important for being able to receive seeds from researchers.'
 required: false
 translatable: false
-default_value: {  }
+default_value:
+  -
+    langcode: null
+    country_code: US
+    administrative_area: ''
+    locality: ''
+    dependent_locality: null
+    postal_code: ''
+    sorting_code: null
+    address_line1: ''
+    address_line2: ''
+    organization: ''
+    given_name: ''
+    additional_name: null
+    family_name: ''
 default_value_callback: ''
 settings:
   available_countries: {  }
