@@ -11,7 +11,7 @@ dependencies:
 id: footerblock1
 theme: minimus
 region: footer
-weight: -13
+weight: -12
 provider: null
 plugin: 'block_content:e930ce1d-d57d-42a0-bb6f-26f020693991'
 settings:

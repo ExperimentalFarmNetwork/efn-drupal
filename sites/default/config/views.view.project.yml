@@ -8,7 +8,9 @@ dependencies:
     - group.type.project
     - image.style.card_project_banner
     - system.menu.main
+    - taxonomy.vocabulary.project_type
   module:
+    - better_exposed_filters
     - group
     - image
     - taxonomy
@@ -587,6 +589,11 @@ display:
       defaults:
         pager: false
         title: false
+        filters: false
+        filter_groups: false
+        sorts: false
+        exposed_form: false
+        use_ajax: false
       display_description: ''
       title: Projects
       menu:
@@ -598,12 +605,166 @@ display:
         weight: -50
         context: '0'
         menu_name: main
+      filters:
+        type:
+          id: type
+          table: groups_field_data
+          field: type
+          value:
+            project: project
+          entity_type: group
+          entity_field: type
+          plugin_id: bundle
+          group: 1
+        field_project_type_target_id:
+          id: field_project_type_target_id
+          table: group__field_project_type
+          field: field_project_type_target_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_project_type_target_id_op
+            label: 'Project Type'
+            description: ''
+            use_operator: false
+            operator: field_project_type_target_id_op
+            identifier: field_project_type_target_id
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              volunteer: '0'
+              administrator: '0'
+              researcher: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          type: select
+          limit: true
+          vid: project_type
+          hierarchy: false
+          error_message: true
+          plugin_id: taxonomy_index_tid
+        label:
+          id: label
+          table: groups_field_data
+          field: label
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: contains
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: label_op
+            label: 'Search Titles'
+            description: ''
+            use_operator: false
+            operator: label_op
+            identifier: label
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              volunteer: '0'
+              administrator: '0'
+              researcher: '0'
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          entity_type: group
+          entity_field: label
+          plugin_id: string
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+      sorts:
+        created:
+          id: created
+          table: groups_field_data
+          field: created
+          relationship: none
+          group_type: group
+          admin_label: ''
+          order: DESC
+          exposed: false
+          expose:
+            label: ''
+          granularity: hour
+          entity_type: group
+          entity_field: created
+          plugin_id: date
+      exposed_form:
+        type: bef
+        options:
+          submit_button: search
+          reset_button: true
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: false
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+          bef:
+            general:
+              allow_secondary: false
+              secondary_label: 'Advanced options'
+              autosubmit: false
+              autosubmit_hide: false
+            field_project_type_target_id:
+              bef_format: bef_links
+              more_options:
+                bef_select_all_none: false
+                bef_collapsible: false
+                is_secondary: false
+                rewrite:
+                  filter_rewrite_values: ''
+            label:
+              bef_format: default
+              more_options:
+                is_secondary: false
+                rewrite:
+                  filter_rewrite_values: ''
+      use_ajax: true
+      exposed_block: true
     cache_metadata:
       max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
+        - url
         - url.query_args
+        - user
       tags:
         - 'config:field.storage.group.field_project_image'
         - 'config:field.storage.group.field_project_summary'

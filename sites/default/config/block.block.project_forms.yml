@@ -1,0 +1,29 @@
+uuid: 3c7a0298-6be7-4202-8d94-b0866af861ad
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.project
+  module:
+    - system
+    - views
+  theme:
+    - minimus
+id: project_forms
+theme: minimus
+region: sidebar_second
+weight: 0
+provider: null
+plugin: 'views_exposed_filter_block:project-page_3'
+settings:
+  id: 'views_exposed_filter_block:project-page_3'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+visibility:
+  request_path:
+    id: request_path
+    pages: /projects
+    negate: false
+    context_mapping: {  }
