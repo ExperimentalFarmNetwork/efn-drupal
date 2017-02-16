@@ -6807,14 +6807,14 @@ footer.footer {
       margin: 5px 10px; }
     footer.footer #block-sociallinks p:nth-of-type(1) {
       margin-bottom: 3em; }
-    footer.footer #block-sociallinks a[href="/donate"], footer.footer #block-sociallinks a.donateLink {
+    footer.footer #block-sociallinks a[href="/donate"], footer.footer #block-sociallinks a.donateLink, footer.footer #block-sociallinks .btn-donate {
       background: #242029;
       color: #A4AD23;
       padding: 20px 40px;
       margin-top: 2em;
       border-radius: 5px;
       font-weight: bold; }
-      footer.footer #block-sociallinks a[href="/donate"]:hover, footer.footer #block-sociallinks a.donateLink:hover {
+      footer.footer #block-sociallinks a[href="/donate"]:hover, footer.footer #block-sociallinks a.donateLink:hover, footer.footer #block-sociallinks .btn-donate:hover {
         background: #A4AD23;
         color: #242029;
         text-transform: none; }

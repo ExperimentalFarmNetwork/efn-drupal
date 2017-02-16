@@ -36,13 +36,13 @@ content:
     third_party_settings: {  }
     type: text_default
   field_location:
-    weight: 12
+    weight: 11
     label: above
     settings: {  }
     third_party_settings: {  }
     type: address_default
   field_misc:
-    weight: 11
+    weight: 10
     label: above
     settings: {  }
     third_party_settings: {  }
@@ -54,7 +54,7 @@ content:
     third_party_settings: {  }
     type: list_default
   field_project_image:
-    weight: 13
+    weight: 12
     label: hidden
     settings:
       image_style: project_banner
@@ -68,14 +68,14 @@ content:
     third_party_settings: {  }
     type: basic_string
   field_project_type:
-    weight: 14
+    weight: 13
     label: hidden
     settings:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
   field_researcher_background:
-    weight: 15
+    weight: 3
     label: above
     settings: {  }
     third_party_settings: {  }

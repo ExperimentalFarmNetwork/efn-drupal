@@ -31,7 +31,8 @@
         "drupal/field_states_ui": "1.x-dev",
         "doctrine/common": "2.5.3",
         "drupal/pathauto": "^1.0@RC",
-        "drupal/better_exposed_filters": "^3.0@alpha"
+        "drupal/better_exposed_filters": "^3.0@alpha",
+        "drupal/smtp": "^1.0@beta"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

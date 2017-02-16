@@ -56,6 +56,7 @@ module:
   rest: 0
   select_or_other: 0
   serialization: 0
+  smtp: 0
   system: 0
   taxonomy: 0
   text: 0

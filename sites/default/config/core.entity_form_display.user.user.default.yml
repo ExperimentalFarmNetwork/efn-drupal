@@ -1,4 +1,4 @@
-uuid: eefb0fb0-4a1c-498b-9f40-389cf0a8a582
+uuid: 8f3e501e-c250-463d-a79a-ae4d66903a62
 langcode: en
 status: true
 dependencies:
@@ -9,20 +9,17 @@ targetEntityType: user
 bundle: user
 mode: default
 content:
-  member_for:
-    weight: 1
+  account:
+    weight: -10
     settings: {  }
     third_party_settings: {  }
-  profile_main:
+  language:
     weight: 0
     settings: {  }
     third_party_settings: {  }
-  profile_researcher:
-    weight: 2
+  timezone:
+    weight: 6
     settings: {  }
     third_party_settings: {  }
-  profile_volunteer:
-    weight: 3
-    settings: {  }
-    third_party_settings: {  }
-hidden: {  }
+hidden:
+  contact: true

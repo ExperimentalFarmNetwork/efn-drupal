@@ -5,7 +5,7 @@ dependencies: {  }
 id: administrator
 label: Administrator
 weight: 3
-is_admin: null
+is_admin: true
 permissions:
   - 'administer comment types'
   - 'administer comments'
