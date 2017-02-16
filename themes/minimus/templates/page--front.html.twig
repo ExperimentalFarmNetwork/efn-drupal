@@ -117,8 +117,9 @@
       {# Header #}
       {% if page.header %}
         {% block header %}
-<!--           <div class="bnrPic" role="heading">
-          </div> -->
+            <div role="heading" class="bump-title">
+              {{ page.header }}
+            </div>
         {% endblock %}
       {% endif %}
 

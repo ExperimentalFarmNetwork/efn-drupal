@@ -6559,37 +6559,40 @@ body.path-group {
       body.path-group .region-content .groupWrapper .field--name-field-location.toggleVFields,
       body.path-group .region-content .groupWrapper .field--name-field-location-geo.toggleVFields {
         display: block; }
-    body.path-group .region-content .groupWrapper .field--name-field-project-type .field--item {
-      display: inline-block; }
-      body.path-group .region-content .groupWrapper .field--name-field-project-type .field--item a {
-        padding: .5em 1em;
-        background: #eeeeee;
-        margin-right: .5em;
-        color: #555555;
-        border-radius: 5px;
-        text-transform: uppercase;
-        line-height: 3em;
-        font-size: 14px;
-        cursor: pointer; }
-        body.path-group .region-content .groupWrapper .field--name-field-project-type .field--item a.bef-link-active {
-          background: #242029; }
-        body.path-group .region-content .groupWrapper .field--name-field-project-type .field--item a:hover {
-          background: #3B4A59;
-          color: #eeeeee;
-          text-decoration: none; }
-    body.path-group .region-content .groupWrapper .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image):not(.field--name-field-description):not(.field--name-field-project-type) {
+    body.path-group .region-content .groupWrapper .field--label {
+      font-weight: bold; }
+    body.path-group .region-content .groupWrapper .field--name-field-project-type {
+      margin-top: 1em; }
+      body.path-group .region-content .groupWrapper .field--name-field-project-type .field--item {
+        display: inline-block; }
+        body.path-group .region-content .groupWrapper .field--name-field-project-type .field--item a {
+          padding: .5em 1em;
+          background: #eeeeee;
+          margin-right: .5em;
+          color: #555555;
+          border-radius: 5px;
+          text-transform: uppercase;
+          line-height: 3em;
+          font-size: 14px;
+          cursor: pointer; }
+          body.path-group .region-content .groupWrapper .field--name-field-project-type .field--item a.bef-link-active {
+            background: #242029; }
+          body.path-group .region-content .groupWrapper .field--name-field-project-type .field--item a:hover {
+            background: #3B4A59;
+            color: #eeeeee;
+            text-decoration: none; }
+    body.path-group .region-content .groupWrapper .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image):not(.field--name-field-description):not(.field--name-field-project-type):not(.field--name-field-project-image) {
       padding-bottom: 2em;
       padding-top: 2em;
       border-bottom: thin #eeeeee solid; }
-      body.path-group .region-content .groupWrapper .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image):not(.field--name-field-description):not(.field--name-field-project-type) .field--label {
+      body.path-group .region-content .groupWrapper .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image):not(.field--name-field-description):not(.field--name-field-project-type):not(.field--name-field-project-image) .field--label {
         width: 45%;
         display: inline-table;
-        text-transform: uppercase;
-        font-weight: normal; }
-      body.path-group .region-content .groupWrapper .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image):not(.field--name-field-description):not(.field--name-field-project-type) .field--item {
+        text-transform: uppercase; }
+      body.path-group .region-content .groupWrapper .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image):not(.field--name-field-description):not(.field--name-field-project-type):not(.field--name-field-project-image) .field--item {
         width: 45%;
         display: inline-table; }
-      body.path-group .region-content .groupWrapper .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image):not(.field--name-field-description):not(.field--name-field-project-type).field--name-field-project-summary {
+      body.path-group .region-content .groupWrapper .field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image):not(.field--name-field-description):not(.field--name-field-project-type):not(.field--name-field-project-image).field--name-field-project-summary {
         display: block;
         padding-top: 0;
         padding-bottom: 1em;
@@ -6610,7 +6613,7 @@ body.path-group {
             text-decoration: none; }
     body.path-group .region-content .groupWrapper .field--name-field-description .field--label {
       text-transform: uppercase;
-      font-weight: normal;
+      font-weight: bold;
       margin-bottom: 1em; }
 
 .js-form-submit[value='Join group'], .btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
@@ -6804,14 +6807,14 @@ footer.footer {
       margin: 5px 10px; }
     footer.footer #block-sociallinks p:nth-of-type(1) {
       margin-bottom: 3em; }
-    footer.footer #block-sociallinks a[href="/donate"] {
+    footer.footer #block-sociallinks a[href="/donate"], footer.footer #block-sociallinks a.donateLink {
       background: #242029;
       color: #A4AD23;
       padding: 20px 40px;
       margin-top: 2em;
       border-radius: 5px;
       font-weight: bold; }
-      footer.footer #block-sociallinks a[href="/donate"]:hover {
+      footer.footer #block-sociallinks a[href="/donate"]:hover, footer.footer #block-sociallinks a.donateLink:hover {
         background: #A4AD23;
         color: #242029;
         text-transform: none; }

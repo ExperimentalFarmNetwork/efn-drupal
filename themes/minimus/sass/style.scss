@@ -324,8 +324,11 @@ body.path-group{
 					display:block; // uncomment when js ready please
 				}
 			}
-
+			.field--label{
+				font-weight:bold;
+			}
 			.field--name-field-project-type{
+				margin-top:1em;
 				.field--item{
 					display:inline-block;
 					a{
@@ -333,7 +336,7 @@ body.path-group{
 					}
 				}
 			}
-			.field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image):not(.field--name-field-description):not(.field--name-field-project-type){
+			.field:not(.field--name-field-user-image):not(.views-field-field-discussion):not(.field--name-field-comment-body):not(.field--name-field-image):not(.field--name-field-description):not(.field--name-field-project-type):not(.field--name-field-project-image){
 				padding-bottom:2em;
 				padding-top:2em;
 				border-bottom: thin $gray-lighter solid;
@@ -341,7 +344,6 @@ body.path-group{
 				    width: 45%;
 				    display: inline-table;
 				    text-transform:uppercase;																																																																																		
-				    font-weight:normal;
 				}
 				.field--item{
 				    width: 45%;
@@ -378,8 +380,9 @@ body.path-group{
 			.field--name-field-description{
 				.field--label{
 					text-transform:uppercase;																																																																																		
-					font-weight:normal;
+					font-weight:bold;
 					margin-bottom:1em;
+
 				}
 			}
 		}
@@ -695,7 +698,7 @@ footer.footer{
 			margin-bottom:3em;
 		};
 
-		a[href="/donate"]{
+		a[href="/donate"], a.donateLink{
 			background: $du-dark;
 			color: $du-gold;
 		    padding: 20px 40px;	
