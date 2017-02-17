@@ -644,20 +644,19 @@ body.path-group{
 		}
 	}
 }
-// #block-views-block-project-updates-block-1-2{
-// 	// background:yellow;
-// 	.item-list ul {
-// 		padding-left:0;
-// 		li {
-// 		    list-style-type: none;
-// 		    margin-bottom: 1em;
-// 		    footer{
-// 		    	color:$gray-light;
-// 		    	font-size:.8em;
-// 		    }
-// 		}
-// 	}
-// }
+
+// user form stuff
+
+.panel#edit-timezone{
+	border:0;
+	box-shadow:none;
+	.panel-heading{
+		display:none;
+	}
+	.panel-body{
+		padding:0;
+	}
+}
 
 // footer
 

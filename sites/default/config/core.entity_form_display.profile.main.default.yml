@@ -3,7 +3,6 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.profile.main.field_donating_other
     - field.field.profile.main.field_full_name
     - field.field.profile.main.field_user_image
     - image.style.thumbnail
@@ -15,28 +14,6 @@ targetEntityType: profile
 bundle: main
 mode: default
 content:
-  field_donating_other:
-    weight: 3
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings:
-      field_states_ui:
-        form:
-          type: ''
-          list:
-            8e359b72-e4a4-423d-9ce2-565e1f9342cb:
-              operations: {  }
-        field_states:
-          8e359b72-e4a4-423d-9ce2-565e1f9342cb:
-            uuid: 8e359b72-e4a4-423d-9ce2-565e1f9342cb
-            id: visible
-            data:
-              target: field_donating
-              comparison: value
-              value: other
-              submit: 'Add Cancel'
-    type: string_textfield
   field_full_name:
     weight: 0
     settings:

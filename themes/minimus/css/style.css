@@ -6771,6 +6771,14 @@ body.path-group {
         border: thin solid #eeeeee;
         padding: 10px; }
 
+.panel#edit-timezone {
+  border: 0;
+  box-shadow: none; }
+  .panel#edit-timezone .panel-heading {
+    display: none; }
+  .panel#edit-timezone .panel-body {
+    padding: 0; }
+
 footer.footer {
   color: #418261;
   background: #3B4A59;

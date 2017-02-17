@@ -10,15 +10,15 @@ bundle: user
 mode: default
 content:
   account:
-    weight: -10
-    settings: {  }
-    third_party_settings: {  }
-  language:
     weight: 0
     settings: {  }
     third_party_settings: {  }
+  language:
+    weight: 1
+    settings: {  }
+    third_party_settings: {  }
   timezone:
-    weight: 6
+    weight: 2
     settings: {  }
     third_party_settings: {  }
 hidden:
