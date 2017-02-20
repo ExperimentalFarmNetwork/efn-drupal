@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "236a7a5ada81020cc658f7956faf9d0a",
+    "content-hash": "0061f45d6dc3bdd2025c6af3d0a5a63c",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -1255,8 +1255,7 @@
             "homepage": "http://drupal.org/project/address",
             "support": {
                 "source": "http://cgit.drupalcode.org/address"
-            },
-            "time": "2016-12-22 18:29:13"
+            }
         },
         {
             "name": "drupal/admin_toolbar",
@@ -1373,8 +1372,7 @@
             "homepage": "https://www.drupal.org/project/ajax_comments",
             "support": {
                 "source": "http://cgit.drupalcode.org/ajax_comments"
-            },
-            "time": "2016-12-10 01:37:43"
+            }
         },
         {
             "name": "drupal/better_exposed_filters",
@@ -2247,8 +2245,62 @@
                 "source": "http://cgit.drupalcode.org/devel",
                 "issues": "http://drupal.org/project/devel",
                 "irc": "irc://irc.freenode.org/drupal-contribute"
+            }
+        },
+        {
+            "name": "drupal/email_registration",
+            "version": "1.0.0-rc4",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/email_registration",
+                "reference": "8.x-1.0-rc4"
             },
-            "time": "2017-01-19 08:35:20"
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/email_registration-8.x-1.0-rc4.zip",
+                "reference": "8.x-1.0-rc4",
+                "shasum": "442a441f71a254e6bc87ab7d774518838d64882e"
+            },
+            "require": {
+                "drupal/core": "~8.0"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.0-rc4",
+                    "datestamp": "1482843783"
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Chris Herberte",
+                    "homepage": "https://www.drupal.org/user/1171"
+                },
+                {
+                    "name": "andypost",
+                    "homepage": "https://www.drupal.org/user/118908"
+                },
+                {
+                    "name": "greggles",
+                    "homepage": "https://www.drupal.org/user/36762"
+                },
+                {
+                    "name": "moshe weitzman",
+                    "homepage": "https://www.drupal.org/user/23"
+                }
+            ],
+            "description": "Allows users to register with an e-mail address as their username.",
+            "homepage": "https://www.drupal.org/project/email_registration",
+            "support": {
+                "source": "http://cgit.drupalcode.org/email_registration"
+            }
         },
         {
             "name": "drupal/entity",
@@ -2363,8 +2415,7 @@
             "homepage": "https://www.drupal.org/project/features",
             "support": {
                 "source": "http://cgit.drupalcode.org/features"
-            },
-            "time": "2017-01-07 00:52:16"
+            }
         },
         {
             "name": "drupal/field_group",
@@ -2549,8 +2600,7 @@
                 "source": "https://cgit.drupalcode.org/geocoder",
                 "issues": "https://drupal.org/project/issues/geocoder",
                 "irc": "irc://irc.freenode.org/drupal-geo"
-            },
-            "time": "2017-01-12 17:39:36"
+            }
         },
         {
             "name": "drupal/geofield",
@@ -2720,8 +2770,7 @@
             "homepage": "https://www.drupal.org/project/group",
             "support": {
                 "source": "http://cgit.drupalcode.org/group"
-            },
-            "time": "2016-12-07 09:54:57"
+            }
         },
         {
             "name": "drupal/leaflet",
@@ -2895,8 +2944,7 @@
             "homepage": "http://drupal.org/project/profile",
             "support": {
                 "source": "http://cgit.drupalcode.org/profile"
-            },
-            "time": "2017-01-19 16:50:30"
+            }
         },
         {
             "name": "drupal/select_or_other",
@@ -2958,7 +3006,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://ftp.drupal.org/files/projects/smtp-8.x-1.0-beta2.zip",
-                "reference": null,
+                "reference": "8.x-1.0-beta2",
                 "shasum": "d6c3890dca35264f6f39647527c2e203e9c445bc"
             },
             "require": {
@@ -3063,8 +3111,7 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/token",
                 "issues": "https://www.drupal.org/project/issues/token"
-            },
-            "time": "2017-01-01 16:26:13"
+            }
         },
         {
             "name": "drupal/yamlform",
@@ -7904,7 +7951,8 @@
         "drupal/field_states_ui": 20,
         "drupal/pathauto": 5,
         "drupal/better_exposed_filters": 15,
-        "drupal/smtp": 10
+        "drupal/smtp": 10,
+        "drupal/email_registration": 5
     },
     "prefer-stable": true,
     "prefer-lowest": false,
