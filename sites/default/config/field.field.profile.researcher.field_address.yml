@@ -12,7 +12,7 @@ field_name: field_address
 entity_type: profile
 bundle: researcher
 label: 'Mailing Address'
-description: 'This will not be shared publicly, but is important for being able to receive seeds from researchers.'
+description: 'This will not be shared publicly, but is important for being able to receive seeds from researchers. Chose "none" in the Country field to leave blank.'
 required: false
 translatable: false
 default_value:

@@ -1,0 +1,26 @@
+uuid: 9e4a0f7e-2d66-45ef-9ff6-c67d2898cdce
+langcode: en
+status: true
+dependencies:
+  module:
+    - efn_users
+    - system
+  theme:
+    - minimus
+id: efnprofilelinks_2
+theme: minimus
+region: sidebar_second
+weight: 0
+provider: null
+plugin: efn_user_profiles
+settings:
+  id: efn_user_profiles
+  label: 'EFN Profile Links'
+  provider: efn_users
+  label_display: visible
+visibility:
+  request_path:
+    id: request_path
+    pages: "/user/*\r\n!/user/*/researcher\r\n!/user/*/volunteer"
+    negate: false
+    context_mapping: {  }

@@ -3,9 +3,10 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.group_content.project-group_membership.field_project_why
     - field.field.group_content.project-group_membership.group_roles
     - group.content_type.project-group_membership
+  module:
+    - path
 id: group_content.project-group_membership.default
 targetEntityType: group_content
 bundle: project-group_membership
@@ -19,16 +20,14 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-  field_project_why:
-    weight: 7
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
   group_roles:
     type: options_buttons
     weight: 6
+    settings: {  }
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 30
     settings: {  }
     third_party_settings: {  }
 hidden:

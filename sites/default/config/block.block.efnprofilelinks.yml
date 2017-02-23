@@ -1,0 +1,26 @@
+uuid: cea5fac6-28ee-4bc2-bd80-aa7590732ab2
+langcode: en
+status: true
+dependencies:
+  module:
+    - efn_users
+    - system
+  theme:
+    - minimus
+id: efnprofilelinks
+theme: minimus
+region: sidebar_second
+weight: -10
+provider: null
+plugin: efn_user_profiles
+settings:
+  id: efn_user_profiles
+  label: 'EFN Profile Links'
+  provider: efn_users
+  label_display: '0'
+visibility:
+  request_path:
+    id: request_path
+    pages: "user/*\r\n~user/*/edit"
+    negate: false
+    context_mapping: {  }

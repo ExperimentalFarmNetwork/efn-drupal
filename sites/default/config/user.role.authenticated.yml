@@ -27,3 +27,6 @@ permissions:
   - 'view own volunteer profile'
   - 'access site-wide contact form'
   - 'access user contact forms'
+  - 'add own researcher profile'
+  - 'delete own researcher profile'
+  - 'change own username'
