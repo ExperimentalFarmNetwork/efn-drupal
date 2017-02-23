@@ -8,7 +8,7 @@ use Drupal\profile\Entity\Profile;
  * Implements hook_profile_insert().
  */
 function efn_users_profile_insert(EntityInterface $profile) {
-	// Add appropriate roles when user completes profile.
+	// Add appropriate roles when user completes profile. Names should match.
 	if (in_array($profile->bundle(), ['volunteer', 'researcher'])) {
 		$user = $profile->getOwner();
 		$user->addRole($profile->bundle());
