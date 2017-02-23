@@ -10,3 +10,4 @@ permissions:
   - 'add own researcher profile'
   - 'delete any researcher profile'
   - 'delete own researcher profile'
+  - 'access user profiles'
