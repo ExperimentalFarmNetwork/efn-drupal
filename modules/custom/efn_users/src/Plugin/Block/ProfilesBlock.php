@@ -23,58 +23,59 @@ class ProfilesBlock extends BlockBase {
    */
   public function build() {
 
-  	$user = \Drupal::currentUser();
+  	$currentUser = \Drupal::currentUser();
+  	if ($currentUser->id()) {
+	  	$user = \Drupal::routeMatch()->getParameter('user');
+	  	// Terrible! Replace with twig template ASAP.
+	  	$markup = '';
 
-  	// Terrible! Replace with twig template ASAP.
-  	$markup = '';
+	  	if ($user && $currentUser->id() == $user->id()) {
+		  	$volunteerProfile = \Drupal::entityManager()->getStorage('profile')
+					->loadByUser($user, 'volunteer');
 
-  	if ($user->id()) {
-	  	$volunteerProfile = \Drupal::entityManager()->getStorage('profile')
-				->loadByUser($user, 'volunteer');
+				if (!$volunteerProfile) {
+					$markup .= '<p>';
+					$markup .= t('Start joining joining projects and connecting to 
+						others in the network:');
 
-			if (!$volunteerProfile) {
-				$markup .= '<p>';
-				$markup .= t('Start joining joining projects and connecting to 
-					others in the network:');
+					$url = Url::fromRoute('entity.profile.type.main.user_profile_form', ['user' => $user->id(), 'profile_type' => 'volunteer']);
+					$link_options = [
+					  'attributes' => [
+					    'class' => ['btn', 'btn-lg', 'btn-primary'],
+					   ],
+					];
+					$url->setOptions($link_options);
+					$link = Link::fromTextAndUrl(t('Create Volunteer Profile'), $url )->toString();
+					$markup .= '</p>';
+					$markup .= $link;
+				}
 
-				$url = Url::fromRoute('entity.profile.type.main.user_profile_form', ['user' => $user->id(), 'profile_type' => 'volunteer']);
-				$link_options = [
-				  'attributes' => [
-				    'class' => ['btn', 'btn-lg', 'btn-primary'],
-				   ],
-				];
-				$url->setOptions($link_options);
-				$link = Link::fromTextAndUrl(t('Create Volunteer Profile'), $url )->toString();
-				$markup .= '</p>';
-				$markup .= $link;
-			}
+			  $researcherProfile = \Drupal::entityManager()->getStorage('profile')
+						->loadByUser($user, 'researcher');
 
-		  $researcherProfile = \Drupal::entityManager()->getStorage('profile')
-					->loadByUser($user, 'researcher');
+				if (!$researcherProfile) {
+					$markup .= '<p>';
+					$markup .= t('Start creating and leading your own projects:');
 
-			if (!$researcherProfile) {
-				$markup .= '<p>';
-				$markup .= t('Start creating and leading your own projects:');
+					$url = Url::fromRoute('entity.profile.type.main.user_profile_form', ['user' => $user->id(), 'profile_type' => 'researcher']);
+					$link_options = [
+					  'attributes' => [
+					    'class' => ['btn', 'btn-lg', 'btn-primary'],
+					   ],
+					];
+					$url->setOptions($link_options);
+					$link = Link::fromTextAndUrl(t('Create Researcher Profile'), $url )->toString();
+					$markup .= '</p>';
+					$markup .= $link;
+				}
 
-				$url = Url::fromRoute('entity.profile.type.main.user_profile_form', ['user' => $user->id(), 'profile_type' => 'researcher']);
-				$link_options = [
-				  'attributes' => [
-				    'class' => ['btn', 'btn-lg', 'btn-primary'],
-				   ],
-				];
-				$url->setOptions($link_options);
-				$link = Link::fromTextAndUrl(t('Create Researcher Profile'), $url )->toString();
-				$markup .= '</p>';
-				$markup .= $link;
-			}
-
-			if ($markup) {
-				return array(
-				  '#markup' => $markup,
-				);				
-			}
-  	}
-
+				if ($markup) {
+					return array(
+					  '#markup' => $markup,
+					);				
+				}
+	  	}
+	  }
  		return array();
   }
   
