@@ -1,0 +1,14 @@
+{
+  "name": "drupal/block_exclude_pages",
+  "type": "drupal-module",
+  "description": "adds an exclude pages field for blocks",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/block_exclude_pages",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/block_exclude_pages",
+    "source": "http://cgit.drupalcode.org/block_exclude_pages"
+  },
+  "require": { }
+}

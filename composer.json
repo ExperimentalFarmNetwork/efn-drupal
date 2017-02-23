@@ -33,7 +33,8 @@
         "drupal/pathauto": "^1.0@RC",
         "drupal/better_exposed_filters": "^3.0@alpha",
         "drupal/smtp": "^1.0@beta",
-        "drupal/email_registration": "^1.0@RC"
+        "drupal/email_registration": "^1.0@RC",
+        "drupal/block_exclude_pages": "^1.2"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
