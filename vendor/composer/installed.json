@@ -3061,7 +3061,7 @@
         "source": {
             "type": "git",
             "url": "https://git.drupal.org/project/token",
-            "reference": "a3b68ccb7c5657a8138c999731dca293ed7991a8"
+            "reference": "ed6cc7b037b462cc76dafde7910d57b5a7010559"
         },
         "require": {
             "drupal/core": "~8.0"
@@ -3072,8 +3072,8 @@
                 "dev-1.x": "1.x-dev"
             },
             "drupal": {
-                "version": "8.x-1.0-beta2+5-dev",
-                "datestamp": "1483288143"
+                "version": "8.x-1.0-rc1+5-dev",
+                "datestamp": "1493466543"
             }
         },
         "installation-source": "source",
@@ -3110,8 +3110,7 @@
         "description": "Provides a user interface for the Token API and some missing core tokens.",
         "homepage": "https://www.drupal.org/project/token",
         "support": {
-            "source": "http://cgit.drupalcode.org/token",
-            "issues": "https://www.drupal.org/project/issues/token"
+            "source": "http://cgit.drupalcode.org/token"
         }
     },
     {
@@ -7794,65 +7793,6 @@
         }
     },
     {
-        "name": "drupal/pathauto",
-        "version": "1.0.0-rc1",
-        "version_normalized": "1.0.0.0-RC1",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/pathauto",
-            "reference": "8.x-1.0-rc1"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/pathauto-8.x-1.0-rc1.zip",
-            "reference": "8.x-1.0-rc1",
-            "shasum": "2460339ac8739317b3c4e66e9ce7142cc02adac3"
-        },
-        "require": {
-            "drupal/core": "*",
-            "drupal/ctools": "*",
-            "drupal/token": "*"
-        },
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-1.x": "1.x-dev"
-            },
-            "drupal": {
-                "version": "8.x-1.0-rc1",
-                "datestamp": "1485702484"
-            }
-        },
-        "installation-source": "dist",
-        "notification-url": "https://packages.drupal.org/8/downloads",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "Berdir",
-                "homepage": "https://www.drupal.org/user/214652"
-            },
-            {
-                "name": "Dave Reid",
-                "homepage": "https://www.drupal.org/user/53892"
-            },
-            {
-                "name": "Freso",
-                "homepage": "https://www.drupal.org/user/27504"
-            },
-            {
-                "name": "greggles",
-                "homepage": "https://www.drupal.org/user/36762"
-            }
-        ],
-        "description": "Provides a mechanism for modules to automatically generate aliases for the content they manage.",
-        "homepage": "https://www.drupal.org/project/pathauto",
-        "support": {
-            "source": "http://cgit.drupalcode.org/pathauto"
-        }
-    },
-    {
         "name": "drupal/better_exposed_filters",
         "version": "3.0.0-alpha2",
         "version_normalized": "3.0.0.0-alpha2",
@@ -8017,18 +7957,126 @@
         }
     },
     {
+        "name": "drupal/block_exclude_pages",
+        "version": "1.2.0",
+        "version_normalized": "1.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/block_exclude_pages",
+            "reference": "8.x-1.2"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/block_exclude_pages-8.x-1.2.zip",
+            "reference": "8.x-1.2",
+            "shasum": "3dbf8b5ca23a504942800a5e3acacade002522f8"
+        },
+        "require": {
+            "drupal/core": "~8.0"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.2",
+                "datestamp": "1485180183"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "jcontreras",
+                "homepage": "https://www.drupal.org/user/2422356"
+            }
+        ],
+        "description": "adds an exclude pages field for blocks",
+        "homepage": "https://www.drupal.org/project/block_exclude_pages",
+        "keywords": [
+            "Drupal"
+        ],
+        "support": {
+            "source": "http://cgit.drupalcode.org/block_exclude_pages",
+            "issues": "https://www.drupal.org/project/issues/block_exclude_pages"
+        }
+    },
+    {
+        "name": "drupal/pathauto",
+        "version": "1.0.0",
+        "version_normalized": "1.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/pathauto",
+            "reference": "8.x-1.0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/pathauto-8.x-1.0.zip",
+            "reference": "8.x-1.0",
+            "shasum": "4c82a5689a18421c8c73fcc8be7b333bb21ae02a"
+        },
+        "require": {
+            "drupal/core": "*",
+            "drupal/ctools": "*",
+            "drupal/token": "*"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.0",
+                "datestamp": "1493468044"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Berdir",
+                "homepage": "https://www.drupal.org/user/214652"
+            },
+            {
+                "name": "Dave Reid",
+                "homepage": "https://www.drupal.org/user/53892"
+            },
+            {
+                "name": "Freso",
+                "homepage": "https://www.drupal.org/user/27504"
+            },
+            {
+                "name": "greggles",
+                "homepage": "https://www.drupal.org/user/36762"
+            }
+        ],
+        "description": "Provides a mechanism for modules to automatically generate aliases for the content they manage.",
+        "homepage": "https://www.drupal.org/project/pathauto",
+        "support": {
+            "source": "http://cgit.drupalcode.org/pathauto"
+        }
+    },
+    {
         "name": "drupal/core",
         "version": "8.2.5",
         "version_normalized": "8.2.5.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/drupal-composer/drupal-core.git",
-            "reference": "fbf10f63dba6b312e1d1b67bac521db1648384f3"
+            "url": "https://github.com/drupal/core.git",
+            "reference": "12ec8a14c0cd269af823375bc05b0738b5293e2a"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/drupal-composer/drupal-core/zipball/fbf10f63dba6b312e1d1b67bac521db1648384f3",
-            "reference": "fbf10f63dba6b312e1d1b67bac521db1648384f3",
+            "url": "https://api.github.com/repos/drupal/core/zipball/12ec8a14c0cd269af823375bc05b0738b5293e2a",
+            "reference": "12ec8a14c0cd269af823375bc05b0738b5293e2a",
             "shasum": ""
         },
         "require": {
@@ -8199,54 +8247,5 @@
             "GPL-2.0+"
         ],
         "description": "Drupal is an open source content management platform powering millions of websites and applications."
-    },
-    {
-        "name": "drupal/block_exclude_pages",
-        "version": "1.2.0",
-        "version_normalized": "1.2.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/block_exclude_pages",
-            "reference": "8.x-1.2"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/block_exclude_pages-8.x-1.2.zip",
-            "reference": null,
-            "shasum": "3dbf8b5ca23a504942800a5e3acacade002522f8"
-        },
-        "require": {
-            "drupal/core": "~8.0"
-        },
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-1.x": "1.x-dev"
-            },
-            "drupal": {
-                "version": "8.x-1.2",
-                "datestamp": "1485180183"
-            }
-        },
-        "installation-source": "dist",
-        "notification-url": "https://packages.drupal.org/8/downloads",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "jcontreras",
-                "homepage": "https://www.drupal.org/user/2422356"
-            }
-        ],
-        "description": "adds an exclude pages field for blocks",
-        "homepage": "https://www.drupal.org/project/block_exclude_pages",
-        "keywords": [
-            "Drupal"
-        ],
-        "support": {
-            "source": "http://cgit.drupalcode.org/block_exclude_pages",
-            "issues": "https://www.drupal.org/project/issues/block_exclude_pages"
-        }
     }
 ]
