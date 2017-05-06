@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9b90c0233d7a55547e07c7e74bf11b94",
+    "content-hash": "203b71110708c34a5757ab933b270c2b",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -266,6 +266,54 @@
             ],
             "description": "Internationalization library powered by CLDR data.",
             "time": "2016-12-13T12:33:19+00:00"
+        },
+        {
+            "name": "commerceguys/zone",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/commerceguys/zone.git",
+                "reference": "9bd0b361a971284442972c42b6749ca855c65435"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/commerceguys/zone/zipball/9bd0b361a971284442972c42b6749ca855c65435",
+                "reference": "9bd0b361a971284442972c42b6749ca855c65435",
+                "shasum": ""
+            },
+            "require": {
+                "commerceguys/addressing": "~1.0",
+                "doctrine/collections": "~1.0",
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "mikey179/vfsstream": "1.*",
+                "phpunit/phpunit": "~4.0",
+                "squizlabs/php_codesniffer": "2.*",
+                "symfony/intl": ">=2.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "CommerceGuys\\Zone\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bojan Zivanovic"
+                }
+            ],
+            "description": "Zone management library.",
+            "time": "2017-04-20 12:44:24"
         },
         {
             "name": "components/jquery",
@@ -1187,15 +1235,22 @@
         },
         {
             "name": "drupal/address",
-            "version": "dev-1.x",
+            "version": "1.0.0-rc4",
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/address",
-                "reference": "27d1c839ead8535cd8f22a250f255a64134594a0"
+                "reference": "8.x-1.0-rc4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/address-8.x-1.0-rc4.zip",
+                "reference": null,
+                "shasum": "541b020ce839dd9c75374e213c1131d9c1f6f52d"
             },
             "require": {
                 "commerceguys/addressing": "~1.0",
                 "commerceguys/intl": "~0.7",
+                "commerceguys/zone": "~1.0",
                 "drupal/core": "*"
             },
             "type": "drupal-module",
@@ -1204,8 +1259,8 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.0-rc4+2-dev",
-                    "datestamp": "1492697043"
+                    "version": "8.x-1.0-rc4",
+                    "datestamp": "1486737287"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -1230,8 +1285,7 @@
             "homepage": "http://drupal.org/project/address",
             "support": {
                 "source": "http://cgit.drupalcode.org/address"
-            },
-            "time": "2017-04-23 21:45:16"
+            }
         },
         {
             "name": "drupal/admin_toolbar",
@@ -1244,7 +1298,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://ftp.drupal.org/files/projects/admin_toolbar-8.x-1.19.zip",
-                "reference": null,
+                "reference": "8.x-1.19",
                 "shasum": "87de41eab3c5cd49d4e1b5b764cb3b9d5ad683a0"
             },
             "require": {
@@ -1348,8 +1402,7 @@
             "homepage": "https://www.drupal.org/project/ajax_comments",
             "support": {
                 "source": "http://cgit.drupalcode.org/ajax_comments"
-            },
-            "time": "2017-03-29 21:00:08"
+            }
         },
         {
             "name": "drupal/better_exposed_filters",
@@ -1362,7 +1415,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://ftp.drupal.org/files/projects/better_exposed_filters-8.x-3.0-alpha2.zip",
-                "reference": null,
+                "reference": "8.x-3.0-alpha2",
                 "shasum": "f1bbe21379a4ac8e28e3edfbdd4964343299caeb"
             },
             "require": {
@@ -1405,7 +1458,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://ftp.drupal.org/files/projects/block_exclude_pages-8.x-1.2.zip",
-                "reference": null,
+                "reference": "8.x-1.2",
                 "shasum": "3dbf8b5ca23a504942800a5e3acacade002522f8"
             },
             "require": {
@@ -1452,7 +1505,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://ftp.drupal.org/files/projects/chosen-8.x-2.1.zip",
-                "reference": null,
+                "reference": "8.x-2.1",
                 "shasum": "15a5fc30958df4dad656edf334daa5b8594c5a6a"
             },
             "require": {
@@ -1604,7 +1657,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://ftp.drupal.org/files/projects/config_update-8.x-1.3.zip",
-                "reference": null,
+                "reference": "8.x-1.3",
                 "shasum": "4fc57add91c090ea3c9ed4848579b450253b1eed"
             },
             "require": {
@@ -2095,7 +2148,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://ftp.drupal.org/files/projects/ctools-8.x-3.0.zip",
-                "reference": null,
+                "reference": "8.x-3.0",
                 "shasum": "302e869ecd1e59fe55663673999fee2ccac5daa8"
             },
             "require": {
@@ -2180,7 +2233,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://ftp.drupal.org/files/projects/default_content-8.x-1.0-alpha3.zip",
-                "reference": null,
+                "reference": "8.x-1.0-alpha3",
                 "shasum": "6834ce4134fd20df56e7294e9aad033f1500d7dd"
             },
             "require": {
@@ -2313,8 +2366,7 @@
                 "source": "http://cgit.drupalcode.org/devel",
                 "issues": "http://drupal.org/project/devel",
                 "irc": "irc://irc.freenode.org/drupal-contribute"
-            },
-            "time": "2017-04-29 10:26:17"
+            }
         },
         {
             "name": "drupal/email_registration",
@@ -2327,7 +2379,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://ftp.drupal.org/files/projects/email_registration-8.x-1.0-rc5.zip",
-                "reference": null,
+                "reference": "8.x-1.0-rc5",
                 "shasum": "8e068ad37077bb3937150155ce13617d98b9b6b1"
             },
             "require": {
@@ -2422,8 +2474,7 @@
             "homepage": "http://drupal.org/project/entity",
             "support": {
                 "source": "http://cgit.drupalcode.org/entity"
-            },
-            "time": "2017-03-08 21:07:49"
+            }
         },
         {
             "name": "drupal/features",
@@ -2485,8 +2536,7 @@
             "homepage": "https://www.drupal.org/project/features",
             "support": {
                 "source": "http://cgit.drupalcode.org/features"
-            },
-            "time": "2017-03-07 17:37:48"
+            }
         },
         {
             "name": "drupal/field_group",
@@ -2499,7 +2549,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://ftp.drupal.org/files/projects/field_group-8.x-1.0-rc6.zip",
-                "reference": null,
+                "reference": "8.x-1.0-rc6",
                 "shasum": "1ce3c6387e745a04a1099956a5bf39bb50096d44"
             },
             "require": {
@@ -2593,8 +2643,7 @@
             "support": {
                 "source": "http://git.drupal.org/project/field_states_ui.git",
                 "issues": "https://www.drupal.org/project/issues/field_states_ui"
-            },
-            "time": "2016-11-07 14:32:46"
+            }
         },
         {
             "name": "drupal/geocoder",
@@ -2672,8 +2721,7 @@
                 "source": "https://cgit.drupalcode.org/geocoder",
                 "issues": "https://drupal.org/project/issues/geocoder",
                 "irc": "irc://irc.freenode.org/drupal-geo"
-            },
-            "time": "2017-01-12 17:39:36"
+            }
         },
         {
             "name": "drupal/geofield",
@@ -2686,7 +2734,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://ftp.drupal.org/files/projects/geofield-8.x-1.0-alpha2.zip",
-                "reference": null,
+                "reference": "8.x-1.0-alpha2",
                 "shasum": "312100e9f087c6b178eb971c6a8a70919edff7f0"
             },
             "require": {
@@ -2802,8 +2850,7 @@
             "homepage": "https://www.drupal.org/project/geophp",
             "support": {
                 "source": "http://cgit.drupalcode.org/geophp"
-            },
-            "time": "2016-05-12 20:20:11"
+            }
         },
         {
             "name": "drupal/group",
@@ -2840,8 +2887,7 @@
             "homepage": "https://www.drupal.org/project/group",
             "support": {
                 "source": "http://cgit.drupalcode.org/group"
-            },
-            "time": "2017-04-18 08:29:00"
+            }
         },
         {
             "name": "drupal/leaflet",
@@ -2900,8 +2946,7 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/leaflet",
                 "issues": "https://www.drupal.org/project/issues/leaflet"
-            },
-            "time": "2017-01-25 20:55:54"
+            }
         },
         {
             "name": "drupal/pathauto",
@@ -2914,7 +2959,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://ftp.drupal.org/files/projects/pathauto-8.x-1.0.zip",
-                "reference": null,
+                "reference": "8.x-1.0",
                 "shasum": "4c82a5689a18421c8c73fcc8be7b333bb21ae02a"
             },
             "require": {
@@ -3012,8 +3057,7 @@
             "homepage": "http://drupal.org/project/profile",
             "support": {
                 "source": "http://cgit.drupalcode.org/profile"
-            },
-            "time": "2017-05-04 12:43:06"
+            }
         },
         {
             "name": "drupal/select_or_other",
@@ -3062,8 +3106,7 @@
             "homepage": "https://www.drupal.org/project/select_or_other",
             "support": {
                 "source": "http://cgit.drupalcode.org/select_or_other"
-            },
-            "time": "2017-02-22 19:54:38"
+            }
         },
         {
             "name": "drupal/smtp",
@@ -3076,7 +3119,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://ftp.drupal.org/files/projects/smtp-8.x-1.0-beta2.zip",
-                "reference": null,
+                "reference": "8.x-1.0-beta2",
                 "shasum": "d6c3890dca35264f6f39647527c2e203e9c445bc"
             },
             "require": {
@@ -3180,8 +3223,7 @@
             "homepage": "https://www.drupal.org/project/token",
             "support": {
                 "source": "http://cgit.drupalcode.org/token"
-            },
-            "time": "2017-04-29 11:48:09"
+            }
         },
         {
             "name": "drupal/yamlform",
@@ -3194,7 +3236,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://ftp.drupal.org/files/projects/yamlform-8.x-1.0-beta25.zip",
-                "reference": null,
+                "reference": "8.x-1.0-beta25",
                 "shasum": "6300f41b6058189922c687fe9576ad650785fe47"
             },
             "require": {
@@ -8023,7 +8065,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "drupal/address": 20,
+        "drupal/address": 5,
         "drupal/ajax_comments": 20,
         "drupal/devel": 20,
         "drupal/entity": 20,

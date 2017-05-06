@@ -68,6 +68,7 @@ return array(
     'Doctrine\\Common\\Cache\\' => array($vendorDir . '/doctrine/cache/lib/Doctrine/Common/Cache'),
     'Composer\\Semver\\' => array($vendorDir . '/composer/semver/src'),
     'Composer\\Installers\\' => array($vendorDir . '/composer/installers/src/Composer/Installers'),
+    'CommerceGuys\\Zone\\' => array($vendorDir . '/commerceguys/zone/src'),
     'CommerceGuys\\Intl\\' => array($vendorDir . '/commerceguys/intl/src'),
     'CommerceGuys\\Enum\\' => array($vendorDir . '/commerceguys/enum/src'),
     'CommerceGuys\\Addressing\\' => array($vendorDir . '/commerceguys/addressing/src'),
