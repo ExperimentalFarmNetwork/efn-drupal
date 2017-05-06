@@ -34,6 +34,7 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: basic_string
+    region: content
   field_crops_mile:
     weight: 12
     label: above
@@ -41,6 +42,7 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+    region: content
   field_crops_quarter_mile:
     weight: 11
     label: above
@@ -48,18 +50,21 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+    region: content
   field_details:
     weight: 14
     label: above
     settings: {  }
     third_party_settings: {  }
     type: basic_string
+    region: content
   field_favorite_crops:
     weight: 1
     label: above
     settings: {  }
     third_party_settings: {  }
     type: basic_string
+    region: content
   field_gmos:
     weight: 13
     label: above
@@ -67,12 +72,14 @@ content:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
+    region: content
   field_growing_experience:
     weight: 2
     label: above
     settings: {  }
     third_party_settings: {  }
     type: list_default
+    region: content
   field_location_descriptors:
     weight: 10
     label: above
@@ -80,6 +87,7 @@ content:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
+    region: content
   field_location_geo:
     weight: 5
     label: above
@@ -109,24 +117,28 @@ content:
           'y': 0
     third_party_settings: {  }
     type: leaflet_formatter_default
+    region: content
   field_other:
     weight: 16
     label: above
     settings: {  }
     third_party_settings: {  }
     type: basic_string
+    region: content
   field_other_limitations:
     weight: 15
     label: above
     settings: {  }
     third_party_settings: {  }
     type: basic_string
+    region: content
   field_soil_details:
     weight: 8
     label: above
     settings: {  }
     third_party_settings: {  }
     type: basic_string
+    region: content
   field_soil_type:
     weight: 9
     label: above
@@ -134,17 +146,20 @@ content:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
+    region: content
   field_space_available:
     weight: 6
     label: above
     settings: {  }
     third_party_settings: {  }
     type: list_default
+    region: content
   field_time_commitment:
     weight: 3
     label: above
     settings: {  }
     third_party_settings: {  }
     type: list_default
+    region: content
 hidden:
   field_location: true

@@ -15,6 +15,7 @@ content:
     weight: 0
     settings: {  }
     third_party_settings: {  }
+    region: content
 hidden:
   member_for: true
   profile_researcher: true

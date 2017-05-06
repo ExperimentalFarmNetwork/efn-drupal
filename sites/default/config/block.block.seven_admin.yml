@@ -12,7 +12,7 @@ _core:
   default_config_hash: DWAB7HaAfAJerAmyT8B2K-6qxicu9n0PcKVpDr--N4c
 id: seven_admin
 theme: seven
-region: '-1'
+region: header
 weight: -3
 provider: null
 plugin: 'system_menu_block:admin'

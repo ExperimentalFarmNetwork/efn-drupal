@@ -13,16 +13,20 @@ content:
     weight: 1
     settings: {  }
     third_party_settings: {  }
+    region: content
   profile_main:
     weight: 0
     settings: {  }
     third_party_settings: {  }
+    region: content
   profile_researcher:
     weight: 2
     settings: {  }
     third_party_settings: {  }
+    region: content
   profile_volunteer:
     weight: 3
     settings: {  }
     third_party_settings: {  }
+    region: content
 hidden: {  }

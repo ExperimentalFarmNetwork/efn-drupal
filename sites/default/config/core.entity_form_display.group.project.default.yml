@@ -36,6 +36,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: text_textarea
+    region: content
   field_location:
     weight: 3
     settings:
@@ -47,6 +48,7 @@ content:
           list: ''
           add: Add
     type: address_default
+    region: content
   field_misc:
     weight: 13
     settings:
@@ -54,11 +56,13 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textarea
+    region: content
   field_multiyear:
     weight: 11
     settings: {  }
     third_party_settings: {  }
     type: options_buttons
+    region: content
   field_project_image:
     weight: 2
     settings:
@@ -71,6 +75,7 @@ content:
           list: ''
           add: Add
     type: image_image
+    region: content
   field_project_summary:
     weight: 1
     settings:
@@ -78,11 +83,13 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textarea
+    region: content
   field_project_type:
     weight: 5
     settings: {  }
     third_party_settings: {  }
     type: options_buttons
+    region: content
   field_researcher_background:
     weight: 6
     settings:
@@ -90,11 +97,13 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textarea
+    region: content
   field_seeking_volunteers:
     weight: 7
     settings: {  }
     third_party_settings: {  }
     type: options_buttons
+    region: content
   field_volunteers_ask_do:
     weight: 9
     settings:
@@ -102,17 +111,20 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textarea
+    region: content
   field_volunteers_how_many:
     weight: 8
     settings:
       placeholder: ''
     third_party_settings: {  }
     type: number
+    region: content
   field_volunteers_keep_seed:
     weight: 12
     settings: {  }
     third_party_settings: {  }
     type: options_buttons
+    region: content
   field_volunteers_other_reqs:
     weight: 10
     settings:
@@ -120,6 +132,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textarea
+    region: content
   label:
     type: string_textfield
     weight: 0
@@ -127,6 +140,7 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+    region: content
 hidden:
   field_location_geo: true
   path: true

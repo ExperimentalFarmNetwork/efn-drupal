@@ -15,10 +15,12 @@ content:
     weight: 5
     settings: {  }
     third_party_settings: {  }
+    region: content
   profile_main:
     weight: 10
     settings: {  }
     third_party_settings: {  }
+    region: content
 hidden:
   masquerade: true
   profile_researcher: true

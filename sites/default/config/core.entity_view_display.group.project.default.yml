@@ -35,24 +35,28 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: text_default
+    region: content
   field_location:
     weight: 11
     label: above
     settings: {  }
     third_party_settings: {  }
     type: address_default
+    region: content
   field_misc:
     weight: 10
     label: above
     settings: {  }
     third_party_settings: {  }
     type: basic_string
+    region: content
   field_multiyear:
     weight: 8
     label: above
     settings: {  }
     third_party_settings: {  }
     type: list_default
+    region: content
   field_project_image:
     weight: 12
     label: hidden
@@ -61,12 +65,14 @@ content:
       image_link: ''
     third_party_settings: {  }
     type: image
+    region: content
   field_project_summary:
     weight: 1
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: basic_string
+    region: content
   field_project_type:
     weight: 13
     label: hidden
@@ -74,24 +80,28 @@ content:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
+    region: content
   field_researcher_background:
     weight: 3
     label: above
     settings: {  }
     third_party_settings: {  }
     type: basic_string
+    region: content
   field_seeking_volunteers:
     weight: 4
     label: above
     settings: {  }
     third_party_settings: {  }
     type: list_default
+    region: content
   field_volunteers_ask_do:
     weight: 6
     label: above
     settings: {  }
     third_party_settings: {  }
     type: basic_string
+    region: content
   field_volunteers_how_many:
     weight: 5
     label: above
@@ -100,18 +110,21 @@ content:
       prefix_suffix: true
     third_party_settings: {  }
     type: number_integer
+    region: content
   field_volunteers_keep_seed:
     weight: 9
     label: above
     settings: {  }
     third_party_settings: {  }
     type: list_default
+    region: content
   field_volunteers_other_reqs:
     weight: 7
     label: above
     settings: {  }
     third_party_settings: {  }
     type: basic_string
+    region: content
   label:
     label: hidden
     type: string
@@ -119,6 +132,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
+    region: content
 hidden:
   changed: true
   created: true

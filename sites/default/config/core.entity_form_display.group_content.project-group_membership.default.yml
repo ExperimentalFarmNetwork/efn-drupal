@@ -20,15 +20,18 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+    region: content
   group_roles:
     type: options_buttons
     weight: 6
     settings: {  }
     third_party_settings: {  }
+    region: content
   path:
     type: path
     weight: 30
     settings: {  }
     third_party_settings: {  }
+    region: content
 hidden:
   uid: true

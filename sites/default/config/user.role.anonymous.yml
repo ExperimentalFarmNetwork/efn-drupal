@@ -10,6 +10,6 @@ weight: 0
 is_admin: false
 permissions:
   - 'access content'
+  - 'access site-wide contact form'
   - 'edit own main profile'
   - 'view any main profile'
-  - 'access site-wide contact form'

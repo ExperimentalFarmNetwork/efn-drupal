@@ -49,6 +49,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textarea
+    region: content
   field_address:
     weight: 18
     settings:
@@ -60,6 +61,7 @@ content:
           list: ''
           add: Add
     type: address_default
+    region: content
   field_bio:
     weight: 3
     settings:
@@ -67,12 +69,14 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textarea
+    region: content
   field_cv:
     weight: 14
     settings:
       progress_indicator: throbber
     third_party_settings: {  }
     type: file_generic
+    region: content
   field_educational_background:
     weight: 21
     settings:
@@ -80,6 +84,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textarea
+    region: content
   field_email:
     weight: 17
     settings:
@@ -87,6 +92,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: email_default
+    region: content
   field_phone:
     weight: 19
     settings:
@@ -94,6 +100,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
+    region: content
   field_website:
     weight: 15
     settings:
@@ -101,6 +108,7 @@ content:
       placeholder_title: ''
     third_party_settings: {  }
     type: link_default
+    region: content
 hidden:
   field_farmland_details: true
   field_farmland_have_details: true

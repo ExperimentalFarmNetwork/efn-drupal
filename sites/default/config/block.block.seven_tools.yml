@@ -12,7 +12,7 @@ _core:
   default_config_hash: xCOijLdB1-UgXxQ9a0D1_pd8vxNEhfMnxXZc8jYhHjs
 id: seven_tools
 theme: seven
-region: '-1'
+region: header
 weight: -2
 provider: null
 plugin: 'system_menu_block:tools'

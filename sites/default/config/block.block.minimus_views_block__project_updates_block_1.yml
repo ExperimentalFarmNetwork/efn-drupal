@@ -11,7 +11,7 @@ dependencies:
     - minimus
 id: minimus_views_block__project_updates_block_1
 theme: minimus
-region: '-1'
+region: navigation
 weight: -10
 provider: null
 plugin: 'views_block:project_updates-block_1'

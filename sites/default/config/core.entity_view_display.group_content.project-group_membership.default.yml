@@ -17,6 +17,7 @@ content:
       link: false
     weight: -4
     third_party_settings: {  }
+    region: content
 hidden:
   entity_id: true
   uid: true

@@ -26,6 +26,7 @@ content:
     weight: 1
     settings: {  }
     third_party_settings: {  }
+    region: content
   field_discussion:
     weight: 3
     label: hidden
@@ -36,6 +37,7 @@ content:
       ajax_comments:
         enable_ajax_comments: '1'
     type: comment_default
+    region: content
   field_image:
     weight: 2
     label: hidden
@@ -44,5 +46,6 @@ content:
       image_link: file
     third_party_settings: {  }
     type: image
+    region: content
 hidden:
   links: true

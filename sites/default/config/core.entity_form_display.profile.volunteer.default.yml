@@ -34,6 +34,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textarea
+    region: content
   field_crops_mile:
     weight: 13
     settings:
@@ -41,6 +42,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
+    region: content
   field_crops_quarter_mile:
     weight: 12
     settings:
@@ -48,6 +50,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
+    region: content
   field_details:
     weight: 14
     settings:
@@ -55,6 +58,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textarea
+    region: content
   field_favorite_crops:
     weight: 1
     settings:
@@ -62,11 +66,13 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textarea
+    region: content
   field_gmos:
     weight: 10
     settings: {  }
     third_party_settings: {  }
     type: options_buttons
+    region: content
   field_growing_experience:
     weight: 2
     settings: {  }
@@ -82,17 +88,20 @@ content:
           add: Add
         field_states: {  }
     type: options_buttons
+    region: content
   field_location:
     weight: 5
     settings:
       default_country: US
     third_party_settings: {  }
     type: address_default
+    region: content
   field_location_descriptors:
     weight: 9
     settings: {  }
     third_party_settings: {  }
     type: options_buttons
+    region: content
   field_other:
     weight: 3
     settings:
@@ -115,6 +124,7 @@ content:
                 delete: Delete
         field_states: {  }
     type: string_textarea
+    region: content
   field_other_limitations:
     weight: 11
     settings:
@@ -122,6 +132,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textarea
+    region: content
   field_soil_details:
     weight: 8
     settings:
@@ -129,20 +140,24 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textarea
+    region: content
   field_soil_type:
     weight: 7
     settings: {  }
     third_party_settings: {  }
     type: options_buttons
+    region: content
   field_space_available:
     weight: 6
     settings: {  }
     third_party_settings: {  }
     type: options_buttons
+    region: content
   field_time_commitment:
     weight: 4
     settings: {  }
     third_party_settings: {  }
     type: options_buttons
+    region: content
 hidden:
   field_location_geo: true

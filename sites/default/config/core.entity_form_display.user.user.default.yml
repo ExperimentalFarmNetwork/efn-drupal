@@ -13,13 +13,16 @@ content:
     weight: 0
     settings: {  }
     third_party_settings: {  }
+    region: content
   language:
     weight: 1
     settings: {  }
     third_party_settings: {  }
+    region: content
   timezone:
     weight: 2
     settings: {  }
     third_party_settings: {  }
+    region: content
 hidden:
   contact: true

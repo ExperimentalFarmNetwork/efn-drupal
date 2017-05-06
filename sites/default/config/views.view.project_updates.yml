@@ -3,20 +3,11 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_display.comment.content_comment.default
-    - field.storage.node.body
-    - field.storage.node.field_discussion
-    - field.storage.node.field_image
     - group.content_type.group_content_type_43c14e35a52cb
     - group.type.project
-    - image.style.medium
   module:
-    - comment
     - group
-    - image
     - node
-    - text
-    - user
 id: project_updates
 label: 'Project Updates'
 module: views
