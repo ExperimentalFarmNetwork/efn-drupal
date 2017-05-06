@@ -459,7 +459,7 @@ display:
   page_1:
     display_plugin: page
     id: page_1
-    display_title: 'Main project page'
+    display_title: 'Home page'
     position: 1
     display_options:
       display_extenders: {  }
@@ -471,6 +471,9 @@ display:
         enabled: false
         weight: -46
       display_description: ''
+      title: ''
+      defaults:
+        title: false
     cache_metadata:
       max-age: -1
       contexts:
