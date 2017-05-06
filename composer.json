@@ -34,7 +34,8 @@
         "drupal/better_exposed_filters": "^3.0@alpha",
         "drupal/smtp": "^1.0@beta",
         "drupal/email_registration": "^1.0@RC",
-        "drupal/block_exclude_pages": "^1.2"
+        "drupal/block_exclude_pages": "^1.2",
+        "drupal/markup": "^1.0@beta"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

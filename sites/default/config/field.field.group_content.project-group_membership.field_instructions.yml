@@ -1,0 +1,25 @@
+uuid: 057ba0fe-d325-44c7-a98b-19d66d4e41fe
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.group_content.field_instructions
+    - group.content_type.project-group_membership
+  module:
+    - markup
+id: group_content.project-group_membership.field_instructions
+field_name: field_instructions
+entity_type: group_content
+bundle: project-group_membership
+label: Instructions
+description: ''
+required: false
+translatable: false
+default_value:
+  - {  }
+default_value_callback: ''
+settings:
+  markup:
+    value: "<p>Click the \"join group\"&nbsp;button below to confirm joining this project. <strong>Note:</strong> you may get an error just after joining. Go back to the homepage and find your group; most likely you have still been added correctly. We are working to fix this problem soon!</p>\r\n"
+    format: raw_html
+field_type: markup

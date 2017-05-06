@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * @file
+ * Install, update, and uninstall functions for the Markup module.
+ */
+
+/**
+ * Implements hook_update_N().
+ *
+ * Alters the settings for all existing fields to accommodate a structural change
+ * for wysiwyg support.
+ */
+//function markup_update_7100() {
+//  $fields = field_read_fields(array('type' => 'markup'));
+//  foreach ($fields as $field) {
+//    if (!is_array($field['settings']['markup'])) {
+//      $field['settings']['markup'] = array(
+//        'value' => $field['settings']['markup'],
+//        'format' => filter_default_format(),
+//      );
+//      try {
+//        field_update_field($field);
+//      }
+//      catch (Exception $e) {
+//        drupal_set_message(t('Attempt to update field %label failed: %message.', array('%label' => $instance['label'], '%message' => $e->getMessage())), 'error');
+//        return;
+//      }
+//    }
+//  }
+//}

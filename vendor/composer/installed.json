@@ -8084,6 +8084,62 @@
         "description": "Zone management library."
     },
     {
+        "name": "drupal/address",
+        "version": "1.0.0-rc4",
+        "version_normalized": "1.0.0.0-RC4",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/address",
+            "reference": "8.x-1.0-rc4"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/address-8.x-1.0-rc4.zip",
+            "reference": "8.x-1.0-rc4",
+            "shasum": "541b020ce839dd9c75374e213c1131d9c1f6f52d"
+        },
+        "require": {
+            "commerceguys/addressing": "~1.0",
+            "commerceguys/intl": "~0.7",
+            "commerceguys/zone": "~1.0",
+            "drupal/core": "*"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.0-rc4",
+                "datestamp": "1486737287"
+            }
+        },
+        "installation-source": "source",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "bojanz",
+                "homepage": "https://www.drupal.org/user/86106"
+            },
+            {
+                "name": "googletorp",
+                "homepage": "https://www.drupal.org/user/386230"
+            },
+            {
+                "name": "rszrama",
+                "homepage": "https://www.drupal.org/user/49344"
+            }
+        ],
+        "description": "Provides functionality for storing, validating and displaying international postal addresses.",
+        "homepage": "http://drupal.org/project/address",
+        "support": {
+            "source": "http://cgit.drupalcode.org/address"
+        }
+    },
+    {
         "name": "drupal/core",
         "version": "8.3.2",
         "version_normalized": "8.3.2.0",
@@ -8276,24 +8332,21 @@
         "description": "Drupal is an open source content management platform powering millions of websites and applications."
     },
     {
-        "name": "drupal/address",
-        "version": "1.0.0-rc4",
-        "version_normalized": "1.0.0.0-RC4",
+        "name": "drupal/markup",
+        "version": "1.0.0-beta1",
+        "version_normalized": "1.0.0.0-beta1",
         "source": {
             "type": "git",
-            "url": "https://git.drupal.org/project/address",
-            "reference": "8.x-1.0-rc4"
+            "url": "https://git.drupal.org/project/markup",
+            "reference": "8.x-1.0-beta1"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/address-8.x-1.0-rc4.zip",
+            "url": "https://ftp.drupal.org/files/projects/markup-8.x-1.0-beta1.zip",
             "reference": null,
-            "shasum": "541b020ce839dd9c75374e213c1131d9c1f6f52d"
+            "shasum": "7bb8c7623094178b9e40ff711065bcae8538b46f"
         },
         "require": {
-            "commerceguys/addressing": "~1.0",
-            "commerceguys/intl": "~0.7",
-            "commerceguys/zone": "~1.0",
             "drupal/core": "*"
         },
         "type": "drupal-module",
@@ -8302,33 +8355,45 @@
                 "dev-1.x": "1.x-dev"
             },
             "drupal": {
-                "version": "8.x-1.0-rc4",
-                "datestamp": "1486737287"
+                "version": "8.x-1.0-beta1",
+                "datestamp": "1460007239"
             }
         },
-        "installation-source": "source",
+        "installation-source": "dist",
         "notification-url": "https://packages.drupal.org/8/downloads",
         "license": [
             "GPL-2.0+"
         ],
         "authors": [
             {
-                "name": "bojanz",
-                "homepage": "https://www.drupal.org/user/86106"
+                "name": "Deciphered",
+                "homepage": "https://www.drupal.org/user/103796"
             },
             {
-                "name": "googletorp",
-                "homepage": "https://www.drupal.org/user/386230"
+                "name": "bcostlow",
+                "homepage": "https://www.drupal.org/user/1340686"
             },
             {
-                "name": "rszrama",
-                "homepage": "https://www.drupal.org/user/49344"
+                "name": "cYu",
+                "homepage": "https://www.drupal.org/user/202205"
+            },
+            {
+                "name": "ebeyrent",
+                "homepage": "https://www.drupal.org/user/23897"
+            },
+            {
+                "name": "mqanneh",
+                "homepage": "https://www.drupal.org/user/2833163"
+            },
+            {
+                "name": "mrfelton",
+                "homepage": "https://www.drupal.org/user/305669"
             }
         ],
-        "description": "Provides functionality for storing, validating and displaying international postal addresses.",
-        "homepage": "http://drupal.org/project/address",
+        "description": "Defines a field type for markup.",
+        "homepage": "https://www.drupal.org/project/markup",
         "support": {
-            "source": "http://cgit.drupalcode.org/address"
+            "source": "http://cgit.drupalcode.org/markup"
         }
     }
 ]

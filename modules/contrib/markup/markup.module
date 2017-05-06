@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Defines a field type for displaying markup on the node/edit form.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Remove 'number of values' selection.
+ */
+function markup_form_field_storage_config_edit_form_alter(&$form, FormStateInterface $form_state) {
+  /** @var \Drupal\field_ui\Form\FieldStorageConfigEditForm $form_object */
+  $form_object = $form_state->getFormObject();
+  /** @var \Drupal\field\Entity\FieldStorageConfig $entity */
+  $entity = $form_object->getEntity();
+  if ($entity->get('module') == 'markup') {
+    unset($form['cardinality_container']);
+  }
+}
+

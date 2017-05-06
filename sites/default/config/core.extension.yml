@@ -47,6 +47,7 @@ module:
   kint: 0
   leaflet: 0
   link: 0
+  markup: 0
   menu_link_content: 0
   menu_ui: 0
   node: 0

@@ -3,9 +3,11 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.group_content.project-group_membership.field_instructions
     - field.field.group_content.project-group_membership.group_roles
     - group.content_type.project-group_membership
   module:
+    - markup
     - path
 id: group_content.project-group_membership.default
 targetEntityType: group_content
@@ -20,6 +22,12 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+    region: content
+  field_instructions:
+    weight: 31
+    settings: {  }
+    third_party_settings: {  }
+    type: markup
     region: content
   group_roles:
     type: options_buttons
