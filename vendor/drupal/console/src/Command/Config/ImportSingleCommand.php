@@ -70,7 +70,7 @@ class ImportSingleCommand extends Command
                 $this->trans('commands.config.import.single.options.file')
             )->addOption(
                 'directory',
-                '',
+                null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.config.import.arguments.directory')
             );
@@ -84,6 +84,7 @@ class ImportSingleCommand extends Command
         $io = new DrupalStyle($input, $output);
 
         $name = $input->getOption('name');
+        $name = is_array($name) ? $name : [$name];
         $directory = $input->getOption('directory');
         $file = $input->getOption('file');
 
@@ -103,10 +104,14 @@ class ImportSingleCommand extends Command
                     $nameItem = substr($nameItem, 0, -4);
                 }
 
-                $configFile = $directory.DIRECTORY_SEPARATOR.$nameItem.'.yml';
+                $configFile = count($name) == 1 ?
+                  $file :
+                  $directory.DIRECTORY_SEPARATOR.$nameItem.'.yml';
+
                 if (file_exists($configFile)) {
                     $value = $ymlFile->parse(file_get_contents($configFile));
-                    $source_storage->replaceData($nameItem, $value);
+                    $source_storage->delete($nameItem);
+                    $source_storage->write($nameItem, $value);
                     continue;
                 }
 
@@ -119,6 +124,7 @@ class ImportSingleCommand extends Command
                 $this->configStorage,
                 $this->configManager
             );
+
 
             if ($this->configImport($io, $storageComparer)) {
                 $io->success(
@@ -168,7 +174,7 @@ class ImportSingleCommand extends Command
                     return true;
                 }
             } catch (ConfigImporterException $e) {
-                $message = 'The import failed due for the following reasons:' . "\n";
+                $message = 'The import failed due to the following reasons:' . "\n";
                 $message .= implode("\n", $configImporter->getErrors());
                 $io->error(
                     sprintf(

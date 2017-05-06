@@ -1,0 +1,71 @@
+# Schema for the configuration files of the geofield module.
+
+field.geofield.storage_settings:
+  label: 'Geofield settings'
+  type: mapping
+  mapping:
+    backend:
+      type: string
+      label: 'Backend storage'
+
+field.geofield.field_settings:
+  type: mapping
+  label: 'Geofield settings'
+  mapping: {  }
+
+field.geofield.value:
+  type: sequence
+  label: 'Default value'
+  sequence:
+    - type: mapping
+      label: 'Default'
+      mapping:
+        value:
+          type: text
+          label: 'Value'
+
+entity_view_display.field.geofield_default:
+  type: entity_field_view_display_base
+  label: 'Geofield default display format settings'
+  mapping:
+    settings:
+      sequence:
+        - type: string
+
+entity_form_display.field.geofield_default:
+  type: entity_field_form_display_base
+  label: 'Geofield default display format settings'
+  mapping:
+    settings:
+      type: sequence
+      label: 'Settings'
+      sequence:
+        - type: string
+
+entity_form_display.field.geofield_latlon:
+  type: entity_field_form_display_base
+  label: 'Geofield Lat Lon display format settings'
+  mapping:
+    settings:
+      type: sequence
+      label: 'Settings'
+      sequence:
+        - type: string
+
+entity_form_display.field.geofield_bbox:
+  type: entity_field_form_display_base
+  label: 'Geofield Bounding box display format settings'
+  mapping:
+    settings:
+      type: sequence
+      label: 'Settings'
+      sequence:
+        - type: string
+
+field.widget.settings.geofield_latlon:
+  type: mapping
+  label: 'Latitude/Longitude settings'
+  mapping:
+    html5_geolocation:
+      type: boolean
+      label: 'Use HTML5 Geolocation to set default values'

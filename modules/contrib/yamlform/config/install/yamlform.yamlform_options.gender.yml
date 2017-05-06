@@ -1,0 +1,12 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - yamlform
+id: gender
+label: Gender
+options: |
+  Male: Male
+  Female: Female
+  Transgender: Transgender

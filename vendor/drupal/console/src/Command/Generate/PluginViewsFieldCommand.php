@@ -88,22 +88,22 @@ class PluginViewsFieldCommand extends Command
             ->setName('generate:plugin:views:field')
             ->setDescription($this->trans('commands.generate.plugin.views.field.description'))
             ->setHelp($this->trans('commands.generate.plugin.views.field.help'))
-            ->addOption('module', '', InputOption::VALUE_REQUIRED, $this->trans('commands.common.options.module'))
+            ->addOption('module', null, InputOption::VALUE_REQUIRED, $this->trans('commands.common.options.module'))
             ->addOption(
                 'class',
-                '',
+                null,
                 InputOption::VALUE_REQUIRED,
                 $this->trans('commands.generate.plugin.views.field.options.class')
             )
             ->addOption(
                 'title',
-                '',
+                null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.generate.plugin.views.field.options.title')
             )
             ->addOption(
                 'description',
-                '',
+                null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.generate.plugin.views.field.options.description')
             );
@@ -118,7 +118,7 @@ class PluginViewsFieldCommand extends Command
 
         // @see use Drupal\Console\Command\Shared\ConfirmationTrait::confirmGeneration
         if (!$this->confirmGeneration($io)) {
-            return;
+            return 1;
         }
 
         $module = $input->getOption('module');
@@ -130,6 +130,8 @@ class PluginViewsFieldCommand extends Command
         $this->generator->generate($module, $class_machine_name, $class_name, $title, $description);
 
         $this->chainQueue->addCommand('cache:rebuild', ['cache' => 'discovery']);
+
+        return 0;
     }
 
     protected function interact(InputInterface $input, OutputInterface $output)

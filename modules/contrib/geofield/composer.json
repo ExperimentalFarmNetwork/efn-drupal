@@ -1,0 +1,28 @@
+{
+  "name": "drupal/geofield",
+  "description": "Stores geographic and location data (points, lines, and polygons).",
+  "type": "drupal-module",
+  "homepage": "https://www.drupal.org/project/geofield",
+  "authors": [
+    {
+      "name": "Brandon Morrison",
+      "homepage": "https://www.drupal.org/u/brandonian",
+      "role": "Maintainer"
+    },
+    {
+      "name": "Pablo López",
+      "homepage": "https://www.drupal.org/u/plopesc",
+      "role": "Maintainer"
+    }
+  ],
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/geofield",
+    "irc": "irc://irc.freenode.org/drupal-contribute",
+    "source": "http://git.drupal.org/project/geofield.git"
+  },
+  "license": "GPL-2.0+",
+  "minimum-stability": "dev",
+  "require": {
+    "phayes/geophp": "dev-master"
+  }
+}

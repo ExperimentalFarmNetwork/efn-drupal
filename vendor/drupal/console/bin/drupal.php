@@ -4,8 +4,11 @@ use DrupalFinder\DrupalFinder;
 use Drupal\Console\Core\Utils\ArgvInputReader;
 use Drupal\Console\Bootstrap\Drupal;
 use Drupal\Console\Application;
+use Drupal\Console\Core\Utils\ConfigurationManager;
 
 set_time_limit(0);
+
+$autoloaders = [];
 
 if (file_exists(__DIR__ . '/../autoload.local.php')) {
     include_once __DIR__ . '/../autoload.local.php';
@@ -31,7 +34,6 @@ if (isset($autoloader)) {
 }
 
 $drupalFinder = new DrupalFinder();
-
 if (!$drupalFinder->locateRoot(getcwd())) {
     echo ' DrupalConsole must be executed within a Drupal Site.'.PHP_EOL;
 
@@ -42,25 +44,24 @@ $composerRoot = $drupalFinder->getComposerRoot();
 $drupalRoot = $drupalFinder->getDrupalRoot();
 chdir($drupalRoot);
 
+$configurationManager = new ConfigurationManager();
+$configuration = $configurationManager
+    ->loadConfigurationFromDirectory($composerRoot);
+
+$argvInputReader = new ArgvInputReader();
+if ($configuration && $options = $configuration->get('application.options') ?: []) {
+    $argvInputReader->setOptionsFromConfiguration($options);
+}
+$argvInputReader->setOptionsAsArgv();
+
 $drupal = new Drupal($autoload, $composerRoot, $drupalRoot);
 $container = $drupal->boot();
 
 if (!$container) {
-    echo ' Something was wrong. Drupal can not be bootstrapped.';
+    echo ' Something was wrong. Drupal can not be bootstrap.';
 
     exit(1);
 }
-
-$configuration = $container->get('console.configuration_manager')
-    ->getConfiguration();
-
-$translator = $container->get('console.translator_manager');
-
-$argvInputReader = new ArgvInputReader();
-if ($options = $configuration->get('application.options') ?: []) {
-    $argvInputReader->setOptionsFromConfiguration($options);
-}
-$argvInputReader->setOptionsAsArgv();
 
 $application = new Application($container);
 $application->setDefaultCommand('about');

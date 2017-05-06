@@ -1,0 +1,10 @@
+services:
+  plugin.manager.geofield_backend:
+      class: Drupal\geofield\Plugin\GeofieldBackendManager
+      parent: default_plugin_manager
+
+  geofield.wkt_generator:
+    class: Drupal\geofield\WktGenerator
+
+  geofield.geophp:
+    class: Drupal\geofield\GeoPHP\GeoPHPWrapper

@@ -45,15 +45,18 @@ class DrupalConsoleCore
     {
         $container = new ContainerBuilder();
         $loader = new YamlFileLoader($container, new FileLocator($this->root));
-        $loader->load($this->root.DRUPAL_CONSOLE_CORE.'/services.yml');
-        if (file_exists($this->root.'/services.yml')) {
-            $loader->load('services.yml');
-        }
 
-        if (file_exists($this->root.DRUPAL_CONSOLE.'/services-drupal-install.yml')) {
-            $loader->load(
-                $this->root . DRUPAL_CONSOLE . '/services-drupal-install.yml'
-            );
+        $servicesFiles = [
+            $this->root.DRUPAL_CONSOLE_CORE.'/services.yml',
+            $this->root.'/services.yml',
+            $this->root.DRUPAL_CONSOLE.'/uninstall.services.yml',
+            $this->root.DRUPAL_CONSOLE.'/extend.console.uninstall.services.yml'
+        ];
+
+        foreach ($servicesFiles as $servicesFile) {
+            if (file_exists($servicesFile)) {
+                $loader->load($servicesFile);
+            }
         }
 
         $container->get('console.configuration_manager')
@@ -76,6 +79,17 @@ class DrupalConsoleCore
             'console.root',
             $consoleRoot
         );
+
+        $configurationManager = $container->get('console.configuration_manager');
+        $directory = $configurationManager->getConsoleDirectory() . 'extend/';
+        $autoloadFile = $directory . 'vendor/autoload.php';
+        if (is_file($autoloadFile)) {
+            include_once $autoloadFile;
+            $extendServicesFile = $directory . 'extend.console.uninstall.services.yml';
+            if (is_file($extendServicesFile)) {
+                $loader->load($extendServicesFile);
+            }
+        }
 
         $container->get('console.renderer')
             ->setSkeletonDirs(

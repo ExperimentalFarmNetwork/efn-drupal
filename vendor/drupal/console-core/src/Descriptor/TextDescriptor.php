@@ -181,12 +181,26 @@ class TextDescriptor extends Descriptor
             $this->describeInputDefinition(new InputDefinition($application->getDefinition()->getOptions()), $options);
             $this->writeText("\n");
             $this->writeText("\n");
-            $width = $this->getColumnWidth($description->getCommands());
+            $width = $this->getColumnWidth($description->getCommands()) + 4;
             if ($describedNamespace) {
                 $this->writeText(sprintf($application->trans('commands.list.messages.comment'), $describedNamespace), $options);
-            } else {
+            }
+            else {
                 $this->writeText($application->trans('commands.list.messages.available-commands'), $options);
             }
+
+            $singleCommands = [
+                'about',
+                'chain',
+                'check',
+                'exec',
+                'help',
+                'init',
+                'list',
+                'shell',
+                'server'
+            ];
+
             // add commands by namespace
             foreach ($description->getNamespaces() as $namespace) {
                 if (!$describedNamespace && ApplicationDescription::GLOBAL_NAMESPACE !== $namespace['id']) {
@@ -194,9 +208,31 @@ class TextDescriptor extends Descriptor
                     $this->writeText(' <comment>'.$namespace['id'].'</comment>', $options);
                 }
                 foreach ($namespace['commands'] as $name) {
+
+                    if (ApplicationDescription::GLOBAL_NAMESPACE == $namespace['id']){
+                        if (!in_array($name, $singleCommands)) {
+                            continue;
+                        }
+                    }
+
                     $this->writeText("\n");
-                    $spacingWidth = $width - strlen($name);
-                    $this->writeText(sprintf('  <info>%s</info>%s%s', $name, str_repeat(' ', $spacingWidth), $description->getCommand($name)->getDescription()), $options);
+                    $alias = '';
+                    if ($description->getCommand($name)->getAliases()){
+                        $alias = sprintf(
+                            '(%s)',
+                            implode(',', $description->getCommand($name)->getAliases())
+                        );
+                    }
+                    $spacingWidth = $width - strlen($name.$alias);
+                    $this->writeText(
+                        sprintf('  <info>%s</info> <comment>%s</comment> %s%s',
+                            $name,
+                            $alias,
+                            str_repeat(' ', $spacingWidth),
+                            $description->getCommand($name)->getDescription()
+                        ),
+                        $options
+                    );
                 }
             }
             $this->writeText("\n");

@@ -64,7 +64,7 @@ class ModuleFileCommand extends Command
             ->setName('generate:module:file')
             ->setDescription($this->trans('commands.generate.module.file.description'))
             ->setHelp($this->trans('commands.generate.module.file.help'))
-            ->addOption('module', '', InputOption::VALUE_REQUIRED, $this->trans('commands.common.options.module'));
+            ->addOption('module', null, InputOption::VALUE_REQUIRED, $this->trans('commands.common.options.module'));
     }
 
     /**
@@ -76,7 +76,7 @@ class ModuleFileCommand extends Command
 
         // @see use Drupal\Console\Command\Shared\ConfirmationTrait::confirmGeneration
         if (!$this->confirmGeneration($io, $yes)) {
-            return;
+            return 1;
         }
 
         $machine_name =  $input->getOption('module');

@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - yamlform
+id: country_codes
+label: 'Country codes'
+options: ''

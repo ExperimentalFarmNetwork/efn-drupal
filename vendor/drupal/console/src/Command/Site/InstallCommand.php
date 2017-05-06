@@ -84,91 +84,91 @@ class InstallCommand extends Command
             )
             ->addOption(
                 'langcode',
-                '',
+                null,
                 InputOption::VALUE_REQUIRED,
                 $this->trans('commands.site.install.options.langcode')
             )
             ->addOption(
                 'db-type',
-                '',
+                null,
                 InputOption::VALUE_REQUIRED,
                 $this->trans('commands.site.install.options.db-type')
             )
             ->addOption(
                 'db-file',
-                '',
+                null,
                 InputOption::VALUE_REQUIRED,
                 $this->trans('commands.site.install.options.db-file')
             )
             ->addOption(
                 'db-host',
-                '',
+                null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.migrate.execute.options.db-host')
             )
             ->addOption(
                 'db-name',
-                '',
+                null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.migrate.execute.options.db-name')
             )
             ->addOption(
                 'db-user',
-                '',
+                null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.migrate.execute.options.db-user')
             )
             ->addOption(
                 'db-pass',
-                '',
+                null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.migrate.execute.options.db-pass')
             )
             ->addOption(
                 'db-prefix',
-                '',
+                null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.migrate.execute.options.db-prefix')
             )
             ->addOption(
                 'db-port',
-                '',
+                null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.migrate.execute.options.db-port')
             )
             ->addOption(
                 'site-name',
-                '',
+                null,
                 InputOption::VALUE_REQUIRED,
                 $this->trans('commands.site.install.options.site-name')
             )
             ->addOption(
                 'site-mail',
-                '',
+                null,
                 InputOption::VALUE_REQUIRED,
                 $this->trans('commands.site.install.options.site-mail')
             )
             ->addOption(
                 'account-name',
-                '',
+                null,
                 InputOption::VALUE_REQUIRED,
                 $this->trans('commands.site.install.options.account-name')
             )
             ->addOption(
                 'account-mail',
-                '',
+                null,
                 InputOption::VALUE_REQUIRED,
                 $this->trans('commands.site.install.options.account-mail')
             )
             ->addOption(
                 'account-pass',
-                '',
+                null,
                 InputOption::VALUE_REQUIRED,
                 $this->trans('commands.site.install.options.account-pass')
             )
             ->addOption(
                 'force',
-                '',
+                null,
                 InputOption::VALUE_NONE,
                 $this->trans('commands.site.install.options.force')
             );
@@ -447,10 +447,12 @@ class InstallCommand extends Command
             $this->getApplication()->setContainer($container);
         } catch (Exception $e) {
             $io->error($e->getMessage());
-            return;
+            return 1;
         }
 
         $this->restoreSitesFile($io);
+
+        return 0;
     }
 
     /**
@@ -461,32 +463,40 @@ class InstallCommand extends Command
      * appropriate subdir when run from a script and a sites.php file exists.
      *
      * @param DrupalStyle $output
+     *
+     * @return boolean
      */
     protected function backupSitesFile(DrupalStyle $output)
     {
         if (!file_exists($this->appRoot . '/sites/sites.php')) {
-            return;
+            return true;
         }
 
-        rename($this->appRoot . '/sites/sites.php', $this->appRoot . '/sites/backup.sites.php');
+        $renamed = rename($this->appRoot . '/sites/sites.php', $this->appRoot . '/sites/backup.sites.php');
 
         $output->info($this->trans('commands.site.install.messages.sites-backup'));
+
+        return $renamed;
     }
 
     /**
      * Restores backup.sites.php to sites.php (if needed).
      *
      * @param DrupalStyle $output
+     *
+     * @return boolean
      */
     protected function restoreSitesFile(DrupalStyle $output)
     {
         if (!file_exists($this->appRoot . '/sites/backup.sites.php')) {
-            return;
+            return true;
         }
 
-        rename($this->appRoot . '/sites/backup.sites.php', $this->appRoot . '/sites/sites.php');
+        $renamed = rename($this->appRoot . '/sites/backup.sites.php', $this->appRoot . '/sites/sites.php');
 
         $output->info($this->trans('commands.site.install.messages.sites-restore'));
+
+        return $renamed;
     }
 
     protected function runInstaller(
@@ -543,10 +553,10 @@ class InstallCommand extends Command
             install_drupal($autoload, $settings);
         } catch (AlreadyInstalledException $e) {
             $io->error($this->trans('commands.site.install.messages.already-installed'));
-            return;
+            return 1;
         } catch (\Exception $e) {
             $io->error($e->getMessage());
-            return;
+            return 1;
         }
 
         if (!$this->site->multisiteMode($uri)) {
@@ -554,5 +564,7 @@ class InstallCommand extends Command
         }
 
         $io->success($this->trans('commands.site.install.messages.installed'));
+
+        return 0;
     }
 }

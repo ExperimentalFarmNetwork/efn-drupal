@@ -97,31 +97,31 @@ class ControllerCommand extends Command
             ->setHelp($this->trans('commands.generate.controller.help'))
             ->addOption(
                 'module',
-                '',
+                null,
                 InputOption::VALUE_REQUIRED,
                 $this->trans('commands.common.options.module')
             )
             ->addOption(
                 'class',
-                '',
+                null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.generate.controller.options.class')
             )
             ->addOption(
                 'routes',
-                '',
+                null,
                 InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
                 $this->trans('commands.generate.controller.options.routes')
             )
             ->addOption(
                 'services',
-                '',
+                null,
                 InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
                 $this->trans('commands.common.options.services')
             )
             ->addOption(
                 'test',
-                '',
+                null,
                 InputOption::VALUE_NONE,
                 $this->trans('commands.generate.controller.options.test')
             );
@@ -137,10 +137,9 @@ class ControllerCommand extends Command
 
         // @see use Drupal\Console\Command\Shared\ConfirmationTrait::confirmGeneration
         if (!$this->confirmGeneration($io, $yes)) {
-            return;
+            return 1;
         }
 
-        $learning = $input->hasOption('learning')?$input->getOption('learning'):false;
         $module = $input->getOption('module');
         $class = $input->getOption('class');
         $routes = $input->getOption('routes');
@@ -164,6 +163,8 @@ class ControllerCommand extends Command
 
         // Run cache rebuild to see changes in Web UI
         $this->chainQueue->addCommand('router:rebuild', []);
+
+        return 0;
     }
 
     /**

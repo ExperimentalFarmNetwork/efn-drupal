@@ -92,6 +92,7 @@ class Application extends BaseApplication
             $this->commandName = $commandName;
         }
         $this->registerEvents();
+        $this->registerExtendCommands();
         $this->registerCommandsFromAutoWireConfiguration();
         $this->registerChainCommands();
 
@@ -122,6 +123,12 @@ class Application extends BaseApplication
             $io->listing($configurationManager->getMissingConfigurationFiles());
             $io->commentBlock(
                 $this->trans('application.site.errors.missing-config-file-command')
+            );
+        }
+
+        if ($this->getCommandName($input) == 'list' && $this->container->hasParameter('console.warning')) {
+            $io->warning(
+                $this->trans($this->container->getParameter('console.warning'))
             );
         }
 
@@ -204,10 +211,10 @@ class Application extends BaseApplication
         );
         $this->getDefinition()->addOption(
             new InputOption(
-                '--no-debug',
+                '--debug',
                 null,
                 InputOption::VALUE_NONE,
-                $this->trans('application.options.no-debug')
+                $this->trans('application.options.debug')
             )
         );
         $this->getDefinition()->addOption(
@@ -269,6 +276,15 @@ class Application extends BaseApplication
     }
 
     /**
+     * registerExtendCommands
+     */
+    private function registerExtendCommands()
+    {
+        $this->container->get('console.configuration_manager')
+            ->loadExtendConfiguration();
+    }
+
+    /**
      * registerCommandsFromAutoWireConfiguration
      */
     private function registerCommandsFromAutoWireConfiguration()
@@ -278,6 +294,10 @@ class Application extends BaseApplication
 
         $autoWireForcedCommands = $configuration
             ->get('application.autowire.commands.forced');
+
+        if(!is_array($autoWireForcedCommands)){
+            return;
+        }
 
         foreach ($autoWireForcedCommands as $autoWireForcedCommand) {
             try {

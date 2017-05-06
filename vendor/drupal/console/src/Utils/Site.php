@@ -3,25 +3,44 @@
 namespace Drupal\Console\Utils;
 
 use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Logger\LoggerChannelFactory;
 use Drupal\Core\Language\LanguageManager;
 use Drupal\Core\Language\Language;
 use Drupal\Core\Site\Settings;
+use Drupal\Console\Core\Utils\ConfigurationManager;
 
 class Site
 {
+    /**
+     * @var string
+     */
     protected $appRoot;
+
+    /**
+     * @var ConfigurationManager
+     */
+    protected $configurationManager;
+
+    /**
+     * @var string
+     */
+    protected $cacheDirectory;
 
     /**
      * Site constructor.
      *
-     * @param $appRoot
+     * @param string               $appRoot
+     * @param ConfigurationManager $configurationManager
      */
-    public function __construct($appRoot)
-    {
+    public function __construct(
+        $appRoot,
+        ConfigurationManager $configurationManager
+    ) {
         $this->appRoot = $appRoot;
+        $this->configurationManager = $configurationManager;
     }
 
     public function loadLegacyFile($legacyFile, $relative = true)
@@ -63,9 +82,21 @@ class Site
         $this->loadLegacyFile('/core/includes/install.inc');
         $this->setMinimalContainerPreKernel();
 
+        $driverDirectories = [
+            $this->appRoot . '/core/lib/Drupal/Core/Database/Driver',
+            $this->appRoot . '/drivers/lib/Drupal/Driver/Database'
+        ];
+
+        $driverDirectories = array_filter(
+            $driverDirectories,
+            function ($directory) {
+                return is_dir($directory);
+            }
+        );
+
         $finder = new Finder();
         $finder->directories()
-            ->in($this->appRoot . '/core/lib/Drupal/Core/Database/Driver')
+            ->in($driverDirectories)
             ->depth('== 0');
 
         $databases = [];
@@ -170,5 +201,74 @@ class Site
         }
 
         return false;
+    }
+
+    public function getCacheDirectory()
+    {
+        if ($this->cacheDirectory) {
+            return $this->cacheDirectory;
+        }
+
+        $configFactory = \Drupal::configFactory();
+        $siteId = $configFactory->get('system.site')
+            ->get('uuid');
+        $pathTemporary = $configFactory->get('system.file')
+            ->get('path.temporary');
+        $configuration = $this->configurationManager->getConfiguration();
+        $cacheDirectory = $configuration->get('application.cache.directory')?:'';
+        if ($cacheDirectory) {
+            if (strpos($cacheDirectory, '/') != 0) {
+                $cacheDirectory = $this->configurationManager
+                    ->getApplicationDirectory() . '/' . $cacheDirectory;
+            }
+            $cacheDirectories[] = $cacheDirectory . '/' . $siteId . '/';
+        }
+        $cacheDirectories[] = sprintf(
+            '%s/cache/%s/',
+            $this->configurationManager->getConsoleDirectory(),
+            $siteId
+        );
+        $cacheDirectories[] = $pathTemporary . '/console/cache/' . $siteId . '/';
+
+        foreach ($cacheDirectories as $cacheDirectory) {
+            if ($this->isValidDirectory($cacheDirectory)) {
+                $this->cacheDirectory = $cacheDirectory;
+                break;
+            }
+        }
+
+        return $this->cacheDirectory;
+    }
+
+    private function isValidDirectory($path)
+    {
+        $fileSystem = new Filesystem();
+        if ($fileSystem->exists($path)) {
+            return true;
+        }
+        try {
+            $fileSystem->mkdir($path);
+
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    public function cachedServicesFile()
+    {
+        return $this->getCacheDirectory().'/console.services.yml';
+    }
+
+    public function cachedServicesFileExists()
+    {
+        return file_exists($this->cachedServicesFile());
+    }
+
+    public function removeCachedServicesFile()
+    {
+        if ($this->cachedServicesFileExists()) {
+            unlink($this->cachedServicesFile());
+        }
     }
 }

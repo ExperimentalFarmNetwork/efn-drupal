@@ -15,6 +15,7 @@ use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Console\Command\Command;
 use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Style\DrupalStyle;
+use \Drupal\Console\Core\Utils\ConfigurationManager;
 
 /**
  * Class ServerCommand
@@ -25,8 +26,14 @@ class ServerCommand extends Command
 {
     use CommandTrait;
 
+    /**
+     * @var string
+     */
     protected $appRoot;
 
+    /**
+     * @var ConfigurationManager
+     */
     protected $configurationManager;
 
     /**
@@ -65,27 +72,19 @@ class ServerCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new DrupalStyle($input, $output);
-        $learning = $input->hasOption('learning')?$input->getOption('learning'):false;
         $address = $this->validatePort($input->getArgument('address'));
 
         $finder = new PhpExecutableFinder();
         if (false === $binary = $finder->find()) {
             $io->error($this->trans('commands.server.errors.binary'));
-            return;
+            return 1;
         }
 
         $router = $this->getRouterPath();
-        $cli = sprintf(
-            '%s %s %s %s',
-            $binary,
-            '-S',
-            $address,
-            $router
-        );
-
-        if ($learning) {
-            $io->commentBlock($cli);
-        }
+        $processBuilder = new ProcessBuilder([$binary, '-S', $address, $router]);
+        $processBuilder->setTimeout(null);
+        $processBuilder->setWorkingDirectory($this->appRoot);
+        $process = $processBuilder->getProcess();
 
         $io->success(
             sprintf(
@@ -94,19 +93,22 @@ class ServerCommand extends Command
             )
         );
 
-        $processBuilder = new ProcessBuilder(explode(' ', $cli));
-        $process = $processBuilder->getProcess();
-        $process->setWorkingDirectory($this->appRoot);
-        if ('\\' !== DIRECTORY_SEPARATOR && file_exists('/dev/tty') && is_readable('/dev/tty')) {
-            $process->setTty('true');
-        } else {
-            $process->setTimeout(null);
-        }
-        $process->run();
+        $io->commentBlock(
+            sprintf(
+                $this->trans('commands.server.messages.listening'),
+                'http://'.$address
+            )
+        );
+
+        // Use the process helper to copy process output to console output.
+        $this->getHelper('process')->run($output, $process, null, null);
 
         if (!$process->isSuccessful()) {
             $io->error($process->getErrorOutput());
+            return 1;
         }
+
+        return 0;
     }
 
     /**
@@ -114,22 +116,26 @@ class ServerCommand extends Command
      */
     private function getRouterPath()
     {
-        $router = sprintf(
-            '%s/.console/router.php',
-            $this->configurationManager->getHomeDirectory()
-        );
+        $routerPath = [
+            sprintf(
+                '%s/.console/router.php',
+                $this->configurationManager->getHomeDirectory()
+            ),
+            sprintf(
+                '%s/console/router.php',
+                $this->configurationManager->getApplicationDirectory()
+            ),
+            sprintf(
+                '%s/%s/config/dist/router.php',
+                $this->configurationManager->getApplicationDirectory(),
+                DRUPAL_CONSOLE_CORE
+            )
+        ];
 
-        if (file_exists($router)) {
-            return $router;
-        }
-
-        $router = sprintf(
-            '%s/config/dist/router.php',
-            $this->configurationManager->getApplicationDirectory()
-        );
-
-        if (file_exists($router)) {
-            return $router;
+        foreach ($routerPath as $router) {
+            if (file_exists($router)) {
+                return $router;
+            }
         }
 
         return null;

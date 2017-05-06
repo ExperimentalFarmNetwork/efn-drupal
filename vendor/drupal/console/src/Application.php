@@ -5,11 +5,9 @@ namespace Drupal\Console;
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Console\Annotations\DrupalCommandAnnotationReader;
 use Drupal\Console\Utils\AnnotationValidator;
-use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Core\Application as BaseApplication;
 
 /**
@@ -27,7 +25,7 @@ class Application extends BaseApplication
     /**
      * @var string
      */
-    const VERSION = '1.0.0-rc14';
+    const VERSION = '1.0.0-rc18';
 
     public function __construct(ContainerInterface $container)
     {
@@ -39,26 +37,17 @@ class Application extends BaseApplication
      */
     public function doRun(InputInterface $input, OutputInterface $output)
     {
-        $io = new DrupalStyle($input, $output);
         $this->registerGenerators();
         $this->registerCommands();
-//        for ($lines = 0; $lines < 2; $lines++) {
-//            $io->write("\r\033[K\033[1A\r");
-//        }
-//        $io->clearCurrentLine();
-
         $clear = $this->container->get('console.configuration_manager')
             ->getConfiguration()
             ->get('application.clear')?:false;
         if ($clear === true || $clear === 'true') {
             $output->write(sprintf("\033\143"));
         }
-        parent::doRun($input, $output);
-        if ($this->getCommandName($input) == 'list' && $this->container->hasParameter('console.warning')) {
-            $io->warning(
-                $this->trans($this->container->getParameter('console.warning'))
-            );
-        }
+
+        $exitCode = parent::doRun($input, $output);
+        return $exitCode;
     }
 
     private function registerGenerators()
@@ -162,7 +151,9 @@ class Application extends BaseApplication
                     continue;
                 }
 
-                if ($annotation = $annotationCommandReader->readAnnotation($serviceDefinition->getClass())) {
+                $annotation = $annotationCommandReader
+                    ->readAnnotation($serviceDefinition->getClass());
+                if ($annotation) {
                     $this->container->get('console.translator_manager')
                         ->addResourceTranslationsByExtension(
                             $annotation['extension'],
@@ -221,8 +212,10 @@ class Application extends BaseApplication
             'help',
             'init',
             'list',
+            'shell',
             'server'
         ];
+
         $languages = $this->container->get('console.configuration_manager')
             ->getConfiguration()
             ->get('application.languages');
@@ -234,8 +227,8 @@ class Application extends BaseApplication
 
         $namespaces = array_filter(
             $this->getNamespaces(), function ($item) {
-            return (strpos($item, ':')<=0);
-        }
+                return (strpos($item, ':')<=0);
+            }
         );
         sort($namespaces);
         array_unshift($namespaces, 'misc');
@@ -244,8 +237,8 @@ class Application extends BaseApplication
             $commands = $this->all($namespace);
             usort(
                 $commands, function ($cmd1, $cmd2) {
-                return strcmp($cmd1->getName(), $cmd2->getName());
-            }
+                    return strcmp($cmd1->getName(), $cmd2->getName());
+                }
             );
 
             foreach ($commands as $command) {

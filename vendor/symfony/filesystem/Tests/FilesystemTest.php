@@ -442,14 +442,22 @@ class FilesystemTest extends FilesystemTestCase
         $this->assertFilePermissions(400, $file);
     }
 
-    public function testChmodWrongMod()
+    public function testChmodWithWrongModLeavesPreviousPermissionsUntouched()
     {
         $this->markAsSkippedIfChmodIsMissing();
+
+        if (defined('HHVM_VERSION')) {
+            $this->markTestSkipped('chmod() changes permissions even when passing invalid modes on HHVM');
+        }
 
         $dir = $this->workspace.DIRECTORY_SEPARATOR.'file';
         touch($dir);
 
+        $permissions = fileperms($dir);
+
         $this->filesystem->chmod($dir, 'Wrongmode');
+
+        $this->assertSame($permissions, fileperms($dir));
     }
 
     public function testChmodRecursive()
@@ -536,7 +544,10 @@ class FilesystemTest extends FilesystemTestCase
         $dir = $this->workspace.DIRECTORY_SEPARATOR.'dir';
         mkdir($dir);
 
-        $this->filesystem->chown($dir, $this->getFileOwner($dir));
+        $owner = $this->getFileOwner($dir);
+        $this->filesystem->chown($dir, $owner);
+
+        $this->assertSame($owner, $this->getFileOwner($dir));
     }
 
     public function testChownRecursive()
@@ -548,7 +559,10 @@ class FilesystemTest extends FilesystemTestCase
         $file = $dir.DIRECTORY_SEPARATOR.'file';
         touch($file);
 
-        $this->filesystem->chown($dir, $this->getFileOwner($dir), true);
+        $owner = $this->getFileOwner($dir);
+        $this->filesystem->chown($dir, $owner, true);
+
+        $this->assertSame($owner, $this->getFileOwner($file));
     }
 
     public function testChownSymlink()
@@ -562,7 +576,10 @@ class FilesystemTest extends FilesystemTestCase
 
         $this->filesystem->symlink($file, $link);
 
-        $this->filesystem->chown($link, $this->getFileOwner($link));
+        $owner = $this->getFileOwner($link);
+        $this->filesystem->chown($link, $owner);
+
+        $this->assertSame($owner, $this->getFileOwner($link));
     }
 
     /**
@@ -602,7 +619,10 @@ class FilesystemTest extends FilesystemTestCase
         $dir = $this->workspace.DIRECTORY_SEPARATOR.'dir';
         mkdir($dir);
 
-        $this->filesystem->chgrp($dir, $this->getFileGroup($dir));
+        $group = $this->getFileGroup($dir);
+        $this->filesystem->chgrp($dir, $group);
+
+        $this->assertSame($group, $this->getFileGroup($dir));
     }
 
     public function testChgrpRecursive()
@@ -614,7 +634,10 @@ class FilesystemTest extends FilesystemTestCase
         $file = $dir.DIRECTORY_SEPARATOR.'file';
         touch($file);
 
-        $this->filesystem->chgrp($dir, $this->getFileGroup($dir), true);
+        $group = $this->getFileGroup($dir);
+        $this->filesystem->chgrp($dir, $group, true);
+
+        $this->assertSame($group, $this->getFileGroup($file));
     }
 
     public function testChgrpSymlink()
@@ -628,7 +651,10 @@ class FilesystemTest extends FilesystemTestCase
 
         $this->filesystem->symlink($file, $link);
 
-        $this->filesystem->chgrp($link, $this->getFileGroup($link));
+        $group = $this->getFileGroup($link);
+        $this->filesystem->chgrp($link, $group);
+
+        $this->assertSame($group, $this->getFileGroup($link));
     }
 
     /**
@@ -842,6 +868,16 @@ class FilesystemTest extends FilesystemTestCase
             array('/a/aab/bb/', '/b/aab', '../../a/aab/bb/'),
             array('/aab/bb', '/aa', '../aab/bb/'),
             array('/aab', '/aa', '../aab/'),
+            array('/aa/bb/cc', '/aa/dd/..', 'bb/cc/'),
+            array('/aa/../bb/cc', '/aa/dd/..', '../bb/cc/'),
+            array('/aa/bb/../../cc', '/aa/../dd/..', 'cc/'),
+            array('/../aa/bb/cc', '/aa/dd/..', 'bb/cc/'),
+            array('/../../aa/../bb/cc', '/aa/dd/..', '../bb/cc/'),
+            array('C:/aa/bb/cc', 'C:/aa/dd/..', 'bb/cc/'),
+            array('c:/aa/../bb/cc', 'c:/aa/dd/..', '../bb/cc/'),
+            array('C:/aa/bb/../../cc', 'C:/aa/../dd/..', 'cc/'),
+            array('C:/../aa/bb/cc', 'C:/aa/dd/..', 'bb/cc/'),
+            array('C:/../../aa/../bb/cc', 'C:/aa/dd/..', '../bb/cc/'),
         );
 
         if ('\\' === DIRECTORY_SEPARATOR) {
@@ -1103,19 +1139,42 @@ class FilesystemTest extends FilesystemTestCase
     {
         $filename = $this->workspace.DIRECTORY_SEPARATOR.'foo'.DIRECTORY_SEPARATOR.'baz.txt';
 
-        // skip mode check on Windows
-        if ('\\' !== DIRECTORY_SEPARATOR) {
-            $oldMask = umask(0002);
-        }
-
         $this->filesystem->dumpFile($filename, 'bar');
+
+        $this->assertFileExists($filename);
+        $this->assertSame('bar', file_get_contents($filename));
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testDumpFileAndSetPermissions()
+    {
+        $filename = $this->workspace.DIRECTORY_SEPARATOR.'foo'.DIRECTORY_SEPARATOR.'baz.txt';
+
+        $this->filesystem->dumpFile($filename, 'bar', 0753);
+
         $this->assertFileExists($filename);
         $this->assertSame('bar', file_get_contents($filename));
 
         // skip mode check on Windows
         if ('\\' !== DIRECTORY_SEPARATOR) {
-            $this->assertFilePermissions(664, $filename);
-            umask($oldMask);
+            $this->assertFilePermissions(753, $filename);
+        }
+    }
+
+    public function testDumpFileWithNullMode()
+    {
+        $filename = $this->workspace.DIRECTORY_SEPARATOR.'foo'.DIRECTORY_SEPARATOR.'baz.txt';
+
+        $this->filesystem->dumpFile($filename, 'bar', null);
+
+        $this->assertFileExists($filename);
+        $this->assertSame('bar', file_get_contents($filename));
+
+        // skip mode check on Windows
+        if ('\\' !== DIRECTORY_SEPARATOR) {
+            $this->assertFilePermissions(600, $filename);
         }
     }
 
@@ -1139,7 +1198,7 @@ class FilesystemTest extends FilesystemTestCase
         $scheme = 'file://';
         $filename = $scheme.$this->workspace.DIRECTORY_SEPARATOR.'foo'.DIRECTORY_SEPARATOR.'baz.txt';
 
-        $this->filesystem->dumpFile($filename, 'bar');
+        $this->filesystem->dumpFile($filename, 'bar', null);
 
         $this->assertFileExists($filename);
         $this->assertSame('bar', file_get_contents($filename));
@@ -1150,11 +1209,24 @@ class FilesystemTest extends FilesystemTestCase
         $scheme = 'compress.zlib://';
         $filename = $this->workspace.DIRECTORY_SEPARATOR.'foo'.DIRECTORY_SEPARATOR.'baz.txt';
 
-        $this->filesystem->dumpFile($filename, 'bar');
+        $this->filesystem->dumpFile($filename, 'bar', null);
 
         // Zlib stat uses file:// wrapper so remove scheme
         $this->assertFileExists(str_replace($scheme, '', $filename));
         $this->assertSame('bar', file_get_contents($filename));
+    }
+
+    public function testDumpKeepsExistingPermissionsWhenOverwritingAnExistingFile()
+    {
+        $this->markAsSkippedIfChmodIsMissing();
+
+        $filename = $this->workspace.DIRECTORY_SEPARATOR.'foo.txt';
+        file_put_contents($filename, 'FOO BAR');
+        chmod($filename, 0745);
+
+        $this->filesystem->dumpFile($filename, 'bar', null);
+
+        $this->assertFilePermissions(745, $filename);
     }
 
     public function testCopyShouldKeepExecutionPermission()

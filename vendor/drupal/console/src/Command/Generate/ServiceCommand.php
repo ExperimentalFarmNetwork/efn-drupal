@@ -104,13 +104,13 @@ class ServiceCommand extends Command
             )
             ->addOption(
                 'interface',
-                false,
+                null,
                 InputOption::VALUE_NONE,
                 $this->trans('commands.common.service.options.interface')
             )
             ->addOption(
                 'interface_name',
-                false,
+                null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.common.service.options.interface_name')
             )
@@ -137,7 +137,7 @@ class ServiceCommand extends Command
 
         // @see use Drupal\Console\Command\Shared\ConfirmationTrait::confirmGeneration
         if (!$this->confirmGeneration($io)) {
-            return;
+            return 1;
         }
 
         $module = $input->getOption('module');
@@ -164,6 +164,8 @@ class ServiceCommand extends Command
         $this->generator->generate($module, $name, $class, $interface, $interface_name, $build_services, $path_service);
 
         $this->chainQueue->addCommand('cache:rebuild', ['cache' => 'all']);
+
+        return 0;
     }
 
     /**

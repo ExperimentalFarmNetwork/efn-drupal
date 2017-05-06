@@ -102,11 +102,8 @@ class ModuleGenerator extends Generator
         }
 
         if ($moduleFile) {
-            $this->renderFile(
-                'module/module.twig',
-                $dir . '/' . $machineName . '.module',
-                $parameters
-            );
+            // Generate '.module' file.
+            $this->createModuleFile($dir, $parameters);
         }
 
         if ($composer) {
@@ -120,11 +117,16 @@ class ModuleGenerator extends Generator
         if ($test) {
             $this->renderFile(
                 'module/src/Tests/load-test.php.twig',
-                $dir . '/src/Tests/' . 'LoadTest.php',
+                $dir . '/tests/src/Functional/' . 'LoadTest.php',
                 $parameters
             );
         }
         if ($twigtemplate) {
+            // If module file is not created earlier, create now.
+            if (!$moduleFile) {
+                // Generate '.module' file.
+                $this->createModuleFile($dir, $parameters);
+            }
             $this->renderFile(
                 'module/module-twig-template-append.twig',
                 $dir .'/' . $machineName . '.module',
@@ -161,9 +163,26 @@ class ModuleGenerator extends Generator
             }
             $this->renderFile(
                 'module/twig-template-file.twig',
-                $dir . $machineName . '.html.twig',
+                $dir . str_replace("_", "-", $machineName) . '.html.twig',
                 $parameters
             );
         }
+    }
+
+    /**
+     * Generate the '.module' file.
+     *
+     * @param string $dir
+     *   The directory name.
+     * @param array  $parameters
+     *   The parameter array.
+     */
+    protected function createModuleFile($dir, $parameters)
+    {
+        $this->renderFile(
+            'module/module.twig',
+            $dir . '/' . $parameters['machine_name'] . '.module',
+            $parameters
+        );
     }
 }

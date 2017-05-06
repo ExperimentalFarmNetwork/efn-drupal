@@ -13,6 +13,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
 use Drupal\Console\Core\Command\Shared\CommandTrait;
+use Drupal\Console\Annotations\DrupalCommand;
 use Drupal\Console\Utils\Create\TermData;
 use Drupal\Console\Utils\DrupalApi;
 use Drupal\Console\Core\Style\DrupalStyle;
@@ -21,6 +22,11 @@ use Drupal\Console\Core\Style\DrupalStyle;
  * Class TermsCommand
  *
  * @package Drupal\Console\Command\Generate
+ *
+ * @DrupalCommand(
+ *     extension = "taxonomy",
+ *     extensionType = "module"
+ * )
  */
 class TermsCommand extends Command
 {
@@ -146,9 +152,9 @@ class TermsCommand extends Command
         );
 
         $tableHeader = [
-          $this->trans('commands.create.terms.messages.term-id'),
-          $this->trans('commands.create.terms.messages.vocabulary'),
-          $this->trans('commands.create.terms.messages.name'),
+            $this->trans('commands.create.terms.messages.term-id'),
+            $this->trans('commands.create.terms.messages.vocabulary'),
+            $this->trans('commands.create.terms.messages.name'),
         ];
 
         $io->table($tableHeader, $terms['success']);

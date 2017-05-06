@@ -1,0 +1,4 @@
+services:
+  yamlform_to_webform.migrate_manager:
+    class: Drupal\yamlform_to_webform\YamlFormToWebformMigrateManager
+    arguments: ['@config.factory', '@module_handler']
