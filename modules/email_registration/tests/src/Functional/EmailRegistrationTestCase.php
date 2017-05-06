@@ -1,15 +1,15 @@
 <?php
 
-namespace Drupal\email_registration\Tests;
+namespace Drupal\Tests\email_registration\Functional;
 
-use Drupal\simpletest\WebTestBase;
+use Drupal\Tests\BrowserTestBase;
 
 /**
  * Tests the email registration module.
  *
  * @group email_registration
  */
-class EmailRegistrationTestCase extends WebTestBase {
+class EmailRegistrationTestCase extends BrowserTestBase {
 
   /**
    * Modules to enable.
@@ -23,6 +23,7 @@ class EmailRegistrationTestCase extends WebTestBase {
    */
   public function testRegistration() {
     $user_config = $this->container->get('config.factory')->getEditable('user.settings');
+    $email_registration_config = $this->container->get('config.factory')->getEditable('email_registration.settings');
     $user_config
       ->set('verify_mail', FALSE)
       ->set('register', USER_REGISTER_VISITORS)
@@ -49,6 +50,29 @@ class EmailRegistrationTestCase extends WebTestBase {
 
     // Now try the immediate login.
     $this->drupalLogout();
+
+    // Try to login with just username, should fail by default.
+    $this->drupalGet('user/login');
+    $this->assertText('Enter your e-mail address.');
+    $this->assertText('E-mail');
+    $this->assertNoText('E-mail or username');
+    $login = array(
+      'name' => $name,
+      'pass' => $pass,
+    );
+    $this->drupalPostForm('user/login', $login, t('Log in'));
+    $error_message = $this->xpath('//div[contains(@class, "error")]');
+    $this->assertTrue(!empty($error_message), t('When login_with_username is false, a user cannot login with just their username.'));
+
+    // Set login_with_username to TRUE and try to login with just username.
+    $email_registration_config->set('login_with_username', TRUE)->save();
+    $this->drupalGet('user/login');
+    $this->assertText('Enter your e-mail address or username.');
+    $this->assertText('E-mail or username');
+    $this->drupalPostForm('user/login', $login, t('Log in'));
+    $this->assertRaw('<title>' . $name . ' | Drupal</title>', t('When login_with_username is true, a user can login with just their username.'));
+    $this->drupalLogout();
+
     $user_config
       ->set('verify_mail', FALSE)
       ->save();

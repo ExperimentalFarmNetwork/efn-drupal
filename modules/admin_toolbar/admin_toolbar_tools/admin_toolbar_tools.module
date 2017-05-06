@@ -28,7 +28,7 @@ function admin_toolbar_tools_toolbar() {
 }
 
 /**
- *  Implements hook_help().
+ * Implements hook_help().
  */
 function admin_toolbar_tools_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
@@ -43,7 +43,7 @@ function admin_toolbar_tools_help($route_name, RouteMatchInterface $route_match)
 }
 
 /**
- *  Implements hook_menu_links_discovered_alter().
+ * Implements hook_menu_links_discovered_alter().
  */
 function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
   $moduleHandler = \Drupal::moduleHandler();
@@ -174,6 +174,12 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
     'menu_name' => 'admin',
     'parent' => 'entity.user.collection',
   );
+  $links['admin_toolbar_tools.user.logout'] = array(
+    'title' => t('Logout'),
+    'route_name' => 'user.logout',
+    'parent' => 'admin_toolbar_tools.help',
+    'weight' => 10,
+  );
   $links['user.role_add'] = array(
     'title' => t('Add a new role'),
     'route_name' => 'user.role_add',
@@ -241,16 +247,15 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
       'route_name' => 'node.type_add',
       'menu_name' => 'admin',
       'parent' => 'entity.node_type.collection',
-      'weight' => -5
+      'weight' => -5,
     );
     // Add node links for each content type.
-    foreach (node_type_get_names() as $machine_name => $label) {
-      $links['node.add.' . $machine_name] = array(
-        'title' => $label,
+    foreach (\Drupal::entityTypeManager()->getStorage('node_type')->loadMultiple() as $type) {
+      $links['node.add.' . $type->id()] = array(
+        'title' => t($type->label()),
         'route_name' => 'node.add',
-        'menu_name' => 'admin',
         'parent' => 'node.add_page',
-        'route_parameters' => array('node_type' => $machine_name),
+        'route_parameters' => array('node_type' => $type->id()),
       );
     }
   }
@@ -286,7 +291,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
       'route_name' => 'entity.menu.add_form',
       'menu_name' => 'admin',
       'parent' => 'entity.menu.collection',
-      'weight' => -50
+      'weight' => -50,
     );
     // Adds links to /admin/structure/menu.
     foreach (menu_ui_get_menus() as $machine_name => $label) {
@@ -330,7 +335,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
       'route_name' => 'block_content.add_page',
       'menu_name' => 'admin',
       'parent' => 'block.admin_display',
-      'weight' => -100
+      'weight' => -100,
     );
     $links['entity.block_content.collection'] = array(
       'title' => t('Custom block library'),
@@ -353,7 +358,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
       'route_name' => 'contact.form_add',
       'menu_name' => 'admin',
       'parent' => 'entity.contact_form.collection',
-      'weight' => -5
+      'weight' => -5,
     );
   }
 
@@ -476,9 +481,9 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
       'parent' => 'system.themes_page',
     );
     // Lists installed themes.
-    $installed_themes = installedThemes();
+    $installed_themes = admin_toolbar_tools_installed_themes();
     foreach ($installed_themes as $key_theme => $label_theme) {
-      $links['system.theme_settings_theme' . '.' . $key_theme] = array(
+      $links['system.theme_settings_theme.' . $key_theme] = array(
         'title' => t($label_theme),
         'route_name' => 'system.theme_settings_theme',
         'menu_name' => 'admin',
@@ -493,9 +498,11 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
 
 /**
  * Return installed themes.
+ *
  * @return array
+ *   An array of friendly theme names, keyed by the machine name.
  */
-function installedThemes() {
+function admin_toolbar_tools_installed_themes() {
   $all_themes = \Drupal::service('theme_handler')->listInfo();
   $themes_installed = array();
   foreach ($all_themes as $key_theme => $theme) {
@@ -508,11 +515,15 @@ function installedThemes() {
 }
 
 /**
- * Get all links related to entity
- * @param $entity_type_id
+ * Get all links related to entity.
+ *
+ * @param string $entity_type_id
+ *   The machine name for the entity type.
+ *
  * @return array
+ *   The links for the entity type.
  */
-function getLinks($entity_type_id) {
+function admin_toolbar_tools_get_links($entity_type_id) {
   $entity = \Drupal::entityTypeManager()->getDefinition($entity_type_id);
   // Get all links related to entity.
   $links = $entity->getLinkTemplates();

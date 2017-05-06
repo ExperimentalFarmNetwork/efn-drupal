@@ -1,0 +1,7 @@
+email_registration.settings:
+  type: config_object
+  label: 'Email registration config'
+  mapping:
+    login_with_username:
+      type: boolean
+      label: 'Allow users to log in with e-mail or username.'
