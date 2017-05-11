@@ -625,7 +625,7 @@ body.path-group{
 		margin-bottom:30px;
 	}
 
-// center button
+
 	#block-minimus-groupoperations{
 		text-align:center;
 	}
@@ -634,12 +634,12 @@ body.path-group{
 		font-size:.8em;
 		text-align:center;
 		color:$gray-light;
-		.views-field-field-user-image{
+		.views-field-field-user-image, .views-field-view-user{
 			display:inline-block;
 			img{
 			    border-radius: 50%;
 			    border: thin solid #eeeeee;
-			    padding: 10px;
+			    padding: 3px;
 			}
 		}
 	}

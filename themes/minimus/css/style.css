@@ -6764,12 +6764,12 @@ body.path-group {
     font-size: .8em;
     text-align: center;
     color: #777777; }
-    .region-sidebar-second .view-members-block .views-field-field-user-image, .region-sidebar-second .view-group-member-test .views-field-field-user-image {
+    .region-sidebar-second .view-members-block .views-field-field-user-image, .region-sidebar-second .view-members-block .views-field-view-user, .region-sidebar-second .view-group-member-test .views-field-field-user-image, .region-sidebar-second .view-group-member-test .views-field-view-user {
       display: inline-block; }
-      .region-sidebar-second .view-members-block .views-field-field-user-image img, .region-sidebar-second .view-group-member-test .views-field-field-user-image img {
+      .region-sidebar-second .view-members-block .views-field-field-user-image img, .region-sidebar-second .view-members-block .views-field-view-user img, .region-sidebar-second .view-group-member-test .views-field-field-user-image img, .region-sidebar-second .view-group-member-test .views-field-view-user img {
         border-radius: 50%;
         border: thin solid #eeeeee;
-        padding: 10px; }
+        padding: 3px; }
 
 .panel#edit-timezone {
   border: 0;
