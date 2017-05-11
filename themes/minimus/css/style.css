@@ -6760,13 +6760,13 @@ body.path-group {
     margin-bottom: 30px; }
   .region-sidebar-second #block-minimus-groupoperations {
     text-align: center; }
-  .region-sidebar-second .view-members-block {
+  .region-sidebar-second .view-members-block, .region-sidebar-second .view-group-member-test {
     font-size: .8em;
     text-align: center;
     color: #777777; }
-    .region-sidebar-second .view-members-block .views-field-field-user-image {
+    .region-sidebar-second .view-members-block .views-field-field-user-image, .region-sidebar-second .view-group-member-test .views-field-field-user-image {
       display: inline-block; }
-      .region-sidebar-second .view-members-block .views-field-field-user-image img {
+      .region-sidebar-second .view-members-block .views-field-field-user-image img, .region-sidebar-second .view-group-member-test .views-field-field-user-image img {
         border-radius: 50%;
         border: thin solid #eeeeee;
         padding: 10px; }

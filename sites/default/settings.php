@@ -24,3 +24,6 @@ if (file_exists($local_settings)) {
   include $local_settings;
 }
 $settings['install_profile'] = 'minimal';
+
+$config_directories[CONFIG_SYNC_DIRECTORY] = 'sites/default/config';
+

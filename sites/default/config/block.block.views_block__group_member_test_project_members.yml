@@ -1,0 +1,25 @@
+uuid: 4d9a71ee-145e-4b4e-a77a-d3c313881d29
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.group_member_test
+  module:
+    - views
+  theme:
+    - minimus
+id: views_block__group_member_test_project_members
+theme: minimus
+region: sidebar_second
+weight: -11
+provider: null
+plugin: 'views_block:group_member_test-project_members'
+settings:
+  id: 'views_block:group_member_test-project_members'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: none
+  context_mapping: {  }
+visibility: {  }
