@@ -50,6 +50,7 @@ module:
   markup: 0
   menu_link_content: 0
   menu_ui: 0
+  minimal: 1000
   node: 0
   options: 0
   page_cache: 0
@@ -79,5 +80,6 @@ theme:
   bootstrap: 0
   minimus: 0
   bartik: 0
+profile: minimal
 _core:
   default_config_hash: m2GVq11UAOVuNgj8x0t5fMOPujpvQQ_zxLoaly1BMEU
