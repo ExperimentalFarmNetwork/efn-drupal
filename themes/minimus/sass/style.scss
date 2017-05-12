@@ -145,6 +145,7 @@ div.main-container{
 .region-sidebar-second{
 	h2{
 		font-size:$font-size-h4;
+		margin-top:0;
 	}
 }
 
@@ -263,6 +264,14 @@ div.main-container{
 		   }
 
 		} 
+}
+
+.path-user{
+	.view-profiles{
+		.field{
+			margin-top:1em;
+		}
+	}
 }
  
 // group main page

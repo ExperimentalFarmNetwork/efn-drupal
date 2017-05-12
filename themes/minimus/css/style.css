@@ -6415,7 +6415,8 @@ div.main-container {
   width: 90%; }
 
 .region-sidebar-second h2 {
-  font-size: 24px; }
+  font-size: 24px;
+  margin-top: 0; }
 
 .path-frontpage .bnrPic {
   background: url("/themes/minimus/images/seed_nodes.png");
@@ -6492,6 +6493,9 @@ div.main-container {
     .path-user .table-striped > tbody > tr td, .path-user .table-striped .table-striped > tbody > tr:nth-of-type(odd) td, .path-user table > tbody > tr td, .path-user table .table-striped > tbody > tr:nth-of-type(odd) td, body.path-group .table-striped > tbody > tr td, body.path-group .table-striped .table-striped > tbody > tr:nth-of-type(odd) td, body.path-group table > tbody > tr td, body.path-group table .table-striped > tbody > tr:nth-of-type(odd) td {
       border-top: 0;
       padding: 0; }
+
+.path-user .view-profiles .field {
+  margin-top: 1em; }
 
 body.path-group {
   background-position-y: 73px; }
