@@ -1,7 +1,0 @@
-name: feature
-type: module
-core: 8.x
-package: Test
-# Force this to install after features.
-dependencies:
-  - features

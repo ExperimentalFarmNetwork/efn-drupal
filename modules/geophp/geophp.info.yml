@@ -1,5 +1,0 @@
-name: geoPHP
-type: module
-description: 'Wraps the geoPHP library: advanced geometry operations in PHP'
-core: 8.x
-package: Geo

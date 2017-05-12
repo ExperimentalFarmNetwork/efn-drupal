@@ -1,7 +1,0 @@
-type: module
-name: 'Geocoder Geofiel Test'
-description: 'Geocoder Geofiel Test module'
-core: 8.x
-package: Testing
-dependencies:
-  - geocoder_geofield

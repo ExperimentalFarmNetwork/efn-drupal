@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "39e0eb54a83b44a6db3ef0c882210b43",
+    "content-hash": "1f6861209f4baaee14f8793625158e90",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -1349,11 +1349,17 @@
         },
         {
             "name": "drupal/ajax_comments",
-            "version": "dev-1.x",
+            "version": "1.0.0-beta1",
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/ajax_comments",
-                "reference": "7e48cdefc10e2659d6933e28410521df1990c15c"
+                "reference": "8.x-1.0-beta1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/ajax_comments-8.x-1.0-beta1.zip",
+                "reference": "8.x-1.0-beta1",
+                "shasum": "64961ad6b111fadab39e18a22eee06aba3c8516d"
             },
             "require": {
                 "drupal/core": "*"
@@ -1364,8 +1370,8 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.0-beta1+2-dev",
-                    "datestamp": "1481334185"
+                    "version": "8.x-1.0-beta1",
+                    "datestamp": "1476840839"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -2298,11 +2304,17 @@
         },
         {
             "name": "drupal/devel",
-            "version": "dev-1.x",
+            "version": "1.0.0-rc2",
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/devel",
-                "reference": "2d1ad8e73f71b3a4b983bc2fe50e601aae248c1a"
+                "reference": "8.x-1.0-rc2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/devel-8.x-1.0-rc2.zip",
+                "reference": "8.x-1.0-rc2",
+                "shasum": "011322bf9c263dab29f94640829f4b654e9c5632"
             },
             "require": {
                 "drupal/core": "~8.0"
@@ -2316,8 +2328,8 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.0-rc2+3-dev",
-                    "datestamp": "1493434144"
+                    "version": "8.x-1.0-rc2",
+                    "datestamp": "1492989244"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -2425,11 +2437,17 @@
         },
         {
             "name": "drupal/entity",
-            "version": "dev-1.x",
+            "version": "1.0.0-alpha4",
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/entity",
-                "reference": "6bf9d5039a2fa4a9cd596d0a3d6b41b5d70f04cb"
+                "reference": "8.x-1.0-alpha4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/entity-8.x-1.0-alpha4.zip",
+                "reference": "8.x-1.0-alpha4",
+                "shasum": "c081d3757c159dfee74c9e5acb63bdee81c42e18"
             },
             "require": {
                 "drupal/core": "~8.1"
@@ -2440,8 +2458,8 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.0-alpha4+2-dev",
-                    "datestamp": "1489007283"
+                    "version": "8.x-1.0-alpha4",
+                    "datestamp": "1481194983"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -2478,11 +2496,17 @@
         },
         {
             "name": "drupal/features",
-            "version": "dev-3.x",
+            "version": "3.5.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/features",
-                "reference": "7d4c9e2f094c9a372eac11d0a526be8763c0e99f"
+                "reference": "8.x-3.5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/features-8.x-3.5.zip",
+                "reference": "8.x-3.5",
+                "shasum": "546b34387018f9adbe742b6992c4d473f9447c41"
             },
             "require": {
                 "drupal/config_update": "*",
@@ -2494,8 +2518,8 @@
                     "dev-3.x": "3.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-3.4+1-dev",
-                    "datestamp": "1488908282"
+                    "version": "8.x-3.5",
+                    "datestamp": "1488908583"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -2599,11 +2623,17 @@
         },
         {
             "name": "drupal/field_states_ui",
-            "version": "dev-1.x",
+            "version": "1.0.0-rc2",
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/field_states_ui",
-                "reference": "41af038d8f571212c7268b20508b36d0e0b7ed62"
+                "reference": "8.x-1.0-rc2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/field_states_ui-8.x-1.0-rc2.zip",
+                "reference": "8.x-1.0-rc2",
+                "shasum": "c67e511310ddf74c9d18b62fa49ae39ad050d2a6"
             },
             "require": {
                 "cweagans/composer-patches": "~1.0",
@@ -2615,8 +2645,8 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.0-rc2+3-dev",
-                    "datestamp": "1478529239"
+                    "version": "8.x-1.0-rc2",
+                    "datestamp": "1477601639"
                 },
                 "patches": {
                     "drupal/core": {
@@ -2647,11 +2677,17 @@
         },
         {
             "name": "drupal/geocoder",
-            "version": "dev-2.x",
+            "version": "2.0.0-alpha5",
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/geocoder",
-                "reference": "3ff307707a0627834e2a39e3d78af927f3c66af4"
+                "reference": "8.x-2.0-alpha5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/geocoder-8.x-2.0-alpha5.zip",
+                "reference": "8.x-2.0-alpha5",
+                "shasum": "1cbac01cc6217e17fd53dd8be68d4ad8f018c004"
             },
             "require": {
                 "drupal/core": "~8.0",
@@ -2668,8 +2704,8 @@
                     "dev-2.x": "2.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-2.0-alpha5+4-dev",
-                    "datestamp": "1484242985"
+                    "version": "8.x-2.0-alpha5",
+                    "datestamp": "1481538483"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -2809,11 +2845,17 @@
         },
         {
             "name": "drupal/geophp",
-            "version": "dev-1.x",
+            "version": "1.0.0-beta1",
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/geophp",
-                "reference": "fdcb4343ce3c4cf71a8ea0f0fd0948038b5ab442"
+                "reference": "8.x-1.0-beta1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/geophp-8.x-1.0-beta1.zip",
+                "reference": "8.x-1.0-beta1",
+                "shasum": "5379b3c01cc1c678415cf38f7d0ae2361d3ed824"
             },
             "require": {
                 "drupal/core": "~8.0"
@@ -2824,8 +2866,8 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.0-beta1+6-dev",
-                    "datestamp": "1463084639"
+                    "version": "8.x-1.0-beta1",
+                    "datestamp": "1414530828"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -2854,11 +2896,17 @@
         },
         {
             "name": "drupal/group",
-            "version": "dev-1.x",
+            "version": "1.0.0-beta5",
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/group",
-                "reference": "12a0077835c69fbeb185b5c134bf35bb62a561bc"
+                "reference": "8.x-1.0-beta5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/group-8.x-1.0-beta5.zip",
+                "reference": "8.x-1.0-beta5",
+                "shasum": "8584143f1e95d4eb29a89216906d68c11c6598c2"
             },
             "require": {
                 "drupal/core": "*"
@@ -2869,8 +2917,8 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.0-beta5+11-dev",
-                    "datestamp": "1492179243"
+                    "version": "8.x-1.0-beta5",
+                    "datestamp": "1487605983"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -2891,14 +2939,21 @@
         },
         {
             "name": "drupal/leaflet",
-            "version": "dev-1.x",
+            "version": "1.0.0-beta1",
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/leaflet",
-                "reference": "da0386d50987b63199937163bfe438807e7affcd"
+                "reference": "8.x-1.0-beta1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/leaflet-8.x-1.0-beta1.zip",
+                "reference": "8.x-1.0-beta1",
+                "shasum": "5c23ec9be44721fd9ed806600ea27e241bf96a39"
             },
             "require": {
-                "drupal/core": "~8.0"
+                "drupal/core": "~8.0",
+                "leaflet/leaflet": "^0.7.7"
             },
             "type": "drupal-module",
             "extra": {
@@ -2906,8 +2961,8 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.0-beta1+3-dev",
-                    "datestamp": "1485300782"
+                    "version": "8.x-1.0-beta1",
+                    "datestamp": "1475508239"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -2959,7 +3014,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://ftp.drupal.org/files/projects/markup-8.x-1.0-beta1.zip",
-                "reference": null,
+                "reference": "8.x-1.0-beta1",
                 "shasum": "7bb8c7623094178b9e40ff711065bcae8538b46f"
             },
             "require": {
@@ -3070,11 +3125,17 @@
         },
         {
             "name": "drupal/profile",
-            "version": "dev-1.x",
+            "version": "1.0.0-alpha7",
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/profile",
-                "reference": "e6034a130b3df0d360fadb6d83fbf18d986df44b"
+                "reference": "8.x-1.0-alpha7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/profile-8.x-1.0-alpha7.zip",
+                "reference": "8.x-1.0-alpha7",
+                "shasum": "8fe1cea29dd88215d0cf886b3bca9eccb025f531"
             },
             "require": {
                 "drupal/core": "~8.1",
@@ -3086,7 +3147,7 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.0-alpha7+0-dev",
+                    "version": "8.x-1.0-alpha7",
                     "datestamp": "1493902084"
                 }
             },
@@ -3124,11 +3185,17 @@
         },
         {
             "name": "drupal/select_or_other",
-            "version": "dev-1.x",
+            "version": "1.0.0-alpha2",
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/select_or_other",
-                "reference": "b683bde0cc5be4e52b6c82d1bdaaff54490cee0a"
+                "reference": "8.x-1.0-alpha2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/select_or_other-8.x-1.0-alpha2.zip",
+                "reference": "8.x-1.0-alpha2",
+                "shasum": "ffd103bc36556b45a248167e0d386f607a418b6c"
             },
             "require": {
                 "drupal/core": "~8.0"
@@ -3139,8 +3206,8 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.0-alpha2+5-dev",
-                    "datestamp": "1476170339"
+                    "version": "8.x-1.0-alpha2",
+                    "datestamp": "1452687539"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -3233,11 +3300,17 @@
         },
         {
             "name": "drupal/token",
-            "version": "dev-1.x",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/token",
-                "reference": "ed6cc7b037b462cc76dafde7910d57b5a7010559"
+                "reference": "8.x-1.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/token-8.x-1.0.zip",
+                "reference": "8.x-1.0",
+                "shasum": "d24c7f1ffddbd0fc56bc92bacae1c4ff769a4442"
             },
             "require": {
                 "drupal/core": "~8.0"
@@ -3248,8 +3321,8 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.0-rc1+5-dev",
-                    "datestamp": "1493466543"
+                    "version": "8.x-1.0",
+                    "datestamp": "1493466843"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -3998,6 +4071,17 @@
                 "minification"
             ],
             "time": "2016-11-11T18:43:20+00:00"
+        },
+        {
+            "name": "leaflet/leaflet",
+            "version": "v0.7.7",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/Leaflet/Leaflet/archive/v0.7.7.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "drupal-library"
         },
         {
             "name": "masterminds/html5",
@@ -8128,24 +8212,21 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "drupal/address": 5,
-        "drupal/ajax_comments": 20,
-        "drupal/devel": 20,
-        "drupal/entity": 20,
-        "drupal/features": 20,
-        "drupal/geocoder": 20,
-        "drupal/geophp": 20,
-        "drupal/group": 20,
-        "drupal/profile": 20,
-        "drupal/token": 20,
-        "drupal/select_or_other": 20,
-        "drupal/leaflet": 20,
-        "drupal/field_states_ui": 20,
+        "drupal/ajax_comments": 10,
+        "drupal/devel": 5,
+        "drupal/geocoder": 15,
+        "drupal/geophp": 10,
+        "drupal/group": 10,
+        "drupal/profile": 15,
+        "drupal/select_or_other": 15,
+        "drupal/leaflet": 10,
+        "drupal/field_states_ui": 5,
         "drupal/pathauto": 5,
         "drupal/better_exposed_filters": 15,
         "drupal/smtp": 10,
         "drupal/email_registration": 5,
         "drupal/markup": 10,
+        "drupal/address": 5,
         "behat/mink": 20
     },
     "prefer-stable": true,

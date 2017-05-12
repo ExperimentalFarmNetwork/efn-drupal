@@ -1,7 +1,0 @@
-name: Test Core
-type: module
-core: 8.x
-package: Test
-# Ensure features is enabled first
-dependencies:
-  - features

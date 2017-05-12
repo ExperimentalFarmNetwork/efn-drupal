@@ -1,9 +1,0 @@
-# Schema for Geocoder module.
-
-gecoder.settings:
-  type: config_object
-  label: 'Geocoder settings'
-  mapping:
-    cache:
-      type: boolean
-      label: 'Cache results'

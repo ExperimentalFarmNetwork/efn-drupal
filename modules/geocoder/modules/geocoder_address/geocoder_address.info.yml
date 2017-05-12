@@ -1,7 +1,0 @@
-type: module
-name: Geocoder Address
-description: 'Provides Geocoder integration with Address module.'
-core: 8.x
-dependencies:
-  - address
-  - geocoder_field

@@ -1,8 +1,0 @@
-name: Features UI
-type: module
-description: 'Provides the user interface for Features.'
-package: Development
-core: 8.x
-configure: features.assignment
-dependencies:
-  - features

@@ -1,6 +1,0 @@
-name: Profile
-type: module
-description: 'Test module for Profile.'
-core: 8.x
-dependencies:
-  - profile

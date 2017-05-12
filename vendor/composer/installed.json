@@ -3031,139 +3031,6 @@
         "homepage": "https://symfony.com"
     },
     {
-        "name": "drupal/ajax_comments",
-        "version": "dev-1.x",
-        "version_normalized": "dev-1.x",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/ajax_comments",
-            "reference": "7e48cdefc10e2659d6933e28410521df1990c15c"
-        },
-        "require": {
-            "drupal/core": "*"
-        },
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-1.x": "1.x-dev"
-            },
-            "drupal": {
-                "version": "8.x-1.0-beta1+2-dev",
-                "datestamp": "1481334185"
-            }
-        },
-        "installation-source": "source",
-        "notification-url": "https://packages.drupal.org/8/downloads",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "acouch",
-                "homepage": "https://www.drupal.org/user/151868"
-            },
-            {
-                "name": "danmuzyka",
-                "homepage": "https://www.drupal.org/user/48685"
-            },
-            {
-                "name": "formatC&#039;vt",
-                "homepage": "https://www.drupal.org/user/1853874"
-            },
-            {
-                "name": "muschpusch",
-                "homepage": "https://www.drupal.org/user/257634"
-            },
-            {
-                "name": "neochief",
-                "homepage": "https://www.drupal.org/user/233667"
-            },
-            {
-                "name": "rjbrown99",
-                "homepage": "https://www.drupal.org/user/367845"
-            }
-        ],
-        "description": "Module makes comments load without a page refresh via AJAX",
-        "homepage": "https://www.drupal.org/project/ajax_comments",
-        "support": {
-            "source": "http://cgit.drupalcode.org/ajax_comments"
-        }
-    },
-    {
-        "name": "drupal/devel",
-        "version": "dev-1.x",
-        "version_normalized": "dev-1.x",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/devel",
-            "reference": "2d1ad8e73f71b3a4b983bc2fe50e601aae248c1a"
-        },
-        "require": {
-            "drupal/core": "~8.0"
-        },
-        "suggest": {
-            "symfony/var-dumper": "Pretty print complex values better with var-dumper available"
-        },
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-1.x": "1.x-dev"
-            },
-            "drupal": {
-                "version": "8.x-1.0-rc2+3-dev",
-                "datestamp": "1493434144"
-            }
-        },
-        "installation-source": "source",
-        "notification-url": "https://packages.drupal.org/8/downloads",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "Moshe Weitzman",
-                "homepage": "https://github.com/weitzman",
-                "email": "weitzman@tejasa.com",
-                "role": "Maintainer"
-            },
-            {
-                "name": "Hans Salvisberg",
-                "homepage": "https://www.drupal.org/u/salvis",
-                "email": "drupal@salvisberg.com",
-                "role": "Maintainer"
-            },
-            {
-                "name": "Luca Lusso",
-                "homepage": "https://www.drupal.org/u/lussoluca",
-                "role": "Maintainer"
-            },
-            {
-                "name": "Marco (willzyx)",
-                "homepage": "https://www.drupal.org/u/willzyx",
-                "role": "Maintainer"
-            },
-            {
-                "name": "See contributors",
-                "homepage": "https://www.drupal.org/node/3236/committers"
-            },
-            {
-                "name": "salvis",
-                "homepage": "https://www.drupal.org/user/82964"
-            },
-            {
-                "name": "willzyx",
-                "homepage": "https://www.drupal.org/user/1043862"
-            }
-        ],
-        "description": "Various blocks, pages, and functions for developers.",
-        "homepage": "http://drupal.org/project/devel",
-        "support": {
-            "source": "http://cgit.drupalcode.org/devel",
-            "issues": "http://drupal.org/project/devel",
-            "irc": "irc://irc.freenode.org/drupal-contribute"
-        }
-    },
-    {
         "name": "drupal/config_update",
         "version": "1.3.0",
         "version_normalized": "1.3.0.0",
@@ -3210,70 +3077,6 @@
         "homepage": "https://www.drupal.org/project/config_update",
         "support": {
             "source": "http://cgit.drupalcode.org/config_update"
-        }
-    },
-    {
-        "name": "drupal/features",
-        "version": "dev-3.x",
-        "version_normalized": "dev-3.x",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/features",
-            "reference": "7d4c9e2f094c9a372eac11d0a526be8763c0e99f"
-        },
-        "require": {
-            "drupal/config_update": "*",
-            "drupal/core": "*"
-        },
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-3.x": "3.x-dev"
-            },
-            "drupal": {
-                "version": "8.x-3.4+1-dev",
-                "datestamp": "1488908282"
-            }
-        },
-        "installation-source": "source",
-        "notification-url": "https://packages.drupal.org/8/downloads",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "dawehner",
-                "homepage": "https://www.drupal.org/user/99340"
-            },
-            {
-                "name": "e2thex",
-                "homepage": "https://www.drupal.org/user/189123"
-            },
-            {
-                "name": "febbraro",
-                "homepage": "https://www.drupal.org/user/43670"
-            },
-            {
-                "name": "jmiccolis",
-                "homepage": "https://www.drupal.org/user/31731"
-            },
-            {
-                "name": "mpotter",
-                "homepage": "https://www.drupal.org/user/616192"
-            },
-            {
-                "name": "nedjo",
-                "homepage": "https://www.drupal.org/user/4481"
-            },
-            {
-                "name": "tim.plunkett",
-                "homepage": "https://www.drupal.org/user/241634"
-            }
-        ],
-        "description": "Enables administrators to package configuration into modules.",
-        "homepage": "https://www.drupal.org/project/features",
-        "support": {
-            "source": "http://cgit.drupalcode.org/features"
         }
     },
     {
@@ -3467,86 +3270,6 @@
         ]
     },
     {
-        "name": "drupal/geocoder",
-        "version": "dev-2.x",
-        "version_normalized": "dev-2.x",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/geocoder",
-            "reference": "3ff307707a0627834e2a39e3d78af927f3c66af4"
-        },
-        "require": {
-            "drupal/core": "~8.0",
-            "willdurand/geocoder": "^3.3"
-        },
-        "require-dev": {
-            "drupal/address": "*",
-            "drupal/geocoder_field": "*",
-            "drupal/geofield": "*"
-        },
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-2.x": "2.x-dev"
-            },
-            "drupal": {
-                "version": "8.x-2.0-alpha5+4-dev",
-                "datestamp": "1484242985"
-            }
-        },
-        "installation-source": "source",
-        "notification-url": "https://packages.drupal.org/8/downloads",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "Pol Dellaiera (@drupol)",
-                "homepage": "https://www.drupal.org/u/pol",
-                "role": "Maintainer"
-            },
-            {
-                "name": "Dean Reilly",
-                "homepage": "https://www.drupal.org/user/336031"
-            },
-            {
-                "name": "GJdan",
-                "homepage": "https://www.drupal.org/user/847848"
-            },
-            {
-                "name": "Pol",
-                "homepage": "https://www.drupal.org/user/47194"
-            },
-            {
-                "name": "Simon Georges",
-                "homepage": "https://www.drupal.org/user/172312"
-            },
-            {
-                "name": "indytechcook",
-                "homepage": "https://www.drupal.org/user/245817"
-            },
-            {
-                "name": "michaelfavia",
-                "homepage": "https://www.drupal.org/user/49137"
-            },
-            {
-                "name": "phayes",
-                "homepage": "https://www.drupal.org/user/47098"
-            },
-            {
-                "name": "vidhatanand",
-                "homepage": "https://www.drupal.org/user/585764"
-            }
-        ],
-        "description": "An API to geocode and reverse geocode data into other GIS data types.",
-        "homepage": "https://drupal.org/project/geocoder",
-        "support": {
-            "source": "https://cgit.drupalcode.org/geocoder",
-            "issues": "https://drupal.org/project/issues/geocoder",
-            "irc": "irc://irc.freenode.org/drupal-geo"
-        }
-    },
-    {
         "name": "phayes/geophp",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
@@ -3668,203 +3391,6 @@
             "source": "http://git.drupal.org/project/geofield.git",
             "issues": "https://www.drupal.org/project/issues/geofield",
             "irc": "irc://irc.freenode.org/drupal-contribute"
-        }
-    },
-    {
-        "name": "drupal/geophp",
-        "version": "dev-1.x",
-        "version_normalized": "dev-1.x",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/geophp",
-            "reference": "fdcb4343ce3c4cf71a8ea0f0fd0948038b5ab442"
-        },
-        "require": {
-            "drupal/core": "~8.0"
-        },
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-1.x": "1.x-dev"
-            },
-            "drupal": {
-                "version": "8.x-1.0-beta1+6-dev",
-                "datestamp": "1463084639"
-            }
-        },
-        "installation-source": "source",
-        "notification-url": "https://packages.drupal.org/8/downloads",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "Brandonian",
-                "homepage": "https://www.drupal.org/user/77766"
-            },
-            {
-                "name": "phayes",
-                "homepage": "https://www.drupal.org/user/47098"
-            },
-            {
-                "name": "plopesc",
-                "homepage": "https://www.drupal.org/user/282415"
-            }
-        ],
-        "description": "Wraps the geoPHP library: advanced geometry operations in PHP",
-        "homepage": "https://www.drupal.org/project/geophp",
-        "support": {
-            "source": "http://cgit.drupalcode.org/geophp"
-        }
-    },
-    {
-        "name": "drupal/group",
-        "version": "dev-1.x",
-        "version_normalized": "dev-1.x",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/group",
-            "reference": "12a0077835c69fbeb185b5c134bf35bb62a561bc"
-        },
-        "require": {
-            "drupal/core": "*"
-        },
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-1.x": "1.x-dev"
-            },
-            "drupal": {
-                "version": "8.x-1.0-beta5+11-dev",
-                "datestamp": "1492179243"
-            }
-        },
-        "installation-source": "source",
-        "notification-url": "https://packages.drupal.org/8/downloads",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "kristiaanvandeneynde",
-                "homepage": "https://www.drupal.org/user/1345130"
-            }
-        ],
-        "description": "This module allows you to group users, content and other entities",
-        "homepage": "https://www.drupal.org/project/group",
-        "support": {
-            "source": "http://cgit.drupalcode.org/group"
-        }
-    },
-    {
-        "name": "drupal/entity",
-        "version": "dev-1.x",
-        "version_normalized": "dev-1.x",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/entity",
-            "reference": "6bf9d5039a2fa4a9cd596d0a3d6b41b5d70f04cb"
-        },
-        "require": {
-            "drupal/core": "~8.1"
-        },
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-1.x": "1.x-dev"
-            },
-            "drupal": {
-                "version": "8.x-1.0-alpha4+2-dev",
-                "datestamp": "1489007283"
-            }
-        },
-        "installation-source": "source",
-        "notification-url": "https://packages.drupal.org/8/downloads",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "Berdir",
-                "homepage": "https://www.drupal.org/user/214652"
-            },
-            {
-                "name": "bojanz",
-                "homepage": "https://www.drupal.org/user/86106"
-            },
-            {
-                "name": "dawehner",
-                "homepage": "https://www.drupal.org/user/99340"
-            },
-            {
-                "name": "dixon_",
-                "homepage": "https://www.drupal.org/user/239911"
-            },
-            {
-                "name": "fago",
-                "homepage": "https://www.drupal.org/user/16747"
-            }
-        ],
-        "description": "Provides expanded entity APIs, which will be moved to Drupal core one day.",
-        "homepage": "http://drupal.org/project/entity",
-        "support": {
-            "source": "http://cgit.drupalcode.org/entity"
-        }
-    },
-    {
-        "name": "drupal/profile",
-        "version": "dev-1.x",
-        "version_normalized": "dev-1.x",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/profile",
-            "reference": "e6034a130b3df0d360fadb6d83fbf18d986df44b"
-        },
-        "require": {
-            "drupal/core": "~8.1",
-            "drupal/entity": "*"
-        },
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-1.x": "1.x-dev"
-            },
-            "drupal": {
-                "version": "8.x-1.0-alpha7+0-dev",
-                "datestamp": "1493902084"
-            }
-        },
-        "installation-source": "source",
-        "notification-url": "https://packages.drupal.org/8/downloads",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "bojanz",
-                "homepage": "https://www.drupal.org/user/86106"
-            },
-            {
-                "name": "dakala",
-                "homepage": "https://www.drupal.org/user/53175"
-            },
-            {
-                "name": "fago",
-                "homepage": "https://www.drupal.org/user/16747"
-            },
-            {
-                "name": "mglaman",
-                "homepage": "https://www.drupal.org/user/2416470"
-            },
-            {
-                "name": "pcambra",
-                "homepage": "https://www.drupal.org/user/122101"
-            }
-        ],
-        "description": "Provides configurable user profiles.",
-        "homepage": "http://drupal.org/project/profile",
-        "support": {
-            "source": "http://cgit.drupalcode.org/profile"
         }
     },
     {
@@ -3994,118 +3520,6 @@
         }
     },
     {
-        "name": "drupal/select_or_other",
-        "version": "dev-1.x",
-        "version_normalized": "dev-1.x",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/select_or_other",
-            "reference": "b683bde0cc5be4e52b6c82d1bdaaff54490cee0a"
-        },
-        "require": {
-            "drupal/core": "~8.0"
-        },
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-1.x": "1.x-dev"
-            },
-            "drupal": {
-                "version": "8.x-1.0-alpha2+5-dev",
-                "datestamp": "1476170339"
-            }
-        },
-        "installation-source": "source",
-        "notification-url": "https://packages.drupal.org/8/downloads",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "danielb",
-                "homepage": "https://www.drupal.org/user/134005"
-            },
-            {
-                "name": "haydeniv",
-                "homepage": "https://www.drupal.org/user/149501"
-            },
-            {
-                "name": "legolasbo",
-                "homepage": "https://www.drupal.org/user/2480548"
-            },
-            {
-                "name": "vlad.ua",
-                "homepage": "https://www.drupal.org/user/2696261"
-            }
-        ],
-        "description": "Provides a select box form element with additional option 'Other' to give a textfield.",
-        "homepage": "https://www.drupal.org/project/select_or_other",
-        "support": {
-            "source": "http://cgit.drupalcode.org/select_or_other"
-        }
-    },
-    {
-        "name": "drupal/leaflet",
-        "version": "dev-1.x",
-        "version_normalized": "dev-1.x",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/leaflet",
-            "reference": "da0386d50987b63199937163bfe438807e7affcd"
-        },
-        "require": {
-            "drupal/core": "~8.0"
-        },
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-1.x": "1.x-dev"
-            },
-            "drupal": {
-                "version": "8.x-1.0-beta1+3-dev",
-                "datestamp": "1485300782"
-            }
-        },
-        "installation-source": "source",
-        "notification-url": "https://packages.drupal.org/8/downloads",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "Peter Vanhee (pvhee)",
-                "homepage": "https://www.drupal.org/u/pvhee",
-                "role": "Maintainer"
-            },
-            {
-                "name": "Rik de Boer (RdeBoer)",
-                "homepage": "https://www.drupal.org/u/rdeboer",
-                "role": "Maintainer"
-            },
-            {
-                "name": "Gabriel Carleton-Barnes (gcb)",
-                "homepage": "https://www.drupal.org/u/gcb",
-                "role": "Maintainer"
-            },
-            {
-                "name": "Lev Tsypin (levelos)",
-                "homepage": "https://www.drupal.org/u/levelos",
-                "role": "Maintainer"
-            },
-            {
-                "name": "Sean Larkin (seanberto)",
-                "homepage": "https://www.drupal.org/u/seanberto",
-                "role": "Maintainer"
-            }
-        ],
-        "description": "Integration with the Leaflet map scripting library.",
-        "homepage": "https://www.drupal.org/project/leaflet",
-        "support": {
-            "source": "http://cgit.drupalcode.org/leaflet",
-            "issues": "https://www.drupal.org/project/issues/leaflet"
-        }
-    },
-    {
         "name": "drupal/field_group",
         "version": "1.0.0-rc6",
         "version_normalized": "1.0.0.0-RC6",
@@ -4164,56 +3578,6 @@
         "homepage": "https://www.drupal.org/project/field_group",
         "support": {
             "source": "http://cgit.drupalcode.org/field_group"
-        }
-    },
-    {
-        "name": "drupal/field_states_ui",
-        "version": "dev-1.x",
-        "version_normalized": "dev-1.x",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/field_states_ui",
-            "reference": "41af038d8f571212c7268b20508b36d0e0b7ed62"
-        },
-        "require": {
-            "cweagans/composer-patches": "~1.0",
-            "drupal/core": "8.x"
-        },
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-1.x": "1.x-dev"
-            },
-            "drupal": {
-                "version": "8.x-1.0-rc2+3-dev",
-                "datestamp": "1478529239"
-            },
-            "patches": {
-                "drupal/core": {
-                    "multi-value field widget hook": "https://www.drupal.org/files/issues/no_hook_to_edit-2822460-2.patch"
-                }
-            }
-        },
-        "installation-source": "source",
-        "notification-url": "https://packages.drupal.org/8/downloads",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "Nick Wilde",
-                "homepage": "https://www.drupal.org/u/nickwilde"
-            },
-            {
-                "name": "See other contributors",
-                "homepage": "https://www.drupal.org/node/2776325/committers"
-            }
-        ],
-        "description": "Provides a UI for applying field states.",
-        "homepage": "https://www.drupal.org/project/field_states_ui",
-        "support": {
-            "source": "http://git.drupal.org/project/field_states_ui.git",
-            "issues": "https://www.drupal.org/project/issues/field_states_ui"
         }
     },
     {
@@ -5942,65 +5306,6 @@
             "drupal",
             "symfony"
         ]
-    },
-    {
-        "name": "drupal/token",
-        "version": "dev-1.x",
-        "version_normalized": "dev-1.x",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/token",
-            "reference": "ed6cc7b037b462cc76dafde7910d57b5a7010559"
-        },
-        "require": {
-            "drupal/core": "~8.0"
-        },
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-1.x": "1.x-dev"
-            },
-            "drupal": {
-                "version": "8.x-1.0-rc1+5-dev",
-                "datestamp": "1493466543"
-            }
-        },
-        "installation-source": "source",
-        "notification-url": "https://packages.drupal.org/8/downloads",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "Berdir",
-                "homepage": "https://www.drupal.org/user/214652"
-            },
-            {
-                "name": "Dave Reid",
-                "homepage": "https://www.drupal.org/user/53892"
-            },
-            {
-                "name": "eaton",
-                "homepage": "https://www.drupal.org/user/16496"
-            },
-            {
-                "name": "fago",
-                "homepage": "https://www.drupal.org/user/16747"
-            },
-            {
-                "name": "greggles",
-                "homepage": "https://www.drupal.org/user/36762"
-            },
-            {
-                "name": "mikeryan",
-                "homepage": "https://www.drupal.org/user/4420"
-            }
-        ],
-        "description": "Provides a user interface for the Token API and some missing core tokens.",
-        "homepage": "https://www.drupal.org/project/token",
-        "support": {
-            "source": "http://cgit.drupalcode.org/token"
-        }
     },
     {
         "name": "drupal/ctools",
@@ -8084,6 +7389,71 @@
         "description": "Zone management library."
     },
     {
+        "name": "drupal/markup",
+        "version": "1.0.0-beta1",
+        "version_normalized": "1.0.0.0-beta1",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/markup",
+            "reference": "8.x-1.0-beta1"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/markup-8.x-1.0-beta1.zip",
+            "reference": "8.x-1.0-beta1",
+            "shasum": "7bb8c7623094178b9e40ff711065bcae8538b46f"
+        },
+        "require": {
+            "drupal/core": "*"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.0-beta1",
+                "datestamp": "1460007239"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Deciphered",
+                "homepage": "https://www.drupal.org/user/103796"
+            },
+            {
+                "name": "bcostlow",
+                "homepage": "https://www.drupal.org/user/1340686"
+            },
+            {
+                "name": "cYu",
+                "homepage": "https://www.drupal.org/user/202205"
+            },
+            {
+                "name": "ebeyrent",
+                "homepage": "https://www.drupal.org/user/23897"
+            },
+            {
+                "name": "mqanneh",
+                "homepage": "https://www.drupal.org/user/2833163"
+            },
+            {
+                "name": "mrfelton",
+                "homepage": "https://www.drupal.org/user/305669"
+            }
+        ],
+        "description": "Defines a field type for markup.",
+        "homepage": "https://www.drupal.org/project/markup",
+        "support": {
+            "source": "http://cgit.drupalcode.org/markup"
+        }
+    },
+    {
         "name": "drupal/address",
         "version": "1.0.0-rc4",
         "version_normalized": "1.0.0.0-RC4",
@@ -8114,7 +7484,7 @@
                 "datestamp": "1486737287"
             }
         },
-        "installation-source": "source",
+        "installation-source": "dist",
         "notification-url": "https://packages.drupal.org/8/downloads",
         "license": [
             "GPL-2.0+"
@@ -8137,6 +7507,282 @@
         "homepage": "http://drupal.org/project/address",
         "support": {
             "source": "http://cgit.drupalcode.org/address"
+        }
+    },
+    {
+        "name": "drupal/ajax_comments",
+        "version": "1.0.0-beta1",
+        "version_normalized": "1.0.0.0-beta1",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/ajax_comments",
+            "reference": "8.x-1.0-beta1"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/ajax_comments-8.x-1.0-beta1.zip",
+            "reference": "8.x-1.0-beta1",
+            "shasum": "64961ad6b111fadab39e18a22eee06aba3c8516d"
+        },
+        "require": {
+            "drupal/core": "*"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.0-beta1",
+                "datestamp": "1476840839"
+            }
+        },
+        "installation-source": "source",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "acouch",
+                "homepage": "https://www.drupal.org/user/151868"
+            },
+            {
+                "name": "danmuzyka",
+                "homepage": "https://www.drupal.org/user/48685"
+            },
+            {
+                "name": "formatC&#039;vt",
+                "homepage": "https://www.drupal.org/user/1853874"
+            },
+            {
+                "name": "muschpusch",
+                "homepage": "https://www.drupal.org/user/257634"
+            },
+            {
+                "name": "neochief",
+                "homepage": "https://www.drupal.org/user/233667"
+            },
+            {
+                "name": "rjbrown99",
+                "homepage": "https://www.drupal.org/user/367845"
+            }
+        ],
+        "description": "Module makes comments load without a page refresh via AJAX",
+        "homepage": "https://www.drupal.org/project/ajax_comments",
+        "support": {
+            "source": "http://cgit.drupalcode.org/ajax_comments"
+        }
+    },
+    {
+        "name": "drupal/devel",
+        "version": "1.0.0-rc2",
+        "version_normalized": "1.0.0.0-RC2",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/devel",
+            "reference": "8.x-1.0-rc2"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/devel-8.x-1.0-rc2.zip",
+            "reference": "8.x-1.0-rc2",
+            "shasum": "011322bf9c263dab29f94640829f4b654e9c5632"
+        },
+        "require": {
+            "drupal/core": "~8.0"
+        },
+        "suggest": {
+            "symfony/var-dumper": "Pretty print complex values better with var-dumper available"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.0-rc2",
+                "datestamp": "1492989244"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Moshe Weitzman",
+                "homepage": "https://github.com/weitzman",
+                "email": "weitzman@tejasa.com",
+                "role": "Maintainer"
+            },
+            {
+                "name": "Hans Salvisberg",
+                "homepage": "https://www.drupal.org/u/salvis",
+                "email": "drupal@salvisberg.com",
+                "role": "Maintainer"
+            },
+            {
+                "name": "Luca Lusso",
+                "homepage": "https://www.drupal.org/u/lussoluca",
+                "role": "Maintainer"
+            },
+            {
+                "name": "Marco (willzyx)",
+                "homepage": "https://www.drupal.org/u/willzyx",
+                "role": "Maintainer"
+            },
+            {
+                "name": "See contributors",
+                "homepage": "https://www.drupal.org/node/3236/committers"
+            },
+            {
+                "name": "salvis",
+                "homepage": "https://www.drupal.org/user/82964"
+            },
+            {
+                "name": "willzyx",
+                "homepage": "https://www.drupal.org/user/1043862"
+            }
+        ],
+        "description": "Various blocks, pages, and functions for developers.",
+        "homepage": "http://drupal.org/project/devel",
+        "support": {
+            "source": "http://cgit.drupalcode.org/devel",
+            "issues": "http://drupal.org/project/devel",
+            "irc": "irc://irc.freenode.org/drupal-contribute"
+        }
+    },
+    {
+        "name": "drupal/entity",
+        "version": "1.0.0-alpha4",
+        "version_normalized": "1.0.0.0-alpha4",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/entity",
+            "reference": "8.x-1.0-alpha4"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/entity-8.x-1.0-alpha4.zip",
+            "reference": "8.x-1.0-alpha4",
+            "shasum": "c081d3757c159dfee74c9e5acb63bdee81c42e18"
+        },
+        "require": {
+            "drupal/core": "~8.1"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.0-alpha4",
+                "datestamp": "1481194983"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Berdir",
+                "homepage": "https://www.drupal.org/user/214652"
+            },
+            {
+                "name": "bojanz",
+                "homepage": "https://www.drupal.org/user/86106"
+            },
+            {
+                "name": "dawehner",
+                "homepage": "https://www.drupal.org/user/99340"
+            },
+            {
+                "name": "dixon_",
+                "homepage": "https://www.drupal.org/user/239911"
+            },
+            {
+                "name": "fago",
+                "homepage": "https://www.drupal.org/user/16747"
+            }
+        ],
+        "description": "Provides expanded entity APIs, which will be moved to Drupal core one day.",
+        "homepage": "http://drupal.org/project/entity",
+        "support": {
+            "source": "http://cgit.drupalcode.org/entity"
+        }
+    },
+    {
+        "name": "drupal/features",
+        "version": "3.5.0",
+        "version_normalized": "3.5.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/features",
+            "reference": "8.x-3.5"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/features-8.x-3.5.zip",
+            "reference": "8.x-3.5",
+            "shasum": "546b34387018f9adbe742b6992c4d473f9447c41"
+        },
+        "require": {
+            "drupal/config_update": "*",
+            "drupal/core": "*"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-3.x": "3.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-3.5",
+                "datestamp": "1488908583"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "dawehner",
+                "homepage": "https://www.drupal.org/user/99340"
+            },
+            {
+                "name": "e2thex",
+                "homepage": "https://www.drupal.org/user/189123"
+            },
+            {
+                "name": "febbraro",
+                "homepage": "https://www.drupal.org/user/43670"
+            },
+            {
+                "name": "jmiccolis",
+                "homepage": "https://www.drupal.org/user/31731"
+            },
+            {
+                "name": "mpotter",
+                "homepage": "https://www.drupal.org/user/616192"
+            },
+            {
+                "name": "nedjo",
+                "homepage": "https://www.drupal.org/user/4481"
+            },
+            {
+                "name": "tim.plunkett",
+                "homepage": "https://www.drupal.org/user/241634"
+            }
+        ],
+        "description": "Enables administrators to package configuration into modules.",
+        "homepage": "https://www.drupal.org/project/features",
+        "support": {
+            "source": "http://cgit.drupalcode.org/features"
         }
     },
     {
@@ -8332,19 +7978,214 @@
         "description": "Drupal is an open source content management platform powering millions of websites and applications."
     },
     {
-        "name": "drupal/markup",
+        "name": "drupal/field_states_ui",
+        "version": "1.0.0-rc2",
+        "version_normalized": "1.0.0.0-RC2",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/field_states_ui",
+            "reference": "8.x-1.0-rc2"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/field_states_ui-8.x-1.0-rc2.zip",
+            "reference": "8.x-1.0-rc2",
+            "shasum": "c67e511310ddf74c9d18b62fa49ae39ad050d2a6"
+        },
+        "require": {
+            "cweagans/composer-patches": "~1.0",
+            "drupal/core": "8.x"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.0-rc2",
+                "datestamp": "1477601639"
+            },
+            "patches": {
+                "drupal/core": {
+                    "multi-value field widget hook": "https://www.drupal.org/files/issues/no_hook_to_edit-2822460-2.patch"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Nick Wilde",
+                "homepage": "https://www.drupal.org/u/nickwilde"
+            },
+            {
+                "name": "See other contributors",
+                "homepage": "https://www.drupal.org/node/2776325/committers"
+            }
+        ],
+        "description": "Provides a UI for applying field states.",
+        "homepage": "https://www.drupal.org/project/field_states_ui",
+        "support": {
+            "source": "http://git.drupal.org/project/field_states_ui.git",
+            "issues": "https://www.drupal.org/project/issues/field_states_ui"
+        }
+    },
+    {
+        "name": "drupal/geophp",
         "version": "1.0.0-beta1",
         "version_normalized": "1.0.0.0-beta1",
         "source": {
             "type": "git",
-            "url": "https://git.drupal.org/project/markup",
+            "url": "https://git.drupal.org/project/geophp",
             "reference": "8.x-1.0-beta1"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/markup-8.x-1.0-beta1.zip",
-            "reference": null,
-            "shasum": "7bb8c7623094178b9e40ff711065bcae8538b46f"
+            "url": "https://ftp.drupal.org/files/projects/geophp-8.x-1.0-beta1.zip",
+            "reference": "8.x-1.0-beta1",
+            "shasum": "5379b3c01cc1c678415cf38f7d0ae2361d3ed824"
+        },
+        "require": {
+            "drupal/core": "~8.0"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.0-beta1",
+                "datestamp": "1414530828"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Brandonian",
+                "homepage": "https://www.drupal.org/user/77766"
+            },
+            {
+                "name": "phayes",
+                "homepage": "https://www.drupal.org/user/47098"
+            },
+            {
+                "name": "plopesc",
+                "homepage": "https://www.drupal.org/user/282415"
+            }
+        ],
+        "description": "Wraps the geoPHP library: advanced geometry operations in PHP",
+        "homepage": "https://www.drupal.org/project/geophp",
+        "support": {
+            "source": "http://cgit.drupalcode.org/geophp"
+        }
+    },
+    {
+        "name": "drupal/geocoder",
+        "version": "2.0.0-alpha5",
+        "version_normalized": "2.0.0.0-alpha5",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/geocoder",
+            "reference": "8.x-2.0-alpha5"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/geocoder-8.x-2.0-alpha5.zip",
+            "reference": "8.x-2.0-alpha5",
+            "shasum": "1cbac01cc6217e17fd53dd8be68d4ad8f018c004"
+        },
+        "require": {
+            "drupal/core": "~8.0",
+            "willdurand/geocoder": "^3.3"
+        },
+        "require-dev": {
+            "drupal/address": "*",
+            "drupal/geocoder_field": "*",
+            "drupal/geofield": "*"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-2.x": "2.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-2.0-alpha5",
+                "datestamp": "1481538483"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Pol Dellaiera (@drupol)",
+                "homepage": "https://www.drupal.org/u/pol",
+                "role": "Maintainer"
+            },
+            {
+                "name": "Dean Reilly",
+                "homepage": "https://www.drupal.org/user/336031"
+            },
+            {
+                "name": "GJdan",
+                "homepage": "https://www.drupal.org/user/847848"
+            },
+            {
+                "name": "Pol",
+                "homepage": "https://www.drupal.org/user/47194"
+            },
+            {
+                "name": "Simon Georges",
+                "homepage": "https://www.drupal.org/user/172312"
+            },
+            {
+                "name": "indytechcook",
+                "homepage": "https://www.drupal.org/user/245817"
+            },
+            {
+                "name": "michaelfavia",
+                "homepage": "https://www.drupal.org/user/49137"
+            },
+            {
+                "name": "phayes",
+                "homepage": "https://www.drupal.org/user/47098"
+            },
+            {
+                "name": "vidhatanand",
+                "homepage": "https://www.drupal.org/user/585764"
+            }
+        ],
+        "description": "An API to geocode and reverse geocode data into other GIS data types.",
+        "homepage": "https://drupal.org/project/geocoder",
+        "support": {
+            "source": "https://cgit.drupalcode.org/geocoder",
+            "issues": "https://drupal.org/project/issues/geocoder",
+            "irc": "irc://irc.freenode.org/drupal-geo"
+        }
+    },
+    {
+        "name": "drupal/group",
+        "version": "1.0.0-beta5",
+        "version_normalized": "1.0.0.0-beta5",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/group",
+            "reference": "8.x-1.0-beta5"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/group-8.x-1.0-beta5.zip",
+            "reference": "8.x-1.0-beta5",
+            "shasum": "8584143f1e95d4eb29a89216906d68c11c6598c2"
         },
         "require": {
             "drupal/core": "*"
@@ -8355,8 +8196,8 @@
                 "dev-1.x": "1.x-dev"
             },
             "drupal": {
-                "version": "8.x-1.0-beta1",
-                "datestamp": "1460007239"
+                "version": "8.x-1.0-beta5",
+                "datestamp": "1487605983"
             }
         },
         "installation-source": "dist",
@@ -8366,34 +8207,279 @@
         ],
         "authors": [
             {
-                "name": "Deciphered",
-                "homepage": "https://www.drupal.org/user/103796"
-            },
-            {
-                "name": "bcostlow",
-                "homepage": "https://www.drupal.org/user/1340686"
-            },
-            {
-                "name": "cYu",
-                "homepage": "https://www.drupal.org/user/202205"
-            },
-            {
-                "name": "ebeyrent",
-                "homepage": "https://www.drupal.org/user/23897"
-            },
-            {
-                "name": "mqanneh",
-                "homepage": "https://www.drupal.org/user/2833163"
-            },
-            {
-                "name": "mrfelton",
-                "homepage": "https://www.drupal.org/user/305669"
+                "name": "kristiaanvandeneynde",
+                "homepage": "https://www.drupal.org/user/1345130"
             }
         ],
-        "description": "Defines a field type for markup.",
-        "homepage": "https://www.drupal.org/project/markup",
+        "description": "This module allows you to group users, content and other entities",
+        "homepage": "https://www.drupal.org/project/group",
         "support": {
-            "source": "http://cgit.drupalcode.org/markup"
+            "source": "http://cgit.drupalcode.org/group"
+        }
+    },
+    {
+        "name": "leaflet/leaflet",
+        "version": "v0.7.7",
+        "version_normalized": "0.7.7.0",
+        "dist": {
+            "type": "zip",
+            "url": "https://github.com/Leaflet/Leaflet/archive/v0.7.7.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "type": "drupal-library",
+        "installation-source": "dist"
+    },
+    {
+        "name": "drupal/leaflet",
+        "version": "1.0.0-beta1",
+        "version_normalized": "1.0.0.0-beta1",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/leaflet",
+            "reference": "8.x-1.0-beta1"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/leaflet-8.x-1.0-beta1.zip",
+            "reference": "8.x-1.0-beta1",
+            "shasum": "5c23ec9be44721fd9ed806600ea27e241bf96a39"
+        },
+        "require": {
+            "drupal/core": "~8.0",
+            "leaflet/leaflet": "^0.7.7"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.0-beta1",
+                "datestamp": "1475508239"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Peter Vanhee (pvhee)",
+                "homepage": "https://www.drupal.org/u/pvhee",
+                "role": "Maintainer"
+            },
+            {
+                "name": "Rik de Boer (RdeBoer)",
+                "homepage": "https://www.drupal.org/u/rdeboer",
+                "role": "Maintainer"
+            },
+            {
+                "name": "Gabriel Carleton-Barnes (gcb)",
+                "homepage": "https://www.drupal.org/u/gcb",
+                "role": "Maintainer"
+            },
+            {
+                "name": "Lev Tsypin (levelos)",
+                "homepage": "https://www.drupal.org/u/levelos",
+                "role": "Maintainer"
+            },
+            {
+                "name": "Sean Larkin (seanberto)",
+                "homepage": "https://www.drupal.org/u/seanberto",
+                "role": "Maintainer"
+            }
+        ],
+        "description": "Integration with the Leaflet map scripting library.",
+        "homepage": "https://www.drupal.org/project/leaflet",
+        "support": {
+            "source": "http://cgit.drupalcode.org/leaflet",
+            "issues": "https://www.drupal.org/project/issues/leaflet"
+        }
+    },
+    {
+        "name": "drupal/profile",
+        "version": "1.0.0-alpha7",
+        "version_normalized": "1.0.0.0-alpha7",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/profile",
+            "reference": "8.x-1.0-alpha7"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/profile-8.x-1.0-alpha7.zip",
+            "reference": "8.x-1.0-alpha7",
+            "shasum": "8fe1cea29dd88215d0cf886b3bca9eccb025f531"
+        },
+        "require": {
+            "drupal/core": "~8.1",
+            "drupal/entity": "*"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.0-alpha7",
+                "datestamp": "1493902084"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "bojanz",
+                "homepage": "https://www.drupal.org/user/86106"
+            },
+            {
+                "name": "dakala",
+                "homepage": "https://www.drupal.org/user/53175"
+            },
+            {
+                "name": "fago",
+                "homepage": "https://www.drupal.org/user/16747"
+            },
+            {
+                "name": "mglaman",
+                "homepage": "https://www.drupal.org/user/2416470"
+            },
+            {
+                "name": "pcambra",
+                "homepage": "https://www.drupal.org/user/122101"
+            }
+        ],
+        "description": "Provides configurable user profiles.",
+        "homepage": "http://drupal.org/project/profile",
+        "support": {
+            "source": "http://cgit.drupalcode.org/profile"
+        }
+    },
+    {
+        "name": "drupal/select_or_other",
+        "version": "1.0.0-alpha2",
+        "version_normalized": "1.0.0.0-alpha2",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/select_or_other",
+            "reference": "8.x-1.0-alpha2"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/select_or_other-8.x-1.0-alpha2.zip",
+            "reference": "8.x-1.0-alpha2",
+            "shasum": "ffd103bc36556b45a248167e0d386f607a418b6c"
+        },
+        "require": {
+            "drupal/core": "~8.0"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.0-alpha2",
+                "datestamp": "1452687539"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "danielb",
+                "homepage": "https://www.drupal.org/user/134005"
+            },
+            {
+                "name": "haydeniv",
+                "homepage": "https://www.drupal.org/user/149501"
+            },
+            {
+                "name": "legolasbo",
+                "homepage": "https://www.drupal.org/user/2480548"
+            },
+            {
+                "name": "vlad.ua",
+                "homepage": "https://www.drupal.org/user/2696261"
+            }
+        ],
+        "description": "Provides a select box form element with additional option 'Other' to give a textfield.",
+        "homepage": "https://www.drupal.org/project/select_or_other",
+        "support": {
+            "source": "http://cgit.drupalcode.org/select_or_other"
+        }
+    },
+    {
+        "name": "drupal/token",
+        "version": "1.0.0",
+        "version_normalized": "1.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/token",
+            "reference": "8.x-1.0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/token-8.x-1.0.zip",
+            "reference": "8.x-1.0",
+            "shasum": "d24c7f1ffddbd0fc56bc92bacae1c4ff769a4442"
+        },
+        "require": {
+            "drupal/core": "~8.0"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.0",
+                "datestamp": "1493466843"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Berdir",
+                "homepage": "https://www.drupal.org/user/214652"
+            },
+            {
+                "name": "Dave Reid",
+                "homepage": "https://www.drupal.org/user/53892"
+            },
+            {
+                "name": "eaton",
+                "homepage": "https://www.drupal.org/user/16496"
+            },
+            {
+                "name": "fago",
+                "homepage": "https://www.drupal.org/user/16747"
+            },
+            {
+                "name": "greggles",
+                "homepage": "https://www.drupal.org/user/36762"
+            },
+            {
+                "name": "mikeryan",
+                "homepage": "https://www.drupal.org/user/4420"
+            }
+        ],
+        "description": "Provides a user interface for the Token API and some missing core tokens.",
+        "homepage": "https://www.drupal.org/project/token",
+        "support": {
+            "source": "http://cgit.drupalcode.org/token"
         }
     }
 ]

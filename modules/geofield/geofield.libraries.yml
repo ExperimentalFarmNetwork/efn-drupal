@@ -1,4 +1,0 @@
-geolocation:
-  version: 1.x
-  js:
-    js/geolocation.js: {}

@@ -1,6 +1,0 @@
-type: module
-name: Token Module Test
-description: Testing module for token functionality.
-package: Testing
-core: 8.x
-hidden: TRUE

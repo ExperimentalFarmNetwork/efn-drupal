@@ -1,6 +1,0 @@
-name: Entity
-description: Provides expanded entity APIs, which will be moved to Drupal core one day.
-type: module
-core: 8.x
-dependencies:
-  - system (>=8.1.0)

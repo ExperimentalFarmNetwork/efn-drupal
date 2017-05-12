@@ -1,3 +1,0 @@
-services:
-  geophp.geophp:
-    class: Drupal\geophp\GeoPHPWrapper

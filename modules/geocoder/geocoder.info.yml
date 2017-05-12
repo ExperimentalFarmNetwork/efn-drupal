@@ -1,4 +1,0 @@
-type: module
-name: Geocoder
-description: An API to geocode and reverse geocode data into other GIS data types.
-core: 8.x

@@ -1,9 +1,0 @@
-name: 'Group Role Sync'
-description: 'Allows you to synchronize global roles to special ''outsider'' group roles.'
-package: 'Group'
-type: 'module'
-version: 1.0
-core: '8.x'
-dependencies:
-  - 'user'
-  - 'group'
