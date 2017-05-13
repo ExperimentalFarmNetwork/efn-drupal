@@ -1,0 +1,13 @@
+type: module
+name: Geocoder Geofield
+description: Providers Geocoder integration with contrib Geofield module.
+# core: 8.x
+dependencies:
+  - geocoder_field
+  - geofield
+
+# Information added by Drupal.org packaging script on 2016-12-12
+version: '8.x-2.0-alpha5'
+core: '8.x'
+project: 'geocoder'
+datestamp: 1481538490

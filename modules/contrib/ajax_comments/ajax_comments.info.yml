@@ -1,0 +1,7 @@
+name: AJAX Comments
+type: module
+description: Module makes comments load without a page refresh via AJAX
+core: 8.x
+dependencies:
+  - comment
+configure: ajax_comments.settings

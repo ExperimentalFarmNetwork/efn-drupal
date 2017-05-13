@@ -1,0 +1,25 @@
+field.widget.third_party.field_states_ui:
+  type: sequence
+  label: 'Field States UI'
+  sequence:
+    type: mapping
+    mapping:
+      id:
+        type: string
+      data:
+        type: field_states_ui.state.[$%parent.id]
+      uuid:
+        type: string
+
+field_states_ui.state.*:
+  type: mapping
+  label: 'Field State API configuration'
+  
+field_states_ui.state.visible:
+  type: field_state
+  label: 'Visible'
+  
+field_states_ui.state.required:
+  type: field_state
+  label: 'Required'
+  

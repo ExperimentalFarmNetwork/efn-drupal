@@ -1,0 +1,15 @@
+name: Leaflet Views
+type: module
+description: Views integration for the Leaflet module.
+# core: 8.x
+# version: VERSION
+package: Views
+dependencies:
+  - leaflet
+  - views
+
+# Information added by Drupal.org packaging script on 2016-10-03
+version: '8.x-1.0-beta1'
+core: '8.x'
+project: 'leaflet'
+datestamp: 1475508241

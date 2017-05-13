@@ -1,0 +1,32 @@
+{
+  "name": "drupal/field_states_ui",
+  "description": "Provides a UI for applying field states.",
+  "type": "drupal-module",
+  "homepage": "https://www.drupal.org/project/field_states_ui",
+  "authors": [
+    {
+      "name": "Nick Wilde",
+      "homepage": "https://www.drupal.org/u/nickwilde"
+    },
+    {
+      "name": "See other contributors",
+      "homepage":"https://www.drupal.org/node/2776325/committers"
+    }
+  ],
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/field_states_ui",
+    "source": "http://git.drupal.org/project/field_states_ui.git"
+  },
+  "license": "GPL-2.0+",
+  "require": {
+    "cweagans/composer-patches": "~1.0",
+    "drupal/core": "8.x"
+  },
+  "extra": {
+    "patches": {
+      "drupal/core": {
+        "multi-value field widget hook": "https://www.drupal.org/files/issues/no_hook_to_edit-2822460-2.patch"
+      }
+    }
+  }
+}

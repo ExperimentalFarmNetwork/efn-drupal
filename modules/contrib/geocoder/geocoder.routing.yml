@@ -1,0 +1,7 @@
+geocoder.settings:
+  path: '/admin/config/system/geocoder'
+  defaults:
+    _form: '\Drupal\geocoder\Form\SettingsForm'
+    _title: 'Geocoder configuration'
+  requirements:
+    _permission: 'administer site configuration'

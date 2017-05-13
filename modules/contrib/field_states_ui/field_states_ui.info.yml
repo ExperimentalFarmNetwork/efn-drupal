@@ -1,0 +1,11 @@
+name: 'Field States UI'
+type: module
+description: 'Provides a user interface for using the States API on form fields.'
+# core: 8.x
+package: fields
+
+# Information added by Drupal.org packaging script on 2016-10-27
+version: '8.x-1.0-rc2'
+core: '8.x'
+project: 'field_states_ui'
+datestamp: 1477602711

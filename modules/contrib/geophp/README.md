@@ -1,0 +1,1 @@
+D8 Port of geophp module for drupal (http://drupal.org/project/geophp). Don't expect this to be the final port, or even functioning. Mainly a playground for Brandonian to figure out some architectural decisions.

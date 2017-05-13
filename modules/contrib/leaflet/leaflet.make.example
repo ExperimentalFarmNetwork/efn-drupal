@@ -1,0 +1,10 @@
+api = 1
+
+core = 8.x
+
+projects[libraries] = 1
+
+libraries[leaflet][download][type] = "get"
+libraries[leaflet][download][url] = "http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.zip"
+libraries[leaflet][directory_name] = "leaflet"
+libraries[leaflet][destination] = "libraries"
