@@ -88,8 +88,10 @@
   {% endif %}
   {{ title_suffix }}
     {% if display_submitted %}
-   <div class="nodeAuthor"> 
+   <div class="nodeAuthor">
+    {% if authpic %}
    <img src="{{ file_url(authpic) }}"><br/>
+    {% endif %}
      project update by {{ author_name }}
    </div>
   {% endif %}

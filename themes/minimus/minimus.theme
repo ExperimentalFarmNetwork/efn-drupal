@@ -2,44 +2,45 @@
 
 function minimus_preprocess_node(&$variables) {
 // a little help from http://drupal.stackexchange.com/a/205375/61845
-	$variables['author'] = \Drupal::entityTypeManager()->getViewBuilder('user')->view($variables['node']->getOwner(), 'nodeview');
+  $variables['author'] = \Drupal::entityTypeManager()->getViewBuilder('user')->view($variables['node']->getOwner(), 'nodeview');
 
-	$profile_type = 'main';
-	$user = $variables['node']->getOwner();
-	$style='80x80';
- 
-	$profile = \Drupal::entityManager()->getStorage('profile')
-			->loadByUser($user, $profile_type);
+  $profile_type = 'main';
+  $user = $variables['node']->getOwner();
+  $style = '80x80';
 
-	$file_uri = $profile->field_user_image->entity->getFileUri();
-	// $variables['authpic']  = \Drupal\image\Entity\ImageStyle::load('80x80')->buildUri($file_uri);
-	$variables['authpic'] = getAuthorpic($user, $profile_type);
+  $profile = \Drupal::entityManager()->getStorage('profile')
+    ->loadByUser($user, $profile_type);
+
+  $variables['authpic'] = getAuthorpic($user, $profile_type);
 }
 
 function minimus_preprocess_comment(&$variables) {
-	$profile_type = 'main';
-	$user = $variables['comment']->getOwner();
-	$style='80x80';
-	$variables['authpic'] = getAuthorpic($user, $profile_type);
+  $profile_type = 'main';
+  $user = $variables['comment']->getOwner();
+  $style='80x80';
+  $variables['authpic'] = getAuthorpic($user, $profile_type);
 }
 
 
 function getAuthorpic($user, $profile_type){
-	$profile = \Drupal::entityManager()->getStorage('profile')
-			->loadByUser($user, $profile_type);
-	$file_uri = $profile->field_user_image->entity->getFileUri();
-	$pic  = \Drupal\image\Entity\ImageStyle::load('80x80')->buildUri($file_uri);
-	return $pic;	
+  $profile = \Drupal::entityManager()->getStorage('profile')
+    ->loadByUser($user, $profile_type);
+  if ($profile->field_user_image->getValue()) {
+    $file_uri = $profile->field_user_image->entity->getFileUri();
+    $pic  = \Drupal\image\Entity\ImageStyle::load('80x80')->buildUri($file_uri);
+    return $pic;
+  }
+  return NULL;
 }
 
 
 function minimus_preprocess_group(&$variables, $hook){
 
-	// add title styling to view and edit of group pages
+  // add title styling to view and edit of group pages
 
-	if ((\Drupal::routeMatch()->getRouteName() === 'entity.group.canonical' || \Drupal::routeMatch()->getRouteName() === 'entity.group.edit_form')) {
-		$variables['#attached']['library'][] = 'minimus/group-view';
-		// kint(\Drupal::routeMatch()->getRouteName());
+  if ((\Drupal::routeMatch()->getRouteName() === 'entity.group.canonical' || \Drupal::routeMatch()->getRouteName() === 'entity.group.edit_form')) {
+  $variables['#attached']['library'][] = 'minimus/group-view';
+  // kint(\Drupal::routeMatch()->getRouteName());
 
 // banner stuff .. not working ??
 
@@ -53,21 +54,19 @@ function minimus_preprocess_group(&$variables, $hook){
 // 		$nid = \Drupal::routeMatch()->getRawParameter('group');
 // 		$url = Drupal\Core\Url::fromRoute('<current>')->getInternalPath();
 // 		// $variables['route']=$url;
-		// if (){
-		// 	$variable['userPic']="aa";
-		// }
-	}
+  // if (){
+  // 	$variable['userPic']="aa";
+  // }
+  }
 
 }
 
 function minimus_preprocess(&$variables, $hook){
-	$url = Drupal\Core\Url::fromRoute('<current>')->getInternalPath();
-	$variables['route']=$url;
-	
-	// add title styling to view and edit of group pages 
-	if (\Drupal::routeMatch()->getRouteName() === 'entity.group.edit_form'){
-		$variables['#attached']['library'][] = 'minimus/group-view';
-	}
+  $url = Drupal\Core\Url::fromRoute('<current>')->getInternalPath();
+  $variables['route']=$url;
+
+  // add title styling to view and edit of group pages
+  if (\Drupal::routeMatch()->getRouteName() === 'entity.group.edit_form'){
+  $variables['#attached']['library'][] = 'minimus/group-view';
+  }
 }
-
-
