@@ -51,6 +51,13 @@ class GroupTypeForm extends BundleEntityFormBase {
       '#description' => $this->t('This text will be displayed on the <em>Add group</em> page.'),
     ];
 
+    $form['creator_membership'] = [
+      '#title' => $this->t('The group creator automatically becomes a member'),
+      '#type' => 'checkbox',
+      '#default_value' => $type->creatorGetsMembership(),
+      '#description' => $this->t('This will make sure that anyone who creates a group of this type will automatically become a member of it.'),
+    ];
+
     // Add-form specific elements.
     if ($this->operation == 'add') {
       $form['add_admin_role'] = [
@@ -64,9 +71,12 @@ class GroupTypeForm extends BundleEntityFormBase {
         '#title' => $this->t('Automatically assign this administrative role to group creators'),
         '#type' => 'checkbox',
         '#default_value' => 0,
-        '#description' => $this->t("This will assign the 'Admin' role to anyone who creates a group of this type."),
+        '#description' => $this->t("This will assign the 'Admin' role to the group creator membership."),
         '#states' => [
-          'visible' => [':input[name="add_admin_role"]' => ['checked' => TRUE]],
+          'visible' => [
+            ':input[name="creator_membership"]' => ['checked' => TRUE],
+            ':input[name="add_admin_role"]' => ['checked' => TRUE],
+          ],
         ],
       ];
     }
@@ -83,6 +93,9 @@ class GroupTypeForm extends BundleEntityFormBase {
         '#options' => $options,
         '#default_value' => $type->getCreatorRoleIds(),
         '#description' => $this->t('Please select which custom group roles a group creator will receive.'),
+        '#states' => [
+          'visible' => [':input[name="creator_membership"]' => ['checked' => TRUE]],
+        ],
       ];
 
       if (empty($options)) {

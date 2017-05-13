@@ -75,11 +75,11 @@ function grolesync_entity_operation(EntityInterface $entity) {
   /*$operations = [];
 
   if ($entity->getEntityTypeId() == 'group_type') {
-    $operations['synchronized-roles'] = array(
+    $operations['synchronized-roles'] = [
       'title' => t('Synchronized roles'),
       'url' => Url::fromRoute('entity.group_type.grolesync', ['group_type' => $entity->id()]),
       'weight' => 43,
-    );
+    ];
   }
 
   return $operations;*/

@@ -92,6 +92,14 @@ interface GroupTypeInterface extends ConfigEntityInterface, EntityDescriptionInt
   public function getMemberRoleId();
 
   /**
+   * Returns whether the group creator automatically receives a membership.
+   *
+   * @return bool
+   *   Whether the group creator automatically receives a membership.
+   */
+  public function creatorGetsMembership();
+
+  /**
    * Gets the IDs of the group roles a group creator should receive.
    *
    * @return string

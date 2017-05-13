@@ -150,18 +150,9 @@ class Group extends ContentEntityBase implements GroupInterface {
    * {@inheritdoc}
    */
   public function addContent(ContentEntityInterface $entity, $plugin_id, $values = []) {
-    $plugin = $this->getGroupType()->getContentPlugin($plugin_id);
-
-    // Only add the entity if the provided plugin supports it.
-    // @todo Verify bundle as well and throw exceptions?
-    if ($entity->getEntityTypeId() == $plugin->getEntityTypeId()) {
-      $keys = [
-        'type' => $plugin->getContentTypeConfigId(),
-        'gid' => $this->id(),
-        'entity_id' => $entity->id(),
-      ];
-      GroupContent::create($keys + $values)->save();
-    }
+    $storage = $this->groupContentStorage();
+    $group_content = $storage->createForEntityInGroup($entity, $this, $plugin_id, $values);
+    $storage->save($group_content);
   }
 
   /**
@@ -288,32 +279,32 @@ class Group extends ContentEntityBase implements GroupInterface {
       ->setLabel(t('Created on'))
       ->setDescription(t('The time that the group was created.'))
       ->setTranslatable(TRUE)
-      ->setDisplayOptions('view', array(
+      ->setDisplayOptions('view', [
         'label' => 'hidden',
         'type' => 'hidden',
         'weight' => 0,
-      ))
+      ])
       ->setDisplayConfigurable('view', TRUE);
 
     $fields['changed'] = BaseFieldDefinition::create('changed')
       ->setLabel(t('Changed on'))
       ->setDescription(t('The time that the group was last edited.'))
       ->setTranslatable(TRUE)
-      ->setDisplayOptions('view', array(
+      ->setDisplayOptions('view', [
         'label' => 'hidden',
         'type' => 'hidden',
         'weight' => 0,
-      ))
+      ])
       ->setDisplayConfigurable('view', TRUE);
 
     if (\Drupal::moduleHandler()->moduleExists('path')) {
       $fields['path'] = BaseFieldDefinition::create('path')
         ->setLabel(t('URL alias'))
         ->setTranslatable(TRUE)
-        ->setDisplayOptions('form', array(
+        ->setDisplayOptions('form', [
           'type' => 'path',
           'weight' => 30,
-        ))
+        ])
         ->setDisplayConfigurable('form', TRUE)
         ->setComputed(TRUE);
     }
@@ -339,9 +330,11 @@ class Group extends ContentEntityBase implements GroupInterface {
   public function postSave(EntityStorageInterface $storage, $update = TRUE) {
     parent::postSave($storage, $update);
 
-    // If a new group is created, add the creator as a member by default.
-    if ($update === FALSE) {
-      $values = ['group_roles' => $this->getGroupType()->getCreatorRoleIds()];
+    // If a new group is created and the group type is configured to grant group
+    // creators a membership by default, add the creator as a member.
+    $group_type = $this->getGroupType();
+    if ($update === FALSE && $group_type->creatorGetsMembership()) {
+      $values = ['group_roles' => $group_type->getCreatorRoleIds()];
       $this->addMember($this->getOwner(), $values);
     }
   }

@@ -21,6 +21,9 @@ group.type.*:
     description:
       type: 'text'
       label: 'Description'
+    creator_membership:
+      type: 'boolean'
+      label: 'The group creator receives a membership'
     creator_roles:
       type: 'sequence'
       label: 'Group creator roles'

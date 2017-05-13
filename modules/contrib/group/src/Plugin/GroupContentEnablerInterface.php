@@ -58,6 +58,14 @@ interface GroupContentEnablerInterface extends PluginInspectionInterface, Deriva
   public function getEntityBundle();
 
   /**
+   * Returns the pretty path key for use in path aliases.
+   *
+   * @return string
+   *   The plugin-provided pretty path key, defaults to 'content'.
+   */
+  public function getPrettyPathKey();
+
+  /**
    * Returns the amount of groups the same content can be added to.
    *
    * @return int

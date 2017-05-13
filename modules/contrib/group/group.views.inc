@@ -36,17 +36,17 @@ function group_views_data_alter(array &$data) {
 
     // This relationship will allow a content entity to easily map to the group
     // content entity that ties it to a group, optionally filtering by plugin.
-    $data[$entity_data_table]['group_content'] = array(
+    $data[$entity_data_table]['group_content'] = [
       'title' => t('Group content for @entity_type', $t_args),
       'help' => t('Relates to the group content entities that represent the @entity_type.', $t_args),
-      'relationship' => array(
+      'relationship' => [
         'group' => t('Group content'),
         'base' => $data_table,
         'base field' => 'entity_id',
         'relationship field' => $entity_type->getKey('id'),
         'id' => 'group_content_to_entity_reverse',
         'label' => t('@entity_type group content', $t_args),
-      ),
-    );
+      ],
+    ];
   }
 }

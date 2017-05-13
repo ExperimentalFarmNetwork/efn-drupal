@@ -117,7 +117,7 @@ function template_preprocess_group(&$variables) {
   $variables['page'] = $variables['view_mode'] == 'full' && $is_page;
 
   // Helpful $content variable for templates.
-  $variables += array('content' => array());
+  $variables += ['content' => []];
   foreach (Element::children($variables['elements']) as $key) {
     $variables['content'][$key] = $variables['elements'][$key];
   }
@@ -151,7 +151,7 @@ function template_preprocess_group_content(&$variables) {
   $variables['page'] = $variables['view_mode'] == 'full' && $is_page;
 
   // Helpful $content variable for templates.
-  $variables += array('content' => array());
+  $variables += ['content' => []];
   foreach (Element::children($variables['elements']) as $key) {
     $variables['content'][$key] = $variables['elements'][$key];
   }

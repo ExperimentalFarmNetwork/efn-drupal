@@ -398,3 +398,16 @@ function group_update_8012() {
     $group_role->save();
   }
 }
+
+/**
+ * Add the 'creator_membership' property to all group types.
+ */
+function group_update_8013() {
+  $config_factory = \Drupal::configFactory();
+
+  foreach ($config_factory->listAll('group.type.') as $group_type_config_name) {
+    $group_type = $config_factory->getEditable($group_type_config_name);
+    $group_type->set('creator_membership', TRUE);
+    $group_type->save(TRUE);
+  }
+}

@@ -8173,51 +8173,6 @@
         }
     },
     {
-        "name": "drupal/group",
-        "version": "1.0.0-beta5",
-        "version_normalized": "1.0.0.0-beta5",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/group",
-            "reference": "8.x-1.0-beta5"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/group-8.x-1.0-beta5.zip",
-            "reference": "8.x-1.0-beta5",
-            "shasum": "8584143f1e95d4eb29a89216906d68c11c6598c2"
-        },
-        "require": {
-            "drupal/core": "*"
-        },
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-1.x": "1.x-dev"
-            },
-            "drupal": {
-                "version": "8.x-1.0-beta5",
-                "datestamp": "1487605983"
-            }
-        },
-        "installation-source": "dist",
-        "notification-url": "https://packages.drupal.org/8/downloads",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "kristiaanvandeneynde",
-                "homepage": "https://www.drupal.org/user/1345130"
-            }
-        ],
-        "description": "This module allows you to group users, content and other entities",
-        "homepage": "https://www.drupal.org/project/group",
-        "support": {
-            "source": "http://cgit.drupalcode.org/group"
-        }
-    },
-    {
         "name": "leaflet/leaflet",
         "version": "v0.7.7",
         "version_normalized": "0.7.7.0",
@@ -8480,6 +8435,45 @@
         "homepage": "https://www.drupal.org/project/token",
         "support": {
             "source": "http://cgit.drupalcode.org/token"
+        }
+    },
+    {
+        "name": "drupal/group",
+        "version": "dev-1.x",
+        "version_normalized": "dev-1.x",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/group",
+            "reference": "12a0077835c69fbeb185b5c134bf35bb62a561bc"
+        },
+        "require": {
+            "drupal/core": "*"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.0-beta5+11-dev",
+                "datestamp": "1492179243"
+            }
+        },
+        "installation-source": "source",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "kristiaanvandeneynde",
+                "homepage": "https://www.drupal.org/user/1345130"
+            }
+        ],
+        "description": "This module allows you to group users, content and other entities",
+        "homepage": "https://www.drupal.org/project/group",
+        "support": {
+            "source": "http://cgit.drupalcode.org/group"
         }
     }
 ]

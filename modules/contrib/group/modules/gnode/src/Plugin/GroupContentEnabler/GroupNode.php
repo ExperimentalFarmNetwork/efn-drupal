@@ -17,7 +17,6 @@ use Drupal\Core\Form\FormStateInterface;
  *   description = @Translation("Adds nodes to groups both publicly and privately."),
  *   entity_type_id = "node",
  *   entity_access = TRUE,
- *   pretty_path_key = "node",
  *   reference_label = @Translation("Title"),
  *   reference_description = @Translation("The title of the node to add to the group"),
  *   deriver = "Drupal\gnode\Plugin\GroupContentEnabler\GroupNodeDeriver"

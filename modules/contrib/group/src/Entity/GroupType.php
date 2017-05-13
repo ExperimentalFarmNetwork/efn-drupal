@@ -50,6 +50,7 @@ use Drupal\Core\Entity\EntityStorageInterface;
  *     "id",
  *     "label",
  *     "description",
+ *     "creator_membership",
  *     "creator_roles",
  *   }
  * )
@@ -76,6 +77,13 @@ class GroupType extends ConfigEntityBundleBase implements GroupTypeInterface {
    * @var string
    */
   protected $description;
+
+  /**
+   * The group creator automatically receives a membership.
+   *
+   * @var bool
+   */
+  protected $creator_membership = TRUE;
 
   /**
    * The IDs of the group roles a group creator should receive.
@@ -185,6 +193,13 @@ class GroupType extends ConfigEntityBundleBase implements GroupTypeInterface {
    */
   public function getMemberRoleId() {
     return $this->id() . '-member';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function creatorGetsMembership() {
+    return $this->creator_membership;
   }
 
   /**

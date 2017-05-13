@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1f6861209f4baaee14f8793625158e90",
+    "content-hash": "c1878e32cfdaf6e05f5085483327936b",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -2896,17 +2896,11 @@
         },
         {
             "name": "drupal/group",
-            "version": "1.0.0-beta5",
+            "version": "dev-1.x",
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/group",
-                "reference": "8.x-1.0-beta5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/group-8.x-1.0-beta5.zip",
-                "reference": "8.x-1.0-beta5",
-                "shasum": "8584143f1e95d4eb29a89216906d68c11c6598c2"
+                "reference": "12a0077835c69fbeb185b5c134bf35bb62a561bc"
             },
             "require": {
                 "drupal/core": "*"
@@ -2917,8 +2911,8 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.0-beta5",
-                    "datestamp": "1487605983"
+                    "version": "8.x-1.0-beta5+11-dev",
+                    "datestamp": "1492179243"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -2935,7 +2929,8 @@
             "homepage": "https://www.drupal.org/project/group",
             "support": {
                 "source": "http://cgit.drupalcode.org/group"
-            }
+            },
+            "time": "2017-04-18 08:29:00"
         },
         {
             "name": "drupal/leaflet",
@@ -8216,7 +8211,7 @@
         "drupal/devel": 5,
         "drupal/geocoder": 15,
         "drupal/geophp": 10,
-        "drupal/group": 10,
+        "drupal/group": 20,
         "drupal/profile": 15,
         "drupal/select_or_other": 15,
         "drupal/leaflet": 10,

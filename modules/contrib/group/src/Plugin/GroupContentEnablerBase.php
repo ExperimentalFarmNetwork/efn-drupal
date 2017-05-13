@@ -93,6 +93,13 @@ abstract class GroupContentEnablerBase extends PluginBase implements GroupConten
   /**
    * {@inheritdoc}
    */
+  public function getPrettyPathKey() {
+    return $this->pluginDefinition['pretty_path_key'];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getGroupCardinality() {
     return $this->configuration['group_cardinality'];
   }

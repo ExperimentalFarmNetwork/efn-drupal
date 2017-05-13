@@ -35,13 +35,16 @@ class GroupNodeGrantsTest extends GroupNodeAccessTestBase {
     $grants = gnode_node_grants($this->account, 'view');
     $this->assertTrue(in_array($this->groupA1->id(), $grants['gnode:a']), 'A-group: Member can view A-nodes.');
     $this->assertTrue(in_array($this->groupA1->id(), $grants['gnode:b']), 'A-group: Member can view B-nodes.');
+    $this->assertTrue(in_array($this->groupA1->id(), $grants['gnode_unpublished:a']), 'A-group: Member can view unpublished A-nodes.');
     $this->assertTrue(in_array($this->groupA2->id(), $grants['gnode:a']), 'A-group: Outsider can view A-nodes.');
+    $this->assertTrue(in_array($this->groupA2->id(), $grants['gnode:b']), 'A-group: Outsider can view B-nodes.');
     $this->assertTrue(in_array($this->groupB2->id(), $grants['gnode:b']), 'B-group: Outsider can view B-nodes.');
 
     // We are testing a bit more specifically here to make sure that the system
     // is only adding those group IDs the user has access in. Seeing as further
     // tests rely on the same system, we are not testing this again.
-    $this->assertFalse(in_array($this->groupA2->id(), $grants['gnode:b']), 'A-group: Outsider can not view B-nodes.');
+    $this->assertFalse(in_array($this->groupA2->id(), $grants['gnode_unpublished:a']), 'A-group: Outsider can not view unpublished A-nodes.');
+    $this->assertFalse(in_array($this->groupB2->id(), $grants['gnode:a']), 'B-group: Outsider can not view A-nodes.');
     $this->assertFalse(in_array($this->groupB1->id(), $grants['gnode:b']), 'B-group: Member can not view B-nodes.');
   }
 

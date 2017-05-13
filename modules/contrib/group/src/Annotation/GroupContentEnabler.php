@@ -79,11 +79,14 @@ class GroupContentEnabler extends Plugin {
   /**
    * (optional) The key to use in automatically generated paths.
    *
-   * Will be added to the entity tokens so modules like Pathauto may use it.
+   * This is exposed through tokens so modules like Pathauto may use it. Only
+   * use this if your plugin has something meaningful to show on the actual
+   * group content entity; i.e.: the relationship. Otherwise leave blank so it
+   * defaults to 'content'.
    *
    * @var string
    */
-  public $pretty_path_key;
+  public $pretty_path_key = 'content';
 
   /**
    * (optional) The label for the entity reference field.

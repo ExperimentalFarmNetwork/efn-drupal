@@ -48,13 +48,23 @@ abstract class GroupKernelTestBase extends EntityKernelTestBase {
   }
 
   /**
-   * Set the current user so group creation can rely on it.
+   * Sets the current user so group creation can rely on it.
    *
    * @param \Drupal\Core\Session\AccountInterface $account
    *   The account to set as the current user.
    */
   protected function setCurrentUser(AccountInterface $account) {
     $this->container->get('current_user')->setAccount($account);
+  }
+
+  /**
+   * Gets the current user so you can run some checks against them.
+   *
+   * @return \Drupal\Core\Session\AccountInterface
+   *   The current user.
+   */
+  protected function getCurrentUser() {
+    return $this->container->get('current_user')->getAccount();
   }
 
   /**

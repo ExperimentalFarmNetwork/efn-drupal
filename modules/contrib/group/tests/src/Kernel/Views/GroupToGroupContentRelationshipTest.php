@@ -10,7 +10,7 @@ use Drupal\views\Views;
 /**
  * Tests the group_to_group_content relationship handler.
  *
- * @see \Drupal\group\Plugin\views\argument\GroupId
+ * @see \Drupal\group\Plugin\views\relationship\GroupToGroupContent
  *
  * @group group
  */

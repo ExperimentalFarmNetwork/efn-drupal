@@ -103,11 +103,11 @@ class GroupContentTypeForm extends EntityForm {
    * {@inheritdoc}
    */
   protected function actions(array $form, FormStateInterface $form_state) {
-    $actions['submit'] = array(
+    $actions['submit'] = [
       '#type' => 'submit',
       '#value' => $this->operation == 'add' ? $this->t('Install plugin') : $this->t('Save configuration'),
-      '#submit' => array('::submitForm'),
-    );
+      '#submit' => ['::submitForm'],
+    ];
 
     return $actions;
   }

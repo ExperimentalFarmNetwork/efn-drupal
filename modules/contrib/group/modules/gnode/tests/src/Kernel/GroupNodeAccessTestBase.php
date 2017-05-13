@@ -115,6 +115,7 @@ abstract class GroupNodeAccessTestBase extends EntityKernelTestBase {
     $member_a = [
       'view group_node:a entity',
       'view group_node:b entity',
+      'view unpublished group_node:a entity',
       'update own group_node:a entity',
       'delete own group_node:a entity',
     ];
@@ -124,6 +125,7 @@ abstract class GroupNodeAccessTestBase extends EntityKernelTestBase {
     ];
     $outsider_a = [
       'view group_node:a entity',
+      'view group_node:b entity',
       'update any group_node:a entity',
       'delete any group_node:a entity',
     ];
