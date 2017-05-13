@@ -20,6 +20,6 @@ default_value:
 default_value_callback: ''
 settings:
   markup:
-    value: "<p>Click the \"join group\"&nbsp;button below to confirm joining this project. <strong>Note:</strong> you may get an error just after joining. Go back to the homepage and find your group; most likely you have still been added correctly. We are working to fix this problem soon!</p>\r\n"
+    value: "<p>Click the \"join group\"&nbsp;button below to confirm joining this project. You will start receiving updates and instructions from the project owner, and be able to post updates on the project page.</p>\r\n"
     format: raw_html
 field_type: markup
