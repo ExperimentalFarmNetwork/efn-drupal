@@ -58,7 +58,6 @@ module:
   profile: 0
   quickedit: 0
   rest: 0
-  select_or_other: 0
   serialization: 0
   smtp: 0
   system: 0

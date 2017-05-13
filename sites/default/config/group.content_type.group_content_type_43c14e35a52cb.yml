@@ -7,6 +7,7 @@ dependencies:
     - node.type.project_update
   module:
     - gnode
+    - node
 id: group_content_type_43c14e35a52cb
 label: 'Project: Group node (Project Update)'
 description: 'Adds <em class="placeholder">Project Update</em> content to groups both publicly and privately.'
@@ -15,3 +16,4 @@ content_plugin: 'group_node:project_update'
 plugin_config:
   group_cardinality: 0
   entity_cardinality: 1
+  use_creation_wizard: false
