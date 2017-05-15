@@ -6,17 +6,6 @@
     $("#block-donate li a").addClass('btn-lg btn-success');
     $('#block-sociallinks a[href="/contact"').addClass('btn-lg btn-success');
 
-    // resize navbar on scroll
-  //   var navbar=$('header.navbar-default');
-  //   $(window).scroll(function () {
-  //       if ($(window).scrollTop() > 160) {
-  //         navbar.addClass('navbar-fixed-top');
-  //     }
-  //     if ($(window).scrollTop() < 161) {
-  //         navbar.removeClass('navbar-fixed-top');
-  //     }
-  // });
-
 // Toggle hidden fields on project page
     $(".toggleVerbose").click(function(event) {
         $('.path-group .region-content .field').toggleClass('toggleVFields','1000');
@@ -51,19 +40,19 @@ Drupal.behaviors.commentThing = {
     if ($("body").hasClass('path-frontpage')){
         $(".view-id-project .views-row").each(function(index, el) {
         var cardPic = $(this).find(".views-field-field-project-image img").attr('src');
-
-        // $(this).css({
-        //     background: 'url('+cardPic+')',
-        //     'background-repeat': 'no-repeat',
-        //     'background-color': '#fff' ,
-        //     'background-size' : '100%'
-        // });
         });
     }
     $("[data-drupal-link-system-path='user']").before('<a href="/user" class="glyphicon glyphicon-user"></a>');
     $("[data-drupal-link-system-path='user/logout']").before('<a href="/user" class="glyphicon glyphicon-log-out"></a>');
 
-
-
+    // Volunteer Profile other checkbox
+    $("input#edit-field-growing-experience-other").click(function(event) {
+        /* Act on the event */
+        if($(this).is(":checked")){
+            $("#edit-field-other-wrapper").css('display', 'block');
+        }else{
+            $("#edit-field-other-wrapper").css('display', 'none');
+        }
+    });
 
 })(jQuery, Drupal);

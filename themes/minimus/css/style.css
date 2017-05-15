@@ -6496,6 +6496,8 @@ div.main-container {
 
 .path-user .view-profiles .field {
   margin-top: 1em; }
+.path-user .profile-volunteer-add-form #edit-field-other-wrapper {
+  display: none; }
 
 body.path-group {
   background-position-y: 73px; }
