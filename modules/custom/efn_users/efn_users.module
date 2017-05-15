@@ -15,3 +15,13 @@ function efn_users_profile_insert(EntityInterface $profile) {
 		$user->save();
 	}
 }
+
+/**
+ * Implements hook_form_alter().
+ */
+function efn_users_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id){
+	// No damn set default buttons on forms
+	if (strpos($form_id, "rofile_")){
+		$form['actions']['set_default']['#access']=FALSE;
+	}
+}
