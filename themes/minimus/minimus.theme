@@ -40,23 +40,6 @@ function minimus_preprocess_group(&$variables, $hook){
 
   if ((\Drupal::routeMatch()->getRouteName() === 'entity.group.canonical' || \Drupal::routeMatch()->getRouteName() === 'entity.group.edit_form')) {
   $variables['#attached']['library'][] = 'minimus/group-view';
-  // kint(\Drupal::routeMatch()->getRouteName());
-
-// banner stuff .. not working ??
-
-// 		$group=$variables['group'];
-
-// 		$group_banner=$group->get('field_project_image');
-
-// 		$banner_uri = $group_banner->entity->url();
-// 		$variables['project_banner'] = $banner_uri;
-
-// 		$nid = \Drupal::routeMatch()->getRawParameter('group');
-// 		$url = Drupal\Core\Url::fromRoute('<current>')->getInternalPath();
-// 		// $variables['route']=$url;
-  // if (){
-  // 	$variable['userPic']="aa";
-  // }
   }
 
 }
@@ -69,4 +52,15 @@ function minimus_preprocess(&$variables, $hook){
   if (\Drupal::routeMatch()->getRouteName() === 'entity.group.edit_form'){
   $variables['#attached']['library'][] = 'minimus/group-view';
   }
+}
+
+// change the title of the "Company" field to "Organization"
+function minimus_form_alter(&$form,  \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  if ($form_id =='profile_researcher_add_form') {
+    $form['field_address']['widget'][0]['address']['#after_build'][] = 'minimus_address_label';
+  }
+}
+function minimus_address_label($element, $form_state) {
+  $element['organization']['#title'] = t('Organization');
+  return $element;
 }
