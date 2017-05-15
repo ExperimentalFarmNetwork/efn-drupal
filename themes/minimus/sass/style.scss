@@ -88,15 +88,12 @@ header.navbar-default{
 		}
 
 	}
-	// #block-minimus-account-menu{
-	// 	float
-	// }
 	ul.navbar-nav{
 		margin-left:2em;
 		margin-top:22px;
-		&.navbar-right{
-			margin-top:8px;
-		}
+		// &.navbar-right{
+		// 	// margin-top:8px;
+		// }
 		li{
 			a{
 				color: $du-green;
@@ -133,6 +130,12 @@ header.navbar-default{
  
 	}
 
+}
+
+body.user-logged-in{
+	ul.navbar-nav.navbar-right{
+		margin-top:8px;
+	}
 }
 
 // Main

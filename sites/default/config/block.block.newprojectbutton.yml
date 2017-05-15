@@ -6,6 +6,7 @@ dependencies:
     - 'block_content:basic_block:c1aff9f9-8287-40e6-9f0d-282496371a16'
   module:
     - block_content
+    - user
   theme:
     - minimus
 id: newprojectbutton
@@ -22,4 +23,11 @@ settings:
   status: true
   info: ''
   view_mode: full
-visibility: {  }
+visibility:
+  user_role:
+    id: user_role
+    roles:
+      authenticated: authenticated
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'

@@ -33,7 +33,6 @@ Drupal.behaviors.commentThing = {
     } 
     if (! $('.field--name-field-project-image').length){
         $(".group-header").remove();
-        console.log("gone");
     }
 
     // front page image to background of card

@@ -6387,8 +6387,6 @@ header.navbar-default {
   header.navbar-default ul.navbar-nav {
     margin-left: 2em;
     margin-top: 22px; }
-    header.navbar-default ul.navbar-nav.navbar-right {
-      margin-top: 8px; }
     header.navbar-default ul.navbar-nav li a {
       color: #418261;
       text-transform: uppercase;
@@ -6410,6 +6408,9 @@ header.navbar-default {
       color: #418261;
       background-color: inherit;
       border-bottom: #3B4A59 thin solid; }
+
+body.user-logged-in ul.navbar-nav.navbar-right {
+  margin-top: 8px; }
 
 div.main-container {
   width: 90%; }
