@@ -1,0 +1,130 @@
+<?php
+/*
+ * @file
+ * "Leaflet Demo" showcases in a block all Leaflet-powered maps enabled on your
+ * Drupal site.
+ *
+ * Try it in combination with "Leaflet More Maps" (drupal.org/project/leaflet_more_maps).
+ */
+
+const LEAFLET_DEMO_DEFAULT_LAT = 51.4777;
+const LEAFLET_DEMO_DEFAULT_LNG = -0.0015;
+const LEAFLET_DEMO_DEFAULT_ZOOM = 11;
+
+function leaflet_demo_map_parameters_form($form, $form_state) {
+  
+  if (!empty($form_state['storage']['latitude'])) {
+    $latitude  = $form_state['storage']['latitude' ];
+    $longitude = $form_state['storage']['longitude'];
+  }
+  else { // fall back to default
+    $latitude  = LEAFLET_DEMO_DEFAULT_LAT;
+    $longitude = LEAFLET_DEMO_DEFAULT_LNG;
+  }
+  $zoom = isset($form_state['storage']['zoom']) ? $form_state['storage']['zoom'] : LEAFLET_DEMO_DEFAULT_ZOOM;
+
+  $rendered_maps = leaflet_demo_output_maps($latitude, $longitude, $zoom);
+  $form['map_parameters'] = array(
+    '#suffix' => $rendered_maps,
+    '#type' => 'fieldset',
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+    '#title' => t('Map parameters'),
+    '#description' => t('All maps below are centered on the same latitude, longitude and have the same initial zoom level.<br/>You may pan/drag and zoom each map individually.')
+  );
+  $form['map_parameters']['latitude'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Latitude'),
+  //'#field_suffix' => t('degrees'),
+    '#description' => t('-90 .. 90 degrees'),
+    '#size' => 12,
+    '#default_value' => $latitude
+  );
+  $form['map_parameters']['longitude'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Longitude'),
+  //'#field_suffix' => t('degrees'),
+    '#description' => t('-180 .. 180 degrees'),
+    '#size' => 12,
+    '#default_value' => $longitude
+  );
+  $form['map_parameters']['zoom'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Zoom'),
+    '#field_suffix' => t('(0..18)'),
+    '#description' => t('Some zoom levels may not be available in some maps.'),
+    '#size' => 2,
+    '#default_value' => LEAFLET_DEMO_DEFAULT_ZOOM
+  );
+  $form['map_parameters']['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Submit map parameters'),
+  );
+
+  $form['map_parameters']['#attached'] = array(
+    'css' => array(drupal_get_path('module', 'leaflet_demo') . '/leaflet_demo.css')
+  );
+  return $form;
+}
+
+/**
+ * Submit handler for leaflet_demo_map_parameters_form().
+ */
+function leaflet_demo_map_parameters_form_submit($form, &$form_state) {
+  $form_state['storage']['latitude']  = $form_state['values']['latitude'];
+  $form_state['storage']['longitude'] = $form_state['values']['longitude'];
+  $form_state['storage']['zoom'] = $form_state['values']['zoom'];
+  $form_state['rebuild'] = TRUE; // to preserve entered values and storage array
+}
+
+/**
+ * Outputs the HTML for all available Leaflet maps, centered on supplied coords.
+ *
+ * @param string $latitude
+ *   the latitude
+ * @param string $longitude
+ *   the longitude
+ *
+ * @return string
+ *   the map string as rendered html
+ */
+function leaflet_demo_output_maps($latitude = LEAFLET_DEMO_DEFAULT_LAT, $longitude = LEAFLET_DEMO_DEFAULT_LNG, $zoom = LEAFLET_DEMO_DEFAULT_ZOOM) {
+
+  if (!is_numeric($latitude) || !is_numeric($longitude) || !is_numeric($zoom)) {
+    return '';
+  }
+  $center = array('lat' => $latitude, 'lon' => $longitude);
+  $features = array(
+    array(
+      'type' => 'point',
+      'lat' => $latitude,
+      'lon' => $longitude,
+      'popup' => 'Your auto-retrieved or manually entered location',
+    ),
+  );
+  $output = '<div class="leaflet-gallery">';
+  $map_info = leaflet_map_get_info();
+  foreach ($map_info as $map_id => $map) {
+    $title = $map_info[$map_id]['label'];
+    // This will generate a unique id
+    $map_id = drupal_html_id('leaflet_map');
+    $map['settings']['zoom'] = $zoom;
+    $map['center'] = $center;
+    $features[0]['leaflet_id'] = $map_id;
+    $settings[] = array(
+      'mapId' => $map_id,
+      'map' => $map,
+      'features' => $features,
+    );
+    $output .=
+        '<div class="leaflet-gallery-map">'
+      . "<div>$title</div>"
+      . theme('leaflet_map', array('map_id' => $map_id, 'height' => '350px'))
+      . '</div>';
+  }
+  $output .= '</div>';
+
+  drupal_add_library('leaflet', 'leaflet-drupal');
+  drupal_add_js(array('leaflet' => array($settings)), 'setting');
+  return $output;
+}

@@ -1,0 +1,16 @@
+leaflet_more_maps_custom_maps:
+  1:
+    map-key: Watercolor
+    layer-keys:
+      'stamen-watercolor layer': 'stamen-watercolor layer'
+    reverse-order: 0
+  2:
+    map-key: Landscape
+    layer-keys:
+      'osm-landscape layer': 'osm-landscape layer'
+    reverse-order: 0
+  3:
+    map-key: Topo
+    layer-keys:
+      'esri-world_topo_map layer': 'esri-world_topo_map layer'
+    reverse-order: 0

@@ -46,11 +46,11 @@ module:
   image: 0
   kint: 0
   leaflet: 0
+  leaflet_more_maps: 0
   link: 0
   markup: 0
   menu_link_content: 0
   menu_ui: 0
-  minimal: 1000
   node: 0
   options: 0
   page_cache: 0
@@ -72,6 +72,7 @@ module:
   yamlform: 0
   yamlform_ui: 0
   pathauto: 1
+  minimal: 1000
 theme:
   stable: 0
   classy: 0

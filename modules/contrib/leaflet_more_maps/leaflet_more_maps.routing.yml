@@ -1,0 +1,8 @@
+leaflet_more_maps.settings:
+  path: '/admin/config/system/leaflet_more_maps'
+  defaults:
+    _form: '\Drupal\leaflet_more_maps\Form\SettingsForm'
+    _title: 'Leaflet More Maps configuration'
+  requirements:
+    _permission: 'administer site configuration'
+

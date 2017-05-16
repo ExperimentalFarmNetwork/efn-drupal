@@ -35,7 +35,8 @@
         "drupal/block_exclude_pages": "^1.2",
         "drupal/markup": "^1.0@beta",
         "drupal/address": "^1.0@RC",
-        "drupal/entity": "1.0.0-alpha4"
+        "drupal/entity": "1.0.0-alpha4",
+        "drupal/leaflet_more_maps": "^1.0@alpha"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

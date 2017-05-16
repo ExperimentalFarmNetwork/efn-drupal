@@ -1,0 +1,6 @@
+leaflet_more_maps.settings:
+  title: 'Leaflet More Maps configuration'
+  description: 'Assemble custom maps from available layers.'
+  route_name: leaflet_more_maps.settings
+  weight: 15
+  parent: system.admin_config_system

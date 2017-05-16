@@ -1,0 +1,7 @@
+leaflet-more-maps:
+    js:
+      leaflet_more_maps.js: {}
+    dependencies:
+      - leaflet/leaflet
+      - core/jquery
+      - core/drupal

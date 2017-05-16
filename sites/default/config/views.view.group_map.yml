@@ -108,7 +108,7 @@ display:
           click_sort_column: geo_type
           type: leaflet_formatter_default
           settings:
-            leaflet_map: 'OSM Mapnik'
+            leaflet_map: esri-world_street_map
             zoom: '10'
             minZoom: '5'
             maxZoom: '18'
