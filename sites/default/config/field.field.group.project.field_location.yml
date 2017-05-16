@@ -11,11 +11,25 @@ id: group.project.field_location
 field_name: field_location
 entity_type: group
 bundle: project
-label: 'Project Location'
-description: 'Where is your project based? Help us map our network!'
+label: 'Researcher Location'
+description: 'Where is your project based? Change the zip here if it''s not your own location. Help us map our network!'
 required: true
 translatable: false
-default_value: {  }
+default_value:
+  -
+    langcode: null
+    country_code: US
+    administrative_area: ''
+    locality: ''
+    dependent_locality: ''
+    postal_code: ''
+    sorting_code: ''
+    address_line1: ''
+    address_line2: ''
+    organization: ''
+    given_name: ''
+    additional_name: ''
+    family_name: ''
 default_value_callback: ''
 settings:
   available_countries: {  }
