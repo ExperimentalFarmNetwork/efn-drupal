@@ -1,24 +1,25 @@
-uuid: 0a8c5fde-ce47-41f8-9c58-cd13780f4890
+uuid: 71f1c331-dd7b-4d43-85c2-f8be7627fc3d
 langcode: en
 status: true
 dependencies:
   config:
-    - views.view.members_block
+    - views.view.project_creator
   module:
     - views
   theme:
     - minimus
-id: views_block__members_block_block_2_2
+id: views_block__project_creator_project_creator
 theme: minimus
 region: sidebar_second
-weight: -12
+weight: -11
 provider: null
-plugin: 'views_block:members_block-block_2'
+plugin: 'views_block:project_creator-project_creator'
 settings:
-  id: 'views_block:members_block-block_2'
+  id: 'views_block:project_creator-project_creator'
   label: ''
   provider: views
   label_display: '0'
   views_label: ''
   items_per_page: none
+  context_mapping: {  }
 visibility: {  }

@@ -4,8 +4,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\user\Entity\User;
 use Drupal\profile\Entity\Profile;
 use Drupal\Core\Url;
-use Drupal\Core\Cache;
-
+use Drupal\group\Entity\GroupContent;
 /**
  * Implements hook_profile_insert().
  */
@@ -30,7 +29,9 @@ function efn_users_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form
 	if ($form_id == 'group_content_project-group_membership_group-join_form') {
 	    $form['actions']['submit']['#submit'][] = 'send_to_project';
 	  }
-
+	// if ($form_id == 'node_project_update_form') {
+	//     $form['actions']['submit']['#submit'][] = 'send_to_project';
+	//   }
 }
 /**
  * Contact form submit handler
@@ -39,20 +40,15 @@ function efn_users_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form
  */
 function send_to_project(&$form, \Drupal\Core\Form\FormStateInterface $form_state) {
 	$entity = $form_state->getFormObject()->getEntity();
-	$group=$gid = $entity-> getGroup();
-	$gid = $entity-> getGroup()->id();
-	$uri= '/project/'.$gid;
+	$group= $entity-> getGroup();
 
-	// Group will have new content so invalidate group tags.
-  $tags = $group->getCacheTagsToInvalidate();
-  // \Drupal\Core\Cache::invalidateTags($tags);
-kint($tags);
-    // Now redirect to the url of the group.
-  $route_params = ['group' => $group->id()];
-  $form_state->setRedirect('entity.group.canonical', $route_params);
+	// Group will have new content so invalidate group tags. But this won't work no matter how we call the Cache class. why? seems to work without clearing caches anyhow ??
+	// $tags = $group->getCacheTagsToInvalidate();
+	// \Drupal\Core\Cache::invalidateTags($tags);
+
+	// Now redirect to the url of the group.
+	$route_params = ['group' => $group->id()];
+	$form_state->setRedirect('entity.group.canonical', $route_params);
 
 	drupal_set_message('Thanks for joining the Project. You now can post updates and comment!');
-	// $url = Url::fromUri("base:/".$uri);
-	// // kint($url);
-	// $form_state->setRedirect($url);
 }

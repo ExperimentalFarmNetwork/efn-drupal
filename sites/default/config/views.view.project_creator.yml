@@ -1,18 +1,18 @@
-uuid: 359a1e1a-c18d-47fb-9f6c-05ee948b1cbd
+uuid: a06b08da-0783-4ab4-8cdd-401f427fb889
 langcode: en
 status: true
 dependencies:
   config:
     - field.storage.profile.field_user_image
     - group.type.project
-    - image.style.80x80
+    - image.style.220x220
   module:
     - group
     - image
     - profile
     - user
-id: group_member_test
-label: 'Project Members'
+id: project_creator
+label: 'Project Creator'
 module: views
 description: ''
 tag: ''
@@ -51,14 +51,15 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       pager:
-        type: none
+        type: some
         options:
+          items_per_page: 1
           offset: 0
       style:
         type: grid
         options:
           grouping: {  }
-          columns: 2
+          columns: 1
           automatic_width: true
           alignment: horizontal
           col_class_default: true
@@ -119,7 +120,7 @@ display:
           click_sort_column: target_id
           type: image
           settings:
-            image_style: 80x80
+            image_style: 220x220
             image_link: ''
           group_column: entity_id
           group_columns: {  }
@@ -143,7 +144,7 @@ display:
           exclude: true
           alter:
             alter_text: true
-            text: '<div class="memberName">{{ label }}</div>'
+            text: 'Project owner: {{ label }} '
             make_link: false
             path: ''
             absolute: false
@@ -208,7 +209,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "{{ field_user_image }}\n{{ label }}"
+            text: "{{ field_user_image }}<br/>\n{{ label }}"
             make_link: false
             path: ''
             absolute: false
@@ -255,16 +256,16 @@ display:
           table: group_content_field_data
           field: uid
           relationship: none
-          group_type: stddev_pop
+          group_type: group
           admin_label: ''
-          order: DESC
+          order: ASC
           exposed: false
           expose:
             label: ''
           entity_type: group_content
           entity_field: uid
           plugin_id: standard
-      title: 'Project members'
+      title: 'Project creator'
       header: {  }
       footer: {  }
       empty:
@@ -303,6 +304,17 @@ display:
           admin_label: Profile
           required: true
           entity_type: user
+          plugin_id: standard
+        uid:
+          id: uid
+          table: group_content_field_data
+          field: uid
+          relationship: none
+          group_type: group
+          admin_label: User
+          required: true
+          entity_type: group_content
+          entity_field: uid
           plugin_id: standard
       arguments:
         gid:
@@ -357,9 +369,9 @@ display:
         - url
       tags:
         - 'config:field.storage.profile.field_user_image'
-  project_members:
+  project_creator:
     display_plugin: block
-    id: project_members
+    id: project_creator
     display_title: Block
     position: 1
     display_options:

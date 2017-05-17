@@ -6381,7 +6381,7 @@ header.navbar-default {
     header.navbar-default #block-newproject .field--name-body a, header.navbar-default #block-newprojectbutton .field--name-body a {
       background: #3B4A59;
       color: #A4AD23; }
-      header.navbar-default #block-newproject .field--name-body a:hover, header.navbar-default #block-newprojectbutton .field--name-body a:hover {
+      header.navbar-default #block-newproject .field--name-body a:ohver, header.navbar-default #block-newprojectbutton .field--name-body a:ohver {
         background: #418261;
         color: #242029; }
   header.navbar-default ul.navbar-nav {
@@ -6771,9 +6771,21 @@ body.path-group {
     font-size: .8em;
     text-align: center;
     color: #777777; }
+    .region-sidebar-second .view-members-block .views-field-view-user, .region-sidebar-second .view-group-member-test .views-field-view-user {
+      margin-bottom: 20px; }
     .region-sidebar-second .view-members-block .views-field-field-user-image, .region-sidebar-second .view-members-block .views-field-view-user, .region-sidebar-second .view-group-member-test .views-field-field-user-image, .region-sidebar-second .view-group-member-test .views-field-view-user {
       display: inline-block; }
       .region-sidebar-second .view-members-block .views-field-field-user-image img, .region-sidebar-second .view-members-block .views-field-view-user img, .region-sidebar-second .view-group-member-test .views-field-field-user-image img, .region-sidebar-second .view-group-member-test .views-field-view-user img {
+        border-radius: 50%;
+        border: thin solid #eeeeee;
+        padding: 3px; }
+  .region-sidebar-second .view-project-creator {
+    font-size: .8em;
+    text-align: center; }
+    .region-sidebar-second .view-project-creator a {
+      text-align: center; }
+      .region-sidebar-second .view-project-creator a img {
+        display: inline-block;
         border-radius: 50%;
         border: thin solid #eeeeee;
         padding: 3px; }

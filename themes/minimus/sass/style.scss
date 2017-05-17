@@ -80,7 +80,7 @@ header.navbar-default{
 			a{
 					background:$du-asparagus;
 					color:$du-gold;
-				&:hover{
+				&:ohver{
 				background: $du-green;
 				color:$du-dark;
 				}
@@ -649,13 +649,29 @@ body.path-group{
 		text-align:center;
 	}
 
-	.view-members-block, .view-group-member-test{
+	.view-members-block, .view-group-member-test {
 		font-size:.8em;
 		text-align:center;
 		color:$gray-light;
+		.views-field-view-user{
+			margin-bottom:20px;
+		}
 		.views-field-field-user-image, .views-field-view-user{
 			display:inline-block;
 			img{
+			    border-radius: 50%;
+			    border: thin solid #eeeeee;
+			    padding: 3px;
+			}
+		}
+	}
+	.view-project-creator{
+		font-size:.8em;
+		text-align:center;
+		a{
+			text-align:center;
+			img{
+				display:inline-block;
 			    border-radius: 50%;
 			    border: thin solid #eeeeee;
 			    padding: 3px;

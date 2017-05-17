@@ -10,7 +10,7 @@ dependencies:
 id: efnprofilelinks
 theme: minimus
 region: sidebar_second
-weight: -10
+weight: -9
 provider: null
 plugin: efn_user_profiles
 settings:
