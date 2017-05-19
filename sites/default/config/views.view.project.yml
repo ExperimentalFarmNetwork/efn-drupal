@@ -474,12 +474,32 @@ display:
       title: ''
       defaults:
         title: false
+        pager: false
+        footer: false
+      pager:
+        type: some
+        options:
+          items_per_page: 8
+          offset: 0
+      footer:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: false
+          tokenize: false
+          content:
+            value: '<a class="btn btn-sm btn-success" href="/projects">see all projects</a>'
+            format: raw_html
+          plugin_id: text
     cache_metadata:
       max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
-        - url.query_args
       tags:
         - 'config:field.storage.group.field_project_image'
         - 'config:field.storage.group.field_project_summary'

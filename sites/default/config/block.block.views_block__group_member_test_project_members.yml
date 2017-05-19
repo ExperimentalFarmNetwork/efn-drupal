@@ -5,6 +5,7 @@ dependencies:
   config:
     - views.view.group_member_test
   module:
+    - group
     - views
   theme:
     - minimus
@@ -22,4 +23,11 @@ settings:
   views_label: ''
   items_per_page: none
   context_mapping: {  }
-visibility: {  }
+visibility:
+  group_type:
+    id: group_type
+    group_types:
+      project: project
+    negate: false
+    context_mapping:
+      group: '@group.group_route_context:group'
