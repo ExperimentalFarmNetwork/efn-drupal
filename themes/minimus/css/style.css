@@ -6446,10 +6446,8 @@ div.main-container {
     display: inline-block; }
     .path-frontpage .bnrPic .btns a {
       margin-bottom: .5em; }
-.path-frontpage .main-container {
-  margin-top: -2em; }
-  .path-frontpage .main-container .col-sm-12 {
-    background: transparent; }
+.path-frontpage .main-container .col-sm-12 {
+  background: transparent; }
 .path-frontpage .navbar {
   margin-top: 0;
   margin-bottom: 0; }
