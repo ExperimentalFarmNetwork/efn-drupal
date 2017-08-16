@@ -1,0 +1,5 @@
+name: efn
+type: module
+description: Helper functions for efn
+core: 8.x
+package: Custom

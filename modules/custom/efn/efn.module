@@ -1,0 +1,61 @@
+<?php
+
+/**
+ * @file
+ * Contains efn.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Form\FormStateInterface;
+
+
+/**
+ * Implements hook_help().
+ */
+function efn_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the efn module.
+    case 'help.page.efn':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Helper functions for efn') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function efn_theme() {
+  return [
+    'efn' => [
+      'render element' => 'children',
+    ],
+  ];
+}
+
+// hide text formatting widget
+
+/**
+ * Implements hook_field_widget_form_alter().
+ */
+function efn_form_alter(&$form, &$form_state, &$form_id) {
+    $form['field_description']['widget']['#after_build'][] = '_allowed_formats_remove_textarea_help';
+    $form['field_project_report']['widget']['#after_build'][] = '_allowed_formats_remove_textarea_help';
+}
+
+function _allowed_formats_remove_textarea_help($form_element, FormStateInterface $form_state) {
+
+  if (isset($form_element[0]['format'])) {
+    // All this stuff is needed to hide the help text.
+    unset($form_element[0]['format']['guidelines']);
+    unset($form_element[0]['format']['help']);
+    unset($form_element[0]['format']['#type']);
+    unset($form_element[0]['format']['#theme_wrappers']);
+    $form_element[0]['format']['format']['#access'] = FALSE;
+  }
+
+  return $form_element;
+}
