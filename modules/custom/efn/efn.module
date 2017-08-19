@@ -7,7 +7,10 @@
 
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Form\FormStateInterface;
-
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use \Drupal\Core\Access\AccessibleInterface;
+use Drupal\group\Entity\GroupContent;
 
 /**
  * Implements hook_help().
@@ -58,4 +61,39 @@ function _allowed_formats_remove_textarea_help($form_element, FormStateInterface
   }
 
   return $form_element;
+}
+
+/**
+ * Implements hook_entity_view().
+ *
+ */
+function efn_entity_view(array $build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode){
+  $user = \Drupal::currentUser();
+  $roles = $user->getRoles($exclude_locked_roles = false);
+  $can_post =["anonymous"];
+  $join=t("To participate, you must create a profile and join this project");
+  $participate=t("You need to join this project to participate");
+
+ 
+  // $bundle = $entity->bundle();
+  // if ($bundle="project"){
+  //   kint($entity);
+  //   print("<h1>".$bundle."</h1>");
+  // }
+
+$gmembers=$entity->getMembers();
+$membersList=[];
+foreach ($gmembers as $value) {
+  $string=$value->getUser()->id();
+  $membersList[]=$string;
+}
+kint($user->id());
+kint($membersList);
+
+  if (in_array("anonymous", $roles)){
+    drupal_set_message($message, 'status', FALSE);
+  } elseif(!in_array($user->id(), $membersList)) {
+    drupal_set_message($participate, 'status', FALSE);
+  }
+
 }
