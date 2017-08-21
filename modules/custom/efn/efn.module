@@ -81,7 +81,7 @@ function efn_entity_view(array $build, EntityInterface $entity, EntityViewDispla
       $membersList[]=$string;
     }
     if (in_array("anonymous", $roles)){
-      drupal_set_message($message, 'status', FALSE);
+      drupal_set_message($join, 'status', FALSE);
     } elseif(!in_array($user->id(), $membersList)) {
       drupal_set_message($participate, 'status', FALSE);
     }

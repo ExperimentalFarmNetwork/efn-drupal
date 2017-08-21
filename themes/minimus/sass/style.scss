@@ -336,11 +336,7 @@ body.path-group{
 			.field--name-field-location-geo{
 				&:not([data-drupal-selector]){
 					display:none;
-				}
-				
-				transition:5s cubic-bezier(0.4, 0, 0.2, 1); 
-				&.toggleVFields{
-					display:block; // uncomment when js ready please
+
 				}
 			}
 			.field--label{

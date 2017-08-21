@@ -6,10 +6,10 @@
     $("#block-donate li a").addClass('btn-lg btn-success');
     $('#block-sociallinks a[href="/contact"').addClass('btn-lg btn-success');
 
-// Toggle hidden fields on project page
+    // Toggle hidden fields on project page
+    var hEl = $(".field--name-field-project-image, .field--name-field-description,.field--name-field-researcher-background,.field--name-field-seeking-volunteers,.field--name-field-volunteers-how-many,.field--name-field-volunteers-ask-do,.field--name-field-volunteers-other-reqs,.field--name-field-multiyear,.field--name-field-volunteers-keep-seed,.field--name-field-privacy,.field--name-field-misc,.field--name-field-location,.field--name-field-location-geo");
     $(".toggleVerbose").click(function(event) {
-        $('.path-group .region-content .field').toggleClass('toggleVFields','1000');
-        $(this).find('.glyphicon').toggleClass('glyphicon-collapse-up');
+        hEl.slideToggle('slow');
     });
 
 Drupal.behaviors.commentThing = {

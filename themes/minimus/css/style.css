@@ -6520,48 +6520,20 @@ body.path-group {
       width: 100%;
       text-align: center;
       cursor: pointer; }
-    body.path-group .region-content .groupWrapper .field--name-field-project-image,
-    body.path-group .region-content .groupWrapper .field--name-field-description,
-    body.path-group .region-content .groupWrapper .field--name-field-researcher-background,
-    body.path-group .region-content .groupWrapper .field--name-field-seeking-volunteers,
-    body.path-group .region-content .groupWrapper .field--name-field-volunteers-how-many,
-    body.path-group .region-content .groupWrapper .field--name-field-volunteers-ask-do,
-    body.path-group .region-content .groupWrapper .field--name-field-volunteers-other-reqs,
-    body.path-group .region-content .groupWrapper .field--name-field-multiyear,
-    body.path-group .region-content .groupWrapper .field--name-field-volunteers-keep-seed,
-    body.path-group .region-content .groupWrapper .field--name-field-privacy,
-    body.path-group .region-content .groupWrapper .field--name-field-misc,
-    body.path-group .region-content .groupWrapper .field--name-field-location,
-    body.path-group .region-content .groupWrapper .field--name-field-location-geo {
-      transition: 5s cubic-bezier(0.4, 0, 0.2, 1); }
-      body.path-group .region-content .groupWrapper .field--name-field-project-image:not([data-drupal-selector]),
-      body.path-group .region-content .groupWrapper .field--name-field-description:not([data-drupal-selector]),
-      body.path-group .region-content .groupWrapper .field--name-field-researcher-background:not([data-drupal-selector]),
-      body.path-group .region-content .groupWrapper .field--name-field-seeking-volunteers:not([data-drupal-selector]),
-      body.path-group .region-content .groupWrapper .field--name-field-volunteers-how-many:not([data-drupal-selector]),
-      body.path-group .region-content .groupWrapper .field--name-field-volunteers-ask-do:not([data-drupal-selector]),
-      body.path-group .region-content .groupWrapper .field--name-field-volunteers-other-reqs:not([data-drupal-selector]),
-      body.path-group .region-content .groupWrapper .field--name-field-multiyear:not([data-drupal-selector]),
-      body.path-group .region-content .groupWrapper .field--name-field-volunteers-keep-seed:not([data-drupal-selector]),
-      body.path-group .region-content .groupWrapper .field--name-field-privacy:not([data-drupal-selector]),
-      body.path-group .region-content .groupWrapper .field--name-field-misc:not([data-drupal-selector]),
-      body.path-group .region-content .groupWrapper .field--name-field-location:not([data-drupal-selector]),
-      body.path-group .region-content .groupWrapper .field--name-field-location-geo:not([data-drupal-selector]) {
-        display: none; }
-      body.path-group .region-content .groupWrapper .field--name-field-project-image.toggleVFields,
-      body.path-group .region-content .groupWrapper .field--name-field-description.toggleVFields,
-      body.path-group .region-content .groupWrapper .field--name-field-researcher-background.toggleVFields,
-      body.path-group .region-content .groupWrapper .field--name-field-seeking-volunteers.toggleVFields,
-      body.path-group .region-content .groupWrapper .field--name-field-volunteers-how-many.toggleVFields,
-      body.path-group .region-content .groupWrapper .field--name-field-volunteers-ask-do.toggleVFields,
-      body.path-group .region-content .groupWrapper .field--name-field-volunteers-other-reqs.toggleVFields,
-      body.path-group .region-content .groupWrapper .field--name-field-multiyear.toggleVFields,
-      body.path-group .region-content .groupWrapper .field--name-field-volunteers-keep-seed.toggleVFields,
-      body.path-group .region-content .groupWrapper .field--name-field-privacy.toggleVFields,
-      body.path-group .region-content .groupWrapper .field--name-field-misc.toggleVFields,
-      body.path-group .region-content .groupWrapper .field--name-field-location.toggleVFields,
-      body.path-group .region-content .groupWrapper .field--name-field-location-geo.toggleVFields {
-        display: block; }
+    body.path-group .region-content .groupWrapper .field--name-field-project-image:not([data-drupal-selector]),
+    body.path-group .region-content .groupWrapper .field--name-field-description:not([data-drupal-selector]),
+    body.path-group .region-content .groupWrapper .field--name-field-researcher-background:not([data-drupal-selector]),
+    body.path-group .region-content .groupWrapper .field--name-field-seeking-volunteers:not([data-drupal-selector]),
+    body.path-group .region-content .groupWrapper .field--name-field-volunteers-how-many:not([data-drupal-selector]),
+    body.path-group .region-content .groupWrapper .field--name-field-volunteers-ask-do:not([data-drupal-selector]),
+    body.path-group .region-content .groupWrapper .field--name-field-volunteers-other-reqs:not([data-drupal-selector]),
+    body.path-group .region-content .groupWrapper .field--name-field-multiyear:not([data-drupal-selector]),
+    body.path-group .region-content .groupWrapper .field--name-field-volunteers-keep-seed:not([data-drupal-selector]),
+    body.path-group .region-content .groupWrapper .field--name-field-privacy:not([data-drupal-selector]),
+    body.path-group .region-content .groupWrapper .field--name-field-misc:not([data-drupal-selector]),
+    body.path-group .region-content .groupWrapper .field--name-field-location:not([data-drupal-selector]),
+    body.path-group .region-content .groupWrapper .field--name-field-location-geo:not([data-drupal-selector]) {
+      display: none; }
     body.path-group .region-content .groupWrapper .field--label {
       font-weight: bold; }
     body.path-group .region-content .groupWrapper .field--name-field-project-type {
