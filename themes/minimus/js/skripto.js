@@ -1,4 +1,6 @@
 (function($, Drupal) {
+    var path = window.location.pathname;
+
     // change bootstrap button for add project update
     $(".block-group-operations button.btn-xs").removeClass('btn-xs btn-default').addClass('btn-lg btn-success');
 
@@ -58,6 +60,27 @@ Drupal.behaviors.commentThing = {
         //  change this to some sort of .each function to work on more than this field.
     var description = $("#edit-field-description-wrapper .description");
     $("#edit-field-description-wrapper label").after(description);
+
+    // Local actions links on /group/{}/members pages
+    pathArray=path.split("/");
+
+    // fix  members
+    fixLocalAction("members","group_membership","Add member");
+
+    // fix Related Entities
+    fixLocalAction("content","add","Add Content");
+    fixLocalAction("content","create","Create Content");
+
+    // fix Project Nodes
+    fixLocalAction("nodes","add","Add Project");
+    fixLocalAction("nodes","create","Create Project");
+
+    function fixLocalAction(url, href, to){
+        if (pathArray[3]==url){
+            var weirdLink = $('.path-group ul.local-actions a[href*='+href+']');
+            weirdLink.html(to);
+        }
+    }
 
 
 })(jQuery, Drupal);
