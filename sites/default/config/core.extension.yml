@@ -23,6 +23,7 @@ module:
   devel: 0
   dynamic_page_cache: 0
   editor: 0
+  efn: 0
   efn_default_content: 0
   efn_users: 0
   email_registration: 0
@@ -69,6 +70,7 @@ module:
   user: 0
   views: 0
   views_ui: 0
+  webprofiler: 0
   yamlform: 0
   yamlform_ui: 0
   pathauto: 1

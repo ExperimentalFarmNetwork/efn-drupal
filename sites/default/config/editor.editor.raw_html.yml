@@ -36,6 +36,7 @@ settings:
           name: Tools
           items:
             - Source
+            - Table
   plugins:
     language:
       language_list: un

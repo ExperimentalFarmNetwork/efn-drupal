@@ -22,3 +22,5 @@ permissions:
   - 'view group'
   - 'create group_node:project_update entity'
   - 'leave group'
+  - 'update own group_membership content'
+  - 'view group_membership content'
