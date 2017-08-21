@@ -54,6 +54,11 @@ h1.page-header, button, nav, h2, h3{
 	}
 }
 
+// forms
+.help-block {
+	font-size:.8em;
+}
+
 // Header
 header.navbar-default{
 	background: $du-dark;
@@ -302,9 +307,6 @@ body.path-group{
 		height:300px;
 	    background-repeat: repeat-x;
 	}
-	// .bump-title{
-  // now in group-view.scss library
-	// }
 
 	.region-content{
 		background:white;

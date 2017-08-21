@@ -54,4 +54,10 @@ Drupal.behaviors.commentThing = {
         }
     });
 
+    // Project form: move description in wysiwyg fields to below the label
+        //  change this to some sort of .each function to work on more than this field.
+    var description = $("#edit-field-description-wrapper .description");
+    $("#edit-field-description-wrapper label").after(description);
+
+
 })(jQuery, Drupal);

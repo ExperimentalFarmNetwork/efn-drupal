@@ -6363,6 +6363,9 @@ h1.page-header, button, nav, h2, h3 {
   .col-sm-12 h1 {
     margin-bottom: 0; }
 
+.help-block {
+  font-size: .8em; }
+
 header.navbar-default {
   background: #242029;
   border-bottom: #A4AD23 3px solid;
