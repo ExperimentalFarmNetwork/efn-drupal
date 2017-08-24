@@ -17,7 +17,7 @@ settings:
   id: efn_user_profiles
   label: 'EFN Profile Links'
   provider: efn_users
-  label_display: visible
+  label_display: '0'
 visibility:
   request_path:
     id: request_path
