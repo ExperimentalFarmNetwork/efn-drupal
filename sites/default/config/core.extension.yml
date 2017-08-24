@@ -69,6 +69,8 @@ module:
   update: 0
   user: 0
   views: 0
+  views_slideshow: 0
+  views_slideshow_cycle: 0
   views_ui: 0
   webprofiler: 0
   yamlform: 0
