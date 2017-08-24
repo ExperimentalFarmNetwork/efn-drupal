@@ -73,7 +73,7 @@ function efn_entity_view(array $build, EntityInterface $entity, EntityViewDispla
     $user = \Drupal::currentUser();
     $roles = $user->getRoles($exclude_locked_roles = false);
     $join=t("To participate, you must create a profile and join this project");
-    $participate=t("You need to join this project to participate");
+    $participate=t("You need to join this project to participate ➪➪➪");
     $gmembers=$entity->getMembers();
     $membersList=[];
     foreach ($gmembers as $value) {

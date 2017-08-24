@@ -5,7 +5,7 @@
     "license": "GPL-2.0+",
     "require": {
         "drupal/core": "~8.3",
-        "composer/installers": "^1.0.24",
+        "composer/installers": "^1.4",
         "drupal/admin_toolbar": "^1.17",
         "drupal/ajax_comments": "^1.0@beta",
         "drupal/config_update": "^1.1",
@@ -36,7 +36,9 @@
         "drupal/markup": "^1.0@beta",
         "drupal/address": "^1.0@RC",
         "drupal/entity": "1.0.0-alpha4",
-        "drupal/leaflet_more_maps": "^1.0@alpha"
+        "drupal/leaflet_more_maps": "^1.0@alpha",
+        "d3/d3": "3.5.*",
+        "components/highlightjs": "9.7.*"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
@@ -72,7 +74,8 @@
             "themes/contrib/{$name}": ["type:drupal-theme"],
             "drush/contrib/{$name}": ["type:drupal-drush"],
             "modules/custom/{$name}": ["type:drupal-custom-module"],
-            "themes/custom/{$name}": ["type:drupal-custom-theme"]
+            "themes/custom/{$name}": ["type:drupal-custom-theme"],
+            "libraries/{$name}": ["type:drupal-library"]
         }
     },
     "autoload": {
@@ -101,6 +104,30 @@
                 "type": "drupal-library",
                 "dist": {
                     "url": "https://github.com/Leaflet/Leaflet/archive/v0.7.7.zip",
+                    "type": "zip"
+                }
+            }
+        },
+        "d3": {
+            "type": "package",
+            "package": {
+                "name": "d3/d3",
+                "version": "v3.5.17",
+                "type": "drupal-library",
+                "dist": {
+                    "url": "https://github.com/d3/d3/archive/v3.5.17.zip",
+                    "type": "zip"
+                }
+            }
+        },
+        "highlightjs": {
+            "type": "package",
+            "package": {
+                "name": "components/highlightjs",
+                "version": "9.7.0",
+                "type": "drupal-library",
+                "dist": {
+                    "url": "https://github.com/components/highlightjs/archive/9.7.0.zip",
                     "type": "zip"
                 }
             }

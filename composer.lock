@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "332c425d0e8ead864e8f1938a428ac1c",
+    "content-hash": "4040c79b01bda6e346c052acc1c10f9e",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -316,6 +316,17 @@
             "time": "2017-04-20T12:44:24+00:00"
         },
         {
+            "name": "components/highlightjs",
+            "version": "9.7.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/components/highlightjs/archive/9.7.0.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "drupal-library"
+        },
+        {
             "name": "components/jquery",
             "version": "3.2.1",
             "source": {
@@ -359,16 +370,16 @@
         },
         {
             "name": "composer/installers",
-            "version": "v1.3.0",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "79ad876c7498c0bbfe7eed065b8651c93bfd6045"
+                "reference": "9ce17fb70e9a38dd8acff0636a29f5cf4d575c1b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/79ad876c7498c0bbfe7eed065b8651c93bfd6045",
-                "reference": "79ad876c7498c0bbfe7eed065b8651c93bfd6045",
+                "url": "https://api.github.com/repos/composer/installers/zipball/9ce17fb70e9a38dd8acff0636a29f5cf4d575c1b",
+                "reference": "9ce17fb70e9a38dd8acff0636a29f5cf4d575c1b",
                 "shasum": ""
             },
             "require": {
@@ -414,6 +425,7 @@
                 "Hurad",
                 "ImageCMS",
                 "Kanboard",
+                "Lan Management System",
                 "MODX Evo",
                 "Mautic",
                 "Maya",
@@ -437,6 +449,7 @@
                 "croogo",
                 "dokuwiki",
                 "drupal",
+                "eZ Platform",
                 "elgg",
                 "expressionengine",
                 "fuelphp",
@@ -453,6 +466,7 @@
                 "mediawiki",
                 "modulework",
                 "moodle",
+                "osclass",
                 "phpbb",
                 "piwik",
                 "ppi",
@@ -469,7 +483,7 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2017-04-24T06:37:16+00:00"
+            "time": "2017-08-09T07:53:48+00:00"
         },
         {
             "name": "composer/semver",
@@ -576,6 +590,17 @@
             ],
             "description": "Provides a way to patch Composer packages.",
             "time": "2017-03-19T18:18:52+00:00"
+        },
+        {
+            "name": "d3/d3",
+            "version": "v3.5.17",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/d3/d3/archive/v3.5.17.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "drupal-library"
         },
         {
             "name": "dflydev/dot-access-configuration",
@@ -3008,7 +3033,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://ftp.drupal.org/files/projects/leaflet_more_maps-8.x-1.0-alpha3.zip",
-                "reference": null,
+                "reference": "8.x-1.0-alpha3",
                 "shasum": "0aa02138eed25efb6d579b2128bbe47a8b149842"
             },
             "require": {
@@ -6381,12 +6406,12 @@
             "version": "v3.3.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/geocoder-php/Geocoder.git",
+                "url": "https://github.com/geocoder-php/php-common.git",
                 "reference": "ccc178e2984c0af24881faa0ffe515f20e5e8c23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/geocoder-php/Geocoder/zipball/ccc178e2984c0af24881faa0ffe515f20e5e8c23",
+                "url": "https://api.github.com/repos/geocoder-php/php-common/zipball/ccc178e2984c0af24881faa0ffe515f20e5e8c23",
                 "reference": "ccc178e2984c0af24881faa0ffe515f20e5e8c23",
                 "shasum": ""
             },
