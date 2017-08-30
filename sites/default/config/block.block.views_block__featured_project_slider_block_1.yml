@@ -1,0 +1,30 @@
+uuid: 91e2a1b6-771c-4091-8e21-e738ecb2f18b
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.featured_project_slider
+  module:
+    - system
+    - views
+  theme:
+    - minimus
+id: views_block__featured_project_slider_block_1
+theme: minimus
+region: content
+weight: -12
+provider: null
+plugin: 'views_block:featured_project_slider-block_1'
+settings:
+  id: 'views_block:featured_project_slider-block_1'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+  items_per_page: '5'
+visibility:
+  request_path:
+    id: request_path
+    pages: '<front>'
+    negate: false
+    context_mapping: {  }

@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.group.project.field_description
+    - field.field.group.project.field_featured_project
     - field.field.group.project.field_location
     - field.field.group.project.field_location_geo
     - field.field.group.project.field_misc
@@ -136,6 +137,7 @@ content:
 hidden:
   changed: true
   created: true
+  field_featured_project: true
   field_location_geo: true
   field_project_type_other: true
   uid: true

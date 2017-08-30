@@ -6454,6 +6454,36 @@ div.main-container {
 .path-frontpage .navbar {
   margin-top: 0;
   margin-bottom: 0; }
+.path-frontpage .view-id-featured_project_slider .views-field.views-field-label {
+  position: absolute;
+  bottom: 2em;
+  left: 1em;
+  background: #3B4A59; }
+  .path-frontpage .view-id-featured_project_slider .views-field.views-field-label .field-content {
+    margin: 0;
+    color: #FFA100; }
+    .path-frontpage .view-id-featured_project_slider .views-field.views-field-label .field-content a {
+      background: #3B4A59;
+      color: #A4AD23;
+      padding: 10px 15px;
+      font-weight: 100; }
+.path-frontpage .view-id-featured_project_slider .views-slideshow-controls-bottom {
+  position: absolute;
+  right: 1em;
+  top: 1em;
+  z-index: 999; }
+.path-frontpage .view-id-featured_project_slider .views_slideshow_pager_field_item {
+  display: inline-block; }
+  .path-frontpage .view-id-featured_project_slider .views_slideshow_pager_field_item img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 5px solid #A4AD23;
+    z-index: 999;
+    display: inline-block;
+    margin-right: .5em; }
+  .path-frontpage .view-id-featured_project_slider .views_slideshow_pager_field_item.active img {
+    border: 5px solid #242029; }
 
 .view-project {
   text-align: center; }

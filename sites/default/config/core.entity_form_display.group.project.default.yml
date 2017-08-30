@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.group.project.field_description
+    - field.field.group.project.field_featured_project
     - field.field.group.project.field_location
     - field.field.group.project.field_location_geo
     - field.field.group.project.field_misc
@@ -36,6 +37,13 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: text_textarea
+    region: content
+  field_featured_project:
+    weight: 14
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
     region: content
   field_location:
     weight: 3

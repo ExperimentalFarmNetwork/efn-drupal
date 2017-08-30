@@ -1,0 +1,18 @@
+uuid: ced9d4a1-0a22-4cb3-96dd-7b3e74787bca
+langcode: en
+status: true
+dependencies:
+  module:
+    - group
+id: group.field_featured_project
+field_name: field_featured_project
+entity_type: group
+type: boolean
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

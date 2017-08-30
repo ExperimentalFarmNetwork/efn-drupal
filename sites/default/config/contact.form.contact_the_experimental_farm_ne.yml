@@ -6,7 +6,6 @@ id: contact_the_experimental_farm_ne
 label: 'Contact the Experimental Farm Network'
 recipients:
   - nathankleinman@gmail.com
-  - onion@radicante.media
 reply: ''
 weight: 0
 message: ''
