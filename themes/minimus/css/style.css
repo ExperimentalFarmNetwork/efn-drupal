@@ -6432,15 +6432,17 @@ div.main-container {
     display: inline-block; }
     .path-frontpage .bnrPic .efntxt_frnt p {
       color: #418261;
-      background: white;
-      border-bottom: thin solid #A4AD23;
       font-size: 4em;
       line-height: 1em;
       padding: 0 10px;
       margin-left: 2em;
       display: table;
       text-transform: lowercase;
-      font-weight: 50; }
+      font-weight: 50;
+      background: #cfcf; }
+      .path-frontpage .bnrPic .efntxt_frnt p img {
+        border-bottom: thin solid #A4AD23;
+        padding-bottom: 5px; }
   .path-frontpage .bnrPic .btns {
     width: 500px;
     margin-top: 85px;
@@ -6515,6 +6517,8 @@ div.main-container {
         line-height: normal; }
         .view-project .views-row .views-field-field-project-summary-1 h2 a {
           color: #333333; }
+  .view-project .view-footer {
+    margin-top: 1em; }
 
 .path-user .table-striped, .path-user table, body.path-group .table-striped, body.path-group table {
   margin-bottom: 0; }
@@ -6871,5 +6875,92 @@ footer.footer {
           text-transform: lowercase; }
           footer.footer #block-minimus-footer .nav > li > a:hover, footer.footer #block-minimus-footer .nav > li > a:focus {
             background: none; }
+
+@media screen and (max-width: 767px) {
+  button.navbar-toggle {
+    margin-top: 16px; } }
+@media screen and (max-width: 878px) {
+  .path-frontpage .bnrPic .efntxt_frnt {
+    width: 100%; }
+  .path-frontpage .bnrPic .btns.pull-right {
+    width: 100%;
+    margin-top: 2em;
+    float: none;
+    text-align: center; }
+    .path-frontpage .bnrPic .btns.pull-right a.btn {
+      display: inline-block; }
+    .path-frontpage .bnrPic .btns.pull-right .btn-block + .btn-block {
+      margin-top: 0; } }
+@media screen and (min-width: 879px) and (max-width: 916px) {
+  .path-frontpage .bnrPic .efntxt_frnt {
+    width: 50%; }
+  .path-frontpage .bnrPic .btns.pull-right {
+    width: 40%;
+    margin-right: 2em;
+    position: relative;
+    bottom: -4em; } }
+@media screen and (min-width: 917px) and (max-width: 1024px) {
+  .path-frontpage .bnrPic .efntxt_frnt {
+    width: 50%; }
+  .path-frontpage .bnrPic .btns.pull-right {
+    width: 40%;
+    margin-right: 2em;
+    position: relative;
+    bottom: -4em; } }
+@media screen and (min-width: 37px) and (max-width: 753px) {
+  .view-project .views-row {
+    width: 320px !important;
+    margin: 5px; } }
+@media screen and (min-width: 755px) and (max-width: 705px) {
+  .view-project .views-row {
+    width: 320px !important;
+    margin: 5px; } }
+@media screen and (min-width: 706px) and (max-width: 809px) {
+  .view-project .views-row {
+    width: 320px !important;
+    margin: 5px; } }
+@media screen and (min-width: 937px) and (max-width: 983px) {
+  .view-project .views-row {
+    width: 277px !important;
+    margin: 5px; } }
+@media screen and (min-width: 984px) and (max-width: 1044px) {
+  .view-project .views-row {
+    width: 300px !important;
+    margin: 5px; } }
+@media screen and (min-width: 1045px) and (max-width: 1104px) {
+  .view-project .views-row {
+    width: 320px !important;
+    margin: 5px; } }
+@media screen and (min-width: 1104px) and (max-width: 1194px) {
+  .view-project .views-row {
+    width: 320px !important; } }
+@media screen and (min-width: 1300px) and (max-width: 1753px) {
+  .view-project .views-row {
+    margin: 10px;
+    width: 320px !important; } }
+@media screen and (min-width: 1025px) and (max-width: 1099px) {
+  .path-frontpage .bnrPic .efntxt_frnt {
+    width: inherit; }
+
+  .btns.pull-right {
+    margin-right: 0; }
+    .btns.pull-right a {
+      width: 300px; } }
+@media all and (max-width: 1297px) {
+  .path-frontpage .bnrPic .efntxt_frnt p {
+    margin-left: 1em; }
+  .path-frontpage .bnrPic .btns {
+    margin-right: 0; }
+    .path-frontpage .bnrPic .btns a {
+      width: 300px; } }
+@media all and (max-width: 1132px) {
+  body.user-logged-in header.navbar-default #block-newprojectbutton .field--name-body a {
+    border-bottom: red solid thick;
+    display: none; }
+    body.user-logged-in header.navbar-default #block-newprojectbutton .field--name-body a:after {
+      content: '+'; } }
+@media screen and (max-width: 1320px) {
+  div.main-container {
+    width: inherit; } }
 
 /*# sourceMappingURL=style.css.map */
