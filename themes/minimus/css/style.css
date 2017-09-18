@@ -6438,8 +6438,7 @@ div.main-container {
       margin-left: 2em;
       display: table;
       text-transform: lowercase;
-      font-weight: 50;
-      background: #cfcf; }
+      font-weight: 50; }
       .path-frontpage .bnrPic .efntxt_frnt p img {
         border-bottom: thin solid #A4AD23;
         padding-bottom: 5px;
@@ -6877,10 +6876,65 @@ footer.footer {
           footer.footer #block-minimus-footer .nav > li > a:hover, footer.footer #block-minimus-footer .nav > li > a:focus {
             background: none; }
 
+@media screen and (max-width: 490px) {
+  .path-frontpage .bnrPic {
+    height: inherit; }
+    .path-frontpage .bnrPic .efntxt_frnt p {
+      font-size: inherit;
+      padding: 0;
+      text-align: center;
+      margin-left: 0 !important;
+      width: 100%; }
+    .path-frontpage .bnrPic .btns.pull-right {
+      margin-top: 1em !important; } }
+@media screen and (max-width: 375px) {
+  .path-frontpage .bnrPic .efntxt_frnt p img[src="themes/minimus/images/e.png"] {
+    width: 234px; }
+  .path-frontpage .bnrPic .efntxt_frnt p img[src="/themes/minimus/images/f.png"] {
+    width: 67px; }
+  .path-frontpage .bnrPic .efntxt_frnt p img[src="themes/minimus/images/n.png"] {
+    width: 136px; } }
+@media screen and (min-width: 375px) and (max-width: 490px) {
+  .path-frontpage .bnrPic .efntxt_frnt p img[src="themes/minimus/images/e.png"] {
+    width: 242px; }
+  .path-frontpage .bnrPic .efntxt_frnt p img[src="/themes/minimus/images/f.png"] {
+    width: 77px; }
+  .path-frontpage .bnrPic .efntxt_frnt p img[src="themes/minimus/images/n.png"] {
+    width: 156px; } }
+@media screen and (min-width: 392px) and (max-width: 490px) {
+  footer.footer #block-sociallinks .field--name-body img {
+    width: 50px; } }
+@media screen and (min-width: 345px) and (max-width: 391px) {
+  footer.footer #block-sociallinks .field--name-body img {
+    width: 40px; } }
+@media screen and (max-width: 398px) {
+  a.logo {
+    background: url(/themes/minimus/images/efn_short.svg);
+    background-repeat: no-repeat;
+    background-size: 111px 45px;
+    width: 112px;
+    height: 45px; }
+    a.logo img {
+      display: none; }
+    a.logo button.navbar-toggle {
+      margin-top: 10px; } }
+@media screen and (max-width: 346px) {
+  footer.footer #block-sociallinks .field--name-body img {
+    width: 65px;
+    margin: 10px 10px; } }
 @media screen and (max-width: 767px) {
   button.navbar-toggle {
     margin-top: 16px; } }
-@media screen and (max-width: 878px) {
+@media screen and (min-width: 768px) and (max-width: 881px) {
+  a.logo {
+    width: 50px;
+    height: 50px;
+    background: url(../images/efn_logo.png);
+    background-size: cover;
+    margin: 5px; }
+    a.logo img {
+      display: none; } }
+@media screen and (max-width: 792px) {
   .path-frontpage .bnrPic .efntxt_frnt {
     width: 100%; }
   .path-frontpage .bnrPic .btns.pull-right {
@@ -6892,21 +6946,7 @@ footer.footer {
       display: inline-block; }
     .path-frontpage .bnrPic .btns.pull-right .btn-block + .btn-block {
       margin-top: 0; } }
-@media screen and (max-width: 986px) {
-  body.user-logged-in ul.navbar-nav.navbar-right {
-    margin-top: 21px; }
-    body.user-logged-in ul.navbar-nav.navbar-right [data-drupal-link-system-path="user"], body.user-logged-in ul.navbar-nav.navbar-right [data-drupal-link-system-path="user/logout"] {
-      display: none; } }
-@media screen and (min-width: 768px) and (max-width: 881px) {
-  a.logo {
-    width: 50px;
-    height: 50px;
-    background: url(../images/efn_logo.png);
-    background-size: cover;
-    margin: 5px; }
-    a.logo img {
-      display: none; } }
-@media screen and (min-width: 879px) and (max-width: 793px) {
+@media screen and (min-width: 793px) and (max-width: 916px) {
   .path-frontpage .bnrPic .efntxt_frnt {
     width: 50%; }
   .path-frontpage .bnrPic .btns.pull-right {
@@ -6922,7 +6962,36 @@ footer.footer {
     margin-right: 2em;
     position: relative;
     bottom: -4em; } }
-@media screen and (min-width: 37px) and (max-width: 753px) {
+@media screen and (max-width: 986px) {
+  body.user-logged-in ul.navbar-nav.navbar-right {
+    margin-top: 21px; }
+    body.user-logged-in ul.navbar-nav.navbar-right [data-drupal-link-system-path="user"], body.user-logged-in ul.navbar-nav.navbar-right [data-drupal-link-system-path="user/logout"] {
+      display: none; } }
+@media screen and (min-width: 1025px) and (max-width: 1099px) {
+  .path-frontpage .bnrPic .efntxt_frnt {
+    width: inherit; }
+
+  .btns.pull-right {
+    margin-right: 0; }
+    .btns.pull-right a {
+      width: 300px; } }
+@media all and (max-width: 1132px) {
+  body.user-logged-in header.navbar-default #block-newprojectbutton .field--name-body a {
+    border-bottom: red solid thick;
+    display: none; }
+    body.user-logged-in header.navbar-default #block-newprojectbutton .field--name-body a:after {
+      content: '+'; } }
+@media screen and (max-width: 1297px) {
+  .path-frontpage .bnrPic .efntxt_frnt p {
+    margin-left: 1em; }
+  .path-frontpage .bnrPic .btns {
+    margin-right: 0; }
+    .path-frontpage .bnrPic .btns a {
+      width: 300px; } }
+@media screen and (max-width: 1320px) {
+  div.main-container {
+    width: inherit; } }
+@media screen and (min-width: 370px) and (max-width: 753px) {
   .view-project .views-row {
     width: 320px !important;
     margin: 5px; } }
@@ -6953,29 +7022,5 @@ footer.footer {
   .view-project .views-row {
     margin: 10px;
     width: 320px !important; } }
-@media screen and (min-width: 1025px) and (max-width: 1099px) {
-  .path-frontpage .bnrPic .efntxt_frnt {
-    width: inherit; }
-
-  .btns.pull-right {
-    margin-right: 0; }
-    .btns.pull-right a {
-      width: 300px; } }
-@media all and (max-width: 1297px) {
-  .path-frontpage .bnrPic .efntxt_frnt p {
-    margin-left: 1em; }
-  .path-frontpage .bnrPic .btns {
-    margin-right: 0; }
-    .path-frontpage .bnrPic .btns a {
-      width: 300px; } }
-@media all and (max-width: 1132px) {
-  body.user-logged-in header.navbar-default #block-newprojectbutton .field--name-body a {
-    border-bottom: red solid thick;
-    display: none; }
-    body.user-logged-in header.navbar-default #block-newprojectbutton .field--name-body a:after {
-      content: '+'; } }
-@media screen and (max-width: 1320px) {
-  div.main-container {
-    width: inherit; } }
 
 /*# sourceMappingURL=style.css.map */

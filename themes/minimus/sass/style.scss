@@ -176,7 +176,7 @@ div.main-container{
 			    display:table;
 			    text-transform:lowercase;
 			    font-weight:50;	
-			    background: #cfcf;
+			    // background: #cfcf;
 			    img{
 		    		border-bottom: thin solid $du-gold;
 		    		padding-bottom: 5px;
@@ -784,11 +784,113 @@ footer.footer{
 
 
 // mediaqueries
-@media screen and (max-width:1000px) {
-	.efntxt_frnt, .btns.pull-right{
-		// border:thin solid #ccc;
+
+// test to show boxes on front page elements comment out to use
+// @media screen and (max-width:1000px) {
+// 	.efntxt_frnt, .btns.pull-right{
+// 		border:thin solid #ccc;
+// 	}
+// }
+
+@media screen and (max-width:490px) {
+	.path-frontpage .bnrPic{
+		height:inherit;
+		.efntxt_frnt{
+			p{
+				font-size:inherit;
+				padding:0;
+				text-align:center;
+				margin-left:0 !important;
+				width:100%;
+			}
+			
+		}
+		.btns.pull-right{
+			margin-top:1em !important;
+		}
+		
 	}
 }
+
+@media screen and (max-width:375px) {
+	.path-frontpage .bnrPic{
+		.efntxt_frnt{
+			p{
+
+				img[src="themes/minimus/images/e.png"]{
+					width: 234px;
+				}
+				img[src="/themes/minimus/images/f.png"]{
+					width: 67px;
+				}
+
+				img[src="themes/minimus/images/n.png"]{
+					width: 136px;
+				}
+			}
+			
+		}		
+	}
+}
+@media screen and (min-width:375px) and (max-width:490px) {
+	.path-frontpage .bnrPic{
+		.efntxt_frnt{
+			p{
+
+				img[src="themes/minimus/images/e.png"]{
+					width: 242px;
+				}
+				img[src="/themes/minimus/images/f.png"]{
+					width: 77px;
+				}
+
+				img[src="themes/minimus/images/n.png"]{
+					width: 156px;
+				}
+			}
+			
+		}
+		
+	}
+}
+
+@media screen and (min-width:392px) and (max-width:490px) {
+	footer.footer #block-sociallinks .field--name-body img{
+		width:50px;
+	}
+}	
+
+@media screen and (min-width:345px) and (max-width:391px) {
+	footer.footer #block-sociallinks .field--name-body img{
+		width:40px;
+	}
+}
+
+
+@media screen and (max-width:398px){
+	a.logo{
+		background:url(/themes/minimus/images/efn_short.svg);
+		background-repeat: no-repeat;
+		background-size: 111px 45px;
+		width: 112px;;
+		height: 45px;
+		img{
+			display:none;
+		}
+		button.navbar-toggle {
+		    margin-top: 10px;
+		}
+
+	}
+}
+
+@media screen and (max-width:346px) {
+	footer.footer #block-sociallinks .field--name-body img{
+		width:65px;
+		margin: 10px 10px;
+	}
+}	
+
 
 // 767 = menu breakpoint
 @media screen and (max-width: 767px) {
@@ -798,7 +900,20 @@ footer.footer{
 }
 
 
-@media screen and (max-width: 878px) {
+@media screen and (min-width:768px) and (max-width: 881px) {
+	a.logo{
+		width:50px;
+		height:50px;
+		background: url(../images/efn_logo.png);
+		background-size: cover;
+		margin:5px;
+		img{
+			display:none;
+		} 
+	}
+}
+
+@media screen and (max-width: 792px) {
 	.path-frontpage .bnrPic{
 		 .efntxt_frnt{
 			width:100%;
@@ -823,33 +938,7 @@ footer.footer{
 	}
 }
 
-@media screen and (max-width: 986px) {
-	body.user-logged-in{
-		ul.navbar-nav{
-			&.navbar-right{
-				margin-top:21px;
-				[data-drupal-link-system-path="user"], [data-drupal-link-system-path="user/logout"]{
-					display:none;		
-				}
-			}
-		}
-	}
-
-}
-@media screen and (min-width:768px) and (max-width: 881px) {
-	a.logo{
-		width:50px;
-		height:50px;
-		background: url(../images/efn_logo.png);
-		background-size: cover;
-		margin:5px;
-		img{
-			display:none;
-		} 
-	}
-}
-
-@media screen and (min-width:879px) and (max-width: 793px) {
+@media screen and (min-width:793px) and (max-width: 916px) {
 	.path-frontpage .bnrPic{
 		 .efntxt_frnt{
 			width:50%;
@@ -866,6 +955,24 @@ footer.footer{
 		}
 	}
 }
+
+// @media screen and (min-width:880px) and (max-width: 916px) {
+// 	.path-frontpage .bnrPic{
+// 		 .efntxt_frnt{
+// 			width:50%;
+// 			img{
+// 				// width:80%;
+				
+// 			}
+// 		}
+// 		.btns.pull-right{
+// 			width:40%;
+// 			margin-right:2em;
+// 			position: relative;
+// 		    bottom: -4em;
+// 		}
+// 	}
+// }
 
 @media screen and (min-width:917px) and (max-width: 1024px) {
 	.path-frontpage .bnrPic{
@@ -885,9 +992,73 @@ footer.footer{
 	}
 }
 
-// grid size tweaks
 
-@media screen and (min-width:37px) and (max-width:753px){
+@media screen and (max-width: 986px) {
+	body.user-logged-in{
+		ul.navbar-nav{
+			&.navbar-right{
+				margin-top:21px;
+				[data-drupal-link-system-path="user"], [data-drupal-link-system-path="user/logout"]{
+					display:none;		
+				}
+			}
+		}
+	}
+
+}
+
+
+@media screen and (min-width:1025px) and (max-width: 1099px) {
+	.path-frontpage .bnrPic .efntxt_frnt{
+		width:inherit;
+	}
+	.btns.pull-right{
+		margin-right:0;
+		a{
+			width:300px;
+		}
+	}
+}
+
+@media all and (max-width: 1132px) {
+  body.user-logged-in {
+    header.navbar-default #block-newprojectbutton .field--name-body a{
+    	border-bottom: red solid thick;
+    	display:none;
+    	&:after{
+    		content:'+';
+    	}
+    }
+  }
+}
+
+@media screen and (max-width: 1297px) {
+	.path-frontpage .bnrPic{
+		.efntxt_frnt{
+			p{
+				margin-left:1em;
+			}
+		}
+		.btns{
+	    margin-right:0;
+		    a{
+		    	width:300px;
+			}
+		}
+	}
+}
+
+
+
+// project view grid size tweaks
+
+@media screen and (max-width: 1320px) {
+	div.main-container{
+		width:inherit;
+	}
+}
+
+@media screen and (min-width:370px) and (max-width:753px){
 	.view-project .views-row{
 	    width: 320px !important;
 	    margin:5px;
@@ -940,64 +1111,5 @@ footer.footer{
 	    margin:10px;
 	    width:320px !important;
 
-	}
-}
-
-@media screen and (min-width:1025px) and (max-width: 1099px) {
-	.path-frontpage .bnrPic .efntxt_frnt{
-		width:inherit;
-		img{
-			// width:80%;
-		}
-	}
-	.btns.pull-right{
-		margin-right:0;
-		a{
-			width:300px;
-		}
-	}
-}
-
-
-@media all and (max-width: 1297px) {
-	.path-frontpage .bnrPic{
-		.efntxt_frnt{
-			p{
-				margin-left:1em;
-			}
-		}
-		.btns{
-		// width: 00px;
-	    // margin-top: 85px;
-	    margin-right:0;
-	    // text-transform: uppercase;
-	    // display: inline-block;
-		    a{
-		    	width:300px;
-			}
-		}
-
-	}
-  body.user-logged-in {
-  
-  }
-}
-
-@media all and (max-width: 1132px) {
-  body.user-logged-in {
-    header.navbar-default #block-newprojectbutton .field--name-body a{
-    	border-bottom: red solid thick;
-    	display:none;
-    	&:after{
-    		content:'+';
-    	}
-    }
-  }
-}
-
-
-@media screen and (max-width: 1320px) {
-	div.main-container{
-		width:inherit;
 	}
 }
