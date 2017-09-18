@@ -269,7 +269,7 @@ abstract class CommentResourceTestBase extends EntityResourceTestBase {
     $this->provisionEntityResource();
     $this->setUpAuthorization('POST');
 
-    $url = $this->getPostUrl()->setOption('query', ['_format' => static::$format]);
+    $url = $this->getEntityResourcePostUrl()->setOption('query', ['_format' => static::$format]);
     $request_options = [];
     $request_options[RequestOptions::HEADERS]['Accept'] = static::$mimeType;
     $request_options[RequestOptions::HEADERS]['Content-Type'] = static::$mimeType;
@@ -326,6 +326,39 @@ abstract class CommentResourceTestBase extends EntityResourceTestBase {
       default:
         return parent::getExpectedUnauthorizedAccessMessage($method);
     }
+  }
+
+  /**
+   * Tests POSTing a comment with and without 'skip comment approval'
+   */
+  public function testPostSkipCommentApproval() {
+    $this->initAuthentication();
+    $this->provisionEntityResource();
+    $this->setUpAuthorization('POST');
+
+    // Create request.
+    $request_options = [];
+    $request_options[RequestOptions::HEADERS]['Accept'] = static::$mimeType;
+    $request_options[RequestOptions::HEADERS]['Content-Type'] = static::$mimeType;
+    $request_options = array_merge_recursive($request_options, $this->getAuthenticationRequestOptions('POST'));
+    $request_options[RequestOptions::BODY] = $this->serializer->encode($this->getNormalizedPostEntity(), static::$format);
+
+    $url = $this->getEntityResourcePostUrl()->setOption('query', ['_format' => static::$format]);
+
+    // Status should be FALSE when posting as anonymous.
+    $response = $this->request('POST', $url, $request_options);
+    $unserialized = $this->serializer->deserialize((string) $response->getBody(), get_class($this->entity), static::$format);
+    $this->assertResourceResponse(201, FALSE, $response);
+    $this->assertFalse($unserialized->getStatus());
+
+    // Grant anonymous permission to skip comment approval.
+    $this->grantPermissionsToTestedRole(['skip comment approval']);
+
+    // Status should be TRUE when posting as anonymous and skip comment approval.
+    $response = $this->request('POST', $url, $request_options);
+    $unserialized = $this->serializer->deserialize((string) $response->getBody(), get_class($this->entity), static::$format);
+    $this->assertResourceResponse(201, FALSE, $response);
+    $this->assertTrue($unserialized->getStatus());
   }
 
 }
