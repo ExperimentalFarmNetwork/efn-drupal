@@ -180,7 +180,7 @@ div.main-container{
 			    img{
 		    		border-bottom: thin solid $du-gold;
 		    		padding-bottom: 5px;
-
+		    		background:#fff;
 			    }
 	    	}
 
@@ -822,7 +822,34 @@ footer.footer{
 		}
 	}
 }
-@media screen and (min-width:879px) and (max-width: 916px) {
+
+@media screen and (max-width: 986px) {
+	body.user-logged-in{
+		ul.navbar-nav{
+			&.navbar-right{
+				margin-top:21px;
+				[data-drupal-link-system-path="user"], [data-drupal-link-system-path="user/logout"]{
+					display:none;		
+				}
+			}
+		}
+	}
+
+}
+@media screen and (min-width:768px) and (max-width: 881px) {
+	a.logo{
+		width:50px;
+		height:50px;
+		background: url(../images/efn_logo.png);
+		background-size: cover;
+		margin:5px;
+		img{
+			display:none;
+		} 
+	}
+}
+
+@media screen and (min-width:879px) and (max-width: 793px) {
 	.path-frontpage .bnrPic{
 		 .efntxt_frnt{
 			width:50%;
