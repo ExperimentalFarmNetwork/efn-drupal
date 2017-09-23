@@ -25,6 +25,6 @@ settings:
 visibility:
   request_path:
     id: request_path
-    pages: '<front>'
+    pages: '<frozznt>'
     negate: false
     context_mapping: {  }

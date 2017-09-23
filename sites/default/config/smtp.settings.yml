@@ -1,11 +1,11 @@
 smtp_on: true
-smtp_host: fleetwood.websitewelcome.com
+smtp_host: mail.radicante.net
 smtp_hostbackup: ''
 smtp_port: '465'
 smtp_protocol: ssl
-smtp_username: efn@radicante.media
-smtp_password: 2P114ICg21qf4osO
-smtp_from: efn@radicante.media
+smtp_username: efn@radicante.net
+smtp_password: lCn9hA9AgcZDW9
+smtp_from: efn@radicante.net
 smtp_fromname: efn
 smtp_allowhtml: '1'
 smtp_test_address: ''
