@@ -7,18 +7,19 @@ dependencies:
     - field.storage.node.field_bef_integer
     - field.storage.node.field_bef_letters
     - field.storage.node.field_bef_location
+    - field.storage.node.field_bef_price
     - taxonomy.vocabulary.bef_test_location
+  enforced:
+    module:
+      - bef_test
   module:
     - better_exposed_filters
     - node
     - options
     - taxonomy
     - user
-  enforced:
-    module:
-      - bef_test
 _core:
-  default_config_hash: Zv5cFBgri_6QnlZXIfOMwirX6vtdm3eqmIFeJMTt7Dc
+  default_config_hash: vBlYQqgp3xw3tYE67_Y9dy18ibAGMS9HYTop3QyDoEk
 id: bef_test
 label: 'BEF Test'
 module: views
@@ -53,22 +54,22 @@ display:
         type: bef
         options:
           submit_button: Apply
-          reset_button: 0
+          reset_button: false
           reset_button_label: Reset
           exposed_sorts_label: 'Sort by'
-          expose_sort_order: 1
+          expose_sort_order: true
           sort_asc_label: Asc
           sort_desc_label: Desc
           bef:
             general:
-              allow_secondary: 0
+              allow_secondary: false
               secondary_label: 'Advanced options'
             status:
               bef_format: default
               more_options:
                 bef_select_all_none: false
-                bef_collapsible: 0
-                is_secondary: 0
+                bef_collapsible: false
+                is_secondary: false
                 bef_filter_description: ''
                 tokens:
                   available:
@@ -78,7 +79,7 @@ display:
             field_bef_boolean_value:
               bef_format: default
               more_options:
-                is_secondary: 0
+                is_secondary: false
                 bef_filter_description: ''
                 tokens:
                   available:
@@ -88,7 +89,7 @@ display:
             field_bef_email_value:
               bef_format: default
               more_options:
-                is_secondary: 0
+                is_secondary: false
                 bef_filter_description: ''
                 tokens:
                   available:
@@ -99,8 +100,8 @@ display:
               bef_format: default
               more_options:
                 bef_select_all_none: false
-                bef_collapsible: 0
-                is_secondary: 0
+                bef_collapsible: false
+                is_secondary: false
                 bef_filter_description: ''
                 tokens:
                   available:
@@ -111,8 +112,8 @@ display:
               bef_format: default
               more_options:
                 bef_select_all_none: false
-                bef_collapsible: 0
-                is_secondary: 0
+                bef_collapsible: false
+                is_secondary: false
                 bef_filter_description: ''
                 tokens:
                   available:
@@ -123,8 +124,8 @@ display:
               bef_format: bef
               more_options:
                 bef_select_all_none: false
-                bef_collapsible: 0
-                is_secondary: 0
+                bef_collapsible: false
+                is_secondary: false
                 bef_filter_description: ''
                 tokens:
                   available:
@@ -586,6 +587,72 @@ display:
           separator: ', '
           field_api_classes: false
           plugin_id: field
+        field_bef_price:
+          id: field_bef_price
+          table: node__field_bef_price
+          field: field_bef_price
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: Price
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: number_decimal
+          settings:
+            thousand_separator: ''
+            prefix_suffix: true
+            decimal_separator: .
+            scale: 2
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
       filters:
         status:
           id: status
@@ -595,7 +662,7 @@ display:
           group_type: group
           admin_label: ''
           operator: '='
-          value: true
+          value: '1'
           group: 1
           exposed: true
           expose:
@@ -635,10 +702,7 @@ display:
           group_type: group
           admin_label: ''
           operator: '='
-          value:
-            min: ''
-            max: ''
-            value: ''
+          value: All
           group: 1
           exposed: true
           expose:
@@ -833,6 +897,47 @@ display:
           depth: 10
           entity_type: node
           plugin_id: taxonomy_index_tid_depth
+        field_bef_price_value:
+          id: field_bef_price_value
+          table: node__field_bef_price
+          field: field_bef_price_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: '<='
+          value:
+            min: ''
+            max: ''
+            value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_bef_price_value_op
+            label: 'Price less than'
+            description: ''
+            use_operator: false
+            operator: field_bef_price_value_op
+            identifier: field_bef_price_value
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          plugin_id: numeric
       sorts:
         created:
           id: created
@@ -872,6 +977,7 @@ display:
         - 'config:field.storage.node.field_bef_integer'
         - 'config:field.storage.node.field_bef_letters'
         - 'config:field.storage.node.field_bef_location'
+        - 'config:field.storage.node.field_bef_price'
   page_1:
     display_plugin: page
     id: page_1
@@ -896,3 +1002,4 @@ display:
         - 'config:field.storage.node.field_bef_integer'
         - 'config:field.storage.node.field_bef_letters'
         - 'config:field.storage.node.field_bef_location'
+        - 'config:field.storage.node.field_bef_price'

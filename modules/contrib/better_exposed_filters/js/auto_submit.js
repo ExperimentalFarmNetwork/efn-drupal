@@ -41,25 +41,8 @@
    */
   Drupal.behaviors.betterExposedFiltersAutoSubmit = {
     attach: function(context) {
-      // 'this' references the form element.
-      function triggerSubmit (e) {
-        $(this).find('[data-bef-auto-submit-click]').click();
-      }
-
-      // The change event bubbles so we only need to bind it to the outer form.
-      $('form[data-bef-auto-submit-full-form]', context)
-        .add('[data-bef-auto-submit]', context)
-        .filter('form, select, input:not(:text, :submit)')
-        .once('bef-auto-submit')
-        .change(function (e) {
-          // don't trigger on text change for full-form
-          if ($(e.target).is(':not(:text, :submit, [data-bef-auto-submit-exclude])')) {
-            triggerSubmit.call(e.target.form);
-          }
-        });
-
       // e.keyCode: key
-      var discardKeyCode = [
+      var ignoredKeyCodes = [
         16, // shift
         17, // ctrl
         18, // alt
@@ -72,33 +55,39 @@
         38, // up arrow
         39, // right arrow
         40, // down arrow
-         9, // tab
+        9, // tab
         13, // enter
         27  // esc
       ];
-      // Don't wait for change event on textfields.
-      $('[data-bef-auto-submit-full-form] input:text, input:text[data-bef-auto-submit]', context)
-        .filter(':not([data-bef-auto-submit-exclude])')
-        .once('bef-auto-submit', function () {
-          // each textinput element has his own timeout
-          var timeoutID = 0;
-          $(this)
-            .bind('keydown keyup', function (e) {
-              if ($.inArray(e.keyCode, discardKeyCode) === -1) {
-                timeoutID && clearTimeout(timeoutID);
-              }
-            })
-            .keyup(function(e) {
-              if ($.inArray(e.keyCode, discardKeyCode) === -1) {
-                timeoutID = setTimeout($.proxy(triggerSubmit, this.form), 500);
-              }
-            })
-            .bind('change', function (e) {
-              if ($.inArray(e.keyCode, discardKeyCode) === -1) {
-                timeoutID = setTimeout($.proxy(triggerSubmit, this.form), 500);
-              }
-            });
-        });
+
+      // When exposed as a block, the form #attributes are moved from the form
+      // to the block element, thus the second selector.
+      // @see \Drupal\block\BlockViewBuilder::preRender
+      var selectors = 'form[data-bef-auto-submit-full-form], [data-bef-auto-submit-full-form] form, [data-bef-auto-submit]';
+
+      function triggerSubmit ($target) {
+        $target.closest('form').find('[data-bef-auto-submit-click]').click();
+      }
+
+      // The change event bubbles so we only need to bind it to the outer form
+      // in case of a full form, or a single element when specified explicitly.
+      $(selectors, context).addBack(selectors).once('bef-auto-submit').on('change keyup keypress', function (e) {
+        var $target = $(e.target);
+
+        // Don't submit on changes to excluded elements or a submit element.
+        if ($target.is('[data-bef-auto-submit-exclude], :submit')) {
+          return true;
+        }
+        // Use debounce to prevent excessive submits on text field changes.
+        // Navigation key presses are ignored.
+        else if ($target.is(':text:not(.hasDatepicker), textarea') && $.inArray(e.keyCode, ignoredKeyCodes) === -1) {
+          Drupal.debounce(triggerSubmit, 500)($target);
+        }
+        // Only trigger submit if a change was the trigger (no keyup).
+        else if (e.type === 'change') {
+          triggerSubmit($target);
+        }
+      });
     }
   }
 

@@ -5276,51 +5276,6 @@
         }
     },
     {
-        "name": "drupal/better_exposed_filters",
-        "version": "3.0.0-alpha2",
-        "version_normalized": "3.0.0.0-alpha2",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/better_exposed_filters",
-            "reference": "8.x-3.0-alpha2"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/better_exposed_filters-8.x-3.0-alpha2.zip",
-            "reference": "8.x-3.0-alpha2",
-            "shasum": "f1bbe21379a4ac8e28e3edfbdd4964343299caeb"
-        },
-        "require": {
-            "drupal/core": "*"
-        },
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-3.x": "3.x-dev"
-            },
-            "drupal": {
-                "version": "8.x-3.0-alpha2",
-                "datestamp": "1484626084"
-            }
-        },
-        "installation-source": "dist",
-        "notification-url": "https://packages.drupal.org/8/downloads",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "mikeker",
-                "homepage": "https://www.drupal.org/user/192273"
-            }
-        ],
-        "description": "Provides advanced options (such as links, checkboxes, or jQueryUI widgets) for exposed Views elements.",
-        "homepage": "https://www.drupal.org/project/better_exposed_filters",
-        "support": {
-            "source": "http://cgit.drupalcode.org/better_exposed_filters"
-        }
-    },
-    {
         "name": "drupal/smtp",
         "version": "1.0.0-beta2",
         "version_normalized": "1.0.0.0-beta2",
@@ -8633,6 +8588,55 @@
         "support": {
             "source": "http://cgit.drupalcode.org/admin_toolbar",
             "issues": "https://www.drupal.org/project/issues/admin_toolbar"
+        }
+    },
+    {
+        "name": "drupal/better_exposed_filters",
+        "version": "3.0.0-alpha3",
+        "version_normalized": "3.0.0.0-alpha3",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/better_exposed_filters",
+            "reference": "8.x-3.0-alpha3"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/better_exposed_filters-8.x-3.0-alpha3.zip",
+            "reference": "8.x-3.0-alpha3",
+            "shasum": "0268a42ea5a4ab170c8f4aefecd26b6f3c7448d2"
+        },
+        "require": {
+            "drupal/core": "*"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-3.x": "3.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-3.0-alpha3",
+                "datestamp": "1501274342",
+                "security-coverage": {
+                    "status": "not-covered",
+                    "message": "Alpha releases are not covered by Drupal security advisories."
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "mikeker",
+                "homepage": "https://www.drupal.org/user/192273"
+            }
+        ],
+        "description": "Provides advanced options (such as links, checkboxes, or jQueryUI widgets) for exposed Views elements.",
+        "homepage": "https://www.drupal.org/project/better_exposed_filters",
+        "support": {
+            "source": "http://cgit.drupalcode.org/better_exposed_filters"
         }
     }
 ]
