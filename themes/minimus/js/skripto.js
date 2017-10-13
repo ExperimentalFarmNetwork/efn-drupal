@@ -43,6 +43,8 @@ Drupal.behaviors.commentThing = {
         var cardPic = $(this).find(".views-field-field-project-image img").attr('src');
         });
     }
+
+    // user icons
     $("[data-drupal-link-system-path='user']").before('<a href="/user" class="glyphicon glyphicon-user"></a>');
     $("[data-drupal-link-system-path='user/logout']").before('<a href="/user" class="glyphicon glyphicon-log-out"></a>');
 
@@ -57,7 +59,8 @@ Drupal.behaviors.commentThing = {
     });
 
     // Project form: move description in wysiwyg fields to below the label
-        //  change this to some sort of .each function to work on more than this field.
+    //  change this to some sort of .each function to work on more than this field.
+    
     var description = $("#edit-field-description-wrapper .description");
     $("#edit-field-description-wrapper label").after(description);
 
@@ -81,6 +84,9 @@ Drupal.behaviors.commentThing = {
             weirdLink.html(to);
         }
     }
+
+    // make profile links a well
+    $("#block-efnprofilelinks-2").addClass('well','well-lg');
 
 
 })(jQuery, Drupal);

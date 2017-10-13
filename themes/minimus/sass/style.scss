@@ -154,6 +154,10 @@ div.main-container{
 	}
 }
 
+// Pages
+.page-header{
+	border-bottom:0;
+}
 
 
 // Front page
@@ -333,6 +337,20 @@ div.main-container{
 	}
 
 }
+
+ // efn new user profile links
+#block-efnprofilelinks-2{
+	p{
+		font-size:.85em;
+	}
+	.btn{
+		margin-bottom:1em;
+	}
+	:last-child {
+	  margin-bottom:0;
+	}
+}
+
  
 // group main page
 body.path-group{

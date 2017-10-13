@@ -6422,6 +6422,9 @@ div.main-container {
   font-size: 24px;
   margin-top: 0; }
 
+.page-header {
+  border-bottom: 0; }
+
 .path-frontpage .bnrPic {
   background: url("/themes/minimus/images/e_.svg") no-repeat;
   background-size: auto 100%;
@@ -6532,6 +6535,13 @@ div.main-container {
   margin-top: 1em; }
 .path-user .profile-volunteer-add-form #edit-field-other-wrapper {
   display: none; }
+
+#block-efnprofilelinks-2 p {
+  font-size: .85em; }
+#block-efnprofilelinks-2 .btn {
+  margin-bottom: 1em; }
+#block-efnprofilelinks-2 :last-child {
+  margin-bottom: 0; }
 
 body.path-group {
   background-position-y: 73px; }
