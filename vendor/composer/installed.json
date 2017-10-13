@@ -3848,68 +3848,6 @@
         }
     },
     {
-        "name": "drupal/admin_toolbar",
-        "version": "1.19.0",
-        "version_normalized": "1.19.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/admin_toolbar",
-            "reference": "8.x-1.19"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/admin_toolbar-8.x-1.19.zip",
-            "reference": "8.x-1.19",
-            "shasum": "87de41eab3c5cd49d4e1b5b764cb3b9d5ad683a0"
-        },
-        "require": {
-            "drupal/core": "*"
-        },
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-1.x": "1.x-dev"
-            },
-            "drupal": {
-                "version": "8.x-1.19",
-                "datestamp": "1491487683"
-            }
-        },
-        "installation-source": "dist",
-        "notification-url": "https://packages.drupal.org/8/downloads",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "Mohamed Anis Taktak",
-                "homepage": "https://www.drupal.org/u/matio89"
-            },
-            {
-                "name": "eme",
-                "homepage": "https://www.drupal.org/user/542492"
-            },
-            {
-                "name": "fethi.krout",
-                "homepage": "https://www.drupal.org/user/3206765"
-            },
-            {
-                "name": "matio89",
-                "homepage": "https://www.drupal.org/user/2320090"
-            },
-            {
-                "name": "romainj",
-                "homepage": "https://www.drupal.org/user/370706"
-            }
-        ],
-        "description": "Admin Toolbar improve the default Drupal Toolbar, it lets the hover of sub menus.",
-        "homepage": "http://drupal.org/project/admin_toolbar",
-        "support": {
-            "source": "http://cgit.drupalcode.org/admin_toolbar",
-            "issues": "https://www.drupal.org/project/issues/admin_toolbar"
-        }
-    },
-    {
         "name": "jakub-onderka/php-console-color",
         "version": "0.1",
         "version_normalized": "0.1.0.0",
@@ -8621,6 +8559,80 @@
         "homepage": "http://drupal.org/project/address",
         "support": {
             "source": "http://cgit.drupalcode.org/address"
+        }
+    },
+    {
+        "name": "drupal/admin_toolbar",
+        "version": "1.20.0",
+        "version_normalized": "1.20.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/admin_toolbar",
+            "reference": "8.x-1.20"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/admin_toolbar-8.x-1.20.zip",
+            "reference": "8.x-1.20",
+            "shasum": "ebeb6b630c0c614b36263ac4a024b269113b6a99"
+        },
+        "require": {
+            "drupal/core": "*"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.20",
+                "datestamp": "1505199844",
+                "security-coverage": {
+                    "status": "covered",
+                    "message": "Covered by Drupal's security advisory policy"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Mohamed Anis Taktak",
+                "homepage": "https://www.drupal.org/u/matio89"
+            },
+            {
+                "name": "adriancid",
+                "homepage": "https://www.drupal.org/user/1962106"
+            },
+            {
+                "name": "bolbol",
+                "homepage": "https://www.drupal.org/user/3400070"
+            },
+            {
+                "name": "eme",
+                "homepage": "https://www.drupal.org/user/542492"
+            },
+            {
+                "name": "fethi.krout",
+                "homepage": "https://www.drupal.org/user/3206765"
+            },
+            {
+                "name": "matio89",
+                "homepage": "https://www.drupal.org/user/2320090"
+            },
+            {
+                "name": "romainj",
+                "homepage": "https://www.drupal.org/user/370706"
+            }
+        ],
+        "description": "Admin Toolbar improve the default Drupal Toolbar, it lets the hover of sub menus.",
+        "homepage": "http://drupal.org/project/admin_toolbar",
+        "support": {
+            "source": "http://cgit.drupalcode.org/admin_toolbar",
+            "issues": "https://www.drupal.org/project/issues/admin_toolbar"
         }
     }
 ]
