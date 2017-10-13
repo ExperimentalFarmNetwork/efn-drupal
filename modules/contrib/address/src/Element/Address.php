@@ -74,31 +74,49 @@ class Address extends FormElement {
   }
 
   /**
+   * Ensures all keys are set on the provided value.
+   *
+   * @param array $value
+   *   The value.
+   *
+   * @return array
+   *   The modified value.
+   */
+  public static function applyDefaults(array $value) {
+    $properties = [
+      'given_name', 'additional_name', 'family_name', 'organization',
+      'address_line1', 'address_line2', 'postal_code', 'sorting_code',
+      'dependent_locality', 'locality', 'administrative_area',
+      'country_code', 'langcode',
+    ];
+    foreach ($properties as $property) {
+      if (!isset($value[$property])) {
+        $value[$property] = NULL;
+      }
+    }
+
+    return $value;
+  }
+
+  /**
    * {@inheritdoc}
    */
   public static function valueCallback(&$element, $input, FormStateInterface $form_state) {
+    // Ensure both the default value and the input have all keys set.
+    // Preselect the default country to ensure it's present in the value.
+    $element['#default_value'] = (array) $element['#default_value'];
+    $element['#default_value'] = self::applyDefaults($element['#default_value']);
+    if (empty($element['#default_value']['country_code']) && $element['#required']) {
+      $element['#default_value']['country_code'] = Country::getDefaultCountry($element['#available_countries']);
+    }
     if (is_array($input)) {
-      return $input;
+      $input = self::applyDefaults($input);
+      if (empty($input['country_code']) && $element['#required']) {
+        $input['country_code'] = $element['#default_value']['country_code'];
+      }
     }
-    else {
-      if (!is_array($element['#default_value'])) {
-        $element['#default_value'] = [];
-      }
-      // Initialize properties.
-      $properties = [
-        'given_name', 'additional_name', 'family_name', 'organization',
-        'address_line1', 'address_line2', 'postal_code', 'sorting_code',
-        'dependent_locality', 'locality', 'administrative_area',
-        'country_code', 'langcode',
-      ];
-      foreach ($properties as $property) {
-        if (!isset($element['#default_value'][$property])) {
-          $element['#default_value'][$property] = NULL;
-        }
-      }
 
-      return $element['#default_value'];
-    }
+    return is_array($input) ? $input : $element['#default_value'];
   }
 
   /**
@@ -115,36 +133,16 @@ class Address extends FormElement {
    *   The processed element.
    *
    * @throws \InvalidArgumentException
-   *   Thrown when #available_countries or #used_fields is malformed.
+   *   Thrown when #used_fields is malformed.
    */
   public static function processAddress(array &$element, FormStateInterface $form_state, array &$complete_form) {
-    if (isset($element['#available_countries']) && !is_array($element['#available_countries'])) {
-      throw new \InvalidArgumentException('The #available_countries property must be an array.');
-    }
     if (isset($element['#used_fields']) && !is_array($element['#used_fields'])) {
       throw new \InvalidArgumentException('The #used_fields property must be an array.');
     }
-
     $id_prefix = implode('-', $element['#parents']);
     $wrapper_id = Html::getUniqueId($id_prefix . '-ajax-wrapper');
-    $full_country_list = \Drupal::service('address.country_repository')->getList();
-    $country_list = $full_country_list;
-    if (!empty($element['#available_countries'])) {
-      $available_countries = $element['#available_countries'];
-      if (!empty($element['#default_value']['country_code'])) {
-        // The current country should always be available.
-        $available_countries[] = $element['#default_value']['country_code'];
-      }
-      $available_countries = array_combine($available_countries, $available_countries);
-      $country_list = array_intersect_key($country_list, $available_countries);
-    }
-
+    // The #value has the new values on #ajax, the #default_value otherwise.
     $value = $element['#value'];
-    if (empty($value['country_code']) && $element['#required']) {
-      // Fallback to the first country in the list if the default country
-      // is empty even though the field is required.
-      $value['country_code'] = key($country_list);
-    }
 
     $element = [
       '#tree' => TRUE,
@@ -155,37 +153,21 @@ class Address extends FormElement {
     ] + $element;
     $element['langcode'] = [
       '#type' => 'hidden',
-      '#value' => $value['langcode'],
+      '#value' => $element['#default_value']['langcode'],
     ];
-    // Hide the country dropdown when there is only one possible value.
-    if (count($country_list) == 1 && $element['#required']) {
-      $element['country_code'] = [
-        '#type' => 'hidden',
-        '#value' => key($available_countries),
-      ];
-    }
-    else {
-      $element['country_code'] = [
-        '#type' => 'select',
-        '#title' => t('Country'),
-        '#options' => $country_list,
-        '#default_value' => $value['country_code'],
-        '#required' => $element['#required'],
-        '#limit_validation_errors' => [],
-        '#ajax' => [
-          'callback' => [get_called_class(), 'ajaxRefresh'],
-          'wrapper' => $wrapper_id,
-        ],
-        '#attributes' => [
-          'class' => ['country'],
-          'autocomplete' => 'country',
-        ],
-        '#weight' => -100,
-      ];
-      if (!$element['#required']) {
-        $element['country_code']['#empty_value'] = '';
-      }
-    }
+    $element['country_code'] = [
+      '#type' => 'address_country',
+      '#title' => t('Country'),
+      '#available_countries' => $element['#available_countries'],
+      '#default_value' => $element['#default_value']['country_code'],
+      '#required' => $element['#required'],
+      '#limit_validation_errors' => [],
+      '#ajax' => [
+        'callback' => [get_called_class(), 'ajaxRefresh'],
+        'wrapper' => $wrapper_id,
+      ],
+      '#weight' => -100,
+    ];
     if (!empty($value['country_code'])) {
       $element = static::addressElements($element, $value);
     }
@@ -302,6 +284,7 @@ class Address extends FormElement {
       $subdivision_properties[] = FieldHelper::getPropertyName($field);
     }
     // Load and insert the subdivisions for each parent id.
+    $locale = \Drupal::languageManager()->getConfigOverrideLanguage()->getId();
     $current_depth = 1;
     $parents = [];
     foreach ($subdivision_properties as $index => $property) {
@@ -313,7 +296,7 @@ class Address extends FormElement {
         break;
       }
       $parents[] = $value[$parent_property];
-      $subdivisions = \Drupal::service('address.subdivision_repository')->getList($parents);
+      $subdivisions = \Drupal::service('address.subdivision_repository')->getList($parents, $locale);
       if (empty($subdivisions)) {
         break;
       }
@@ -365,14 +348,21 @@ class Address extends FormElement {
    * Ajax callback.
    */
   public static function ajaxRefresh(array $form, FormStateInterface $form_state) {
-    $country_element = $form_state->getTriggeringElement();
-    $address_element = NestedArray::getValue($form, array_slice($country_element['#array_parents'], 0, -1));
+    $triggering_element = $form_state->getTriggeringElement();
+    $parents = $triggering_element['#array_parents'];
+    $triggering_element_name = array_pop($parents);
+    // The country_code element is nested one level deeper than
+    // the subdivision elements.
+    if ($triggering_element_name == 'country_code') {
+      array_pop($parents);
+    };
+    $address_element = NestedArray::getValue($form, $parents);
 
     return $address_element;
   }
 
   /**
-   * Clears the country-specific form values when the country changes.
+   * Clears dependent form values when the country or subdivision changes.
    *
    * Implemented as an #after_build callback because #after_build runs before
    * validation, allowing the values to be cleared early enough to prevent the
@@ -384,14 +374,22 @@ class Address extends FormElement {
       return $element;
     }
 
-    $triggering_element_name = end($triggering_element['#parents']);
-    if ($triggering_element_name == 'country_code') {
-      $keys = [
+    $keys = [
+      'country_code' => [
         'dependent_locality', 'locality', 'administrative_area',
         'postal_code', 'sorting_code',
-      ];
+      ],
+      'administrative_area' => [
+        'dependent_locality', 'locality',
+      ],
+      'locality' => [
+        'dependent_locality',
+      ],
+    ];
+    $triggering_element_name = end($triggering_element['#parents']);
+    if (isset($keys[$triggering_element_name])) {
       $input = &$form_state->getUserInput();
-      foreach ($keys as $key) {
+      foreach ($keys[$triggering_element_name] as $key) {
         $parents = array_merge($element['#parents'], [$key]);
         NestedArray::setValue($input, $parents, '');
         $element[$key]['#value'] = '';

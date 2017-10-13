@@ -1,0 +1,8 @@
+{
+  "name": "drupal/geophp",
+  "description": "Wraps the geoPHP library: advanced geometry operations in PHP.",
+  "type": "drupal-module",
+  "license": "GPL-2.0+",
+  "minimum-stability": "dev",
+  "require": { }
+}

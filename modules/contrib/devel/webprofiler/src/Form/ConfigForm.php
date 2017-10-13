@@ -134,7 +134,7 @@ class ConfigForm extends ConfigFormBase {
       '#states' => array(
         'visible' => array(
           array(
-            ':input[name="active_toolbar_items[database]' => array('checked' => TRUE),
+            'input[name="active_toolbar_items[database]"]' => array('checked' => TRUE),
           ),
         ),
       ),

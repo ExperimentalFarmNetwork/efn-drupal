@@ -11,6 +11,9 @@ auto_submit:
   version: 3.x
   js:
     js/auto_submit.js: {}
+  dependencies:
+    - core/jquery.once
+    - core/drupal.debounce
 select_all_none:
   version: 3.x
   js:
@@ -29,3 +32,4 @@ datepickers:
     js/bef_datepickers.js: {}
   dependencies:
     - core/jquery
+    - core/jquery.ui.slider
