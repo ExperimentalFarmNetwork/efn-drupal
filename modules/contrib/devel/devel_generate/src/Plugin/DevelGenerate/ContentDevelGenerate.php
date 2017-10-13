@@ -14,6 +14,7 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Routing\UrlGeneratorInterface;
 use Drupal\devel_generate\DevelGenerateBase;
 use Drupal\field\Entity\FieldConfig;
+use Drush\Utils\StringUtils;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -315,7 +316,7 @@ class ContentDevelGenerate extends DevelGenerateBase implements ContainerFactory
       $start = time();
       for ($i = 1; $i <= $values['num']; $i++) {
         $this->develGenerateContentAddNode($values);
-        if (function_exists('drush_log') && $i % drush_get_option('feedback', 1000) == 0) {
+        if ($this->isDrush8() && function_exists('drush_log') && $i % drush_get_option('feedback', 1000) == 0) {
           $now = time();
           drush_log(dt('Completed @feedback nodes (@rate nodes/min)', array('@feedback' => drush_get_option('feedback', 1000), '@rate' => (drush_get_option('feedback', 1000) * 60) / ($now - $start))), 'ok');
           $start = $now;
@@ -343,7 +344,7 @@ class ContentDevelGenerate extends DevelGenerateBase implements ContainerFactory
       $operations[] = array('devel_generate_operation', array($this, 'batchContentAddNode', $values));
     }
 
-    // Start the batch.
+    // Set the batch.
     $batch = array(
       'title' => $this->t('Generating Content'),
       'operations' => $operations,
@@ -371,8 +372,8 @@ class ContentDevelGenerate extends DevelGenerateBase implements ContainerFactory
   /**
    * {@inheritdoc}
    */
-  public function validateDrushParams($args) {
-    $add_language = drush_get_option('languages');
+  public function validateDrushParams($args, $options = []) {
+    $add_language = $this->isDrush8() ? drush_get_option('languages') : $options['languages'];
     if (!empty($add_language)) {
       $add_language = explode(',', str_replace(' ', '', $add_language));
       // Intersect with the enabled languages to make sure the language args
@@ -380,33 +381,33 @@ class ContentDevelGenerate extends DevelGenerateBase implements ContainerFactory
       $values['values']['add_language'] = array_intersect($add_language, array_keys($this->languageManager->getLanguages(LanguageInterface::STATE_ALL)));
     }
 
-    $values['kill'] = drush_get_option('kill');
+    $values['kill'] = $this->isDrush8() ? drush_get_option('kill') : $options['kill'];
     $values['title_length'] = 6;
     $values['num'] = array_shift($args);
     $values['max_comments'] = array_shift($args);
     $all_types = array_keys(node_type_get_names());
     $default_types = array_intersect(array('page', 'article'), $all_types);
-    $selected_types = _convert_csv_to_array(drush_get_option('types', $default_types));
-
-    // Validates the input format for content types option.
-    if (drush_get_option('types', $default_types) === TRUE) {
-      return drush_set_error('DEVEL_GENERATE_INVALID_INPUT', dt('Wrong syntax or no content type selected. The correct syntax uses "=", eg.: --types=page,article'));
+    if ($this->isDrush8()) {
+      $selected_types = _convert_csv_to_array(drush_get_option('types', $default_types));
+    }
+    else {
+      $selected_types = StringUtils::csvToArray($options['types'] ?: $default_types);
     }
 
     if (empty($selected_types)) {
-      return drush_set_error('DEVEL_GENERATE_NO_CONTENT_TYPES', dt('No content types available'));
+      throw new \Exception(dt('No content types available'));
     }
 
     $values['node_types'] = array_combine($selected_types, $selected_types);
     $node_types = array_filter($values['node_types']);
 
     if (!empty($values['kill']) && empty($node_types)) {
-      return drush_set_error('DEVEL_GENERATE_INVALID_INPUT', dt('Please provide content type (--types) in which you want to delete the content.'));
+      throw new \Exception(dt('Please provide content type (--types) in which you want to delete the content.'));
     }
 
     // Checks for any missing content types before generating nodes.
     if (array_diff($node_types, $all_types)) {
-      return drush_set_error('DEVEL_GENERATE_INVALID_INPUT', dt('One or more content types have been entered that don\'t exist on this site'));
+      throw new \Exception(dt('One or more content types have been entered that don\'t exist on this site'));
     }
 
     return $values;
@@ -437,7 +438,6 @@ class ContentDevelGenerate extends DevelGenerateBase implements ContainerFactory
   protected function develGenerateContentPreNode(&$results) {
     // Get user id.
     $users = $this->getUsers();
-    $users = array_merge($users, array('0'));
     $results['users'] = $users;
   }
 
@@ -492,7 +492,7 @@ class ContentDevelGenerate extends DevelGenerateBase implements ContainerFactory
   }
 
   /**
-   * Retrive 50 uids from the database.
+   * Retrieve 50 uids from the database.
    */
   protected function getUsers() {
     $users = array();
