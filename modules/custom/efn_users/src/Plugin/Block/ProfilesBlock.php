@@ -41,7 +41,7 @@ class ProfilesBlock extends BlockBase {
 					$url = Url::fromRoute('entity.profile.type.main.user_profile_form', ['user' => $user->id(), 'profile_type' => 'volunteer']);
 					$link_options = [
 					  'attributes' => [
-					    'class' => ['btn', 'btn-lg', 'btn-primary'],
+					    'class' => ['btn', 'btn-primary'],
 					   ],
 					];
 					$url->setOptions($link_options);
@@ -60,7 +60,7 @@ class ProfilesBlock extends BlockBase {
 					$url = Url::fromRoute('entity.profile.type.main.user_profile_form', ['user' => $user->id(), 'profile_type' => 'researcher']);
 					$link_options = [
 					  'attributes' => [
-					    'class' => ['btn', 'btn-lg', 'btn-primary'],
+					    'class' => ['btn', 'btn-primary'],
 					   ],
 					];
 					$url->setOptions($link_options);

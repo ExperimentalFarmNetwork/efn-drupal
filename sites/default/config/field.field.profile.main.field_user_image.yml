@@ -28,11 +28,11 @@ settings:
   title_field: false
   title_field_required: false
   default_image:
-    uuid: b13cc69d-70f8-4e08-80dc-9a8fe7ed5cb3
+    uuid: 9b9dc56f-74b8-48c0-804e-8c86d2984284
     alt: 'Profile Pic'
     title: 'Profile image'
-    width: 300
-    height: 254
+    width: 292
+    height: 292
   handler: 'default:file'
   handler_settings: {  }
 field_type: image

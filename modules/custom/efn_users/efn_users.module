@@ -24,6 +24,7 @@ function efn_users_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form
 	// No damn set default buttons on forms
 	if (strpos($form_id, "rofile_")){
 		$form['actions']['set_default']['#access']=FALSE;
+		kint($form_id);
 	}
 
 	if ($form_id == 'group_content_project-group_membership_group-join_form') {

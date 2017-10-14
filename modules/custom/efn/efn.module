@@ -88,3 +88,9 @@ function efn_entity_view(array $build, EntityInterface $entity, EntityViewDispla
   }
 
 }
+
+// Change error for bad zip code
+
+// function efn_form_group_project_edit_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+// kint($form['field_location']);
+// }
