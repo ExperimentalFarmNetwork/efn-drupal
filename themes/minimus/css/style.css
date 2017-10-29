@@ -6637,6 +6637,8 @@ body.path-group {
       text-transform: uppercase;
       font-weight: bold;
       margin-bottom: 1em; }
+  body.path-group .group-content-project-group-membership-group-leave-form #edit-actions {
+    margin-top: 3em; }
 
 .js-form-submit[value='Join group'], .btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
   font-size: 2rem;
@@ -6779,9 +6781,24 @@ body.path-group {
   padding: 5px;
   margin-top: 10px; }
   .region-sidebar-second section.block {
-    margin-bottom: 30px; }
+    margin: 30px 0 60px; }
   .region-sidebar-second #block-minimus-groupoperations {
     text-align: center; }
+    .region-sidebar-second #block-minimus-groupoperations .btn-group > .btn-lg + .dropdown-toggle, .region-sidebar-second #block-minimus-groupoperations .btn-group-lg.btn-group > .btn + .dropdown-toggle,
+    .region-sidebar-second #block-minimus-groupoperations .btn-group-lg.btn-group > .btn + .dropdown-toggle {
+      display: none; }
+    .region-sidebar-second #block-minimus-groupoperations ul.dropdown-menu {
+      display: block;
+      border: none;
+      background-color: transparent;
+      box-shadow: none;
+      text-align: center;
+      width: 100%; }
+      .region-sidebar-second #block-minimus-groupoperations ul.dropdown-menu li a.hidden {
+        display: block; }
+      .region-sidebar-second #block-minimus-groupoperations ul.dropdown-menu li.leave-group a {
+        border: 0;
+        font-size: .8em; }
   .region-sidebar-second .view-members-block, .region-sidebar-second .view-group-member-test {
     font-size: .8em;
     text-align: center;

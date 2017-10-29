@@ -467,6 +467,12 @@ body.path-group{
 			}
 		}
 	}
+	// leave group
+	.group-content-project-group-membership-group-leave-form{
+		#edit-actions{
+			margin-top:3em;
+		}
+	}
 }
 
 .js-form-submit[value='Join group'], .btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle){	
@@ -673,12 +679,35 @@ body.path-group{
 	margin-top:10px;
 
 	section.block{
-		margin-bottom:30px;
+		margin:30px 0 60px;
 	}
 
 
 	#block-minimus-groupoperations{
 		text-align:center;
+		.btn-group > .btn-lg + .dropdown-toggle, 
+		.btn-group-lg.btn-group > .btn + .dropdown-toggle{
+			display:none;
+		}
+		ul.dropdown-menu{
+			display: block;
+		    border: none;
+		    background-color: transparent;
+		    box-shadow: none;
+		    text-align: center;
+		    width: 100%;
+			li a.hidden{
+				display:block;
+			}
+			li.leave-group{
+				a{
+					border:0;
+					font-size:.8em;
+				}
+			}
+		}
+
+	
 	}
 
 	.view-members-block, .view-group-member-test {
