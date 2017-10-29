@@ -1,0 +1,17 @@
+uuid: 567bd445-22cd-4ca4-9979-7d8d450ec1af
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.project
+  enforced:
+    config:
+      - user.role.researcher
+id: project-fc46cad6f
+label: Researcher
+weight: 4
+internal: true
+audience: outsider
+group_type: project
+permissions_ui: false
+permissions: {  }

@@ -72,7 +72,6 @@ module:
   views_slideshow: 0
   views_slideshow_cycle: 0
   views_ui: 0
-  webprofiler: 0
   yamlform: 0
   yamlform_ui: 0
   pathauto: 1

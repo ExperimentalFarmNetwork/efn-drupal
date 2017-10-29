@@ -29,7 +29,6 @@ permissions:
   - 'delete own group_node:project_update content'
   - 'delete any group_node:project_update content'
   - 'view group_node:project_update entity'
-  - 'create group_node:project_update entity'
   - 'update own group_node:project_update entity'
   - 'update any group_node:project_update entity'
   - 'delete own group_node:project_update entity'
