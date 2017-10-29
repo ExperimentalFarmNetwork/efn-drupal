@@ -1,9 +1,6 @@
 name: 'Group role sync'
-description: 'DOES NOT CURRENTLY WORK, SEE https://www.drupal.org/node/2850417. Allows you to synchronize global roles to group roles.'
-package: 'Group (Work in progress)'
+description: 'THIS IS NOW PART OF THE MAIN MODULE. Will be removed by 8.x-1.0!'
+package: 'Group (Obsolete)'
 type: 'module'
 version: 1.0
 core: '8.x'
-dependencies:
-  - 'user'
-  - 'group'

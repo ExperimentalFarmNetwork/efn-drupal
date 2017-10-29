@@ -411,3 +411,16 @@ function group_update_8013() {
     $group_type->save(TRUE);
   }
 }
+
+/**
+ * Add the 'creator_wizard' property to all group types.
+ */
+function group_update_8014() {
+  $config_factory = \Drupal::configFactory();
+
+  foreach ($config_factory->listAll('group.type.') as $group_type_config_name) {
+    $group_type = $config_factory->getEditable($group_type_config_name);
+    $group_type->set('creator_wizard', TRUE);
+    $group_type->save(TRUE);
+  }
+}

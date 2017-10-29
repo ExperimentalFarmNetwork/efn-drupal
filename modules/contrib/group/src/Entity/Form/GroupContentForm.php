@@ -64,8 +64,8 @@ class GroupContentForm extends ContentEntityForm {
     $form = parent::form($form, $form_state);
 
     // Do not allow to edit the group content subject through the UI. Also hide
-    // the field when we are on step 2 of the creation wizard.
-    if ($this->operation !== 'add' || $form_state->has('store_id')) {
+    // the field when we are on step 2 of a creation wizard.
+    if ($this->operation !== 'add' || $form_state->get('group_wizard')) {
       $form['entity_id']['#access'] = FALSE;
     }
 
@@ -78,31 +78,39 @@ class GroupContentForm extends ContentEntityForm {
   protected function actions(array $form, FormStateInterface $form_state) {
     $actions = parent::actions($form, $form_state);
 
-    // If we are on step 2 of the creation wizard, we need to alter the actions.
-    if ($form_state->has('store_id')) {
-      $store = $this->privateTempStoreFactory->get('group_content_wizard');
+    // If we are on step 2 of a wizard, we need to alter the actions.
+    if ($form_state->get('group_wizard')) {
+      $wizard_id = $form_state->get('group_wizard_id');
+      $store = $this->privateTempStoreFactory->get($wizard_id);
       $store_id = $form_state->get('store_id');
 
-      // Add a back button to return to step 1 with.
-      $actions['back'] = [
-        '#type' => 'submit',
-        '#value' => $this->t('Back'),
-        '#submit' => ['::submitForm', '::back'],
-        '#limit_validation_errors' => [],
-      ];
+      if ($store->get("$store_id:step") === 2) {
+        // Add a back button to return to step 1 with.
+        $actions['back'] = [
+          '#type' => 'submit',
+          '#value' => $this->t('Back'),
+          '#submit' => ['::back'],
+          '#limit_validation_errors' => [],
+        ];
 
-      // Make the label of the save button more intuitive.
-      $entity_type_id = $store->get("$store_id:entity")->getEntityTypeId();
-      $entity_type = $this->entityManager->getDefinition($entity_type_id);
-      $replace = [
-        '@entity_type' => strtolower($entity_type->getLabel()),
-        '@group' => $this->getEntity()->getGroup()->label(),
-      ];
-      $actions['submit']['#value'] = $this->t('Create @entity_type in @group', $replace);
+        // Make the label of the save button more intuitive.
+        if ($wizard_id == 'group_creator') {
+          $actions['submit']['#value'] = $this->t('Save group and membership');
+        }
+        elseif ($wizard_id == 'group_entity') {
+          $entity_type_id = $store->get("$store_id:entity")->getEntityTypeId();
+          $entity_type = $this->entityManager->getDefinition($entity_type_id);
+          $replace = [
+            '@entity_type' => $entity_type->getLowercaseLabel(),
+            '@group' => $this->getEntity()->getGroup()->label(),
+          ];
+          $actions['submit']['#value'] = $this->t('Create @entity_type in @group', $replace);
+        }
 
-      // Make sure we complete the wizard before saving the group content.
-      $index = array_search('::save', $actions['submit']['#submit']);
-      array_splice($actions['submit']['#submit'], $index, 0, '::complete');
+        // Make sure we complete the wizard before saving the group content.
+        $index = array_search('::save', $actions['submit']['#submit']);
+        array_splice($actions['submit']['#submit'], $index, 0, '::complete');
+      }
     }
 
     return $actions;
@@ -148,7 +156,7 @@ class GroupContentForm extends ContentEntityForm {
    * @see \Drupal\group\Entity\Controller\GroupContentController::createForm()
    */
   public function back(array &$form, FormStateInterface $form_state) {
-    $store = $this->privateTempStoreFactory->get('group_content_wizard');
+    $store = $this->privateTempStoreFactory->get($form_state->get('group_wizard_id'));
     $store_id = $form_state->get('store_id');
     $store->set("$store_id:step", 1);
 
@@ -173,7 +181,8 @@ class GroupContentForm extends ContentEntityForm {
    * @see \Drupal\group\Entity\Controller\GroupContentController::createForm()
    */
   public function complete(array &$form, FormStateInterface $form_state) {
-    $store = $this->privateTempStoreFactory->get('group_content_wizard');
+    $wizard_id = $form_state->get('group_wizard_id');
+    $store = $this->privateTempStoreFactory->get($wizard_id);
     $store_id = $form_state->get('store_id');
     $entity = $store->get("$store_id:entity");
 
@@ -189,7 +198,8 @@ class GroupContentForm extends ContentEntityForm {
     $form_object->save($form, $form_state);
 
     // Add the newly saved entity's ID to the group content entity.
-    $this->entity->set('entity_id', $entity->id());
+    $property = $wizard_id == 'group_creator' ? 'gid' : 'entity_id';
+    $this->entity->set($property, $entity->id());
 
     // We also clear the temp store so we can start fresh next time around.
     $store->delete("$store_id:step");

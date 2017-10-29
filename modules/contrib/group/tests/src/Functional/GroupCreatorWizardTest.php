@@ -51,7 +51,7 @@ class GroupCreatorWizardTest extends GroupBrowserTestBase {
   public function testNoWizard() {
     $this->drupalGet('/group/add/other');
     $this->assertSession()->statusCodeEquals(200);
-    $this->assertSession()->buttonExists('Create Other');
+    $this->assertSession()->buttonExists('Save');
     $this->assertSession()->buttonNotExists('Cancel');
   }
 

@@ -109,7 +109,7 @@ function gnode_node_access(NodeInterface $node, $op, AccountInterface $account) 
  * Implements hook_node_grants().
  *
  * We define the following grants:
- * - 'gnode:NODE_TYPE': Grants view access for this node type.
+ * - 'gnode:NODE_TYPE': Grants view and update or delete any access to nodes.
  * - 'gnode_unpublished:NODE_TYPE': Grants view access to unpublished nodes.
  * - 'gnode_author:UID:NODE_TYPE': Grants update or delete access to authors.
  * - 'gnode_bypass': Given to anyone with the 'bypass group access' permission.

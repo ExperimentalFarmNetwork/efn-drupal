@@ -119,13 +119,6 @@ class GroupContentStorageTest extends GroupKernelTestBase {
    * @expectedExceptionMessage The provided plugin provided does not support the entity's bundle.
    */
   public function testCreateForInvalidBundle() {
-    // @todo Remove when https://www.drupal.org/node/2744069 lands.
-    // @todo See _group.type.other.yml for details.
-    $this->entityTypeManager->getStorage('group_type')->create([
-      'id' => 'other',
-      'label' => 'Other',
-    ])->save();
-
     $group = $this->createGroup();
     $subgroup = $this->createGroup(['type' => 'other']);
     $this->storage->createForEntityInGroup($subgroup, $group, 'group_as_content');

@@ -36,6 +36,14 @@ entity.group_type.permissions_form:
   requirements:
     _permission: 'administer group'
 
+entity.group_type.outsider_permissions_form:
+  path: '/admin/group/types/manage/{group_type}/permissions/outsider'
+  defaults:
+    _form: '\Drupal\group\Form\GroupPermissionsOutsiderForm'
+    _title: 'Edit advanced outsider permissions'
+  requirements:
+    _permission: 'administer group'
+
 entity.group_type.content_plugins:
   path: '/admin/group/types/manage/{group_type}/content'
   defaults:

@@ -97,6 +97,10 @@ services:
     tags:
       - { name: 'breadcrumb_builder', priority: 100 }
 
+  group_role.synchronizer:
+    class: 'Drupal\group\GroupRoleSynchronizer'
+    arguments: ['@entity_type.manager']
+
   plugin.manager.group_content_enabler:
     class: 'Drupal\group\Plugin\GroupContentEnablerManager'
     arguments: ['@container.namespaces', '@cache.discovery', '@module_handler', '@entity_type.manager']

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "3123a82f842d7dc2fd98b9ab92641aeb",
+    "content-hash": "1fd2667380d2fcec3ab7b660d11acf61",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -1208,6 +1208,7 @@
                 "select",
                 "ui"
             ],
+            "abandoned": "components/chosen",
             "time": "2016-06-23T06:51:35+00:00"
         },
         {
@@ -2954,11 +2955,17 @@
         },
         {
             "name": "drupal/group",
-            "version": "dev-1.x",
+            "version": "1.0.0-rc1",
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/group",
-                "reference": "12a0077835c69fbeb185b5c134bf35bb62a561bc"
+                "reference": "8.x-1.0-rc1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/group-8.x-1.0-rc1.zip",
+                "reference": "8.x-1.0-rc1",
+                "shasum": "6991939b310fbc5ac19151eb0d70e9b30f340354"
             },
             "require": {
                 "drupal/core": "*"
@@ -2969,8 +2976,12 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.0-beta5+11-dev",
-                    "datestamp": "1492179243"
+                    "version": "8.x-1.0-rc1",
+                    "datestamp": "1498033733",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "RC releases are not covered by Drupal security advisories."
+                    }
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -2987,8 +2998,7 @@
             "homepage": "https://www.drupal.org/project/group",
             "support": {
                 "source": "http://cgit.drupalcode.org/group"
-            },
-            "time": "2017-04-18 08:29:00"
+            }
         },
         {
             "name": "drupal/leaflet",
@@ -8436,7 +8446,6 @@
         "drupal/devel": 5,
         "drupal/geocoder": 15,
         "drupal/geophp": 10,
-        "drupal/group": 20,
         "drupal/profile": 15,
         "drupal/select_or_other": 15,
         "drupal/leaflet": 10,

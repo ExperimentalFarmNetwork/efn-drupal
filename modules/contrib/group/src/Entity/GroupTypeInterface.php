@@ -100,6 +100,14 @@ interface GroupTypeInterface extends ConfigEntityInterface, EntityDescriptionInt
   public function creatorGetsMembership();
 
   /**
+   * Returns whether the group creator must complete their membership.
+   *
+   * @return bool
+   *   Whether the group creator must complete their membership.
+   */
+  public function creatorMustCompleteMembership();
+
+  /**
    * Gets the IDs of the group roles a group creator should receive.
    *
    * @return string

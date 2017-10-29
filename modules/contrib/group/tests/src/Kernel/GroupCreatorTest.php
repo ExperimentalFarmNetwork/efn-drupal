@@ -8,6 +8,10 @@ use Drupal\group\Entity\GroupInterface;
 /**
  * Tests the behavior of group creators.
  *
+ * @todo Move to Drupal\Tests\group\Functional\GroupCreatorWizardTest when we
+ *   remove the functionality that auto-creates creator memberships while saving
+ *   a new group programmatically.
+ *
  * @group group
  */
 class GroupCreatorTest extends GroupKernelTestBase {

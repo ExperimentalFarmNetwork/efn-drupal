@@ -24,6 +24,9 @@ group.type.*:
     creator_membership:
       type: 'boolean'
       label: 'The group creator receives a membership'
+    creator_wizard:
+      type: 'boolean'
+      label: 'The group creator must immediately complete their membership.'
     creator_roles:
       type: 'sequence'
       label: 'Group creator roles'

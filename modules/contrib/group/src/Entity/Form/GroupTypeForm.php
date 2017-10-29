@@ -58,6 +58,16 @@ class GroupTypeForm extends BundleEntityFormBase {
       '#description' => $this->t('This will make sure that anyone who creates a group of this type will automatically become a member of it.'),
     ];
 
+    $form['creator_wizard'] = [
+      '#title' => $this->t('Group creator must complete their membership'),
+      '#type' => 'checkbox',
+      '#default_value' => $type->creatorMustCompleteMembership(),
+      '#description' => $this->t('This will first show you the form to create the group and then a form to fill out your membership details.<br />You can choose to disable this wizard if you did not or will not add any fields to the membership.<br /><strong>Warning:</strong> If you do have fields on the membership and do not use the wizard, you may end up with required fields not being filled out.'),
+      '#states' => [
+        'visible' => [':input[name="creator_membership"]' => ['checked' => TRUE]],
+      ],
+    ];
+
     // Add-form specific elements.
     if ($this->operation == 'add') {
       $form['add_admin_role'] = [

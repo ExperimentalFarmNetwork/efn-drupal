@@ -304,15 +304,23 @@ class GroupContentController extends ControllerBase {
     /** @var \Drupal\group\Plugin\GroupContentEnablerInterface $plugin */
     $plugin = $group->getGroupType()->getContentPlugin($plugin_id);
 
-    $store = $this->privateTempStoreFactory->get('group_content_wizard');
+    $wizard_id = 'group_entity';
+    $store = $this->privateTempStoreFactory->get($wizard_id);
     $store_id = $plugin_id . ':' . $group->id();
 
-    // See if the plugin uses a wizard for creating new entities.
+    // See if the plugin uses a wizard for creating new entities. Also pass this
+    // info to the form state.
     $config = $plugin->getConfiguration();
-    $wizard = $config['use_creation_wizard'];
+    $extra['group_wizard'] = $config['use_creation_wizard'];
+    $extra['group_wizard_id'] = $wizard_id;
+
+    // Pass the group, plugin ID and store ID to the form state as well.
+    $extra['group'] = $group;
+    $extra['group_content_enabler'] = $plugin_id;
+    $extra['store_id'] = $store_id;
 
     // See if we are on the second step of the form.
-    $step2 = $wizard && $store->get("$store_id:step") === 2;
+    $step2 = $extra['group_wizard'] && $store->get("$store_id:step") === 2;
 
     // Content entity form, potentially as wizard step 1.
     if (!$step2) {
@@ -335,20 +343,6 @@ class GroupContentController extends ControllerBase {
       if ($entity_type->getFormClass('add')) {
         $operation = 'add';
       }
-
-      // Pass the group and plugin ID to the form state.
-      $extra = [
-        'group' => $group,
-        'group_content_enabler' => $plugin_id,
-      ];
-
-      // If we are in a wizard, we'll also need to pass the temp store ID.
-      if ($wizard) {
-        $extra['store_id'] = $store_id;
-      }
-
-      // Return the entity form with the configuration gathered above.
-      return $this->entityFormBuilder()->getForm($entity, $operation, $extra);
     }
     // Wizard step 2: Group content form.
     else {
@@ -357,18 +351,14 @@ class GroupContentController extends ControllerBase {
         'type' => $plugin->getContentTypeConfigId(),
         'gid' => $group->id(),
       ];
-      $group_content = $this->entityTypeManager()->getStorage('group_content')->create($values);
+      $entity = $this->entityTypeManager()->getStorage('group_content')->create($values);
 
-      // Pass the group, plugin ID and storage ID to the form state.
-      $extra = [
-        'group' => $group,
-        'group_content_enabler' => $plugin_id,
-        'store_id' => $store_id,
-      ];
-
-      // Return the entity form with the configuration gathered above.
-      return $this->entityFormBuilder()->getForm($group_content, 'add', $extra);
+      // Group content entities have an add form handler.
+      $operation = 'add';
     }
+
+    // Return the entity form with the configuration gathered above.
+    return $this->entityFormBuilder()->getForm($entity, $operation, $extra);
   }
 
   /**

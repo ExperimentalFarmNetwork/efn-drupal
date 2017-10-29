@@ -6,11 +6,11 @@ use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Config\Entity\ConfigEntityStorage;
 use Drupal\Core\Entity\EntityTypeInterface;
-use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\group\Entity\GroupInterface;
 use Drupal\group\GroupMembershipLoaderInterface;
+use Drupal\group\GroupRoleSynchronizerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -31,19 +31,28 @@ class GroupRoleStorage extends ConfigEntityStorage implements GroupRoleStorageIn
   protected $userGroupRoleIds = [];
 
   /**
+   * The group role synchronizer service.
+   *
+   * @var \Drupal\group\GroupRoleSynchronizerInterface
+   */
+  protected $groupRoleSynchronizer;
+
+  /**
    * The group membership loader.
    *
    * @var \Drupal\group\GroupMembershipLoaderInterface
    */
-  protected $membershipLoader;
+  protected $groupMembershipLoader;
 
   /**
    * Constructs a GroupRoleStorage object.
    *
+   * @param \Drupal\group\GroupRoleSynchronizerInterface $group_role_synchronizer
+   *   The group role synchronizer service.
+   * @param \Drupal\group\GroupMembershipLoaderInterface $group_membership_loader
+   *   The group membership loader.
    * @param \Drupal\Core\Entity\EntityTypeInterface $entity_type
    *   The entity type definition.
-   * @param \Drupal\group\GroupMembershipLoaderInterface $membership_loader
-   *   The group membership loader.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The config factory service.
    * @param \Drupal\Component\Uuid\UuidInterface $uuid_service
@@ -51,9 +60,10 @@ class GroupRoleStorage extends ConfigEntityStorage implements GroupRoleStorageIn
    * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
    *   The language manager.
    */
-  public function __construct(EntityTypeInterface $entity_type, GroupMembershipLoaderInterface $membership_loader, ConfigFactoryInterface $config_factory, UuidInterface $uuid_service, LanguageManagerInterface $language_manager) {
+  public function __construct(GroupRoleSynchronizerInterface $group_role_synchronizer, GroupMembershipLoaderInterface $group_membership_loader, EntityTypeInterface $entity_type, ConfigFactoryInterface $config_factory, UuidInterface $uuid_service, LanguageManagerInterface $language_manager) {
     parent::__construct($entity_type, $config_factory, $uuid_service, $language_manager);
-    $this->membershipLoader = $membership_loader;
+    $this->groupRoleSynchronizer = $group_role_synchronizer;
+    $this->groupMembershipLoader = $group_membership_loader;
   }
 
   /**
@@ -61,8 +71,9 @@ class GroupRoleStorage extends ConfigEntityStorage implements GroupRoleStorageIn
    */
   public static function createInstance(ContainerInterface $container, EntityTypeInterface $entity_type) {
     return new static(
-      $entity_type,
+      $container->get('group_role.synchronizer'),
       $container->get('group.membership_loader'),
+      $entity_type,
       $container->get('config.factory'),
       $container->get('uuid'),
       $container->get('language_manager')
@@ -80,7 +91,7 @@ class GroupRoleStorage extends ConfigEntityStorage implements GroupRoleStorageIn
       $ids = [];
 
       // Get the IDs from the 'group_roles' field, without loading the roles.
-      if ($membership = $this->membershipLoader->load($group, $account)) {
+      if ($membership = $this->groupMembershipLoader->load($group, $account)) {
         foreach ($membership->getGroupContent()->group_roles as $group_role_ref) {
           $ids[] = $group_role_ref->target_id;
         }
@@ -88,13 +99,19 @@ class GroupRoleStorage extends ConfigEntityStorage implements GroupRoleStorageIn
 
       // Add the implied group role IDs.
       if ($include_implied) {
+        $group_type = $group->getGroupType();
+
         if ($membership !== FALSE) {
-          $ids[] = $group->getGroupType()->getMemberRoleId();
+          $ids[] = $group_type->getMemberRoleId();
+        }
+        elseif ($account->isAnonymous()) {
+          $ids[] = $group_type->getAnonymousRoleId();
         }
         else {
-          $ids[] = $account->isAnonymous()
-            ? $group->getGroupType()->getAnonymousRoleId()
-            : $group->getGroupType()->getOutsiderRoleId();
+          $ids[] = $group_type->getOutsiderRoleId();
+          foreach ($account->getRoles(TRUE) as $role_id) {
+            $ids[] = $this->groupRoleSynchronizer->getGroupRoleId($group_type->id(), $role_id);
+          }
         }
       }
 

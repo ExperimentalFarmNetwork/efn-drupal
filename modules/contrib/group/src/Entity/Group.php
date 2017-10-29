@@ -332,6 +332,9 @@ class Group extends ContentEntityBase implements GroupInterface {
 
     // If a new group is created and the group type is configured to grant group
     // creators a membership by default, add the creator as a member.
+    // @todo Deprecate in 8.x-2.x in favor of a form-only approach. API-created
+    //   groups should not get this functionality because it may create
+    //   incomplete group memberships.
     $group_type = $this->getGroupType();
     if ($update === FALSE && $group_type->creatorGetsMembership()) {
       $values = ['group_roles' => $group_type->getCreatorRoleIds()];
