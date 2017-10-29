@@ -33,7 +33,6 @@
   {%- if items -%}
     <{{ list_type }}{{ attributes.addClass(classes) }} role="menu">
       {%- for item in items -%}
-      <!-- check if leave group link for group operations -->
         {% if item.value.link['#url'].routeName == 'entity.group.leave' %}
           <li{{ item.attributes }} class="leave-group">{{ item.value }}</li>
         {% else %}
