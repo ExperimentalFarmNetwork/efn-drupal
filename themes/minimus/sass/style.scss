@@ -159,6 +159,10 @@ div.main-container{
 	border-bottom:0;
 }
 
+.signup {
+    margin-top: 1em;
+}
+
 
 // Front page
 .path-frontpage{
@@ -335,8 +339,12 @@ div.main-container{
 			display:none;
 		}
 	}
-
+	.member.label{
+	    font-size: inherit;
+	    padding-left: 0;
+	}
 }
+
 
  // efn new user profile links
 #block-efnprofilelinks-2{

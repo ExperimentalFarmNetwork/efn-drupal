@@ -6425,6 +6425,9 @@ div.main-container {
 .page-header {
   border-bottom: 0; }
 
+.signup {
+  margin-top: 1em; }
+
 .path-frontpage .bnrPic {
   background: url("/themes/minimus/images/e_.svg") no-repeat;
   background-size: auto 100%;
@@ -6535,6 +6538,9 @@ div.main-container {
   margin-top: 1em; }
 .path-user .profile-volunteer-add-form #edit-field-other-wrapper {
   display: none; }
+.path-user .member.label {
+  font-size: inherit;
+  padding-left: 0; }
 
 #block-efnprofilelinks-2 p {
   font-size: .85em; }
