@@ -6,6 +6,11 @@ dependencies:
     - field.storage.profile.field_user_image
     - group.type.project
     - image.style.80x80
+    - user.role.administrator
+    - user.role.anonymous
+    - user.role.authenticated
+    - user.role.researcher
+    - user.role.volunteer
   module:
     - group
     - image
@@ -27,8 +32,14 @@ display:
     position: 0
     display_options:
       access:
-        type: none
-        options: {  }
+        type: role
+        options:
+          role:
+            anonymous: anonymous
+            authenticated: authenticated
+            volunteer: volunteer
+            administrator: administrator
+            researcher: researcher
       cache:
         type: tag
         options: {  }
@@ -265,7 +276,20 @@ display:
           entity_field: uid
           plugin_id: standard
       title: 'Project members'
-      header: {  }
+      header:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: false
+          tokenize: false
+          content:
+            value: '<h2 class="block-title project-members ">Project members</h2>'
+            format: raw_html
+          plugin_id: text
       footer: {  }
       empty:
         area:
@@ -355,6 +379,7 @@ display:
         - 'languages:language_interface'
         - route
         - url
+        - user.roles
       tags:
         - 'config:field.storage.profile.field_user_image'
   project_members:
@@ -371,5 +396,6 @@ display:
         - 'languages:language_interface'
         - route
         - url
+        - user.roles
       tags:
         - 'config:field.storage.profile.field_user_image'
