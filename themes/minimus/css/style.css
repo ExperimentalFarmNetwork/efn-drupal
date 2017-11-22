@@ -6540,7 +6540,7 @@ div.main-container {
   display: none; }
 .path-user .member.label {
   font-size: inherit;
-  padding-left: 0; }
+  padding: 0; }
 
 #block-efnprofilelinks-2 p {
   font-size: .85em; }
@@ -6816,17 +6816,18 @@ body.path-group {
       .region-sidebar-second .view-members-block .views-field-field-user-image img, .region-sidebar-second .view-members-block .views-field-view-user img, .region-sidebar-second .view-group-member-test .views-field-field-user-image img, .region-sidebar-second .view-group-member-test .views-field-view-user img {
         border-radius: 50%;
         border: thin solid #eeeeee;
-        padding: 3px; }
+        padding: 3px;
+        display: inline; }
   .region-sidebar-second .view-project-creator {
     font-size: .8em;
     text-align: center; }
     .region-sidebar-second .view-project-creator a {
       text-align: center; }
-      .region-sidebar-second .view-project-creator a img {
-        display: inline-block;
-        border-radius: 50%;
-        border: thin solid #eeeeee;
-        padding: 3px; }
+    .region-sidebar-second .view-project-creator img {
+      display: inline-block;
+      border-radius: 50%;
+      border: thin solid #eeeeee;
+      padding: 3px; }
 
 .panel#edit-timezone {
   border: 0;

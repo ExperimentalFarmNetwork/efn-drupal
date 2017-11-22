@@ -341,7 +341,7 @@ div.main-container{
 	}
 	.member.label{
 	    font-size: inherit;
-	    padding-left: 0;
+	    padding: 0;
 	}
 }
 
@@ -731,6 +731,7 @@ body.path-group{
 			    border-radius: 50%;
 			    border: thin solid #eeeeee;
 			    padding: 3px;
+			    display:inline;
 			}
 		}
 	}
@@ -739,12 +740,12 @@ body.path-group{
 		text-align:center;
 		a{
 			text-align:center;
-			img{
-				display:inline-block;
-			    border-radius: 50%;
-			    border: thin solid #eeeeee;
-			    padding: 3px;
-			}
+		}
+		img{
+			display:inline-block;
+		    border-radius: 50%;
+		    border: thin solid #eeeeee;
+		    padding: 3px;
 		}
 	}
 }

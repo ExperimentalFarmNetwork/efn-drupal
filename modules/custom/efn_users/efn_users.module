@@ -21,11 +21,20 @@ function efn_users_profile_insert(EntityInterface $profile) {
  * Implements hook_form_alter().
  */
 function efn_users_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id){
-	// No damn set default buttons on forms
-	if (strpos($form_id, "rofile_")){
-		$form['actions']['set_default']['#access']=FALSE;
-		// kint($form_id);
+
+	// is it a profile?
+	if (in_array('profile-form',$form['#attributes']['class'])){
+		$cuser = \Drupal::currentUser();
+		// user of currently viewed profile form
+		$puser = \Drupal::routeMatch()->getParameter('user')->id();
+
+		if (($cuser->id()!=$puser) & !(in_array('administrator', $cuser->getRoles($exclude_locked_roles = false) ))) {
+			// deny access to non -owners of form
+			$form["#access"]=FALSE;
+		}
+		$form['actions']['set_default']['#access']=FALSE;		
 	}
+
 
 	if ($form_id == 'group_content_project-group_membership_group-join_form') {
 	    $form['actions']['submit']['#submit'][] = 'send_to_project';
