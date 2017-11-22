@@ -6447,7 +6447,7 @@ div.main-container {
       font-weight: 50; }
       .path-frontpage .bnrPic .efntxt_frnt p img {
         border-bottom: thin solid #A4AD23;
-        padding-bottom: 5px;
+        padding: 5px 20px;
         background: #fff; }
   .path-frontpage .bnrPic .btns {
     width: 500px;

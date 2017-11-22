@@ -9,4 +9,5 @@ is_admin: null
 permissions:
   - 'access user profiles'
   - 'add own researcher profile'
+  - 'create project group'
   - 'delete own researcher profile'

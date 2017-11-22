@@ -8,5 +8,6 @@ weight: 2
 is_admin: null
 permissions:
   - 'access user profiles'
+  - 'create project group'
   - 'edit own comments'
   - 'post comments'
