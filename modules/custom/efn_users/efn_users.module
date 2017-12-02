@@ -23,7 +23,7 @@ function efn_users_profile_insert(EntityInterface $profile) {
 function efn_users_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id){
 
 	// is it a profile?
-	if (in_array('profile-form',$form['#attributes']['class'])){
+	if (is_array($form['#attributes']['class']) && in_array('profile-form',$form['#attributes']['class'])){
 		$cuser = \Drupal::currentUser();
 		// user of currently viewed profile form
 		$puser = \Drupal::routeMatch()->getParameter('user')->id();

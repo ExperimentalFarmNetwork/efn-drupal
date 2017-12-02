@@ -101,14 +101,20 @@
       <p><img src="themes/minimus/images/e.png"></p>
       <p><img src="/themes/minimus/images/f.png"></p>
       <p><img src="themes/minimus/images/n.png"></p>
-<!--       <p>Farm</p>
-      <p>Network</p> -->
     </div>
     <div class="btns pull-right">
       <a href="/join" class="btn btn-primary btn-success btn-lg btn-block" title="Join the Experimental Farm Network" >Join</a>
       <a href="/learn" class="btn btn-primary btn-success btn-lg btn-block" title="Learn more about EFN" >Learn</a>
     </div>
   </div>
+  {% if page.front_slider %}
+    {% block front_slider %}
+  <div class="front-slider">
+    {{ page.front_slider }}
+  </div>
+    {% endblock %}
+  {% endif %}
+
 {# Main #}
 {% block main %}
   <div role="main" class="main-container {{ container }} js-quickedit-main-content">

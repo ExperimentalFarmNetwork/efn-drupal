@@ -216,28 +216,59 @@ div.main-container{
 
 	// slider
 .view-id-featured_project_slider{
-	// height:490px;
-	// overflow:hidden;
-	.views-field.views-field-label {
+	border-bottom: 5px solid $du-dark;
+	border-top: 5px solid $du-dark;
+
+	.view-header{
+	    background: #3B4A59;
+	    color: #eeeeee;
+	    padding: 5px;
+	    font-size: .8em;
 	    position: absolute;
-	    bottom:2em;
-	    left:1em;
-	    background:$du-asparagus;
+	    top: 5px;
+	    z-index: 99;
+	    left: 30px;
+	}
+	.views-field.views-field-label {
+	    position: absolute;	
+		top:333px;
+	    left: 30px;
 	    .field-content{
 		    	margin:0;
+			    background: #242029;
+			    color: #A4AD23;
+			    padding: 10px 15px;
+			    font-weight: 100;
 		    	a{
-			    	background: $du-asparagus;
-		    		color:$du-gold;
-	    		    padding: 10px 15px;
-				    font-weight: 100;
+			    	// background: $du-asparagus;
+	    		 //    padding: 10px 15px;
+				    // font-weight: 100;
+				    // line-height:70px;
 		    	}
 	    	color: $du-orange;
+	    }
+	}
+	.prjct-summary{
+		position: absolute;
+	    top:30px;
+	    left:30px;
+	    background: #242029;
+	    color: white;
+	    padding: 10px 15px;
+	    width:70%;
+	    h1{
+	    	margin-top:0;
+		    a{
+		    	
+				color:$du-gold;
+				display:block;
+		    }
 	    }
 	}
 	.views-slideshow-controls-bottom{
 		position:absolute;
 		right:1em;
-		top:1em;
+		top:50px;
 		z-index:999;
 	}
 	.views_slideshow_pager_field_item{
