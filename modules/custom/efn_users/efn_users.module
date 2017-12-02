@@ -18,12 +18,11 @@ function efn_users_profile_insert(EntityInterface $profile) {
 }
 
 /**
- * Implements hook_form_alter().
+ * Implements hook_form_BASE_FORM_ID_alter.
  */
-function efn_users_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id){
-
+function efn_users_form_profile_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id){
 	// is it a profile?
-	if (is_array($form['#attributes']['class']) && in_array('profile-form',$form['#attributes']['class'])){
+	if (in_array('profile-form',$form['#attributes']['class'])){
 		$cuser = \Drupal::currentUser();
 		// user of currently viewed profile form
 		$puser = \Drupal::routeMatch()->getParameter('user')->id();
@@ -36,10 +35,17 @@ function efn_users_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form
 	}
 
 
+}
+
+/**
+ * Implements hook_form_alter.
+ */
+function efn_users_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id){
 	if ($form_id == 'group_content_project-group_membership_group-join_form') {
 	    $form['actions']['submit']['#submit'][] = 'send_to_project';
 	  }
 }
+
 /**
  * Contact form submit handler
  * @param $form
