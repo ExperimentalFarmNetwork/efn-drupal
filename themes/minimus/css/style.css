@@ -6668,6 +6668,14 @@ body.path-group {
       margin-bottom: 1em; }
   body.path-group .group-content-project-group-membership-group-leave-form #edit-actions {
     margin-top: 3em; }
+  body.path-group .missing-researcher {
+    background: yellow;
+    display: inline-block;
+    padding: 1em; }
+    body.path-group .missing-researcher a {
+      text-decoration: underline; }
+      body.path-group .missing-researcher a:hover {
+        font-weight: bold; }
 
 .js-form-submit[value='Join group'], .btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
   font-size: 2rem;

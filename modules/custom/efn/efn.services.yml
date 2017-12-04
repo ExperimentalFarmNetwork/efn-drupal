@@ -1,0 +1,5 @@
+services:
+  efn.route_subscriber:
+    class: Drupal\efn\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }

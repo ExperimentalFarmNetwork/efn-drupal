@@ -62,12 +62,12 @@ function _allowed_formats_remove_textarea_help($form_element, FormStateInterface
 
   return $form_element;
 }
+// Tell the user to login or join
 
 /**
  * Implements hook_entity_view().
  *
  */
-// Tell the user to login or join
 function efn_entity_view(array $build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode){
   if($entity->getEntityTypeId()=="group"){
     $user = \Drupal::currentUser();
@@ -86,7 +86,32 @@ function efn_entity_view(array $build, EntityInterface $entity, EntityViewDispla
       drupal_set_message($participate, 'status', FALSE);
     }
   }
+}
 
+
+// Make sure only researchers can create projects
+
+/**
+ * Implements hook_form_FORM_ID_alter() for group_project_add_form().
+ */
+function efn_form_group_project_add_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
+  $user = \Drupal::currentUser();
+  $uid=$user->id();
+  $roles=$user->getRoles($exclude_locked_roles = false);
+
+  if (!in_array('researcher',$roles)){
+    $profile_link='<a href="/user/'.$uid.'/researcher">researcher profile</a>';
+    $rprofile_url="/user/".$uid."/researcher";
+    $message="<div class='missing-researcher'>You need to create a ".$profile_link." before creating a new project!</div>";
+
+    $form["#access"]=FALSE;
+    $form['#markup'] = t($message);
+    $form['#cache'] = [
+      'contexts' => [],
+      'max-age' => 0,
+    ];
+
+  }
 }
 
 // Change error for bad zip code
@@ -95,6 +120,14 @@ function efn_entity_view(array $build, EntityInterface $entity, EntityViewDispla
 // kint($form['field_location']);
 // }
 
+
+
+// Make the member for label better
+
+/**
+ * Implements hook_entity_view_alter().
+ *
+ */
 function efn_user_view_alter(array &$build, Drupal\Core\Entity\EntityInterface $entity, \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display){
   if ($display->getComponent('member_for')) {
     $build['member_for'] = [

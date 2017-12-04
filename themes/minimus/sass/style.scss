@@ -512,6 +512,20 @@ body.path-group{
 			margin-top:3em;
 		}
 	}
+
+	// start a project form
+
+	.missing-researcher{
+		background:yellow;
+		display:inline-block;
+		padding:1em;
+		a{
+			text-decoration:underline;
+			&:hover{
+				font-weight:bold;
+			}
+		}
+	}
 }
 
 .js-form-submit[value='Join group'], .btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle){	
@@ -709,6 +723,8 @@ body.path-group{
 		}
 	
 }
+
+
 
 // sidebar
 .region-sidebar-second{
