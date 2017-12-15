@@ -6464,7 +6464,9 @@ div.main-container {
   margin-bottom: 0; }
 .path-frontpage .view-id-featured_project_slider {
   border-bottom: 5px solid #242029;
-  border-top: 5px solid #242029; }
+  border-top: 5px solid #242029;
+  position: relative;
+  height: 433px; }
   .path-frontpage .view-id-featured_project_slider .view-header {
     background: #3B4A59;
     color: #eeeeee;
@@ -6472,8 +6474,8 @@ div.main-container {
     font-size: .8em;
     position: absolute;
     top: 5px;
-    z-index: 99;
-    left: 30px; }
+    left: 30px;
+    z-index: 99; }
   .path-frontpage .view-id-featured_project_slider .views-field.views-field-label {
     position: absolute;
     top: 333px;
@@ -6492,7 +6494,7 @@ div.main-container {
     background: #242029;
     color: white;
     padding: 10px 15px;
-    width: 70%; }
+    max-width: 70%; }
     .path-frontpage .view-id-featured_project_slider .prjct-summary h1 {
       margin-top: 0; }
       .path-frontpage .view-id-featured_project_slider .prjct-summary h1 a {
@@ -6501,7 +6503,7 @@ div.main-container {
   .path-frontpage .view-id-featured_project_slider .views-slideshow-controls-bottom {
     position: absolute;
     right: 1em;
-    top: 50px;
+    bottom: 1em;
     z-index: 999; }
   .path-frontpage .view-id-featured_project_slider .views_slideshow_pager_field_item {
     display: inline-block; }
