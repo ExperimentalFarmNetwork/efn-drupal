@@ -216,14 +216,14 @@ div.main-container{
 
 	// slider
 .view-id-featured_project_slider{
-
 	.view-content{
 		border-bottom: 5px solid $du-dark;
 		border-top: 5px solid $du-dark;
 		position:relative;
 		// height:433px;
 		overflow:hidden;
-		background:$du-gold;
+		background:$du-asparagus url("../images/seeds_bak.svg");
+		background-size:cover;
 	}
 
 	.view-header{
@@ -231,10 +231,11 @@ div.main-container{
 	    color: #eeeeee;
 	    padding: 5px;
 	    font-size: .8em;
-	    position: absolute;
-	    top: 5px;
+	    position: relative;
+	    top: 43px;
 	    left: 30px;
 	    z-index: 99;
+	    display:inline-block;
 	}
 	.views-field.views-field-label {
 	    position: absolute;	

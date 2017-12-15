@@ -6467,16 +6467,18 @@ div.main-container {
   border-top: 5px solid #242029;
   position: relative;
   overflow: hidden;
-  background: #A4AD23; }
+  background: #3B4A59 url("../images/seeds_bak.svg");
+  background-size: cover; }
 .path-frontpage .view-id-featured_project_slider .view-header {
   background: #3B4A59;
   color: #eeeeee;
   padding: 5px;
   font-size: .8em;
-  position: absolute;
-  top: 5px;
+  position: relative;
+  top: 43px;
   left: 30px;
-  z-index: 99; }
+  z-index: 99;
+  display: inline-block; }
 .path-frontpage .view-id-featured_project_slider .views-field.views-field-label {
   position: absolute;
   top: 333px;
