@@ -216,10 +216,15 @@ div.main-container{
 
 	// slider
 .view-id-featured_project_slider{
-	border-bottom: 5px solid $du-dark;
-	border-top: 5px solid $du-dark;
-	position:relative;
-	height:433px;
+
+	.view-content{
+		border-bottom: 5px solid $du-dark;
+		border-top: 5px solid $du-dark;
+		position:relative;
+		// height:433px;
+		overflow:hidden;
+		background:$du-gold;
+	}
 
 	.view-header{
 	    background: #3B4A59;
