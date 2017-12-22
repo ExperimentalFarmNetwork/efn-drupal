@@ -115,16 +115,19 @@ function efn_form_group_project_add_form_alter(&$form, FormStateInterface &$form
 }
 
 /**
- * Implements hook_form_FORM_ID_alter() for group_project_add_form().
+ * Implements hook_form_FORM_ID_alter() for group_project_edit_form().
  */
 function efn_form_group_project_edit_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
+
+// Only show featured checkbox for administrators
   $user = \Drupal::currentUser();
   $uid=$user->id();
   $roles=$user->getRoles($exclude_locked_roles = false);
   if (!in_array('administrator',$roles)){
     unset($form['field_featured_project']);
   }
-
+  // Fix stupid button text
+  $form['actions']['submit']['#value'] = t('Save changes');
 }
 
 // Change error for bad zip code
