@@ -114,6 +114,19 @@ function efn_form_group_project_add_form_alter(&$form, FormStateInterface &$form
   }
 }
 
+/**
+ * Implements hook_form_FORM_ID_alter() for group_project_add_form().
+ */
+function efn_form_group_project_edit_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
+  $user = \Drupal::currentUser();
+  $uid=$user->id();
+  $roles=$user->getRoles($exclude_locked_roles = false);
+  if (!in_array('administrator',$roles)){
+    unset($form['field_featured_project']);
+  }
+
+}
+
 // Change error for bad zip code
 
 // function efn_form_group_project_edit_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
@@ -136,3 +149,4 @@ function efn_user_view_alter(array &$build, Drupal\Core\Entity\EntityInterface $
     ];
   }
 }
+
