@@ -80,5 +80,5 @@ function send_to_project(&$form, \Drupal\Core\Form\FormStateInterface $form_stat
 	$route_params = ['group' => $group->id()];
 	$form_state->setRedirect('entity.group.canonical', $route_params);
 
-	drupal_set_message(t('Thanks for joining the Project. You now can post updates and comment!'));
+	drupal_set_message(t('Thanks for joining the Project. The project owner will be in touch with you soon!'));
 }
