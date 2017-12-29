@@ -11,8 +11,8 @@
  * associative array is then passed to leaflet_render_map(), along with a
  * collection of features.
  *
- * The settings array maps to the settings available
- * to leaflet map object, http://leaflet.cloudmade.com/reference.html#map-properties
+ * The settings array maps to the settings available to the leaflet map object,
+ * see http://leafletjs.com/reference.html#map-properties
  *
  * Layers are the available base layers for the map and, if you enable the
  * layer control, can be toggled on the map.
@@ -69,8 +69,8 @@ function hook_leaflet_map_info() {
  * Alters the map definitions for one or more maps that were defined by
  * hook_leaflet_map_info().
  *
- * The settings array maps to the settings available
- * to leaflet map object, http://leaflet.cloudmade.com/reference.html#map-properties
+ * The settings array maps to the settings available to the leaflet map object,
+ * http://leafletjs.com/reference.html#map-properties
  *
  * @param array $map_info
  */

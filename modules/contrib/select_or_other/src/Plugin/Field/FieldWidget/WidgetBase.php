@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\select_or_other\Plugin\Field\FieldWidget\WidgetBase.
- */
-
 namespace Drupal\select_or_other\Plugin\Field\FieldWidget;
 
 use Drupal\Core\Entity\FieldableEntityInterface;
@@ -177,7 +172,10 @@ abstract class WidgetBase extends \Drupal\Core\Field\WidgetBase {
     $selected_options = [];
 
     foreach ($items as $item) {
-      $selected_options[] = $item->{$this->getColumn()};
+      $column = $this->getColumn();
+      if ($value = $item->get($column)->getValue()) {
+        $selected_options[] = $value;
+      }
     }
 
     $selected_options = $this->prepareSelectedOptions($selected_options);
@@ -257,7 +255,7 @@ abstract class WidgetBase extends \Drupal\Core\Field\WidgetBase {
   private function selectElementTypeOptions() {
     return [
       'select_or_other_select' => $this->t('Select list'),
-      'select_or_other_buttons' => $this->t('Radiobuttons/checkboxes'),
+      'select_or_other_buttons' => $this->t('Check boxes/radio buttons'),
     ];
   }
 

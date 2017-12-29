@@ -10,8 +10,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
+use Drupal\Console\Core\Command\Command;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Datetime\DateFormatterInterface;
@@ -23,7 +22,6 @@ use Drupal\Console\Core\Style\DrupalStyle;
 
 class CreateCommand extends Command
 {
-    use CommandTrait;
     use ConfirmationTrait;
 
     /**
@@ -76,11 +74,34 @@ class CreateCommand extends Command
             ->setName('user:create')
             ->setDescription($this->trans('commands.user.create.description'))
             ->setHelp($this->trans('commands.user.create.help'))
-            ->addArgument('username', InputArgument::OPTIONAL, $this->trans('commands.user.create.options.username'))
-            ->addArgument('password', InputArgument::OPTIONAL, $this->trans('commands.user.create.options.password'))
-            ->addOption('roles', null, InputOption::VALUE_OPTIONAL, $this->trans('commands.user.create.options.roles'))
-            ->addOption('email', null, InputOption::VALUE_OPTIONAL, $this->trans('commands.user.create.options.email'))
-            ->addOption('status', null, InputOption::VALUE_OPTIONAL, $this->trans('commands.user.create.options.status'));
+            ->addArgument(
+                'username',
+                InputArgument::OPTIONAL,
+                $this->trans('commands.user.create.options.username')
+            )
+            ->addArgument(
+                'password',
+                InputArgument::OPTIONAL,
+                $this->trans('commands.user.create.options.password')
+            )
+            ->addOption(
+                'roles',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                $this->trans('commands.user.create.options.roles')
+            )
+            ->addOption(
+                'email',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                $this->trans('commands.user.create.options.email')
+            )
+            ->addOption(
+                'status',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                $this->trans('commands.user.create.options.status')
+            )->setAliases(['uc']);
     }
 
     /**
@@ -96,7 +117,13 @@ class CreateCommand extends Command
         $email = $input->getOption('email');
         $status = $input->getOption('status');
 
-        $user = $this->createUser($username, $password, $roles, $email, $status);
+        $user = $this->createUser(
+            $username,
+            $password,
+            $roles,
+            $email,
+            $status
+        );
 
         $tableHeader = ['Field', 'Value'];
 
@@ -120,6 +147,7 @@ class CreateCommand extends Command
             );
 
             $io->table($tableHeader, $tableData);
+
             $io->success(
                 sprintf(
                     $this->trans('commands.user.create.messages.user-created'),
@@ -132,6 +160,8 @@ class CreateCommand extends Command
 
         if ($user['error']) {
             $io->error($user['error']['error']);
+
+            return 1;
         }
     }
 
@@ -143,22 +173,22 @@ class CreateCommand extends Command
         $io = new DrupalStyle($input, $output);
 
         $username = $input->getArgument('username');
-        while (!$username) {
-            $username = $io->askEmpty(
-                $this->trans('commands.user.create.questions.username'),
-                null
+        if (!$username) {
+            $username = $io->ask(
+                $this->trans('commands.user.create.questions.username')
             );
+
+            $input->setArgument('username', $username);
         }
-        $input->setArgument('username', $username);
 
         $password = $input->getArgument('password');
         if (!$password) {
             $password = $io->askEmpty(
-                $this->trans('commands.user.create.questions.password'),
-                null
+                $this->trans('commands.user.create.questions.password')
             );
+
+            $input->setArgument('password', $password);
         }
-        $input->setArgument('password', $password);
 
         $roles = $input->getOption('roles');
         if (!$roles) {
@@ -186,8 +216,9 @@ class CreateCommand extends Command
                 $this->trans('commands.user.create.questions.email'),
                 null
             );
+
+            $input->setOption('email', $email);
         }
-        $input->setOption('email', $email);
 
         $status = $input->getOption('status');
         if (!$status) {
@@ -196,18 +227,18 @@ class CreateCommand extends Command
                 [0, 1],
                 1
             );
+
+            $input->setOption('status', $status);
         }
-        $input->setOption('status', $status);
     }
 
     private function createUser($username, $password, $roles, $email = null, $status = null)
     {
-        $password = $password?:$this->generatePassword();
         $user = User::create(
             [
                 'name' => $username,
                 'mail' => $email ?: $username . '@example.com',
-                'pass' => $password,
+                'pass' => $password?:user_password(),
                 'status' => $status,
                 'roles' => $roles,
                 'created' => REQUEST_TIME,
@@ -242,17 +273,5 @@ class CreateCommand extends Command
         }
 
         return $result;
-    }
-
-    private function generatePassword()
-    {
-        $length = mt_rand(8, 16);
-        $str = '';
-
-        for ($i = 0; $i < $length; $i++) {
-            $str .= chr(mt_rand(32, 126));
-        }
-
-        return $str;
     }
 }

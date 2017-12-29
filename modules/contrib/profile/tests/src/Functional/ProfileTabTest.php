@@ -27,7 +27,7 @@ class ProfileTabTest extends ProfileTestBase {
   /**
    * Testing demo user 2.
    *
-   * @var \Drupal\user\UserInterface;
+   * @var \Drupal\user\UserInterface
    */
   public $user2;
 
@@ -41,6 +41,7 @@ class ProfileTabTest extends ProfileTestBase {
       'access user profiles',
       'administer profile',
       'administer profile types',
+      'administer users',
       'access administration pages',
     ]);
   }
@@ -87,19 +88,20 @@ class ProfileTabTest extends ProfileTestBase {
 
     $this->drupalLogin($this->adminUser);
 
-    $this->drupalGet('admin/config');
-    $this->clickLink('User profiles');
+    $this->drupalGet('admin/config/people');
+    $this->clickLink('Profile types');
     $this->assertResponse(200);
     $this->assertUrl('admin/config/people/profiles');
 
+    $this->drupalGet('admin/people/profiles');
     $this->assertLink($profile1->label());
     $this->assertLinkByHref($profile2->toUrl('canonical')->toString());
 
+    $this->drupalGet('admin/people');
     $tasks = [
+      ['entity.user.collection', []],
       ['entity.profile.collection', []],
-      ['entity.profile_type.collection', []],
     ];
-
     $this->assertLocalTasks($tasks, 0);
   }
 

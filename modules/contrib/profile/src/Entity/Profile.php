@@ -13,7 +13,6 @@ use Drupal\profile\Event\ProfileEvents;
 use Drupal\profile\Event\ProfileLabelEvent;
 use Drupal\user\UserInterface;
 
-
 /**
  * Defines the profile entity class.
  *
@@ -35,7 +34,7 @@ use Drupal\user\UserInterface;
  *       "delete" = "Drupal\profile\Form\ProfileDeleteForm",
  *     },
  *     "route_provider" = {
- *       "html" = "Drupal\profile\ProfileHtmlRouteProvider",
+ *       "html" = "Drupal\Core\Entity\Routing\DefaultHtmlRouteProvider",
  *     },
  *   },
  *   bundle_entity_type = "profile_type",

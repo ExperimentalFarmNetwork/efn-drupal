@@ -8,7 +8,6 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\profile\ProfileTestTrait;
-use Drupal\simpletest\WebTestBase;
 use Drupal\Tests\BrowserTestBase;
 
 /**
@@ -30,14 +29,14 @@ abstract class ProfileTestBase extends BrowserTestBase {
   /**
    * Testing profile type entity view display.
    *
-   * @var \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display
+   * @var \Drupal\Core\Entity\Display\EntityViewDisplayInterface
    */
   protected $display;
 
   /**
    * Testing profile type entity form display.
    *
-   * @var \Drupal\Core\Entity\Display\EntityFormDisplayInterface $form
+   * @var \Drupal\Core\Entity\Display\EntityFormDisplayInterface
    */
   protected $form;
 
@@ -98,7 +97,7 @@ abstract class ProfileTestBase extends BrowserTestBase {
       ->setComponent($this->field->getName(), ['type' => 'string'])
       ->save();
 
-    // Configure rhe default form.
+    // Configure the default form.
     $this->form = EntityFormDisplay::load("profile.{$this->type->id()}.default");
     if (!$this->form) {
       $this->form = EntityFormDisplay::create([

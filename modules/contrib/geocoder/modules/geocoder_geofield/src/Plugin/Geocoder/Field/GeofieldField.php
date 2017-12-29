@@ -2,8 +2,8 @@
 
 namespace Drupal\geocoder_geofield\Plugin\Geocoder\Field;
 
+use Drupal\Core\Field\FieldConfigInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\field\FieldConfigInterface;
 use Drupal\geocoder_field\Plugin\Geocoder\Field\DefaultField;
 
 /**

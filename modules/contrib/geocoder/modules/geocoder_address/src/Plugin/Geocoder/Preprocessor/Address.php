@@ -25,7 +25,6 @@ class Address extends PreprocessorBase {
 
     $defaults = [
       'address_line1' => NULL,
-      'address_line2' => NULL,
       'locality' => NULL,
       'dependent_locality' => NULL,
       'administrative_area' => NULL,
@@ -36,7 +35,6 @@ class Address extends PreprocessorBase {
       $value += $defaults;
       $address = [
         $value['address_line1'],
-        $value['address_line2'],
         $value['locality'],
         $value['dependent_locality'],
         str_replace($value['country_code'] . '-', '', $value['administrative_area']),

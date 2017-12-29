@@ -53,38 +53,39 @@ class LeafletDefaultFormatter extends FormatterBase {
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $elements = parent::settingsForm($form, $form_state);
 
+    $leaflet_map_options = [];
     foreach (leaflet_map_get_info() as $key => $map) {
-      $options[$key] = $this->t($map['label']);
+      $leaflet_map_options[$key] = $this->t($map['label']);
     }
     $elements['leaflet_map'] = array(
       '#title' => $this->t('Leaflet Map'),
       '#type' => 'select',
-      '#options' => $options,
+      '#options' => $leaflet_map_options,
       '#default_value' => $this->getSetting('leaflet_map'),
       '#required' => TRUE,
     );
-    $options=null;
+    $zoom_options = [];
     for ($i = $this->getSetting('minPossibleZoom'); $i <= $this->getSetting('maxPossibleZoom'); $i++) {
-      $options[$i] = $i;
+      $zoom_options[$i] = $i;
     }
     $elements['zoom'] = array(
       '#title' => $this->t('Zoom'),
       '#type' => 'select',
-      '#options' => $options,
+      '#options' => $zoom_options,
       '#default_value' => $this->getSetting('zoom'),
       '#required' => TRUE,
     );
     $elements['minZoom'] = array(
       '#title' => $this->t('Min. Zoom'),
       '#type' => 'select',
-      '#options' => $options,
+      '#options' => $zoom_options,
       '#default_value' => $this->getSetting('minZoom'),
       '#required' => TRUE,
     );
     $elements['maxZoom'] = array(
       '#title' => $this->t('Max. Zoom'),
       '#type' => 'select',
-      '#options' => $options,
+      '#options' => $zoom_options,
       '#default_value' => $this->getSetting('maxZoom'),
       '#required' => TRUE,
     );
@@ -128,7 +129,7 @@ class LeafletDefaultFormatter extends FormatterBase {
       '#title' => $this->t('Icon Size'),
       '#type' => 'fieldset',
       '#collapsible' => FALSE,
-      '#description' => $this->t('Size of the icon image in pixels.')
+      '#description' => $this->t('Size of the icon image in pixels.'),
     );
     $elements['icon']['icon_size']['x'] = array(
       '#title' => $this->t('Width'),
@@ -144,8 +145,7 @@ class LeafletDefaultFormatter extends FormatterBase {
       '#title' => $this->t('Icon Anchor'),
       '#type' => 'fieldset',
       '#collapsible' => FALSE,
-      '#description' => $this->t('The coordinates of the "tip" of the icon (relative to
-        its top left corner). The icon will be aligned so that this point is at the marker\'s geographical location.')
+      '#description' => $this->t('The coordinates of the "tip" of the icon (relative to its top left corner). The icon will be aligned so that this point is at the marker\'s geographical location.'),
     );
     $elements['icon']['icon_anchor']['x'] = array(
       '#title' => $this->t('X'),
@@ -161,7 +161,7 @@ class LeafletDefaultFormatter extends FormatterBase {
       '#title' => $this->t('Shadow Anchor'),
       '#type' => 'fieldset',
       '#collapsible' => FALSE,
-      '#description' => $this->t('The point from which the shadow is shown.')
+      '#description' => $this->t('The point from which the shadow is shown.'),
     );
     $elements['icon']['shadow_anchor']['x'] = array(
       '#title' => $this->t('X'),
@@ -177,8 +177,7 @@ class LeafletDefaultFormatter extends FormatterBase {
       '#title' => $this->t('Popup Anchor'),
       '#type' => 'fieldset',
       '#collapsible' => FALSE,
-      '#description' => $this->t('The point from which the marker popup opens, relative
-        to the anchor point.')
+      '#description' => $this->t('The point from which the marker popup opens, relative to the anchor point.'),
     );
     $elements['icon']['popup_anchor']['x'] = array(
       '#title' => $this->t('X'),
@@ -214,9 +213,9 @@ class LeafletDefaultFormatter extends FormatterBase {
     $icon_url = $settings['icon']['icon_url'];
 
     $map = leaflet_map_get_info($settings['leaflet_map']);
-    $map['settings']['zoom'] = isset($settings['zoom']) ? $settings['zoom'] : null;
-    $map['settings']['minZoom'] = isset($settings['minZoom']) ? $settings['minZoom'] : null;
-    $map['settings']['maxZoom'] = isset($settings['zoom']) ? $settings['maxZoom'] : null;
+    $map['settings']['zoom'] = isset($settings['zoom']) ? $settings['zoom'] : NULL;
+    $map['settings']['minZoom'] = isset($settings['minZoom']) ? $settings['minZoom'] : NULL;
+    $map['settings']['maxZoom'] = isset($settings['zoom']) ? $settings['maxZoom'] : NULL;
 
     $elements = array();
     foreach ($items as $delta => $item) {
@@ -237,6 +236,14 @@ class LeafletDefaultFormatter extends FormatterBase {
     return $elements;
   }
 
+  /**
+   * Validate Url method.
+   *
+   * @param array $element
+   *   The element to validate.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The state of the form.
+   */
   public function validateUrl($element, FormStateInterface $form_state) {
     if (!empty($element['#value']) && !UrlHelper::isValid($element['#value'])) {
       $form_state->setError($element, $this->t("Icon Url is not valid."));

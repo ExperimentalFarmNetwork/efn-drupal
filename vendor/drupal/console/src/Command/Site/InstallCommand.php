@@ -9,26 +9,23 @@ namespace Drupal\Console\Command\Site;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Config\Definition\Exception\Exception;
-use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\ContainerAwareCommand;
 use Drupal\Core\Database\Database;
 use Drupal\Core\Installer\Exception\AlreadyInstalledException;
-use Drupal\Console\Core\Command\Shared\ContainerAwareCommandTrait;
 use Drupal\Console\Command\Shared\DatabaseTrait;
 use Drupal\Console\Core\Utils\ConfigurationManager;
 use Drupal\Console\Extension\Manager;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Bootstrap\Drupal;
 use Drupal\Console\Utils\Site;
-use DrupalFinder\DrupalFinder;
+use Drupal\Console\Core\Utils\DrupalFinder;
 
-class InstallCommand extends Command
+class InstallCommand extends ContainerAwareCommand
 {
-    use ContainerAwareCommandTrait;
     use DatabaseTrait;
 
     /**
@@ -86,19 +83,19 @@ class InstallCommand extends Command
                 'langcode',
                 null,
                 InputOption::VALUE_REQUIRED,
-                $this->trans('commands.site.install.options.langcode')
+                $this->trans('commands.site.install.arguments.langcode')
             )
             ->addOption(
                 'db-type',
                 null,
                 InputOption::VALUE_REQUIRED,
-                $this->trans('commands.site.install.options.db-type')
+                $this->trans('commands.site.install.arguments.db-type')
             )
             ->addOption(
                 'db-file',
                 null,
                 InputOption::VALUE_REQUIRED,
-                $this->trans('commands.site.install.options.db-file')
+                $this->trans('commands.site.install.arguments.db-file')
             )
             ->addOption(
                 'db-host',
@@ -140,38 +137,39 @@ class InstallCommand extends Command
                 'site-name',
                 null,
                 InputOption::VALUE_REQUIRED,
-                $this->trans('commands.site.install.options.site-name')
+                $this->trans('commands.site.install.arguments.site-name')
             )
             ->addOption(
                 'site-mail',
                 null,
                 InputOption::VALUE_REQUIRED,
-                $this->trans('commands.site.install.options.site-mail')
+                $this->trans('commands.site.install.arguments.site-mail')
             )
             ->addOption(
                 'account-name',
                 null,
                 InputOption::VALUE_REQUIRED,
-                $this->trans('commands.site.install.options.account-name')
+                $this->trans('commands.site.install.arguments.account-name')
             )
             ->addOption(
                 'account-mail',
                 null,
                 InputOption::VALUE_REQUIRED,
-                $this->trans('commands.site.install.options.account-mail')
+                $this->trans('commands.site.install.arguments.account-mail')
             )
             ->addOption(
                 'account-pass',
                 null,
                 InputOption::VALUE_REQUIRED,
-                $this->trans('commands.site.install.options.account-pass')
+                $this->trans('commands.site.install.arguments.account-pass')
             )
             ->addOption(
                 'force',
                 null,
                 InputOption::VALUE_NONE,
-                $this->trans('commands.site.install.options.force')
-            );
+                $this->trans('commands.site.install.arguments.force')
+            )
+            ->setAliases(['si']);
     }
 
     /**
@@ -321,7 +319,7 @@ class InstallCommand extends Command
         if (!$siteName) {
             $siteName = $io->ask(
                 $this->trans('commands.site.install.questions.site-name'),
-                'Drupal 8'
+                $this->trans('commands.site.install.suggestions.site-name')
             );
             $input->setOption('site-name', $siteName);
         }
@@ -372,6 +370,7 @@ class InstallCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new DrupalStyle($input, $output);
+
         $uri =  parse_url($input->getParameterOption(['--uri', '-l'], 'default'), PHP_URL_HOST);
 
         if ($this->site->multisiteMode($uri)) {
@@ -424,7 +423,7 @@ class InstallCommand extends Command
               'driver' => $dbType,
             ];
 
-            if ($force && Database::getConnectionInfo()) {
+            if ($force && Database::isActiveConnection()) {
                 $schema = Database::getConnection()->schema();
                 $tables = $schema->findTables('%');
                 foreach ($tables as $table) {
@@ -436,13 +435,10 @@ class InstallCommand extends Command
         try {
             $drupalFinder = new DrupalFinder();
             $drupalFinder->locateRoot(getcwd());
-            $composerRoot = $drupalFinder->getComposerRoot();
-            $drupalRoot = $drupalFinder->getDrupalRoot();
-
             $this->runInstaller($io, $input, $database, $uri);
 
             $autoload = $this->container->get('class_loader');
-            $drupal = new Drupal($autoload, $composerRoot, $drupalRoot);
+            $drupal = new Drupal($autoload, $drupalFinder);
             $container = $drupal->boot();
             $this->getApplication()->setContainer($container);
         } catch (Exception $e) {

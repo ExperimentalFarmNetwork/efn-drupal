@@ -16,7 +16,7 @@ Drupal Console
 =============================================
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/hechoendrupal/DrupalConsole)
-[![Build Status](https://travis-ci.org/hechoendrupal/DrupalConsole.svg?branch=master)](https://travis-ci.org/hechoendrupal/DrupalConsole)
+[![Build Status](https://travis-ci.org/hechoendrupal/drupal-console.svg?branch=master)](https://travis-ci.org/hechoendrupal/drupal-console)
 [![Latest Stable Version](https://poser.pugx.org/drupal/console/v/stable.svg)](https://packagist.org/packages/drupal/console)
 [![Latest Unstable Version](https://poser.pugx.org/drupal/console/v/unstable.svg)](https://packagist.org/packages/drupal/console)
 [![Software License](https://img.shields.io/badge/license-GPL%202.0+-blue.svg)](https://packagist.org/packages/drupal/console)
@@ -52,7 +52,7 @@ Using the DrupalConsole Launcher
 drupal
 ``` 
 
-We highly recommend you to install the global executable, but if is not installed, then you can run DrupalConsole by:  
+We highly recommend you to install the global executable, but if is not installed, you can run Drupal Console depending on your installation by executing:
 
 ```
 vendor/bin/drupal
@@ -65,9 +65,9 @@ bin/drupal
 ## Drupal Console Support
 You can ask for support at Drupal Console gitter chat room [http://bit.ly/console-support](http://bit.ly/console-support).
 
-## Getting The Project To Contribute
-
-For information about how to run this project for development follow instructions at [setup instructions](https://gist.github.com/jmolivas/97bbd07f328217be3564a434c5bd2618).
+## Contribute to Drupal Console
+* [Getting the project](https://docs.drupalconsole.com/en/contributing/getting-the-project.html)
+* [Running the project](https://docs.drupalconsole.com/en/contributing/running-the-project.html)
 
 ## Enabling Autocomplete
 ```

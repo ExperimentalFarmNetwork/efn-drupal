@@ -7,7 +7,12 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\views\Plugin\views\display\DisplayPluginBase;
 use Drupal\views\Plugin\views\style\StylePluginBase;
 use Drupal\views\ViewExecutable;
-
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Entity\EntityFieldManagerInterface;
+use Drupal\Core\Entity\EntityDisplayRepositoryInterface;
+use Drupal\Core\Render\RendererInterface;
 
 /**
  * Style plugin to render a View output as a Leaflet map.
@@ -26,7 +31,21 @@ use Drupal\views\ViewExecutable;
  *
  * @deprecated Should be removed in favor of other plugins.
  */
-class LeafletMap extends StylePluginBase {
+class LeafletMap extends StylePluginBase implements ContainerFactoryPluginInterface {
+
+  /**
+   * The Entity type property.
+   *
+   * @var string
+   */
+  private $entityType;
+
+  /**
+   * The Entity Info service property.
+   *
+   * @var string
+   */
+  private $entityInfo;
 
   /**
    * Does the style plugin for itself support to add fields to it's output.
@@ -34,6 +53,85 @@ class LeafletMap extends StylePluginBase {
    * @var bool
    */
   protected $usesFields = TRUE;
+
+  /**
+   * The Entity type manager service.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityManager;
+
+  /**
+   * The Entity Field manager service property.
+   *
+   * @var \Drupal\Core\Entity\EntityFieldManagerInterface
+   */
+  protected $entityFieldManager;
+
+  /**
+   * The Entity Display Repository service property.
+   *
+   * @var \Drupal\Core\Entity\EntityDisplayRepositoryInterface
+   */
+  protected $entityDisplay;
+
+  /**
+   * The Renderer service property.
+   *
+   * @var \Drupal\Core\Entity\EntityDisplayRepositoryInterface
+   */
+  protected $renderer;
+
+  /**
+   * Constructs a LeafletMap style instance.
+   *
+   * @param array $configuration
+   *   A configuration array containing information about the plugin instance.
+   * @param string $plugin_id
+   *   The plugin_id for the formatter.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
+   * @param EntityTypeManagerInterface $entity_manager
+   *   The entity manager.
+   * @param EntityFieldManagerInterface $entity_field_manager
+   *   The entity field manager.
+   * @param EntityDisplayRepositoryInterface $entity_display
+   *   The entity display manager.
+   * @param RendererInterface $renderer
+   *   The renderer.
+   */
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    EntityTypeManagerInterface $entity_manager,
+    EntityFieldManagerInterface $entity_field_manager,
+    EntityDisplayRepositoryInterface $entity_display,
+    RendererInterface $renderer
+  ) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition);
+
+    $this->entityManager = $entity_manager;
+    $this->entityFieldManager = $entity_field_manager;
+    $this->entityDisplay = $entity_display;
+    $this->renderer = $renderer;
+
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $container->get('entity_type.manager'),
+      $container->get('entity_field.manager'),
+      $container->get('entity_display.repository'),
+      $container->get('renderer')
+    );
+  }
 
   /**
    * If this view is displaying an entity, save the entity type and info.
@@ -44,10 +142,10 @@ class LeafletMap extends StylePluginBase {
     // For later use, set entity info related to the View's base table.
     $base_tables = array_keys($view->getBaseTables());
     $base_table = reset($base_tables);
-    foreach (\Drupal::entityManager()->getDefinitions() as $key => $info) {
+    foreach ($this->entityManager->getDefinitions() as $key => $info) {
       if ($info->getDataTable() == $base_table) {
-        $this->entity_type = $key;
-        $this->entity_info = $info;
+        $this->entityType = $key;
+        $this->entityInfo = $info;
         return;
       }
     }
@@ -62,19 +160,19 @@ class LeafletMap extends StylePluginBase {
   }
 
   /**
-   * Options form
+   * Options form.
    */
   public function buildOptionsForm(&$form, FormStateInterface $form_state) {
     parent::buildOptionsForm($form, $form_state);
 
-    // Get a list of fields and a sublist of geo data fields in this view
+    // Get a list of fields and a sublist of geo data fields in this view.
     $fields = array();
     $fields_geo_data = array();
     foreach ($this->displayHandler->getHandlers('field') as $field_id => $handler) {
       $label = $handler->adminLabel() ?: $field_id;
       $fields[$field_id] = $label;
       if (is_a($handler, '\Drupal\views\Plugin\views\field\Field')) {
-        $field_storage_definitions = \Drupal::entityManager()
+        $field_storage_definitions = $this->entityFieldManager
           ->getFieldStorageDefinitions($handler->getEntityType());
         $field_storage_definition = $field_storage_definitions[$handler->definition['field_name']];
 
@@ -84,7 +182,7 @@ class LeafletMap extends StylePluginBase {
       }
     }
 
-    // Check whether we have a geo data field we can work with
+    // Check whether we have a geo data field we can work with.
     if (!count($fields_geo_data)) {
       $form['error'] = array(
         '#markup' => $this->t('Please add at least one geofield to the view.'),
@@ -102,7 +200,7 @@ class LeafletMap extends StylePluginBase {
       '#required' => TRUE,
     );
 
-    // Name field
+    // Name field.
     $form['name_field'] = array(
       '#type' => 'select',
       '#title' => $this->t('Title Field'),
@@ -112,10 +210,10 @@ class LeafletMap extends StylePluginBase {
     );
 
     $desc_options = array_merge(array('' => ''), $fields);
-    // Add an option to render the entire entity using a view mode
-    if ($this->entity_type) {
+    // Add an option to render the entire entity using a view mode.
+    if ($this->entityType) {
       $desc_options += array(
-        '#rendered_entity' => '<' . $this->t('@entity entity', array('@entity' => $this->entity_type)) . '>',
+        '#rendered_entity' => $this->t('< @entity entity >', array('@entity' => $this->entityType)),
       );
     }
 
@@ -128,12 +226,11 @@ class LeafletMap extends StylePluginBase {
       '#default_value' => $this->options['description_field'],
     );
 
-    if ($this->entity_type) {
+    if ($this->entityType) {
 
       // Get the human readable labels for the entity view modes.
       $view_mode_options = array();
-      foreach (\Drupal::entityManager()
-                 ->getViewModes($this->entity_type) as $key => $view_mode) {
+      foreach ($this->entityDisplay->getViewModes($this->entityType) as $key => $view_mode) {
         $view_mode_options[$key] = $view_mode['label'];
       }
       // The View Mode drop-down is visible conditional on "#rendered_entity"
@@ -147,14 +244,14 @@ class LeafletMap extends StylePluginBase {
         '#states' => array(
           'visible' => array(
             ':input[name="style_options[description_field]"]' => array(
-              'value' => '#rendered_entity'
-            )
-          )
-        )
+              'value' => '#rendered_entity',
+            ),
+          ),
+        ),
       );
     }
 
-    // Choose a map preset
+    // Choose a map preset.
     $map_options = array();
     foreach (leaflet_map_get_info() as $key => $map) {
       $map_options[$key] = $this->t($map['label']);
@@ -202,7 +299,7 @@ class LeafletMap extends StylePluginBase {
       '#title' => $this->t('Icon Size'),
       '#type' => 'fieldset',
       '#collapsible' => FALSE,
-      '#description' => $this->t('Size of the icon image in pixels.')
+      '#description' => $this->t('Size of the icon image in pixels.'),
     );
 
     $form['icon']['iconSize']['x'] = array(
@@ -221,7 +318,7 @@ class LeafletMap extends StylePluginBase {
       '#title' => $this->t('Icon Anchor'),
       '#type' => 'fieldset',
       '#collapsible' => FALSE,
-      '#description' => $this->t('The coordinates of the "tip" of the icon (relative to its top left corner). The icon will be aligned so that this point is at the marker\'s geographical location.')
+      '#description' => $this->t('The coordinates of the "tip" of the icon (relative to its top left corner). The icon will be aligned so that this point is at the marker\'s geographical location.'),
     );
 
     $form['icon']['iconAnchor']['x'] = array(
@@ -240,7 +337,7 @@ class LeafletMap extends StylePluginBase {
       '#title' => $this->t('Shadow Anchor'),
       '#type' => 'fieldset',
       '#collapsible' => FALSE,
-      '#description' => $this->t('The point from which the shadow is shown.')
+      '#description' => $this->t('The point from which the shadow is shown.'),
     );
     $form['icon']['shadowAnchor']['x'] = array(
       '#title' => $this->t('X'),
@@ -257,7 +354,7 @@ class LeafletMap extends StylePluginBase {
       '#title' => $this->t('Popup Anchor'),
       '#type' => 'fieldset',
       '#collapsible' => FALSE,
-      '#description' => $this->t('The point from which the marker popup opens, relative to the anchor point.')
+      '#description' => $this->t('The point from which the marker popup opens, relative to the anchor point.'),
     );
 
     $form['icon']['popupAnchor']['x'] = array(
@@ -301,7 +398,7 @@ class LeafletMap extends StylePluginBase {
   /**
    * Renders the View.
    */
-  function render() {
+  public function render() {
     $data = array();
     $geofield_name = $this->options['data_source'];
     if ($this->options['data_source']) {
@@ -318,25 +415,25 @@ class LeafletMap extends StylePluginBase {
         if (!empty($geofield_value)) {
           $points = leaflet_process_geofield($geofield_value);
 
-          // Render the entity with the selected view mode
+          // Render the entity with the selected view mode.
           if ($this->options['description_field'] === '#rendered_entity' && is_object($result)) {
-            $entity = entity_load($this->entity_type, $result->{$this->entity_info->getKey('id')});
-            $build = entity_view($entity, $this->options['view_mode']);
-            $description = drupal_render($build);
+            $entity = $this->entityManager->getStorage($this->entityType)->load($result->nid);
+            $build = $this->entityManager->getViewBuilder($entity->getEntityTypeId())->view($entity, $this->options['view_mode'], $entity->language());
+            $description = $this->renderer->render($build);
           }
-          // Normal rendering via fields
+          // Normal rendering via fields.
           elseif ($this->options['description_field']) {
             $description = $this->rendered_fields[$id][$this->options['description_field']];
           }
 
-          // Attach pop-ups if we have a description field
+          // Attach pop-ups if we have a description field.
           if (isset($description)) {
             foreach ($points as &$point) {
               $point['popup'] = $description;
             }
           }
 
-          // Attach also titles, they might be used later on
+          // Attach also titles, they might be used later on.
           if ($this->options['name_field']) {
             foreach ($points as &$point) {
               $point['label'] = $this->rendered_fields[$id][$this->options['name_field']];
@@ -360,7 +457,7 @@ class LeafletMap extends StylePluginBase {
   }
 
   /**
-   * Set default options
+   * Set default options.
    */
   protected function defineOptions() {
     $options = parent::defineOptions();
@@ -373,4 +470,5 @@ class LeafletMap extends StylePluginBase {
     $options['icon'] = array('default' => array());
     return $options;
   }
+
 }

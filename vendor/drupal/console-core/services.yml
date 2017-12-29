@@ -18,6 +18,7 @@ services:
     arguments: ['@console.translator_manager', '@console.string_converter']
   console.file_queue:
     class: Drupal\Console\Core\Utils\FileQueue
+    arguments: ['@app.root']
   console.shell_process:
     class: Drupal\Console\Core\Utils\ShellProcess
     arguments: ['@app.root', '@console.translator_manager']
@@ -26,6 +27,10 @@ services:
   console.chain_discovery:
     class: Drupal\Console\Core\Utils\ChainDiscovery
     arguments: ['@console.root', '@console.configuration_manager']
+  console.count_code_lines:
+    class: Drupal\Console\Core\Utils\CountCodeLines
+  console.message_manager:
+    class: Drupal\Console\Core\Utils\MessageManager
   # DrupalConsoleCore Commands
   console.about:
     class: Drupal\Console\Core\Command\AboutCommand
@@ -54,7 +59,7 @@ services:
     tags:
       - { name: drupal.command }
   console.settings_debug:
-    class: Drupal\Console\Core\Command\Settings\DebugCommand
+    class: Drupal\Console\Core\Command\Debug\SettingsCommand
     arguments: ['@console.configuration_manager', '@console.nested_array']
     tags:
       - { name: drupal.command }
@@ -74,47 +79,13 @@ services:
     tags:
       - { name: drupal.command }
   console.chain_debug:
-    class: Drupal\Console\Core\Command\Chain\ChainDebugCommand
+    class: Drupal\Console\Core\Command\Debug\ChainCommand
     arguments: ['@console.chain_discovery']
     tags:
       - { name: drupal.command }
   console.site_debug:
-    class: Drupal\Console\Core\Command\Site\DebugCommand
+    class: Drupal\Console\Core\Command\Debug\SiteCommand
     arguments: ['@console.configuration_manager']
-    tags:
-      - { name: drupal.command }
-  console.yaml_diff:
-    class: Drupal\Console\Core\Command\Yaml\DiffCommand
-    arguments: ['@console.nested_array']
-    tags:
-      - { name: drupal.command }
-  console.yaml_get_value:
-      class: Drupal\Console\Core\Command\Yaml\GetValueCommand
-      arguments: ['@console.nested_array']
-      tags:
-        - { name: drupal.command }
-  console.yaml_merge:
-    class: Drupal\Console\Core\Command\Yaml\MergeCommand
-    tags:
-      - { name: drupal.command }
-  console.yaml_split:
-    class: Drupal\Console\Core\Command\Yaml\SplitCommand
-    arguments: ['@console.nested_array']
-    tags:
-      - { name: drupal.command }
-  console.yaml_update_key:
-    class: Drupal\Console\Core\Command\Yaml\UpdateKeyCommand
-    arguments: ['@console.nested_array']
-    tags:
-      - { name: drupal.command }
-  console.yaml_update_value:
-    class: Drupal\Console\Core\Command\Yaml\UpdateValueCommand
-    arguments: ['@console.nested_array']
-    tags:
-      - { name: drupal.command }
-  console.yaml_unset_key:
-    class: Drupal\Console\Core\Command\Yaml\UnsetKeyCommand
-    arguments: ['@console.nested_array']
     tags:
       - { name: drupal.command }
   # DrupalConsoleCore Generators
@@ -122,3 +93,8 @@ services:
     class: Drupal\Console\Core\Generator\InitGenerator
     tags:
       - { name: drupal.generator }
+  console.drush:
+    class: Drupal\Console\Core\Command\DrushCommand
+    arguments: ['@console.configuration_manager', '@console.chain_queue']
+    tags:
+      - { name: drupal.command }

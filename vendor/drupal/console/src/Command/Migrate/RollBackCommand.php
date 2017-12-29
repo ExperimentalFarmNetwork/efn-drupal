@@ -14,8 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Drupal\Console\Command\Shared\MigrationTrait;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Annotations\DrupalCommand;
-use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
+use Drupal\Console\Core\Command\Command;
 use Drupal\migrate_plus\Entity\MigrationGroup;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\MigrateExecutable;
@@ -28,11 +27,9 @@ use Drupal\migrate\Plugin\MigrationPluginManagerInterface;
  *     extensionType = "module"
  * )
  */
-
 class RollBackCommand extends Command
 {
     use MigrationTrait;
-    use CommandTrait;
 
     /**
      * @var MigrationPluginManagerInterface $pluginManagerMigration
@@ -44,8 +41,9 @@ class RollBackCommand extends Command
      *
      * @param MigrationPluginManagerInterface $pluginManagerMigration
      */
-    public function __construct(MigrationPluginManagerInterface $pluginManagerMigration)
-    {
+    public function __construct(
+        MigrationPluginManagerInterface $pluginManagerMigration
+    ) {
         $this->pluginManagerMigration = $pluginManagerMigration;
         parent::__construct();
     }
@@ -60,8 +58,9 @@ class RollBackCommand extends Command
                 'source-base_path',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                $this->trans('commands.migrate.setup.options.source-base_path')
-            );
+                $this->trans('commands.migrate.setup.options.source-base-path')
+            )->setAliases(['mir']);
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -174,7 +173,7 @@ class RollBackCommand extends Command
         $sourceBasepath = $input->getOption('source-base_path');
         if (!$sourceBasepath) {
             $sourceBasepath = $io->ask(
-                $this->trans('commands.migrate.setup.questions.source-base_path'),
+                $this->trans('commands.migrate.setup.questions.source-base-path'),
                 ''
             );
             $input->setOption('source-base_path', $sourceBasepath);

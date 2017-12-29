@@ -4,6 +4,9 @@ namespace Drupal\leaflet_views\Plugin\views\style;
 
 use Drupal\views\Plugin\views\style\StylePluginBase;
 use Drupal\views\ResultRow;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 
 /**
  * Style plugin to render leaflet markers.
@@ -17,7 +20,7 @@ use Drupal\views\ResultRow;
  *   display_types = {"leaflet"},
  * )
  */
-class MarkerDefault extends StylePluginBase {
+class MarkerDefault extends StylePluginBase implements ContainerFactoryPluginInterface {
 
   /**
    * Does the style plugin allows to use style plugins.
@@ -41,6 +44,13 @@ class MarkerDefault extends StylePluginBase {
   protected $usesGrouping = FALSE;
 
   /**
+   * The module handler service.
+   *
+   * @var \Drupal\Core\Extension\ModuleHandlerInterface
+   */
+  protected $moduleHandler;
+
+  /**
    * Does the style plugin for itself support to add fields to it's output.
    *
    * This option only makes sense on style plugins without row plugins, like
@@ -50,6 +60,45 @@ class MarkerDefault extends StylePluginBase {
    */
   protected $usesFields = TRUE;
 
+  /**
+   * Constructs a MarkerDefault instance.
+   *
+   * @param array $configuration
+   *   A configuration array containing information about the plugin instance.
+   * @param string $plugin_id
+   *   The plugin_id for the formatter.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
+   * @param ModuleHandlerInterface $module_handler
+   *   The modules handler.
+   */
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    ModuleHandlerInterface $module_handler
+  ) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition);
+
+    $this->moduleHandler = $module_handler;
+
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $container->get('module_handler')
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function renderGroupingSets($sets, $level = 0) {
     $output = array();
     foreach ($sets as $set) {
@@ -73,18 +122,17 @@ class MarkerDefault extends StylePluginBase {
         continue;
       }
 
-      if ($featureGroup = $this->renderLeafletGroup($set['features'], $set['group'], $level)) {
+      if ($feature_group = $this->renderLeafletGroup($set['features'], $set['group'], $level)) {
         // Allow modules to adjust the feature group.
-        \Drupal::moduleHandler()
-          ->alter('leaflet_views_feature_group', $featureGroup, $this);
+        $this->moduleHandler->alter('leaflet_views_feature_group', $feature_group, $this);
 
         // If the rendered "feature group" is actually only a list of features,
         // merge them into the output; else simply append the feature group.
-        if (empty($featureGroup['group'])) {
-          $output = array_merge($output, $featureGroup['features']);
+        if (empty($feature_group['group'])) {
+          $output = array_merge($output, $feature_group['features']);
         }
         else {
-          $output[] = $featureGroup;
+          $output[] = $feature_group;
         }
       }
     }
@@ -96,7 +144,9 @@ class MarkerDefault extends StylePluginBase {
    * Alter the marker definition generated from the row plugin.
    *
    * @param array $points
+   *   The Marker Points.
    * @param ResultRow $row
+   *   The Result rows.
    */
   protected function alterLeafletMarkerPoints(&$points, ResultRow $row) {
   }
@@ -106,10 +156,11 @@ class MarkerDefault extends StylePluginBase {
    *
    * @param array $features
    *   The list of leaflet features / points.
-   * @param $title
+   * @param string $title
    *   The group title.
-   * @param $level
+   * @param string $level
    *   The current group level.
+   *
    * @return array
    *   Definition of leaflet markers, compatible with leaflet_render_map().
    */

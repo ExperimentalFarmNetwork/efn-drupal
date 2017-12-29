@@ -26,9 +26,9 @@ interface GeocoderInterface {
   /**
    * Reverse geocode coordinates.
    *
-   * @param double $latitude
+   * @param $latitude
    *   The latitude.
-   * @param double $longitude
+   * @param $longitude
    *   The longitude.
    * @param string[] $plugins
    *   A list of plugin identifiers to use.
@@ -39,6 +39,6 @@ interface GeocoderInterface {
    * @return \Geocoder\Model\AddressCollection|null
    *   An address collection or NULL on gecoding failure.
    */
-  public function reverse(\double $latitude, \double $longitude, array $plugins, array $options = []);
+  public function reverse($latitude, $longitude, array $plugins, array $options = []);
 
 }

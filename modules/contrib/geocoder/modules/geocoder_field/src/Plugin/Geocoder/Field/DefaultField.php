@@ -2,10 +2,10 @@
 
 namespace Drupal\geocoder_field\Plugin\Geocoder\Field;
 
+use Drupal\Core\Field\FieldConfigInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Plugin\PluginBase;
-use Drupal\field\FieldConfigInterface;
 use Drupal\geocoder\DumperPluginManager;
 use Drupal\geocoder\ProviderPluginManager;
 use Drupal\geocoder_field\GeocoderFieldPluginInterface;
@@ -105,12 +105,20 @@ class DefaultField extends PluginBase implements GeocoderFieldPluginInterface, C
       ],
       '#default_value' => $field->getThirdPartySetting('geocoder_field', 'method', 'none'),
     ];
+
+    $invisible_state = [
+      'invisible' => [
+        ':input[name="third_party_settings[geocoder_field][method]"]' => ['value' => 'none'],
+      ],
+    ];
+
     $element['field'] = [
       '#type' => 'select',
       '#title' => $this->t('Geocode from an existing field'),
       '#description' => $this->t('Select which field you would like to use.'),
       '#default_value' => $field->getThirdPartySetting('geocoder_field', 'field'),
       '#options' => $this->fieldPluginManager->getSourceFields($field->getTargetEntityTypeId(), $field->getTargetBundle(), $field->getName()),
+      '#states' => $invisible_state,
     ];
     $element['plugins'] = [
       '#type' => 'table',
@@ -122,6 +130,9 @@ class DefaultField extends PluginBase implements GeocoderFieldPluginInterface, C
       ],
       ],
       '#caption' => $this->t('Select the Geocoder plugins to use, you can reorder them. The first one to return a valid value will be used.'),
+      // We need this class for #states to hide the entire table.
+      '#attributes' => ['class' => ['js-form-item']],
+      '#states' => $invisible_state,
     ];
 
     $default_plugins = (array) $field->getThirdPartySetting('geocoder_field', 'plugins');
@@ -153,29 +164,21 @@ class DefaultField extends PluginBase implements GeocoderFieldPluginInterface, C
       '#default_value' => $field->getThirdPartySetting('geocoder_field', 'dumper', 'wkt'),
       '#options' => $this->dumperPluginManager->getPluginsAsOptions(),
       '#description' => $this->t('Set the output format of the value. Ex, for a geofield, the format must be set to WKT.'),
+      '#states' => $invisible_state,
     ];
     $element['delta_handling'] = [
       '#type' => 'select',
       '#title' => $this->t('Multi-value input handling'),
-      '#description' => [
-        ['#markup' => $this->t('Should geometries from multiple inputs be:')],
-        [
-          '#theme' => 'item_list',
-          '#items' => [
-            $this->t('Matched with each input (e.g. One POINT for each address field'),
-            $this->t('Aggregated into a single MULTIPOINT geofield (e.g. One MULTIPOINT polygon from multiple address fields)'),
-            $this->t('Broken up into multiple geometries (e.g. One MULTIPOINT to multiple POINTs.)'),
-          ],
-        ],
-      ],
+      '#description' => 'If the source field is a multi-value field, this is mapped 1-on-1 by default.
+      That means that if you can add an unlimited amount of text fields, this also results in an
+      unlimited amount of geocodes. However, if you have one field that contains multiple geocodes
+      (like a file) you can select single-to-multiple to extract all geocodes from the first field.',
       '#default_value' => $field->getThirdPartySetting('geocoder_field', 'delta_handling', 'default'),
       '#options' => [
         'default' => $this->t('Match Multiples (default)'),
-        'm_to_s' => $this->t('Multiple to Single'),
         's_to_m' => $this->t('Single to Multiple'),
-        'c_to_s' => $this->t('Concatenate to Single'),
-        'c_to_m' => $this->t('Concatenate to Multiple'),
       ],
+      '#states' => $invisible_state,
     ];
     $failure = (array) $field->getThirdPartySetting('geocoder_field', 'failure') + [
       'handling' => 'preserve',
@@ -191,16 +194,19 @@ class DefaultField extends PluginBase implements GeocoderFieldPluginInterface, C
         'empty' => $this->t('Empty the field value'),
       ],
       '#default_value' => $failure['handling'],
+      '#states' => $invisible_state,
     ];
     $element['failure']['status_message'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Show a status message warning in case of geo-coding failure.'),
       '#default_value' => $failure['status_message'],
+      '#states' => $invisible_state,
     ];
     $element['failure']['log'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Log the geo-coding failure.'),
       '#default_value' => $failure['log'],
+      '#states' => $invisible_state,
     ];
 
     return $element;

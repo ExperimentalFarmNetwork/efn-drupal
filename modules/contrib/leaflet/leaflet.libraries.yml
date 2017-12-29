@@ -1,15 +1,15 @@
 leaflet:
   remote: http://leafletjs.com/
-  version: 0.7.7
+  version: 1.0.2
   license:
     name: Leaflet-License
-    url: https://github.com/Leaflet/Leaflet/blob/v0.7.7/LICENSE
+    url: https://github.com/Leaflet/Leaflet/blob/v1.0.2/LICENSE
     gpl-compatible: true
   js:
-    //unpkg.com/leaflet@0.7.7/dist/leaflet.js: {}
+    /libraries/leaflet/dist/leaflet.js: {}
   css:
     component:
-      //unpkg.com/leaflet@0.7.7/dist/leaflet.css: {}
+      /libraries/leaflet/dist/leaflet.css: {}
 
 leaflet-drupal:
     version: VERSION

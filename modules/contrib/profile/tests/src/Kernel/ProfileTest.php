@@ -3,10 +3,11 @@
 namespace Drupal\Tests\profile\Kernel;
 
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\KernelTests\Core\Entity\EntityKernelTestBase;
 use Drupal\profile\Entity\Profile;
 use Drupal\profile\Entity\ProfileType;
-use Drupal\profile\ProfileTestTrait;
 
 /**
  * Tests basic functionality of profiles.
@@ -36,7 +37,7 @@ class ProfileTest extends EntityKernelTestBase {
   /**
    * Testing demo user 2.
    *
-   * @var \Drupal\user\UserInterface;
+   * @var \Drupal\user\UserInterface
    */
   public $user2;
 
@@ -149,6 +150,7 @@ class ProfileTest extends EntityKernelTestBase {
       'id' => 'test_defaults',
       'label' => 'test_defaults',
     ]);
+    $profile_type->save();
 
     // Create new profiles.
     $profile1 = Profile::create([
@@ -172,6 +174,7 @@ class ProfileTest extends EntityKernelTestBase {
       'id' => 'test_defaults',
       'label' => 'test_defaults',
     ]);
+    $profile_type->save();
 
     // Create a new profile.
     $profile1 = Profile::create([
@@ -215,6 +218,7 @@ class ProfileTest extends EntityKernelTestBase {
       'id' => 'test_defaults',
       'label' => 'test_defaults',
     ]);
+    $profile_type->save();
 
     // Create new profiles.
     $profile1 = Profile::create([
@@ -240,7 +244,89 @@ class ProfileTest extends EntityKernelTestBase {
     // Ensure that \Drupal\profile\Entity\Profile::preSave doesn't crash.
     $anonymous_profile = Profile::create(['type' => $profile_type->id()]);
     $anonymous_profile->save();
-    $this->assertEmpty($anonymous_profile->getOwner());
+    $this->assertTrue(empty($anonymous_profile->getOwner()));
+  }
+
+  /**
+   * Tests revisions.
+   */
+  public function testProfileRevisions() {
+    $profile_type = ProfileType::create([
+      'id' => 'test_defaults',
+      'label' => 'test_defaults',
+    ]);
+    $profile_type->save();
+
+    $field_storage = FieldStorageConfig::create([
+      'field_name' => 'profile_fullname',
+      'entity_type' => 'profile',
+      'type' => 'text',
+    ]);
+    $field_storage->save();
+
+    $field = FieldConfig::create([
+      'field_storage' => $field_storage,
+      'bundle' => $profile_type->id(),
+      'label' => 'Full name',
+    ]);
+    $field->save();
+
+
+    // Create new profiles.
+    /** @var \Drupal\profile\Entity\Profile $profile1 */
+    $profile1 = Profile::create([
+      'type' => $profile_type->id(),
+      'uid' => $this->user1->id(),
+      'profile_fullname' => $this->randomMachineName(),
+    ]);
+    $profile1->save();
+
+    $profile1 = $this->reloadEntity($profile1);
+    $existing_profile_id = $profile1->id();
+    $existing_revision_id = $profile1->getRevisionId();
+
+    $profile1->get('profile_fullname')->setValue($this->randomMachineName());
+    $profile1->save();
+
+    $profile1 = $this->reloadEntity($profile1);
+    $this->assertEquals($existing_profile_id, $profile1->id());
+    $this->assertEquals($existing_revision_id, $profile1->getRevisionId());
+
+    $profile_type->set('use_revisions', TRUE);
+    $profile_type->save();
+
+    // Create new profiles.
+    /** @var \Drupal\profile\Entity\Profile $profile2 */
+    $profile2 = Profile::create([
+      'type' => $profile_type->id(),
+      'uid' => $this->user1->id(),
+      'profile_fullname' => $this->randomMachineName(),
+    ]);
+    $profile2->setDefault(TRUE);
+    $profile2->save();
+
+    $profile2 = $this->reloadEntity($profile2);
+    $existing_profile_id = $profile2->id();
+    $existing_revision_id = $profile2->getRevisionId();
+
+    // Changing profiles support revisions.
+    $profile2->get('profile_fullname')->setValue($this->randomMachineName());
+    $profile2->setNewRevision();
+    $profile2->save();
+
+    $profile2 = $this->reloadEntity($profile2);
+    $this->assertEquals($existing_profile_id, $profile2->id());
+    $this->assertNotEquals($existing_revision_id, $profile2->getRevisionId());
+
+    $existing_profile_id = $profile2->id();
+    $existing_revision_id = $profile2->getRevisionId();
+
+    // Random save does not create a revision.
+    $profile2->save();
+    $profile2 = $this->reloadEntity($profile2);
+    $this->assertEquals($existing_profile_id, $profile2->id());
+    $this->assertEquals($existing_revision_id, $profile2->getRevisionId());
+
   }
 
 }

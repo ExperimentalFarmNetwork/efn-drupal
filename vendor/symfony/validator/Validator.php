@@ -28,29 +28,10 @@ use Symfony\Component\Validator\Exception\ValidatorException;
  */
 class Validator implements ValidatorInterface, Mapping\Factory\MetadataFactoryInterface
 {
-    /**
-     * @var MetadataFactoryInterface
-     */
     private $metadataFactory;
-
-    /**
-     * @var ConstraintValidatorFactoryInterface
-     */
     private $validatorFactory;
-
-    /**
-     * @var TranslatorInterface
-     */
     private $translator;
-
-    /**
-     * @var null|string
-     */
     private $translationDomain;
-
-    /**
-     * @var array
-     */
     private $objectInitializers;
 
     public function __construct(
@@ -108,7 +89,7 @@ class Validator implements ValidatorInterface, Mapping\Factory\MetadataFactoryIn
     /**
      * {@inheritdoc}
      *
-     * @throws ValidatorException If the metadata for the value does not support properties.
+     * @throws ValidatorException if the metadata for the value does not support properties
      */
     public function validateProperty($containingValue, $property, $groups = null)
     {
@@ -139,7 +120,7 @@ class Validator implements ValidatorInterface, Mapping\Factory\MetadataFactoryIn
     /**
      * {@inheritdoc}
      *
-     * @throws ValidatorException If the metadata for the value does not support properties.
+     * @throws ValidatorException if the metadata for the value does not support properties
      */
     public function validatePropertyValue($containingValue, $property, $value, $groups = null)
     {

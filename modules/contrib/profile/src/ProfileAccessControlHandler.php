@@ -3,7 +3,6 @@
 namespace Drupal\profile;
 
 use Drupal\Core\Access\AccessResult;
-use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\entity\EntityAccessControlHandler as EntityApiAccessControlHandler;
 use Drupal\profile\Entity\ProfileType;

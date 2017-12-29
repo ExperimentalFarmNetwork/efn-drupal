@@ -10,8 +10,7 @@ namespace Drupal\Console\Command\User;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
+use Drupal\Console\Core\Command\Command;
 use Drupal\Console\Utils\DrupalApi;
 use Drupal\Console\Core\Style\DrupalStyle;
 
@@ -22,8 +21,6 @@ use Drupal\Console\Core\Style\DrupalStyle;
  */
 class RoleCommand extends Command
 {
-    use CommandTrait;
-
     /**
      * @var DrupalApi
      */
@@ -51,34 +48,18 @@ class RoleCommand extends Command
             ->addArgument(
                 'operation',
                 InputOption::VALUE_REQUIRED,
-                $this->trans('commands.user.role.operation')
+                $this->trans('commands.user.role.arguments.operation')
             )
             ->addArgument(
                 'user',
                 InputOption::VALUE_REQUIRED,
-                $this->trans('commands.user.role.user')
+                $this->trans('commands.user.role.arguments.user')
             )
             ->addArgument(
                 'role',
                 InputOption::VALUE_REQUIRED,
-                $this->trans('commands.user.role.role')
-            );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function interact(InputInterface $input, OutputInterface $output)
-    {
-        $operation = $input->getArgument('operation');
-        $user = $input->getArgument('user');
-        $role = $input->getArgument('role');
-
-        if (!$operation || !$user || !$role) {
-            throw new \Exception(
-                $this->trans('commands.user.role.messages.bad-arguments')
-            );
-        }
+                $this->trans('commands.user.role.arguments.roles')
+            )->setAliases(['ur']);
     }
 
     /**
@@ -90,6 +71,12 @@ class RoleCommand extends Command
         $operation = $input->getArgument('operation');
         $user = $input->getArgument('user');
         $role = $input->getArgument('role');
+
+        if (!$operation || !$user || !$role) {
+            throw new \Exception(
+                $this->trans('commands.user.role.messages.bad-arguments')
+            );
+        }
 
         $systemRoles = $this->drupalApi->getRoles();
 

@@ -5,10 +5,11 @@ namespace Drupal\Console\Composer\Plugin;
 use Composer\Composer;
 use Composer\IO\IOInterface;
 use Composer\Plugin\PluginInterface;
-use Composer\Installer\PackageEvent;
-use Composer\Installer\PackageEvents;
+use Composer\Script\Event;
+use Composer\Script\ScriptEvents;
 use Composer\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Finder\Finder;
 
 // Explicitly require ExtenderManager here.
 // When this package is uninstalled, ExtenderManager needs to be available any
@@ -44,18 +45,17 @@ class Extender implements PluginInterface, EventSubscriberInterface
      */
     public static function getSubscribedEvents()
     {
-        return array(
-            PackageEvents::POST_PACKAGE_INSTALL => "processPackages",
-            PackageEvents::POST_PACKAGE_UPDATE => "processPackages",
-            PackageEvents::POST_PACKAGE_UNINSTALL => "processPackages",
-        );
+        return [
+            ScriptEvents::POST_INSTALL_CMD => "processPackages",
+            ScriptEvents::POST_UPDATE_CMD => "processPackages",
+        ];
     }
 
     /**
-     * @param PackageEvent $event
+     * @param Event $event
      * @throws \Exception
      */
-    public function processPackages(PackageEvent $event)
+    public function processPackages(Event $event)
     {
         $extenderManager = new ExtenderManager();
 
@@ -65,22 +65,22 @@ class Extender implements PluginInterface, EventSubscriberInterface
         $localRepository = $repositoryManager->getLocalRepository();
 
         foreach ($localRepository->getPackages() as $package) {
-          if ($installationManager->isPackageInstalled($localRepository, $package)) {
-            if ($package->getType() === 'drupal-console-library') {
-              $extenderManager->addServicesFile($installationManager->getInstallPath($package) . '/console.services.yml');
-              $extenderManager->addConfigFile($installationManager->getInstallPath($package) . '/console.config.yml');
+            if ($installationManager->isPackageInstalled($localRepository, $package)) {
+                if ($package->getType() === 'drupal-console-library') {
+                    $extenderManager->addServicesFile($installationManager->getInstallPath($package) . '/console.services.yml');
+                    $extenderManager->addConfigFile($installationManager->getInstallPath($package) . '/console.config.yml');
+                }
             }
-          }
         }
 
         if ($consolePackage = $localRepository->findPackage('drupal/console', '*')) {
-          if ($localRepository->hasPackage($consolePackage)) {
-            $directory = $installationManager->getInstallPath($consolePackage);
-          }
+            if ($localRepository->hasPackage($consolePackage)) {
+                $directory = $installationManager->getInstallPath($consolePackage);
+            }
         }
         if (empty($directory)) {
-          // cwd should be the project root.  This is the same logic Symfony uses.
-          $directory = getcwd();
+            // cwd should be the project root.  This is the same logic Symfony uses.
+            $directory = getcwd();
         }
 
         $configFile = $directory . '/extend.console.config.yml';
@@ -89,17 +89,20 @@ class Extender implements PluginInterface, EventSubscriberInterface
 
         if (file_exists($configFile)) {
             unlink($configFile);
-            $this->io->write('<info>Removing config cache file:</info>' . $configFile);
+            $this->io->write('<info>Removing config cache file:</info>');
+            $this->io->write($configFile);
         }
 
         if (file_exists($servicesFile)) {
             unlink($servicesFile);
-            $this->io->write('<info>Removing services cache file:</info>' . $servicesFile);
+            $this->io->write('<info>Removing packages services cache file:</info>');
+            $this->io->write($servicesFile);
         }
 
         if (file_exists($servicesUninstallFile)) {
             unlink($servicesUninstallFile);
-            $this->io->write('<info>Removing services cache file:</info>' . $servicesUninstallFile);
+            $this->io->write('<info>Removing packages services cache file:</info>');
+            $this->io->write($servicesUninstallFile);
         }
 
         if ($configData = $extenderManager->getConfigData()) {
@@ -107,7 +110,8 @@ class Extender implements PluginInterface, EventSubscriberInterface
                 $configFile,
                 Yaml::dump($configData, 6, 2)
             );
-            $this->io->write('<info>Creating config cache file:</info>' . $configFile);
+            $this->io->write('<info>Creating packages config cache file:</info>');
+            $this->io->write($configFile);
         }
 
         $servicesData = $extenderManager->getServicesData();
@@ -116,7 +120,8 @@ class Extender implements PluginInterface, EventSubscriberInterface
                 $servicesFile,
                 Yaml::dump($servicesData['install'], 4, 2)
             );
-            $this->io->write('<info>Creating services cache file: </info>' . $servicesFile);
+            $this->io->write('<info>Creating packages services cache file: </info>');
+            $this->io->write($servicesFile);
         }
 
         $servicesData = $extenderManager->getServicesData();
@@ -125,7 +130,29 @@ class Extender implements PluginInterface, EventSubscriberInterface
                 $servicesUninstallFile,
                 Yaml::dump($servicesData['uninstall'], 4, 2)
             );
-            $this->io->write('<info>Creating services cache file: </info>' . $servicesUninstallFile);
+            $this->io->write('<info>Creating packages services cache file: </info>');
+            $this->io->write($servicesUninstallFile);
+        }
+
+        $this->removeCacheFiles($directory);
+    }
+
+    protected function removeCacheFiles($directory)
+    {
+        try {
+            $finder = new Finder();
+            $finder->files()
+                ->in($directory)
+                ->name('*-console.services.yml')
+                ->ignoreUnreadableDirs();
+
+            foreach ($finder as $file) {
+                $this->io->write('<info>Removing site services cache file:</info>');
+                $this->io->write($file->getPathName());
+                unlink($file->getPathName());
+            }
+        } catch (\InvalidArgumentException $argumentException) {
+            $this->io->write('<info>Cache file can not be deleted</info>');
         }
     }
 }

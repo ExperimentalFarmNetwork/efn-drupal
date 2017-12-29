@@ -39,8 +39,6 @@ class InlineServiceDefinitionsPass implements RepeatablePassInterface
 
     /**
      * Processes the ContainerBuilder for inline service definitions.
-     *
-     * @param ContainerBuilder $container
      */
     public function process(ContainerBuilder $container)
     {
@@ -113,7 +111,7 @@ class InlineServiceDefinitionsPass implements RepeatablePassInterface
             return true;
         }
 
-        if ($definition->isPublic() || $definition->isLazy()) {
+        if ($definition->isDeprecated() || $definition->isPublic() || $definition->isLazy()) {
             return false;
         }
 

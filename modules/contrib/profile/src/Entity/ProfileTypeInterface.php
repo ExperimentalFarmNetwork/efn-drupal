@@ -3,11 +3,13 @@
 namespace Drupal\profile\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityInterface;
+use Drupal\Core\Entity\RevisionableEntityBundleInterface;
+use Drupal\Core\Entity\EntityDescriptionInterface;
 
 /**
  * Provides an interface defining a profile type entity.
  */
-interface ProfileTypeInterface extends ConfigEntityInterface {
+interface ProfileTypeInterface extends ConfigEntityInterface, RevisionableEntityBundleInterface, EntityDescriptionInterface {
 
   /**
    * Return the registration form flag.
@@ -50,7 +52,7 @@ interface ProfileTypeInterface extends ConfigEntityInterface {
    *
    * @return $this
    */
-  public function setRoles($roles);
+  public function setRoles(array $roles);
 
   /**
    * Returns the profile type's weight.

@@ -28,7 +28,66 @@ if (!function_exists('Psy\sh')) {
      */
     function sh()
     {
-        return 'extract(\Psy\Shell::debug(get_defined_vars(), isset($this) ? $this : null));';
+        return 'extract(\Psy\debug(get_defined_vars(), isset($this) ? $this : null));';
+    }
+}
+
+if (!function_exists('Psy\debug')) {
+    /**
+     * Invoke a Psy Shell from the current context.
+     *
+     * For example:
+     *
+     *     foreach ($items as $item) {
+     *         \Psy\debug(get_defined_vars());
+     *     }
+     *
+     * If you would like your shell interaction to affect the state of the
+     * current context, you can extract() the values returned from this call:
+     *
+     *     foreach ($items as $item) {
+     *         extract(\Psy\debug(get_defined_vars()));
+     *         var_dump($item); // will be whatever you set $item to in Psy Shell
+     *     }
+     *
+     * Optionally, supply an object as the `$boundObject` parameter. This
+     * determines the value `$this` will have in the shell, and sets up class
+     * scope so that private and protected members are accessible:
+     *
+     *     class Foo {
+     *         function bar() {
+     *             \Psy\debug(get_defined_vars(), $this);
+     *         }
+     *     }
+     *
+     * This only really works in PHP 5.4+ and HHVM 3.5+, so upgrade already.
+     *
+     * @param array  $vars        Scope variables from the calling context (default: array())
+     * @param object $boundObject Bound object ($this) value for the shell
+     *
+     * @return array Scope variables from the debugger session
+     */
+    function debug(array $vars = array(), $boundObject = null)
+    {
+        echo PHP_EOL;
+
+        $sh = new Shell();
+        $sh->setScopeVariables($vars);
+
+        // Show a couple of lines of call context for the debug session.
+        //
+        // @todo come up with a better way of doing this which doesn't involve injecting input :-P
+        if ($sh->has('whereami')) {
+            $sh->addInput('whereami -n2', true);
+        }
+
+        if ($boundObject !== null) {
+            $sh->setBoundObject($boundObject);
+        }
+
+        $sh->run();
+
+        return $sh->getScopeVariables(false);
     }
 }
 
@@ -85,9 +144,17 @@ if (!function_exists('Psy\info')) {
 
         // Use an explicit, fresh update check here, rather than relying on whatever is in $config.
         $checker = new GitHubChecker();
+        $updateAvailable = null;
+        $latest = null;
+        try {
+            $updateAvailable = !$checker->isLatest();
+            $latest = $checker->getLatest();
+        } catch (\Exception $e) {
+        }
+
         $updates = array(
-            'update available'       => !$checker->isLatest(),
-            'latest release version' => $checker->getLatest(),
+            'update available'       => $updateAvailable,
+            'latest release version' => $latest,
             'update check interval'  => $config->getUpdateCheck(),
             'update cache file'      => $prettyPath($config->getUpdateCheckCacheFile()),
         );
@@ -118,6 +185,11 @@ if (!function_exists('Psy\info')) {
             'pcntl available' => function_exists('pcntl_signal'),
             'posix available' => function_exists('posix_getpid'),
         );
+
+        $disabledFuncs = array_map('trim', explode(',', ini_get('disable_functions')));
+        if (in_array('pcntl_signal', $disabledFuncs) || in_array('pcntl_fork', $disabledFuncs)) {
+            $pcntl['pcntl disabled'] = true;
+        }
 
         $history = array(
             'history file'     => $prettyPath($config->getHistoryFile()),
@@ -161,6 +233,7 @@ if (!function_exists('Psy\info')) {
         $autocomplete = array(
             'tab completion enabled' => $config->getTabCompletion(),
             'custom matchers'        => array_map('get_class', $config->getTabCompletionMatchers()),
+            'bracketed paste'        => $config->useBracketedPaste(),
         );
 
         return array_merge($core, compact('updates', 'pcntl', 'readline', 'history', 'docs', 'autocomplete'));
@@ -253,7 +326,7 @@ EOL;
             } catch (Exception $e) {
                 echo $e->getMessage() . PHP_EOL;
 
-                // TODO: this triggers the "exited unexpectedly" logic in the
+                // @todo this triggers the "exited unexpectedly" logic in the
                 // ForkingLoop, so we can't exit(1) after starting the shell...
                 // fix this :)
 

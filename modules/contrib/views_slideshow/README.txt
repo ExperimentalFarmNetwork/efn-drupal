@@ -29,7 +29,7 @@ INSTALLATION
 
   * Required libraries
     * https://malsup.github.io/jquery.cycle.all.js
-    * http://cherne.net/brian/resources/jquery.hoverIntent.js
+    * https://raw.githubusercontent.com/briancherne/jquery-hoverIntent/master/jquery.hoverIntent.js
     * https://raw.githubusercontent.com/douglascrockford/JSON-js/master/json2.js
 
   * an example of code you could run in your Drupal root directory to download
@@ -37,7 +37,7 @@ INSTALLATION
 
     ```
     mkdir -p libraries/jquery.cycle && cd $_ && wget https://malsup.github.io/jquery.cycle.all.js \
-    && mkdir -p ../../libraries/jquery.hoverIntent && cd $_ && wget http://cherne.net/brian/resources/jquery.hoverIntent.js \
+    && mkdir -p ../../libraries/jquery.hoverIntent && cd $_ && wget https://raw.githubusercontent.com/briancherne/jquery-hoverIntent/master/jquery.hoverIntent.js \
     && mkdir -p ../../libraries/json2 && cd $_ && wget https://raw.githubusercontent.com/douglascrockford/JSON-js/master/json2.js
     ```
 

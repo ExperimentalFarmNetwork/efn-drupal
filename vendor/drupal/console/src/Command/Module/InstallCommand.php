@@ -7,19 +7,18 @@
 
 namespace Drupal\Console\Command\Module;
 
-use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\ProcessBuilder;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\Command;
 use Drupal\Console\Command\Shared\ProjectDownloadTrait;
 use Drupal\Console\Command\Shared\ModuleTrait;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Utils\Site;
 use Drupal\Console\Utils\Validator;
-use Drupal\Core\ProxyClass\Extension\ModuleInstaller;
+use Drupal\Core\Extension\ModuleInstallerInterface;
 use Drupal\Console\Utils\DrupalApi;
 use Drupal\Console\Extension\Manager;
 use Drupal\Console\Core\Utils\ChainQueue;
@@ -31,7 +30,6 @@ use Drupal\Console\Core\Utils\ChainQueue;
  */
 class InstallCommand extends Command
 {
-    use CommandTrait;
     use ProjectDownloadTrait;
     use ModuleTrait;
 
@@ -84,7 +82,7 @@ class InstallCommand extends Command
     public function __construct(
         Site $site,
         Validator $validator,
-        ModuleInstaller $moduleInstaller,
+        ModuleInstallerInterface $moduleInstaller,
         DrupalApi $drupalApi,
         Manager $extensionManager,
         $appRoot,
@@ -124,7 +122,8 @@ class InstallCommand extends Command
                 null,
                 InputOption::VALUE_NONE,
                 $this->trans('commands.module.uninstall.options.composer')
-            );
+            )
+            ->setAliases(['moi']);
     }
 
     /**
@@ -174,14 +173,14 @@ class InstallCommand extends Command
                 if ($process->isSuccessful()) {
                     $io->info(
                         sprintf(
-                            'Module %s was downloaded with Composer.',
+                            $this->trans('commands.module.install.messages.download-with-composer'),
                             $moduleItem
                         )
                     );
                 } else {
                     $io->error(
                         sprintf(
-                            'Module %s seems not to be installed with Composer. Halting.',
+                            $this->trans('commands.module.install.messages.not-installed-with-composer'),
                             $moduleItem
                         )
                     );
@@ -201,7 +200,7 @@ class InstallCommand extends Command
                     unset($module[array_search($invalidModule, $module)]);
                     $io->error(
                         sprintf(
-                            'Invalid module name: %s',
+                            $this->trans('commands.module.install.messages.invalid-name'),
                             $invalidModule
                         )
                     );

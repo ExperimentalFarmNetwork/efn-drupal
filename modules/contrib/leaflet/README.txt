@@ -1,10 +1,9 @@
 
 This module provides integration with Leaflet map scripting library,
-http://leaflet.cloudmade.com.
+http://leafletjs.com
 
 To use it you must download the leaflet JS library from either
-http://leafletjs.com/download.html or
-GitHub, http://github.com/CloudMade/Leaflet
+http://leafletjs.com/download.html or GitHub,https://github.com/Leaflet/Leaflet
 
 In its current state, maps can be rendered as follows:
 o via the included field formatter for Geofield (drupal.org/project/geofield)
@@ -12,16 +11,41 @@ o via Views (and Geofield)
 o by using the API directly.
 
 
-Installation
-------------
+Installation (manual)
+---------------------
 
 1. Normal Drupal module installation
 
-2. Download the Leaflet library from http://leafletjs.com/. Leaflet 0.6.x or
+2. Download the Leaflet library from http://leafletjs.com/. Leaflet 1.0.2 or
    higher is recommended
 
-3. Enable leaflet_views for using Views and Leaflet (see below), or use the 
+3. Enable leaflet_views for using Views and Leaflet (see below), or use the
    display formatters for fields display.
+
+
+Installation (composer)
+-----------------------
+
+1. Run $ composer require drupal/leaflet:~1.0
+
+2. Add the proper repository to your composer.json file to be able to require
+   the JS library:
+    {
+      "type": "package",
+      "package": {
+        "name": "leaflet/leaflet",
+        "version": "1.0.2",
+        "type": "drupal-library",
+        "dist": {
+          "url": "https://github.com/Leaflet/Leaflet/archive/v1.0.2.zip",
+          "type": "zip"
+        }
+      }
+    }
+
+3. Run $ composer require leaflet/leaflet:~1.0
+
+4. Enable Drupal modules as usual.
 
 
 API Usage
@@ -38,8 +62,8 @@ This is the tricky pary. This is an associative array of all the features you
 want to plot on the map. A feature can be a point, linestring, polygon,
 multipolygon, multipolygon, or json object. Additionally, features can be
 grouped into layer groups so they can be controlled together,
-http://leaflet.cloudmade.com/reference.html#layergroup. An feature will look
-something like:
+http://leafletjs.com/reference.html#layergroup. A feature will look something
+like:
 
 $features = array(
   array(

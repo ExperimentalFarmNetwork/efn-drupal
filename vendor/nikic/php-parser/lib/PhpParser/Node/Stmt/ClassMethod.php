@@ -17,7 +17,7 @@ class ClassMethod extends Node\Stmt implements FunctionLike
     public $params;
     /** @var null|string|Node\Name|Node\NullableType Return type */
     public $returnType;
-    /** @var Node[] Statements */
+    /** @var Node[]|null Statements */
     public $stmts;
 
     /** @deprecated Use $flags instead */
@@ -69,7 +69,7 @@ class ClassMethod extends Node\Stmt implements FunctionLike
 
     public function isPublic() {
         return ($this->flags & Class_::MODIFIER_PUBLIC) !== 0
-            || ($this->flags & Class_::VISIBILITY_MODIFER_MASK) === 0;
+            || ($this->flags & Class_::VISIBILITY_MODIFIER_MASK) === 0;
     }
 
     public function isProtected() {

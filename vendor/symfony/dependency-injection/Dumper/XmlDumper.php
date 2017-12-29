@@ -35,8 +35,6 @@ class XmlDumper extends Dumper
     /**
      * Dumps the service container as an XML string.
      *
-     * @param array $options An array of options
-     *
      * @return string An xml string representing of the service container
      */
     public function dump(array $options = array())
@@ -58,11 +56,6 @@ class XmlDumper extends Dumper
         return $xml;
     }
 
-    /**
-     * Adds parameters.
-     *
-     * @param \DOMElement $parent
-     */
     private function addParameters(\DOMElement $parent)
     {
         $data = $this->container->getParameterBag()->all();
@@ -79,12 +72,6 @@ class XmlDumper extends Dumper
         $this->convertParameters($data, 'parameter', $parameters);
     }
 
-    /**
-     * Adds method calls.
-     *
-     * @param array       $methodcalls
-     * @param \DOMElement $parent
-     */
     private function addMethodCalls(array $methodcalls, \DOMElement $parent)
     {
         foreach ($methodcalls as $methodcall) {
@@ -215,6 +202,10 @@ class XmlDumper extends Dumper
             $service->appendChild($autowiringType);
         }
 
+        if ($definition->isAbstract()) {
+            $service->setAttribute('abstract', 'true');
+        }
+
         if ($callable = $definition->getConfigurator()) {
             $configurator = $this->document->createElement('configurator');
 
@@ -251,11 +242,6 @@ class XmlDumper extends Dumper
         $parent->appendChild($service);
     }
 
-    /**
-     * Adds services.
-     *
-     * @param \DOMElement $parent
-     */
     private function addServices(\DOMElement $parent)
     {
         $definitions = $this->container->getDefinitions();
@@ -302,9 +288,9 @@ class XmlDumper extends Dumper
                 $element->setAttribute('type', 'service');
                 $element->setAttribute('id', (string) $value);
                 $behaviour = $value->getInvalidBehavior();
-                if ($behaviour == ContainerInterface::NULL_ON_INVALID_REFERENCE) {
+                if (ContainerInterface::NULL_ON_INVALID_REFERENCE == $behaviour) {
                     $element->setAttribute('on-invalid', 'null');
-                } elseif ($behaviour == ContainerInterface::IGNORE_ON_INVALID_REFERENCE) {
+                } elseif (ContainerInterface::IGNORE_ON_INVALID_REFERENCE == $behaviour) {
                     $element->setAttribute('on-invalid', 'ignore');
                 }
                 if (!$value->isStrict(false)) {
@@ -330,8 +316,6 @@ class XmlDumper extends Dumper
 
     /**
      * Escapes arguments.
-     *
-     * @param array $arguments
      *
      * @return array
      */

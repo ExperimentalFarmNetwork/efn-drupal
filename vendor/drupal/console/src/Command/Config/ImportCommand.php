@@ -9,10 +9,9 @@ namespace Drupal\Console\Command\Config;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\Command;
 use Drupal\Core\Config\CachedStorage;
 use Drupal\Core\Config\ConfigManager;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Core\Config\ConfigImporterException;
 use Drupal\Core\Config\ConfigImporter;
@@ -21,8 +20,6 @@ use Drupal\Core\Config\StorageComparer;
 
 class ImportCommand extends Command
 {
-    use CommandTrait;
-
     /**
      * @var CachedStorage
      */
@@ -73,7 +70,8 @@ class ImportCommand extends Command
                 null,
                 InputOption::VALUE_NONE,
                 $this->trans('commands.config.import.options.remove-files')
-            );
+            )
+            ->setAliases(['ci']);
     }
 
     /**
@@ -130,7 +128,7 @@ class ImportCommand extends Command
                 $config_importer->import();
                 return true;
             } catch (ConfigImporterException $e) {
-                $message = 'The import failed due to the following reasons:' . "\n";
+                $message = $this->trans('commands.config.import.messages.import-fail') . "\n";
                 $message .= implode("\n", $config_importer->getErrors());
                 $io->error(
                     sprintf(

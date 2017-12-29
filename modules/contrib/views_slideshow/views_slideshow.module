@@ -74,6 +74,16 @@ function views_slideshow_theme() {
         'length' => NULL,
       ],
     ],
+    'views_slideshow_pager_bullets' => [
+      'variables' => [
+        'vss_id' => NULL,
+        'view' => NULL,
+        'settings' => [],
+        'location' => NULL,
+        'attributes' => [],
+      ],
+      'file' => 'views_slideshow.theme.inc',
+    ],
     'views_slideshow_controls_widget_render' => [
       'variables' => [
         'vss_id' => NULL,

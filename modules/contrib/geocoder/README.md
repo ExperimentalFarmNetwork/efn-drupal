@@ -1,25 +1,32 @@
 # Geocoder 8.x-2.x
 
-This is the Geocoder module for Drupal 8 rewritten using the
-Geocoder PHP library.
-
-# Requirements
-* [Composer](https://getcomposer.org/)
-* [Geophp module](https://drupal.org/project/geophp) >= 8.x-1.x
-* [Geofield](https://drupal.org/project/geofield) >= 8.x-1.x
-
-# Installation
-* Make sure to read this page: https://www.drupal.org/node/2404989
-* Make sure to add the drupal.org repository: ```composer
-  config repositories.drupal composer https://packages.drupal.org/8```
-* Download the module: ```composer require drupal/geocoder```
-* Enable the module via drush ```drush en geocoder``` or the web interface.
-* Enable the submodules ```geocoder_geofield``` or ```geocoder_field```.
+This is a complete rewrite of the Geocoder module, based on the
+[Geocoder PHP library](http://geocoder-php.org)
 
 # Features
-* Provides options to geocode a field from a string into a geographic data format such as WKT, GeoJson, etc etc...
-* The Provider and Dumper plugins are extendable through a custom module,
-* All successful requests are cached by default.
+* Solid API based on <a href="http://geocoder-php.org">Geocoder PHP library
+* Geocode and Reverse Geocode using one or multiple Geocoder providers (ArcGISOnline, BingMaps, File, GoogleMaps, MapQuest, Nominatim, OpeneStreetMap, etc)
+* Results can be dumped into multiple formats such as WKT, GeoJson, etc ...</li>
+* The Geocoder Provider and Dumper plugins are extendable through a custom module.</li>
+* Submodule Geocoder Field provides Drupal fields widgets and formatters, with even more options.</li>
+* [Geofield](https://www.drupal.org/project/geofield) and [Address](https://www.drupal.org/project/address) fields integration.
+* Caching results capabilities, enabled by default.
+
+# Requirements
+* [Composer](https://getcomposer.org/), to add the module to your codebase (for more info refer to [Using Composer to manage Drupal site dependencies](https://www.drupal.org/node/2718229)
+* [Drush](http://drush.org), to enable the module (and its dependencies) from the shell
+* No other external requirements for the main geocoder Module: the [Geocoder PHP library](http://geocoder-php.org) will be downloaded automatically via composer (see below)
+* The embedded "Geocoder Geofield" submodule requires the [Geofield Module](https://www.drupal.org/project/geofield)
+* The embedded "Geocoder Address" submodule requires the [Address Module](https://www.drupal.org/project/address)
+
+# Installation
+* Download the module running the following shell command from you project root (at the composer.json file level):  
+  ```$ composer require drupal/geocoder```  
+  **Note:** this will also download the Geocoder PHP library as vendor/willdurand/geocoder
+* Enable the module via [Drush](http://drush.org)  
+ ```$ drush en geocoder```  
+ or the website back-end/administration interface.
+* Eventually enable also the submodules: ```geocoder_field``` and ```geocoder_geofield``` / ```geocoder_address```.
 
 # API
 

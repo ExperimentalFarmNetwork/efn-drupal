@@ -30,16 +30,6 @@ use Symfony\Component\DependencyInjection\ParameterBag\FrozenParameterBag;
  *
  * Parameter and service keys are case insensitive.
  *
- * A service id can contain lowercased letters, digits, underscores, and dots.
- * Underscores are used to separate words, and dots to group services
- * under namespaces:
- *
- * <ul>
- *   <li>request</li>
- *   <li>mysql_session_storage</li>
- *   <li>symfony.mysql_session_storage</li>
- * </ul>
- *
  * A service can also be defined by creating a method named
  * getXXXService(), where XXX is the camelized version of the id:
  *
@@ -61,11 +51,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\FrozenParameterBag;
  */
 class Container implements IntrospectableContainerInterface, ResettableContainerInterface
 {
-    /**
-     * @var ParameterBagInterface
-     */
     protected $parameterBag;
-
     protected $services = array();
     protected $methodMap = array();
     protected $aliases = array();
@@ -77,9 +63,6 @@ class Container implements IntrospectableContainerInterface, ResettableContainer
 
     private $underscoreMap = array('_' => '', '.' => '_', '\\' => '_');
 
-    /**
-     * @param ParameterBagInterface $parameterBag A ParameterBagInterface instance
-     */
     public function __construct(ParameterBagInterface $parameterBag = null)
     {
         $this->parameterBag = $parameterBag ?: new ParameterBag();
@@ -266,15 +249,15 @@ class Container implements IntrospectableContainerInterface, ResettableContainer
         // this method can be called thousands of times during a request, avoid
         // calling strtolower() unless necessary.
         for ($i = 2;;) {
-            if ('service_container' === $id) {
-                return $this;
-            }
             if (isset($this->aliases[$id])) {
                 $id = $this->aliases[$id];
             }
             // Re-use shared service instance if it exists.
             if (isset($this->services[$id]) || array_key_exists($id, $this->services)) {
                 return $this->services[$id];
+            }
+            if ('service_container' === $id) {
+                return $this;
             }
 
             if (isset($this->loading[$id])) {
@@ -345,14 +328,14 @@ class Container implements IntrospectableContainerInterface, ResettableContainer
     {
         $id = strtolower($id);
 
+        if (isset($this->aliases[$id])) {
+            $id = $this->aliases[$id];
+        }
+
         if ('service_container' === $id) {
             // BC: 'service_container' was a synthetic service previously.
             // @todo Change to false in next major release.
             return true;
-        }
-
-        if (isset($this->aliases[$id])) {
-            $id = $this->aliases[$id];
         }
 
         return isset($this->services[$id]) || array_key_exists($id, $this->services);
@@ -495,8 +478,6 @@ class Container implements IntrospectableContainerInterface, ResettableContainer
     /**
      * Adds a scope to the container.
      *
-     * @param ScopeInterface $scope
-     *
      * @throws InvalidArgumentException
      *
      * @deprecated since version 2.8, to be removed in 3.0.
@@ -523,7 +504,7 @@ class Container implements IntrospectableContainerInterface, ResettableContainer
         $this->scopeChildren[$name] = array();
 
         // normalize the child relations
-        while ($parentScope !== self::SCOPE_CONTAINER) {
+        while (self::SCOPE_CONTAINER !== $parentScope) {
             $this->scopeChildren[$parentScope][] = $name;
             $parentScope = $this->scopes[$parentScope];
         }

@@ -12,13 +12,12 @@
 namespace Psy\Test\CodeCleaner;
 
 use PhpParser\NodeTraverser;
-use PhpParser\Parser;
 use PhpParser\PrettyPrinter\Standard as Printer;
 use Psy\CodeCleaner\CodeCleanerPass;
 use Psy\Exception\ParseErrorException;
 use Psy\ParserFactory;
 
-class CodeCleanerTestCase extends \PHPUnit_Framework_TestCase
+class CodeCleanerTestCase extends \PHPUnit\Framework\TestCase
 {
     protected $pass;
     protected $traverser;

@@ -7,24 +7,21 @@
 namespace Drupal\Console\Command\Config;
 
 use Drupal\config\StorageReplaceDataWrapper;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Core\Config\CachedStorage;
 use Drupal\Core\Config\ConfigImporter;
 use Drupal\Core\Config\ConfigImporterException;
 use Drupal\Core\Config\ConfigManager;
 use Drupal\Core\Config\StorageComparer;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
+use Drupal\Console\Core\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Yaml\Parser;
+use Webmozart\PathUtil\Path;
 
 class ImportSingleCommand extends Command
 {
-    use CommandTrait;
-
     /**
      * @var CachedStorage
      */
@@ -59,21 +56,17 @@ class ImportSingleCommand extends Command
             ->setName('config:import:single')
             ->setDescription($this->trans('commands.config.import.single.description'))
             ->addOption(
-                'name',
-                null,
-                InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
-                $this->trans('commands.config.import.single.options.name')
-            )->addOption(
                 'file',
                 null,
-                InputOption::VALUE_OPTIONAL,
+                InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
                 $this->trans('commands.config.import.single.options.file')
             )->addOption(
                 'directory',
                 null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.config.import.arguments.directory')
-            );
+            )
+            ->setAliases(['cis']);
     }
 
     /**
@@ -83,35 +76,38 @@ class ImportSingleCommand extends Command
     {
         $io = new DrupalStyle($input, $output);
 
-        $name = $input->getOption('name');
-        $name = is_array($name) ? $name : [$name];
-        $directory = $input->getOption('directory');
         $file = $input->getOption('file');
+        $directory = $input->getOption('directory');
 
-        if (!$file && !$directory) {
-            $directory = config_get_config_directory(CONFIG_SYNC_DIRECTORY);
+        if (!$file) {
+            $io->error($this->trans('commands.config.import.single..message.missing-file'));
+
+            return 1;
         }
 
-        $ymlFile = new Parser();
+        if ($directory) {
+            $directory = Path::canonicalize($directory);
+        }
+
+        $names = [];
         try {
             $source_storage = new StorageReplaceDataWrapper(
                 $this->configStorage
             );
 
-            foreach ($name as $nameItem) {
-                // Allow for accidental .yml extension.
-                if (substr($nameItem, -4) === '.yml') {
-                    $nameItem = substr($nameItem, 0, -4);
+            foreach ($file as $fileItem) {
+                $configFile = $fileItem;
+                if ($directory) {
+                    $configFile = Path::canonicalize($directory) . '/' . $fileItem;
                 }
 
-                $configFile = count($name) == 1 ?
-                  $file :
-                  $directory.DIRECTORY_SEPARATOR.$nameItem.'.yml';
-
                 if (file_exists($configFile)) {
+                    $name = Path::getFilenameWithoutExtension($configFile);
+                    $ymlFile = new Parser();
                     $value = $ymlFile->parse(file_get_contents($configFile));
-                    $source_storage->delete($nameItem);
-                    $source_storage->write($nameItem, $value);
+                    $source_storage->delete($name);
+                    $source_storage->write($name, $value);
+                    $names[] = $name;
                     continue;
                 }
 
@@ -125,14 +121,13 @@ class ImportSingleCommand extends Command
                 $this->configManager
             );
 
-
             if ($this->configImport($io, $storageComparer)) {
                 $io->success(
                     sprintf(
                         $this->trans(
                             'commands.config.import.single.messages.success'
                         ),
-                        implode(", ", $name)
+                        implode(',', $names)
                     )
                 );
             }
@@ -174,7 +169,7 @@ class ImportSingleCommand extends Command
                     return true;
                 }
             } catch (ConfigImporterException $e) {
-                $message = 'The import failed due to the following reasons:' . "\n";
+                $message = $this->trans('commands.config.import.messages.import-fail') . "\n";
                 $message .= implode("\n", $configImporter->getErrors());
                 $io->error(
                     sprintf(
@@ -199,30 +194,22 @@ class ImportSingleCommand extends Command
     protected function interact(InputInterface $input, OutputInterface $output)
     {
         $io = new DrupalStyle($input, $output);
-        $name = $input->getOption('name');
         $file = $input->getOption('file');
         $directory = $input->getOption('directory');
 
-        if (!$name) {
-            $name = $io->ask(
-                $this->trans('commands.config.import.single.questions.name')
-            );
-            $input->setOption('name', $name);
-        }
-
-        if (!$directory && !$file) {
-            $file = $io->askEmpty(
+        if (!$file) {
+            $file = $io->ask(
                 $this->trans('commands.config.import.single.questions.file')
             );
-            $input->setOption('file', $file);
-        }
+            $input->setOption('file', [$file]);
 
+            if (!$directory && !Path::isAbsolute($file)) {
+                $directory = $io->ask(
+                    $this->trans('commands.config.import.single.questions.directory')
+                );
 
-        if (!$file && !$directory) {
-            $directory = $io->askEmpty(
-                $this->trans('commands.config.import.single.questions.directory')
-            );
-            $input->setOption('directory', $directory);
+                $input->setOption('directory', $directory);
+            }
         }
     }
 }

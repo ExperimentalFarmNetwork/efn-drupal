@@ -40,10 +40,11 @@ class ThemeGenerator extends Generator
         $package,
         $base_theme,
         $global_library,
+        $libraries,
         $regions,
         $breakpoints
     ) {
-        $dir .= '/' . $machine_name;
+        $dir = ($dir == "/" ? '': $dir).'/'.$machine_name;
         if (file_exists($dir)) {
             if (!is_dir($dir)) {
                 throw new \RuntimeException(
@@ -73,16 +74,17 @@ class ThemeGenerator extends Generator
         }
 
         $parameters = [
-        'theme' => $theme,
-        'machine_name' => $machine_name,
-        'type' => 'theme',
-        'core' => $core,
-        'description' => $description,
-        'package' => $package,
-        'base_theme' => $base_theme,
-        'global_library' => $global_library,
-        'regions' => $regions,
-        'breakpoints' => $breakpoints,
+            'theme' => $theme,
+            'machine_name' => $machine_name,
+            'type' => 'theme',
+            'core' => $core,
+            'description' => $description,
+            'package' => $package,
+            'base_theme' => $base_theme,
+            'global_library' => $global_library,
+            'libraries' => $libraries,
+            'regions' => $regions,
+            'breakpoints' => $breakpoints,
         ];
 
         $this->renderFile(
@@ -96,6 +98,14 @@ class ThemeGenerator extends Generator
             $dir . '/' . $machine_name . '.theme',
             $parameters
         );
+
+        if ($libraries) {
+            $this->renderFile(
+                'theme/libraries.yml.twig',
+                $dir . '/' . $machine_name . '.libraries.yml',
+                $parameters
+            );
+        }
 
         if ($breakpoints) {
             $this->renderFile(

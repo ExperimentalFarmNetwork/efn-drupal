@@ -10,8 +10,7 @@ namespace Drupal\Console\Command\Generate;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
+use Drupal\Console\Core\Command\Command;
 use Drupal\Console\Generator\ModuleFileGenerator;
 use Drupal\Console\Command\Shared\ConfirmationTrait;
 use Drupal\Console\Command\Shared\ModuleTrait;
@@ -25,7 +24,6 @@ use Drupal\Console\Core\Style\DrupalStyle;
  */
 class ModuleFileCommand extends Command
 {
-    use CommandTrait;
     use ConfirmationTrait;
     use ModuleTrait;
 
@@ -64,7 +62,12 @@ class ModuleFileCommand extends Command
             ->setName('generate:module:file')
             ->setDescription($this->trans('commands.generate.module.file.description'))
             ->setHelp($this->trans('commands.generate.module.file.help'))
-            ->addOption('module', null, InputOption::VALUE_REQUIRED, $this->trans('commands.common.options.module'));
+            ->addOption(
+                'module',
+                null,
+                InputOption::VALUE_REQUIRED,
+                $this->trans('commands.common.options.module')
+            )->setAliases(['gmf']);
     }
 
     /**

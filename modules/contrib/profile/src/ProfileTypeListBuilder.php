@@ -15,6 +15,7 @@ class ProfileTypeListBuilder extends ConfigEntityListBuilder {
    */
   public function buildHeader() {
     $header['type'] = $this->t('Profile type');
+    $header['description'] = $this->t('Description');
     $header['registration'] = $this->t('Registration');
     $header['multiple'] = $this->t('Allow multiple profiles');
     return $header + parent::buildHeader();
@@ -25,6 +26,7 @@ class ProfileTypeListBuilder extends ConfigEntityListBuilder {
    */
   public function buildRow(EntityInterface $entity) {
     $row['type'] = $entity->toLink(NULL, 'edit-form');
+    $row['description'] = $entity->getDescription();
     $row['registration'] = $entity->getRegistration() ? $this->t('Yes') : $this->t('No');
     $row['multiple'] = $entity->getMultiple() ? $this->t('Yes') : $this->t('No');
     return $row + parent::buildRow($entity);

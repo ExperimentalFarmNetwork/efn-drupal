@@ -7,19 +7,17 @@
 
 namespace Drupal\Console\Command\Module;
 
-use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\Command;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Command\Shared\ProjectDownloadTrait;
 use Drupal\Console\Core\Utils\ShellProcess;
 
 class UpdateCommand extends Command
 {
-    use CommandTrait;
     use ProjectDownloadTrait;
 
 
@@ -68,7 +66,7 @@ class UpdateCommand extends Command
                 null,
                 InputOption::VALUE_NONE,
                 $this->trans('commands.module.update.options.simulate')
-            );
+            )->setAliases(['moup']);
     }
 
     /**
@@ -125,7 +123,7 @@ class UpdateCommand extends Command
 
         if ($composer) {
             // Register composer repository
-            $command = "composer config repositories.drupal composer https://packagist.drupal-composer.org";
+            $command = "composer config repositories.drupal composer https://packages.drupal.org/8";
             $this->shellProcess->exec($command, $this->root);
 
             $command = 'composer update ' . $modules . ' --optimize-autoloader --prefer-dist --no-dev --root-reqs ';

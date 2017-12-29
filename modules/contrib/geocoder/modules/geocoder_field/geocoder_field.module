@@ -7,15 +7,15 @@
 
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Field\FieldConfigInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Form\FormState;
-use Drupal\field\FieldConfigInterface;
 
 /**
  * Implements hook_form_FORM_ID_alter().
  */
 function geocoder_field_form_field_config_edit_form_alter(array &$form, FormStateInterface $form_state, $form_id) {
-  /** @var \Drupal\field\FieldConfigInterface $field */
+  /** @var \Drupal\Core\Field\FieldConfigInterface $field */
   $field = $form_state->getFormObject()->getEntity();
   /** @var \Drupal\geocoder_field\GeocoderFieldPluginInterface $field_plugin */
   if (!$field_plugin = \Drupal::service('geocoder_field.plugin.manager.field')->getPluginByFieldType($field->getType())) {
@@ -78,7 +78,7 @@ function geocoder_field_entity_presave(EntityInterface $entity) {
   $dumper_manager = \Drupal::service('plugin.manager.geocoder.dumper');
 
   foreach ($entity->getFields() as $field_name => $field) {
-    /** @var \Drupal\field\FieldConfigInterface $field_config */
+    /** @var \Drupal\Core\Field\FieldConfigInterface $field_config */
     if (!($field_config = $field->getFieldDefinition()) instanceof FieldConfigInterface) {
       // Only configurable fields are subject of geocoding.
       continue;
@@ -107,8 +107,25 @@ function geocoder_field_entity_presave(EntityInterface $entity) {
     $result = [];
     foreach ($remote_field->getValue() as $delta => $value) {
       if ($address_collection = \Drupal::service('geocoder')->geocode($value['value'], $geocoder['plugins'])) {
-        $result[$delta] = $dumper->dump($address_collection->first());
+        /* @var \Geocoder\Model\AddressCollection $address_collection */
+
+        switch ($geocoder['delta_handling']) {
+
+          // Single-to-multiple handling - if we can, explode out the
+          // component geometries.
+          case 's_to_m':
+            foreach ($address_collection->all() as $collectionDelta => $address) {
+              $result[$collectionDelta] = $dumper->dump($address);
+            }
+            break;
+
+          // Default delta handling: just pass one delta to the next.
+          default:
+            $result[$delta] = $dumper->dump($address_collection->first());
+        }
+
         continue;
+
       }
       if ($geocoder['failure']['handling'] == 'preserve') {
         $result[$delta] = isset($default_values[$delta]) ? $default_values[$delta]->getValue() : NULL;

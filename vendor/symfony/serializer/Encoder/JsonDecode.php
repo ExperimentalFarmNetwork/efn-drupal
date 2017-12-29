@@ -20,23 +20,11 @@ use Symfony\Component\Serializer\Exception\UnexpectedValueException;
  */
 class JsonDecode implements DecoderInterface
 {
-    /**
-     * Specifies if the returned result should be an associative array or a nested stdClass object hierarchy.
-     *
-     * @var bool
-     */
-    private $associative;
-
-    /**
-     * Specifies the recursion depth.
-     *
-     * @var int
-     */
-    private $recursionDepth;
-
-    private $lastError = JSON_ERROR_NONE;
-
     protected $serializer;
+
+    private $associative;
+    private $recursionDepth;
+    private $lastError = JSON_ERROR_NONE;
 
     /**
      * Constructs a new JsonDecode instance.
@@ -101,7 +89,7 @@ class JsonDecode implements DecoderInterface
         $recursionDepth = $context['json_decode_recursion_depth'];
         $options = $context['json_decode_options'];
 
-        if (PHP_VERSION_ID >= 50400) {
+        if (\PHP_VERSION_ID >= 50400) {
             $decodedData = json_decode($data, $associative, $recursionDepth, $options);
         } else {
             $decodedData = json_decode($data, $associative, $recursionDepth);
@@ -124,8 +112,6 @@ class JsonDecode implements DecoderInterface
 
     /**
      * Merges the default options of the Json Decoder with the passed context.
-     *
-     * @param array $context
      *
      * @return array
      */

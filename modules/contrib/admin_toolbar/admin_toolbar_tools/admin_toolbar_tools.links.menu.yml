@@ -12,13 +12,6 @@ system.admin_index:
   parent: admin_toolbar_tools.help
   weight: -100
 
-system.run_cron:
-  title: 'Run cron'
-  route_name: admin_toolbar.run.cron
-  menu_name: admin
-  parent: admin_toolbar_tools.help
-  weight: -8
-
 system.db_update:
   title: 'Run updates'
   route_name: system.db_update
@@ -32,60 +25,23 @@ system.modules_uninstall:
   menu_name: admin
   parent: system.modules_list
 
-admin_toolbar_tools.flush:
-  title: 'Flush all caches'
-  route_name: admin_toolbar_tools.flush
-  weight: -9
-  parent: admin_toolbar_tools.help
-  menu_name: admin
-
-admin_toolbar_tools.cssjs:
-  title: 'Flush CSS and Javascript'
-  route_name: admin_toolbar_tools.cssjs
-  parent: admin_toolbar_tools.flush
-  menu_name: admin
-
-admin_toolbar_tools.plugin:
-  title: 'Flush plugins cache'
-  route_name: admin_toolbar_tools.plugin
-  parent: admin_toolbar_tools.flush
-  menu_name: admin
-
-admin_toolbar_tools.flush_static:
-  title: 'Flush static cache'
-  route_name: admin_toolbar_tools.flush_static
-  parent: admin_toolbar_tools.flush
-  menu_name: admin
-
-admin_toolbar_tools.flush_menu:
-  title: 'Flush routing and links cache'
-  route_name: admin_toolbar_tools.flush_menu
-  parent: admin_toolbar_tools.flush
-  menu_name: admin
-
-admin_toolbar_tools.flush_rendercache:
-  title: 'Flush render cache'
-  route_name: admin_toolbar_tools.flush_rendercache
-  parent: admin_toolbar_tools.flush
-  menu_name: admin
-
 admin_toolbar_tools.drupalorg:
   title: 'Drupal.org'
   weight: -5
-  route_name: admin_toolbar_tools.drupalorg
+  url: https://www.drupal.org
   parent: admin_toolbar_tools.help
   menu_name: admin
 
 admin_toolbar_tools.listchanges:
   title: 'Change records for Drupal core'
   weight: -6
-  route_name: admin_toolbar_tools.listchanges
+  url: https://www.drupal.org/list-changes
   parent: admin_toolbar_tools.drupalorg
   menu_name: admin
 
 admin_toolbar_tools.doc:
   title: 'D8 API documentation'
   weight: -5
-  route_name: admin_toolbar_tools.doc
+  url: https://api.drupal.org/api/drupal/8
   parent: admin_toolbar_tools.drupalorg
   menu_name: admin

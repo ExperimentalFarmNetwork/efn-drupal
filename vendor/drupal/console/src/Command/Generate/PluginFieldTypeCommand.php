@@ -7,16 +7,16 @@
 
 namespace Drupal\Console\Command\Generate;
 
+use Drupal\Console\Utils\Validator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Drupal\Console\Generator\PluginFieldTypeGenerator;
 use Drupal\Console\Command\Shared\ModuleTrait;
 use Drupal\Console\Command\Shared\ConfirmationTrait;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\Command;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Extension\Manager;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Utils\StringConverter;
 use Drupal\Console\Core\Utils\ChainQueue;
 use Drupal\Core\Field\FieldTypePluginManager;
@@ -30,7 +30,6 @@ class PluginFieldTypeCommand extends Command
 {
     use ModuleTrait;
     use ConfirmationTrait;
-    use CommandTrait;
 
     /**
  * @var Manager
@@ -48,6 +47,11 @@ class PluginFieldTypeCommand extends Command
     protected $stringConverter;
 
     /**
+     * @var Validator
+     */
+    protected $validator;
+
+    /**
      * @var ChainQueue
      */
     protected $chainQueue;
@@ -59,17 +63,20 @@ class PluginFieldTypeCommand extends Command
      * @param Manager                  $extensionManager
      * @param PluginFieldTypeGenerator $generator
      * @param StringConverter          $stringConverter
+     * @param Validator                $validator
      * @param ChainQueue               $chainQueue
      */
     public function __construct(
         Manager $extensionManager,
         PluginFieldTypeGenerator $generator,
         StringConverter $stringConverter,
+        Validator $validator,
         ChainQueue $chainQueue
     ) {
         $this->extensionManager = $extensionManager;
         $this->generator = $generator;
         $this->stringConverter = $stringConverter;
+        $this->validator = $validator;
         $this->chainQueue = $chainQueue;
         parent::__construct();
     }
@@ -80,7 +87,12 @@ class PluginFieldTypeCommand extends Command
             ->setName('generate:plugin:fieldtype')
             ->setDescription($this->trans('commands.generate.plugin.fieldtype.description'))
             ->setHelp($this->trans('commands.generate.plugin.fieldtype.help'))
-            ->addOption('module', null, InputOption::VALUE_REQUIRED, $this->trans('commands.common.options.module'))
+            ->addOption(
+                'module',
+                null,
+                InputOption::VALUE_REQUIRED,
+                $this->trans('commands.common.options.module')
+            )
             ->addOption(
                 'class',
                 null,
@@ -116,7 +128,8 @@ class PluginFieldTypeCommand extends Command
                 null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.generate.plugin.fieldtype.options.default-formatter')
-            );
+            )
+            ->setAliases(['gpft']);
     }
 
     /**
@@ -132,7 +145,7 @@ class PluginFieldTypeCommand extends Command
         }
 
         $module = $input->getOption('module');
-        $class_name = $input->getOption('class');
+        $class_name = $this->validator->validateClassName($input->getOption('class'));
         $label = $input->getOption('label');
         $plugin_id = $input->getOption('plugin-id');
         $description = $input->getOption('description');
@@ -164,7 +177,10 @@ class PluginFieldTypeCommand extends Command
         if (!$class_name) {
             $class_name = $io->ask(
                 $this->trans('commands.generate.plugin.fieldtype.questions.class'),
-                'ExampleFieldType'
+                'ExampleFieldType',
+                function ($class_name) {
+                    return $this->validator->validateClassName($class_name);
+                }
             );
             $input->setOption('class', $class_name);
         }
@@ -194,7 +210,7 @@ class PluginFieldTypeCommand extends Command
         if (!$description) {
             $description = $io->ask(
                 $this->trans('commands.generate.plugin.fieldtype.questions.description'),
-                'My Field Type'
+                $this->trans('commands.generate.plugin.fieldtype.suggestions.my-field-type')
             );
             $input->setOption('description', $description);
         }

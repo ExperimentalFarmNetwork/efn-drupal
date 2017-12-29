@@ -3,6 +3,7 @@
 namespace Drupal\profile\Form;
 
 use Drupal\Core\Entity\ContentEntityForm;
+use Drupal\Core\Entity\RevisionableEntityBundleInterface;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
@@ -18,10 +19,12 @@ class ProfileForm extends ContentEntityForm {
     /** @var \Drupal\profile\Entity\ProfileInterface $profile */
     $profile = $this->entity;
 
-    // Display a "make default" button if:
-    // - this is an active profile and
-    // - this is not the default profile.
-    if ($profile->isActive() && !$profile->isDefault()){
+    $profile_type_storage = $this->entityTypeManager->getStorage('profile_type');
+    /** @var \Drupal\profile\Entity\ProfileTypeInterface $profile_type */
+    $profile_type = $profile_type_storage->load($profile->bundle());
+
+    // Allow the profile to be saved as default if type supports multiple.
+    if ($profile_type->getMultiple() && !$profile->isDefault()) {
       // Add a "make default" button.
       $element['set_default'] = $element['submit'];
       $element['set_default']['#value'] = $this->t('Save and make default');
@@ -54,6 +57,21 @@ class ProfileForm extends ContentEntityForm {
    */
   public function deactivate(array $form, FormStateInterface $form_state) {
     $form_state->setValue('status', FALSE);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function buildEntity(array $form, FormStateInterface $form_state) {
+    /** @var \Drupal\profile\Entity\ProfileInterface $entity */
+    $entity = parent::buildEntity($form, $form_state);
+
+    // Mark a new revision if the profile type enforces revisions.
+    /** @var \Drupal\profile\Entity\ProfileTypeInterface $profile_type */
+    $profile_type = $this->entityTypeManager->getStorage('profile_type')->load($entity->bundle());
+    $entity->setNewRevision($profile_type->shouldCreateNewRevision());
+
+    return $entity;
   }
 
   /**

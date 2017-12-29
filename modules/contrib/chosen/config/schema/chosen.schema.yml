@@ -23,6 +23,9 @@ chosen.settings:
     disable_search:
       type: boolean
       label: 'Disable search box'
+    allow_single_deselect:
+      type: boolean
+      label: 'Allow deselect on single selects.'
     disabled_themes:
       type: sequence
       label: 'Disable the default Chosen theme for the following themes'
