@@ -124,16 +124,16 @@
         },
         {
             "name": "commerceguys/addressing",
-            "version": "v1.0.0-beta3",
+            "version": "v1.0.0-beta4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/commerceguys/addressing.git",
-                "reference": "615464980031d353865fd0a4b5da3acb3f567129"
+                "reference": "6d053016d0bebee441db1377bd4746a5b840284e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/commerceguys/addressing/zipball/615464980031d353865fd0a4b5da3acb3f567129",
-                "reference": "615464980031d353865fd0a4b5da3acb3f567129",
+                "url": "https://api.github.com/repos/commerceguys/addressing/zipball/6d053016d0bebee441db1377bd4746a5b840284e",
+                "reference": "6d053016d0bebee441db1377bd4746a5b840284e",
                 "shasum": ""
             },
             "require": {
@@ -145,8 +145,8 @@
                 "mikey179/vfsstream": "1.*",
                 "phpunit/phpunit": "~4.0",
                 "squizlabs/php_codesniffer": "2.*",
-                "symfony/intl": ">=2.3",
-                "symfony/validator": ">=2.3"
+                "symfony/intl": ">=3.2",
+                "symfony/validator": ">=3.2"
             },
             "suggest": {
                 "commerceguys/intl": "to use it as the source of country data",
@@ -183,7 +183,7 @@
                 "localization",
                 "postal"
             ],
-            "time": "2017-04-20T12:32:07+00:00"
+            "time": "2017-12-28T17:58:50+00:00"
         },
         {
             "name": "commerceguys/enum",
@@ -225,16 +225,16 @@
         },
         {
             "name": "commerceguys/intl",
-            "version": "v0.7.4",
+            "version": "v0.7.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/commerceguys/intl.git",
-                "reference": "edfcfc26ed8505c4f6fcf862eb36dfda1af74b00"
+                "reference": "de1435502068393fae4061818e194e4ea61b98d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/commerceguys/intl/zipball/edfcfc26ed8505c4f6fcf862eb36dfda1af74b00",
-                "reference": "edfcfc26ed8505c4f6fcf862eb36dfda1af74b00",
+                "url": "https://api.github.com/repos/commerceguys/intl/zipball/de1435502068393fae4061818e194e4ea61b98d6",
+                "reference": "de1435502068393fae4061818e194e4ea61b98d6",
                 "shasum": ""
             },
             "require": {
@@ -265,7 +265,7 @@
                 }
             ],
             "description": "Internationalization library powered by CLDR data.",
-            "time": "2016-12-13T12:33:19+00:00"
+            "time": "2017-12-29T00:13:05+00:00"
         },
         {
             "name": "components/highlightjs",
@@ -898,20 +898,20 @@
         },
         {
             "name": "doctrine/collections",
-            "version": "v1.4.0",
+            "version": "v1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/collections.git",
-                "reference": "1a4fb7e902202c33cce8c55989b945612943c2ba"
+                "reference": "a01ee38fcd999f34d9bfbcee59dbda5105449cbf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/collections/zipball/1a4fb7e902202c33cce8c55989b945612943c2ba",
-                "reference": "1a4fb7e902202c33cce8c55989b945612943c2ba",
+                "url": "https://api.github.com/repos/doctrine/collections/zipball/a01ee38fcd999f34d9bfbcee59dbda5105449cbf",
+                "reference": "a01ee38fcd999f34d9bfbcee59dbda5105449cbf",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.6 || ^7.0"
+                "php": "^7.1"
             },
             "require-dev": {
                 "doctrine/coding-standard": "~0.1@dev",
@@ -961,7 +961,7 @@
                 "collections",
                 "iterator"
             ],
-            "time": "2017-01-03T10:49:41+00:00"
+            "time": "2017-07-22T10:37:32+00:00"
         },
         {
             "name": "doctrine/common",
@@ -1213,17 +1213,17 @@
         },
         {
             "name": "drupal/address",
-            "version": "1.2.0",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/address",
-                "reference": "8.x-1.2"
+                "reference": "8.x-1.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/address-8.x-1.2.zip",
-                "reference": "8.x-1.2",
-                "shasum": "041445ac14087be943c0c1c562b9bf800d87f7e8"
+                "url": "https://ftp.drupal.org/files/projects/address-8.x-1.3.zip",
+                "reference": "8.x-1.3",
+                "shasum": "170551d6ecf4a08bac178f31b9869a626279d9eb"
             },
             "require": {
                 "commerceguys/addressing": "~1.0",
@@ -1236,8 +1236,8 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.2",
-                    "datestamp": "1505896144",
+                    "version": "8.x-1.3",
+                    "datestamp": "1511382784",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
