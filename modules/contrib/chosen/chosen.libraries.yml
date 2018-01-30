@@ -1,6 +1,6 @@
 drupal.chosen:
   remote: https://drupal.org/project/chosen
-  version: 1.6.1
+  version: 1.7.0
   license:
       name: GNU GPL v2
       url: https://www.drupal.org/about/licensing

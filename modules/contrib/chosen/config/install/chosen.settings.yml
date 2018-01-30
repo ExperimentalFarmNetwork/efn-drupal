@@ -5,6 +5,7 @@ minimum_width: 0
 jquery_selector: select:visible
 search_contains: FALSE
 disable_search: FALSE
+allow_single_deselect: FALSE
 placeholder_text_multiple: Choose some options
 placeholder_text_single: Choose an option
 no_results_text: No results match

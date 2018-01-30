@@ -23,6 +23,4 @@ return array(
     'Dflydev\\PlaceholderResolver' => array($vendorDir . '/dflydev/placeholder-resolver/src'),
     'Dflydev\\DotAccessData' => array($vendorDir . '/dflydev/dot-access-data/src'),
     'Dflydev\\DotAccessConfiguration' => array($vendorDir . '/dflydev/dot-access-configuration/src'),
-    'ComponentInstaller' => array($vendorDir . '/robloach/component-installer/src'),
-    'Assetic' => array($vendorDir . '/kriswallsmith/assetic/src'),
 );
