@@ -3820,6 +3820,55 @@
         }
     },
     {
+        "name": "drupal/views_send",
+        "version": "1.1.0",
+        "version_normalized": "1.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/views_send",
+            "reference": "8.x-1.1"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/views_send-8.x-1.1.zip",
+            "reference": "8.x-1.1",
+            "shasum": "b5cfc562e786af38251243fe67e68394737ee52c"
+        },
+        "require": {
+            "drupal/core": "*"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.1",
+                "datestamp": "1502866144",
+                "security-coverage": {
+                    "status": "covered",
+                    "message": "Covered by Drupal's security advisory policy"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "hansfn",
+                "homepage": "https://www.drupal.org/user/40521"
+            }
+        ],
+        "description": "Provides a way to send e-mails from a list created with Views",
+        "homepage": "https://www.drupal.org/project/views_send",
+        "support": {
+            "source": "http://cgit.drupalcode.org/views_send"
+        }
+    },
+    {
         "name": "drupal/views_slideshow",
         "version": "4.5.0",
         "version_normalized": "4.5.0.0",

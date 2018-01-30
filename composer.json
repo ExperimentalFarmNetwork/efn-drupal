@@ -40,7 +40,8 @@
         "d3/d3": "3.5.*",
         "components/highlightjs": "9.7.*",
         "drupal/views_slideshow": "^4.5",
-        "drupal/bootstrap": "^3.6"
+        "drupal/bootstrap": "^3.6",
+        "drupal/views_send": "^1.1"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

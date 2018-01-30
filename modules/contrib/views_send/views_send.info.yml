@@ -1,0 +1,16 @@
+name: 'Views Send'
+type: module
+description: 'Provides a way to send e-mails from a list created with Views'
+package: Views
+# core: 8.x
+configure: views_send.configure
+dependencies:
+  - views
+
+files:
+  - views_send.rules.inc
+# Information added by Drupal.org packaging script on 2017-08-16
+version: '8.x-1.1'
+core: '8.x'
+project: 'views_send'
+datestamp: 1502866146

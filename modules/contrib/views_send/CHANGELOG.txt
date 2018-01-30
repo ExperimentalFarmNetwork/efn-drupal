@@ -1,0 +1,5 @@
+
+Views Send 8.x-1.x, xxxx-xx-xx
+------------------------------
+
+Reset changelog for Drupal 8 version.
