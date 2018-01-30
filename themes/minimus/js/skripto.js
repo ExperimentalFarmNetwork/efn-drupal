@@ -9,19 +9,19 @@
     $('#block-sociallinks a[href="/contact"').addClass('btn-lg btn-success');
 
     // Toggle hidden fields on project page
-    var hEl = $(".field--name-field-project-image, .field--name-field-description,.field--name-field-researcher-background,.field--name-field-seeking-volunteers,.field--name-field-volunteers-how-many,.field--name-field-volunteers-ask-do,.field--name-field-volunteers-other-reqs,.field--name-field-multiyear,.field--name-field-volunteers-keep-seed,.field--name-field-privacy,.field--name-field-misc,.field--name-field-location,.field--name-field-location-geo");
-    $(".toggleVerbose").click(function(event) {
-        hEl.slideToggle('slow');
-    });
+    // var hEl = $(".field--name-field-project-image, .field--name-field-description,.field--name-field-researcher-background,.field--name-field-seeking-volunteers,.field--name-field-volunteers-how-many,.field--name-field-volunteers-ask-do,.field--name-field-volunteers-other-reqs,.field--name-field-multiyear,.field--name-field-volunteers-keep-seed,.field--name-field-privacy,.field--name-field-misc,.field--name-field-location,.field--name-field-location-geo");
+    // $(".toggleVerbose").click(function(event) {
+    //     hEl.slideToggle('slow');
+    // });
 
     Drupal.behaviors.commentThing = {
-            attach: function(context, settings) {
-                $(".views-field-field-discussion textarea.form-textarea, #node-project-update-field-discussion textarea.form-textarea, [id^=node-project-update-field-discussion] textarea.form-textarea").attr("placeholder", "Comment here ...").click(function(event) {
-                    $(this).attr('placeholder', '!');
-                    $('.js-form-submit').css('display', 'block');
-                });
-            }
-        }
+      attach: function(context, settings) {
+        $(".views-field-field-discussion textarea.form-textarea, #node-project-update-field-discussion textarea.form-textarea, [id^=node-project-update-field-discussion] textarea.form-textarea").attr("placeholder", "Comment here ...").click(function(event) {
+            $(this).attr('placeholder', '!');
+            $('.js-form-submit').css('display', 'block');
+        });
+      }
+    }
         // Put header image in background of group pages
 
     if (($("body").hasClass('path-group')) && $('.field--name-field-project-image')) {
@@ -95,7 +95,7 @@
     });
 
     // no clicking on users if not logged in
-    
+
     $('body:not(".user-logged-in") .region-sidebar-second .views-field-view-user img').unwrap();
-   
+
 })(jQuery, Drupal);

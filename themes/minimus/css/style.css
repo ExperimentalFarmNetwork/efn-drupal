@@ -6593,28 +6593,6 @@ body.path-group {
   body.path-group .region-content {
     background: white;
     padding: 1em; }
-    body.path-group .region-content .toggleVerbose {
-      margin-top: 24px;
-      border-bottom: thin #eeeeee solid;
-      border-top: thin #eeeeee solid;
-      padding: 5px;
-      width: 100%;
-      text-align: center;
-      cursor: pointer; }
-    body.path-group .region-content .groupWrapper .field--name-field-project-image:not([data-drupal-selector]),
-    body.path-group .region-content .groupWrapper .field--name-field-description:not([data-drupal-selector]),
-    body.path-group .region-content .groupWrapper .field--name-field-researcher-background:not([data-drupal-selector]),
-    body.path-group .region-content .groupWrapper .field--name-field-seeking-volunteers:not([data-drupal-selector]),
-    body.path-group .region-content .groupWrapper .field--name-field-volunteers-how-many:not([data-drupal-selector]),
-    body.path-group .region-content .groupWrapper .field--name-field-volunteers-ask-do:not([data-drupal-selector]),
-    body.path-group .region-content .groupWrapper .field--name-field-volunteers-other-reqs:not([data-drupal-selector]),
-    body.path-group .region-content .groupWrapper .field--name-field-multiyear:not([data-drupal-selector]),
-    body.path-group .region-content .groupWrapper .field--name-field-volunteers-keep-seed:not([data-drupal-selector]),
-    body.path-group .region-content .groupWrapper .field--name-field-privacy:not([data-drupal-selector]),
-    body.path-group .region-content .groupWrapper .field--name-field-misc:not([data-drupal-selector]),
-    body.path-group .region-content .groupWrapper .field--name-field-location:not([data-drupal-selector]),
-    body.path-group .region-content .groupWrapper .field--name-field-location-geo:not([data-drupal-selector]) {
-      display: none; }
     body.path-group .region-content .groupWrapper .field--label {
       font-weight: bold; }
     body.path-group .region-content .groupWrapper .field--name-field-project-type {

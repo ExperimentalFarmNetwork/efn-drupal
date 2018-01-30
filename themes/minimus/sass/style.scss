@@ -31,7 +31,7 @@
 
 // Sections
 body{
-	margin-top:0;	
+	margin-top:0;
 	font-family: "open_sanslight", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
 }
@@ -71,7 +71,7 @@ header.navbar-default{
 		.logo img{
 			height:50px;
 			margin: 5px;
-			transition:.3s cubic-bezier(0.4, 0, 0.2, 1); 
+			transition:.3s cubic-bezier(0.4, 0, 0.2, 1);
 		}
 	}
 	#block-minimus-account-menu, #block-newproject, #block-newprojectbutton{
@@ -129,7 +129,7 @@ header.navbar-default{
 	        border-bottom: $du-asparagus thin solid;
 	      }
 	    }
- 
+
 	}
 
 }
@@ -143,7 +143,7 @@ body.user-logged-in{
 // Main
 div.main-container{
 	width:90%;
-	
+
 }
 
 // Sidebar
@@ -183,7 +183,7 @@ div.main-container{
 			    margin-left: 2em;
 			    display:table;
 			    text-transform:lowercase;
-			    font-weight:50;	
+			    font-weight:50;
 			    // background: #cfcf;
 			    img{
 		    		border-bottom: thin solid $du-gold;
@@ -238,7 +238,7 @@ div.main-container{
 	    display:inline-block;
 	}
 	.views-field.views-field-label {
-	    position: absolute;	
+	    position: absolute;
 		top:333px;
 	    left: 30px;
 	    .field-content{
@@ -267,7 +267,7 @@ div.main-container{
 	    h1{
 	    	margin-top:0;
 		    a{
-		    	
+
 				color:$du-gold;
 				display:block;
 		    }
@@ -293,20 +293,20 @@ div.main-container{
 	    &.active img{
 	    	border: 5px solid $du-dark;
 	    }
-		
+
 	}
-}	
+}
 
 }
 	// Project cards
 
 	.view-project{
 		text-align: center;
-		
+
 		.views-row{
 			border: $gray-dark thin solid;
 			border-radius:5px;
-			margin:15px;	
+			margin:15px;
 			height:300px;
 		    width: 350px !important;
 		    display:inline-block;
@@ -336,10 +336,10 @@ div.main-container{
 				    line-height:normal;
 				    a{
 				    	color:$gray-dark;
-				    	
+
 				    }
 			    }
-		    	
+
 
 		    }
 		}
@@ -363,7 +363,7 @@ div.main-container{
 
 		   }
 
-		} 
+		}
 }
 
 .path-user{
@@ -398,7 +398,7 @@ div.main-container{
 	}
 }
 
- 
+
 // group main page
 body.path-group{
 	background-position-y:73px;
@@ -412,7 +412,7 @@ body.path-group{
 		height:400px; //put this in mediaquery
 	}
 	.nu-project-header{
-		background: url("/themes/minimus/images/project_default.png") no-repeat; 
+		background: url("/themes/minimus/images/project_default.png") no-repeat;
 		background-size:cover;
 		height:300px;
 	    background-repeat: repeat-x;
@@ -422,35 +422,7 @@ body.path-group{
 		background:white;
 		padding:1em;
 
-		.toggleVerbose{
-			margin-top:24px;
-			border-bottom: thin $gray-lighter solid;
-			border-top: thin $gray-lighter solid;
-			padding: 5px;
-			width:100%;
-			text-align:center;
-			cursor: pointer;
-		}
-
 		.groupWrapper{
-			.field--name-field-project-image,
-			.field--name-field-description,
-			.field--name-field-researcher-background,
-			.field--name-field-seeking-volunteers,
-			.field--name-field-volunteers-how-many,
-			.field--name-field-volunteers-ask-do,
-			.field--name-field-volunteers-other-reqs,
-			.field--name-field-multiyear,
-			.field--name-field-volunteers-keep-seed,
-			.field--name-field-privacy,
-			.field--name-field-misc,
-			.field--name-field-location,
-			.field--name-field-location-geo{
-				&:not([data-drupal-selector]){
-					display:none;
-
-				}
-			}
 			.field--label{
 				font-weight:bold;
 			}
@@ -470,7 +442,7 @@ body.path-group{
 				.field--label{
 				    width: 45%;
 				    display: inline-table;
-				    text-transform:uppercase;																																																																																		
+				    text-transform:uppercase;
 				}
 				.field--item{
 				    width: 45%;
@@ -506,7 +478,7 @@ body.path-group{
 			}
 			.field--name-field-description{
 				.field--label{
-					text-transform:uppercase;																																																																																		
+					text-transform:uppercase;
 					font-weight:bold;
 					margin-bottom:1em;
 
@@ -536,7 +508,7 @@ body.path-group{
 	}
 }
 
-.js-form-submit[value='Join group'], .btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle){	
+.js-form-submit[value='Join group'], .btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle){
     font-size: 2rem;
     border-radius: 5px;
     padding: 1rem 2rem;
@@ -564,7 +536,7 @@ body.path-group{
 		}
 	}
 
-	// tabs 
+	// tabs
 	nav.tabs{
 		ul.nav-tabs {
 			border-bottom:0;
@@ -581,11 +553,11 @@ body.path-group{
 				&:hover{
 					    filter: alpha(Opacity=100);
 						opacity: 1;
-						color:$du-asparagus;			
+						color:$du-asparagus;
 						}			}
-			} 
+			}
 
-				
+
 		}
 	}
 
@@ -630,7 +602,7 @@ body.path-group{
 	}
 
 	.views-row{
-		clear:both;	
+		clear:both;
 		&:first-of-type {
 			h3{
 				margin-top:0;
@@ -675,7 +647,7 @@ body.path-group{
 					margin-right:1em;
 					float:left;
 				}
-					
+
 				.views-col{
 					width:100% !important;
 				}
@@ -697,7 +669,7 @@ body.path-group{
 				width:100% !important;
 			}
 		}
-	}	
+	}
 
 
 }
@@ -729,7 +701,7 @@ body.path-group{
 				}
 			}
 		}
-	
+
 }
 
 
@@ -748,7 +720,7 @@ body.path-group{
 
 	#block-minimus-groupoperations{
 		text-align:center;
-		.btn-group > .btn-lg + .dropdown-toggle, 
+		.btn-group > .btn-lg + .dropdown-toggle,
 		.btn-group-lg.btn-group > .btn + .dropdown-toggle{
 			display:none;
 		}
@@ -770,7 +742,7 @@ body.path-group{
 			}
 		}
 
-	
+
 	}
 
 	.view-members-block, .view-group-member-test {
@@ -854,7 +826,7 @@ footer.footer{
 		a[href="/donate"], a.donateLink, .btn-donate{
 			background: $du-dark;
 			color: $du-gold;
-		    padding: 20px 40px;	
+		    padding: 20px 40px;
 		    margin-top:2em;
 		    border-radius:5px;
 		    font-weight:bold;
@@ -871,7 +843,7 @@ footer.footer{
 		@include make-lg-column(4);
 		padding-top:45px;
 		.nav{
-				width:100%;	
+				width:100%;
 				> li {
 				display:block;
 				float:none;
@@ -914,12 +886,12 @@ footer.footer{
 				margin-left:0 !important;
 				width:100%;
 			}
-			
+
 		}
 		.btns.pull-right{
 			margin-top:1em !important;
 		}
-		
+
 	}
 }
 
@@ -939,8 +911,8 @@ footer.footer{
 					width: 136px;
 				}
 			}
-			
-		}		
+
+		}
 	}
 }
 @media screen and (min-width:375px) and (max-width:490px) {
@@ -959,9 +931,9 @@ footer.footer{
 					width: 156px;
 				}
 			}
-			
+
 		}
-		
+
 	}
 }
 
@@ -969,7 +941,7 @@ footer.footer{
 	footer.footer #block-sociallinks .field--name-body img{
 		width:50px;
 	}
-}	
+}
 
 @media screen and (min-width:345px) and (max-width:391px) {
 	footer.footer #block-sociallinks .field--name-body img{
@@ -1000,7 +972,7 @@ footer.footer{
 		width:65px;
 		margin: 10px 10px;
 	}
-}	
+}
 
 
 // 767 = menu breakpoint
@@ -1020,7 +992,7 @@ footer.footer{
 		margin:5px;
 		img{
 			display:none;
-		} 
+		}
 	}
 }
 
@@ -1030,7 +1002,7 @@ footer.footer{
 			width:100%;
 			img{
 				// width:80%;
-				
+
 			}
 		}
 		.btns.pull-right{
@@ -1055,7 +1027,7 @@ footer.footer{
 			width:50%;
 			img{
 				// width:80%;
-				
+
 			}
 		}
 		.btns.pull-right{
@@ -1073,7 +1045,7 @@ footer.footer{
 // 			width:50%;
 // 			img{
 // 				// width:80%;
-				
+
 // 			}
 // 		}
 // 		.btns.pull-right{
@@ -1091,7 +1063,7 @@ footer.footer{
 			width:50%;
 			img{
 				// width:80%;
-				
+
 			}
 		}
 		.btns.pull-right{
@@ -1110,7 +1082,7 @@ footer.footer{
 			&.navbar-right{
 				margin-top:21px;
 				[data-drupal-link-system-path="user"], [data-drupal-link-system-path="user/logout"]{
-					display:none;		
+					display:none;
 				}
 			}
 		}
