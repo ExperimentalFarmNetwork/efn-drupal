@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * This contains deprecated functions that will be removed in a future release.
@@ -346,6 +347,52 @@ function &_bootstrap_get_classes(array &$element, $property = 'attributes') {
 }
 
 /**
+ * Returns a specific Bootstrap Glyphicon as a render array.
+ *
+ * Note: This function was added in 7.x-3.17 to keep BC with the former
+ * _bootstrap_icon() implementation since it didn't return a render array. It
+ * is basically a backport of 8.x-3.x code so the added $attributes parameter
+ * can be more easily dealt with.
+ *
+ * @param string $name
+ *   The icon name, minus the "glyphicon-" prefix.
+ * @param array|string $default
+ *   (Optional) The default render array to use if $name is not available.
+ * @param array $attributes
+ *   (Optional) Additional attributes to merge onto the icon.
+ *
+ * @return array
+ *   The render containing the icon defined by $name, $default value if
+ *   icon does not exist or returns NULL if no icon could be rendered.
+ *
+ * @deprecated Will be removed in a future release.
+ *
+ * @code
+ *   // Before.
+ *   $icon = _bootstrap_glyphicon($name, $default, $attributes);
+ *
+ *   // After.
+ *   use Drupal\bootstrap\Bootstrap;
+ *   use Drupal\bootstrap\Utility\Element;
+ *   $icon = Bootstrap::glyphicon($name, ['#markup' => $default]);
+ *   $icon_attributes = isset($icon['#attributes']) ? $icon['#attributes'] : [];
+ *   unset($icon['#attributes']);
+ *   $icon = Element::createStandalone($icon)->setAttributes($attributes)->setAttributes($icon_attributes)->getArray();
+ * @endcode
+ *
+ * @see https://www.drupal.org/project/bootstrap/issues/2844885
+ * @see \Drupal\bootstrap\Bootstrap::glyphicon()
+ * @see \Drupal\bootstrap\Utility\Element::createStandalone()
+ */
+function _bootstrap_glyphicon($name, $default = [], array $attributes = []) {
+  Bootstrap::deprecated();
+  $icon = Bootstrap::glyphicon($name, ['#markup' => $default]);
+  $icon_attributes = isset($icon['#attributes']) ? $icon['#attributes'] : [];
+  unset($icon['#attributes']);
+  return Element::createStandalone($icon)->setAttributes($attributes)->setAttributes($icon_attributes)->getArray();
+}
+
+/**
  * Returns a list of available Bootstrap Glyphicons.
  *
  * @param string $version
@@ -396,12 +443,14 @@ function _bootstrap_glyphicons_supported() {
 }
 
 /**
- * Returns a specific Bootstrap Glyphicon.
+ * Returns a specific Bootstrap Glyphicon as rendered HTML markup.
  *
  * @param string $name
  *   The icon name, minus the "glyphicon-" prefix.
  * @param string $default
  *   (Optional) The default value to return.
+ * @param array $attributes
+ *   (Optional) Additional attributes to merge onto the icon.
  *
  * @return string
  *   The HTML markup containing the icon defined by $name, $default value if
@@ -411,19 +460,26 @@ function _bootstrap_glyphicons_supported() {
  *
  * @code
  *   // Before.
- *   $icon = _bootstrap_icon($name, $default);
+ *   $icon = _bootstrap_icon($name, $default, $attributes);
  *
  *   // After.
  *   use Drupal\bootstrap\Bootstrap;
  *   use Drupal\bootstrap\Utility\Element;
- *   $icon = (string) Element::createStandalone(Bootstrap::glyphicon($name, ['#markup' => $default]))->renderPlain();
+ *   $icon = Bootstrap::glyphicon($name, ['#markup' => $default]);
+ *   $icon_attributes = isset($icon['#attributes']) ? $icon['#attributes'] : [];
+ *   unset($icon['#attributes']);
+ *   $icon = (string) Element::createStandalone($icon)->setAttributes($attributes)->setAttributes($icon_attributes)->renderPlain();
  * @endcode
  *
  * @see \Drupal\bootstrap\Bootstrap::glyphicon()
+ * @see \Drupal\bootstrap\Utility\Element::createStandalone()
  */
-function _bootstrap_icon($name, $default = NULL) {
+function _bootstrap_icon($name, $default = NULL, array $attributes = []) {
   Bootstrap::deprecated();
-  return Element::createStandalone(Bootstrap::glyphicon($name, ['#markup' => $default]))->renderPlain();
+  $icon = Bootstrap::glyphicon($name, ['#markup' => $default]);
+  $icon_attributes = isset($icon['#attributes']) ? $icon['#attributes'] : [];
+  unset($icon['#attributes']);
+  return (string) Element::createStandalone($icon)->setAttributes($attributes)->setAttributes($icon_attributes)->renderPlain();
 }
 
 /**
@@ -512,10 +568,10 @@ function _bootstrap_is_button(array $element) {
  *
  * @param string $string
  *   The string of text to check "simple" criteria on.
- * @param int|FALSE $length
+ * @param int|false $length
  *   The length of characters used to determine whether or not $string is
  *   considered "simple". Set explicitly to FALSE to disable this criteria.
- * @param array|FALSE $allowed_tags
+ * @param array|false $allowed_tags
  *   An array of allowed tag elements. Set explicitly to FALSE to disable this
  *   criteria.
  * @param bool $html
@@ -584,7 +640,7 @@ function _bootstrap_remove_class($class, array &$element, $property = 'attribute
  * @param bool $reset
  *   Toggle determining whether or not to reset the database cache.
  *
- * @return array|FALSE
+ * @return array|false
  *   An associative array of CDN providers, keyed by their machine name if
  *   $provider is not set. If $provider is set and exists, it's individual
  *   data array will be returned. If $provider is set and the data does not
@@ -839,6 +895,8 @@ function bootstrap_include($theme, $path) {
  * @param string $prefix
  *   The prefix used on the $name of the setting, this will be appended with
  *   "_" automatically if set.
+ * @param mixed $default
+ *   The default value to return if setting doesn't exist or is not set.
  *
  * @return mixed
  *   The value of the requested setting, NULL if the setting does not exist.
@@ -860,9 +918,9 @@ function bootstrap_include($theme, $path) {
  * @see \Drupal\bootstrap\Theme::getSetting()
  * @see \Drupal\bootstrap\Bootstrap::getTheme()
  */
-function bootstrap_setting($name, $theme = NULL, $prefix = 'bootstrap') {
+function bootstrap_setting($name, $theme = NULL, $prefix = 'bootstrap', $default = NULL) {
   Bootstrap::deprecated();
   $theme = Bootstrap::getTheme($theme);
   $prefix = $prefix !== 'bootstrap' && !empty($prefix) ? $prefix . '_' : '';
-  return $theme->getSetting($prefix . $name);
+  return $theme->getSetting($prefix . $name, $default);
 }

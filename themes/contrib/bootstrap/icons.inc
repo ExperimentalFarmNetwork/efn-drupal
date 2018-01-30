@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Icon API support to provide Bootstrap Framework glyphicons.
@@ -12,7 +13,7 @@ use Drupal\bootstrap\Bootstrap;
 function bootstrap_icon_providers() {
   $providers['bootstrap'] = [
     'title' => t('Bootstrap'),
-    'url' => 'http://getbootstrap.com/components/#glyphicons',
+    'url' => 'https://getbootstrap.com/docs/3.3/components/#glyphicons',
   ];
   return $providers;
 }

@@ -1,17 +1,10 @@
 <?php
-/**
- * @file
- * Contains \Drupal\bootstrap\Plugin\Setting\Advanced\Cdn\CdnJsdelivrVersion.
- */
 
 namespace Drupal\bootstrap\Plugin\Setting\Advanced\Cdn;
 
-use Drupal\bootstrap\Annotation\BootstrapConstant;
-use Drupal\bootstrap\Annotation\BootstrapSetting;
 use Drupal\bootstrap\Bootstrap;
 use Drupal\bootstrap\Utility\Element;
 use Drupal\Component\Utility\Html;
-use Drupal\Core\Annotation\Translation;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
@@ -40,6 +33,9 @@ class CdnJsdelivrVersion extends CdnProvider {
    * {@inheritdoc}
    */
   public function alterFormElement(Element $form, FormStateInterface $form_state, $form_id = NULL) {
+    // Add autoload fix to make sure AJAX callbacks work.
+    static::formAutoloadFix($form_state);
+
     $plugin_id = Html::cleanCssIdentifier($this->provider->getPluginId());
     $setting = $this->getSettingElement($form, $form_state);
 

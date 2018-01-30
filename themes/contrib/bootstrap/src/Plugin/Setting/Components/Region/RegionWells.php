@@ -1,15 +1,9 @@
 <?php
-/**
- * @file
- * Contains \Drupal\bootstrap\Plugin\Setting\Components\Region\RegionWells.
- */
 
 namespace Drupal\bootstrap\Plugin\Setting\Components\Region;
 
-use Drupal\bootstrap\Annotation\BootstrapSetting;
 use Drupal\bootstrap\Plugin\Setting\SettingBase;
 use Drupal\bootstrap\Utility\Element;
-use Drupal\Core\Annotation\Translation;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
@@ -37,7 +31,7 @@ use Drupal\Core\Form\FormStateInterface;
  *     "region_wells" = @Translation("Region Wells"),
  *   },
  *   see = {
- *     "http://getbootstrap.com/components/#wells" = @Translation("Bootstrap Wells"),
+ *     "https://getbootstrap.com/docs/3.3/components/#wells" = @Translation("Bootstrap Wells"),
  *   },
  * )
  */

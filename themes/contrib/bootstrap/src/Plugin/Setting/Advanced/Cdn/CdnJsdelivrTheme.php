@@ -1,14 +1,8 @@
 <?php
-/**
- * @file
- * Contains \Drupal\bootstrap\Plugin\Setting\Advanced\Cdn\CdnJsdelivrTheme.
- */
 
 namespace Drupal\bootstrap\Plugin\Setting\Advanced\Cdn;
 
-use Drupal\bootstrap\Annotation\BootstrapSetting;
 use Drupal\bootstrap\Utility\Element;
-use Drupal\Core\Annotation\Translation;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
@@ -45,7 +39,7 @@ class CdnJsdelivrTheme extends CdnProvider {
     $setting->setProperty('suffix', '<div id="bootstrap-theme-preview"></div>');
     $setting->setProperty('description', t('Choose the example <a href=":bootstrap_theme" target="_blank">Bootstrap Theme</a> provided by Bootstrap or one of the many, many <a href=":bootswatch" target="_blank">Bootswatch</a> themes!', [
       ':bootswatch' => 'https://bootswatch.com',
-      ':bootstrap_theme' => 'http://getbootstrap.com/examples/theme/',
+      ':bootstrap_theme' => 'https://getbootstrap.com/docs/3.3/examples/theme/',
     ]));
 
     $options = [];

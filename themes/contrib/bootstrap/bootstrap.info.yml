@@ -42,7 +42,6 @@ libraries-extend:
 
 libraries-override:
   core/drupal.batch: bootstrap/drupal.batch
-  core/drupal.collapse: false
   core/drupal.dropbutton: bootstrap/dropdown
   core/drupal.vertical-tabs: bootstrap/drupal.vertical-tabs
   filter/drupal.filter: bootstrap/drupal.filter
@@ -80,8 +79,8 @@ libraries-override:
 #  core/drupal.dialog: bootstrap/drupal.dialog
 #  core/drupal.dialog.ajax: bootstrap/drupal.dialog.ajax
 
-# Information added by Drupal.org packaging script on 2017-09-25
-version: '8.x-3.6'
+# Information added by Drupal.org packaging script on 2018-01-20
+version: '8.x-3.9'
 core: '8.x'
 project: 'bootstrap'
-datestamp: 1506357855
+datestamp: 1516430290

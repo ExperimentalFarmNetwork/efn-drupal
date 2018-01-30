@@ -1,8 +1,10 @@
 <?php
+
 /**
  * @file
  * Drupal Bootstrap Drush commands.
  */
+
 use Drupal\bootstrap\Bootstrap;
 use Drupal\bootstrap\Theme;
 use Drupal\Component\Serialization\Yaml;
@@ -25,6 +27,7 @@ function bootstrap_drush_command() {
  * Generates markdown documentation.
  *
  * @param string $type
+ *   The type of documentation.
  */
 function drush_bootstrap_generate_docs($type = 'all') {
   $types = $type === 'all' ? ['settings'] : [$type];
@@ -85,14 +88,25 @@ function _drush_bootstrap_generate_docs_settings(Theme $bootstrap) {
     $output[] = "### $group";
     $output[] = '';
     $output[] = '<table class="table table-striped table-responsive">';
-    $output[] = '  <thead><tr><th class="col-xs-3">Setting name</th><th>Description and default value</th></tr></thead>';
+    $output[] = '  <thead>';
+    $output[] = '    <tr>';
+    $output[] = '      <th class="col-xs-3">Setting name</th>';
+    $output[] = '      <th>Description and default value</th>';
+    $output[] = '    </tr>';
+    $output[] = '  </thead>';
     $output[] = '  <tbody>';
     foreach ($settings as $definition) {
       $output[] = '  <tr>';
-      $output[] = '    <td class="col-xs-3">' . $definition['id'] . '</td>';
+      $output[] = '    <td class="col-xs-3">';
+      $output[] = $definition['id'];
+      $output[] = '    </td>';
       $output[] = '    <td>';
-      $output[] = '      <div class="help-block">' . str_replace('&quote;', '"', $definition['description']) . '</div>';
-      $output[] = '      <pre class=" language-yaml"><code>' . Yaml::encode([$definition['id'] => $definition['defaultValue']]) . '</code></pre>';
+      $output[] = '      <div class="help-block">';
+      $output[] = str_replace('&quote;', '"', wordwrap($definition['description']));
+      $output[] = '      </div>';
+      $output[] = '      <pre class=" language-yaml"><code>';
+      $output[] = wordwrap(Yaml::encode([$definition['id'] => $definition['defaultValue']]));
+      $output[] = '</code></pre>';
       $output[] = '    </td>';
       $output[] = '  </tr>';
     }
@@ -103,7 +117,7 @@ function _drush_bootstrap_generate_docs_settings(Theme $bootstrap) {
   // Ensure we have link references at the bottom.
   $output[] = '';
   $output[] = '[Drupal Bootstrap]: https://www.drupal.org/project/bootstrap';
-  $output[] = '[Bootstrap Framework]: http://getbootstrap.com';
+  $output[] = '[Bootstrap Framework]: https://getbootstrap.com/docs/3.3/';
 
   // Save the generated output to the appropriate file.
   return file_put_contents(realpath($bootstrap->getPath() . '/docs/Theme-Settings.md'), implode("\n", $output)) !== FALSE;

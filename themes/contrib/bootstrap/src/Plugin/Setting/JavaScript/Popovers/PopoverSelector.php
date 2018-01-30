@@ -1,14 +1,8 @@
 <?php
-/**
- * @file
- * Contains \Drupal\bootstrap\Plugin\Setting\JavaScript\Popovers\PopoverSelector.
- */
 
 namespace Drupal\bootstrap\Plugin\Setting\JavaScript\Popovers;
 
-use Drupal\bootstrap\Annotation\BootstrapSetting;
 use Drupal\bootstrap\Plugin\Setting\SettingBase;
-use Drupal\Core\Annotation\Translation;
 
 /**
  * The "popover_selector" theme setting.
@@ -28,7 +22,7 @@ use Drupal\Core\Annotation\Translation;
  *   },
  *   see = {
  *     "https://github.com/twbs/bootstrap/issues/4215" = @Translation("Issue #4215"),
- *     "http://jsfiddle.net/fScua/" = @Translation("JSFiddle Example"),
+ *     "https://jsfiddle.net/fScua/" = @Translation("JSFiddle Example"),
  *   },
  * )
  */
