@@ -1,0 +1,15 @@
+name: 'YAML Form module translation tests'
+type: module
+description: 'Support module for YAML Form module translatation testing that provides working examples for translating forms.'
+package: Testing
+# core: 8.x
+dependencies:
+  - yamlform
+  - config_translation
+  - node
+
+# Information added by Drupal.org packaging script on 2016-12-26
+version: '8.x-1.0-beta29'
+core: '8.x'
+project: 'yamlform'
+datestamp: 1482752287

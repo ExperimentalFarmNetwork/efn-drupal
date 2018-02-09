@@ -1,0 +1,215 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - yamlform_test
+uid: 1
+template: false
+id: test_token
+title: 'Test: Token'
+description: 'Test YAML Form and YAML Form Submission tokens'
+elements: |
+  yamlform_tokens:
+    '#type': codemirror
+    '#mode': text
+    '#title': 'YAML Form Tokens'
+    '#default_value': |
+      Description: [yamlform:description]
+      Form ID: [yamlform:id]
+      title: [yamlform:title]
+      URL: [yamlform:url]
+      Author: [yamlform:author]
+      Author name: [yamlform:author:account-name]
+      Author roles: [yamlform:author:roles]
+  yamlform_submission_tokens:
+    '#type': codemirror
+    '#mode': text
+    '#title': 'YAML Form Submission Tokens'
+    '#default_value': |
+      Date changed: [yamlform_submission:changed]
+      Date changed long: [yamlform_submission:changed:long]
+      Date completed: [yamlform_submission:completed]
+      Date completed long: [yamlform_submission:completed:long]
+      Date created: [yamlform_submission:created]
+      Date created long: [yamlform_submission:created:long]
+      Form: [yamlform_submission:yamlform]
+      IP address: [yamlform_submission:ip-address]
+      Langcode: [yamlform_submission:langcode]
+      Language: [yamlform_submission:language]
+      Source URL: [yamlform_submission:source-url]
+      Submission ID: [yamlform_submission:sid]
+      Submission serial number: [yamlform_submission:serial]
+      Submitter: [yamlform_submission:user]
+      Submitter name: [yamlform_submission:user:account-name]
+      Submitter mail: [yamlform_submission:user:mail]
+      Token: [yamlform_submission:token]
+      Update URL: [yamlform_submission:update-url]
+      URL: [yamlform_submission:url]
+      URL Edit Form: [yamlform_submission:url:edit-form]
+      UUID: [yamlform_submission:uuid]
+  yamlform_submission_data_tokens:
+    '#type': codemirror
+    '#mode': text
+    '#title': 'YAML Form Submission Data Tokens'
+    '#default_value': |
+      Submission values: [yamlform_submission:values]
+  yamlform_submission_source_entity_tokens:
+    '#type': codemirror
+    '#mode': text
+    '#title': 'YAML Form Submission Source Entity Tokens'
+    '#default_value': |
+      Author: [yamlform_submission:source-entity:author]
+      Account cancellation URL: [yamlform_submission:source-entity:author:cancel-url]
+      Account Name: [yamlform_submission:source-entity:author:account-name]
+      Created: [yamlform_submission:source-entity:author:created]
+      Display Name: [yamlform_submission:source-entity:author:display-name]
+      Edit URL: [yamlform_submission:source-entity:author:edit-url]
+      Email: [yamlform_submission:source-entity:author:mail]
+      Last login: [yamlform_submission:source-entity:author:last-login]
+      Picture: [yamlform_submission:source-entity:author:user_picture]
+      Roles: [yamlform_submission:source-entity:author:roles]
+      URL: [yamlform_submission:source-entity:author:url]
+      User ID: [yamlform_submission:source-entity:author:uid]
+      Body: [yamlform_submission:source-entity:body]
+      Content ID: [yamlform_submission:source-entity:nid]
+      Content type: [yamlform_submission:source-entity:content-type]
+      Date changed: [yamlform_submission:source-entity:changed]
+      Date created: [yamlform_submission:source-entity:created]
+      Image: [yamlform_submission:source-entity:field_image]
+      Language code: [yamlform_submission:source-entity:langcode]
+      Revision ID: [yamlform_submission:source-entity:vid]
+      Summary: [yamlform_submission:source-entity:summary]
+      Title: [yamlform_submission:source-entity:title]
+      URL: [yamlform_submission:source-entity:url]
+  yamlform_submission_node_tokens:
+    '#type': codemirror
+    '#mode': text
+    '#title': 'YAML Form Submission Node Tokens'
+    '#default_value': |
+      Author: [yamlform_submission:node:author]
+      Account cancellation URL: [yamlform_submission:node:author:cancel-url]
+      Account Name: [yamlform_submission:node:author:account-name]
+      Created: [yamlform_submission:node:author:created]
+      Display Name: [yamlform_submission:node:author:display-name]
+      Edit URL: [yamlform_submission:node:author:edit-url]
+      Email: [yamlform_submission:node:author:mail]
+      Last login: [yamlform_submission:node:author:last-login]
+      Picture: [yamlform_submission:node:author:user_picture]
+      Roles: [yamlform_submission:node:author:roles]
+      URL: [yamlform_submission:node:author:url]
+      User ID: [yamlform_submission:node:author:uid]
+      Body: [yamlform_submission:node:body]
+      Content ID: [yamlform_submission:node:nid]
+      Content type: [yamlform_submission:node:content-type]
+      Date changed: [yamlform_submission:node:changed]
+      Date created: [yamlform_submission:node:created]
+      Image: [yamlform_submission:node:field_image]
+      Language code: [yamlform_submission:node:langcode]
+      Revision ID: [yamlform_submission:node:vid]
+      Summary: [yamlform_submission:node:summary]
+      Title: [yamlform_submission:node:title]
+      URL: [yamlform_submission:node:url]
+css: ''
+javascript: ''
+settings:
+  page: true
+  page_submit_path: ''
+  page_confirm_path: ''
+  form_submit_label: ''
+  form_submit_attributes: {  }
+  form_exception_message: ''
+  form_closed_message: ''
+  form_confidential: false
+  form_confidential_message: ''
+  form_prepopulate: false
+  form_prepopulate_source_entity: false
+  form_novalidate: false
+  form_unsaved: false
+  form_disable_back: false
+  form_autofocus: false
+  form_details_toggle: false
+  wizard_progress_bar: true
+  wizard_progress_pages: false
+  wizard_progress_percentage: false
+  wizard_next_button_label: ''
+  wizard_next_button_attributes: {  }
+  wizard_prev_button_label: ''
+  wizard_prev_button_attributes: {  }
+  wizard_start_label: ''
+  wizard_complete: true
+  wizard_complete_label: ''
+  preview: 0
+  preview_next_button_label: ''
+  preview_next_button_attributes: {  }
+  preview_prev_button_label: ''
+  preview_prev_button_attributes: {  }
+  preview_message: ''
+  draft: false
+  draft_auto_save: false
+  draft_button_label: ''
+  draft_button_attributes: {  }
+  draft_saved_message: ''
+  draft_loaded_message: ''
+  confirmation_type: page
+  confirmation_message: ''
+  confirmation_url: ''
+  confirmation_attributes: {  }
+  confirmation_back: true
+  confirmation_back_label: ''
+  confirmation_back_attributes: {  }
+  limit_total: null
+  limit_total_message: ''
+  limit_user: null
+  limit_user_message: ''
+  entity_limit_total: null
+  entity_limit_user: null
+  results_disabled: false
+  results_disabled_ignore: false
+  token_update: true
+access:
+  create:
+    roles:
+      - anonymous
+      - authenticated
+    users: {  }
+  view_any:
+    roles: {  }
+    users: {  }
+  update_any:
+    roles: {  }
+    users: {  }
+  delete_any:
+    roles: {  }
+    users: {  }
+  purge_any:
+    roles: {  }
+    users: {  }
+  view_own:
+    roles: {  }
+    users: {  }
+  update_own:
+    roles: {  }
+    users: {  }
+  delete_own:
+    roles: {  }
+    users: {  }
+handlers:
+  email:
+    id: email
+    label: Email
+    handler_id: email
+    status: true
+    weight: 0
+    settings:
+      to_mail: default
+      cc_mail: ''
+      bcc_mail: ''
+      from_mail: default
+      from_name: default
+      subject: default
+      body: '<a href="[yamlform_submission:update-url]">[yamlform_submission:update-url]</a>'
+      excluded_elements: {  }
+      html: true
+      attachments: false
+      debug: false
