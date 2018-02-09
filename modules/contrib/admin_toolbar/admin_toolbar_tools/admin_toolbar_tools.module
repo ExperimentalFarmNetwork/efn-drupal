@@ -5,7 +5,9 @@
  * Provides extra menu links for the core drupal toolbar.
  */
 
+use Drupal\Core\Link;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
 
 /**
  * Implements hook_toolbar().
@@ -32,10 +34,21 @@ function admin_toolbar_tools_toolbar() {
 function admin_toolbar_tools_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
     case 'help.page.admin_toolbar_tools':
+      $url = Url::fromUri('https://www.drupal.org/project/admin_toolbar');
+      $external_link = Link::fromTextAndUrl(t('Admin Toolbar'), $url);
+      $external_link2 = Link::fromTextAndUrl(t('Toolbar'), $url);
+      $url = Url::fromUri('https://www.drupal.org/node/2713693');
+      $external_link3 = Link::fromTextAndUrl(t('online documentation for Admin Toolbar'), $url);
       $output = '';
-      $output .= '<p>' . t('The Admin Toolbar Extra Tools module comes packaged with the <a href="https://www.drupal.org/project/admin_toolbar"> Admin Toolbar</a> module and adds functionality to it. The additional functionality is accessed thru extra links on the main administration <a href="https://www.drupal.org/project/toolbar">Toolbar</a>.  Some links to Admin Toolbar Extra Tools administration pages are located at the bottom of this page. For more information, see the <a href="https://www.drupal.org/node/2713693">online documentation for Admin Toolbar</a>') . '</p>';
+      $output .= '<p>';
+      $output .= t('The Admin Toolbar Extra Tools module comes packaged with the :link module and adds functionality to it. The additional functionality is accessed thru extra links on the main administration :link2.  Some links to Admin Toolbar Extra Tools administration pages are located at the bottom of this page. For more information, see the :link3', [
+        ':link' => $external_link,
+        ':link2' => $external_link2,
+        ':link3' => $external_link3,
+      ]);
+      $output .= '</p>';
       $output .= '<h3>' . t('Uses') . '</h3>';
-      $output .= '<p>' . t('To use Admin Toolbar Extra Tools just install it like any other module.  There is no other configuration required. The Admin Toolbar functionality can be further extended by installing complimentary modules.  See <a href="https://www.drupal.org/project/admin_toolbar">Admin Toolbar</a> for a complete listing of these complimentary modules.') . '</p>';
+      $output .= '<p>' . t('To use Admin Toolbar Extra Tools just install it like any other module.  There is no other configuration required. The Admin Toolbar functionality can be further extended by installing complimentary modules.  See :link for a complete listing of these complimentary modules.', [':link' => $external_link]) . '</p>';
 
       return $output;
   }
@@ -64,8 +77,18 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
     }
   }
 
+  // Adding a menu link to clean the Views cache.
+  if ($moduleHandler->moduleExists('views')) {
+    $links['admin_toolbar_tools.flush_views'] = [
+      'title' => t('Flush views cache'),
+      'route_name' => 'admin_toolbar_tools.flush_views',
+      'menu_name' => 'admin',
+      'parent' => 'admin_toolbar_tools.flush',
+    ];
+  }
+
   // Adds common links to entities.
-  foreach ($content_entities as $module_name => $entities) {
+  foreach ($content_entities as $entities) {
     $content_entity_bundle = $entities['content_entity_bundle'];
     $content_entity = $entities['content_entity'];
     foreach ($entityTypeManager->getStorage($content_entity_bundle)->loadMultiple() as $machine_name => $bundle) {
@@ -250,7 +273,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
       'weight' => -5,
     ];
     // Add node links for each content type.
-    foreach (\Drupal::entityTypeManager()->getStorage('node_type')->loadMultiple() as $type) {
+    foreach ($entityTypeManager->getStorage('node_type')->loadMultiple() as $type) {
       $links['node.add.' . $type->id()] = [
         'title' => t($type->label()),
         'route_name' => 'node.add',
@@ -395,7 +418,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
       'weight' => '-1',
     ];
     if ($moduleHandler->moduleExists('webprofiler')) {
-      $links['admin_menu_tools.devel.webprofiler'] = [
+      $links['admin_toolbar_tools.devel.webprofiler'] = [
         'title' => t('Web Profiler settings'),
         'route_name' => 'webprofiler.settings',
         'menu_name' => 'admin',
@@ -455,20 +478,33 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
       'menu_name' => 'admin',
       'parent' => 'admin_development',
     ];
+    // Menu link for the Toolbar module.
+    $links['admin_toolbar_tools.toolbar.settings'] = [
+      'title' => t('Toolbar settings'),
+      'route_name' => 'devel.toolbar.settings_form',
+      'menu_name' => 'admin',
+      'parent' => 'devel.admin_settings',
+    ];
   }
 
   // If module Views Ui enabled.
   if ($moduleHandler->moduleExists('views_ui')) {
-    $links['views_ui.add'] = [
+    $links['admin_toolbar_tools.views_ui.add'] = [
       'title' => t('Add new view'),
       'route_name' => 'views_ui.add',
       'menu_name' => 'admin',
       'parent' => 'entity.view.collection',
       'weight' => -5,
     ];
+    $links['admin_toolbar_tools.views_ui.field_list'] = [
+      'title' => t('Used in views'),
+      'route_name' => 'views_ui.reports_fields',
+      'menu_name' => 'admin',
+      'parent' => 'entity.field_storage_config.collection',
+    ];
   }
 
-  $links['system.theme_settings_'] = [
+  $links['admin_toolbar_tools.system.theme_settings'] = [
     'title' => t('Settings'),
     'route_name' => 'system.theme_settings',
     'menu_name' => 'admin',
@@ -476,13 +512,14 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
   ];
 
   if ($moduleHandler->moduleExists('webprofiler')) {
-    $links['admin_menu_tools.devel.webprofiler'] = [
+    $links['admin_toolbar_tools.devel.webprofiler'] = [
       'title' => t('Webprofiler settings'),
       'route_name' => 'webprofiler.settings',
       'menu_name' => 'admin',
       'parent' => 'admin_development',
     ];
   }
+
   if ($moduleHandler->moduleExists('update')) {
     $links['update.theme_install_'] = [
       'title' => t('Install new theme'),
@@ -509,6 +546,53 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
         ],
       ];
     }
+  }
+
+  // If module Language enabled.
+  if ($moduleHandler->moduleExists('language')) {
+    $links['admin_toolbar_tools.language.negotiation'] = [
+      'title' => t('Detection and selection'),
+      'route_name' => 'language.negotiation',
+      'menu_name' => 'admin',
+      'parent' => 'entity.configurable_language.collection',
+    ];
+  }
+
+  // If module Media enabled.
+  if ($moduleHandler->moduleExists('media')) {
+    $links['admin_toolbar_tools.add_media'] = [
+      'title' => t('Add media'),
+      'route_name' => 'entity.media.add_page',
+      'menu_name' => 'admin',
+      'parent' => 'system.admin_content',
+    ];
+    // Add node links for each media type.
+    foreach (\Drupal::entityTypeManager()->getStorage('media_type')->loadMultiple() as $type) {
+      $links['node.add.' . $type->id()] = [
+        'title' => t($type->label()),
+        'route_name' => 'entity.media.add_form',
+        'parent' => 'admin_toolbar_tools.add_media',
+        'route_parameters' => ['media_type' => $type->id()],
+      ];
+    }
+  }
+
+  // If module Config enabled.
+  if ($moduleHandler->moduleExists('config')) {
+    $links['admin_toolbar_tools.config.import'] = [
+      'title' => t('Import'),
+      'route_name' => 'config.import_full',
+      'menu_name' => 'admin',
+      'parent' => 'config.sync',
+      'weight' => 1,
+    ];
+    $links['admin_toolbar_tools.config.export'] = [
+      'title' => t('Export'),
+      'route_name' => 'config.export_full',
+      'menu_name' => 'admin',
+      'parent' => 'config.sync',
+      'weight' => 2,
+    ];
   }
 }
 
