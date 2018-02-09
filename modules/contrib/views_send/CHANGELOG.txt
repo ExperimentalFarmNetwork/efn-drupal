@@ -1,5 +1,14 @@
-
-Views Send 8.x-1.x, xxxx-xx-xx
+Views Send 8.x-1.2, 2018-02-02
 ------------------------------
 
-Reset changelog for Drupal 8 version.
+Issue #1074898 by hansfn: Limit number of retries
+Issue #2917414 by hansfn: url function is no longer available in Drupal 8
+Issue #2925717 by johnhuang0808: If excluded fields should be tokens or not, should be configurable
+Issue #2930153 by hansfn: Cron throttle value incorrect
+Issue #2931525 by hansfn: Routing breaks when using a block display for the view
+Issue #2930167 by hansfn: Support HTML emails with Swiftmailer
+
+Views Send 8.x-1.1, 2017-08-16
+------------------------------
+
+First stable release for Drupal 8.

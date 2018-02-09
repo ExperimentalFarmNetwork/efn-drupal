@@ -99,3 +99,12 @@ function views_send_schema() {
  */
 function views_send_uninstall() {
 }
+
+/**
+ * Add retry to the default configuration.
+ */
+function views_send_update_8101() {
+  $config = \Drupal::configFactory()->getEditable('views_send.settings');
+  $config->set('retry', 5);
+  $config->save(TRUE);
+}

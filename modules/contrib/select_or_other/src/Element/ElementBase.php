@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- * Contains Drupal\select_or_other\Element\ElementBase.
- */
 
 namespace Drupal\select_or_other\Element;
 

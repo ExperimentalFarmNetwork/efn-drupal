@@ -380,6 +380,8 @@
     }
   };
 
+  // Copy the pager hooks from fields pager to the bullets one.
+  Drupal.viewsSlideshowPagerBullets = Drupal.viewsSlideshowPagerFields || {};
 
   /**
    * Views Slideshow Slide Counter

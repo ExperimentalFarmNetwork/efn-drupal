@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\select_or_other\Tests\ReferenceTest.
- */
-
 namespace Drupal\select_or_other\Tests;
 
 /**
@@ -13,7 +8,7 @@ namespace Drupal\select_or_other\Tests;
  * @codeCoverageIgnore
  *   Our unit tests do not have to cover the integration tests.
  *
- * @group 'Select or other'
+ * @group Select or other
  */
 class ListTest extends TestBase {
 

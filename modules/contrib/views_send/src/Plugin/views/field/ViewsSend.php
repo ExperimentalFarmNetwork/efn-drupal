@@ -4,6 +4,7 @@ namespace Drupal\views_send\Plugin\views\field;
 
 use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
 use Drupal\system\Plugin\views\field\BulkForm;;
 use Drupal\views\ResultRow;
 
@@ -13,6 +14,15 @@ use Drupal\views\ResultRow;
  * @ViewsField("views_send_bulk_form")
  */
 class ViewsSend extends BulkForm {
+
+  protected function defineOptions() {
+    $options = parent::defineOptions();
+    $options['enable_excluded_fields'] = [
+      'default' => 1  ,
+    ];
+
+    return $options;
+  }
 
   /**
    * Overrides \Drupal\system\Plugin\views\field\BulkForm::buildOptionsForm().
@@ -28,6 +38,11 @@ class ViewsSend extends BulkForm {
     $form['action_title']['#access'] = FALSE;
     $form['include_exclude']['#access'] = FALSE;
     $form['selected_actions']['#access'] = FALSE;
+    $form['enable_excluded_fields'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Use excluded fields as tokens'),
+      '#default_value' => $this->options['enable_excluded_fields'],
+    ];
   }
 
   /**
@@ -76,8 +91,16 @@ class ViewsSend extends BulkForm {
         $field_name = $this->options['id'];
         $selection = array_filter($form_state->getValue($field_name));
         $form_state->set('selection', array_keys($selection));
-
         $form_state->set('step', 'views_send_config_form');
+        // Preserve the URL as it gets lost if block display and batch API.
+        if ($this->view->hasUrl()) {
+          $url = $this->view->getUrl();
+        } else {
+          // For some reason Url::fromRoute('<current>') doesn't work.
+          $url = Url::fromUserInput(\Drupal::service('path.current')->getPath());
+        }
+        $query = UrlHelper::filterQueryParameters($_GET, array('q'));
+        $form_state->set('url', $url->setOption('query', $query));
         $form_state->setRebuild(TRUE);
         break;
 
@@ -127,9 +150,7 @@ class ViewsSend extends BulkForm {
         // Queue the email for sending.
         views_send_queue_mail($form_state->get('configuration'), $form_state->get('selection'), $this->view);
 
-        // Redirect. (FIXME - query...)
-        $query = UrlHelper::filterQueryParameters($_GET, array('q'));
-        $form_state->setRedirectUrl($this->view->getUrl());
+        $form_state->setRedirectUrl($form_state->get('url'));
         break;
     }
   }

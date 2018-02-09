@@ -16,7 +16,14 @@ widget_info:
 controls_text:
   version: VERSION
   css:
-    css/controls_text.css: {}
+    theme:
+      css/controls_text.css: {}
+
+pager_bullets:
+  version: VERSION
+  css:
+    component:
+      css/views-slideshow-pager-bullets.css: {}
 
 jquery_hoverIntent:
   remote: https://github.com/briancherne/jquery-hoverIntent

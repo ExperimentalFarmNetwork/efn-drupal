@@ -5,6 +5,9 @@ views_send.settings:
     throttle:
       type: integer
       label: 'Number of messages sent per cron run'
+    retry:
+      type: integer
+      label: 'How many retries before a message in the spool is discarded'
     spool_expire:
       type: integer
       label: 'How many days messages are retained in the spool after successfull sending'

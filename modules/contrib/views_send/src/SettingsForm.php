@@ -4,6 +4,7 @@ namespace Drupal\views_send;
 
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
 
 /**
  * Configure update settings for this site.
@@ -34,12 +35,13 @@ class SettingsForm extends ConfigFormBase {
 
     $throttle_values = array(1, 10, 20, 30, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000);
     $throttle = array_combine($throttle_values, $throttle_values);
-    array_unshift($throttle, $this->t('Unlimited'));
+    $throttle += array($this->t('Unlimited'));
 
     $throttle_desc = $this->t('Sets the numbers of messages sent per cron run. Failure to send will also be counted. Cron execution must not exceed the PHP maximum execution time of %max seconds.',
       array('%max' => ini_get('max_execution_time')));
     if (\Drupal::moduleHandler()->moduleExists('dblog')) {
-      $throttle_desc .= ' ' . $this->t('You find the time spent to send e-mails in the <a href="@dblog-url">recent log messages</a>.', array('@dblog-url' => $this->url('dblog.overview')));
+      $throttle_desc .= ' ' . $this->t('You find the time spent to send e-mails in the <a href="@dblog-url">recent log messages</a>.',
+        array('@dblog-url' => URL::fromRoute('dblog.overview')->toString()));
     }
     $form['throttle'] = array(
       '#type' => 'select',
@@ -47,6 +49,16 @@ class SettingsForm extends ConfigFormBase {
       '#options' => $throttle,
       '#default_value' => $config->get('throttle'),
       '#description' => $throttle_desc,
+    );
+
+    $retry_values = array(0, 1, 2, 3, 4, 5, 10, 15, 20, 30, 40, 50, 100);
+    $retry = array_combine($retry_values, $retry_values);
+    $form['retry'] = array(
+      '#type' => 'select',
+      '#title' => $this->t('Number of retries'),
+      '#options' => $retry,
+      '#default_value' => $config->get('retry'),
+      '#description' => $this->t('How many retries should be done before a message (in the spool) should be discarded?'),
     );
 
     $form['spool_expire'] = array(
@@ -82,6 +94,7 @@ class SettingsForm extends ConfigFormBase {
 
     $config
       ->set('throttle', $form_state->getValue('throttle'))
+      ->set('retry', $form_state->getValue('retry'))
       ->set('spool_expire', $form_state->getValue('spool_expire'))
       ->set('debug', $form_state->getValue('debug'))
       ->save();

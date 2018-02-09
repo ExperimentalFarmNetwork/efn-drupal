@@ -9,11 +9,13 @@
  * @ingroup views_send
  */
 
+use \Drupal\Component\Utility\Html;
 use \Drupal\Component\Utility\Unicode;
 use \Drupal\Component\Utility\UrlHelper;
-use \Drupal\Core\Url;
+use \Drupal\Core\Link;
 use \Drupal\Core\Mail\MailFormatHelper;
-use \Drupal\Component\Utility\Html;
+use \Drupal\Core\Render\Markup;
+use \Drupal\Core\Url;
 use \Drupal\filter\Entity\FilterFormat;
 use \Drupal\views_send\Event\AllMailAddedEvent;
 use \Drupal\views_send\Event\MailAddedEvent;
@@ -30,12 +32,6 @@ define('VIEWS_SEND_PRIORITY_LOW', 4);
 define('VIEWS_SEND_PRIORITY_LOWEST', 5);
 
 /**
- * Capture PHP max_execution_time before drupal_cron_run().
- * Workaround for Drupal 6.14. See http://drupal.org/node/584334
- */
-define('VIEWS_SEND_MAX_EXECUTION_TIME', ini_get('max_execution_time'));
-
-/**
  * Token pattern.
  */
 define('VIEWS_SEND_TOKEN_PATTERN', 'views-send:%s');
@@ -43,9 +39,20 @@ define('VIEWS_SEND_TOKEN_PREFIX', '[');
 define('VIEWS_SEND_TOKEN_POSTFIX', ']');
 
 /**
- * Detect and store Mime Mail module presence.
+ * Detect if there is MIME support (through modules like Mime Mail or Swift Mailer).
  */
-define('VIEWS_SEND_MIMEMAIL', \Drupal::moduleHandler()->moduleExists('mimemail'));
+switch (TRUE) {
+  case \Drupal::moduleHandler()->moduleExists('mailgun'):
+  case \Drupal::moduleHandler()->moduleExists('mandrill'):
+  case \Drupal::moduleHandler()->moduleExists('mimemail'):
+  case \Drupal::moduleHandler()->moduleExists('sendgrid_integration'):
+  case \Drupal::moduleHandler()->moduleExists('swiftmailer'):
+    define('VIEWS_SEND_MIMEMAIL', TRUE);
+    break;
+
+  default:
+    define('VIEWS_SEND_MIMEMAIL', FALSE);
+}
 
 /**
  * Gets the selector field if it exists on the passed-in view.
@@ -239,7 +246,7 @@ function views_send_config_form(&$form, &$form_state, $view) {
     '#default_value' => isset($config['remember']) ? $config['remember'] : FALSE,
   );
   $query = UrlHelper::filterQueryParameters($_GET, array('q'));
-  $url = $view->getUrl()->setOption('query', $query);
+  $url = Url::fromRoute('<current>')->setOption('query', $query);
   $form['actions'] = array(
     '#type' => 'container',
     '#attributes' => array('class' => array('form-actions')),
@@ -249,7 +256,7 @@ function views_send_config_form(&$form, &$form_state, $view) {
     '#type' => 'submit',
     '#value' => t('Next'),
     '#validate' => array('views_send_config_form_validate'),
-    '#suffix' => \Drupal::l(t('Cancel'), $url),
+    '#suffix' => Link::fromTextAndUrl(t('Cancel'), $url)->toString(),
   );
 
   return $form;
@@ -402,7 +409,7 @@ function views_send_confirm_form(&$form, &$form_state, $view) {
   }
 
   $query = UrlHelper::filterQueryParameters($_GET, array('q'));
-  $url = $view->getUrl()->setOption('query', $query);
+  $url = Url::fromRoute('<current>')->setOption('query', $query);
   $form['actions'] = array(
     '#type' => 'container',
     '#attributes' => array('class' => array('form-actions')),
@@ -411,7 +418,7 @@ function views_send_confirm_form(&$form, &$form_state, $view) {
   $form['actions']['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Send'),
-    '#suffix' => \Drupal::l(t('Cancel'), $url),
+    '#suffix' => Link::fromTextAndUrl(t('Cancel'), $url)->toString(),
   );
 
   return $form;
@@ -420,6 +427,8 @@ function views_send_confirm_form(&$form, &$form_state, $view) {
 
 /**
  * Assembles the email and queues it for sending.
+ *
+ * Also email sent directly using the Batch API is handled here.
  *
  * @param $params
  *   Data entered in the "config" step of the form.
@@ -434,7 +443,7 @@ function views_send_queue_mail($params, $selected_rows, $view) {
   if (!$account->hasPermission('mass mailing with views_send')) {
     drupal_set_message(
       t('No mails sent since you aren\'t allowed to send mass mail with Views. (<a href="@permurl">Edit the permission.</a>)',
-        array('@permurl' => url('admin/people/permissions', array('fragment' => 'module-views_send')))),
+        array('@permurl' => URL::fromRoute('user.admin_permissions', [], ['fragment' => 'module-views_send'])->toString())),
       'error'
     );
     return;
@@ -493,6 +502,10 @@ function views_send_queue_mail($params, $selected_rows, $view) {
 
     if (!VIEWS_SEND_MIMEMAIL || (\Drupal::config('mimemail.settings')->get('format') == 'plain_text')) {
       $body = MailFormatHelper::htmlToText($body);
+    }
+    else {
+      // This is needed to avoid escaping of HTML in Swiftmailer.
+      $body = Markup::create($body);
     }
 
     if ($params['format'] == 'plain_text') {
@@ -777,6 +790,7 @@ function _views_send_prepare_mail(&$message, $plain_format=TRUE, $attachments=ar
   if (VIEWS_SEND_MIMEMAIL) {
     $params['attachments'] = $attachments;
     if ($plain_format) {
+      // Tell Mimemail module that this is a plain text message as HTML is the default.
       $params['plain'] = TRUE;
     }
   }
@@ -967,14 +981,17 @@ function _views_send_get_fields_and_tokens($view, $type) {
   $fields = array();
   $tokens = array();
   $fields_name_text = array();
+  $enable_excluded_fields = $view->field['views_send_bulk_form']->options['enable_excluded_fields'];
   foreach ($view->field as $field_name => $field) {
     // Ignore Views Send field(s).
     if ($field instanceof Drupal\views_send\Plugin\views\field\ViewsSend) {
       continue;
     }
-    // Excluded fields should not available.
     elseif (isset($field->options['exclude']) && $field->options['exclude']) {
-      continue;
+      // If enable_excluded_fields is false, excluded fields should not be available.
+      if (!$enable_excluded_fields) {
+        continue;
+      }
     }
     if (!empty($field->field)) {
       $field_key = $field->field;

@@ -285,6 +285,36 @@ function template_preprocess_views_slideshow_pager_field_item(&$vars) {
 }
 
 /**
+ * Views Slideshow: Bullets pager.
+ */
+function template_preprocess_views_slideshow_pager_bullets(&$vars) {
+  $vars['#attached']['library'][] = 'views_slideshow/widget_info';
+  $vars['#attached']['library'][] = 'views_slideshow/pager_bullets';
+  $vars['#attached']['drupalSettings']['viewsSlideshowPagerFields'][$vars['vss_id']] = [
+    $vars['location'] => [
+      'activatePauseOnHover' => $vars['settings']['views_slideshow_pager_bullets']['views_slideshow_pager_bullets_hover'],
+    ],
+  ];
+
+  $vars['bullet_items'] = [
+    '#theme' => 'item_list',
+    '#items' => [],
+    '#attributes' => $vars['attributes'],
+  ];
+  $vars['bullet_items']['#attributes']['class'][] = 'views-slideshow-pager-bullets';
+  $vars['bullet_items']['#attributes']['class'][] = 'views_slideshow_pager_field';
+
+  for ($i = 0; $i < count($vars['view']->result); $i++) {
+    $vars['bullet_items']['#items'][] = [
+      '#markup' => $i,
+      '#wrapper_attributes' => [
+        'id' => 'views_slideshow_pager_field_item_' . $vars['location'] . '_' . $vars['vss_id'] . '_' . $i,
+      ],
+    ];
+  }
+}
+
+/**
  * Views Slideshow: Controls.
  */
 function template_preprocess_views_slideshow_controls_widget_render(&$vars) {
