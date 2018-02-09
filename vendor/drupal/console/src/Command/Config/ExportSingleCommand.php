@@ -12,16 +12,20 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\Command;
+use Drupal\Console\Utils\Validator;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Config\CachedStorage;
 use Drupal\Console\Core\Style\DrupalStyle;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Command\Shared\ExportTrait;
+use Drupal\Console\Command\Shared\ModuleTrait;
+use Drupal\Console\Extension\Manager;
+use Drupal\Core\Language\LanguageManagerInterface;
+use Webmozart\PathUtil\Path;
 
 class ExportSingleCommand extends Command
 {
-    use CommandTrait;
+    use ModuleTrait;
     use ExportTrait;
 
     /**
@@ -39,20 +43,47 @@ class ExportSingleCommand extends Command
      */
     protected $configStorage;
 
+    /**
+     * @var Manager
+     */
+    protected $extensionManager;
+
+    /**
+     * @var Configuration.
+     */
     protected $configExport;
+
+    /**
+     * @var LanguageManagerInterface
+     */
+    protected $languageManager;
+
+    /**
+     * @var Validator
+     */
+    protected $validator;
 
     /**
      * ExportSingleCommand constructor.
      *
      * @param EntityTypeManagerInterface $entityTypeManager
      * @param CachedStorage              $configStorage
+     * @param Manager                    $extensionManager
+     * @param languageManager            $languageManager
+     * @param Validator                  $validator
      */
     public function __construct(
         EntityTypeManagerInterface $entityTypeManager,
-        CachedStorage $configStorage
+        CachedStorage $configStorage,
+        Manager $extensionManager,
+        LanguageManagerInterface $languageManager,
+        Validator $validator
     ) {
         $this->entityTypeManager = $entityTypeManager;
         $this->configStorage = $configStorage;
+        $this->extensionManager = $extensionManager;
+        $this->languageManager = $languageManager;
+        $this->validator = $validator;
         parent::__construct();
     }
 
@@ -99,7 +130,8 @@ class ExportSingleCommand extends Command
                 null,
                 InputOption::VALUE_NONE,
                 $this->trans('commands.config.export.single.options.remove-config-hash')
-            );
+            )
+            ->setAliases(['ces']);
     }
 
     /*
@@ -120,8 +152,8 @@ class ExportSingleCommand extends Command
 
         uasort($entity_types, 'strnatcasecmp');
         $config_types = [
-            'system.simple' => $this->trans('commands.config.export.single.options.simple-configuration'),
-          ] + $entity_types;
+                'system.simple' => $this->trans('commands.config.export.single.options.simple-configuration'),
+            ] + $entity_types;
 
         return $config_types;
     }
@@ -192,10 +224,12 @@ class ExportSingleCommand extends Command
                 $definition = $this->entityTypeManager->getDefinition($type);
                 $name = $definition->getConfigPrefix() . '.' . $name;
             }
-            $input->setOption('name', $name);
+
+            $input->setOption('name', [$name]);
         }
 
-        $module = $input->getOption('module');
+        // --module option
+        $module = $this->getModuleOption();
         if ($module) {
             $optionalConfig = $input->getOption('optional');
             if (!$optionalConfig) {
@@ -223,7 +257,6 @@ class ExportSingleCommand extends Command
         }
     }
 
-
     /**
      * {@inheritdoc}
      */
@@ -233,57 +266,88 @@ class ExportSingleCommand extends Command
 
         $directory = $input->getOption('directory');
         $module = $input->getOption('module');
-        $ame = $input->getOption('name');
+        $name = $input->getOption('name');
         $optional = $input->getOption('optional');
         $removeUuid = $input->getOption('remove-uuid');
         $removeHash = $input->getOption('remove-config-hash');
+        $includeDependencies = $input->getOption('include-dependencies');
 
-        foreach ($ame as $nameItem) {
-            $config = $this->getConfiguration(
-                $nameItem,
-                $removeUuid,
-                $removeHash
-            );
-            
-            if ($config) {
-                $this->configExport[$nameItem] = [
-                    'data' => $config,
-                    'optional' => $optional
-                ];
+        foreach ($this->getLanguage() as $value) {
+            foreach ($name as $nameItem) {
+                $config = $this->getConfiguration(
+                    $nameItem,
+                    $removeUuid,
+                    $removeHash,
+                    $value
+                );
 
-                if ($input->getOption('include-dependencies')) {
-                    // Include config dependencies in export files
-                    if ($dependencies = $this->fetchDependencies($config, 'config')) {
-                        $this->resolveDependencies($dependencies, $optional);
+                if ($config) {
+                    $this->configExport[$nameItem] = [
+                        'data' => $config,
+                        'optional' => $optional
+                    ];
+
+                    if ($includeDependencies) {
+                        // Include config dependencies in export files
+                        if ($dependencies = $this->fetchDependencies($config, 'config')) {
+                            $this->resolveDependencies($dependencies, $optional);
+                        }
                     }
+                } else {
+                    $io->error($this->trans('commands.config.export.single.messages.config-not-found'));
+                }
+            }
+
+            if ($module) {
+                $this->exportConfigToModule(
+                    $module,
+                    $io,
+                    $this->trans(
+                        'commands.config.export.single.messages.config-exported'
+                    )
+                );
+
+                return 0;
+            }
+
+            if (!is_dir($directory)) {
+                $directory = $directory_copy = config_get_config_directory(CONFIG_SYNC_DIRECTORY);
+                if ($value) {
+                    $directory = $directory_copy .'/' . str_replace('.', '/', $value);
                 }
             } else {
-                $io->error($this->trans('commands.config.export.single.messages.config-not-found'));
+                $directory = $directory_copy .'/' . str_replace('.', '/', $value);
+                $directory = Path::canonicalize($directory);
+                if (!file_exists($directory)) {
+                    mkdir($directory, 0755, true);
+                }
             }
-        }
 
-        if ($module) {
-            $this->exportConfigToModule(
-                $module,
+            $this->exportConfig(
+                $directory,
                 $io,
-                $this->trans(
-                    'commands.config.export.single.messages.config-exported'
-                )
+                $this->trans('commands.config.export.single.messages.config-exported')
             );
-
-            return 0;
         }
-
-        if (!$directory) {
-            $directory = config_get_config_directory(CONFIG_SYNC_DIRECTORY);
-        }
-
-        $this->exportConfig(
-            $directory,
-            $io,
-            $this->trans('commands.config.export.single.messages.config-exported')
-        );
 
         return 0;
+    }
+
+    /**
+     * Get the languague enable.
+     */
+    protected function getLanguage()
+    {
+        $output = [];
+        // Get the language that be for default.
+        $default_id = $this->languageManager->getDefaultLanguage()->getId();
+        foreach ($this->languageManager->getLanguages() as $key => $value) {
+            if ($default_id == $key) {
+                $output[] = '';
+            } else {
+                $output[] = 'language.' . $value->getId();
+            }
+        }
+        return $output;
     }
 }

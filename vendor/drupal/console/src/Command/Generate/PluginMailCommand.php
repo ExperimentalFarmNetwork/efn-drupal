@@ -15,10 +15,9 @@ use Drupal\Console\Command\Shared\ModuleTrait;
 use Drupal\Console\Command\Shared\FormTrait;
 use Drupal\Console\Command\Shared\ConfirmationTrait;
 use Drupal\Console\Generator\PluginMailGenerator;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\ContainerAwareCommand;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Extension\Manager;
-use Drupal\Console\Core\Command\Shared\ContainerAwareCommandTrait;
 use Drupal\Console\Core\Utils\StringConverter;
 use Drupal\Console\Utils\Validator;
 use Drupal\Console\Core\Utils\ChainQueue;
@@ -28,13 +27,12 @@ use Drupal\Console\Core\Utils\ChainQueue;
  *
  * @package Drupal\Console\Command\Generate
  */
-class PluginMailCommand extends Command
+class PluginMailCommand extends ContainerAwareCommand
 {
     use ServicesTrait;
     use ModuleTrait;
     use FormTrait;
     use ConfirmationTrait;
-    use ContainerAwareCommandTrait;
 
     /**
  * @var Manager
@@ -92,7 +90,12 @@ class PluginMailCommand extends Command
             ->setName('generate:plugin:mail')
             ->setDescription($this->trans('commands.generate.plugin.mail.description'))
             ->setHelp($this->trans('commands.generate.plugin.mail.help'))
-            ->addOption('module', null, InputOption::VALUE_REQUIRED, $this->trans('commands.common.options.module'))
+            ->addOption(
+                'module',
+                null,
+                InputOption::VALUE_REQUIRED,
+                $this->trans('commands.common.options.module')
+            )
             ->addOption(
                 'class',
                 null,
@@ -116,7 +119,7 @@ class PluginMailCommand extends Command
                 null,
                 InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
                 $this->trans('commands.common.options.services')
-            );
+            )->setAliases(['gpm']);
     }
 
     /**
@@ -127,12 +130,12 @@ class PluginMailCommand extends Command
         $io = new DrupalStyle($input, $output);
 
         // @see use Drupal\Console\Command\Shared\ConfirmationTrait::confirmGeneration
-        if (!$this->confirmGeneration($io)) {
+        if (!$this->confirmGeneration($io, $input)) {
             return 1;
         }
 
         $module = $input->getOption('module');
-        $class_name = $input->getOption('class');
+        $class_name = $this->validator->validateClassName($input->getOption('class'));
         $label = $input->getOption('label');
         $plugin_id = $input->getOption('plugin-id');
         $services = $input->getOption('services');
@@ -150,12 +153,7 @@ class PluginMailCommand extends Command
         $io = new DrupalStyle($input, $output);
 
         // --module option
-        $module = $input->getOption('module');
-        if (!$module) {
-            // @see Drupal\Console\Command\Shared\ModuleTrait::moduleQuestion
-            $module = $this->moduleQuestion($io);
-            $input->setOption('module', $module);
-        }
+        $this->getModuleOption();
 
         // --class option
         $class = $input->getOption('class');

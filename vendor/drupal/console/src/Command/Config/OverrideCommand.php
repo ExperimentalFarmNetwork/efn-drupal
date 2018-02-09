@@ -10,16 +10,13 @@ namespace Drupal\Console\Command\Config;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\Command;
 use Drupal\Core\Config\CachedStorage;
 use Drupal\Core\Config\ConfigFactory;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Style\DrupalStyle;
 
 class OverrideCommand extends Command
 {
-    use CommandTrait;
-
     /**
      * @var CachedStorage
      */
@@ -55,8 +52,17 @@ class OverrideCommand extends Command
                 InputArgument::REQUIRED,
                 $this->trans('commands.config.override.arguments.name')
             )
-            ->addArgument('key', InputArgument::REQUIRED, $this->trans('commands.config.override.arguments.key'))
-            ->addArgument('value', InputArgument::REQUIRED, $this->trans('commands.config.override.arguments.value'));
+            ->addArgument(
+                'key',
+                InputArgument::REQUIRED,
+                $this->trans('commands.config.override.arguments.key')
+            )
+            ->addArgument(
+                'value',
+                InputArgument::REQUIRED,
+                $this->trans('commands.config.override.arguments.value')
+            )
+            ->setAliases(['co']);
     }
 
     /**
@@ -117,7 +123,11 @@ class OverrideCommand extends Command
 
         $config = $this->configFactory->getEditable($configName);
 
-        $configurationOverrideResult = $this->overrideConfiguration($config, $key, $value);
+        $configurationOverrideResult = $this->overrideConfiguration(
+            $config,
+            $key,
+            $value
+        );
 
         $config->save();
 
@@ -131,8 +141,6 @@ class OverrideCommand extends Command
         ];
         $tableRows = $configurationOverrideResult;
         $io->table($tableHeader, $tableRows);
-
-        $config->save();
     }
 
 

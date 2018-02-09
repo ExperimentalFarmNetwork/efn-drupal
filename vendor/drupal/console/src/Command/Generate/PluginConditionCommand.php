@@ -7,12 +7,12 @@
 
 namespace Drupal\Console\Command\Generate;
 
+use Drupal\Console\Utils\Validator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\Command;
 use Drupal\Core\Entity\EntityTypeRepository;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Generator\PluginConditionGenerator;
 use Drupal\Console\Command\Shared\ModuleTrait;
 use Drupal\Console\Command\Shared\ConfirmationTrait;
@@ -28,7 +28,6 @@ use Drupal\Console\Core\Utils\StringConverter;
  */
 class PluginConditionCommand extends Command
 {
-    use CommandTrait;
     use ModuleTrait;
     use ConfirmationTrait;
 
@@ -52,6 +51,11 @@ class PluginConditionCommand extends Command
      */
     protected $stringConverter;
 
+    /**
+     * @var Validator
+     */
+    protected $validator;
+
 
     /**
      * PluginConditionCommand constructor.
@@ -61,19 +65,22 @@ class PluginConditionCommand extends Command
      * @param ChainQueue               $chainQueue
      * @param EntityTypeRepository     $entitytyperepository
      * @param StringConverter          $stringConverter
+     * @param Validator                $validator
      */
     public function __construct(
         Manager $extensionManager,
         PluginConditionGenerator $generator,
         ChainQueue $chainQueue,
         EntityTypeRepository $entitytyperepository,
-        StringConverter $stringConverter
+        StringConverter $stringConverter,
+        Validator $validator
     ) {
         $this->extensionManager = $extensionManager;
         $this->generator = $generator;
         $this->chainQueue = $chainQueue;
         $this->entitytyperepository = $entitytyperepository;
         $this->stringConverter = $stringConverter;
+        $this->validator = $validator;
         parent::__construct();
     }
 
@@ -83,7 +90,12 @@ class PluginConditionCommand extends Command
             ->setName('generate:plugin:condition')
             ->setDescription($this->trans('commands.generate.plugin.condition.description'))
             ->setHelp($this->trans('commands.generate.plugin.condition.help'))
-            ->addOption('module', null, InputOption::VALUE_REQUIRED, $this->trans('commands.common.options.module'))
+            ->addOption(
+                'module',
+                null,
+                InputOption::VALUE_REQUIRED,
+                $this->trans('commands.common.options.module')
+            )
             ->addOption(
                 'class',
                 null,
@@ -119,7 +131,8 @@ class PluginConditionCommand extends Command
                 null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.generate.plugin.condition.options.context-definition-required')
-            );
+            )
+            ->setAliases(['gpco']);
     }
 
     /**
@@ -130,12 +143,12 @@ class PluginConditionCommand extends Command
         $io = new DrupalStyle($input, $output);
 
         // @see use Drupal\Console\Command\Shared\ConfirmationTrait::confirmGeneration
-        if (!$this->confirmGeneration($io)) {
+        if (!$this->confirmGeneration($io, $input)) {
             return 1;
         }
 
         $module = $input->getOption('module');
-        $class_name = $input->getOption('class');
+        $class_name = $this->validator->validateClassName($input->getOption('class'));
         $label = $input->getOption('label');
         $plugin_id = $input->getOption('plugin-id');
         $context_definition_id = $input->getOption('context-definition-id');
@@ -160,19 +173,17 @@ class PluginConditionCommand extends Command
         $entity_types = $entityTypeRepository->getEntityTypeLabels(true);
 
         // --module option
-        $module = $input->getOption('module');
-        if (!$module) {
-            // @see Drupal\Console\Command\Shared\ModuleTrait::moduleQuestion
-            $module = $this->moduleQuestion($io);
-        }
-        $input->setOption('module', $module);
+        $this->getModuleOption();
 
         // --class option
         $class = $input->getOption('class');
         if (!$class) {
             $class = $io->ask(
                 $this->trans('commands.generate.plugin.condition.questions.class'),
-                'ExampleCondition'
+                'ExampleCondition',
+                function ($class) {
+                    return $this->validator->validateClassName($class);
+                }
             );
             $input->setOption('class', $class);
         }

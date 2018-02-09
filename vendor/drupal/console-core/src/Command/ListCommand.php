@@ -11,18 +11,15 @@ use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputOption;
 use Drupal\Console\Core\Helper\DescriptorHelper;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class ListCommand
+ *
  * @package Drupal\Console\Core\Command
  */
 class ListCommand extends Command
 {
-    use CommandTrait;
-
     /**
      * {@inheritdoc}
      */
@@ -76,12 +73,12 @@ class ListCommand extends Command
     private function createDefinition()
     {
         return new InputDefinition(
-            array(
+            [
                 new InputArgument('namespace', InputArgument::OPTIONAL, $this->trans('commands.list.arguments.namespace')),
                 new InputOption('xml', null, InputOption::VALUE_NONE, $this->trans('commands.list.options.xml')),
                 new InputOption('raw', null, InputOption::VALUE_NONE, $this->trans('commands.list.options.raw')),
                 new InputOption('format', null, InputOption::VALUE_REQUIRED, $this->trans('commands.list.options.format'), 'txt'),
-            )
+            ]
         );
     }
 }

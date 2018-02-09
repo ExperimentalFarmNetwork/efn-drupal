@@ -8,6 +8,7 @@
 namespace Drupal\Console\Command\Generate;
 
 use Drupal\Console\Generator\PluginRulesActionGenerator;
+use Drupal\Console\Utils\Validator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -15,10 +16,9 @@ use Drupal\Console\Command\Shared\ServicesTrait;
 use Drupal\Console\Command\Shared\ModuleTrait;
 use Drupal\Console\Command\Shared\FormTrait;
 use Drupal\Console\Command\Shared\ConfirmationTrait;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\Command;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Extension\Manager;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Utils\StringConverter;
 use Drupal\Console\Core\Utils\ChainQueue;
 
@@ -33,7 +33,6 @@ class PluginRulesActionCommand extends Command
     use ModuleTrait;
     use FormTrait;
     use ConfirmationTrait;
-    use CommandTrait;
 
     /**
  * @var Manager
@@ -51,6 +50,11 @@ class PluginRulesActionCommand extends Command
     protected $stringConverter;
 
     /**
+     * @var Validator
+     */
+    protected $validator;
+
+    /**
      * @var ChainQueue
      */
     protected $chainQueue;
@@ -62,17 +66,20 @@ class PluginRulesActionCommand extends Command
      * @param Manager                    $extensionManager
      * @param PluginRulesActionGenerator $generator
      * @param StringConverter            $stringConverter
+     * @param Validator                  $validator
      * @param ChainQueue                 $chainQueue
      */
     public function __construct(
         Manager $extensionManager,
         PluginRulesActionGenerator $generator,
         StringConverter $stringConverter,
+        Validator $validator,
         ChainQueue $chainQueue
     ) {
         $this->extensionManager = $extensionManager;
         $this->generator = $generator;
         $this->stringConverter = $stringConverter;
+        $this->validator = $validator;
         $this->chainQueue = $chainQueue;
         parent::__construct();
     }
@@ -83,7 +90,12 @@ class PluginRulesActionCommand extends Command
             ->setName('generate:plugin:rulesaction')
             ->setDescription($this->trans('commands.generate.plugin.rulesaction.description'))
             ->setHelp($this->trans('commands.generate.plugin.rulesaction.help'))
-            ->addOption('module', null, InputOption::VALUE_REQUIRED, $this->trans('commands.common.options.module'))
+            ->addOption(
+                'module',
+                null,
+                InputOption::VALUE_REQUIRED,
+                $this->trans('commands.common.options.module')
+            )
             ->addOption(
                 'class',
                 null,
@@ -114,7 +126,8 @@ class PluginRulesActionCommand extends Command
                 null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.generate.plugin.rulesaction.options.context')
-            );
+            )
+            ->setAliases(['gpra']);
     }
 
     /**
@@ -125,12 +138,12 @@ class PluginRulesActionCommand extends Command
         $io = new DrupalStyle($input, $output);
 
         // @see use Drupal\Console\Command\Shared\ConfirmationTrait::confirmGeneration
-        if (!$this->confirmGeneration($io)) {
+        if (!$this->confirmGeneration($io, $input)) {
             return 1;
         }
 
         $module = $input->getOption('module');
-        $class_name = $input->getOption('class');
+        $class_name = $this->validator->validateClassName($input->getOption('class'));
         $label = $input->getOption('label');
         $plugin_id = $input->getOption('plugin-id');
         $type = $input->getOption('type');
@@ -149,19 +162,17 @@ class PluginRulesActionCommand extends Command
         $io = new DrupalStyle($input, $output);
 
         // --module option
-        $module = $input->getOption('module');
-        if (!$module) {
-            // @see Drupal\Console\Command\Shared\ModuleTrait::moduleQuestion
-            $module = $this->moduleQuestion($io);
-            $input->setOption('module', $module);
-        }
+        $this->getModuleOption();
 
         // --class option
         $class_name = $input->getOption('class');
         if (!$class_name) {
             $class_name = $io->ask(
                 $this->trans('commands.generate.plugin.rulesaction.options.class'),
-                'DefaultAction'
+                'DefaultAction',
+                function ($class_name) {
+                    return $this->validator->validateClassName($class_name);
+                }
             );
             $input->setOption('class', $class_name);
         }

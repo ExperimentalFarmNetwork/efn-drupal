@@ -9,8 +9,7 @@ namespace Drupal\Console\Command\Site;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Core\Command\Shared\ContainerAwareCommandTrait;
+use Drupal\Console\Core\Command\ContainerAwareCommand;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Utils\DrupalApi;
 use Drupal\Core\Entity\Query\QueryFactory;
@@ -22,10 +21,8 @@ use Drupal\Core\Extension\ModuleHandlerInterface;
  *
  * @package Drupal\Console\Command\Site
  */
-class StatisticsCommand extends Command
+class StatisticsCommand extends ContainerAwareCommand
 {
-    use ContainerAwareCommandTrait;
-
     /**
      * @var DrupalApi
      */
@@ -75,7 +72,8 @@ class StatisticsCommand extends Command
         $this
             ->setName('site:statistics')
             ->setDescription($this->trans('commands.site.statistics.description'))
-            ->setHelp($this->trans('commands.site.statistics.help'));
+            ->setHelp($this->trans('commands.site.statistics.help'))
+            ->setAliases(['sst']);
         ;
     }
 

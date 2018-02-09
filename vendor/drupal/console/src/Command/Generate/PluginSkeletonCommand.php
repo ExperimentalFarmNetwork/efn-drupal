@@ -11,13 +11,12 @@ use Drupal\Console\Generator\PluginSkeletonGenerator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\ContainerAwareCommand;
 use Drupal\Console\Command\Shared\ModuleTrait;
 use Drupal\Console\Command\Shared\ConfirmationTrait;
 use Drupal\Console\Command\Shared\ServicesTrait;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Extension\Manager;
-use Drupal\Console\Core\Command\Shared\ContainerAwareCommandTrait;
 use Drupal\Console\Core\Utils\StringConverter;
 use Drupal\Console\Core\Utils\ChainQueue;
 use Drupal\Console\Utils\Validator;
@@ -27,21 +26,20 @@ use Drupal\Console\Utils\Validator;
  *
  * @package Drupal\Console\Command\Generate
  */
-class PluginSkeletonCommand extends Command
+class PluginSkeletonCommand extends ContainerAwareCommand
 {
     use ModuleTrait;
     use ConfirmationTrait;
     use ServicesTrait;
-    use ContainerAwareCommandTrait;
 
     /**
- * @var Manager
-*/
+     * @var Manager
+     */
     protected $extensionManager;
 
     /**
- * @var PluginSkeletonGenerator
-*/
+     * @var PluginSkeletonGenerator
+     */
     protected $generator;
 
     /**
@@ -50,8 +48,8 @@ class PluginSkeletonCommand extends Command
     protected $stringConverter;
 
     /**
- * @var Validator
-*/
+     * @var Validator
+     */
     protected $validator;
 
     /**
@@ -111,22 +109,21 @@ class PluginSkeletonCommand extends Command
                 'plugin-id',
                 null,
                 InputOption::VALUE_REQUIRED,
-                $this->trans('commands.generate.plugin.options.plugin-id')
+                $this->trans('commands.generate.plugin.skeleton.options.plugin')
             )
             ->addOption(
                 'class',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                $this->trans('commands.generate.plugin.block.options.class')
+                $this->trans('commands.generate.plugin.skeleton.options.class')
             )
             ->addOption(
                 'services',
                 null,
                 InputOption::VALUE_OPTIONAL| InputOption::VALUE_IS_ARRAY,
                 $this->trans('commands.common.options.services')
-            );
+            )->setAliases(['gps']);
     }
-
     /**
      * {@inheritdoc}
      */
@@ -136,7 +133,7 @@ class PluginSkeletonCommand extends Command
         $plugins = $this->getPlugins();
 
         // @see use Drupal\Console\Command\ConfirmationTrait::confirmGeneration
-        if (!$this->confirmGeneration($io)) {
+        if (!$this->confirmGeneration($io, $input)) {
             return 1;
         }
 
@@ -165,7 +162,7 @@ class PluginSkeletonCommand extends Command
             );
         }
 
-        $className = $input->getOption('class');
+        $className = $this->validator->validateClassName($input->getOption('class'));
         $services = $input->getOption('services');
 
         // @see use Drupal\Console\Command\Shared\ServicesTrait::buildServices
@@ -183,12 +180,8 @@ class PluginSkeletonCommand extends Command
     {
         $io = new DrupalStyle($input, $output);
 
-        $module = $input->getOption('module');
-        if (!$module) {
-            // @see Drupal\Console\Command\ModuleTrait::moduleQuestion
-            $module = $this->moduleQuestion($io);
-            $input->setOption('module', $module);
-        }
+        // --module option
+        $this->getModuleOption();
 
         $pluginId = $input->getOption('plugin-id');
         if (!$pluginId) {

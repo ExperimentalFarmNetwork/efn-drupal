@@ -13,6 +13,7 @@ use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 {% if revisionable %}
 use Drupal\Core\Entity\RevisionableContentEntityBase;
+use Drupal\Core\Entity\RevisionableInterface;
 {% else %}
 use Drupal\Core\Entity\ContentEntityBase;
 {% endif %}
@@ -94,11 +95,11 @@ use Drupal\user\UserInterface;
 {% if revisionable %}
  *     "version-history" = "{{ base_path }}/{{ entity_name }}/{{ '{'~entity_name~'}' }}/revisions",
  *     "revision" = "{{ base_path }}/{{ entity_name }}/{{ '{'~entity_name~'}' }}/revisions/{{ '{'~entity_name~'_revision}' }}/view",
-{% if is_translatable %}
  *     "revision_revert" = "{{ base_path }}/{{ entity_name }}/{{ '{'~entity_name~'}' }}/revisions/{{ '{'~entity_name~'_revision}' }}/revert",
+ *     "revision_delete" = "{{ base_path }}/{{ entity_name }}/{{ '{'~entity_name~'}' }}/revisions/{{ '{'~entity_name~'_revision}' }}/delete",
+{% if is_translatable %}
  *     "translation_revert" = "{{ base_path }}/{{ entity_name }}/{{ '{'~entity_name~'}' }}/revisions/{{ '{'~entity_name~'_revision}' }}/revert/{langcode}",
 {% endif %}
- *     "revision_delete" = "{{ base_path }}/{{ entity_name }}/{{ '{'~entity_name~'}' }}/revisions/{{ '{'~entity_name~'_revision}' }}/delete",
 {% endif %}
  *     "collection" = "{{ base_path }}/{{ entity_name }}",
  *   },
@@ -128,6 +129,22 @@ class {{ entity_class }} extends {% if revisionable %}RevisionableContentEntityB
     ];
   }
 {% if revisionable %}
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function urlRouteParameters($rel) {
+    $uri_route_parameters = parent::urlRouteParameters($rel);
+
+    if ($rel === 'revision_revert' && $this instanceof RevisionableInterface) {
+      $uri_route_parameters[$this->getEntityTypeId() . '_revision'] = $this->getRevisionId();
+    }
+    elseif ($rel === 'revision_delete' && $this instanceof RevisionableInterface) {
+      $uri_route_parameters[$this->getEntityTypeId() . '_revision'] = $this->getRevisionId();
+    }
+
+    return $uri_route_parameters;
+  }
 
   /**
    * {@inheritdoc}

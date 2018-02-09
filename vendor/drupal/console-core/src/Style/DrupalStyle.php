@@ -16,6 +16,7 @@ use Drupal\Console\Core\Helper\DrupalChoiceQuestionHelper;
 
 /**
  * Class DrupalStyle
+ *
  * @package Drupal\Console\Core\Style
  */
 class DrupalStyle extends SymfonyStyle
@@ -120,8 +121,12 @@ class DrupalStyle extends SymfonyStyle
      */
     public function askEmpty($question, $validator = null)
     {
-        $question = new Question($question, ' ');
-        $question->setValidator($validator);
+        $question = new Question($question, '');
+        $question->setValidator(
+            function ($answer) {
+                return $answer;
+            }
+        );
 
         return trim($this->askQuestion($question));
     }
@@ -221,31 +226,35 @@ class DrupalStyle extends SymfonyStyle
         parent::text($message);
     }
 
-    public function successLite($message, $newLine = false) {
+    public function successLite($message, $newLine = false)
+    {
         $message = sprintf('<info>✔</info> %s', $message);
         parent::text($message);
-        if ($newLine){
+        if ($newLine) {
             parent::newLine();
         }
     }
 
-    public function errorLite($message, $newLine = false) {
+    public function errorLite($message, $newLine = false)
+    {
         $message = sprintf('<fg=red>✘</> %s', $message);
         parent::text($message);
-        if ($newLine){
+        if ($newLine) {
             parent::newLine();
         }
     }
 
-    public function warningLite($message, $newLine = false) {
+    public function warningLite($message, $newLine = false)
+    {
         $message = sprintf('<comment>!</comment> %s', $message);
         parent::text($message);
-        if ($newLine){
+        if ($newLine) {
             parent::newLine();
         }
     }
 
-    public function customLite($message, $prefix = '*', $style = '', $newLine = false) {
+    public function customLite($message, $prefix = '*', $style = '', $newLine = false)
+    {
         if ($style) {
             $message = sprintf(
                 '<%s>%s</%s> %s',
@@ -262,8 +271,16 @@ class DrupalStyle extends SymfonyStyle
             );
         }
         parent::text($message);
-        if ($newLine){
+        if ($newLine) {
             parent::newLine();
         }
+    }
+
+    /**
+     * @return InputInterface
+     */
+    public function getInput()
+    {
+        return $this->input;
     }
 }

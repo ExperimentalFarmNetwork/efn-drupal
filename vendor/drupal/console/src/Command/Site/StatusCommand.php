@@ -10,9 +10,8 @@ namespace Drupal\Console\Command\Site;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\ContainerAwareCommand;
 use Drupal\Core\Database\Database;
-use Drupal\Console\Core\Command\Shared\ContainerAwareCommandTrait;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\system\SystemManager;
 use Drupal\Core\Site\Settings;
@@ -24,10 +23,8 @@ use Drupal\Core\Extension\ThemeHandler;
  *
  *  @category site
  */
-class StatusCommand extends Command
+class StatusCommand extends ContainerAwareCommand
 {
-    use ContainerAwareCommandTrait;
-
     /* @var $connectionInfoKeys array */
     protected $connectionInfoKeys = [
       'driver',
@@ -80,7 +77,7 @@ class StatusCommand extends Command
      * @param $appRoot
      */
     public function __construct(
-        SystemManager $systemManager,
+        SystemManager $systemManager = null,
         Settings $settings,
         ConfigFactory $configFactory,
         ThemeHandler $themeHandler,
@@ -108,7 +105,8 @@ class StatusCommand extends Command
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.site.status.options.format'),
                 'table'
-            );
+            )
+            ->setAliases(['ss']);
     }
 
     /**
@@ -169,7 +167,7 @@ class StatusCommand extends Command
             } catch (\Exception $e) {
                 $hashSalt = '';
             }
-            $systemData['system'][$this->trans('commands.site.status.messages.hash_salt')] = $hashSalt;
+            $systemData['system'][$this->trans('commands.site.status.messages.hash-salt')] = $hashSalt;
             $systemData['system'][$this->trans('commands.site.status.messages.console')] = $this->getApplication()->getVersion();
         }
 
@@ -209,8 +207,8 @@ class StatusCommand extends Command
 
         return [
           'theme' => [
-            'theme_default' => $config->get('default'),
-            'theme_admin' => $config->get('admin'),
+            $this->trans('commands.site.status.messages.theme_default') => $config->get('default'),
+            $this->trans('commands.site.status.messages.theme_admin') => $config->get('admin'),
           ],
         ];
     }
@@ -238,10 +236,10 @@ class StatusCommand extends Command
 
         return [
           'directory' => [
-            $this->trans('commands.site.status.messages.directory_root') => $this->appRoot,
-            $this->trans('commands.site.status.messages.directory_temporary') => $systemFile->get('path.temporary'),
-            $this->trans('commands.site.status.messages.directory_theme_default') => $themeDefaultDirectory,
-            $this->trans('commands.site.status.messages.directory_theme_admin') => $themeAdminDirectory,
+            $this->trans('commands.site.status.messages.directory-root') => $this->appRoot,
+            $this->trans('commands.site.status.messages.directory-temporary') => $systemFile->get('path.temporary'),
+            $this->trans('commands.site.status.messages.directory-theme-default') => $themeDefaultDirectory,
+            $this->trans('commands.site.status.messages.directory-theme-admin') => $themeAdminDirectory,
           ],
         ];
     }

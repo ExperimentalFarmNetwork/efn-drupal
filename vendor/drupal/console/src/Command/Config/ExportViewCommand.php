@@ -11,8 +11,8 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
+use Drupal\Console\Core\Command\Command;
+use Drupal\Console\Utils\Validator;
 use Drupal\Console\Command\Shared\ModuleTrait;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Config\CachedStorage;
@@ -22,7 +22,6 @@ use Drupal\Console\Extension\Manager;
 
 class ExportViewCommand extends Command
 {
-    use CommandTrait;
     use ModuleTrait;
     use ExportTrait;
 
@@ -45,6 +44,11 @@ class ExportViewCommand extends Command
     protected $extensionManager;
 
     /**
+     * @var Validator
+     */
+    protected $validator;
+
+    /**
      * ExportViewCommand constructor.
      *
      * @param EntityTypeManagerInterface $entityTypeManager
@@ -54,11 +58,13 @@ class ExportViewCommand extends Command
     public function __construct(
         EntityTypeManagerInterface $entityTypeManager,
         CachedStorage $configStorage,
-        Manager $extensionManager
+        Manager $extensionManager,
+        Validator $validator
     ) {
         $this->entityTypeManager = $entityTypeManager;
         $this->configStorage = $configStorage;
         $this->extensionManager = $extensionManager;
+        $this->validator = $validator;
         parent::__construct();
     }
 
@@ -89,7 +95,8 @@ class ExportViewCommand extends Command
                 null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.config.export.view.options.include-module-dependencies')
-            );
+            )
+            ->setAliases(['cev']);
     }
 
     /**
@@ -100,12 +107,7 @@ class ExportViewCommand extends Command
         $io = new DrupalStyle($input, $output);
 
         // --module option
-        $module = $input->getOption('module');
-        if (!$module) {
-            // @see Drupal\Console\Command\Shared\ModuleTrait::moduleQuestion
-            $module = $this->moduleQuestion($io);
-            $input->setOption('module', $module);
-        }
+        $this->getModuleOption();
 
         // view-id argument
         $viewId = $input->getArgument('view-id');
@@ -171,6 +173,6 @@ class ExportViewCommand extends Command
             }
         }
 
-        $this->exportConfigToModule($module, $io, $this->trans('commands.views.export.messages.view_exported'));
+        $this->exportConfigToModule($module, $io, $this->trans('commands.views.export.messages.view-exported'));
     }
 }

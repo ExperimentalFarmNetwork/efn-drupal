@@ -9,9 +9,11 @@ namespace Drupal\Console\Core\Generator;
 
 use Drupal\Console\Core\Utils\TwigRenderer;
 use Drupal\Console\Core\Utils\FileQueue;
+use Drupal\Console\Core\Utils\CountCodeLines;
 
 /**
  * Class Generator
+ *
  * @package Drupal\Console\Core\Generator
  */
 abstract class Generator
@@ -25,6 +27,11 @@ abstract class Generator
      * @var FileQueue
      */
     protected $fileQueue;
+
+    /**
+     * @var CountCodeLines
+     */
+    protected $countCodeLines;
 
     /**
      * @param $renderer
@@ -43,6 +50,14 @@ abstract class Generator
     }
 
     /**
+     * @param $countCodeLines
+     */
+    public function setCountCodeLines(CountCodeLines $countCodeLines)
+    {
+        $this->countCodeLines = $countCodeLines;
+    }
+
+    /**
      * @param string $template
      * @param string $target
      * @param array  $parameters
@@ -57,17 +72,41 @@ abstract class Generator
         $flag = null
     ) {
         if (!is_dir(dirname($target))) {
-            mkdir(dirname($target), 0777, true);
+            if (!mkdir(dirname($target), 0777, true)) {
+                throw new \InvalidArgumentException(
+                    sprintf(
+                        'Path "%s" is invalid. You need to provide a valid path.',
+                        dirname($target)
+                    )
+                );
+            }
         }
 
+        $currentLine = 0;
+        if (!empty($flag) && file_exists($target)) {
+            $currentLine = count(file($target));
+        }
         $content = $this->renderer->render($template, $parameters);
 
         if (file_put_contents($target, $content, $flag)) {
             $this->fileQueue->addFile($target);
 
+            $newCodeLine = count(file($target));
+
+            if ($currentLine > 0) {
+                $newCodeLine = ($newCodeLine-$currentLine);
+            }
+
+            $this->countCodeLines->addCountCodeLines($newCodeLine);
+
             return true;
         }
 
         return false;
+    }
+
+    public function addSkeletonDir($skeletonDir)
+    {
+        $this->renderer->addSkeletonDir($skeletonDir);
     }
 }

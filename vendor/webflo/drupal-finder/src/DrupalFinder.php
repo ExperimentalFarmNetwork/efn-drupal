@@ -85,7 +85,7 @@ class DrupalFinder
      */
     protected function isValidRoot($path)
     {
-        if (!empty($path) && is_dir($path) && file_exists($path . '/autoload.php') && file_exists($path . '/composer.json')) {
+        if (!empty($path) && is_dir($path) && file_exists($path . '/autoload.php') && file_exists($path . '/' . $this->getComposerFileName())) {
             // Additional check for the presence of core/composer.json to
             // grant it is not a Drupal 7 site with a base folder named "core".
             $candidate = 'core/includes/common.inc';
@@ -97,30 +97,34 @@ class DrupalFinder
                 }
             }
         }
-        if (!empty($path) && is_dir($path) && file_exists($path . '/composer.json')) {
+        if (!empty($path) && is_dir($path) && file_exists($path . '/' . $this->getComposerFileName())) {
             $json = json_decode(
-                file_get_contents($path . '/composer.json'),
+                file_get_contents($path . '/' . $this->getComposerFileName()),
                 true
             );
             if (is_array($json)) {
                 if (isset($json['extra']['installer-paths']) && is_array($json['extra']['installer-paths'])) {
                     foreach ($json['extra']['installer-paths'] as $install_path => $items) {
-                        if (in_array('type:drupal-core', $items) || in_array('drupal/core', $items)) {
+                        if (in_array('type:drupal-core', $items) ||
+                            in_array('drupal/core', $items) ||
+                            in_array('drupal/drupal', $items)) {
                             $this->composerRoot = $path;
-                            $this->drupalRoot = $path . '/' . substr(
-                                $install_path,
-                                0,
-                                -5
-                            );
+                            // @todo: Remove this magic and detect the major version instead.
+                            if ($install_path == 'core') {
+                                $install_path = null;
+                            } elseif (substr($install_path, -5) == '/core') {
+                                $install_path = substr($install_path, 0, -5);
+                            }
+                            $this->drupalRoot = rtrim($path . '/' . $install_path, '/');
                             $this->vendorDir = $this->composerRoot . '/vendor';
                         }
                     }
                 }
             }
         }
-        if ($this->composerRoot && file_exists($this->composerRoot . '/composer.json')) {
+        if ($this->composerRoot && file_exists($this->composerRoot . '/' . $this->getComposerFileName())) {
             $json = json_decode(
-                file_get_contents($path . '/composer.json'),
+                file_get_contents($path . '/' . $this->getComposerFileName()),
                 true
             );
             if (is_array($json) && isset($json['config']['vendor-dir'])) {
@@ -145,6 +149,14 @@ class DrupalFinder
     public function getComposerRoot()
     {
         return $this->composerRoot;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getComposerFileName()
+    {
+        return trim(getenv('COMPOSER')) ?: 'composer.json';
     }
 
     /**

@@ -8,17 +8,15 @@ namespace Drupal\Console\Command\Entity;
 
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\Command;
 use Drupal\Core\Entity\EntityTypeRepository;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Style\DrupalStyle;
 
 class DeleteCommand extends Command
 {
-    use CommandTrait;
-
     /**
      * @var EntityTypeRepository
      */
@@ -51,6 +49,12 @@ class DeleteCommand extends Command
         $this
             ->setName('entity:delete')
             ->setDescription($this->trans('commands.entity.delete.description'))
+            ->addOption(
+                'all',
+                null,
+                InputOption::VALUE_NONE,
+                $this->trans('commands.entity.delete.options.all')
+            )
             ->addArgument(
                 'entity-definition-id',
                 InputArgument::REQUIRED,
@@ -60,7 +64,7 @@ class DeleteCommand extends Command
                 'entity-id',
                 InputArgument::REQUIRED,
                 $this->trans('commands.entity.delete.arguments.entity-id')
-            );
+            )->setAliases(['ed']);
     }
 
     /**
@@ -71,6 +75,7 @@ class DeleteCommand extends Command
         $io = new DrupalStyle($input, $output);
         $entityDefinitionID = $input->getArgument('entity-definition-id');
         $entityID = $input->getArgument('entity-id');
+        $all = $input->getOption('all');
 
         if (!$entityDefinitionID) {
             $entityTypes = $this->entityTypeRepository->getEntityTypeLabels(true);
@@ -88,7 +93,9 @@ class DeleteCommand extends Command
             $input->setArgument('entity-definition-id', $entityDefinitionID);
         }
 
-        if (!$entityID) {
+        if ($all) {
+            $input->setArgument('entity-id', '-');
+        } elseif (!$entityID) {
             $entityID = $io->ask(
                 $this->trans('commands.entity.delete.questions.entity-id')
             );
@@ -104,22 +111,44 @@ class DeleteCommand extends Command
         $io = new DrupalStyle($input, $output);
 
         $entityDefinitionID = $input->getArgument('entity-definition-id');
-        $entityID = $input->getArgument('entity-id');
 
         try {
-            $this->entityTypeManager->getStorage($entityDefinitionID)->load($entityID)->delete();
+            $storage = $this->entityTypeManager->getStorage($entityDefinitionID);
+
+            if ($input->getOption('all')) {
+                $entities = $storage->loadMultiple();
+                if ($io->confirm(
+                    sprintf(
+                        $this->trans('commands.entity.delete.messages.confirm-delete-all'),
+                        $entityDefinitionID,
+                        count($entities)
+                    )
+                )
+                ) {
+                    $storage->delete($entities);
+                    $io->success(
+                        sprintf(
+                            $this->trans('commands.entity.delete.messages.deleted-all'),
+                            $entityDefinitionID,
+                            count($entities)
+                        )
+                    );
+                }
+            } else {
+                $entityID = $input->getArgument('entity-id');
+                $storage->load($entityID)->delete();
+                $io->success(
+                    sprintf(
+                        $this->trans('commands.entity.delete.messages.deleted'),
+                        $entityDefinitionID,
+                        $entityID
+                    )
+                );
+            }
         } catch (\Exception $e) {
             $io->error($e->getMessage());
 
             return 1;
         }
-
-        $io->success(
-            sprintf(
-                $this->trans('commands.entity.delete.messages.deleted'),
-                $entityDefinitionID,
-                $entityID
-            )
-        );
     }
 }

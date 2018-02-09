@@ -14,16 +14,13 @@ use Drupal\Core\Config\StorageInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\Command;
 use Symfony\Component\Filesystem\Filesystem;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Core\Config\ConfigManager;
 
 class ExportCommand extends Command
 {
-    use CommandTrait;
-
     /**
      * @var ConfigManager
      */
@@ -59,24 +56,25 @@ class ExportCommand extends Command
                 'directory',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                $this->trans('commands.config.export.arguments.directory')
+                $this->trans('commands.config.export.options.directory')
             )
             ->addOption(
                 'tar',
                 null,
                 InputOption::VALUE_NONE,
-                $this->trans('commands.config.export.arguments.tar')
+                $this->trans('commands.config.export.options.tar')
             )->addOption(
                 'remove-uuid',
                 null,
                 InputOption::VALUE_NONE,
-                $this->trans('commands.config.export.single.options.remove-uuid')
+                $this->trans('commands.config.export.options.remove-uuid')
             )->addOption(
                 'remove-config-hash',
                 null,
                 InputOption::VALUE_NONE,
-                $this->trans('commands.config.export.single.options.remove-config-hash')
-            );
+                $this->trans('commands.config.export.options.remove-config-hash')
+            )
+            ->setAliases(['ce']);
     }
 
     /**
@@ -90,7 +88,7 @@ class ExportCommand extends Command
         $tar = $input->getOption('tar');
         $removeUuid = $input->getOption('remove-uuid');
         $removeHash = $input->getOption('remove-config-hash');
-        
+
         if (!$directory) {
             $directory = config_get_config_directory(CONFIG_SYNC_DIRECTORY);
         }
@@ -131,6 +129,9 @@ class ExportCommand extends Command
                 }
                 if ($removeHash) {
                     unset($configData['_core']['default_config_hash']);
+                    if (empty($configData['_core'])) {
+                        unset($configData['_core']);
+                    }
                 }
                 $ymlData = Yaml::encode($configData);
 
@@ -143,14 +144,21 @@ class ExportCommand extends Command
             // Get all override data from the remaining collections.
             foreach ($this->storage->getAllCollectionNames() as $collection) {
                 $collection_storage = $this->storage->createCollection($collection);
+                $collection_path = str_replace('.', '/', $collection);
+                if (!$tar) {
+                    mkdir("$directory/$collection_path", 0755, true);
+                }
                 foreach ($collection_storage->listAll() as $name) {
-                    $configName = str_replace('.', '/', $collection) . "/$name.yml";
+                    $configName = "$collection_path/$name.yml";
                     $configData = $collection_storage->read($name);
                     if ($removeUuid) {
                         unset($configData['uuid']);
                     }
                     if ($removeHash) {
                         unset($configData['_core']['default_config_hash']);
+                        if (empty($configData['_core'])) {
+                            unset($configData['_core']);
+                        }
                     }
 
                     $ymlData = Yaml::encode($configData);

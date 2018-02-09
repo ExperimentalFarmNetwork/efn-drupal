@@ -33,6 +33,15 @@ class Extension extends BaseExtension
         return $this->getSourcePath($fullPath) . '/Controller';
     }
 
+     /**
+     * @param bool $fullPath
+     * @return string
+     */
+    public function getAjaxPath($fullPath = false)
+    {
+        return $this->getSourcePath($fullPath) . '/Ajax';
+    }
+
     /**
      * @param bool $fullPath
      * @return string
@@ -113,5 +122,32 @@ class Extension extends BaseExtension
     public function getTemplatePath($fullPath = false)
     {
         return $this->getPath($fullPath) . '/templates';
+    }
+
+    /**
+     * @param bool $fullPath
+     * @return string
+     */
+    public function getTestsPath($fullPath = false)
+    {
+        return $this->getPath($fullPath) . '/tests';
+    }
+
+    /**
+     * @param bool $fullPath
+     * @return string
+     */
+    public function getTestsSourcePath($fullPath = false)
+    {
+        return $this->getTestsPath($fullPath) . '/src';
+    }
+
+    /**
+     * @param bool $fullPath
+     * @return string
+     */
+    public function getJsTestsPath($fullPath = false)
+    {
+        return $this->getTestsSourcePath($fullPath) . '/FunctionalJavascript';
     }
 }

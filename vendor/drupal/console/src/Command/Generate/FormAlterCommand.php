@@ -16,9 +16,8 @@ use Drupal\Console\Command\Shared\ModuleTrait;
 use Drupal\Console\Command\Shared\MenuTrait;
 use Drupal\Console\Command\Shared\FormTrait;
 use Drupal\Console\Command\Shared\ConfirmationTrait;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\Command;
 use Drupal\Console\Core\Style\DrupalStyle;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Utils\StringConverter;
 use Drupal\Console\Extension\Manager;
 use Drupal\Core\Extension\ModuleHandlerInterface;
@@ -35,7 +34,6 @@ class FormAlterCommand extends Command
     use FormTrait;
     use MenuTrait;
     use ConfirmationTrait;
-    use CommandTrait;
 
     /**
  * @var Manager
@@ -63,13 +61,13 @@ class FormAlterCommand extends Command
     protected $elementInfoManager;
 
     /**
- * @var Validator
-*/
+     * @var Validator
+     */
     protected $validator;
 
     /**
- * @var RouteProviderInterface
-*/
+     * @var RouteProviderInterface
+     */
     protected $routeProvider;
 
     /**
@@ -108,7 +106,8 @@ class FormAlterCommand extends Command
         ElementInfoManager $elementInfoManager,
         Profiler $profiler = null,
         $appRoot,
-        ChainQueue $chainQueue
+        ChainQueue $chainQueue,
+        Validator $validator
     ) {
         $this->extensionManager = $extensionManager;
         $this->generator = $generator;
@@ -118,6 +117,7 @@ class FormAlterCommand extends Command
         $this->profiler = $profiler;
         $this->appRoot = $appRoot;
         $this->chainQueue = $chainQueue;
+        $this->validator = $validator;
         parent::__construct();
     }
 
@@ -132,9 +132,7 @@ class FormAlterCommand extends Command
     {
         $this
             ->setName('generate:form:alter')
-            ->setDescription(
-                $this->trans('commands.generate.form.alter.description')
-            )
+            ->setDescription($this->trans('commands.generate.form.alter.description'))
             ->setHelp($this->trans('commands.generate.form.alter.help'))
             ->addOption(
                 'module',
@@ -153,7 +151,8 @@ class FormAlterCommand extends Command
                 null,
                 InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
                 $this->trans('commands.common.options.inputs')
-            );
+            )
+            ->setAliases(['gfa']);
     }
 
     /**
@@ -164,7 +163,7 @@ class FormAlterCommand extends Command
         $io = new DrupalStyle($input, $output);
 
         // @see use Drupal\Console\Command\Shared\ConfirmationTrait::confirmGeneration
-        if (!$this->confirmGeneration($io)) {
+        if (!$this->confirmGeneration($io, $input)) {
             return 1;
         }
 
@@ -202,13 +201,7 @@ class FormAlterCommand extends Command
         $io = new DrupalStyle($input, $output);
 
         // --module option
-        $module = $input->getOption('module');
-        if (!$module) {
-            // @see Drupal\Console\Command\Shared\ModuleTrait::moduleQuestion
-            $module = $this->moduleQuestion($io);
-        }
-
-        $input->setOption('module', $module);
+        $this->getModuleOption();
 
         // --form-id option
         $formId = $input->getOption('form-id');
@@ -224,7 +217,7 @@ class FormAlterCommand extends Command
 
             if (!empty($forms)) {
                 $formId = $io->choiceNoList(
-                    $this->trans('commands.generate.form.alter.options.form-id'),
+                    $this->trans('commands.generate.form.alter.questions.form-id'),
                     array_keys($forms)
                 );
             }

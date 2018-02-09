@@ -10,8 +10,7 @@ namespace Drupal\Console\Command\Rest;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
+use Drupal\Console\Core\Command\ContainerAwareCommand;
 use Drupal\Console\Annotations\DrupalCommand;
 use Drupal\rest\RestResourceConfigInterface;
 use Drupal\Console\Core\Style\DrupalStyle;
@@ -27,9 +26,8 @@ use Drupal\Core\Entity\EntityManager;
  *     extensionType = "module"
  * )
  */
-class EnableCommand extends Command
+class EnableCommand extends ContainerAwareCommand
 {
-    use CommandTrait;
     use RestTrait;
 
     /**
@@ -48,44 +46,34 @@ class EnableCommand extends Command
     protected $configFactory;
 
     /**
-     * The available serialization formats.
-     *
-     * @var array
-     */
-    protected $formats;
-
-    /**
      * The entity manager.
      *
-     * @var \Drupal\Core\Entity\EntityManagerInterface
+     * @var EntityManager
      */
     protected $entityManager;
 
     /**
      * EnableCommand constructor.
      *
-     * @param ResourcePluginManager                      $pluginManagerRest
-     * @param AuthenticationCollector                    $authenticationCollector
-     * @param ConfigFactory                              $configFactory
-     * @param array                                      $formats
-     *   The available serialization formats.
-     * @param \Drupal\Core\Entity\EntityManagerInterface $entity_manager
+     * @param ResourcePluginManager   $pluginManagerRest
+     * @param AuthenticationCollector $authenticationCollector
+     * @param ConfigFactory           $configFactory
+     * @param EntityManager           $entity_manager
      *   The entity manager.
      */
     public function __construct(
         ResourcePluginManager $pluginManagerRest,
         AuthenticationCollector $authenticationCollector,
         ConfigFactory $configFactory,
-        array $formats,
         EntityManager $entity_manager
     ) {
         $this->pluginManagerRest = $pluginManagerRest;
         $this->authenticationCollector = $authenticationCollector;
         $this->configFactory = $configFactory;
-        $this->formats = $formats;
         $this->entityManager = $entity_manager;
         parent::__construct();
     }
+
 
     protected function configure()
     {
@@ -96,7 +84,8 @@ class EnableCommand extends Command
                 'resource-id',
                 InputArgument::OPTIONAL,
                 $this->trans('commands.rest.debug.arguments.resource-id')
-            );
+            )
+            ->setAliases(['ree']);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -137,8 +126,9 @@ class EnableCommand extends Command
 
         $format = $io->choice(
             $this->trans('commands.rest.enable.arguments.formats'),
-            $this->formats
+            $this->container->getParameter('serializer.formats')
         );
+
         $io->writeln(
             $this->trans('commands.rest.enable.messages.selected-format') . ' ' . $format
         );

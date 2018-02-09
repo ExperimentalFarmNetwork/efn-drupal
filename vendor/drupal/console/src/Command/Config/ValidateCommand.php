@@ -9,8 +9,7 @@ namespace Drupal\Console\Command\Config;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Core\Command\Shared\ContainerAwareCommandTrait;
+use Drupal\Console\Core\Command\ContainerAwareCommand;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Core\Config\TypedConfigManagerInterface;
 use Symfony\Component\Console\Input\InputArgument;
@@ -21,9 +20,8 @@ use Drupal\Core\Config\Schema\SchemaCheckTrait;
  *
  * @package Drupal\Console\Command\Config
  */
-class ValidateCommand extends Command
+class ValidateCommand extends ContainerAwareCommand
 {
-    use ContainerAwareCommandTrait;
     use SchemaCheckTrait;
     use PrintConfigValidationTrait;
 
@@ -35,7 +33,10 @@ class ValidateCommand extends Command
         $this
             ->setName('config:validate')
             ->setDescription($this->trans('commands.config.validate.description'))
-            ->addArgument('config.name', InputArgument::REQUIRED);
+            ->addArgument(
+                'name',
+                InputArgument::REQUIRED
+            )->setAliases(['cv']);
     }
 
     /**
@@ -52,7 +53,7 @@ class ValidateCommand extends Command
         $io = new DrupalStyle($input, $output);
 
         //Test the config name and see if a schema exists, if not it will fail
-        $name = $input->getArgument('config.name');
+        $name = $input->getArgument('name');
         if (!$typedConfigManager->hasConfigSchema($name)) {
             $io->warning($this->trans('commands.config.validate.messages.no-conf'));
             return 1;

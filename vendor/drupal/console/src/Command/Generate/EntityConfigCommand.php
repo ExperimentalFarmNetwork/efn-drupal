@@ -64,13 +64,13 @@ class EntityConfigCommand extends EntityCommand
         $this->setEntityType('EntityConfig');
         $this->setCommandName('generate:entity:config');
         parent::configure();
-
         $this->addOption(
             'bundle-of',
             null,
             InputOption::VALUE_NONE,
             $this->trans('commands.generate.entity.config.options.bundle-of')
-        );
+        )
+            ->setAliases(['gec']);
     }
 
     /**

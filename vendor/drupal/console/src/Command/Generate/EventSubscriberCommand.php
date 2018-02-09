@@ -7,6 +7,7 @@
 
 namespace Drupal\Console\Command\Generate;
 
+use Drupal\Console\Utils\Validator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -15,21 +16,19 @@ use Drupal\Console\Command\Shared\ModuleTrait;
 use Drupal\Console\Generator\EventSubscriberGenerator;
 use Drupal\Console\Command\Shared\ConfirmationTrait;
 use Drupal\Console\Command\Shared\EventsTrait;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\ContainerAwareCommand;
 use Drupal\Console\Core\Style\DrupalStyle;
-use Drupal\Console\Core\Command\Shared\ContainerAwareCommandTrait;
 use Drupal\Console\Core\Utils\StringConverter;
 use Drupal\Console\Extension\Manager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Drupal\Console\Core\Utils\ChainQueue;
 
-class EventSubscriberCommand extends Command
+class EventSubscriberCommand extends ContainerAwareCommand
 {
     use EventsTrait;
     use ServicesTrait;
     use ModuleTrait;
     use ConfirmationTrait;
-    use ContainerAwareCommandTrait;
 
     /**
      * @var Manager
@@ -47,6 +46,11 @@ class EventSubscriberCommand extends Command
     protected $stringConverter;
 
     /**
+     * @var Validator
+     */
+    protected $validator;
+
+    /**
      * @var EventDispatcherInterface
      */
     protected $eventDispatcher;
@@ -62,6 +66,7 @@ class EventSubscriberCommand extends Command
      * @param Manager                  $extensionManager
      * @param EventSubscriberGenerator $generator
      * @param StringConverter          $stringConverter
+     * @param Validator                $validator
      * @param EventDispatcherInterface $eventDispatcher
      * @param ChainQueue               $chainQueue
      */
@@ -69,12 +74,14 @@ class EventSubscriberCommand extends Command
         Manager $extensionManager,
         EventSubscriberGenerator $generator,
         StringConverter $stringConverter,
+        Validator $validator,
         EventDispatcherInterface $eventDispatcher,
         ChainQueue $chainQueue
     ) {
         $this->extensionManager = $extensionManager;
         $this->generator = $generator;
         $this->stringConverter = $stringConverter;
+        $this->validator = $validator;
         $this->eventDispatcher = $eventDispatcher;
         $this->chainQueue = $chainQueue;
         parent::__construct();
@@ -89,18 +96,23 @@ class EventSubscriberCommand extends Command
             ->setName('generate:event:subscriber')
             ->setDescription($this->trans('commands.generate.event.subscriber.description'))
             ->setHelp($this->trans('commands.generate.event.subscriber.description'))
-            ->addOption('module', null, InputOption::VALUE_REQUIRED, $this->trans('commands.common.options.module'))
+            ->addOption(
+                'module',
+                null,
+                InputOption::VALUE_REQUIRED,
+                $this->trans('commands.common.options.module')
+            )
             ->addOption(
                 'name',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                $this->trans('commands.generate.service.options.name')
+                $this->trans('commands.generate.event.subscriber.options.name')
             )
             ->addOption(
                 'class',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                $this->trans('commands.generate.service.options.class')
+                $this->trans('commands.generate.event.subscriber.options.class')
             )
             ->addOption(
                 'events',
@@ -113,7 +125,8 @@ class EventSubscriberCommand extends Command
                 null,
                 InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
                 $this->trans('commands.common.options.services')
-            );
+            )
+            ->setAliases(['ges']);
     }
 
     /**
@@ -124,13 +137,13 @@ class EventSubscriberCommand extends Command
         $io = new DrupalStyle($input, $output);
 
         // @see use Drupal\Console\Command\Shared\ConfirmationTrait::confirmGeneration
-        if (!$this->confirmGeneration($io)) {
+        if (!$this->confirmGeneration($io, $input)) {
             return 1;
         }
 
         $module = $input->getOption('module');
         $name = $input->getOption('name');
-        $class = $input->getOption('class');
+        $class = $this->validator->validateClassName($input->getOption('class'));
         $events = $input->getOption('events');
         $services = $input->getOption('services');
 
@@ -150,12 +163,7 @@ class EventSubscriberCommand extends Command
         $io = new DrupalStyle($input, $output);
 
         // --module option
-        $module = $input->getOption('module');
-        if (!$module) {
-            // @see Drupal\Console\Command\Shared\ModuleTrait::moduleQuestion
-            $module = $this->moduleQuestion($io);
-            $input->setOption('module', $module);
-        }
+        $module = $this->getModuleOption();
 
         // --service-name option
         $name = $input->getOption('name');
@@ -172,7 +180,10 @@ class EventSubscriberCommand extends Command
         if (!$class) {
             $class = $io->ask(
                 $this->trans('commands.generate.event.subscriber.questions.class'),
-                'DefaultSubscriber'
+                'DefaultSubscriber',
+                function ($class) {
+                    return $this->validator->validateClassName($class);
+                }
             );
             $input->setOption('class', $class);
         }

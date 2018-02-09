@@ -10,8 +10,6 @@ namespace Drupal\Console\Command\User;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\Query\QueryFactory;
 use Drupal\Console\Core\Style\DrupalStyle;
@@ -22,15 +20,8 @@ use Drupal\Console\Utils\DrupalApi;
  *
  * @package Drupal\Console\Command\User
  */
-class DeleteCommand extends Command
+class DeleteCommand extends UserBase
 {
-    use CommandTrait;
-
-    /**
-     * @var EntityTypeManagerInterface
-     */
-    protected $entityTypeManager;
-
     /**
      * @var QueryFactory
      */
@@ -53,10 +44,9 @@ class DeleteCommand extends Command
         QueryFactory $entityQuery,
         DrupalApi $drupalApi
     ) {
-        $this->entityTypeManager = $entityTypeManager;
         $this->entityQuery = $entityQuery;
         $this->drupalApi = $drupalApi;
-        parent::__construct();
+        parent::__construct($entityTypeManager);
     }
 
     /**
@@ -68,17 +58,17 @@ class DeleteCommand extends Command
             ->setName('user:delete')
             ->setDescription($this->trans('commands.user.delete.description'))
             ->addOption(
-                'user-id',
+                'user',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                $this->trans('commands.user.delete.options.user-id')
+                $this->trans('commands.user.delete.options.user')
             )
             ->addOption(
                 'roles',
                 null,
                 InputOption::VALUE_IS_ARRAY | InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.user.delete.options.roles')
-            );
+            )->setAliases(['ud']);
     }
 
     /**
@@ -88,18 +78,11 @@ class DeleteCommand extends Command
     {
         $io = new DrupalStyle($input, $output);
 
-        $userId = $input->getOption('user-id');
-        if (!$userId) {
-            $userId = $io->askEmpty(
-                $this->trans('commands.user.delete.questions.user-id'),
-                null
-            );
-            $input->setOption('user-id', $userId);
-        }
+        $user = $this->getUserOption();
 
         $roles = $input->getOption('roles');
 
-        if (!$userId && !$roles) {
+        if (!$user && !$roles) {
             $systemRoles = $this->drupalApi->getRoles(false, false, false);
             $roles = $io->choice(
                 $this->trans('commands.user.delete.questions.roles'),
@@ -126,29 +109,26 @@ class DeleteCommand extends Command
     {
         $io = new DrupalStyle($input, $output);
 
-        $userId = $input->getOption('user-id');
+        $user = $input->getOption('user');
 
-        if ($userId && $userId <= 1) {
-            $io->error(
-                sprintf(
-                    $this->trans('commands.user.delete.errors.invalid-user-id'),
-                    $userId
-                )
-            );
-
-            return 1;
-        }
-
-        if ($userId) {
-            $user = $this->entityTypeManager
-                ->getStorage('user')
-                ->load($userId);
-
-            if (!$user) {
+        if ($user) {
+            $userEntity = $this->getUserEntity($user);
+            if (!$userEntity) {
                 $io->error(
                     sprintf(
                         $this->trans('commands.user.delete.errors.invalid-user'),
-                        $userId
+                        $user
+                    )
+                );
+
+                return 1;
+            }
+
+            if ($userEntity->id() <= 1) {
+                $io->error(
+                    sprintf(
+                        $this->trans('commands.user.delete.errors.invalid-user'),
+                        $user
                     )
                 );
 
@@ -156,13 +136,15 @@ class DeleteCommand extends Command
             }
 
             try {
-                $user->delete();
+                $userEntity->delete();
                 $io->info(
                     sprintf(
                         $this->trans('commands.user.delete.messages.user-deleted'),
-                        $user->getUsername()
+                        $userEntity->getUsername()
                     )
                 );
+
+                return 0;
             } catch (\Exception $e) {
                 $io->error($e->getMessage());
 
@@ -173,14 +155,17 @@ class DeleteCommand extends Command
         $roles = $input->getOption('roles');
 
         if ($roles) {
-            $userStorage = $this->entityTypeManager->getStorage('user');
+            $roles = is_array($roles)?$roles:[$roles];
 
-            $query = $this->entityQuery->get('user');
-            $query->condition('roles', is_array($roles)?$roles:[$roles], 'IN');
-            $query->condition('uid', 1, '>');
+            $query = $this->entityQuery
+                ->get('user')
+                ->condition('roles', array_values($roles), 'IN')
+                ->condition('uid', 1, '>');
             $results = $query->execute();
 
-            $users = $userStorage->loadMultiple($results);
+            $users = $this->entityTypeManager
+                ->getStorage('user')
+                ->loadMultiple($results);
 
             $tableHeader = [
               $this->trans('commands.user.debug.messages.user-id'),
@@ -188,12 +173,12 @@ class DeleteCommand extends Command
             ];
 
             $tableRows = [];
-            foreach ($users as $userId => $user) {
+            foreach ($users as $user => $userEntity) {
                 try {
-                    $user->delete();
-                    $tableRows['success'][] = [$userId, $user->getUsername()];
+                    $userEntity->delete();
+                    $tableRows['success'][] = [$user, $userEntity->getUsername()];
                 } catch (\Exception $e) {
-                    $tableRows['error'][] = [$userId, $user->getUsername()];
+                    $tableRows['error'][] = [$user, $userEntity->getUsername()];
                     $io->error($e->getMessage());
 
                     return 1;
@@ -208,6 +193,8 @@ class DeleteCommand extends Command
                         count($tableRows['success'])
                     )
                 );
+
+                return 0;
             }
         }
     }

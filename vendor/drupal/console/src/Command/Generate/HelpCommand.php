@@ -10,25 +10,24 @@ namespace Drupal\Console\Command\Generate;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\Command;
 use Drupal\Console\Generator\HelpGenerator;
 use Drupal\Console\Command\Shared\ModuleTrait;
 use Drupal\Console\Command\Shared\ConfirmationTrait;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Extension\Manager;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Utils\Site;
 use Drupal\Console\Core\Utils\ChainQueue;
+use Drupal\Console\Utils\Validator;
 
 class HelpCommand extends Command
 {
-    use CommandTrait;
     use ModuleTrait;
     use ConfirmationTrait;
 
     /**
- * @var HelpGenerator
-*/
+     * @var HelpGenerator
+     */
     protected $generator;
 
     /**
@@ -37,14 +36,19 @@ class HelpCommand extends Command
     protected $site;
 
     /**
- * @var Manager
-*/
+     * @var Manager
+     */
     protected $extensionManager;
 
     /**
      * @var ChainQueue
      */
     protected $chainQueue;
+
+    /**
+     * @var Validator
+     */
+    protected $validator;
 
 
     /**
@@ -59,12 +63,14 @@ class HelpCommand extends Command
         HelpGenerator $generator,
         Site $site,
         Manager $extensionManager,
-        ChainQueue $chainQueue
+        ChainQueue $chainQueue,
+        Validator $validator
     ) {
         $this->generator = $generator;
         $this->site = $site;
         $this->extensionManager = $extensionManager;
         $this->chainQueue = $chainQueue;
+        $this->validator = $validator;
         parent::__construct();
     }
 
@@ -84,8 +90,8 @@ class HelpCommand extends Command
                 'description',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                $this->trans('commands.generate.module.options.description')
-            );
+                $this->trans('commands.generate.help.options.description')
+            )->setAliases(['gh']);
     }
 
     /**
@@ -96,7 +102,7 @@ class HelpCommand extends Command
         $io = new DrupalStyle($input, $output);
 
         // @see use Drupal\Console\Command\ConfirmationTrait::confirmGeneration
-        if (!$this->confirmGeneration($io)) {
+        if (!$this->confirmGeneration($io, $input)) {
             return 1;
         }
 
@@ -129,18 +135,14 @@ class HelpCommand extends Command
         $this->site->loadLegacyFile('/core/includes/update.inc');
         $this->site->loadLegacyFile('/core/includes/schema.inc');
 
-        $module = $input->getOption('module');
-        if (!$module) {
-            // @see Drupal\Console\Command\ModuleTrait::moduleQuestion
-            $module = $this->moduleQuestion($io);
-            $input->setOption('module', $module);
-        }
+        // --module option
+        $this->getModuleOption();
 
         $description = $input->getOption('description');
         if (!$description) {
             $description = $io->ask(
-                $this->trans('commands.generate.module.questions.description'),
-                'My Awesome Module'
+                $this->trans('commands.generate.help.questions.description'),
+                $this->trans('commands.generate.module.suggestions.my-awesome-module')
             );
         }
         $input->setOption('description', $description);

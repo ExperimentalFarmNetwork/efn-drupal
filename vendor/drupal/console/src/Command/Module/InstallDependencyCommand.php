@@ -7,18 +7,17 @@
 
 namespace Drupal\Console\Command\Module;
 
-use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\Command;
 use Drupal\Console\Command\Shared\ProjectDownloadTrait;
 use Drupal\Console\Command\Shared\ModuleTrait;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Utils\Site;
 use Drupal\Console\Utils\Validator;
-use Drupal\Core\ProxyClass\Extension\ModuleInstaller;
+use Drupal\Core\Extension\ModuleInstallerInterface;
 use Drupal\Console\Core\Utils\ChainQueue;
 
 /**
@@ -28,7 +27,6 @@ use Drupal\Console\Core\Utils\ChainQueue;
  */
 class InstallDependencyCommand extends Command
 {
-    use CommandTrait;
     use ProjectDownloadTrait;
     use ModuleTrait;
 
@@ -38,13 +36,13 @@ class InstallDependencyCommand extends Command
     protected $site;
 
     /**
- * @var Validator
-*/
+     * @var Validator
+     */
     protected $validator;
 
     /**
- * @var ModuleInstaller
-*/
+     * @var ModuleInstallerInterface
+     */
     protected $moduleInstaller;
 
     /**
@@ -55,14 +53,15 @@ class InstallDependencyCommand extends Command
     /**
      * InstallCommand constructor.
      *
-     * @param Site       $site
-     * @param Validator  $validator
-     * @param ChainQueue $chainQueue
+     * @param Site                     $site
+     * @param Validator                $validator
+     * @param ModuleInstallerInterface $moduleInstaller
+     * @param ChainQueue               $chainQueue
      */
     public function __construct(
         Site $site,
         Validator $validator,
-        ModuleInstaller $moduleInstaller,
+        ModuleInstallerInterface $moduleInstaller,
         ChainQueue $chainQueue
     ) {
         $this->site = $site;
@@ -79,12 +78,12 @@ class InstallDependencyCommand extends Command
     {
         $this
             ->setName('module:dependency:install')
-            ->setDescription($this->trans('commands.module.install.dependencies.description'))
+            ->setDescription($this->trans('commands.module.dependency.install.description'))
             ->addArgument(
                 'module',
                 InputArgument::IS_ARRAY,
-                $this->trans('commands.module.install.dependencies.arguments.module')
-            );
+                $this->trans('commands.module.dependency.install.arguments.module')
+            )->setAliases(['modi']);
     }
 
     /**
@@ -92,12 +91,10 @@ class InstallDependencyCommand extends Command
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
-        $io = new DrupalStyle($input, $output);
-
         $module = $input->getArgument('module');
         if (!$module) {
             // @see Drupal\Console\Command\Shared\ModuleTrait::moduleQuestion
-            $module = $this->moduleQuestion($io);
+            $module = $this->moduleQuestion();
             $input->setArgument('module', $module);
         }
     }
@@ -113,14 +110,14 @@ class InstallDependencyCommand extends Command
         $unInstalledDependencies = $this->calculateDependencies((array)$module);
 
         if (!$unInstalledDependencies) {
-            $io->warning($this->trans('commands.module.install.dependencies.messages.no-depencies'));
+            $io->warning($this->trans('commands.module.dependency.install.messages.no-depencies'));
             return 0;
         }
 
         try {
             $io->comment(
                 sprintf(
-                    $this->trans('commands.module.install.dependencies.messages.installing'),
+                    $this->trans('commands.module.dependency.install.messages.installing'),
                     implode(', ', $unInstalledDependencies)
                 )
             );
@@ -130,7 +127,7 @@ class InstallDependencyCommand extends Command
             $this->moduleInstaller->install($unInstalledDependencies, true);
             $io->success(
                 sprintf(
-                    $this->trans('commands.module.install.dependencies.messages.success'),
+                    $this->trans('commands.module.dependency.install.messages.success'),
                     implode(', ', $unInstalledDependencies)
                 )
             );

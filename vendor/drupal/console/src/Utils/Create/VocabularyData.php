@@ -21,25 +21,6 @@ use Drupal\Core\Language\LanguageInterface;
 class VocabularyData extends Base
 {
     /**
-     * Vocabularies constructor.
-     *
-     * @param EntityTypeManagerInterface  $entityManager
-     * @param EntityFieldManagerInterface $entityFieldManager
-     * @param DateFormatterInterface      $dateFormatter
-     */
-    public function __construct(
-        EntityTypeManagerInterface $entityManager,
-        EntityFieldManagerInterface $entityFieldManager,
-        DateFormatterInterface $dateFormatter
-    ) {
-        parent::__construct(
-            $entityManager,
-            $entityFieldManager,
-            $dateFormatter
-        );
-    }
-
-    /**
      * Create and returns an array of new Vocabularies.
      *
      * @param $limit
@@ -58,7 +39,7 @@ class VocabularyData extends Base
             $vocabulary = $this->entityTypeManager->getStorage('taxonomy_vocabulary')->create(
                 [
                     'name' => $this->getRandom()->sentences(mt_rand(1, $nameWords), true),
-                    'description' => $this->getRandom()->sentences(),
+                    'description' => $this->getRandom()->sentences(mt_rand(1, $nameWords)),
                     'vid' => Unicode::strtolower($this->getRandom()->name()),
                     'langcode' => LanguageInterface::LANGCODE_NOT_SPECIFIED,
                     'weight' => mt_rand(0, 10),
