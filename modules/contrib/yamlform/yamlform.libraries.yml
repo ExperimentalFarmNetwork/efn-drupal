@@ -13,6 +13,26 @@ yamlform.admin:
     - core/jquery.once
     - yamlform/yamlform.form
 
+# Used preload libraries required by (modal) dialogs.
+# @see js/yamlform.element.codemirror.js
+yamlform.admin.dialog:
+  version: 1.x
+  css:
+    theme:
+      css/yamlform.admin.css: {}
+  js:
+    js/yamlform.admin.js:  {}
+    js/yamlform.dialog.js:  {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/jquery.ui.dialog
+    - yamlform/yamlform.form
+    - yamlform/yamlform.element.codemirror.yaml
+    - yamlform/yamlform.element.html_editor
+    - yamlform/yamlform.element.other
+    - yamlform/yamlform.element.select2
+
 yamlform.admin.translation:
   version: 1.x
   css:
@@ -46,6 +66,7 @@ yamlform.help:
     - core/drupal
     - core/jquery
     - core/jquery.once
+    - core/jquery.ui.accordion
 
 # Form.
 
@@ -72,12 +93,12 @@ yamlform.assets.css:
   version: 1.x
   css:
     theme:
-      //yamlform/{yamlform}/assets/css: { preprocess: false, minified: false }
+      css/yamlform.assets.css: { preprocess: false, minified: false }
 
 yamlform.assets.javascript:
   version: 1.x
   js:
-    //yamlform/{yamlform}/assets/javascript: { preprocess: false, minified: false }
+    js/yamlform.assets.js: { preprocess: false, minified: false }
   dependencies:
     - core/drupal
     - core/jquery
@@ -88,12 +109,6 @@ yamlform.navigation:
   css:
     theme:
       css/yamlform.navigation.css: {}
-
-yamlform.options:
-  version: 1.x
-  css:
-    theme:
-      css/yamlform.options.css: {}
 
 yamlform.progress:
   version: 1.x
@@ -277,6 +292,12 @@ yamlform.element.inputmask:
     - core/jquery.once
     - yamlform/jquery.inputmask
 
+yamlform.element.multiple:
+  version: 1.x
+  css:
+    component:
+      css/yamlform.element.multiple.css: {}
+
 yamlform.element.likert:
   version: 1.x
   css:
@@ -301,6 +322,12 @@ yamlform.element.message:
   css:
     theme:
       css/yamlform.element.message.css: {}
+  js:
+    js/yamlform.element.message.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/jquery.once
 
 yamlform.element.options:
   version: 1.x
@@ -573,13 +600,13 @@ jquery.select2:
 
 jquery.timepicker:
   remote: https://github.com/jonthornton/jquery-timepicker
-  version: 1.11.6
+  version: 1.11.8
   license:
     name: MIT
     url: http://opensource.org/licenses/mit-license.php
     gpl-compatible: true
   cdn:
-    /libraries/jquery.timepicker/: https://cdn.rawgit.com/jonthornton/jquery-timepicker/1.11.6/
+    /libraries/jquery.timepicker/: https://cdn.rawgit.com/jonthornton/jquery-timepicker/1.11.8/
   css:
     theme:
       /libraries/jquery.timepicker/jquery.timepicker.css: {}

@@ -5,6 +5,7 @@ namespace Drupal\yamlform\Element;
 use Drupal\Core\Serialization\Yaml;
 use Drupal\Core\Render\Element\Textarea;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\yamlform\Utility\YamlFormTidy;
 
 /**
  * Provides a form element for HTML, YAML, or Plain text using CodeMirror.
@@ -56,6 +57,24 @@ class YamlFormCodeMirror extends Textarea {
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public static function valueCallback(&$element, $input, FormStateInterface $form_state) {
+    if ($input === FALSE && $element['#mode'] == 'yaml' && isset($element['#default_value'])) {
+      // Convert associative array in default value to YAML.
+      if (is_array($element['#default_value'])) {
+        $element['#default_value'] = YamlFormTidy::tidy(Yaml::encode($element['#default_value']));
+      }
+      // Convert empty YAML into an empty string.
+      if ($element['#default_value'] == '{  }') {
+        $element['#default_value'] = '';
+      }
+      return $element['#default_value'];
+    }
+    return NULL;
+  }
+
+  /**
    * Processes a 'yamlform_codemirror' element.
    */
   public static function processYamlFormCodeMirror(&$element, FormStateInterface $form_state, &$complete_form) {
@@ -63,21 +82,6 @@ class YamlFormCodeMirror extends Textarea {
     if (empty($element['#mode']) || !isset(self::$modes[$element['#mode']])) {
       $element['#mode'] = 'text';
     }
-
-    // Alter element based on its mode.
-    switch ($element['#mode']) {
-      case 'yaml':
-        // Clear empty #default_value.
-        if (isset($element['#default_value']) && $element['#default_value'] == '{  }') {
-          $element['#default_value'] = '';
-        }
-        // Clear empty #value.
-        if (isset($element['#value']) && $element['#value'] == '{  }') {
-          $element['#value'] = '';
-        }
-        break;
-    }
-
     return $element;
   }
 
@@ -114,6 +118,17 @@ class YamlFormCodeMirror extends Textarea {
         ],
       ];
       $form_state->setError($element, \Drupal::service('renderer')->render($build));
+    }
+
+    if ($element['#mode'] == 'yaml' && (isset($element['#default_value']) && is_array($element['#default_value']))) {
+      // Handle rare case where single array value is not parsed correctly.
+      if (preg_match('/^- (.*?)\s*$/', $element['#value'], $match)) {
+        $value = [$match[1]];
+      }
+      else {
+        $value = $element['#value'] ? Yaml::decode($element['#value']) : [];
+      }
+      $form_state->setValueForElement($element, $value);
     }
   }
 

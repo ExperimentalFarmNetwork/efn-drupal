@@ -15,6 +15,7 @@ use Drupal\geocoder_field\PreprocessorBase;
  *   name = "Text",
  *   field_types = {
  *     "string",
+ *     "string_long",
  *     "text",
  *     "text_long"
  *   }

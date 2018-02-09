@@ -38,19 +38,22 @@ class ProfileAccessCheck implements AccessInterface {
    *   The route to check against.
    * @param \Drupal\Core\Session\AccountInterface $account
    *   The currently logged in account.
+   * @param \Drupal\Core\Session\AccountInterface $user
+   *   The user entity.
    * @param \Drupal\profile\Entity\ProfileTypeInterface $profile_type
    *   The profile type entity.
    *
    * @return bool|\Drupal\Core\Access\AccessResultInterface
    *   The access result.
    */
-  public function access(Route $route, AccountInterface $account, ProfileTypeInterface $profile_type) {
+  public function access(Route $route, AccountInterface $account, AccountInterface $user, ProfileTypeInterface $profile_type) {
     if ($account->hasPermission('administer profile types')) {
       return AccessResult::allowed()->cachePerPermissions();
     }
+    $own_any = ($account->id() == $user->id()) ? 'own' : 'any';
+    $operation = ($profile_type->getMultiple()) ? 'view' : 'update';
 
-    $access_control_handler = $this->entityTypeManager->getAccessControlHandler('profile');
-    return $access_control_handler->createAccess($profile_type->id(), $account, [], TRUE);
+    return AccessResult::allowedIfHasPermission($account, "$operation $own_any {$profile_type->id()} profile");
   }
 
 }

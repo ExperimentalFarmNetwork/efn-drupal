@@ -17,7 +17,7 @@ class YamlFormAdminSettingsTest extends YamlFormTestBase {
    *
    * @var array
    */
-  public static $modules = ['system', 'block', 'node', 'user', 'yamlform', 'yamlform_ui', 'yamlform_test'];
+  protected static $modules = ['system', 'block', 'node', 'user', 'yamlform', 'yamlform_ui', 'yamlform_test'];
 
   /**
    * Tests form admin settings.

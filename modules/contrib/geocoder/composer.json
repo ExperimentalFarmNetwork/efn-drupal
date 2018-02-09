@@ -1,9 +1,10 @@
 {
     "name": "drupal/geocoder",
-    "description": "An API to geocode and reverse geocode data into other GIS data types.",
+    "description": "A Drupal module and a services based API to perform Geocode & Reverse Geocode operations among GIS data and addresses types & formats.",
     "type": "drupal-module",
     "license": "GPL-2.0+",
     "minimum-stability": "dev",
+    "prefer-stable": true,
     "homepage": "https://drupal.org/project/geocoder",
     "require": {
         "willdurand/geocoder": "^3.3"
@@ -13,11 +14,23 @@
             "name": "Pol Dellaiera (@drupol)",
             "homepage": "https://www.drupal.org/u/pol",
             "role": "Maintainer"
+        },
+        {
+          "name": "Italo Mairo (@itamair)",
+          "homepage": "https://www.drupal.org/u/itamair",
+          "role": "Co-maintainer"
         }
     ],
     "support": {
         "issues": "https://drupal.org/project/issues/geocoder",
         "irc": "irc://irc.freenode.org/drupal-geo",
         "source": "https://cgit.drupalcode.org/geocoder"
+    },
+    "require-dev": {
+        "phpro/grumphp": "^0.12.1",
+        "squizlabs/php_codesniffer": "^2.7",
+        "sensiolabs/security-checker": "^4.1",
+        "phpunit/phpunit": "^5.7|^6.5",
+        "drupal/coder": "^8.2"
     }
 }

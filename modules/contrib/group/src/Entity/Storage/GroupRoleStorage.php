@@ -24,8 +24,6 @@ class GroupRoleStorage extends ConfigEntityStorage implements GroupRoleStorageIn
   /**
    * Static cache of a user's group role IDs.
    *
-   * @todo Perhaps we need to be able to clear this cache during runtime?
-   *
    * @var array
    */
   protected $userGroupRoleIds = [];
@@ -86,8 +84,9 @@ class GroupRoleStorage extends ConfigEntityStorage implements GroupRoleStorageIn
   public function loadByUserAndGroup(AccountInterface $account, GroupInterface $group, $include_implied = TRUE) {
     $uid = $account->id();
     $gid = $group->id();
+    $key = $include_implied ? 'include' : 'exclude';
 
-    if (!isset($this->userGroupRoleIds[$uid][$gid])) {
+    if (!isset($this->userGroupRoleIds[$uid][$gid][$key])) {
       $ids = [];
 
       // Get the IDs from the 'group_roles' field, without loading the roles.
@@ -115,10 +114,23 @@ class GroupRoleStorage extends ConfigEntityStorage implements GroupRoleStorageIn
         }
       }
 
-      $this->userGroupRoleIds[$uid][$gid] = $ids;
+      $this->userGroupRoleIds[$uid][$gid][$key] = $ids;
     }
 
-    return $this->loadMultiple($this->userGroupRoleIds[$uid][$gid]);
+    return $this->loadMultiple($this->userGroupRoleIds[$uid][$gid][$key]);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function resetUserGroupRoleCache(AccountInterface $account, GroupInterface $group = NULL) {
+    $uid = $account->id();
+    if (isset($group)) {
+      unset($this->userGroupRoleIds[$uid][$group->id()]);
+    }
+    else {
+      unset($this->userGroupRoleIds[$uid]);
+    }
   }
 
 }

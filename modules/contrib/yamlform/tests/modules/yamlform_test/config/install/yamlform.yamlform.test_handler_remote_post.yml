@@ -42,6 +42,7 @@ settings:
   page_submit_path: ''
   page_confirm_path: ''
   form_submit_label: ''
+  form_submit_attributes: {  }
   form_exception_message: ''
   form_closed_message: ''
   form_confidential: false
@@ -57,22 +58,31 @@ settings:
   wizard_progress_pages: false
   wizard_progress_percentage: false
   wizard_next_button_label: ''
+  wizard_next_button_attributes: {  }
   wizard_prev_button_label: ''
+  wizard_prev_button_attributes: {  }
   wizard_start_label: ''
   wizard_complete: true
   wizard_complete_label: ''
   preview: 0
   preview_next_button_label: ''
+  preview_next_button_attributes: {  }
   preview_prev_button_label: ''
+  preview_prev_button_attributes: {  }
   preview_message: ''
   draft: false
   draft_auto_save: false
   draft_button_label: ''
+  draft_button_attributes: {  }
   draft_saved_message: ''
   draft_loaded_message: ''
   confirmation_type: page
   confirmation_message: ''
   confirmation_url: ''
+  confirmation_attributes: {  }
+  confirmation_back: true
+  confirmation_back_label: ''
+  confirmation_back_attributes: {  }
   limit_total: null
   limit_total_message: ''
   limit_user: null
@@ -117,8 +127,36 @@ handlers:
     status: true
     weight: 1
     settings:
-      insert_url: 'http://defaultyamlform_test/remote_post/insert'
-      update_url: 'http://defaultyamlform_test/remote_post/update'
-      delete_url: 'http://defaultyamlform_test/remote_post/delete'
+      insert_url: 'http://default/yamlform_test/remote_post/insert'
+      update_url: 'http://default/yamlform_test/remote_post/update'
+      delete_url: 'http://default/yamlform_test/remote_post/delete'
       type: x-www-form-urlencoded
+      excluded_data:
+        serial: serial
+        sid: sid
+        uuid: uuid
+        token: token
+        uri: uri
+        created: created
+        completed: completed
+        changed: changed
+        in_draft: in_draft
+        current_page: current_page
+        remote_addr: remote_addr
+        uid: uid
+        langcode: langcode
+        yamlform_id: yamlform_id
+        entity_type: entity_type
+        entity_id: entity_id
+        sticky: sticky
+        notes: notes
+      custom_data: |
+        custom_all: true
+        custom_title: '[yamlform:title]: Submission #[yamlform_submission:serial]'
+      insert_custom_data: |
+        custom_insert: true
+      update_custom_data: |
+        custom_update: true
+      delete_custom_data: |
+        custom_delete: true
       debug: true

@@ -92,7 +92,7 @@ class YamlFormHandlerTest extends YamlFormTestBase {
     $this->assertRaw('Invoked: Drupal\yamlform_test\Plugin\YamlFormHandler\TestYamlFormHandler:preCreate');
     $this->assertRaw('Invoked: Drupal\yamlform_test\Plugin\YamlFormHandler\TestYamlFormHandler:postCreate');
     $this->assertRaw('Invoked: Drupal\yamlform_test\Plugin\YamlFormHandler\TestYamlFormHandler:alterElements');
-    $this->assertNoRaw('Invoked: Drupal\yamlform_test\Plugin\YamlFormHandler\TestYamlFormHandler:alterForm');
+    $this->assertRaw('Invoked: Drupal\yamlform_test\Plugin\YamlFormHandler\TestYamlFormHandler:alterForm');
 
     // Check admin can still post submission.
     $this->drupalLogin($this->adminFormUser);

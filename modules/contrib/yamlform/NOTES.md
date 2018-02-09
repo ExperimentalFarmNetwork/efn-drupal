@@ -8,8 +8,6 @@ Steps for creating a new release
   4. Run tests
   5. Generate release notes
   6. Tag and create a new release
-  7. Update project page
-  8. Update documentation
 
 
 1. Cleanup code
@@ -24,26 +22,26 @@ Tidy YAML files
     drush yamlform-tidy yamlform; 
     drush yamlform-tidy yamlform_ui; 
     drush yamlform-tidy yamlform_test;
-    drush yamlform-tidy yamlform_translation_test;
+    drush yamlform-tidy yamlform_test_translation;
 
 
 2. Export configuration
 -----------------------
 
     # Install all sub-modules.
-    drush en -y yamlform yamlform_test yamlform_translation_test yamlform_examples yamlform_templates yamlform_node
+    drush en -y yamlform yamlform_test yamlform_test_translation yamlform_examples yamlform_templates yamlform_node
     
     # Export form configuration from your site.
     drush features-export -y yamlform
     drush features-export -y yamlform_test
-    drush features-export -y yamlform_translation_test
+    drush features-export -y yamlform_test_translation
     drush features-export -y yamlform_examples
     drush features-export -y yamlform_templates
     
     # Tidy form configuration from your site.
     drush yamlform-tidy -y --dependencies yamlform
     drush yamlform-tidy -y --dependencies yamlform_test
-    drush features-tidy -y --dependencies yamlform_translation_test
+    drush features-tidy -y --dependencies yamlform_test_translation
     drush yamlform-tidy -y --dependencies yamlform_examples
     drush yamlform-tidy -y --dependencies yamlform_templates
     
@@ -124,23 +122,3 @@ Tidy YAML files
     git push origin tag 8.x-1.0-VERSION
 
 [Create new release](https://www.drupal.org/node/add/project-release/2640714)
-
-
-7. Update project page
-----------------------
-
-[Export README](https://www.drupal.org/project/readme)
-    
-     # Update project page
-     drush readme-export --project --path='docs/index.md' yamlform
-     open https://www.drupal.org/node/2640714/edit
-     
-[Edit project page](https://www.drupal.org/node/2640714/edit)
-
-
-8. Update documentation
------------------------
-
-[Update Roadmap](http://yamlform.io/developers/roadmap/)
-
-     npm install; grunt docs-deploy;

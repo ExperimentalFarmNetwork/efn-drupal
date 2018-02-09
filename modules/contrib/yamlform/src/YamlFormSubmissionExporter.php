@@ -233,7 +233,7 @@ class YamlFormSubmissionExporter implements YamlFormSubmissionExporterInterface 
       'exporter' => 'delimited',
 
       'delimiter' => ',',
-      'file_name' => 'submission-[yamlform-submission:serial]',
+      'file_name' => 'submission-[yamlform_submission:serial]',
 
       'header_format' => 'label',
       'header_prefix' => TRUE,

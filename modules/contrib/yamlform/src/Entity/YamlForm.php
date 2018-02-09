@@ -35,7 +35,7 @@ use Drupal\yamlform\YamlFormSubmissionInterface;
  *       "assets" = "Drupal\yamlform\YamlFormEntityAssetsForm",
  *       "access" = "Drupal\yamlform\YamlFormEntityAccessForm",
  *       "handlers" = "Drupal\yamlform\YamlFormEntityHandlersForm",
- *       "delete" = "Drupal\Core\Entity\EntityDeleteForm",
+ *       "delete" = "Drupal\yamlform\YamlFormEntityDeleteForm",
  *       "duplicate" = "Drupal\yamlform\YamlFormEntityForm",
  *     }
  *   },
@@ -493,6 +493,7 @@ class YamlForm extends ConfigEntityBundleBase implements YamlFormInterface {
       'page_submit_path' => '',
       'page_confirm_path' => '',
       'form_submit_label' => '',
+      'form_submit_attributes' => [],
       'form_exception_message' => '',
       'form_closed_message' => '',
       'form_confidential' => FALSE,
@@ -508,22 +509,31 @@ class YamlForm extends ConfigEntityBundleBase implements YamlFormInterface {
       'wizard_progress_pages' => FALSE,
       'wizard_progress_percentage' => FALSE,
       'wizard_next_button_label' => '',
+      'wizard_next_button_attributes' => [],
       'wizard_prev_button_label' => '',
+      'wizard_prev_button_attributes' => [],
       'wizard_start_label' => '',
       'wizard_complete' => TRUE,
       'wizard_complete_label' => '',
       'preview' => DRUPAL_DISABLED,
       'preview_next_button_label' => '',
+      'preview_next_button_attributes' => [],
       'preview_prev_button_label' => '',
+      'preview_prev_button_attributes' => [],
       'preview_message' => '',
       'draft' => FALSE,
       'draft_auto_save' => FALSE,
       'draft_button_label' => '',
+      'draft_button_attributes' => [],
       'draft_saved_message' => '',
       'draft_loaded_message' => '',
       'confirmation_type' => 'page',
       'confirmation_message' => '',
       'confirmation_url' => '',
+      'confirmation_attributes' => [],
+      'confirmation_back' => TRUE,
+      'confirmation_back_label' => '',
+      'confirmation_back_attributes' => [],
       'limit_total' => NULL,
       'limit_total_message' => '',
       'limit_user' => NULL,
@@ -1051,37 +1061,45 @@ class YamlForm extends ConfigEntityBundleBase implements YamlFormInterface {
    * {@inheritdoc}
    */
   public function getPages() {
-    if (!isset($this->pages)) {
-      // Add form page containers.
-      $this->pages = [];
-      $elements = $this->getElementsInitialized();
+    if (isset($this->pages)) {
+      return $this->pages;
+    }
+
+    $wizard_properties = [
+      '#title' => '#title',
+      '#prev_button_label' => '#prev_button_label',
+      '#next_button_label' => '#next_button_label',
+    ];
+
+    $elements = $this->getElementsInitialized();
+
+    // Add form page containers.
+    $this->pages = [];
+    if (is_array($elements)) {
       foreach ($elements as $key => $element) {
         if (isset($element['#type']) && $element['#type'] == 'yamlform_wizard_page') {
-          $this->pages[$key] = $element;
+          $this->pages[$key] = array_intersect_key($element, $wizard_properties);
         }
-      }
-
-      // Add preview page.
-      $settings = $this->getSettings();
-      if ($settings['preview'] != DRUPAL_DISABLED) {
-        // If there is no start page, we must define one.
-        if (empty($this->pages)) {
-          $this->pages['start'] = [
-            '#type' => 'yamlform_wizard_page',
-            '#title' => $this->getSetting('wizard_start_label') ?: \Drupal::config('yamlform.settings')->get('settings.default_wizard_start_label'),
-          ];
-        }
-        $this->pages['preview'] = [
-          '#type' => 'yamlform_preview',
-          '#title' => $this->t('Preview'),
-        ];
       }
     }
 
+    // Add preview page.
+    $settings = $this->getSettings();
+    if ($settings['preview'] != DRUPAL_DISABLED) {
+      // If there is no start page, we must define one.
+      if (empty($this->pages)) {
+        $this->pages['start'] = [
+          '#title' => $this->getSetting('wizard_start_label') ?: \Drupal::config('yamlform.settings')->get('settings.default_wizard_start_label'),
+        ];
+      }
+      $this->pages['preview'] = [
+        '#title' => $this->t('Preview'),
+      ];
+    }
+
     // Only add complete page, if there are some pages.
-    if ($this->pages  && $this->getSetting('wizard_complete')) {
+    if ($this->pages && $this->getSetting('wizard_complete')) {
       $this->pages['complete'] = [
-        '#type' => 'yamlform_wizard_page',
         '#title' => $this->getSetting('wizard_complete_label') ?: \Drupal::config('yamlform.settings')->get('settings.default_wizard_complete_label'),
       ];
     }
@@ -1092,18 +1110,9 @@ class YamlForm extends ConfigEntityBundleBase implements YamlFormInterface {
   /**
    * {@inheritdoc}
    */
-  public function getPage($index) {
+  public function getPage($key) {
     $pages = $this->getPages();
-    if (isset($pages[$index])) {
-      return $pages[$index];
-    }
-
-    $keys = array_keys($pages);
-    if (isset($keys[$index])) {
-      return $pages[$keys[$index]];
-    }
-
-    return NULL;
+    return (isset($pages[$key])) ? $pages[$key] : NULL;
   }
 
   /**
@@ -1139,7 +1148,7 @@ class YamlForm extends ConfigEntityBundleBase implements YamlFormInterface {
       $entity->deletePaths();
 
       // Delete the state.
-      \Drupal::state()->delete('yamlform.' . $entity->id());
+      \Drupal::state()->delete('yamlform.yamlform.' . $entity->id());
     }
 
     // Delete all submission associated with this form.
@@ -1442,7 +1451,7 @@ class YamlForm extends ConfigEntityBundleBase implements YamlFormInterface {
    * {@inheritdoc}
    */
   public function getState($key, $default = NULL) {
-    $namespace = 'yamlform.' . $this->id();
+    $namespace = 'yamlform.yamlform.' . $this->id();
     $values = \Drupal::state()->get($namespace, []);
     return (isset($values[$key])) ? $values[$key] : $default;
   }
@@ -1451,7 +1460,7 @@ class YamlForm extends ConfigEntityBundleBase implements YamlFormInterface {
    * {@inheritdoc}
    */
   public function setState($key, $value) {
-    $namespace = 'yamlform.' . $this->id();
+    $namespace = 'yamlform.yamlform.' . $this->id();
     $values = \Drupal::state()->get($namespace, []);
     $values[$key] = $value;
     \Drupal::state()->set($namespace, $values);
@@ -1461,7 +1470,7 @@ class YamlForm extends ConfigEntityBundleBase implements YamlFormInterface {
    * {@inheritdoc}
    */
   public function deleteState($key) {
-    $namespace = 'yamlform.' . $this->id();
+    $namespace = 'yamlform.yamlform.' . $this->id();
     $values = \Drupal::state()->get($namespace, []);
     unset($values[$key]);
     \Drupal::state()->set($namespace, $values);
@@ -1471,7 +1480,7 @@ class YamlForm extends ConfigEntityBundleBase implements YamlFormInterface {
    * {@inheritdoc}
    */
   public function hasState($key) {
-    $namespace = 'yamlform.' . $this->id();
+    $namespace = 'yamlform.yamlform.' . $this->id();
     $values = \Drupal::state()->get($namespace, []);
     return (isset($values[$key])) ? TRUE : FALSE;
   }

@@ -12,3 +12,9 @@ block:
     js/block.js: {}
   dependencies:
     - 'block/drupal.block'
+
+permissions:
+  version: 'VERSION'
+  css:
+    theme:
+      css/permissions.css: {}

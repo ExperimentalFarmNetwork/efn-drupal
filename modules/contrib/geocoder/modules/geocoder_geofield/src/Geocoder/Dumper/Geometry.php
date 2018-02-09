@@ -20,18 +20,9 @@ class Geometry implements Dumper {
   /**
    * Geophp interface.
    *
-   * @var \Drupal\geofield\geophp\geoPHPInterface
+   * @var \Drupal\geofield\GeoPHP\GeoPHPInterface
    */
   private $geophp;
-
-  /**
-   * Address.
-   *
-   * @inheritdoc
-   */
-  public function dump(Address $address) {
-    return $this->geophp->load($this->dumper->dump($address), 'json');
-  }
 
   /**
    * {@inheritdoc}
@@ -39,6 +30,13 @@ class Geometry implements Dumper {
   public function __construct() {
     $this->dumper = \Drupal::service('plugin.manager.geocoder.dumper')->createInstance('geojson');
     $this->geophp = \Drupal::service('geofield.geophp');
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function dump(Address $address) {
+    return $this->geophp->load($this->dumper->dump($address), 'json');
   }
 
 }

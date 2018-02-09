@@ -10,9 +10,15 @@ services:
   plugin.manager.geocoder.provider:
     class: Drupal\geocoder\ProviderPluginManager
     parent: default_plugin_manager
+    arguments: ['@config.factory', '@string_translation', '@renderer', '@link_generator']
 
   plugin.manager.geocoder.dumper:
     class: Drupal\geocoder\DumperPluginManager
+    parent: default_plugin_manager
+    arguments: ['@logger.factory']
+
+  plugin.manager.geocoder.formatter:
+    class: Drupal\geocoder\FormatterPluginManager
     parent: default_plugin_manager
 
   cache.geocoder:

@@ -32,7 +32,7 @@ Documentation README
     drush-integration
     
 
-### How to take screencast
+### How to take a screencast
 
 **Setup**
 

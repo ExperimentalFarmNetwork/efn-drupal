@@ -235,7 +235,7 @@ abstract class YamlFormExporterBase extends PluginBase implements YamlFormExport
     $file_name = $export_options['file_name'];
     $token_data = [
       'yamlform' => $yamlform_submission->getYamlForm(),
-      'yamlform-submission' => $yamlform_submission,
+      'yamlform_submission' => $yamlform_submission,
     ];
     $token_options = ['clear' => TRUE];
     $file_name = \Drupal::token()->replace($file_name, $token_data, $token_options);

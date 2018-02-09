@@ -14,11 +14,6 @@ use Drupal\Component\Utility\Unicode;
  *   An array containing examples of all elements.
  */
 function yamlform_test_example_elements() {
-  $data = [
-    'basic_elements' => [],
-    'advanced_elements' => [],
-  ];
-
   // Elements to be ignored.
   $skipped_elements = [
     'table',
@@ -33,6 +28,11 @@ function yamlform_test_example_elements() {
   $definitions = $element_manager->getDefinitions();
   $definitions = $element_manager->getSortedDefinitions($definitions);
   $elements = $element_manager->getInstances();
+
+  $data = [
+    'basic_elements' => [],
+    'advanced_elements' => [],
+  ];
   foreach ($definitions as $definition) {
     $element_type = $definition['id'];
     if (in_array($element_type, $skipped_elements)) {
@@ -46,6 +46,9 @@ function yamlform_test_example_elements() {
     }
 
     $category_name = (string) $yamlform_element->getPluginDefinition()['category'] ?: 'Other elements';
+    if ($category_name == 'Composite elements') {
+      continue;
+    }
     $category_id = preg_replace('/[^a-zA-Z0-9]+/', '_', Unicode::strtolower($category_name));
     if (empty($data[$category_id])) {
       $data[$category_id] = [

@@ -15,7 +15,7 @@ abstract class DocumentBaseYamlFormExporter extends YamlFormExporterBase {
    */
   public function defaultConfiguration() {
     return parent::defaultConfiguration() + [
-      'file_name' => 'submission-[yamlform-submission:serial]',
+      'file_name' => 'submission-[yamlform_submission:serial]',
     ];
   }
 

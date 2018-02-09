@@ -26,10 +26,10 @@ class YamlFormTableSort extends Table {
       '#sticky' => FALSE,
       '#pre_render' => [
         [$class, 'preRenderTable'],
-        [$class, 'preRenderTableSort'],
+        [$class, 'preRenderYamlFormTableSort'],
       ],
       '#process' => [
-        [$class, 'processTableSort'],
+        [$class, 'processYamlFormTableSort'],
       ],
       '#options' => [],
       '#empty' => '',
@@ -74,7 +74,7 @@ class YamlFormTableSort extends Table {
    * @return array
    *   The processed element.
    */
-  public static function preRenderTableSort($element) {
+  public static function preRenderYamlFormTableSort($element) {
     $rows = [];
     $header = $element['#header'];
     if (!empty($element['#options'])) {
@@ -146,15 +146,15 @@ class YamlFormTableSort extends Table {
    * @return array
    *   The processed element.
    */
-  public static function processTableSort(&$element, FormStateInterface $form_state, &$complete_form) {
+  public static function processYamlFormTableSort(&$element, FormStateInterface $form_state, &$complete_form) {
     $value = is_array($element['#value']) ? $element['#value'] : [];
 
     // Add validate callback that extracts the associative array of options.
     if (isset($element['#element_validate'])) {
-      array_unshift($element['#element_validate'], [get_called_class(), 'validateTableSelectOrder']);
+      array_unshift($element['#element_validate'], [get_called_class(), 'validateYamlFormTableSelectOrder']);
     }
     else {
-      $element['#element_validate'][] = [get_called_class(), 'validateTableSelectOrder'];
+      $element['#element_validate'][] = [get_called_class(), 'validateYamlFormTableSelectOrder'];
     }
 
     $element['#tree'] = TRUE;
@@ -227,7 +227,7 @@ class YamlFormTableSort extends Table {
   /**
    * Validates yamlform_table_other.
    */
-  public static function validateTableSelectOrder(&$element, FormStateInterface $form_state, &$complete_form) {
+  public static function validateYamlFormTableSelectOrder(&$element, FormStateInterface $form_state, &$complete_form) {
     // Get and sort checked values.
     $checked_values = [];
     foreach (Element::children($element) as $key) {

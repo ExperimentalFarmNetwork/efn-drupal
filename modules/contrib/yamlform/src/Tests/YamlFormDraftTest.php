@@ -19,7 +19,7 @@ class YamlFormDraftTest extends WebTestBase {
    *
    * @var array
    */
-  public static $modules = ['system', 'user', 'yamlform', 'yamlform_test'];
+  protected static $modules = ['system', 'user', 'yamlform', 'yamlform_test'];
 
   /**
    * {@inheritdoc}

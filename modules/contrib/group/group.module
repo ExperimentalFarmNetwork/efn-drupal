@@ -169,8 +169,11 @@ function group_rebuild() {
  * Implements hook_modules_installed().
  */
 function group_modules_installed($modules) {
-  _group_content_enabler_manager()->installEnforced();
-  _group_role_synchronizer()->createGroupRoles();
+  // Only create config objects while config import is not in progress.
+  if (!\Drupal::isConfigSyncing()) {
+    _group_content_enabler_manager()->installEnforced();
+    _group_role_synchronizer()->createGroupRoles();
+  }
 }
 
 /**
@@ -319,6 +322,23 @@ function _group_mass_reassign_to_super_user(array $ids, &$context) {
 }
 
 /**
+ * Implements hook_ENTITY_TYPE_update().
+ */
+function group_user_update(AccountInterface $account) {
+  // If a user's roles change, we need to reset their group roles cache.
+  $new = array_unique($account->getRoles());
+  $old = array_unique($account->original->getRoles());
+  sort($new);
+  sort($old);
+
+  if ($new != $old) {
+    /** @var \Drupal\group\Entity\Storage\GroupRoleStorageInterface $storage */
+    $storage = \Drupal::entityTypeManager()->getStorage('group_role');
+    $storage->resetUserGroupRoleCache($account);
+  }
+}
+
+/**
  * Implements hook_ENTITY_TYPE_delete().
  */
 function group_user_delete(EntityInterface $account) {
@@ -333,7 +353,10 @@ function group_user_delete(EntityInterface $account) {
  * Implements hook_ENTITY_TYPE_insert().
  */
 function group_user_role_insert(RoleInterface $role) {
-  _group_role_synchronizer()->createGroupRoles(NULL, [$role->id()]);
+  // Only create config objects while config import is not in progress.
+  if (!\Drupal::isConfigSyncing()) {
+    _group_role_synchronizer()->createGroupRoles(NULL, [$role->id()]);
+  }
 }
 
 /**

@@ -120,7 +120,7 @@ class YamlFormSubmissionStorage extends SqlContentEntityStorage implements YamlF
    * {@inheritdoc}
    */
   public function getTotal(YamlFormInterface $yamlform = NULL, EntityInterface $source_entity = NULL, AccountInterface $account = NULL) {
-    $query = $this->getQuery()->count();
+    $query = $this->getQuery();
     $query->condition('in_draft', FALSE);
     if ($yamlform) {
       $query->condition('yamlform_id', $yamlform->id());
@@ -132,7 +132,11 @@ class YamlFormSubmissionStorage extends SqlContentEntityStorage implements YamlF
     if ($account) {
       $query->condition('uid', $account->id());
     }
-    return $query->execute();
+
+    // Issue: Query count method is not working for SQL Lite.
+    // return $query->count()->execute();
+    // Work-around: Manually count the number of entity ids.
+    return count($query->execute());
   }
 
   /**
@@ -326,7 +330,6 @@ class YamlFormSubmissionStorage extends SqlContentEntityStorage implements YamlF
     // Submission ID.
     $columns['sid'] = [
       'title' => $this->t('SID'),
-      'default' => FALSE,
     ];
 
     // UUID.
@@ -527,19 +530,19 @@ class YamlFormSubmissionStorage extends SqlContentEntityStorage implements YamlF
     ];
     switch ($entity->getState()) {
       case YamlFormSubmissionInterface::STATE_DRAFT;
-        \Drupal::logger('yamlform')->notice('@form:Submission #@id draft saved.', $context);
+        \Drupal::logger('yamlform')->notice('@form: Submission #@id draft saved.', $context);
         break;
 
       case YamlFormSubmissionInterface::STATE_UPDATED;
-        \Drupal::logger('yamlform')->notice('@form:Submission #@id updated.', $context);
+        \Drupal::logger('yamlform')->notice('@form: Submission #@id updated.', $context);
         break;
 
       case YamlFormSubmissionInterface::STATE_COMPLETED;
         if ($result === SAVED_NEW) {
-          \Drupal::logger('yamlform')->notice('@form:Submission #@id created.', $context);
+          \Drupal::logger('yamlform')->notice('@form: Submission #@id created.', $context);
         }
         else {
-          \Drupal::logger('yamlform')->notice('@form:Submission #@id completed.', $context);
+          \Drupal::logger('yamlform')->notice('@form: Submission #@id completed.', $context);
         }
         break;
     }
@@ -611,7 +614,7 @@ class YamlFormSubmissionStorage extends SqlContentEntityStorage implements YamlF
     // Log deleted.
     foreach ($entities as $entity) {
       \Drupal::logger('yamlform')
-        ->notice('Deleted @form:Submission #@id.', [
+        ->notice('Deleted @form: Submission #@id.', [
           '@id' => $entity->id(),
           '@form' => $entity->getYamlForm()->label(),
         ]);

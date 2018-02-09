@@ -16,7 +16,7 @@ class GeocoderTest extends WebTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = array('geocoder');
+  public static $modules = ['geocoder'];
 
   /**
    * {@inheritdoc}
@@ -29,9 +29,9 @@ class GeocoderTest extends WebTestBase {
   public function setUp() {
 
     parent::setUp();
-    $this->user = $this->DrupalCreateUser(array(
+    $this->user = $this->DrupalCreateUser([
       'administer site configuration',
-    ));
+    ]);
   }
 
   /**
@@ -62,9 +62,9 @@ class GeocoderTest extends WebTestBase {
       'Cache field has the default value'
     );
 
-    $this->drupalPostForm(NULL, array(
+    $this->drupalPostForm(NULL, [
       'cache' => FALSE,
-    ), t('Save configuration'));
+    ], t('Save configuration'));
 
     $this->drupalGet('admin/config/system/geocoder');
     $this->assertResponse(200);

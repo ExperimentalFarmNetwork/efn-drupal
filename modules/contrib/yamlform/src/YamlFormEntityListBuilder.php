@@ -116,13 +116,8 @@ class YamlFormEntityListBuilder extends ConfigEntityListBuilder {
     }
     $build += parent::render();
 
-    $build['#attached']['library'][] = 'yamlform/yamlform.admin';
-
-    // Must preload CKEditor and CodeMirror library so that the
-    // window.dialog:aftercreate trigger is set before any dialogs are opened.
-    // @see js/yamlform.element.codemirror.js
-    $build['#attached']['library'][] = 'yamlform/yamlform.element.codemirror.yaml';
-    $build['#attached']['library'][] = 'yamlform/yamlform.element.html_editor';
+    // Must preload libraries required by (modal) dialogs.
+    $build['#attached']['library'][] = 'yamlform/yamlform.admin.dialog';
 
     return $build;
   }

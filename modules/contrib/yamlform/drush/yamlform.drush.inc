@@ -155,7 +155,6 @@ function yamlform_drush_command() {
       'yamlform-repair' => 'Repairs admin settings and forms are up-to-date.',
     ],
     'aliases' => ['yfr'],
-
   ];
 
   return $items;
@@ -382,7 +381,8 @@ function drush_yamlform_tidy($module = 'yamlform') {
       }
     }
 
-    $tidied_yaml = YamlFormTidy::tidy($tidied_yaml);
+    // Tidy and add new line to the end of the tidied file.
+    $tidied_yaml = YamlFormTidy::tidy($tidied_yaml) . "\n";
     if ($tidied_yaml != $original_yaml) {
       drush_print(dt('Tidying @file...', ['@file' => $file->filename]));
       file_put_contents($file->uri, $tidied_yaml);
@@ -461,6 +461,7 @@ function drush_yamlform_libraries_remove($status = TRUE) {
       $removed = TRUE;
     }
   }
+
   if ($status) {
     drupal_flush_all_caches();
   }
@@ -483,6 +484,7 @@ function drush_yamlform_libraries_download() {
   ];
   $commandline_options = ['no-core' => 'no-core'];
   drush_invoke_process('@self', 'make', $commandline_args, $commandline_options);
+
   drupal_flush_all_caches();
 }
 

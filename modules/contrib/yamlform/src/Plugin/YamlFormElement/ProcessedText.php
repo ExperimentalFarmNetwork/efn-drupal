@@ -79,14 +79,14 @@ class ProcessedText extends YamlFormMarkupBase {
   /**
    * {@inheritdoc}
    */
-  protected function setConfigurationFormDefaultValue(array &$form, array &$properties, array &$property_element, $property_name) {
+  protected function setConfigurationFormDefaultValue(array &$form, array &$element_properties, array &$property_element, $property_name) {
     // Apply element.format to the text (text_format) element and unset it.
     if ($property_name == 'text') {
-      $property_element['#format'] = $properties['format'];
-      unset($properties['format']);
+      $property_element['#format'] = $element_properties['format'];
+      unset($element_properties['format']);
     }
 
-    parent::setConfigurationFormDefaultValue($form, $properties, $property_element, $property_name);
+    parent::setConfigurationFormDefaultValue($form, $element_properties, $property_element, $property_name);
   }
 
   /**

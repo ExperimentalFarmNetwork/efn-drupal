@@ -56,4 +56,3 @@ flexbox_date:
     '#format': 'l, F j, Y - g:i A'
     '#default_value': '2009-08-18T01:00:00-05:00'
     '#flex': 4
-

@@ -17,7 +17,7 @@ class YamlFormSubmissionFormSettingsTest extends YamlFormTestBase {
    *
    * @var array
    */
-  public static $modules = ['system', 'block', 'filter', 'node', 'user', 'yamlform', 'yamlform_test'];
+  protected static $modules = ['system', 'block', 'filter', 'node', 'user', 'yamlform', 'yamlform_test'];
 
   /**
    * Tests form setting including confirmation.
@@ -58,67 +58,6 @@ class YamlFormSubmissionFormSettingsTest extends YamlFormTestBase {
     // Check that next serial is set to max serial.
     $this->drupalPostForm('admin/structure/yamlform/manage/contact/settings', ['next_serial' => 1], t('Save'));
     $this->assertRaw('The next submission number was increased to 100 to make it higher than existing submissions.');
-
-    /* Test confirmation message (confirmation_type=message) */
-
-    // Check confirmation message.
-    $this->drupalPostForm('yamlform/test_confirmation_message', [], t('Submit'));
-    $this->assertRaw('This is a <b>custom</b> confirmation message.');
-    $this->assertUrl('yamlform/test_confirmation_message');
-
-    // Check confirmation page with custom query parameters.
-    $this->drupalPostForm('yamlform/test_confirmation_message', [], t('Submit'), ['query' => ['custom' => 'param']]);
-    $this->assertUrl('yamlform/test_confirmation_message', ['query' => ['custom' => 'param']]);
-
-    /* Test confirmation inline (confirmation_type=inline) */
-
-    $yamlform_confirmation_inline = YamlForm::load('test_confirmation_inline');
-
-    // Check confirmation inline.
-    $this->drupalPostForm('yamlform/test_confirmation_inline', [], t('Submit'));
-    $this->assertRaw('<a href="' . $yamlform_confirmation_inline->toUrl()->toString() . '" rel="back" title="Go back to form">Back to form</a>');
-    $this->assertUrl('yamlform/test_confirmation_inline', ['query' => ['yamlform_id' => $yamlform_confirmation_inline->id()]]);
-
-    // Check confirmation inline with custom query parameters.
-    $this->drupalPostForm('yamlform/test_confirmation_inline', [], t('Submit'), ['query' => ['custom' => 'param']]);
-    $this->assertRaw('<a href="' . $yamlform_confirmation_inline->toUrl()->toString() . '?custom=param" rel="back" title="Go back to form">Back to form</a>');
-    $this->assertUrl('yamlform/test_confirmation_inline', ['query' => ['custom' => 'param', 'yamlform_id' => $yamlform_confirmation_inline->id()]]);
-
-    /* Test confirmation page (confirmation_type=page) */
-
-    $yamlform_confirmation_page = YamlForm::load('test_confirmation_page');
-
-    // Check confirmation page.
-    $this->drupalPostForm('yamlform/test_confirmation_page', [], t('Submit'));
-    $this->assertRaw('This is a custom confirmation page.');
-    $this->assertRaw('<a href="' . $yamlform_confirmation_page->toUrl()->toString() . '" rel="back" title="Go back to form">Back to form</a>');
-    $this->assertUrl('yamlform/test_confirmation_page/confirmation');
-
-    // Check that the confirmation page's 'Back to form 'link includes custom
-    // query parameters.
-    $this->drupalGet('yamlform/test_confirmation_page/confirmation', ['query' => ['custom' => 'param']]);
-
-    // Check confirmation page with custom query parameters.
-    $this->drupalPostForm('yamlform/test_confirmation_page', [], t('Submit'), ['query' => ['custom' => 'param']]);
-    $this->assertUrl('yamlform/test_confirmation_page/confirmation', ['query' => ['custom' => 'param']]);
-
-    // TODO: (TESTING)  Figure out why the inline confirmation link is not including the query string parameters.
-    // $this->assertRaw('<a href="' . $yamlform_confirmation_page->toUrl()->toString() . '?custom=param">Back to form</a>');
-
-    /* Test confirmation URL (confirmation_type=url) */
-
-    // Check confirmation URL.
-    $this->drupalPostForm('yamlform/test_confirmation_url', [], t('Submit'));
-    $this->assertNoRaw('<h2 class="visually-hidden">Status message</h2>');
-    $this->assertUrl('<front>');
-
-    /* Test confirmation URL (confirmation_type=url_message) */
-
-    // Check confirmation URL.
-    $this->drupalPostForm('yamlform/test_confirmation_url_message', [], t('Submit'));
-    $this->assertRaw('<h2 class="visually-hidden">Status message</h2>');
-    $this->assertRaw('This is a custom confirmation message.');
-    $this->assertUrl('<front>');
 
     /* Test form closed (status=false) */
 

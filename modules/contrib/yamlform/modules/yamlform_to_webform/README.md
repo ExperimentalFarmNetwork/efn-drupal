@@ -21,7 +21,7 @@ The biggest risk and challenge with using a global search-n-replace is to not
 accidentally rename and break something unexpectedly, which is why any custom or 
 contrib modules (except the YAML Form module) that references the words 
 'YAML Form'  or 'yamlform' must be completely uninstalled.  For example, any 
-custom link or shortcut containing the words 'YAML Form' which be changed to 
+custom link or shortcut containing the words 'YAML Form' will be changed to 
 'Webform'.
 
 ### Prerequisites
@@ -49,27 +49,17 @@ memory limit issues.
 
 #### Via the Command Line using Drush.
 
-```bash
+> Replace `/var/www/sites/d8_yamlform` with your site's docroot.
+
+drush```bash
 # Change directory to your site's root.
 cd /var/www/sites/d8_yamlform
 
 # Enable YAML Form to Webform module.
 drush pm-enable yamlform_to_webform
 
-# OPTION 1: Create Webform 8.x-5.x module. (FOR TESTING ONLY)
-drush yamlform-to-webform-convert -y
-
-# OPTION 2: Download Webform 8.x-5.x module (Once it is available)
+# Download Webform 8.x-5.x module (Once it is available)
 drush pm-download webform-8.x-5.x
-
-# OPTIONAL: Allow public file uploads. (FOR TESTING ONLY)
-drush -y config-set yamlform.settings file.file_public true
-
-# OPTIONAL Generate contact submissions. (FOR TESTING ONLY)
-drush yamlform-generate contact
-
-# OPTIONAL: Generate job application submission (which has file uploads). (FOR TESTING ONLY)
-drush yamlform-generate template_job_application
 
 # Make a _backup directory.
 mkdir ../_backup
@@ -84,7 +74,7 @@ drush yamlform-to-webform-migrate -y
 open http://localhost/admin/structure/webform
 
 # OPTIONAL: Restore archive from _backup directory.
-drush archive-restore --overwrite ../_backup/d8_yamlform.tar
+drush archive-restore --overwrite --destination /var/www/sites/d8_yamlform  ../_backup/d8_yamlform.tar
 ```
 
 #### Via the User Interface

@@ -26,7 +26,7 @@ class EntityAutocomplete extends YamlFormElementBase implements YamlFormEntityRe
   public function getDefaultProperties() {
     return parent::getDefaultProperties() + [
       // Entity reference settings.
-      'target_type' => 'node',
+      'target_type' => '',
       'selection_handler' => 'default',
       'selection_settings' => [],
       'tags' => FALSE,

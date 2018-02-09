@@ -31,6 +31,59 @@ function hook_yamlform_handler_info_alter(array &$handlers) {
 }
 
 /**
+ * Alter form elements.
+ *
+ * @param array $element
+ *   The form element.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The current state of the form.
+ * @param array $context
+ *   An associative array containing the following key-value pairs:
+ *   - form: The form structure to which elements is being attached.
+ *
+ * @see \Drupal\yamlform\YamlFormSubmissionForm::prepareElements()
+ * @see hook_yamlform_element_ELEMENT_TYPE_form_alter()
+ */
+function hook_yamlform_element_alter(array &$element, \Drupal\Core\Form\FormStateInterface $form_state, array $context) {
+  // Code here acts on all elements included in a form.
+  /** @var \Drupal\yamlform\YamlFormSubmissionForm $form_object */
+  $form_object = $form_state->getFormObject();
+  /** @var \Drupal\yamlform\YamlFormSubmissionInterface $yamlform_submission */
+  $yamlform_submission = $form_object->getEntity();
+  /** @var \Drupal\yamlform\YamlFormInterface $yamlform */
+  $yamlform = $yamlform_submission->getYamlForm();
+
+  // Add custom data attributes to all elements.
+  $element['#attributes']['data-custom'] = '{custom data goes here}';
+}
+
+/**
+ * Alter form elements for a specific type.
+ *
+ * Modules can implement hook_yamlform_element_ELEMENT_TYPE_form_alter() to
+ * modify a specific form element, rather than using
+ * hook_yamlform_element_alter() and checking the element type.
+ *
+ * @param array $element
+ *   The form element.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The current state of the form.
+ * @param array $context
+ *   An associative array. See hook_field_widget_form_alter() for the structure
+ *   and content of the array.
+ *
+ * @see \Drupal\yamlform\YamlFormSubmissionForm::prepareElements()
+ * @see hook_yamlform_element_alter(()
+ */
+function hook_yamlform_element_ELEMENT_TYPE_form_alter(array &$element, \Drupal\Core\Form\FormStateInterface $form_state, array $context) {
+  // Add custom data attributes to a specific element type.
+  $element['#attributes']['data-custom'] = '{custom data goes here}';
+
+  // Attach a custom library to the element type.
+  $element['#attached']['library'][] = 'MODULE/MODULE.element.ELEMENT_TYPE';
+}
+
+/**
  * Alter the form options by id.
  *
  * @param array $options

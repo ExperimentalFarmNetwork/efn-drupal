@@ -85,4 +85,132 @@ class YamlFormArrayHelper {
     return !self::isAssociative($array);
   }
 
+  /**
+   * Get the first key in an array.
+   *
+   * @param array $array
+   *   An array.
+   *
+   * @return string|null
+   *   The first key in an array.
+   */
+  public static function getFirstKey(array $array) {
+    $keys = array_keys($array);
+    return reset($keys);
+  }
+
+  /**
+   * Get the last key in an array.
+   *
+   * @param array $array
+   *   An array.
+   *
+   * @return string|null
+   *   The last key in an array.
+   */
+  public static function getLastKey(array $array) {
+    $keys = array_keys($array);
+    return end($keys);
+  }
+
+  /**
+   * Get the next key in an array.
+   *
+   * @param array $array
+   *   An array.
+   * @param string $key
+   *   A key.
+   *
+   * @return string|null
+   *   The next key in an array or NULL is there is no next key.
+   */
+  public static function getNextKey(array $array, $key) {
+    return self::getKey($array, $key, 'next');
+  }
+
+  /**
+   * Get the prev(ious) key in an array.
+   *
+   * @param array $array
+   *   An array.
+   * @param string $key
+   *   A key.
+   *
+   * @return string|null
+   *   The prev(ious) key in an array or NULL is there is no previous key.
+   */
+  public static function getPreviousKey(array $array, $key) {
+    return self::getKey($array, $key, 'prev');
+  }
+
+  /**
+   * Get next or prev(ious) array key.
+   *
+   * @param array $array
+   *   An array.
+   * @param string $key
+   *   A array key.
+   * @param string $direction
+   *   The direction of the  key to retrieve.
+   *
+   * @return string|null
+   *   The next or prev(ious) array key or NULL if no key is found.
+   *
+   * @see http://stackoverflow.com/questions/6407795/get-the-next-array-item-using-the-key-php
+   */
+  protected static function getKey(array $array, $key, $direction) {
+    $array_keys = array_keys($array);
+    $array_key = reset($array_keys);
+    do {
+      if ($array_key == $key) {
+        return $direction($array_keys);
+      }
+    } while ($array_key = next($array_keys));
+    return NULL;
+  }
+
+  /**
+   * Add prefix to all top level keys in an associative array.
+   *
+   * @param array $array
+   *   An associative array.
+   * @param string $prefix
+   *   Prefix to be prepended to all keys.
+   *
+   * @return array
+   *   An associative array with all top level keys prefixed.
+   */
+  public static function addPrefix(array $array, $prefix = '#') {
+    $prefixed_array = [];
+    foreach ($array as $key => $value) {
+      if ($key[0] != $prefix) {
+        $key = $prefix . $key;
+      }
+      $prefixed_array[$key] = $value;
+    }
+    return $prefixed_array;
+  }
+
+  /**
+   * Remove prefix from all top level keys in an associative array.
+   *
+   * @param array $array
+   *   An associative array.
+   * @param string $prefix
+   *   Prefix to be remove from to all keys.
+   *
+   * @return array
+   *   An associative array with prefix removed from all top level keys.
+   */
+  public static function removePrefix(array $array, $prefix = '#') {
+    $unprefixed_array = [];
+    foreach ($array as $key => $value) {
+      if ($key[0] == $prefix) {
+        $key = preg_replace('/^' . $prefix . '/', '', $key);
+      }
+      $unprefixed_array[$key] = $value;
+    }
+    return $unprefixed_array;
+  }
+
 }

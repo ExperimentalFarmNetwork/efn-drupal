@@ -1,25 +1,42 @@
 # Geocoder 8.x-2.x
 
-This is the Geocoder module for Drupal 8 rewritten using the
-Geocoder PHP library.
-
-# Requirements
-* [Composer](https://getcomposer.org/)
-* [Geophp module](https://drupal.org/project/geophp) >= 8.x-1.x
-* [Geofield](https://drupal.org/project/geofield) >= 8.x-1.x
-
-# Installation
-* Make sure to read this page: https://www.drupal.org/node/2404989
-* Make sure to add the drupal.org repository: ```composer
-  config repositories.drupal composer https://packages.drupal.org/8```
-* Download the module: ```composer require drupal/geocoder```
-* Enable the module via drush ```drush en geocoder``` or the web interface.
-* Enable the submodules ```geocoder_geofield``` or ```geocoder_field```.
+This is a complete rewrite of the Geocoder module, based on the
+[Geocoder PHP library](http://geocoder-php.org) - [version 3.x](https://github.com/geocoder-php/Geocoder/tree/3.x).
 
 # Features
-* Provides options to geocode a field from a string into a geographic data format such as WKT, GeoJson, etc etc...
-* The Provider and Dumper plugins are extendable through a custom module,
-* All successful requests are cached by default.
+* Solid API based on [Geocoder PHP library](http://geocoder-php.org);
+* Geocode and Reverse Geocode using one or multiple Geocoder providers (ArcGISOnline, BingMaps, File, GoogleMaps, MapQuest, Nominatim, OpeneStreetMap, etc);
+* Results can be dumped into multiple formats such as WKT, GeoJson, etc ...</li>
+* The Geocoder Provider and Dumper plugins are extendable through a custom module;</li>
+* Submodule Geocoder Field provides Drupal fields widgets and formatters, with even more options;</li>
+* [Geofield](https://www.drupal.org/project/geofield) and [Address](https://www.drupal.org/project/address) fields integration.
+* Caching results capabilities, enabled by default;
+
+# Requirements
+* [Composer](https://getcomposer.org/), to add the module to your codebase (for more info refer to [Using Composer to manage Drupal site dependencies](https://www.drupal.org/node/2718229);
+* [Drush](http://drush.org), to enable the module (and its dependencies) from the shell;
+* No other external requirements for the main geocoder Module: the [Geocoder PHP library](http://geocoder-php.org) will be downloaded automatically via composer (see below);
+* The embedded "Geocoder Geofield" submodule requires the [Geofield Module](https://www.drupal.org/project/geofield);
+* The embedded "Geocoder Address" submodule requires the [Address Module](https://www.drupal.org/project/address);
+
+# Installation and setup
+* Download the module running the following shell command from you project root (at the composer.json file level):  
+  ```$ composer require drupal/geocoder```  
+  **Note:** this will also download the Geocoder PHP library as vendor/willdurand/geocoder
+* Enable the module via [Drush](http://drush.org)  
+ ```$ drush en geocoder```  
+ or the website back-end/administration interface;
+* Eventually enable also the submodules: ```geocoder_field``` and ```geocoder_geofield``` / ```geocoder_address```.
+* From the module configuration page it is possible to setup caching and custom options for every available Geocoder Provider; 
+
+# Submodules
+The geocoder submodules are needed to set-up and implement Geocode and Reverse Geocode functionalities on Entities fields from the Drupal backend.
+* The **geocoder_field** module adds the ability to setup Geocode operations among string/text fields on entity insert/edit and as field Geo formatters,
+using all the available Geocoder Provider Plugins and Output Geo Formats (via Dumpers).
+* The **geocoder_geofield** module provides integration with Geofield (module/field type) and the ability to both use it as target of Geocode or source of Reverse Geocode with the other fields;
+* The **geocoder_address** module provides integration with Address (module/field type) and the ability to both use it as target of Reverse Geocode or source of Geocode with the other fields;
+
+From the Geocoder configuration page it is possible to setup custom options for every available 
 
 # API
 
@@ -122,5 +139,5 @@ $geometry = \Drupal::service('plugin.manager.geocoder.dumper')->createInstance('
 # Links
 * [Composer](https://getcomposer.org/)
 * [Drush](http://drush.org)
-* [Geocoder PHP library](http://geocoder-php.org/)
+* [Geocoder PHP library](http://geocoder-php.org) - [version 3.x](https://github.com/geocoder-php/Geocoder/tree/3.x)
 * [Geocoder module](https://www.drupal.org/project/geocoder)

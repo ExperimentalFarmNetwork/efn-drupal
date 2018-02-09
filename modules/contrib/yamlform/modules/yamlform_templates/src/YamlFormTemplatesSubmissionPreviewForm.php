@@ -4,9 +4,9 @@ namespace Drupal\yamlform_templates;
 
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\CloseDialogCommand;
-use Drupal\Core\Ajax\RedirectCommand;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Drupal\yamlform\Utility\YamlFormDialogHelper;
 use Drupal\yamlform\YamlFormDialogTrait;
 use Drupal\yamlform\YamlFormSubmissionForm;
 
@@ -38,13 +38,10 @@ class YamlFormTemplatesSubmissionPreviewForm extends YamlFormSubmissionForm {
       unset($form['actions']['#type']);
       $form['modal_actions'] = ['#type' => 'actions'];
       $form['modal_actions']['select'] = [
-        '#type' => 'submit',
-        '#value' => $this->t('Select'),
-        '#button_type' => 'primary',
-        '#ajax' => [
-          'callback' => '::selectTemplate',
-          'event' => 'click',
-        ],
+        '#type' => 'link',
+        '#title' => $this->t('Select'),
+        '#url' => Url::fromRoute('entity.yamlform.duplicate_form', ['yamlform' => $this->getYamlForm()->id()]),
+        '#attributes' => YamlFormDialogHelper::getModalDialogAttributes(640, ['button', 'button--primary']),
       ];
       $form['modal_actions']['close'] = [
         '#type' => 'submit',
@@ -68,23 +65,6 @@ class YamlFormTemplatesSubmissionPreviewForm extends YamlFormSubmissionForm {
     else {
       parent::validateForm($form, $form_state);
     }
-  }
-
-  /**
-   * Select template.
-   *
-   * @param array $form
-   *   An associative array containing the structure of the form.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   The current state of the form.
-   *
-   * @return bool|\Drupal\Core\Ajax\AjaxResponse
-   *   An AJAX response that display validation error messages.
-   */
-  public function selectTemplate(array &$form, FormStateInterface $form_state) {
-    $response = new AjaxResponse();
-    $response->addCommand(new RedirectCommand(Url::fromRoute('entity.yamlform.duplicate_form', ['yamlform' => $this->getYamlForm()->id()])->toString()));
-    return $response;
   }
 
   /**

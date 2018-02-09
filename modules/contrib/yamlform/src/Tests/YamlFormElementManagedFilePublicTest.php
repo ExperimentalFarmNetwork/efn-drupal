@@ -16,7 +16,7 @@ class YamlFormElementManagedFilePublicTest extends YamlFormTestBase {
    *
    * @var array
    */
-  public static $modules = ['system', 'file', 'yamlform', 'yamlform_test', 'yamlform_ui'];
+  protected static $modules = ['system', 'file', 'yamlform', 'yamlform_test', 'yamlform_ui'];
 
   /**
    * {@inheritdoc}

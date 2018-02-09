@@ -1,16 +1,11 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geofield\Plugin\GeofieldBackendBase.
- */
 namespace Drupal\geofield\Plugin;
 
 use Drupal\Component\Plugin\PluginBase;
 
 /**
- * Defines a base class from which other modules providing geofield backends
- * may extend.
+ * Defines a base class for geofield backends.
  *
  * A complete sample plugin definition should be defined as in this example:
  *

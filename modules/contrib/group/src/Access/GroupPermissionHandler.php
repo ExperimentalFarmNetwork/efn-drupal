@@ -3,7 +3,6 @@
 namespace Drupal\group\Access;
 
 use Drupal\Component\Discovery\YamlDiscovery;
-use Drupal\Component\Render\MarkupInterface;
 use Drupal\Core\Controller\ControllerResolverInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -121,10 +120,13 @@ class GroupPermissionHandler implements GroupPermissionHandlerInterface {
     // configuration but can't because their plugins may not be installed along
     // with the module itself (i.e.: non-enforced plugins).
     if ($include_plugins) {
+      /** @var \Drupal\group\Plugin\GroupContentEnablerInterface $plugin */
       foreach ($this->pluginManager->getAll() as $plugin) {
-        /** @var \Drupal\group\Plugin\GroupContentEnablerInterface $plugin */
+        $provider = $plugin->getProvider();
+        $section = $plugin->getLabel()->__toString();
+
         foreach ($plugin->getPermissions() as $permission_name => $permission) {
-          $permission += ['provider' => $plugin->getProvider()];
+          $permission += ['provider' => $provider, 'section' => $section];
           $all_permissions[$permission_name] = $this->completePermission($permission);
         }
       }
@@ -141,9 +143,12 @@ class GroupPermissionHandler implements GroupPermissionHandlerInterface {
 
     // Add the plugin defined permissions to the whole.
     foreach ($group_type->getInstalledContentPlugins() as $plugin) {
+      $provider = $plugin->getProvider();
+      $section = $plugin->getLabel()->__toString();
+
       /** @var \Drupal\group\Plugin\GroupContentEnablerInterface $plugin */
       foreach ($plugin->getPermissions() as $permission_name => $permission) {
-        $permission += ['provider' => $plugin->getProvider()];
+        $permission += ['provider' => $provider, 'section' => $section];
         $all_permissions[$permission_name] = $this->completePermission($permission);
       }
     }
@@ -213,6 +218,9 @@ class GroupPermissionHandler implements GroupPermissionHandlerInterface {
               // Set the provider if none was specified.
               $callback_permission += ['provider' => $provider];
 
+              // Set the section if none was specified.
+              $callback_permission += ['section' => 'General'];
+
               $all_callback_permissions[$name] = $callback_permission;
             }
           }
@@ -226,8 +234,13 @@ class GroupPermissionHandler implements GroupPermissionHandlerInterface {
           $permission = ['title' => $permission];
         }
 
-        // Set the provider if none was spec
-        $permissions[$permission_name] = $permission + ['provider' => $provider];
+        // Set the provider if none was specified.
+        $permission += ['provider' => $provider];
+
+        // Set the section if none was specified.
+        $permission += ['section' => 'General'];
+
+        $permissions[$permission_name] = $permission;
       }
 
       $all_permissions += $permissions;
@@ -256,19 +269,19 @@ class GroupPermissionHandler implements GroupPermissionHandlerInterface {
   protected function sortPermissions(array $permissions = []) {
     $modules = $this->getModuleNames();
 
-    // Sort all permissions by provider name first and then by title.
+    // Sort all permissions by provider, section and title, in that order.
     uasort($permissions, function (array $permission_a, array $permission_b) use ($modules) {
-      if ($modules[$permission_a['provider']] == $modules[$permission_b['provider']]) {
-        // Account for the possibility that titles may already be instances of
-        // \Drupal\Core\StringTranslation\TranslatableMarkup.
-        $title_a = $permission_a['title'] instanceof MarkupInterface
-          ? $permission_a['title']->__toString()
-          : $permission_a['title'];
-        $title_b = $permission_b['title'] instanceof MarkupInterface
-          ? $permission_b['title']->__toString()
-          : $permission_b['title'];
-
-        return strip_tags($title_a) > strip_tags($title_b);
+      if ($permission_a['provider'] == $permission_b['provider']) {
+        if ($permission_a['section'] == $permission_b['section']) {
+          // All permissions should have gone through ::completePermission() so
+          // the titles are \Drupal\Core\StringTranslation\TranslatableMarkup.
+          $title_a = $permission_a['title']->__toString();
+          $title_b = $permission_b['title']->__toString();
+          return strip_tags($title_a) > strip_tags($title_b);
+        }
+        else {
+          return $permission_a['section'] > $permission_b['section'];
+        }
       }
       else {
         return $modules[$permission_a['provider']] > $modules[$permission_b['provider']];

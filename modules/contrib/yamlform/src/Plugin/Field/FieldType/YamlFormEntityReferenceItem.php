@@ -2,6 +2,7 @@
 
 namespace Drupal\yamlform\Plugin\Field\FieldType;
 
+use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Field\Plugin\Field\FieldType\EntityReferenceItem;
 use Drupal\Core\Form\FormStateInterface;
@@ -52,7 +53,7 @@ class YamlFormEntityReferenceItem extends EntityReferenceItem {
         'target_id' => [
           'description' => 'The ID of the form entity.',
           'type' => 'varchar_ascii',
-          'length' => 255,
+          'length' => EntityTypeInterface::BUNDLE_MAX_LENGTH,
         ],
         'default_data' => [
           'description' => 'Default submission data.',

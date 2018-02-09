@@ -17,7 +17,7 @@ class YamlFormHandlerPluginTest extends WebTestBase {
    *
    * @var array
    */
-  public static $modules = ['yamlform', 'yamlform_devel'];
+  protected static $modules = ['yamlform', 'yamlform_devel'];
 
   /**
    * Tests form element plugin.

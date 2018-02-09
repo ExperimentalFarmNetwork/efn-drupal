@@ -11,11 +11,21 @@ use Drupal\geocoder\DumperPluginManager;
 use Drupal\geocoder\Geocoder;
 use Drupal\geocoder\ProviderPluginManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Render\RendererInterface;
+use Drupal\Core\Utility\LinkGeneratorInterface;
 
 /**
  * Base Plugin implementation of the Geocode formatter.
  */
 abstract class GeocodeFormatterBase extends FormatterBase implements ContainerFactoryPluginInterface {
+
+  /**
+   * The config factory service.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
+  protected $config;
 
   /**
    * The geocoder service.
@@ -39,6 +49,21 @@ abstract class GeocodeFormatterBase extends FormatterBase implements ContainerFa
   protected $dumperPluginManager;
 
   /**
+   * The Renderer service property.
+   *
+   * @var \Drupal\Core\Entity\EntityDisplayRepositoryInterface
+   */
+  protected $renderer;
+
+
+  /**
+   * The Link generator Service.
+   *
+   * @var \Drupal\Core\Utility\LinkGeneratorInterface
+   */
+  protected $link;
+
+  /**
    * Constructs a GeocodeFormatterBase object.
    *
    * @param string $plugin_id
@@ -55,18 +80,41 @@ abstract class GeocodeFormatterBase extends FormatterBase implements ContainerFa
    *   The view mode.
    * @param array $third_party_settings
    *   Any third party settings.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   A config factory for retrieving required config objects.
    * @param \Drupal\geocoder\Geocoder $geocoder
    *   The gecoder service.
    * @param \Drupal\geocoder\ProviderPluginManager $provider_plugin_manager
    *   The provider plugin manager service.
    * @param \Drupal\geocoder\DumperPluginManager $dumper_plugin_manager
    *   The dumper plugin manager service.
+   * @param \Drupal\Core\Render\RendererInterface $renderer
+   *   The renderer.
+   * @param \Drupal\Core\Utility\LinkGeneratorInterface $link_generator
+   *   The Link Generator service.
    */
-  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, Geocoder $geocoder, ProviderPluginManager $provider_plugin_manager, DumperPluginManager $dumper_plugin_manager) {
+  public function __construct(
+    $plugin_id,
+    $plugin_definition,
+    FieldDefinitionInterface $field_definition,
+    array $settings,
+    $label,
+    $view_mode,
+    array $third_party_settings,
+    ConfigFactoryInterface $config_factory,
+    Geocoder $geocoder,
+    ProviderPluginManager $provider_plugin_manager,
+    DumperPluginManager $dumper_plugin_manager,
+    RendererInterface $renderer,
+    LinkGeneratorInterface $link_generator
+  ) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
+    $this->config = $config_factory->get('geocoder.settings');
     $this->geocoder = $geocoder;
     $this->providerPluginManager = $provider_plugin_manager;
     $this->dumperPluginManager = $dumper_plugin_manager;
+    $this->renderer = $renderer;
+    $this->link = $link_generator;
   }
 
   /**
@@ -81,9 +129,12 @@ abstract class GeocodeFormatterBase extends FormatterBase implements ContainerFa
       $configuration['label'],
       $configuration['view_mode'],
       $configuration['third_party_settings'],
+      $container->get('config.factory'),
       $container->get('geocoder'),
       $container->get('plugin.manager.geocoder.provider'),
-      $container->get('plugin.manager.geocoder.dumper')
+      $container->get('plugin.manager.geocoder.dumper'),
+      $container->get('renderer'),
+      $container->get('link_generator')
     );
   }
 
@@ -91,118 +142,70 @@ abstract class GeocodeFormatterBase extends FormatterBase implements ContainerFa
    * {@inheritdoc}
    */
   public static function defaultSettings() {
-    return parent::defaultSettings() + array(
-      'dumper_plugin' => 'wkt',
-      'provider_plugins' => array(),
-    );
+    return parent::defaultSettings() + [
+      'dumper' => 'wkt',
+      'plugins' => [],
+    ];
   }
 
   /**
    * {@inheritdoc}
    */
   public function settingsForm(array $form, FormStateInterface $form_state) {
-    $elements = parent::settingsForm($form, $form_state);
+    $element = parent::settingsForm($form, $form_state);
 
-    $enabled_plugins = array();
-    $i = 0;
-    foreach ($this->getSetting('provider_plugins') as $plugin_id => $plugin) {
+    // Attach Geofield Map Library.
+    $element['#attached']['library'] = [
+      'geocoder_field/general',
+    ];
+
+    // Get the enabled/selected plugins.
+    $enabled_plugins = [];
+    foreach ($this->getSetting('plugins') as $plugin_id => $plugin) {
       if ($plugin['checked']) {
-        $plugin['weight'] = intval($i++);
-        $enabled_plugins[$plugin_id] = $plugin;
+        $enabled_plugins[] = $plugin_id;
       }
     }
 
-    $elements['geocoder_plugins_title'] = array(
-      '#type' => 'item',
-      '#weight' => 15,
-      '#title' => t('Geocoder plugin(s)'),
-      '#description' => t('Select the Geocoder plugins to use, you can reorder them. The first one to return a valid value will be used.'),
-    );
+    // Generates the Draggable Table of Selectable Geocoder Plugins.
+    $element['plugins'] = $this->providerPluginManager->providersPluginsTableList($enabled_plugins);
 
-    $elements['provider_plugins'] = array(
-      '#type' => 'table',
-      '#weight' => 20,
-      '#header' => array(
-        array('data' => $this->t('Enabled')),
-        array('data' => $this->t('Weight')),
-        array('data' => $this->t('Name')),
-      ),
-      '#tabledrag' => array(
-        array(
-          'action' => 'order',
-          'relationship' => 'sibling',
-          'group' => 'provider_plugins-order-weight',
-        ),
-      ),
-    );
+    // Set a validation for the plugins selection.
+    $element['plugins']['#element_validate'] = [[get_class($this), 'validatePluginsSettingsForm']];
 
-    $rows = array();
-    $count = count($enabled_plugins);
-    foreach ($this->providerPluginManager->getPluginsAsOptions() as $plugin_id => $plugin_name) {
-      if (isset($enabled_plugins[$plugin_id])) {
-        $weight = $enabled_plugins[$plugin_id]['weight'];
-      }
-      else {
-        $weight = $count++;
-      }
-
-      $rows[$plugin_id] = array(
-        '#attributes' => array(
-          'class' => array('draggable'),
-        ),
-        '#weight' => $weight,
-        'checked' => array(
-          '#type' => 'checkbox',
-          '#default_value' => isset($enabled_plugins[$plugin_id]) ? 1 : 0,
-        ),
-        'weight' => array(
-          '#type' => 'weight',
-          '#title' => t('Weight for @title', array('@title' => $plugin_id)),
-          '#title_display' => 'invisible',
-          '#default_value' => $weight,
-          '#attributes' => array('class' => array('provider_plugins-order-weight')),
-        ),
-        'name' => array(
-          '#plain_text' => $plugin_name,
-        ),
-      );
-    }
-
-    uasort($rows, function ($a, $b) {
-      return strcmp($a['#weight'], $b['#weight']);
-    });
-
-    foreach ($rows as $plugin_id => $row) {
-      $elements['provider_plugins'][$plugin_id] = $row;
-    }
-
-    $elements['dumper_plugin'] = array(
+    $element['dumper'] = [
       '#type' => 'select',
       '#weight' => 25,
       '#title' => 'Output format',
-      '#default_value' => $this->getSetting('dumper_plugin'),
+      '#default_value' => $this->getSetting('dumper'),
       '#options' => $this->dumperPluginManager->getPluginsAsOptions(),
       '#description' => t('Set the output format of the value. Ex, for a geofield, the format must be set to WKT.'),
-    );
+    ];
 
-    return $elements;
+    return $element;
   }
 
   /**
    * {@inheritdoc}
    */
   public function settingsSummary() {
-    $summary = array();
+    $summary = [];
     $provider_plugin_ids = $this->getEnabledProviderPlugins();
     $dumper_plugins = $this->dumperPluginManager->getPluginsAsOptions();
-    $dumper_plugin = $this->getSetting('dumper_plugin');
+    $dumper_plugin = $this->getSetting('dumper');
 
-    if (!empty($provider_plugin_ids)) {
-      $summary[] = t('Geocoder plugin(s): @plugin_ids', array('@plugin_ids' => implode(', ', $provider_plugin_ids)));
-    }
-    if (!empty($dumper_plugin)) {
-      $summary[] = t('Output format plugin: @format', array('@format' => $dumper_plugins[$dumper_plugin]));
-    }
+    // Replace the plugin array with its name.
+    array_walk($provider_plugin_ids, function (&$item) {
+      $item = $item['name'];
+    });
+
+    $summary[] = t('Geocoder plugin(s): @plugin_ids', [
+      '@plugin_ids' => !empty($provider_plugin_ids) ? implode(', ', $provider_plugin_ids) : $this->t('Not set'),
+    ]);
+
+    $summary[] = t('Output format: @format', [
+      '@format' => !empty($dumper_plugin) ? $dumper_plugins[$dumper_plugin] : $this->t('Not set'),
+    ]);
 
     return $summary;
   }
@@ -211,15 +214,22 @@ abstract class GeocodeFormatterBase extends FormatterBase implements ContainerFa
    * {@inheritdoc}
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
-    $elements = array();
-    $dumper = $this->dumperPluginManager->createInstance($this->getSetting('dumper_plugin'));
+    $elements = [];
+    $dumper = $this->dumperPluginManager->createInstance($this->getSetting('dumper'));
     $provider_plugins = $this->getEnabledProviderPlugins();
+    $geocoder_plugins_options = $this->config->get('plugins_options');
+
+    // Eventually converts Plugins Options in Beta1 Json format.
+    // @TODO: This should be removed before the stable release 8.x-2.0.
+    if (is_string($geocoder_plugins_options)) {
+      $this->providerPluginManager->conditionalGetJsonPluginsOptions($geocoder_plugins_options);
+    }
 
     foreach ($items as $delta => $item) {
-      if ($addressCollection = $this->geocoder->geocode($item->value, $provider_plugins)) {
-        $elements[$delta] = array(
-          '#plain_text' => $dumper->dump($addressCollection->first()),
-        );
+      if ($address_collection = $this->geocoder->geocode($item->value, array_keys($provider_plugins), $geocoder_plugins_options)) {
+        $elements[$delta] = [
+          '#plain_text' => $dumper->dump($address_collection->first()),
+        ];
       }
     }
 
@@ -230,19 +240,39 @@ abstract class GeocodeFormatterBase extends FormatterBase implements ContainerFa
    * Get the list of enabled Provider plugins.
    *
    * @return array
-   *   Provider plugin IDs.
+   *   Provider plugin IDs and their properties (id, name, arguments...).
    */
   public function getEnabledProviderPlugins() {
-    $provider_plugin_ids = array();
-    $geocoder_plugins = $this->providerPluginManager->getPluginsAsOptions();
+    $geocoder_plugins = $this->providerPluginManager->getPlugins();
+    $plugins_settings = $this->getSetting('plugins');
 
-    foreach ($this->getSetting('provider_plugins') as $plugin_id => $plugin) {
-      if ($plugin['checked']) {
-        $provider_plugin_ids[$plugin_id] = $geocoder_plugins[$plugin_id];
+    // Filter out unchecked plugins.
+    $provider_plugin_ids = array_filter($plugins_settings, function ($plugin) {
+      return $plugin['checked'] == TRUE;
+    });
+
+    $provider_plugin_ids = array_combine(array_keys($provider_plugin_ids), array_keys($provider_plugin_ids));
+
+    foreach ($geocoder_plugins as $plugin) {
+      if (isset($provider_plugin_ids[$plugin['id']])) {
+        $provider_plugin_ids[$plugin['id']] = $plugin;
       }
     }
 
     return $provider_plugin_ids;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function validatePluginsSettingsForm(array $element, FormStateInterface &$form_state) {
+    $plugins = array_filter($element['#value'], function ($value) {
+      return isset($value['checked']) && TRUE == $value['checked'];
+    });
+
+    if (empty($plugins)) {
+      $form_state->setError($element, t('The selected Geocode operation needs at least one plugin.'));
+    }
   }
 
 }

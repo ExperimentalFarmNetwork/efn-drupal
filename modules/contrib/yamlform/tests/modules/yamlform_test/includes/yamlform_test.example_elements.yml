@@ -21,7 +21,7 @@ entity_autocomplete:
 language_select:
   '#languages': 3
 yamlform_autocomplete:
-  '#autocomplete_options': country_names
+  '#autocomplete_items': country_names
 yamlform_codemirror:
   '#mode': yaml
 yamlform_entity_select:

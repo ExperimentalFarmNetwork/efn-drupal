@@ -15,7 +15,7 @@ class YamlFormEntityReferenceItemNormalizerTest extends YamlFormTestBase {
    *
    * @var array
    */
-  public static $modules = [
+  protected static $modules = [
     'system',
     'block',
     'node',

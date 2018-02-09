@@ -28,7 +28,7 @@ class YamlFormEmailConfirm extends FormElement {
       '#input' => TRUE,
       '#size' => 60,
       '#process' => [
-        [$class, 'processEmailConfirm'],
+        [$class, 'processYamlFormEmailConfirm'],
       ],
       '#pre_render' => [
         [$class, 'preRenderCompositeFormElement'],
@@ -46,16 +46,20 @@ class YamlFormEmailConfirm extends FormElement {
       if (!isset($element['#default_value'])) {
         $element['#default_value'] = '';
       }
-      $element['mail_2'] = $element['mail_1'] = $element['#default_value'];
-      return $element;
+      return [
+        'mail_1' => $element['#default_value'],
+        'mail_2' => $element['#default_value'],
+      ];
     }
-    return NULL;
+    else {
+      return $input;
+    }
   }
 
   /**
    * Expand an email confirm field into two HTML5 email elements.
    */
-  public static function processEmailConfirm(&$element, FormStateInterface $form_state, &$complete_form) {
+  public static function processYamlFormEmailConfirm(&$element, FormStateInterface $form_state, &$complete_form) {
     $element['#tree'] = TRUE;
 
     // Get shared properties.
@@ -98,7 +102,7 @@ class YamlFormEmailConfirm extends FormElement {
     unset($element['#maxlength']);
     unset($element['#atributes']);
 
-    $element['#element_validate'] = [[get_called_class(), 'validateEmailConfirm']];
+    $element['#element_validate'] = [[get_called_class(), 'validateYamlFormEmailConfirm']];
 
     return $element;
   }
@@ -106,7 +110,7 @@ class YamlFormEmailConfirm extends FormElement {
   /**
    * Validates an email confirm element.
    */
-  public static function validateEmailConfirm(&$element, FormStateInterface $form_state, &$complete_form) {
+  public static function validateYamlFormEmailConfirm(&$element, FormStateInterface $form_state, &$complete_form) {
 
     $mail_1 = trim($element['mail_1']['#value']);
     $mail_2 = trim($element['mail_2']['#value']);

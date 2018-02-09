@@ -3,7 +3,6 @@
 namespace Drupal\yamlform;
 
 use Drupal\Component\Plugin\PluginBase;
-use Drupal\Core\Serialization\Yaml;
 use Drupal\Component\Utility\Xss;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Database\Database;
@@ -16,7 +15,6 @@ use Drupal\Core\Render\ElementInfoManagerInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
-use Drupal\yamlform\Element\YamlFormSelectOther;
 use Drupal\yamlform\Entity\YamlFormOptions;
 use Drupal\yamlform\Utility\YamlFormArrayHelper;
 use Drupal\yamlform\Utility\YamlFormElementHelper;
@@ -72,18 +70,18 @@ class YamlFormElementBase extends PluginBase implements YamlFormElementInterface
   protected $elementInfo;
 
   /**
-   * The element's properties without the initial hash (#) character.
-   *
-   * @var array
-   */
-  protected $properties;
-
-  /**
    * The form element manager.
    *
    * @var \Drupal\yamlform\YamlFormElementManagerInterface
    */
   protected $elementManager;
+
+  /**
+   * The token manager.
+   *
+   * @var \Drupal\yamlform\YamlFormTranslationManagerInterface
+   */
+  protected $tokenManager;
 
   /**
    * Constructs a Drupal\Component\Plugin\PluginBase object.
@@ -104,8 +102,10 @@ class YamlFormElementBase extends PluginBase implements YamlFormElementInterface
    *   The element info manager.
    * @param \Drupal\yamlform\YamlFormElementManagerInterface $element_manager
    *   The form element manager.
+   * @param \Drupal\yamlform\YamlFormTokenManagerInterface $token_manager
+   *   The token manager.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, LoggerInterface $logger, ConfigFactoryInterface $config_factory, AccountInterface $current_user, EntityTypeManagerInterface $entity_type_manager, ElementInfoManagerInterface $element_info, YamlFormElementManagerInterface $element_manager) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, LoggerInterface $logger, ConfigFactoryInterface $config_factory, AccountInterface $current_user, EntityTypeManagerInterface $entity_type_manager, ElementInfoManagerInterface $element_info, YamlFormElementManagerInterface $element_manager, YamlFormTokenManagerInterface $token_manager) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->logger = $logger;
     $this->configFactory = $config_factory;
@@ -113,6 +113,7 @@ class YamlFormElementBase extends PluginBase implements YamlFormElementInterface
     $this->entityTypeManager = $entity_type_manager;
     $this->elementInfo = $element_info;
     $this->elementManager = $element_manager;
+    $this->tokenManager = $token_manager;
   }
 
   /**
@@ -128,7 +129,8 @@ class YamlFormElementBase extends PluginBase implements YamlFormElementInterface
       $container->get('current_user'),
       $container->get('entity_type.manager'),
       $container->get('plugin.manager.element_info'),
-      $container->get('plugin.manager.yamlform.element')
+      $container->get('plugin.manager.yamlform.element'),
+      $container->get('yamlform.token_manager')
     );
   }
 
@@ -159,11 +161,9 @@ class YamlFormElementBase extends PluginBase implements YamlFormElementInterface
       'unique' => FALSE,
       // Submission display.
       'format' => $this->getDefaultFormat(),
-      // Custom attributes.
-      'wrapper_attributes__class' => '',
-      'wrapper_attributes__style' => '',
-      'attributes__class' => '',
-      'attributes__style' => '',
+      // Attributes.
+      'wrapper_attributes' => [],
+      'attributes' => [],
     ] + $this->getDefaultBaseProperties();
   }
 
@@ -257,7 +257,7 @@ class YamlFormElementBase extends PluginBase implements YamlFormElementInterface
    * {@inheritdoc}
    */
   public function hasWrapper(array $element) {
-    return $this->hasProperty('wrapper_attributes__class');
+    return $this->hasProperty('wrapper_attributes');
   }
 
   /**
@@ -455,12 +455,7 @@ class YamlFormElementBase extends PluginBase implements YamlFormElementInterface
     $this->prepareWrapper($element);
 
     // Replace tokens for all properties.
-    $token_data = [
-      'yamlform' => $yamlform_submission->getYamlForm(),
-      'yamlform-submission' => $yamlform_submission,
-    ];
-    $token_options = ['clear' => TRUE];
-    YamlFormElementHelper::replaceTokens($element, $token_data, $token_options);
+    $element = $this->tokenManager->replace($element, $yamlform_submission);
   }
 
   /**
@@ -969,7 +964,6 @@ class YamlFormElementBase extends PluginBase implements YamlFormElementInterface
     $form['form'] = [
       '#type' => 'details',
       '#title' => $this->t('Form display'),
-      '#open' => FALSE,
     ];
     $form['form']['title_display'] = [
       '#type' => 'select',
@@ -1047,7 +1041,6 @@ class YamlFormElementBase extends PluginBase implements YamlFormElementInterface
       '#type' => 'details',
       '#title' => $this->t('Flexbox item'),
       '#description' => $this->t('Learn more about using <a href=":href">flexbox layouts</a>.', [':href' => 'http://www.w3schools.com/css/css3_flexbox.asp']),
-      '#open' => FALSE,
     ];
     $flex_range = range(0, 12);
     $form['flex']['flex'] = [
@@ -1058,32 +1051,30 @@ class YamlFormElementBase extends PluginBase implements YamlFormElementInterface
       '#options' => [0 => $this->t('0 (none)')] + array_combine($flex_range, $flex_range),
     ];
 
-    /* Custom attributes */
+    /* Wrapper and element attributes */
 
-    $form['attributes'] = [
+    $form['wrapper_attributes'] = [
       '#type' => 'details',
-      '#title' => $this->t('Custom attributes'),
-      '#open' => FALSE,
+      '#title' => $this->t('Wrapper attributes'),
+      '#open' => TRUE,
     ];
-    $form['attributes']['wrapper_attributes__class'] = self::getAttributesClassElement(
-      $this->t('Wrapper CSS classes'),
-      $this->t("Apply classes to the element's wrapper around both the field and its label. Select 'custom...' to enter custom classes."),
-      $this->configFactory->get('yamlform.settings')->get('elements.wrapper_classes')
-    );
-    $form['attributes']['wrapper_attributes__style'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Wrapper CSS style'),
-      '#description' => $this->t("Apply custom styles to the element's wrapper around both the field and its label."),
+    $form['wrapper_attributes']['wrapper_attributes'] = [
+      '#type' => 'yamlform_element_attributes',
+      '#title' => $this->t('Wrapper'),
+      '#class__description' => $this->t("Apply classes to the element's wrapper around both the field and its label. Select 'custom...' to enter custom classes."),
+      '#style__description' => $this->t("Apply custom styles to the element's wrapper around both the field and its label."),
+      '#attributes__description' => $this->t("Enter additional attributes to be added the element's wrapper."),
+      '#classes' => $this->configFactory->get('yamlform.settings')->get('elements.wrapper_classes'),
     ];
-    $form['attributes']['attributes__class'] = self::getAttributesClassElement(
-      $this->t('Element CSS classes'),
-      $this->t("Apply classes to the element. Select 'custom...' to enter custom classes."),
-      $this->configFactory->get('yamlform.settings')->get('elements.classes')
-    );
-    $form['attributes']['attributes__style'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Element CSS style'),
-      '#description' => $this->t('Apply custom styles to the element.'),
+    $form['element_attributes'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Element attributes'),
+      '#open' => TRUE,
+    ];
+    $form['element_attributes']['attributes'] = [
+      '#type' => 'yamlform_element_attributes',
+      '#title' => $this->t('Element'),
+      '#classes' => $this->configFactory->get('yamlform.settings')->get('elements.classes'),
     ];
 
     /* Validation */
@@ -1096,7 +1087,6 @@ class YamlFormElementBase extends PluginBase implements YamlFormElementInterface
     $form['validation'] = [
       '#type' => 'details',
       '#title' => $this->t('Form validation'),
-      '#open' => FALSE,
     ];
     $form['validation']['required'] = [
       '#type' => 'checkbox',
@@ -1126,7 +1116,6 @@ class YamlFormElementBase extends PluginBase implements YamlFormElementInterface
     $form['conditional'] = [
       '#type' => 'details',
       '#title' => $this->t('Conditional logic'),
-      '#open' => FALSE,
     ];
     $form['conditional']['states'] = [
       '#type' => 'yamlform_element_states',
@@ -1139,7 +1128,6 @@ class YamlFormElementBase extends PluginBase implements YamlFormElementInterface
     $form['display'] = [
       '#type' => 'details',
       '#title' => $this->t('Submission display'),
-      '#open' => FALSE,
     ];
     $form['display']['format'] = [
       '#type' => 'select',
@@ -1167,7 +1155,6 @@ class YamlFormElementBase extends PluginBase implements YamlFormElementInterface
     $form['access'] = [
       '#type' => 'details',
       '#title' => $this->t('Element access'),
-      '#open' => FALSE,
     ];
     if (!$this->currentUser->hasPermission('administer yamlform') && !$this->currentUser->hasPermission('administer yamlform element access')) {
       $form['access'] = FALSE;
@@ -1191,7 +1178,6 @@ class YamlFormElementBase extends PluginBase implements YamlFormElementInterface
     $form['admin'] = [
       '#type' => 'details',
       '#title' => $this->t('Administration'),
-      '#open' => FALSE,
     ];
     $form['admin']['private'] = [
       '#type' => 'checkbox',
@@ -1214,10 +1200,26 @@ class YamlFormElementBase extends PluginBase implements YamlFormElementInterface
    */
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
     $default_properties = $this->getDefaultProperties();
-    $this->properties = YamlFormElementHelper::removePrefix($this->configuration) + $default_properties;
-    $this->setConfigurationFormAttributes($this->properties);
+    $element_properties = YamlFormArrayHelper::removePrefix($this->configuration) + $default_properties;
+
+    // Set default and element properties.
+    // Note: Storing this information in the form's state allows modules to view
+    // and alter this information using form alteration hooks.
+    $form_state->set('default_properties', $default_properties);
+    $form_state->set('element_properties', $element_properties);
 
     $form = $this->form($form, $form_state);
+
+    // Get element properties which can be altered by YamlFormElementHandlers.
+    // @see \Drupal\yamlform\Plugin\YamlFormElement\YamlFormEntityReferenceTrait::form
+    $element_properties = $form_state->get('element_properties');
+
+    // Copy element properties to custom properties which will be determined
+    // as the default values are set.
+    $custom_properties = $element_properties;
+
+    // Populate the form.
+    $this->setConfigurationFormDefaultValueRecursive($form, $custom_properties);
 
     // Set fieldset weights so that they appear first.
     foreach ($form as &$element) {
@@ -1226,24 +1228,22 @@ class YamlFormElementBase extends PluginBase implements YamlFormElementInterface
       }
     }
 
-    $this->setConfigurationFormDefaultValueRecursive($form, $this->properties);
-
     // Store 'type' as a hardcoded value and make sure it is always first.
     // Also always remove the 'yamlform_*' prefix from the type name.
-    if (isset($this->properties['type'])) {
+    if (isset($custom_properties['type'])) {
       $form['type'] = [
         '#type' => 'value',
-        '#value' => preg_replace('/^yamlform_/', '', $this->properties['type']),
+        '#value' => preg_replace('/^yamlform_/', '', $custom_properties['type']),
         '#parents' => ['properties', 'type'],
       ];
-      unset($this->properties['type']);
+      unset($custom_properties['type']);
     }
 
     // Allow custom properties (ie #attributes) to be added to the element.
     $form['custom'] = [
       '#type' => 'details',
       '#title' => $this->t('Custom settings'),
-      '#open' => $this->properties ? TRUE : FALSE,
+      '#open' => $custom_properties ? TRUE : FALSE,
       '#access' => $this->currentUser->hasPermission('edit yamlform source'),
     ];
     if ($api_url = $this->getPluginApiUrl()) {
@@ -1254,27 +1254,23 @@ class YamlFormElementBase extends PluginBase implements YamlFormElementInterface
       $form['custom']['#description'] = $this->t('Read the %label element\'s <a href=":href">API documentation</a>.', $t_args);
     }
 
-    $form['custom']['custom'] = [
+    $form['custom']['properties'] = [
       '#type' => 'yamlform_codemirror',
       '#mode' => 'yaml',
       '#title' => $this->t('Custom properties'),
-      '#description' => $this->t('Properties can include additional custom <a href=":attributes_href">#attributes</a>.', [':attributes_href' => 'https://api.drupal.org/api/drupal/developer!topics!forms_api_reference.html/7.x#attributes']) .
-      ' ' .
-      $this->t('Properties do not have to be prepended with a hash (#) character, the hash character will be automatically added upon submission.') .
+      '#description' => $this->t('Properties do not have to be prepended with a hash (#) character, the hash character will be automatically added upon submission.') .
       '<br/>' .
-      $this->t('These properties and callbacks are not allowed: @properties', ['@properties' => YamlFormArrayHelper::toString(YamlFormElementHelper::addPrefix(YamlFormElementHelper::$ignoredProperties))]),
-      '#default_value' => Yaml::encode($this->properties),
+      $this->t('These properties and callbacks are not allowed: @properties', ['@properties' => YamlFormArrayHelper::toString(YamlFormArrayHelper::addPrefix(YamlFormElementHelper::$ignoredProperties))]),
+      '#default_value' => $custom_properties ,
       '#parents' => ['properties', 'custom'],
     ];
 
-    if (\Drupal::moduleHandler()->moduleExists('token')) {
-      $form['token_tree_link'] = [
-        '#theme' => 'token_tree_link',
-        '#token_types' => ['yamlform', 'yamlform-submission'],
-        '#click_insert' => FALSE,
-        '#dialog' => TRUE,
-      ];
-    }
+    $form['token_tree_link'] = $this->tokenManager->buildTreeLink();
+
+    // Set custom properties.
+    // Note: Storing this information in the form's state allows modules to view
+    // and alter this information using form alteration hooks.
+    $form_state->set('custom_properties', $custom_properties);
 
     return $form;
   }
@@ -1284,13 +1280,14 @@ class YamlFormElementBase extends PluginBase implements YamlFormElementInterface
    *
    * @param array $form
    *   A form render array.
-   * @param array $properties
-   *   The element's properties without hash prefix.
+   * @param array $element_properties
+   *   The element's properties without hash prefix. Any property that is found
+   *   in the form will be populated and unset from $element_properties array.
    *
    * @return bool
    *   TRUE is the form has any inputs.
    */
-  protected function setConfigurationFormDefaultValueRecursive(array &$form, array &$properties) {
+  protected function setConfigurationFormDefaultValueRecursive(array &$form, array &$element_properties) {
     $has_input = FALSE;
 
     foreach ($form as $property_name => &$property_element) {
@@ -1303,7 +1300,7 @@ class YamlFormElementBase extends PluginBase implements YamlFormElementInterface
       // @see \Drupal\yamlform\Plugin\YamlFormElement\YamlFormEntityReferenceTrait::form
       // @todo Fix entity reference AJAX and move code YamlFormEntityReferenceTrait.
       if (!empty($property_element['#tree']) && $property_name == 'selection_settings') {
-        unset($properties[$property_name]);
+        unset($element_properties[$property_name]);
         $property_element['#parents'] = ['properties', $property_name];
         $has_input = TRUE;
         continue;
@@ -1313,9 +1310,9 @@ class YamlFormElementBase extends PluginBase implements YamlFormElementInterface
       // manager.
       $is_input = $this->elementManager->getElementInstance($property_element)->isInput($property_element);
       if ($is_input) {
-        if (isset($properties[$property_name])) {
+        if (isset($element_properties[$property_name])) {
           // If this property exists, then set its default value.
-          $this->setConfigurationFormDefaultValue($form, $properties, $property_element, $property_name);
+          $this->setConfigurationFormDefaultValue($form, $element_properties, $property_element, $property_name);
           $has_input = TRUE;
         }
         else {
@@ -1325,9 +1322,9 @@ class YamlFormElementBase extends PluginBase implements YamlFormElementInterface
       }
       else {
         // Recurse down this container and see if it's children have inputs.
-        // Note: #access is used to protected containers that should always
+        // Note: #access is used to protect containers that should always
         // be visible.
-        $container_has_input = $this->setConfigurationFormDefaultValueRecursive($property_element, $properties);
+        $container_has_input = $this->setConfigurationFormDefaultValueRecursive($property_element, $element_properties);
         if ($container_has_input) {
           $has_input = TRUE;
         }
@@ -1345,15 +1342,15 @@ class YamlFormElementBase extends PluginBase implements YamlFormElementInterface
    *
    * @param array $form
    *   An element's configuration form.
-   * @param array $properties
+   * @param array $element_properties
    *   The element's properties without hash prefix.
    * @param array $property_element
    *   The form input used to set an element's property.
    * @param string $property_name
    *   THe property's name.
    */
-  protected function setConfigurationFormDefaultValue(array &$form, array &$properties, array &$property_element, $property_name) {
-    $default_value = $properties[$property_name];
+  protected function setConfigurationFormDefaultValue(array &$form, array &$element_properties, array &$property_element, $property_name) {
+    $default_value = $element_properties[$property_name];
     $type = (isset($property_element['#type'])) ? $property_element['#type'] : NULL;
 
     switch ($type) {
@@ -1365,15 +1362,6 @@ class YamlFormElementBase extends PluginBase implements YamlFormElementInterface
         }
         else {
           $property_element['#default_value'] = ($default_value) ? $target_storage->load($default_value) : NULL;
-        }
-        break;
-
-      case 'yamlform_codemirror':
-        if ($property_element['#mode'] == 'yaml' && is_array($default_value)) {
-          $property_element['#default_value'] = Yaml::encode($default_value);
-        }
-        else {
-          $property_element['#default_value'] = $default_value;
         }
         break;
 
@@ -1404,7 +1392,7 @@ class YamlFormElementBase extends PluginBase implements YamlFormElementInterface
     }
 
     $property_element['#parents'] = ['properties', $property_name];
-    unset($properties[$property_name]);
+    unset($element_properties[$property_name]);
   }
 
   /**
@@ -1433,95 +1421,45 @@ class YamlFormElementBase extends PluginBase implements YamlFormElementInterface
    * {@inheritdoc}
    */
   public function getConfigurationFormProperties(array &$form, FormStateInterface $form_state) {
-    $properties = $form_state->getValues();
-
-    if (isset($properties['custom'])) {
-      // Decode and append custom properties.
-      if ($properties['custom']) {
-        $properties += Yaml::decode($properties['custom']);
-      }
-      unset($properties['custom']);
-    }
+    $element_properties = $form_state->getValues();
 
     // Get default properties so that they can be unset below.
-    $default_properties = $this->getDefaultProperties();
+    $default_properties = $form_state->get('default_properties');
+
+    // Get custom properties.
+    if (isset($element_properties['custom'])) {
+      if (is_array($element_properties['custom'])) {
+        $element_properties += $element_properties['custom'];
+      }
+      unset($element_properties['custom']);
+    }
 
     // Remove all hash prefixes so that we can filter out any default
     // properties.
-    YamlFormElementHelper::removePrefix($properties);
-
-    $this->getConfigurationFormAttributes($properties);
+    YamlFormArrayHelper::removePrefix($element_properties);
 
     // Build a temp element used to see if multiple value and/or composite
     // elements need to be supported.
-    $element = YamlFormElementHelper::addPrefix($properties);
-    foreach ($properties as $property_name => $property_value) {
+    $element = YamlFormArrayHelper::addPrefix($element_properties);
+    foreach ($element_properties as $property_name => $property_value) {
       if (!isset($default_properties[$property_name])) {
         continue;
       }
 
-      $this->getConfigurationFormProperty($properties, $property_name, $property_value, $element);
+      $this->getConfigurationFormProperty($element_properties, $property_name, $property_value, $element);
 
-      if ($default_properties[$property_name] == $properties[$property_name]) {
-        unset($properties[$property_name]);
+      // Unset element property that matched the default property.
+      if ($default_properties[$property_name] == $element_properties[$property_name]) {
+        unset($element_properties[$property_name]);
       }
     }
 
     // Make sure #type is always first.
-    if (isset($properties['type'])) {
-      $properties = ['type' => $properties['type']] + $properties;
+    if (isset($element_properties['type'])) {
+      $element_properties = ['type' => $element_properties['type']] + $element_properties;
     }
 
-    return YamlFormElementHelper::addPrefix($properties);
-  }
-
-  /**
-   * Set configuration form attributes from properties.
-   *
-   * @param array $properties
-   *   An array of element properties.
-   */
-  protected function setConfigurationFormAttributes(&$properties) {
-    foreach ($properties as $property => $value) {
-      // Attributes are delimited using '__'.
-      if (strpos($property, 'attributes__') === FALSE) {
-        continue;
-      }
-
-      list($custom_parent, $custom_key) = explode('__', $property);
-      if (isset($properties[$custom_parent][$custom_key])) {
-        $properties[$property] = $properties[$custom_parent][$custom_key];
-        unset($properties[$custom_parent][$custom_key]);
-        if (empty($properties[$custom_parent])) {
-          unset($properties[$custom_parent]);
-        }
-      }
-    }
-  }
-
-  /**
-   * Get configuration form attributes from properties.
-   *
-   * @param array $properties
-   *   An array of element properties.
-   */
-  protected function getConfigurationFormAttributes(array &$properties) {
-    foreach ($properties as $property => $value) {
-      // Attributes are delimited using '__'.
-      if (strpos($property, 'attributes__') === FALSE) {
-        continue;
-      }
-
-      list($custom_parent, $custom_key) = explode('__', $property);
-      if ($value) {
-        // Convert key/value pairs to a simple indexed array of values.
-        if (is_array($value)) {
-          $value = array_values($value);
-        }
-        $properties[$custom_parent][$custom_key] = $value;
-      }
-      unset($properties[$property]);
-    }
+    return YamlFormArrayHelper::addPrefix($element_properties);
   }
 
   /**
@@ -1537,75 +1475,9 @@ class YamlFormElementBase extends PluginBase implements YamlFormElementInterface
    *   The element whose properties are being updated.
    */
   protected function getConfigurationFormProperty(array &$properties, $property_name, $property_value, array $element) {
-    if ($property_name == 'default_value' && trim($property_value) && $this->hasMultipleValues($element)) {
-      if ($this->isComposite()) {
-        $properties[$property_name] = Yaml::decode($property_value);
-      }
-      else {
-        $properties[$property_name] = preg_split('/\s*,\s*/', $property_value);
-      }
+    if ($property_name == 'default_value' && is_string($property_value) && $this->hasMultipleValues($element)) {
+      $properties[$property_name] = preg_split('/\s*,\s*/', $property_value);
     }
-    else {
-      // Decode raw YAML into an associative array.
-      if ($this->isPropertyArray($property_name) && is_string($property_value)) {
-        // Handle rare case where single array value is not parsed correctly.
-        if (preg_match('/^- (.*?)\s*$/', $property_value, $match)) {
-          $property_value = [$match[1]];
-        }
-        else {
-          try {
-            $property_value = Yaml::decode($property_value);
-          }
-          catch (\Exception $exception) {
-            // Do nothing with YAML decoding exception.
-          }
-        }
-      }
-
-      $properties[$property_name] = $property_value;
-    }
-  }
-
-  /**
-   * Determine is an element's property should be an associative array.
-   *
-   * @param string $property_name
-   *   An element's property name.
-   *
-   * @return bool
-   *   TRUE is the element's default property value is an array.
-   */
-  protected function isPropertyArray($property_name) {
-    $default_properties = $this->getDefaultProperties();
-    return is_array($default_properties[$property_name]);
-  }
-
-  /**
-   * Get element for entering an element's or wrappers attribute class(es).
-   *
-   * @param string $title
-   *   The element's title.
-   * @param string $description
-   *   The element's description.
-   * @param string $classes
-   *   Available classes.
-   *
-   * @return array
-   *   An element for entering an element's class(es).
-   */
-  public static function getAttributesClassElement($title, $description, $classes) {
-    $classes = preg_split('/\r?\n/', trim($classes));
-    return [
-      '#title' => $title,
-      '#description' => $description,
-      '#type' => 'yamlform_select_other',
-      '#multiple' => TRUE,
-      '#options' => [YamlFormSelectOther::OTHER_OPTION => t('custom...')] + array_combine($classes, $classes),
-      '#other__option_delimiter' => ' ',
-      '#other__placeholder' => t('Enter custom classes...'),
-      '#attached' => ['library' => ['yamlform/yamlform.element.select2']],
-      '#attributes' => ['class' => ['js-yamlform-select2', 'yamlform-select2']],
-    ];
   }
 
 }

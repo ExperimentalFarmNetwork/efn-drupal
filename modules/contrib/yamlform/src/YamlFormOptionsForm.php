@@ -11,7 +11,7 @@ use Drupal\yamlform\Utility\YamlFormArrayHelper;
 use Drupal\yamlform\Utility\YamlFormOptionsHelper;
 
 /**
- * Base for controller for form options.
+ * Provides a form to set options.
  */
 class YamlFormOptionsForm extends EntityForm {
 

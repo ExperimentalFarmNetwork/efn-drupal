@@ -11,7 +11,7 @@ interface GroupPermissionHandlerInterface {
 
   /**
    * Gets all defined group permissions.
-   * 
+   *
    * @param bool $include_plugins
    *   (optional) Whether to also include the permissions defined by all
    *   installed group content plugins. Defaults to FALSE.
@@ -49,6 +49,10 @@ interface GroupPermissionHandlerInterface {
    *     the module providing the permission. You may set this to another
    *     module's name to make it appear as if the permission was provided by
    *     that module.
+   *   - section: (optional) The section name of the permission. This is used to
+   *     maintain a clear overview on the permissions form. Defaults to the
+   *     plugin name for plugin provided permissions and to "General" for all
+   *     other permissions.
    */
   public function getPermissions($include_plugins = FALSE);
 
@@ -63,7 +67,7 @@ interface GroupPermissionHandlerInterface {
    *
    * @return array
    *   The full permission list, structured like ::getPermissions().
-   * 
+   *
    * @see \Drupal\group\Access\GroupPermissionHandlerInterface::getPermissions()
    */
   public function getPermissionsByGroupType(GroupTypeInterface $group_type);

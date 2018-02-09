@@ -4,6 +4,7 @@ namespace Drupal\yamlform\Controller;
 
 use Drupal\Component\Plugin\PluginManagerInterface;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Url;
 use Drupal\yamlform\Utility\YamlFormDialogHelper;
 use Drupal\yamlform\YamlFormHandlerInterface;
@@ -14,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Controller for all form handlers.
  */
-class YamlFormPluginHandlerController extends ControllerBase {
+class YamlFormPluginHandlerController extends ControllerBase implements ContainerInjectionInterface {
 
   /**
    * A form handler plugin manager.

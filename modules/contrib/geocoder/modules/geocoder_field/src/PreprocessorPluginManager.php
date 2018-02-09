@@ -8,6 +8,9 @@ use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\geocoder\GeocoderPluginManagerBase;
 use Drupal\geocoder_field\Annotation\GeocoderPreprocessor;
+use Drupal\Core\Field\FieldConfigInterface;
+use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\Component\Serialization\Json;
 
 /**
  * Provides a plugin manager for geocoder data preprocessors.
@@ -27,7 +30,7 @@ class PreprocessorPluginManager extends GeocoderPluginManagerBase {
    * Pre-processes a field, running all plugins that support that field type.
    *
    * @param \Drupal\Core\Field\FieldItemListInterface $field
-   *   The field item list to be processsed.
+   *   The field item list to be processed.
    */
   public function preprocess(FieldItemListInterface &$field) {
     $type = $field->getFieldDefinition()->getType();
@@ -47,6 +50,56 @@ class PreprocessorPluginManager extends GeocoderPluginManagerBase {
       $preprocessor = $this->createInstance($plugin_id);
       $preprocessor->setField($field)->preprocess();
     }
+  }
+
+  /**
+   * Get the ordered list of fields to be Geocoded | Reverse Geocoded.
+   *
+   * Reorders the fields based on the user-defined GeocoderField weights.
+   *
+   * @param \Drupal\Core\Entity\ContentEntityInterface $entity
+   *   The Entity that needs to be preprocessed.
+   *
+   * @return \Drupal\Core\Field\FieldItemListInterface[]
+   *   An array of field item lists implementing, keyed by field name.
+   */
+  public function getOrderedGeocodeFields(ContentEntityInterface $entity) {
+    $geocoder_fields = [];
+    $results = [];
+
+    foreach ($entity->getFields() as $field_name => $field) {
+      /** @var \Drupal\Core\Field\FieldConfigInterface $field_config */
+      if (!($field_config = $field->getFieldDefinition()) instanceof FieldConfigInterface) {
+        // Only configurable fields are subject of geocoding.
+        continue;
+      }
+      $geocoder = $field_config->getThirdPartySettings('geocoder_field');
+      if (empty($geocoder['method']) || $geocoder['method'] === 'none') {
+        // This field was not configured to geocode/reverse_geocode from/to
+        // other field.
+        continue;
+      }
+
+      $geocoder_fields[$field_name] = [
+        'field_name' => $field_name,
+        'field_value' => $field,
+        'weight' => isset($geocoder['weight']) ? $geocoder['weight'] : 0,
+      ];
+    }
+
+    usort($geocoder_fields, function ($a, $b) {
+      if ($a['weight'] === $b['weight']) {
+        return 0;
+      }
+      return ($a['weight'] < $b['weight']) ? -1 : 1;
+    });
+
+    foreach ($geocoder_fields as $field) {
+      $results[$field['field_name']] = $field['field_value'];
+    }
+
+    return $results;
+
   }
 
 }

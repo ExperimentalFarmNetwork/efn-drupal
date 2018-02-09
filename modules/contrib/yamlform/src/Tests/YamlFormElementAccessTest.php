@@ -17,7 +17,7 @@ class YamlFormElementAccessTest extends YamlFormTestBase {
    *
    * @var array
    */
-  public static $modules = ['yamlform', 'yamlform_ui', 'yamlform_test'];
+  protected static $modules = ['yamlform', 'yamlform_ui', 'yamlform_test'];
 
   /**
    * Test element access.

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geofield\Annotation\GeofieldBackend.
- */
-
 namespace Drupal\geofield\Annotation;
 
 use Drupal\Component\Annotation\Plugin;

@@ -28,6 +28,7 @@ settings:
   page_submit_path: ''
   page_confirm_path: ''
   form_submit_label: ''
+  form_submit_attributes: {  }
   form_exception_message: ''
   form_closed_message: ''
   form_confidential: false
@@ -43,22 +44,31 @@ settings:
   wizard_progress_pages: false
   wizard_progress_percentage: false
   wizard_next_button_label: ''
+  wizard_next_button_attributes: {  }
   wizard_prev_button_label: ''
+  wizard_prev_button_attributes: {  }
   wizard_start_label: ''
   wizard_complete: true
   wizard_complete_label: ''
   preview: 0
   preview_next_button_label: ''
+  preview_next_button_attributes: {  }
   preview_prev_button_label: ''
+  preview_prev_button_attributes: {  }
   preview_message: ''
   draft: false
   draft_auto_save: false
   draft_button_label: ''
+  draft_button_attributes: {  }
   draft_saved_message: ''
   draft_loaded_message: ''
   confirmation_type: page
   confirmation_message: ''
   confirmation_url: ''
+  confirmation_attributes: {  }
+  confirmation_back: true
+  confirmation_back_label: ''
+  confirmation_back_attributes: {  }
   limit_total: null
   limit_total_message: ''
   limit_user: null
@@ -110,13 +120,13 @@ handlers:
       from_name: default
       subject: default
       body: |
-        <h3>default:</h3>[yamlform-submission:values:checkboxes]<hr/>
-        <h3>comma:</h3>[yamlform-submission:values:checkboxes:comma]<hr/>
-        <h3>semicolon:</h3>[yamlform-submission:values:checkboxes:semicolon]<hr/>
-        <h3>and:</h3>[yamlform-submission:values:checkboxes:and]<hr/>
-        <h3>ul:</h3>[yamlform-submission:values:checkboxes:ul]<hr/>
-        <h3>ol:</h3>[yamlform-submission:values:checkboxes:ol]<hr/>
-        <h3>raw:</h3>[yamlform-submission:values:checkboxes:raw]<hr/>
+        <h3>default:</h3>[yamlform_submission:values:checkboxes]<hr/>
+        <h3>comma:</h3>[yamlform_submission:values:checkboxes:comma]<hr/>
+        <h3>semicolon:</h3>[yamlform_submission:values:checkboxes:semicolon]<hr/>
+        <h3>and:</h3>[yamlform_submission:values:checkboxes:and]<hr/>
+        <h3>ul:</h3>[yamlform_submission:values:checkboxes:ul]<hr/>
+        <h3>ol:</h3>[yamlform_submission:values:checkboxes:ol]<hr/>
+        <h3>raw:</h3>[yamlform_submission:values:checkboxes:raw]<hr/>
       excluded_elements: {  }
       html: true
       attachments: false
@@ -136,25 +146,25 @@ handlers:
       subject: default
       body: |
         default:
-        [yamlform-submission:values:checkboxes]
+        [yamlform_submission:values:checkboxes]
         
         comma:
-        [yamlform-submission:values:checkboxes:comma]
+        [yamlform_submission:values:checkboxes:comma]
         
         semicolon:
-        [yamlform-submission:values:checkboxes:semicolon]
+        [yamlform_submission:values:checkboxes:semicolon]
         
         and:
-        [yamlform-submission:values:checkboxes:and]
+        [yamlform_submission:values:checkboxes:and]
         
         ul:
-        [yamlform-submission:values:checkboxes:ul]
+        [yamlform_submission:values:checkboxes:ul]
         
         ol:
-        [yamlform-submission:values:checkboxes:ol]
+        [yamlform_submission:values:checkboxes:ol]
         
         raw:
-        [yamlform-submission:values:checkboxes:raw]
+        [yamlform_submission:values:checkboxes:raw]
       excluded_elements: {  }
       html: false
       attachments: false

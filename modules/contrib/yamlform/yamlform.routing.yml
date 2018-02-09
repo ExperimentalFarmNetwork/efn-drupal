@@ -398,6 +398,7 @@ entity.yamlform_submission.sticky_toggle:
     _controller: '\Drupal\yamlform\Controller\YamlFormSubmissionController::sticky'
   requirements:
     _entity_access: 'yamlform_submission.update'
+    _csrf_token: 'TRUE'
 
 # Handlers
 
@@ -481,3 +482,15 @@ yamlform.element.autocomplete:
         type: 'entity:yamlform'
   requirements:
     _entity_access: 'yamlform.submission_page'
+
+
+# Autocomplete
+
+yamlform.element.message.close:
+  path: '/yamlform/message/close/{storage}/{id}'
+  defaults:
+    _controller: '\Drupal\yamlform\Controller\YamlFormElementController::close'
+    _storage: user
+  requirements:
+    _access: 'TRUE'
+    _csrf_token: 'TRUE'

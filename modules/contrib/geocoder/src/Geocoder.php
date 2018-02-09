@@ -38,10 +38,10 @@ class Geocoder implements GeocoderInterface {
         return $provider->geocode($data);
       }
       catch (InvalidCredentials $e) {
-        static::log($e->getMessage(), 'error');
+        static::log($e->getMessage());
       }
       catch (\Exception $e) {
-        static::log($e->getMessage(), 'error');
+        static::log($e->getMessage());
       }
     }
 
@@ -51,7 +51,7 @@ class Geocoder implements GeocoderInterface {
   /**
    * {@inheritdoc}
    */
-  public function reverse(\double $latitude, \double $longitude, array $plugins, array $options = []) {
+  public function reverse($latitude, $longitude, array $plugins, array $options = []) {
     foreach ($plugins as $plugin_id) {
       $options += [$plugin_id => []];
       $provider = $this->providerPluginManager->createInstance($plugin_id, $options[$plugin_id]);
@@ -60,10 +60,10 @@ class Geocoder implements GeocoderInterface {
         return $provider->reverse($latitude, $longitude);
       }
       catch (InvalidCredentials $e) {
-        static::log($e->getMessage(), 'error');
+        static::log($e->getMessage());
       }
       catch (\Exception $e) {
-        static::log($e->getMessage(), 'error');
+        static::log($e->getMessage());
       }
     }
 
@@ -75,12 +75,9 @@ class Geocoder implements GeocoderInterface {
    *
    * @param string $message
    *   The message.
-   * @param string $type
-   *   The type of message.
    */
-  public static function log($message, $type) {
+  public static function log($message) {
     \Drupal::logger('geocoder')->error($message);
-    drupal_set_message($message, $type);
   }
 
 }

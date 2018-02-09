@@ -2,6 +2,7 @@
 
 namespace Drupal\yamlform\Plugin\YamlFormElement;
 
+use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Form\OptGroup;
 use Drupal\yamlform\Utility\YamlFormArrayHelper;
@@ -25,7 +26,15 @@ abstract class OptionsBase extends YamlFormElementBase {
    * {@inheritdoc}
    */
   public function getDefaultProperties() {
-    return parent::getDefaultProperties() + [
+    $default_properties = parent::getDefaultProperties();
+
+    // Issue #2836374: Wrapper attributes are not supported by composite
+    // elements, this includes radios, checkboxes, and buttons.
+    if (preg_match('/(radios|checkboxes|buttons)/', $this->getPluginId())) {
+      unset($default_properties['wrapper_attributes']);
+    }
+
+    return $default_properties + [
       // Options settings.
       'options' => [],
       'options_randomize' => FALSE,
@@ -390,6 +399,9 @@ abstract class OptionsBase extends YamlFormElementBase {
       elseif ($export_options['options_item_format'] == 'label') {
         $record[] = YamlFormOptionsHelper::getOptionText($value, $element_options);
       }
+      else {
+        $record[] = $value;
+      }
     }
 
     return $record;
@@ -437,6 +449,15 @@ abstract class OptionsBase extends YamlFormElementBase {
     $form['general']['default_value']['#description'] = $this->t('The default value of the field identified by its key.');
     $form['general']['default_value']['#description'] .= ' ' . $this->t('For multiple options, use commas to separate multiple defaults.');
 
+    // Issue #2836374: Wrapper attributes are not supported by composite
+    // elements, this includes radios, checkboxes, and buttons.
+    if (preg_match('/(radios|checkboxes|buttons)/', $this->getPluginId())) {
+      $t_args = [
+        '@name' => Unicode::strtolower($this->getPluginLabel()),
+        ':href' => 'https://www.drupal.org/node/2836364',
+      ];
+      $form['element_attributes']['#description'] = $this->t('Please note: That the below custom element attributes will also be applied to the @name fieldset wrapper. (<a href=":href">Issue #2836374</a>)', $t_args);
+    }
     // Options.
     $form['options'] = [
       '#type' => 'fieldset',

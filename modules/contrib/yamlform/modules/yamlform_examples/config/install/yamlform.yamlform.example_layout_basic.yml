@@ -7,8 +7,8 @@ dependencies:
 uid: null
 template: false
 id: example_layout_basic
-title: 'Example: Basic layout'
-description: 'Basic layout examples using messages, CSS classes, custom attributes, and tables that are included in Drupal 8 core.'
+title: 'Example: Layout: Basic'
+description: 'Examples of basic element layout and enhancements using messages, CSS classes, custom attributes, and tables.'
 elements: |
   message_example:
     '#type': details
@@ -18,17 +18,21 @@ elements: |
       '#type': message
       '#message_type': info
       '#message_message': 'This is an <strong>info</strong> message.'
+      '#message_close': true
     message_status:
       '#type': message
       '#message_message': 'This is a <strong>status</strong> message.'
+      '#message_close': true
     message_warning:
       '#type': message
       '#message_type': warning
       '#message_message': 'This is a <strong>warning</strong> message.'
+      '#message_close': true
     message_error:
       '#type': message
       '#message_type': error
       '#message_message': 'This is a <strong>error</strong> message.'
+      '#message_close': true
   form_inline_example:
     '#type': details
     '#title': 'Form inline with warning (.form--inline.message.message--warning)'
@@ -211,6 +215,7 @@ settings:
   page_submit_path: ''
   page_confirm_path: ''
   form_submit_label: ''
+  form_submit_attributes: {  }
   form_exception_message: ''
   form_closed_message: ''
   form_confidential: false
@@ -226,22 +231,31 @@ settings:
   wizard_progress_pages: false
   wizard_progress_percentage: false
   wizard_next_button_label: ''
+  wizard_next_button_attributes: {  }
   wizard_prev_button_label: ''
+  wizard_prev_button_attributes: {  }
   wizard_start_label: ''
   wizard_complete: true
   wizard_complete_label: ''
   preview: 0
   preview_next_button_label: ''
+  preview_next_button_attributes: {  }
   preview_prev_button_label: ''
+  preview_prev_button_attributes: {  }
   preview_message: ''
   draft: false
   draft_auto_save: false
   draft_button_label: ''
+  draft_button_attributes: {  }
   draft_saved_message: ''
   draft_loaded_message: ''
   confirmation_type: page
   confirmation_message: ''
   confirmation_url: ''
+  confirmation_attributes: {  }
+  confirmation_back: true
+  confirmation_back_label: ''
+  confirmation_back_attributes: {  }
   limit_total: null
   limit_total_message: ''
   limit_user: null

@@ -2,7 +2,6 @@
 
 namespace Drupal\Tests\profile\Kernel;
 
-use Drupal\Component\Utility\SafeMarkup;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\KernelTests\Core\Entity\EntityKernelTestBase;
 use Drupal\profile\Entity\Profile;
@@ -79,14 +78,16 @@ class ProfileAccessTest extends EntityKernelTestBase {
 
     // Verify access through route.
     $this->assertFalse($this->accessManager->checkNamedRoute(
-      'entity.profile.add_form',
+      'entity.profile.type.user_profile_form.add',
       ['user' => $web_user1->id(), 'profile_type' => $this->type->id()],
       $web_user1
     ));
 
-
     // Test user with permission to only add a profile.
-    $web_user2 = $this->createUser([], ["create {$this->type->id()} profile"]);
+    $web_user2 = $this->createUser([], [
+      "create {$this->type->id()} profile",
+      "update own {$this->type->id()} profile",
+    ]);
     $web_user1->addRole($web_user2->get('roles')->first()->target_id);
     $web_user1->save();
 
@@ -96,13 +97,13 @@ class ProfileAccessTest extends EntityKernelTestBase {
 
     // User 2 can create profile of type.
     $this->assertTrue($this->accessManager->checkNamedRoute(
-      'entity.profile.add_form',
+      'entity.profile.type.user_profile_form.add',
       ['user' => $web_user2->id(), 'profile_type' => $this->type->id()],
       $web_user2
     ));
     // User 1 cannot create a profile for User 2.
     $this->assertFalse($this->accessManager->checkNamedRoute(
-      'entity.profile.add_form',
+      'entity.profile.type.user_profile_form.add',
       ['user' => $web_user2->id(), 'profile_type' => $this->type->id()],
       $web_user1
     ));
@@ -111,23 +112,26 @@ class ProfileAccessTest extends EntityKernelTestBase {
     $second_type = $this->createProfileType('test2', 'Test2 profile', TRUE);
     $this->assertFalse($this->accessControlHandler->createAccess('test2', $web_user2));
     $this->assertFalse($this->accessManager->checkNamedRoute(
-      'entity.profile.add_form',
+      'entity.profile.type.user_profile_form.add',
       ['user' => $web_user2->id(), 'profile_type' => $second_type->id()],
       $web_user2
     ));
 
     // Test user with permission to only add any profile.
-    $web_user3 = $this->createUser([], ["create {$this->type->id()} profile"]);
+    $web_user3 = $this->createUser([], [
+      "create {$this->type->id()} profile",
+      "update own {$this->type->id()} profile",
+    ]);
     $this->assertTrue($this->accessControlHandler->createAccess($this->type->id(), $web_user3));
 
     // Verify access through route.
     $this->assertTrue($this->accessManager->checkNamedRoute(
-      'entity.profile.add_form',
+      'entity.profile.type.user_profile_form.add',
       ['user' => $web_user3->id(), 'profile_type' => $this->type->id()],
       $web_user3
     ));
-    $this->assertTrue($this->accessManager->checkNamedRoute(
-      'entity.profile.add_form',
+    $this->assertFalse($this->accessManager->checkNamedRoute(
+      'entity.profile.type.user_profile_form.add',
       ['user' => $web_user2->id(), 'profile_type' => $this->type->id()],
       $web_user3
     ));
@@ -172,7 +176,7 @@ class ProfileAccessTest extends EntityKernelTestBase {
     $this->assertFalse($profile2->access('view', User::getAnonymousUser()));
 
     // @todo Fix in https://www.drupal.org/node/2820209
-    // user_role_grant_permissions(AccountInterface::ANONYMOUS_ROLE, ["view any {$this->type->id()} profile"]);
+    user_role_grant_permissions(AccountInterface::ANONYMOUS_ROLE, ["view any {$this->type->id()} profile"]);
     // $this->assertTrue($profile1->access('view', User::getAnonymousUser()));
     // $this->assertTrue($profile2->access('view', User::getAnonymousUser()));
   }

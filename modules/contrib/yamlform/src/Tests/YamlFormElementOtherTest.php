@@ -17,7 +17,7 @@ class YamlFormElementOtherTest extends WebTestBase {
    *
    * @var array
    */
-  public static $modules = ['yamlform', 'yamlform_test'];
+  protected static $modules = ['yamlform', 'yamlform_test'];
 
   /**
    * Tests building of other elements.

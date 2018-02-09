@@ -69,6 +69,8 @@ class ProfileRoleAccessTest extends EntityKernelTestBase {
   protected $role2;
 
   /**
+   * The profile access handler.
+   *
    * @var \Drupal\profile\ProfileAccessControlHandler
    */
   protected $accessHandler;
@@ -93,7 +95,7 @@ class ProfileRoleAccessTest extends EntityKernelTestBase {
     $this->type2 = $this->createProfileType(NULL, NULL, FALSE, [$this->role2->id()]);
     $this->type3 = $this->createProfileType(NULL, NULL, FALSE, [
       $this->role1->id(),
-      $this->role2->id()
+      $this->role2->id(),
     ]);
 
     $this->accessHandler = $this->container->get('entity_type.manager')
@@ -104,8 +106,7 @@ class ProfileRoleAccessTest extends EntityKernelTestBase {
   }
 
   /**
-   * Tests add profile form access for a profile type that does not require
-   * users to have a role.
+   * Tests profile form access for a type that has no role requirement.
    */
   public function testProfileWithNoRoles() {
     // Create user with add profile permissions.
@@ -113,6 +114,9 @@ class ProfileRoleAccessTest extends EntityKernelTestBase {
     $this->assertTrue($this->accessHandler->createAccess($this->type1->id(), $web_user1));
   }
 
+  /**
+   * Tests profile form access for a type that has the locked role requirement.
+   */
   public function testLockedRoles() {
     $locked_role_type = $this->createProfileType(NULL, NULL, FALSE, [AccountInterface::AUTHENTICATED_ROLE]);
     // Create user with add profile permissions.
@@ -121,8 +125,7 @@ class ProfileRoleAccessTest extends EntityKernelTestBase {
   }
 
   /**
-   * Tests add profile form access for a profile type that requires users to
-   * have a single role.
+   * Tests profile form access for a type that requires a role.
    */
   public function testProfileWithSingleRole() {
     // Create user with add own profile permissions.
@@ -149,12 +152,10 @@ class ProfileRoleAccessTest extends EntityKernelTestBase {
     $this->reloadEntity($web_user1);
 
     $this->assertTrue($this->accessHandler->createAccess($this->type2->id(), $web_user1));
-
   }
 
   /**
-   * Tests add profile form access for a profile type that requires users to
-   * have one of multiple roles.
+   * Tests profile form access for a type that requires multiple roles.
    */
   public function testProfileWithAllRoles() {
     // Create user with add own profile permissions.

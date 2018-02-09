@@ -1,9 +1,139 @@
 # Schema for Geocoder module.
 
-gecoder.settings:
+geocoder.settings:
   type: config_object
   label: 'Geocoder settings'
   mapping:
     cache:
       type: boolean
-      label: 'Cache results'
+      label: 'Should we cache the results ?'
+      description: 'To prevent sending multiple times the same request, you can enable to cache to save temporarily the result of the geocode and reverse geocode in the cache.'
+    plugins_options:
+      type: sequence
+      label: 'Plugins arguments'
+      sequence:
+        type: geocoder.settings.plugins.[%key]
+        label: 'The configuration of a plugin'
+
+geocoder.settings.plugins.googlemaps:
+  type: mapping
+  label: 'GoogleMaps arguments'
+  mapping:
+    apikey:
+      type: string
+      label: 'The apikey'
+      description: '<a href="https://developers.google.com/maps/documentation/javascript/get-api-key">Get a valid Google Maps Api Key</a>'
+    locale:
+      type: string
+      label: 'The locale'
+    region:
+      type: string
+      label: 'The region'
+    usessl:
+      type: boolean
+      label: 'Use SSL'
+
+geocoder.settings.plugins.arcgisonline:
+  type: mapping
+  label: 'ArcGISOnline arguments'
+  mapping:
+    sourcecountry:
+      type: string
+      label: 'The source country'
+    usessl:
+      type: boolean
+      label: 'Use SSL'
+
+geocoder.settings.plugins.bingmaps:
+  type: mapping
+  label: 'Bingmaps arguments'
+  mapping:
+    apikey:
+      type: string
+      label: 'The apikey'
+    locale:
+      type: string
+      label: 'The locale'
+
+geocoder.settings.plugins.geonames:
+  type: mapping
+  label: 'Geonames arguments'
+  mapping:
+    username:
+      type: string
+      label: 'The username'
+    locale:
+      type: string
+      label: 'The locale'
+
+geocoder.settings.plugins.ipinfodb:
+  type: mapping
+  label: 'IpInfoDb arguments'
+  mapping:
+    apikey:
+      type: string
+      label: 'The apikey'
+    precision:
+      type: string
+      label: 'The precision'
+
+geocoder.settings.plugins.mapquest:
+  type: mapping
+  label: 'MapQuest arguments'
+  mapping:
+    apikey:
+      type: string
+      label: 'The apikey'
+    licensed:
+      type: boolean
+      label: 'Is licensed'
+
+geocoder.settings.plugins.maxmind:
+  type: mapping
+  label: 'MaxMind arguments'
+  mapping:
+    apikey:
+      type: string
+      label: 'The apikey'
+    service:
+      type: string
+      label: 'The service'
+    usessl:
+      type: boolean
+      label: 'Use SSL'
+
+geocoder.settings.plugins.nominatim:
+  type: mapping
+  label: 'Nominatim arguments'
+  mapping:
+    rooturl:
+      type: string
+      label: 'The root URL'
+    locale:
+      type: string
+      label: 'The locale'
+
+geocoder.settings.plugins.opencage:
+  type: mapping
+  label: 'OpenCage arguments'
+  mapping:
+    apikey:
+      type: string
+      label: 'The apikey'
+    locale:
+      type: string
+      label: 'The locale'
+    usessl:
+      type: boolean
+      label: 'Use SSL'
+
+geocoder.settings.plugins.tomtom:
+  type: mapping
+  label: 'TomTom arguments'
+  mapping:
+    apikey:
+      type: string
+      label: 'The apikey'
+    locale:
+      type: string
+      label: 'The locale'

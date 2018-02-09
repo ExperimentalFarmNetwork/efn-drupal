@@ -130,6 +130,8 @@ class YamlFormToWebformMigrateForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
+    $this->migrateManager->migrate();
+
     // DEBUG:
     /*
     $messages = $this->migrateManager->migrate();

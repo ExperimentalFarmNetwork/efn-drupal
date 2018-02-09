@@ -2,8 +2,8 @@
 
 namespace Drupal\geocoder_field;
 
+use Drupal\Core\Field\FieldConfigInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\field\FieldConfigInterface;
 
 /**
  * Provides an interface for field plugins.
@@ -17,7 +17,7 @@ interface GeocoderFieldPluginInterface {
    * module as third party settings to the field that is storing the geocoding
    * result.
    *
-   * @param \Drupal\field\FieldConfigInterface $field
+   * @param \Drupal\Core\Field\FieldConfigInterface $field
    *   The field config.
    * @param array $form
    *   The form API form array.

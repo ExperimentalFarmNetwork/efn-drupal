@@ -6,7 +6,6 @@ use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Component\Serialization\Json;
 use Drupal\Component\Utility\Xss;
 use Drupal\Core\Render\Element;
-use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\Core\Template\Attribute;
 
 /**
@@ -60,34 +59,6 @@ class YamlFormElementHelper {
   }
 
   /**
-   * Replaces all tokens in a given render element with appropriate values.
-   *
-   * @param array $element
-   *   A render element.
-   * @param array $data
-   *   (optional) An array of keyed objects.
-   * @param array $options
-   *   (optional) A keyed array of settings and flags to control the token
-   *   replacement process.
-   * @param \Drupal\Core\Render\BubbleableMetadata|null $bubbleable_metadata
-   *   (optional) An object to which static::generate() and the hooks and
-   *   functions that it invokes will add their required bubbleable metadata.
-   *
-   * @see \Drupal\Core\Utility\Token::replace()
-   */
-  public static function replaceTokens(array &$element, array $data = [], array $options = [], BubbleableMetadata $bubbleable_metadata = NULL) {
-    foreach ($element as $element_property => &$element_value) {
-      // Most strings won't contain tokens so lets check and return ASAP.
-      if (is_string($element_value) && strpos($element_value, '[') !== FALSE) {
-        $element[$element_property] = \Drupal::token()->replace($element_value, $data, $options);
-      }
-      elseif (is_array($element_value)) {
-        self::replaceTokens($element_value, $data, $options, $bubbleable_metadata);
-      }
-    }
-  }
-
-  /**
    * Get an associative array containing a render element's properties.
    *
    * @param array $element
@@ -122,50 +93,6 @@ class YamlFormElementHelper {
       }
     }
     return $element;
-  }
-
-  /**
-   * Add prefix to all top level keys in an associative array.
-   *
-   * @param array $array
-   *   An associative array.
-   * @param string $prefix
-   *   Prefix to be prepended to all keys.
-   *
-   * @return array
-   *   An associative array with all top level keys prefixed.
-   */
-  public static function addPrefix(array $array, $prefix = '#') {
-    $prefixed_array = [];
-    foreach ($array as $key => $value) {
-      if ($key[0] != $prefix) {
-        $key = $prefix . $key;
-      }
-      $prefixed_array[$key] = $value;
-    }
-    return $prefixed_array;
-  }
-
-  /**
-   * Remove prefix from all top level keys in an associative array.
-   *
-   * @param array $array
-   *   An associative array.
-   * @param string $prefix
-   *   Prefix to be remove from to all keys.
-   *
-   * @return array
-   *   An associative array with prefix removed from all top level keys.
-   */
-  public static function removePrefix(array $array, $prefix = '#') {
-    $unprefixed_array = [];
-    foreach ($array as $key => $value) {
-      if ($key[0] == $prefix) {
-        $key = preg_replace('/^' . $prefix . '/', '', $key);
-      }
-      $unprefixed_array[$key] = $value;
-    }
-    return $unprefixed_array;
   }
 
   /**
@@ -258,7 +185,7 @@ class YamlFormElementHelper {
   protected static function isIgnoredProperty($property) {
     // Build cached ignored properties regular expression.
     if (!isset(self::$ignoredPropertiesRegExp)) {
-      self::$ignoredPropertiesRegExp = '/__(' . implode('|', array_keys(self::removePrefix(self::$ignoredProperties))) . ')$/';
+      self::$ignoredPropertiesRegExp = '/__(' . implode('|', array_keys(YamlFormArrayHelper::removePrefix(self::$ignoredProperties))) . ')$/';
     }
 
     if (isset(self::$ignoredProperties[$property])) {

@@ -3,9 +3,11 @@
 namespace Drupal\yamlform\Plugin\YamlFormHandler;
 
 use Drupal\Core\Serialization\Yaml;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\yamlform\YamlFormHandlerBase;
 use Drupal\yamlform\YamlFormSubmissionInterface;
+use Drupal\yamlform\YamlFormTokenManagerInterface;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\ResponseInterface;
@@ -27,6 +29,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class RemotePostYamlFormHandler extends YamlFormHandlerBase {
 
   /**
+   * The module handler.
+   *
+   * @var \Drupal\Core\Extension\ModuleHandlerInterface
+   */
+  protected $moduleHandler;
+
+  /**
    * The HTTP client to fetch the feed data with.
    *
    * @var \GuzzleHttp\ClientInterface
@@ -34,11 +43,20 @@ class RemotePostYamlFormHandler extends YamlFormHandlerBase {
   protected $httpClient;
 
   /**
+   * The token manager.
+   *
+   * @var \Drupal\yamlform\YamlFormTranslationManagerInterface
+   */
+  protected $tokenManager;
+
+  /**
    * {@inheritdoc}
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, LoggerInterface $logger, ClientInterface $http_client) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, LoggerInterface $logger, ModuleHandlerInterface $module_handler, ClientInterface $http_client, YamlFormTokenManagerInterface $token_manager) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $logger);
+    $this->moduleHandler = $module_handler;
     $this->httpClient = $http_client;
+    $this->tokenManager = $token_manager;
   }
 
   /**
@@ -50,7 +68,9 @@ class RemotePostYamlFormHandler extends YamlFormHandlerBase {
       $plugin_id,
       $plugin_definition,
       $container->get('logger.factory')->get('yamlform.remote_post'),
-      $container->get('http_client')
+      $container->get('module_handler'),
+      $container->get('http_client'),
+      $container->get('yamlform.token_manager')
     );
   }
 
@@ -75,11 +95,18 @@ class RemotePostYamlFormHandler extends YamlFormHandlerBase {
    * {@inheritdoc}
    */
   public function defaultConfiguration() {
+    $field_names = array_keys(\Drupal::service('entity_field.manager')->getBaseFieldDefinitions('yamlform_submission'));
+    $excluded_data = array_combine($field_names, $field_names);
     return [
       'type' => 'x-www-form-urlencoded',
       'insert_url' => '',
       'update_url' => '',
       'delete_url' => '',
+      'excluded_data' => $excluded_data,
+      'custom_data' => '',
+      'insert_custom_data' => '',
+      'update_custom_data' => '',
+      'delete_custom_data' => '',
       'debug' => FALSE,
     ];
   }
@@ -117,7 +144,7 @@ class RemotePostYamlFormHandler extends YamlFormHandlerBase {
 
     $form['type'] = [
       '#type' => 'select',
-      '#title' => $this->t('Post Type'),
+      '#title' => $this->t('Post type'),
       '#description' => $this->t('Use x-www-form-urlencoded if unsure, as it is the default format for HTML forms. You also have the option to post data in <a href="http://www.json.org/" target="_blank">JSON</a> format.'),
       '#options' => [
         'x-www-form-urlencoded' => $this->t('x-www-form-urlencoded'),
@@ -126,6 +153,69 @@ class RemotePostYamlFormHandler extends YamlFormHandlerBase {
       '#required' => TRUE,
       '#default_value' => $this->configuration['type'],
     ];
+
+    $form['submission_data'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Submission data'),
+    ];
+    $form['submission_data']['excluded_data'] = [
+      '#type' => 'yamlform_excluded_columns',
+      '#title' => $this->t('Posted data'),
+      '#title_display' => 'invisible',
+      '#yamlform' => $yamlform,
+      '#required' => TRUE,
+      '#parents' => ['settings', 'excluded_data'],
+      '#default_value' => $this->configuration['excluded_data'],
+    ];
+
+    $form['custom_data'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Custom data'),
+      '#description' => $this->t('Custom data will take precedence over submission data. You may use tokens.'),
+    ];
+
+    $form['custom_data']['custom_data'] = [
+      '#type' => 'yamlform_codemirror',
+      '#mode' => 'yaml',
+      '#title' => $this->t('Custom data'),
+      '#description' => $this->t('Enter custom data that will be included in all remote post requests.'),
+      '#parents' => ['settings', 'custom_data'],
+      '#default_value' => $this->configuration['custom_data'],
+    ];
+    $form['custom_data']['insert_custom_data'] = [
+      '#type' => 'yamlform_codemirror',
+      '#mode' => 'yaml',
+      '#title' => $this->t('Insert data'),
+      '#description' => $this->t("Enter custom data that will be included when a new form submission is saved."),
+      '#parents' => ['settings', 'insert_custom_data'],
+      '#states' => [
+        'visible' => [
+          [':input[name="settings[update_url]"]' => ['filled' => TRUE]],
+          'or',
+          [':input[name="settings[delete_url]"]' => ['filled' => TRUE]],
+        ],
+      ],
+      '#default_value' => $this->configuration['insert_custom_data'],
+    ];
+    $form['custom_data']['update_custom_data'] = [
+      '#type' => 'yamlform_codemirror',
+      '#mode' => 'yaml',
+      '#title' => $this->t('Update data'),
+      '#description' => $this->t("Enter custom data that will be included when a form submission is updated."),
+      '#parents' => ['settings', 'update_custom_data'],
+      '#states' => ['visible' => [':input[name="settings[update_url]"]' => ['filled' => TRUE]]],
+      '#default_value' => $this->configuration['update_custom_data'],
+    ];
+    $form['custom_data']['delete_custom_data'] = [
+      '#type' => 'yamlform_codemirror',
+      '#mode' => 'yaml',
+      '#title' => $this->t('Delete data'),
+      '#description' => $this->t("Enter custom data that will be included when a form submission is deleted."),
+      '#parents' => ['settings', 'delete_custom_data'],
+      '#states' => ['visible' => [':input[name="settings[delete_url]"]' => ['filled' => TRUE]]],
+      '#default_value' => $this->configuration['delete_custom_data'],
+    ];
+    $form['custom_data']['token_tree_link'] = $this->tokenManager->buildTreeLink();
 
     $form['debug'] = [
       '#type' => 'checkbox',
@@ -182,7 +272,7 @@ class RemotePostYamlFormHandler extends YamlFormHandlerBase {
     }
 
     $request_type = $this->configuration['type'];
-    $request_post_data = $this->getPostData($yamlform_submission);
+    $request_post_data = $this->getPostData($operation, $yamlform_submission);
 
     try {
       switch ($request_type) {
@@ -223,14 +313,41 @@ class RemotePostYamlFormHandler extends YamlFormHandlerBase {
   /**
    * Get a form submission's post data.
    *
+   * @param string $operation
+   *   The type of form submission operation to be posted. Can be 'insert',
+   *   'update', or 'delete'.
    * @param \Drupal\yamlform\YamlFormSubmissionInterface $yamlform_submission
-   *   A form submission.
+   *   The form submission to be posted.
    *
    * @return array
    *   A form submission converted to an associative array.
    */
-  protected function getPostData(YamlFormSubmissionInterface $yamlform_submission) {
-    return $yamlform_submission->toArray(TRUE);
+  protected function getPostData($operation, YamlFormSubmissionInterface $yamlform_submission) {
+    // Get submission and elements data.
+    $data = $yamlform_submission->toArray(TRUE);
+
+    // Flatten data.
+    // Prioritizing elements before the submissions fields.
+    $data = $data['data'] + $data;
+    unset($data['data']);
+
+    // Excluded selected submission data.
+    $data = array_diff_key($data, $this->configuration['excluded_data']);
+
+    // Append custom data.
+    if (!empty($this->configuration['custom_data'])) {
+      $data = Yaml::decode($this->configuration['custom_data']) + $data;
+    }
+
+    // Append operation data.
+    if (!empty($this->configuration[$operation . '_custom_data'])) {
+      $data = Yaml::decode($this->configuration[$operation . '_custom_data']) + $data;
+    }
+
+    // Replace tokens.
+    $data = $this->tokenManager->replace($data, $yamlform_submission);
+
+    return $data;
   }
 
   /**
@@ -284,8 +401,8 @@ class RemotePostYamlFormHandler extends YamlFormHandlerBase {
       '#markup' => $request_type,
     ];
     $build['request_post_data'] = [
-      '#type' => 'details',
-      '#title' => $this->t('Request post data'),
+      '#type' => 'item',
+      '#title' => $this->t('Request data'),
       'data' => [
         '#markup' => htmlspecialchars(Yaml::encode($request_post_data)),
         '#prefix' => '<pre>',
@@ -325,8 +442,15 @@ class RemotePostYamlFormHandler extends YamlFormHandlerBase {
         ],
       ];
     }
+    else {
+      $build['response_code'] = [
+        '#markup' => t('No response. Please see the recent log messages.'),
+        '#prefix' => '<p>',
+        '#suffix' => '</p>',
+      ];
+    }
 
-    drupal_set_message(\Drupal::service('renderer')->render($build), $type);
+    drupal_set_message(\Drupal::service('renderer')->renderPlain($build), $type);
   }
 
 }

@@ -43,7 +43,7 @@ class YamlFormTest extends YamlFormTestBase {
     $this->assertEqual($this->submissionStorage->getTotal($yamlform), 0);
 
     // Check that 'test' state was deleted with the form.
-    $this->assertEqual(\Drupal::state()->get('yamlform.' . $yamlform->id()), NULL);
+    $this->assertEqual(\Drupal::state()->get('yamlform.yamlform.' . $yamlform->id()), NULL);
   }
 
 }

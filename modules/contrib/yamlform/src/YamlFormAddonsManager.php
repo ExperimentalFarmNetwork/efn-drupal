@@ -66,6 +66,9 @@ class YamlFormAddonsManager implements YamlFormAddonsManagerInterface {
    */
   public function getCategories() {
     $categories = [];
+    $categories['config'] = [
+      'title' => $this->t('Configuration management'),
+    ];
     $categories['integration'] = [
       'title' => $this->t('Integration'),
     ];
@@ -140,6 +143,14 @@ class YamlFormAddonsManager implements YamlFormAddonsManagerInterface {
       'category' => 'integration',
     ];
 
+    // Integrations: Webform Views Integration.
+    $projects['webform_views'] = [
+      'title' => $this->t('Webform Views Integration'),
+      'description' => $this->t('Integrates Webforms 8.x-5.x and Views modules.'),
+      'url' => Url::fromUri('https://www.drupal.org/node/2838128'),
+      'category' => 'integration',
+    ];
+
     // Handler: YAML Form Queue.
     $projects['yamlform_queue'] = [
       'title' => $this->t('YAML Form Queue'),
@@ -178,6 +189,22 @@ class YamlFormAddonsManager implements YamlFormAddonsManagerInterface {
       'description' => $this->t('Provides migration routines from Drupal 6 Webform module to Drupal 8 YAML Form module.'),
       'url' => Url::fromUri('https://www.drupal.org/sandbox/dippers/2819169'),
       'category' => 'migrate',
+    ];
+
+    // Config: Drush CMI tools.
+    $projects['drush_cmi_tools'] = [
+      'title' => $this->t('Drush CMI tools'),
+      'description' => $this->t('Provides advanced CMI import and export functionality for CMI workflows. Drush CMI tools should be used to protect YAML Forms from being overwritten during a configuration import.'),
+      'url' => Url::fromUri('https://github.com/previousnext/drush_cmi_tools'),
+      'category' => 'config',
+    ];
+
+    // Configuration Split.
+    $projects['config_split'] = [
+      'title' => $this->t('Configuration Split'),
+      'description' => $this->t('Provides configuration filter for importing and exporting split config.'),
+      'url' => Url::fromUri('https://www.drupal.org/project/config_split'),
+      'category' => 'config',
     ];
 
     return $projects;

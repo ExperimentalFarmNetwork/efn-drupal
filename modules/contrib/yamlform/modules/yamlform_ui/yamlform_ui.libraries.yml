@@ -3,3 +3,12 @@ yamlform_ui:
   css:
     theme:
       css/yamlform_ui.module.css: {}
+
+yamlform_ui.element:
+  version: 1.x
+  js:
+    js/yamlform_ui.element.js:  {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/jquery.once

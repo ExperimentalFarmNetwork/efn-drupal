@@ -211,7 +211,7 @@ abstract class GroupContentEnablerBase extends PluginBase implements GroupConten
     $defaults = ['title_args' => $t_args, 'description_args' => $t_args];
 
     // Use the same title prefix to keep permissions sorted properly.
-    $prefix = '%plugin_name - Relationship:';
+    $prefix = 'Relationship:';
 
     $permissions["view $plugin_id content"] = [
       'title' => "$prefix View entity relations",
@@ -261,7 +261,7 @@ abstract class GroupContentEnablerBase extends PluginBase implements GroupConten
     $defaults = ['title_args' => $t_args, 'description_args' => $t_args];
 
     // Use the same title prefix to keep permissions sorted properly.
-    $prefix = '%plugin_name - Entity:';
+    $prefix = 'Entity:';
 
     $permissions["view $plugin_id entity"] = [
       'title' => "$prefix View %entity_type entities",

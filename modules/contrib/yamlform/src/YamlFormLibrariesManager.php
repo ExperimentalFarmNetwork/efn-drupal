@@ -45,7 +45,7 @@ class YamlFormLibrariesManager implements YamlFormLibrariesManagerInterface {
         '@path' => $library_path,
         ':download_href' => $library['download']['url'],
         ':library_href' => $library['url']->toString(),
-        ':install_href' => 'http://yamlform.io/support/installation/#third-party-libraries',
+        ':install_href' => 'http://cgit.drupalcode.org/yamlform/tree/INSTALL.md?h=8.x-1.x',
         ':external_href' => 'https://www.drupal.org/docs/8/theming-drupal-8/adding-stylesheets-css-and-javascript-js-to-a-drupal-8-theme#external',
         ':settings_href' => Url::fromRoute('yamlform.settings', [], ['fragment' => 'edit-library'])->toString(),
       ];
@@ -162,7 +162,7 @@ class YamlFormLibrariesManager implements YamlFormLibrariesManagerInterface {
       'title' => $this->t('jQuery Timepicker'),
       'description' => $this->t('A lightweight, customizable javascript timepicker plugin for jQuery, inspired by Google Calendar.'),
       'notes' => $this->t('Timepicker is used to provide a polyfill for HTML 5 time elements.'),
-      'version' => '1.11.6',
+      'version' => '1.11.8',
       'url' => Url::fromUri('https://github.com/jonthornton/jquery-timepicker'),
     ];
     $libraries['toggles'] = [

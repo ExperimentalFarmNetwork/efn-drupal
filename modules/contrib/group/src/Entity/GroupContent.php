@@ -133,6 +133,10 @@ class GroupContent extends ContentEntityBase implements GroupContentInterface {
   protected function urlRouteParameters($rel) {
     $uri_route_parameters = parent::urlRouteParameters($rel);
     $uri_route_parameters['group'] = $this->getGroup()->id();
+    // These routes depend on the plugin ID.
+    if (in_array($rel, ['add-form', 'create-form'])) {
+      $uri_route_parameters['plugin_id'] = $this->getContentPlugin()->getPluginId();
+    }
     return $uri_route_parameters;
   }
 
@@ -196,6 +200,10 @@ class GroupContent extends ContentEntityBase implements GroupContentInterface {
   public function postSave(EntityStorageInterface $storage, $update = TRUE) {
     parent::postSave($storage, $update);
 
+    // For memberships, we generally need to rebuild the group role cache for
+    // the member's user account in the target group.
+    $rebuild_group_role_cache = $this->getContentPlugin()->getPluginId() == 'group_membership';
+
     if ($update === FALSE) {
       // We want to make sure that the entity we just added to the group behaves
       // as a grouped entity. This means we may need to update access records,
@@ -203,6 +211,22 @@ class GroupContent extends ContentEntityBase implements GroupContentInterface {
       // cannot possibly know about. Lucky for us, all of that behavior usually
       // happens when saving an entity so let's re-save the added entity.
       $this->getEntity()->save();
+    }
+
+    // If a membership gets updated, but the member's roles haven't changed, we
+    // do not need to rebuild the group role cache for the member's account.
+    elseif ($rebuild_group_role_cache) {
+      $new = array_column($this->group_roles->getValue(), 'target_id');
+      $old = array_column($this->original->group_roles->getValue(), 'target_id');
+      sort($new);
+      sort($old);
+      $rebuild_group_role_cache = ($new != $old);
+    }
+
+    if ($rebuild_group_role_cache) {
+      /** @var \Drupal\group\Entity\Storage\GroupRoleStorageInterface $role_storage */
+      $role_storage = \Drupal::entityTypeManager()->getStorage('group_role');
+      $role_storage->resetUserGroupRoleCache($this->getEntity(), $this->getGroup());
     }
   }
 
@@ -212,16 +236,25 @@ class GroupContent extends ContentEntityBase implements GroupContentInterface {
   public static function postDelete(EntityStorageInterface $storage, array $entities) {
     parent::postDelete($storage, $entities);
 
-    // For the same reasons we re-save entities that are added to a group, we
-    // need to re-save entities that were removed from one. See ::postSave().
     /** @var GroupContentInterface[] $entities */
     foreach ($entities as $group_content) {
-      // We only save the entity if it still exists to avoid trying to save an
-      // entity that just got deleted and triggered the deletion of its group
-      // content entities.
       if ($entity = $group_content->getEntity()) {
+        // For the same reasons we re-save entities that are added to a group,
+        // we need to re-save entities that were removed from one. See
+        // ::postSave(). We only save the entity if it still exists to avoid
+        // trying to save an entity that just got deleted and triggered the
+        // deletion of its group content entities.
         // @todo Revisit when https://www.drupal.org/node/2754399 lands.
         $entity->save();
+
+        // If a membership gets deleted, we need to reset the internal group
+        // roles cache for the member in that group, but only if the user still
+        // exists. Otherwise, it doesn't matter as the user ID will become void.
+        if ($group_content->getContentPlugin()->getPluginId() == 'group_membership') {
+          /** @var \Drupal\group\Entity\Storage\GroupRoleStorageInterface $role_storage */
+          $role_storage = \Drupal::entityTypeManager()->getStorage('group_role');
+          $role_storage->resetUserGroupRoleCache($group_content->getEntity(), $group_content->getGroup());
+        }
       }
     }
   }

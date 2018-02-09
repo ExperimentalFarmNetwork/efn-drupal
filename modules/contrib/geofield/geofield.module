@@ -1,7 +1,8 @@
 <?php
 
 /**
- * @TODO: Provide function/method to determine version.
+ * @file
+ * Contains the geofield.module.
  */
 
 use Drupal\Core\Template\Attribute;
@@ -32,7 +33,7 @@ define('GEOFIELD_TYPE_LINESTRING', 'LINESTRING');
  *
  * @var string
  */
-define('GEOFIELD_TYPE_MULTILINESTRING' , 'MULTILINESTRING');
+define('GEOFIELD_TYPE_MULTILINESTRING', 'MULTILINESTRING');
 
 /**
  * Polygon feature constant.
@@ -87,42 +88,60 @@ define('GEOFIELD_NAUTICAL_MILES', 3444);
  * Implements hook_theme().
  */
 function geofield_theme() {
-  return array(
-    'geofield_proximity' => array(
+  return [
+    'geofield_proximity' => [
       'render element' => 'element',
-    ),
-  );
+    ],
+    'geofield_dms' => [
+      'variables' => [
+        'components' => [],
+      ],
+    ],
+    'geofield_latlon' => [
+      'variables' => [
+        'lat' => 0,
+        'lon' => 0,
+      ],
+    ],
+  ];
 }
 
 /**
  * Returns options for radius of the Earth.
  */
 function geofield_radius_options() {
-  return array(
+  return [
     GEOFIELD_KILOMETERS => t('Kilometers'),
     GEOFIELD_METERS => t('Meters'),
     GEOFIELD_MILES => t('Miles'),
     GEOFIELD_YARDS => t('Yards'),
     GEOFIELD_FEET => t('Feet'),
     GEOFIELD_NAUTICAL_MILES => t('Nautical Miles'),
-  );
+  ];
 }
 
 /**
- * Theme wrapper for form item
+ * Theme wrapper for geofield_proximity form item.
+ *
+ * @param array $vars
+ *   The variables.
+ *
+ * @return string
+ *   The return markup..
  */
-function theme_geofield_proximity($vars) {
+function theme_geofield_proximity(array $vars) {
   $element = $vars['element'];
 
-  $attributes = !empty($element['#wrapper_attributes']) ? $element['#wrapper_attributes'] : array('class' => array());
+  $attributes = !empty($element['#wrapper_attributes']) ? $element['#wrapper_attributes'] : ['class' => []];
   $attributes['class'][] = 'geofield-proximity-field-wrapper';
   $attributes['class'][] = 'clearfix';
 
-  $wrapper_attributes = array();
+  $wrapper_attributes = [];
   $wrapper_attributes['class'][] = 'clearfix';
 
-  if (isset($element['#children']))
+  if (isset($element['#children'])) {
     $element['#children'] = '<div id="' . $element['#id'] . '" ' . new Attribute($wrapper_attributes) . '>' . $element['#children'] . '</div>';
+  }
 
   $output = '<div ' . new Attribute($attributes) . '>' . render($vars) . '</div>';
 

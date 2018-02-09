@@ -8,6 +8,30 @@
   'use strict';
 
   /**
+   * Handles help accordion.
+   *
+   * @type {Drupal~behavior}
+   *
+   * @prop {Drupal~behaviorAttach} attach
+   *   Attaches the behavior for help accordion.
+   */
+  Drupal.behaviors.yamlFormHelpAccordion = {
+    attach: function (context) {
+      var $widget = $(context).find('.yamlform-help-accordion');
+      $widget.once('yamlform-help-accordion').accordion({
+        collapsible: true,
+        heightStyle: "content"
+      });
+
+      var $container = $('h3' + location.hash, $widget);
+      if ($container.length) {
+        var active = $widget.find($widget.accordion('option', 'header')).index($container);
+        $widget.accordion('option', 'active', active);
+      }
+    }
+  };
+
+  /**
    * Handles disabling help dialog for mobile devices.
    *
    * @type {Drupal~behavior}

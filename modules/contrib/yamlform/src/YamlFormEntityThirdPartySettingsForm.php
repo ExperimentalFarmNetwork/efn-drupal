@@ -7,7 +7,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Base for controller for form third party settings.
+ * Provides a form to configure third party settings.
  */
 class YamlFormEntityThirdPartySettingsForm extends EntityForm {
 

@@ -87,10 +87,9 @@ class YamlFormResultsCustomForm extends FormBase {
     // Columns.
     $columns_options = [];
     foreach ($available_columns as $column_name => $column) {
-      $columns_options[$column_name] = [
-        'title' => $column['title'],
-        'key' => (isset($column['key'])) ? str_replace('yamlform_', '', $column['key']) : $column['name'],
-      ];
+      $title = (strpos($column_name, 'element__') === 0) ? ['data' => ['#markup' => '<b>' . $column['title'] . '</b>']] : $column['title'];
+      $key = (isset($column['key'])) ? str_replace('yamlform_', '', $column['key']) : $column['name'];
+      $columns_options[$column_name] = ['title' => $title, 'key' => $key];
     }
     $columns_keys = array_keys($custom_columns);
     $columns_default_value = array_combine($columns_keys, $columns_keys);

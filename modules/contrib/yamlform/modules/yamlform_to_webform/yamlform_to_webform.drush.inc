@@ -16,7 +16,7 @@ function yamlform_to_webform_drush_command() {
   $items['yamlform-to-webform-migrate'] = [
     'description' => 'Migrate all configuration and data from the YAML Form 8.x-1.x module to Webform 8.x-5.x module.',
     'core' => ['8+'],
-    'bootstrap' => DRUSH_BOOTSTRAP_DRUPAL_ROOT,
+    'drupal dependencies' => ['yamlform_to_webform'],
     'examples' => [
       'drush yamlform-to-webform-migrate yamlform' => 'Migrate all configuration and data from the YAML Form 8.x-1.x module to Webform 8.x-5.x module.',
     ],
@@ -115,6 +115,8 @@ function drush_yamlform_to_webform_convert() {
   // Move certain files.
   $files = [
     'docs/developers/development.md' => 'DEVELOPMENT.md',
+    'docs/support/issues.md' => 'ISSUES.md',
+    'docs/features.md' => 'FEATURES.md',
   ];
   foreach ($files as $source => $destination) {
     file_unmanaged_move("$webform_destination/$source", "$webform_destination/$destination", FILE_EXISTS_REPLACE);
@@ -129,8 +131,10 @@ function drush_yamlform_to_webform_convert() {
     'GruntFile.js',
     'mkdocs.yml',
     'node_modules',
-    'includes/webform.update.inc',
+    'includes/yamlform.update.inc',
     'modules/yamlform_to_webform',
+    'modules/yamlform_ui/yamlform_ui.install',
+
   ];
   foreach ($directories as $directory) {
     if (file_exists("$webform_destination/$directory")) {
@@ -209,12 +213,28 @@ function drush_yamlform_to_webform_convert() {
       );
     }
 
+    // Custom cleanup.
+    switch (basename($file_path)) {
+      case 'webform_node.install':
+        $lines = explode("\n", $contents);
+        $lines = array_slice($lines, 0, 26);
+        $contents = implode("\n", $lines);
+    }
+
     if (drush_get_option(['verbose', 'debug'], FALSE)) {
       drush_print(dt("Search-n-replacing in '@path'...", [
         '@path' => str_replace(DRUPAL_ROOT . '/', '', $file_path),
       ]));
     }
     file_put_contents($file_path, $contents);
+  }
+
+  // Revert certain files that are now being customized for the Webform module.
+  if (file_exists("$webform_destination/.git")) {
+    drush_print(dt('Reverting selected files...'));
+    foreach ($config['revert'] as $file) {
+      `cd $webform_destination; git checkout -- $file`;
+    }
   }
 }
 

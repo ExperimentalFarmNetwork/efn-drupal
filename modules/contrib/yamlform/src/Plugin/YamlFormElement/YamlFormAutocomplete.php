@@ -23,7 +23,7 @@ class YamlFormAutocomplete extends TextField {
     return parent::getDefaultProperties() + [
       // Autocomplete settings.
       'autocomplete_existing' => FALSE,
-      'autocomplete_options' => [],
+      'autocomplete_items' => [],
       'autocomplete_limit' => 10,
       'autocomplete_match' => 3,
       'autocomplete_match_operator' => 'CONTAINS',
@@ -36,21 +36,19 @@ class YamlFormAutocomplete extends TextField {
   public function prepare(array &$element, YamlFormSubmissionInterface $yamlform_submission) {
     parent::prepare($element, $yamlform_submission);
 
-    // Query form submission for existing values.
-    if (!empty($element['#autocomplete_existing'])) {
-      // Make sure YAML Form has submission values to use in autocompletion.
-      $display_autocomplete = \Drupal::database()->select('yamlform_submission_data')
+    $has_items = !empty($element['#autocomplete_items']);
+    // Query form submission for existing items.
+    if (!$has_items && !empty($element['#autocomplete_existing'])) {
+      $has_items = \Drupal::database()->select('yamlform_submission_data')
         ->fields('yamlform_submission_data', ['value'])
         ->condition('yamlform_id', $yamlform_submission->getYamlForm()->id())
         ->condition('name', $element['#yamlform_key'])
+        ->condition('value', '', '!=')
         ->execute()
         ->fetchField();
     }
-    else {
-      $display_autocomplete = !empty($element['#autocomplete_options']);
-    }
 
-    if ($display_autocomplete && isset($element['#yamlform_key'])) {
+    if ($has_items && isset($element['#yamlform_key'])) {
       $element['#autocomplete_route_name'] = 'yamlform.element.autocomplete';
       $element['#autocomplete_route_parameters'] = [
         'yamlform' => $yamlform_submission->getYamlForm()->id(),
@@ -68,20 +66,16 @@ class YamlFormAutocomplete extends TextField {
       '#type' => 'fieldset',
       '#title' => $this->t('Autocomplete settings'),
     ];
+    $form['autocomplete']['autocomplete_items'] = [
+      '#type' => 'yamlform_element_options',
+      '#custom__type' => 'yamlform_multiple',
+      '#title' => $this->t('Autocomplete values'),
+    ];
     $form['autocomplete']['autocomplete_existing'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Include existing submission values.'),
       '#description' => $this->t("If checked, all existing submission values will be visible to the form's users."),
       '#return_value' => TRUE,
-    ];
-    $form['autocomplete']['autocomplete_options'] = [
-      '#type' => 'yamlform_element_options',
-      '#title' => $this->t('Autocomplete options'),
-      '#states' => [
-        'visible' => [
-          ':input[name="properties[autocomplete_existing]"]' => ['checked' => FALSE],
-        ],
-      ],
     ];
     $form['autocomplete']['autocomplete_limit'] = [
       '#type' => 'number',

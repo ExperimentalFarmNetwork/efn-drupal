@@ -38,6 +38,12 @@ function yamlform_form_config_translation_add_form_alter(&$form, FormStateInterf
 
       _yamlform_form_config_translate_add_form_alter_yaml_element($config_element['elements'], $source_value, $translation_value);
 
+
+      $form['inputs'] = [
+        '#type' => 'textarea',
+        '#parents' => ["translation", "config_names", "yamlform.yamlform.test_translation", "description"],
+      ];
+
       $config_element['elements']['translation']['#description'] = t('Please note: Custom properties will be automatically removed.');
       $form_state->set('yamlform_config_name', $config_name);
       $form_state->set('yamlform_source_elements', $source_elements);

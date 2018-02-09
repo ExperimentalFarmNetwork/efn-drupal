@@ -13,7 +13,7 @@ abstract class DataPrepareBase extends GeocoderPluginBase implements DataPrepare
   /**
    * Entity.
    *
-   * @var EntityInterface
+   * @var \Drupal\Core\Entity\EntityInterface
    */
   private $entity;
 
@@ -70,7 +70,7 @@ abstract class DataPrepareBase extends GeocoderPluginBase implements DataPrepare
    *
    * @inheritDoc
    */
-  public function setWidgetIds(array $widgets = array()) {
+  public function setWidgetIds(array $widgets = []) {
     $this->widget_ids = $widgets;
 
     return $this;
@@ -90,7 +90,7 @@ abstract class DataPrepareBase extends GeocoderPluginBase implements DataPrepare
    *
    * @inheritDoc
    */
-  public function setValues(array $values = array()) {
+  public function setValues(array $values = []) {
     $this->values = $values;
 
     return $this;
@@ -110,7 +110,7 @@ abstract class DataPrepareBase extends GeocoderPluginBase implements DataPrepare
    *
    * @inheritDoc
    */
-  public function setWidgetConfiguration(array $settings = array()) {
+  public function setWidgetConfiguration(array $settings = []) {
     $this->widget_configuration = $settings;
 
     return $this;
@@ -142,7 +142,7 @@ abstract class DataPrepareBase extends GeocoderPluginBase implements DataPrepare
    * @inheritDoc
    */
   public function getCurrentField() {
-    return $this->$fieldId;
+    return $this->fieldId;
   }
 
   /**
@@ -150,7 +150,7 @@ abstract class DataPrepareBase extends GeocoderPluginBase implements DataPrepare
    *
    * @inheritDoc
    */
-  public function getPreparedGeocodeValues(array $values = array()) {
+  public function getPreparedGeocodeValues(array $values = []) {
     return $this->setValues($values)->getValues();
   }
 
@@ -159,7 +159,7 @@ abstract class DataPrepareBase extends GeocoderPluginBase implements DataPrepare
    *
    * @inheritDoc
    */
-  public function getPreparedReverseGeocodeValues(array $values = array()) {
+  public function getPreparedReverseGeocodeValues(array $values = []) {
     return $this->setValues($values)->getValues();
   }
 

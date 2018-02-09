@@ -2,15 +2,19 @@
 
 namespace Drupal\geocoder_field\Plugin\Geocoder\Field;
 
+use Drupal\Core\Field\FieldConfigInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Plugin\PluginBase;
-use Drupal\field\FieldConfigInterface;
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\geocoder\DumperPluginManager;
 use Drupal\geocoder\ProviderPluginManager;
 use Drupal\geocoder_field\GeocoderFieldPluginInterface;
 use Drupal\geocoder_field\GeocoderFieldPluginManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Render\RendererInterface;
+use Drupal\Core\Utility\LinkGeneratorInterface;
 
 /**
  * Provides a default generic geocoder field plugin.
@@ -22,11 +26,27 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *     "text",
  *     "text_long",
  *     "text_with_summary",
- *     "string"
+ *     "string",
+ *     "string_long",
  *   }
  * )
  */
 class DefaultField extends PluginBase implements GeocoderFieldPluginInterface, ContainerFactoryPluginInterface {
+
+  /**
+   * The config factory service.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
+  protected $config;
+
+  /**
+   * The module handler.
+   *
+   * @var \Drupal\Core\Extension\ModuleHandlerInterface
+   */
+  protected $moduleHandler;
+
   /**
    * The plugin manager for this type of plugins.
    *
@@ -49,6 +69,20 @@ class DefaultField extends PluginBase implements GeocoderFieldPluginInterface, C
   protected $providerPluginManager;
 
   /**
+   * The Renderer service property.
+   *
+   * @var \Drupal\Core\Entity\EntityDisplayRepositoryInterface
+   */
+  protected $renderer;
+
+  /**
+   * The Link generator Service.
+   *
+   * @var \Drupal\Core\Utility\LinkGeneratorInterface
+   */
+  protected $link;
+
+  /**
    * Constructs a 'default' plugin.
    *
    * @param array $configuration
@@ -57,18 +91,41 @@ class DefaultField extends PluginBase implements GeocoderFieldPluginInterface, C
    *   The plugin_id for the plugin instance.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   A config factory for retrieving required config objects.
+   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
+   *   The module handler.
    * @param \Drupal\geocoder_field\GeocoderFieldPluginManager $field_plugin_manager
    *   The plugin manager for this type of plugins.
    * @param \Drupal\geocoder\DumperPluginManager $dumper_plugin_manager
    *   The dumper plugin manager service.
    * @param \Drupal\geocoder\ProviderPluginManager $provider_plugin_manager
    *   The provider plugin manager service.
+   * @param \Drupal\Core\Render\RendererInterface $renderer
+   *   The renderer.
+   * @param \Drupal\Core\Utility\LinkGeneratorInterface $link_generator
+   *   The Link Generator service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, GeocoderFieldPluginManager $field_plugin_manager, DumperPluginManager $dumper_plugin_manager, ProviderPluginManager $provider_plugin_manager) {
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    ConfigFactoryInterface $config_factory,
+    ModuleHandlerInterface $module_handler,
+    GeocoderFieldPluginManager $field_plugin_manager,
+    DumperPluginManager $dumper_plugin_manager,
+    ProviderPluginManager $provider_plugin_manager,
+    RendererInterface $renderer,
+    LinkGeneratorInterface $link_generator
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
+    $this->config = $config_factory->get('geocoder.settings');
+    $this->moduleHandler = $module_handler;
     $this->fieldPluginManager = $field_plugin_manager;
     $this->dumperPluginManager = $dumper_plugin_manager;
     $this->providerPluginManager = $provider_plugin_manager;
+    $this->renderer = $renderer;
+    $this->link = $link_generator;
   }
 
   /**
@@ -79,9 +136,13 @@ class DefaultField extends PluginBase implements GeocoderFieldPluginInterface, C
       $configuration,
       $plugin_id,
       $plugin_definition,
+      $container->get('config.factory'),
+      $container->get('module_handler'),
       $container->get('geocoder_field.plugin.manager.field'),
       $container->get('plugin.manager.geocoder.dumper'),
-      $container->get('plugin.manager.geocoder.provider')
+      $container->get('plugin.manager.geocoder.provider'),
+      $container->get('renderer'),
+      $container->get('link_generator')
     );
   }
 
@@ -95,57 +156,120 @@ class DefaultField extends PluginBase implements GeocoderFieldPluginInterface, C
       '#open' => TRUE,
     ];
 
+    // Attach Geofield Map Library.
+    $element['#attached']['library'] = [
+      'geocoder_field/general',
+    ];
+
+    $invisible_state = [
+      'invisible' => [
+        ':input[name="third_party_settings[geocoder_field][method]"]' => ['value' => 'none'],
+      ],
+    ];
+
     $element['method'] = [
       '#type' => 'radios',
       '#title' => $this->t('Geocode method'),
       '#options' => [
         'none' => $this->t('No geocoding'),
-        'source' => $this->t('Geocode from an existing field'),
-        'destination' => $this->t('Reverse geocode from an existing field'),
+        'source' => $this->t('<b>Geocode</b> from an existing field'),
       ],
       '#default_value' => $field->getThirdPartySetting('geocoder_field', 'method', 'none'),
     ];
-    $element['field'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Geocode from an existing field'),
-      '#description' => $this->t('Select which field you would like to use.'),
-      '#default_value' => $field->getThirdPartySetting('geocoder_field', 'field'),
-      '#options' => $this->fieldPluginManager->getSourceFields($field->getTargetEntityTypeId(), $field->getTargetBundle(), $field->getName()),
-    ];
-    $element['plugins'] = [
-      '#type' => 'table',
-      '#header' => [t('Geocoder plugins'), $this->t('Weight')],
-      '#tabledrag' => [[
-        'action' => 'order',
-        'relationship' => 'sibling',
-        'group' => 'plugins-order-weight',
-      ],
-      ],
-      '#caption' => $this->t('Select the Geocoder plugins to use, you can reorder them. The first one to return a valid value will be used.'),
+
+    $element['weight'] = [
+      '#type' => 'number',
+      '#title' => $this->t('Weight'),
+      '#description' => $this->t('This is the weight order that will be followed for Geocode/Reverse Geocode operations on multiple fields of this entity. Lowest weights will be processed first.'),
+      '#default_value' => $field->getThirdPartySetting('geocoder_field', 'weight', 0),
+      '#min' => 0,
+      '#max' => 9,
+      '#size' => 2,
+      '#states' => $invisible_state,
     ];
 
-    $default_plugins = (array) $field->getThirdPartySetting('geocoder_field', 'plugins');
-    $plugins = array_combine($default_plugins, $default_plugins);
-    foreach ($this->providerPluginManager->getPluginsAsOptions() as $plugin_id => $plugin_name) {
-      // Non-default values are appended at the end.
-      $plugins[$plugin_id] = $plugin_name;
-    }
-    foreach ($plugins as $plugin_id => $plugin_name) {
-      $element['plugins'][$plugin_id] = [
-        'checked' => [
-          '#type' => 'checkbox',
-          '#title' => $plugin_name,
-          '#default_value' => in_array($plugin_id, $default_plugins),
+    // Set a default empty array value for geocode_field.
+    $element['geocode_field'] = [
+      '#type' => 'value',
+      '#value' => [],
+    ];
+
+    // Set a default empty array value for reverse_geocode_field.
+    $element['reverse_geocode_field'] = [
+      '#type' => 'value',
+      '#value' => [],
+    ];
+
+    // Get the field options for geocode and reverse geocode source fields.
+    $geocode_source_fields_options = $this->fieldPluginManager->getGeocodeSourceFields($field->getTargetEntityTypeId(), $field->getTargetBundle(), $field->getName());
+    $reverse_geocode_source_fields_options = $this->fieldPluginManager->getReverseGeocodeSourceFields($field->getTargetEntityTypeId(), $field->getTargetBundle(), $field->getName());
+
+    // If there is at least one geocode source field defined from the entity,
+    // extend the Form with Geocode Option.
+    // (from Geofield) capabilities.
+    if (!empty($geocode_source_fields_options)) {
+      $element['geocode_field'] = [
+        '#type' => 'select',
+        '#title' => $this->t('Geocode from an existing field'),
+        '#description' => $this->t('Select which field you would like to use as Source Address field.'),
+        '#default_value' => $field->getThirdPartySetting('geocoder_field', 'geocode_field'),
+        '#options' => $geocode_source_fields_options,
+        '#states' => [
+          'visible' => [
+            ':input[name="third_party_settings[geocoder_field][method]"]' => ['value' => 'source'],
+          ],
         ],
-        'weight' => array(
-          '#type' => 'weight',
-          '#title' => $this->t('Weight for @title', ['@title' => $plugin_name]),
-          '#title_display' => 'invisible',
-          '#attributes' => ['class' => ['plugins-order-weight']],
-        ),
-        '#attributes' => ['class' => ['draggable']],
       ];
     }
+
+    // If the Geocoder Geofield Module exists and there is at least one
+    // geofield defined from the entity, extend the Form with Reverse Geocode
+    // (from Geofield) capabilities.
+    if ($this->moduleHandler->moduleExists('geocoder_geofield') && !empty($reverse_geocode_source_fields_options)) {
+
+      // Add the Option to Reverse Geocode.
+      $element['method']['#options']['destination'] = $this->t('<b>Reverse Geocode</b> from a Geofield type existing field');
+
+      // Add the Element to select the Reverse Geocode field.
+      $element['reverse_geocode_field'] = [
+        '#type' => 'select',
+        '#title' => $this->t('Reverse Geocode from an existing field'),
+        '#description' => $this->t('Select which field you would like to use as Geographic Source field.'),
+        '#default_value' => $field->getThirdPartySetting('geocoder_field', 'reverse_geocode_field'),
+        '#options' => $reverse_geocode_source_fields_options,
+        '#states' => [
+          'visible' => [
+            ':input[name="third_party_settings[geocoder_field][method]"]' => ['value' => 'destination'],
+          ],
+        ],
+      ];
+    }
+    $element['hidden'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('<strong>Hide</strong> this field in the Content Edit Form'),
+      '#description' => $this->t('If checked, the Field will be Hidden to the user in the edit form, </br>and totally managed by the Geocode/Reverse Geocode operation chosen'),
+      '#default_value' => $field->getThirdPartySetting('geocoder_field', 'hidden'),
+      '#states' => $invisible_state,
+    ];
+    $element['disabled'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('<strong>Disable</strong> this field in the Content Edit Form'),
+      '#description' => $this->t('If checked, the Field will be Disabled to the user in the edit form, </br>and totally managed by the Geocode/Reverse Geocode operation chosen'),
+      '#default_value' => $field->getThirdPartySetting('geocoder_field', 'disabled'),
+      '#states' => [
+        'invisible' => [
+          [':input[name="third_party_settings[geocoder_field][method]"]' => ['value' => 'none']],
+          [':input[name="third_party_settings[geocoder_field][hidden]"]' => ['checked' => TRUE]],
+        ],
+      ],
+    ];
+
+    // Get the enabled/selected plugins.
+    $enabled_plugins = (array) $field->getThirdPartySetting('geocoder_field', 'plugins');
+
+    // Generates the Draggable Table of Selectable Geocoder Plugins.
+    $element['plugins'] = $this->providerPluginManager->providersPluginsTableList($enabled_plugins);
+    $element['plugins']['#states'] = $invisible_state;
 
     $element['dumper'] = [
       '#type' => 'select',
@@ -153,28 +277,24 @@ class DefaultField extends PluginBase implements GeocoderFieldPluginInterface, C
       '#default_value' => $field->getThirdPartySetting('geocoder_field', 'dumper', 'wkt'),
       '#options' => $this->dumperPluginManager->getPluginsAsOptions(),
       '#description' => $this->t('Set the output format of the value. Ex, for a geofield, the format must be set to WKT.'),
+      '#states' => $invisible_state,
     ];
     $element['delta_handling'] = [
       '#type' => 'select',
       '#title' => $this->t('Multi-value input handling'),
-      '#description' => [
-        ['#markup' => $this->t('Should geometries from multiple inputs be:')],
-        [
-          '#theme' => 'item_list',
-          '#items' => [
-            $this->t('Matched with each input (e.g. One POINT for each address field'),
-            $this->t('Aggregated into a single MULTIPOINT geofield (e.g. One MULTIPOINT polygon from multiple address fields)'),
-            $this->t('Broken up into multiple geometries (e.g. One MULTIPOINT to multiple POINTs.)'),
-          ],
-        ],
-      ],
+      '#description' => 'If the source field is a multi-value field, this is mapped 1-on-1 by default.
+      That means that if you can add an unlimited amount of text fields, this also results in an
+      unlimited amount of geocodes. However, if you have one field that contains multiple geocodes
+      (like a file) you can select single-to-multiple to extract all geocodes from the first field.',
       '#default_value' => $field->getThirdPartySetting('geocoder_field', 'delta_handling', 'default'),
       '#options' => [
         'default' => $this->t('Match Multiples (default)'),
-        'm_to_s' => $this->t('Multiple to Single'),
         's_to_m' => $this->t('Single to Multiple'),
-        'c_to_s' => $this->t('Concatenate to Single'),
-        'c_to_m' => $this->t('Concatenate to Multiple'),
+      ],
+      '#states' => [
+        'visible' => [
+          [':input[name="third_party_settings[geocoder_field][method]"]' => ['value' => 'source']],
+        ],
       ],
     ];
     $failure = (array) $field->getThirdPartySetting('geocoder_field', 'failure') + [
@@ -191,16 +311,19 @@ class DefaultField extends PluginBase implements GeocoderFieldPluginInterface, C
         'empty' => $this->t('Empty the field value'),
       ],
       '#default_value' => $failure['handling'],
+      '#states' => $invisible_state,
     ];
     $element['failure']['status_message'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Show a status message warning in case of geo-coding failure.'),
       '#default_value' => $failure['status_message'],
+      '#states' => $invisible_state,
     ];
     $element['failure']['log'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Log the geo-coding failure.'),
       '#default_value' => $failure['log'],
+      '#states' => $invisible_state,
     ];
 
     return $element;
@@ -209,6 +332,18 @@ class DefaultField extends PluginBase implements GeocoderFieldPluginInterface, C
   /**
    * {@inheritdoc}
    */
-  public function validateSettingsForm(array $form, FormStateInterface &$form_state) {}
+  public function validateSettingsForm(array $form, FormStateInterface &$form_state) {
+    $form_values = $form_state->getValues();
+
+    if ($form_values['method'] !== 'none' && empty($form_values['plugins'])) {
+      $form_state->setError($form['third_party_settings']['geocoder_field']['plugins'], t('The selected Geocode operation needs at least one plugin.'));
+    }
+
+    // On Reverse Geocode the delta_handling should always be 'default'
+    // (many to many), because the other scenario is not admittable.
+    if ($form_values['method'] == 'destination') {
+      $form_state->setValue('delta_handling', 'default');
+    }
+  }
 
 }
