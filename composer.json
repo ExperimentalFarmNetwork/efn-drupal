@@ -41,7 +41,8 @@
         "components/highlightjs": "9.7.*",
         "drupal/views_slideshow": "^4.5",
         "drupal/bootstrap": "^3.6",
-        "drupal/views_send": "^1.1"
+        "drupal/views_send": "^1.1",
+        "drush/drush": "^9"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
@@ -64,11 +65,6 @@
             "recurse": false,
             "replace": false,
             "merge-extra": false
-        },
-        "patches": {
-            "drupal/default_content": {
-                "Allow manual imports": "https://www.drupal.org/files/issues/allow_manual_imports-2640734-11.patch"
-            }
         },
         "installer-paths": {
             "core": ["type:drupal-core"],

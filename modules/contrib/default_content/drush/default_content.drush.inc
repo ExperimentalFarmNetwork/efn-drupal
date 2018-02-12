@@ -5,8 +5,6 @@
  * Drush integration for the default_content module.
  */
 
-use Drush\Log\LogLevel;
-
 /**
  * Implements hook_drush_command().
  */
@@ -42,16 +40,6 @@ function default_content_drush_command() {
     ],
     'aliases' => ['dcem'],
     'required-arguments' => 1,
-  ];
-  $items['default-content-import'] = [
-    'description' => dt('Imports or updates the content provided by installed modules and default profile.'),
-    'arguments' => [
-      'module' => dt('The name of the module or profile. If omitted, by all content from enabled modules and default profile will be imported.'),
-    ],
-    'options' => [
-      'update' => dt('Update existing entities.'),
-    ],
-    'aliases' => ['dci'],
   ];
 
   return $items;
