@@ -1084,12 +1084,18 @@ footer.footer{
 }
 
 @media all and (max-width: 1132px) {
+	header.navbar-default ul.navbar-right{
+		margin-left: 0;
+	}
   body.user-logged-in {
     header.navbar-default #block-newprojectbutton .field--name-body a{
-    	border-bottom: red solid thick;
-    	display:none;
+			font-size: .01em;
+			line-height: 0;
+			background: none;
     	&:after{
     		content:'+';
+				font-size: 31px;
+				line-height: 32px;
     	}
     }
   }
@@ -1142,6 +1148,13 @@ footer.footer{
 	}
 }
 
+@media screen and (max-width:1002px){
+	#navbar .container-fluid{
+		width: 100%;
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+}
 @media screen and (min-width:937px) and (max-width:983px){
 	.view-project .views-row{
 	    width: 277px !important;
@@ -1165,6 +1178,17 @@ footer.footer{
 @media screen and (min-width:1104px) and (max-width:1194px){
 	.view-project .views-row{
 	    width: 320px !important;
+	}
+}
+
+@media screen and (max-width:1250px){
+	#navbar{
+		[data-drupal-link-system-path="user"], [data-drupal-link-system-path="user/logout"]{
+			display: none;
+		}
+		#block-newprojectbutton{
+			bottom: -10px;
+		}
 	}
 }
 
