@@ -895,27 +895,7 @@ footer.footer{
 	}
 }
 
-@media screen and (max-width:375px) {
-	.path-frontpage .bnrPic{
-		.efntxt_frnt{
-			p{
-
-				img[src="themes/minimus/images/e.png"]{
-					width: 234px;
-				}
-				img[src="/themes/minimus/images/f.png"]{
-					width: 67px;
-				}
-
-				img[src="themes/minimus/images/n.png"]{
-					width: 136px;
-				}
-			}
-
-		}
-	}
-}
-@media screen and (min-width:375px) and (max-width:490px) {
+@media screen and (max-width:490px) {
 	.path-frontpage .bnrPic{
 		.efntxt_frnt{
 			p{
@@ -924,7 +904,7 @@ footer.footer{
 					width: 242px;
 				}
 				img[src="/themes/minimus/images/f.png"]{
-					width: 77px;
+					width: 105px;
 				}
 
 				img[src="themes/minimus/images/n.png"]{

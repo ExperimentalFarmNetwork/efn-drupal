@@ -15,12 +15,6 @@
  * Copyright 2011-2016 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
-@font-face {
-  font-family: 'open_sanslight';
-  src: url("../fonts/OpenSans-Light-webfont.eot");
-  src: url("../fonts/OpenSans-Light-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/OpenSans-Light-webfont.woff") format("woff"), url("../fonts/OpenSans-Light-webfont.ttf") format("truetype"), url("../fonts/OpenSans-Light-webfont.svg#open_sanslight") format("svg");
-  font-weight: normal;
-  font-style: normal; }
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 html {
   font-family: sans-serif;
@@ -6935,18 +6929,11 @@ footer.footer {
       width: 100%; }
     .path-frontpage .bnrPic .btns.pull-right {
       margin-top: 1em !important; } }
-@media screen and (max-width: 375px) {
-  .path-frontpage .bnrPic .efntxt_frnt p img[src="themes/minimus/images/e.png"] {
-    width: 234px; }
-  .path-frontpage .bnrPic .efntxt_frnt p img[src="/themes/minimus/images/f.png"] {
-    width: 67px; }
-  .path-frontpage .bnrPic .efntxt_frnt p img[src="themes/minimus/images/n.png"] {
-    width: 136px; } }
-@media screen and (min-width: 375px) and (max-width: 490px) {
+@media screen and (max-width: 490px) {
   .path-frontpage .bnrPic .efntxt_frnt p img[src="themes/minimus/images/e.png"] {
     width: 242px; }
   .path-frontpage .bnrPic .efntxt_frnt p img[src="/themes/minimus/images/f.png"] {
-    width: 77px; }
+    width: 105px; }
   .path-frontpage .bnrPic .efntxt_frnt p img[src="themes/minimus/images/n.png"] {
     width: 156px; } }
 @media screen and (min-width: 392px) and (max-width: 490px) {
