@@ -19,7 +19,7 @@ class YamlFormSubmissionStorageTest extends WebTestBase {
    *
    * @var array
    */
-  public static $modules = ['system', 'user', 'yamlform'];
+  protected static $modules = ['system', 'user', 'yamlform'];
 
   /**
    * {@inheritdoc}

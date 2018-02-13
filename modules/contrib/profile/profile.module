@@ -88,7 +88,7 @@ function template_preprocess_profile(array &$variables) {
   $profile = $variables['elements']['#profile'];
 
   $variables['profile'] = $profile;
-  $variables['url'] = $profile->toUrl();
+  $variables['url'] = $profile->id() ? $profile->toUrl() : FALSE;
   // Helpful $content variable for templates.
   $variables['content'] = [];
   foreach (Element::children($variables['elements']) as $key) {
@@ -220,8 +220,7 @@ function profile_form_user_register_form_alter(&$form, FormStateInterface $form_
       if (empty($profile)) {
         $profile = Profile::create([
           'type' => $profile_type->id(),
-          'langcode' => $profile_type->language() ?
-            $profile_type->language() : \Drupal::languageManager()->getDefaultLanguage()->getId(),
+          'langcode' => $profile_type->language() ? $profile_type->language() : \Drupal::languageManager()->getDefaultLanguage()->getId(),
         ]);
 
         // Attach profile entity form.
@@ -236,6 +235,22 @@ function profile_form_user_register_form_alter(&$form, FormStateInterface $form_
         '#weight' => ++$weight,
         '#open' => TRUE,
       ];
+
+      // @see https://www.drupal.org/node/2871480.
+      if (\Drupal::moduleHandler()->moduleExists('field_group')) {
+        $context = [
+          'entity_type' => $profile->getEntityTypeId(),
+          'bundle' => $profile->bundle(),
+          'entity' => $profile,
+          'context' => 'form',
+          'display_context' => 'form',
+          'mode' => 'default',
+        ];
+
+        field_group_attach_groups($form['entity_' . $profile_type->id()], $context);
+        $form['entity_' . $profile_type->id()]['#pre_render'][] = 'field_group_form_pre_render';
+      }
+
       $form_state
         ->get('form_display_' . $profile_type->id())
         ->buildForm($profile, $form['entity_' . $profile_type->id()], $form_state);
@@ -296,7 +311,9 @@ function profile_views_add_title_pre_render($element) {
   /** @var \Drupal\views\ViewExecutable $view */
   if (isset($element['#title'])) {
     $view = $element['view_build']['#view'];
-    $view->setTitle($element['#title']);
+    if (!empty($view->result)) {
+      $view->setTitle($element['#title']);
+    }
   }
 
   return $element;
@@ -332,6 +349,16 @@ function profile_views_data_alter(&$data) {
     'group' => 'User',
     'help' => t('Reference to the profile of a user.'),
     'id' => 'standard',
+    'base' => 'profile',
+    'base field' => 'uid',
+    'field' => 'uid',
+  ];
+  $data['users_field_data']['profile_type']['relationship'] = [
+    'title' => t('Profile Type'),
+    'label' => t('Profile Type'),
+    'group' => 'User',
+    'help' => t('Reference to a specific profile type of a user.'),
+    'id' => 'profile_relationship',
     'base' => 'profile',
     'base field' => 'uid',
     'field' => 'uid',

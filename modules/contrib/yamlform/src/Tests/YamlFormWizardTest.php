@@ -20,7 +20,7 @@ class YamlFormWizardTest extends WebTestBase {
    *
    * @var array
    */
-  public static $modules = ['system', 'user', 'yamlform', 'yamlform_test'];
+  protected static $modules = ['system', 'user', 'yamlform', 'yamlform_test'];
 
   /**
    * {@inheritdoc}
@@ -38,9 +38,53 @@ class YamlFormWizardTest extends WebTestBase {
   }
 
   /**
-   * Test form wizard.
+   * Test form custom wizard, advanced wizard, and custom wizard settings.
    */
   public function testWizard() {
+
+    /* Custom wizard */
+
+    // Check current page is #1.
+    $this->drupalGet('yamlform/test_form_wizard_custom');
+    $this->assertCurrentPage('Wizard page #1');
+
+    // Check next page is #2.
+    $this->drupalPostForm('yamlform/test_form_wizard_custom', [], 'Next Page >');
+    $this->assertCurrentPage('Wizard page #2');
+
+    // Check previous page is #1.
+    $this->drupalPostForm(NULL, [], '< Previous Page');
+    $this->assertCurrentPage('Wizard page #1');
+
+    // Hide pages #3 and #4.
+    $edit = [
+      'pages[wizard_1]' => TRUE,
+      'pages[wizard_2]' => TRUE,
+      'pages[wizard_3]' => FALSE,
+      'pages[wizard_4]' => FALSE,
+      'pages[wizard_5]' => TRUE,
+      'pages[wizard_6]' => TRUE,
+      'pages[wizard_7]' => TRUE,
+    ];
+    $this->drupalPostForm(NULL, $edit, 'Next Page >');
+
+    // Check next page is #2.
+    $this->assertCurrentPage('Wizard page #2');
+
+    // Check next page is #5.
+    $this->drupalPostForm(NULL, [], 'Next Page >');
+    $this->assertCurrentPage('Wizard page #5');
+
+    // Check previous page is #2.
+    $this->drupalPostForm(NULL, [], '< Previous Page');
+    $this->assertCurrentPage('Wizard page #2');
+
+    // Check previous page is #1.
+    $this->drupalPostForm(NULL, [], '< Previous Page');
+    $this->assertCurrentPage('Wizard page #1');
+
+    /* Advanced wizard */
+
     $yamlform_wizard_advanced = YamlForm::load('test_form_wizard_advanced');
 
     // Get initial wizard start page (Your Information).
@@ -123,7 +167,7 @@ class YamlFormWizardTest extends WebTestBase {
     // Check nosave attributes.
     $this->assertRaw('data-yamlform-unsaved');
     // Check progress bar is set to 'Contact Information'.
-    $this->assertPattern('#<li class="yamlform-progress-bar__page yamlform-progress-bar__page--current">\s+<b>Contact Information</b></li>#');
+    $this->assertCurrentPage('Contact Information');
     // Check progress pages.
     $this->assertRaw('Page 2 of 5');
     // Check progress percentage.
@@ -140,12 +184,12 @@ class YamlFormWizardTest extends WebTestBase {
     // Complete reload the form.
     $this->drupalGet('yamlform/test_form_wizard_advanced');
     // Check progress bar is still set to 'Contact Information'.
-    $this->assertPattern('#<li class="yamlform-progress-bar__page yamlform-progress-bar__page--current">\s+<b>Contact Information</b></li>#');
+    $this->assertCurrentPage('Contact Information');
 
     // Move to last page (Your Feedback).
     $this->drupalPostForm(NULL, [], t('Next Page >'));
     // Check progress bar is set to 'Your Feedback'.
-    $this->assertPattern('#<li class="yamlform-progress-bar__page yamlform-progress-bar__page--current">\s+<b>Your Feedback</b></li>#');
+    $this->assertCurrentPage('Your Feedback');
     // Check previous button does exist.
     $this->assertFieldById('edit-previous', '< Previous Page');
     // Check next button is labeled 'Preview'.
@@ -159,7 +203,7 @@ class YamlFormWizardTest extends WebTestBase {
     ];
     $this->drupalPostForm(NULL, $edit, t('Preview'));
     // Check progress bar is set to 'Preview'.
-    $this->assertPattern('#<li class="yamlform-progress-bar__page yamlform-progress-bar__page--current">\s+<b>Preview</b></li>#');
+    $this->assertCurrentPage('Preview');
     // Check progress pages.
     $this->assertRaw('Page 4 of 5');
     // Check progress percentage.
@@ -174,14 +218,15 @@ class YamlFormWizardTest extends WebTestBase {
 
     // Submit the form.
     $this->drupalPostForm(NULL, [], t('Submit'));
-    // Check progress bar is set to 'Completed'.
-    $this->assertPattern('#<li class="yamlform-progress-bar__page yamlform-progress-bar__page--current">\s+<b>Complete</b><span></span></li>#');
+    // Check progress bar is set to 'Complete'.
+    $this->assertCurrentPage('Complete');
     // Check progress pages.
     $this->assertRaw('Page 5 of 5');
     // Check progress percentage.
     $this->assertRaw('(100%)');
 
-    /* Custom wizard settings */
+    /* Custom wizard settings (using advanced wizard) */
+
     $this->drupalLogout();
 
     // Check global next and previous button labels.
@@ -274,6 +319,16 @@ class YamlFormWizardTest extends WebTestBase {
     $this->assertNoRaw('{yamlform complete}');
     $this->drupalGet('yamlform/test_form_wizard_advanced/confirmation');
     $this->assertNoRaw('class="yamlform-progress-bar"');
+  }
+
+  /**
+   * Assert the current page using the progress bar's markup.
+   *
+   * @param string $title
+   *   The title of the current page.
+   */
+  protected function assertCurrentPage($title) {
+    $this->assertPattern('|<li class="yamlform-progress-bar__page yamlform-progress-bar__page--current">\s+<b>' . $title . '</b>|');
   }
 
 }

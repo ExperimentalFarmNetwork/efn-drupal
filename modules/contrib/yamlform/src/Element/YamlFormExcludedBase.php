@@ -91,10 +91,14 @@ abstract class YamlFormExcludedBase extends FormElement {
     /** @var \Drupal\yamlform\YamlFormInterface $yamlform */
     $yamlform = $element['#yamlform'];
 
+    /** @var \Drupal\yamlform\YamlFormElementManagerInterface $element_manager */
+    $element_manager = \Drupal::service('plugin.manager.yamlform.element');
+
     $options = [];
     $elements = $yamlform->getElementsInitializedAndFlattened();
     foreach ($elements as $key => $element) {
-      if (empty($element['#type']) || in_array($element['#type'], ['container', 'details', 'fieldset', 'item', 'label'])) {
+      $element_handler = $element_manager->getElementInstance($element);
+      if (!$element_handler->isInput($element)) {
         continue;
       }
 

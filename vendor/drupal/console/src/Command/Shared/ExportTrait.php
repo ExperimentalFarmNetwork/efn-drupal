@@ -9,6 +9,7 @@ namespace Drupal\Console\Command\Shared;
 
 use Drupal\Component\Serialization\Yaml;
 use Drupal\Console\Core\Style\DrupalStyle;
+use Symfony\Component\Console\Exception\InvalidOptionException;
 
 /**
  * Class ConfigExportTrait
@@ -22,20 +23,24 @@ trait ExportTrait
      * @param bool|false $uuid
      * @return mixed
      */
-    protected function getConfiguration($configName, $uuid = false, $hash = false)
+    protected function getConfiguration($configName, $uuid = false, $hash = false, $collection = '')
     {
-        $config = $this->configStorage->read($configName);
-
+        $config = $this->configStorage->createCollection($collection)->read($configName);
         // Exclude uuid base in parameter, useful to share configurations.
         if ($uuid) {
             unset($config['uuid']);
         }
-        
+
         // Exclude default_config_hash inside _core is site-specific.
         if ($hash) {
             unset($config['_core']['default_config_hash']);
+
+            // Remove empty _core to match core's output.
+            if (empty($config['_core'])) {
+                unset($config['_core']);
+            }
         }
-        
+
         return $config;
     }
 
@@ -45,6 +50,7 @@ trait ExportTrait
      */
     protected function exportConfig($directory, DrupalStyle $io, $message)
     {
+        $directory = realpath($directory);
         $io->info($message);
 
         foreach ($this->configExport as $fileName => $config) {
@@ -56,7 +62,7 @@ trait ExportTrait
                 $fileName
             );
 
-            $io->info('- ' . $configFile);
+            $io->writeln('- ' . $configFile);
 
             // Create directory if doesn't exist
             if (!file_exists($directory)) {
@@ -71,14 +77,18 @@ trait ExportTrait
     }
 
     /**
-     * @param string      $module
+     * @param string      $moduleName
      * @param DrupalStyle $io
      */
-    protected function exportConfigToModule($module, DrupalStyle $io, $message)
+    protected function exportConfigToModule($moduleName, DrupalStyle $io, $message)
     {
         $io->info($message);
 
-        $module = $this->extensionManager->getModule($module);
+        $module = $this->extensionManager->getModule($moduleName);
+
+        if (empty($module)) {
+            throw new InvalidOptionException(sprintf('The module %s does not exist.', $moduleName));
+        }
 
         foreach ($this->configExport as $fileName => $config) {
             $yamlConfig = Yaml::encode($config['data']);

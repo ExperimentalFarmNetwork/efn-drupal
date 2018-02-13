@@ -83,6 +83,7 @@ settings:
   page_submit_path: ''
   page_confirm_path: ''
   form_submit_label: Apply
+  form_submit_attributes: {  }
   form_exception_message: ''
   form_closed_message: ''
   form_confidential: false
@@ -98,22 +99,31 @@ settings:
   wizard_progress_pages: false
   wizard_progress_percentage: false
   wizard_next_button_label: ''
+  wizard_next_button_attributes: {  }
   wizard_prev_button_label: ''
+  wizard_prev_button_attributes: {  }
   wizard_start_label: ''
   wizard_complete: true
   wizard_complete_label: ''
   preview: 0
   preview_next_button_label: ''
+  preview_next_button_attributes: {  }
   preview_prev_button_label: ''
+  preview_prev_button_attributes: {  }
   preview_message: ''
   draft: false
   draft_auto_save: false
   draft_button_label: ''
+  draft_button_attributes: {  }
   draft_saved_message: ''
   draft_loaded_message: ''
   confirmation_type: page
   confirmation_message: 'Thank you for applying.'
   confirmation_url: ''
+  confirmation_attributes: {  }
+  confirmation_back: true
+  confirmation_back_label: ''
+  confirmation_back_attributes: {  }
   limit_total: null
   limit_total_message: ''
   limit_user: null
@@ -161,8 +171,8 @@ handlers:
       to_mail: default
       cc_mail: ''
       bcc_mail: ''
-      from_mail: '[yamlform-submission:values:email:raw]'
-      from_name: '[yamlform-submission:values:first_name] [yamlform-submission:values:last_name]'
+      from_mail: '[yamlform_submission:values:email:raw]'
+      from_name: '[yamlform_submission:values:first_name] [yamlform_submission:values:last_name]'
       subject: default
       body: default
       excluded_elements: {  }

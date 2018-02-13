@@ -510,7 +510,7 @@ abstract class YamlFormManagedFileBase extends YamlFormElementBase {
    * Form API callback. Consolidate the array of fids for this field into a single fids.
    */
   public static function validate(array &$element, FormStateInterface $form_state, &$complete_form) {
-    // Call the default managed_elemend validation handler, which checks
+    // Call the default managed_element validation handler, which checks
     // the file entity and #required.
     // @see \Drupal\file\Element\ManagedFile::getInfo
     // @see \Drupal\yamlform\Plugin\YamlFormElement\ManagedFile::prepare

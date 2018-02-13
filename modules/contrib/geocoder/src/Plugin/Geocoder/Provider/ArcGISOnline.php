@@ -12,7 +12,8 @@ use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
  *   name = "ArcGISOnline",
  *   handler = "\Geocoder\Provider\ArcGISOnline",
  *   arguments = {
- *     "sourceCountry"
+ *     "sourcecountry" = NULL,
+ *     "usessl" = false
  *   }
  * )
  */

@@ -11,7 +11,7 @@ use Drupal\yamlform\Entity\YamlForm;
  */
 class YamlFormHandlerEmailAdvancedTest extends YamlFormTestBase {
 
-  public static $modules = ['system', 'block', 'filter', 'node', 'user', 'file', 'yamlform', 'yamlform_test'];
+  protected static $modules = ['system', 'block', 'filter', 'node', 'user', 'file', 'yamlform', 'yamlform_test'];
 
   /**
    * Create form test users.

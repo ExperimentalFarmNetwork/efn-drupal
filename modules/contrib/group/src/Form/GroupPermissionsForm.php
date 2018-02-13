@@ -99,14 +99,21 @@ abstract class GroupPermissionsForm extends FormBase {
    *   providing module first and then by permission name.
    */
   protected function getPermissions() {
-    $permissions_by_provider = [];
+    $by_provider_and_section = [];
 
-    // Create a list of group permissions ordered by their provider.
+    // Create a list of group permissions ordered by their provider and section.
     foreach ($this->groupPermissionHandler->getPermissionsByGroupType($this->getGroupType()) as $permission_name => $permission) {
-      $permissions_by_provider[$permission['provider']][$permission_name] = $permission;
+      $by_provider_and_section[$permission['provider']][$permission['section']][$permission_name] = $permission;
     }
 
-    return $permissions_by_provider;
+    // Always put the 'General' section at the top if provided.
+    foreach ($by_provider_and_section as $provider => $sections) {
+      if (isset($sections['General'])) {
+        $by_provider_and_section[$provider] = ['General' => $sections['General']] + $sections;
+      }
+    }
+
+    return $by_provider_and_section;
   }
 
   /**
@@ -162,66 +169,93 @@ abstract class GroupPermissionsForm extends FormBase {
 
     // Render the permission as sections of rows.
     $hide_descriptions = system_admin_compact_mode();
-    foreach ($this->getPermissions() as $provider => $permissions) {
-      // Start each section with a full width row containing the provider name.
-      $form['permissions'][$provider] = [[
-        '#wrapper_attributes' => [
-          'colspan' => count($group_roles) + 1,
-          'class' => ['module'],
-          'id' => 'module-' . $provider,
-        ],
-        '#markup' => $this->moduleHandler->getName($provider),
-      ]];
-
-      // Then list all of the permissions for that provider.
-      foreach ($permissions as $perm => $perm_item) {
-        // Create a row for the permission, starting with the description cell.
-        $form['permissions'][$perm]['description'] = [
-          '#type' => 'inline_template',
-          '#template' => '<div class="permission"><span class="title">{{ title }}</span>{% if description or warning %}<div class="description">{% if warning %}<em class="permission-warning">{{ warning }}</em><br />{% endif %}{{ description }}</div>{% endif %}</div>',
-          '#context' => [
-            'title' => $perm_item['title'],
+    foreach ($this->getPermissions() as $provider => $sections) {
+      // Print a full width row containing the provider name for each provider.
+      $form['permissions'][$provider] = [
+        [
+          '#wrapper_attributes' => [
+            'colspan' => count($group_roles) + 1,
+            'class' => ['module'],
+            'id' => 'module-' . $provider,
           ],
+          '#markup' => $this->moduleHandler->getName($provider),
+        ]
+      ];
+
+      foreach ($sections as $section => $permissions) {
+        // Create a clean section ID.
+        $section_id = $provider . '-' . preg_replace('/[^a-z0-9_]+/', '_', strtolower($section));
+
+        // Start each section with a full width row containing the section name.
+        $form['permissions'][$section_id] = [
+          [
+            '#wrapper_attributes' => [
+              'colspan' => count($group_roles) + 1,
+              'class' => ['section'],
+              'id' => 'section-' . $section_id,
+            ],
+            '#markup' => $section,
+          ]
         ];
 
-        // Show the permission description and warning if toggled on.
-        if (!$hide_descriptions) {
-          $form['permissions'][$perm]['description']['#context']['description'] = $perm_item['description'];
-          $form['permissions'][$perm]['description']['#context']['warning'] = $perm_item['warning'];
-        }
+        // Then list all of the permissions for that provider and section.
+        foreach ($permissions as $perm => $perm_item) {
+          // Create a row for the permission, starting with the description cell.
+          $form['permissions'][$perm]['description'] = [
+            '#type' => 'inline_template',
+            '#template' => '<span class="title">{{ title }}</span>{% if description or warning %}<div class="description">{% if warning %}<em class="permission-warning">{{ warning }}</em><br />{% endif %}{{ description }}</div>{% endif %}',
+            '#context' => [
+              'title' => $perm_item['title'],
+            ],
+            '#wrapper_attributes' => [
+              'class' => ['permission'],
+            ],
+          ];
 
-        // Finally build a checkbox cell for every group role.
-        foreach ($role_info as $role_name => $info) {
-          // Determine whether the permission is available for this role.
-          $na = $info['is_anonymous'] && !in_array('anonymous', $perm_item['allowed for']);
-          $na = $na || ($info['is_outsider'] && !in_array('outsider', $perm_item['allowed for']));
-          $na = $na || ($info['is_member'] && !in_array('member', $perm_item['allowed for']));
-
-          // Show a red '-' if the permission is unavailable.
-          if ($na) {
-            $form['permissions'][$perm][$role_name] = [
-              '#title' => $info['label'] . ': ' . $perm_item['title'],
-              '#title_display' => 'invisible',
-              '#wrapper_attributes' => [
-                'class' => ['checkbox'],
-                'style' => 'color: #ff0000;',
-              ],
-              '#markup' => '-',
-            ];
+          // Show the permission description and warning if toggled on.
+          if (!$hide_descriptions) {
+            $form['permissions'][$perm]['description']['#context']['description'] = $perm_item['description'];
+            $form['permissions'][$perm]['description']['#context']['warning'] = $perm_item['warning'];
           }
-          // Show a checkbox if the permissions is available.
-          else {
-            $form['permissions'][$perm][$role_name] = [
-              '#title' => $info['label'] . ': ' . $perm_item['title'],
-              '#title_display' => 'invisible',
-              '#wrapper_attributes' => [
-                'class' => ['checkbox'],
-              ],
-              '#type' => 'checkbox',
-              '#default_value' => in_array($perm, $info['permissions']) ? 1 : 0,
-              '#attributes' => ['class' => ['rid-' . $role_name, 'js-rid-' . $role_name]],
-              '#parents' => [$role_name, $perm],
-            ];
+
+          // Finally build a checkbox cell for every group role.
+          foreach ($role_info as $role_name => $info) {
+            // Determine whether the permission is available for this role.
+            $na = $info['is_anonymous'] && !in_array('anonymous', $perm_item['allowed for']);
+            $na = $na || ($info['is_outsider'] && !in_array('outsider', $perm_item['allowed for']));
+            $na = $na || ($info['is_member'] && !in_array('member', $perm_item['allowed for']));
+
+            // Show a red '-' if the permission is unavailable.
+            if ($na) {
+              $form['permissions'][$perm][$role_name] = [
+                '#title' => $info['label'] . ': ' . $perm_item['title'],
+                '#title_display' => 'invisible',
+                '#wrapper_attributes' => [
+                  'class' => ['checkbox'],
+                  'style' => 'color: #ff0000;',
+                ],
+                '#markup' => '-',
+              ];
+            }
+            // Show a checkbox if the permissions is available.
+            else {
+              $form['permissions'][$perm][$role_name] = [
+                '#title' => $info['label'] . ': ' . $perm_item['title'],
+                '#title_display' => 'invisible',
+                '#wrapper_attributes' => [
+                  'class' => ['checkbox'],
+                ],
+                '#type' => 'checkbox',
+                '#default_value' => in_array($perm, $info['permissions']) ? 1 : 0,
+                '#attributes' => [
+                  'class' => [
+                    'rid-' . $role_name,
+                    'js-rid-' . $role_name
+                  ]
+                ],
+                '#parents' => [$role_name, $perm],
+              ];
+            }
           }
         }
       }
@@ -234,11 +268,9 @@ abstract class GroupPermissionsForm extends FormBase {
       '#button_type' => 'primary',
     ];
 
-    // @todo Do something like the global permissions page for 'member'.
-    // $form['#attached']['library'][] = 'user/drupal.user.permissions';
-
-    // Add the CSS from the user module as it has styling for permission tables.
-    $form['#attached']['library'][] = 'user/drupal.user.admin';
+    // @todo Do something like the global permissions page JS for 'member'.
+    // @todo See user/drupal.user.permissions for JS example.
+    $form['#attached']['library'][] = 'group/permissions';
 
     return $form;
   }

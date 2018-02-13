@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geofield\Field\FieldType\GeofieldItem.
- */
-
 namespace Drupal\geofield\Plugin\Field\FieldType;
 
 use Drupal\Core\Field\FieldDefinitionInterface;
@@ -29,93 +24,94 @@ class GeofieldItem extends FieldItemBase {
   /**
    * {@inheritdoc}
    */
-  public static function defaultInstanceSettings() {
-    return array(
+  public static function defaultStorageSettings() {
+    return [
       'backend' => 'geofield_backend_default',
-    ) + parent::defaultInstanceSettings();
+    ] + parent::defaultStorageSettings();
   }
 
   /**
    * {@inheritdoc}
    */
   public static function schema(FieldStorageDefinitionInterface $field) {
-    $backendManager = \Drupal::service('plugin.manager.geofield_backend');
-    $backendPlugin = NULL;
+    $backend_manager = \Drupal::service('plugin.manager.geofield_backend');
+    $backend_plugin = NULL;
 
-    if (isset($field->settings['backend']) && $backendManager->getDefinition($field->settings['backend']) != NULL) {
-      $backendPlugin = $backendManager->createInstance($field->getSetting('backend'));
-    } 
-
-    if ($backendPlugin === NULL) {
-      $backendPlugin = $backendManager->createInstance('geofield_backend_default');
+    /* @var \Drupal\geofield\Plugin\GeofieldBackendPluginInterface $backend_plugin */
+    if (isset($field->settings['backend']) && $backend_manager->getDefinition($field->getSetting('backend')) != NULL) {
+      $backend_plugin = $backend_manager->createInstance($field->getSetting('backend'));
     }
 
-    return array(
-      'columns' => array(
-        'value' => $backendPlugin->schema(),
-        'geo_type' => array(
+    if ($backend_plugin === NULL) {
+      $backend_plugin = $backend_manager->createInstance('geofield_backend_default');
+    }
+
+    return [
+      'columns' => [
+        'value' => $backend_plugin->schema(),
+        'geo_type' => [
           'type' => 'varchar',
           'default' => '',
           'length' => 64,
-        ),
-        'lat' => array(
+        ],
+        'lat' => [
           'type' => 'numeric',
           'precision' => 18,
           'scale' => 12,
           'not null' => FALSE,
-        ),
-        'lon' => array(
+        ],
+        'lon' => [
           'type' => 'numeric',
           'precision' => 18,
           'scale' => 12,
           'not null' => FALSE,
-        ),
-        'left' => array(
+        ],
+        'left' => [
           'type' => 'numeric',
           'precision' => 18,
           'scale' => 12,
           'not null' => FALSE,
-        ),
-        'top' => array(
+        ],
+        'top' => [
           'type' => 'numeric',
           'precision' => 18,
           'scale' => 12,
           'not null' => FALSE,
-        ),
-        'right' => array(
+        ],
+        'right' => [
           'type' => 'numeric',
           'precision' => 18,
           'scale' => 12,
           'not null' => FALSE,
-        ),
-        'bottom' => array(
+        ],
+        'bottom' => [
           'type' => 'numeric',
           'precision' => 18,
           'scale' => 12,
           'not null' => FALSE,
-        ),
-        'geohash' => array(
+        ],
+        'geohash' => [
           'type' => 'varchar',
           'length' => GEOFIELD_GEOHASH_LENGTH,
           'not null' => FALSE,
-        ),
-      ),
-      'indexes' => array(
-        'lat' => array('lat'),
-        'lon' => array('lon'),
-        'top' => array('top'),
-        'bottom' => array('bottom'),
-        'left' => array('left'),
-        'right' => array('right'),
-        'geohash' => array('geohash'),
-        'centroid' => array('lat','lon'),
-        'bbox' => array('top','bottom','left','right'),
-      ),
-    );
+        ],
+      ],
+      'indexes' => [
+        'lat' => ['lat'],
+        'lon' => ['lon'],
+        'top' => ['top'],
+        'bottom' => ['bottom'],
+        'left' => ['left'],
+        'right' => ['right'],
+        'geohash' => ['geohash'],
+        'centroid' => ['lat', 'lon'],
+        'bbox' => ['top', 'bottom', 'left', 'right'],
+      ],
+    ];
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) {
     $properties['value'] = DataDefinition::create('string')
@@ -155,27 +151,27 @@ class GeofieldItem extends FieldItemBase {
   /**
    * {@inheritdoc}
    */
-  public function instanceSettingsForm(array $form, FormStateInterface $form_state) {
-    // @TODO: Backend plugins need to define requirement/settings methods,
-    //   allow them to inject data here.
-    $element = array();
+  public function fieldSettingsForm(array $form, FormStateInterface $form_state) {
+    // Backend plugins need to define requirement/settings methods,
+    // allow them to inject data here.
+    $element = [];
 
-    $backendManager = \Drupal::service('plugin.manager.geofield_backend');
+    $backend_manager = \Drupal::service('plugin.manager.geofield_backend');
 
-    $backends = $backendManager->getDefinitions();
-    $backend_options = array();
+    $backends = $backend_manager->getDefinitions();
+    $backend_options = [];
 
     foreach ($backends as $id => $backend) {
       $backend_options[$id] = $backend['admin_label'];
     }
 
-    $element['backend'] = array(
+    $element['backend'] = [
       '#type' => 'select',
-      '#title' => t('Storage Backend'),
+      '#title' => $this->t('Storage Backend'),
       '#default_value' => $this->getSetting('backend'),
       '#options' => $backend_options,
-      '#description' => t("Select the Geospatial storage backend you would like to use to store geofield geometry data. If you don't know what this means, select 'Default'."),
-    );
+      '#description' => $this->t("Select the Geospatial storage backend you would like to use to store geofield geometry data. If you don't know what this means, select 'Default'."),
+    ];
 
     return $element;
   }
@@ -189,10 +185,7 @@ class GeofieldItem extends FieldItemBase {
   }
 
   /**
-   * Overrides \Drupal\Core\TypedData\FieldItemBase::setValue().
-   *
-   * @param array|null $values
-   *   An array of property values.
+   * {@inheritdoc}
    */
   public function setValue($values, $notify = TRUE) {
     parent::setValue($values);
@@ -203,9 +196,12 @@ class GeofieldItem extends FieldItemBase {
    * Populates computed variables.
    */
   protected function populateComputedValues() {
+
+    /* @var \Geometry $geom */
     $geom = \Drupal::service('geofield.geophp')->load($this->value);
 
     if (!empty($geom)) {
+      /* @var \Point $centroid */
       $centroid = $geom->getCentroid();
       $bounding = $geom->getBBox();
 
@@ -225,17 +221,15 @@ class GeofieldItem extends FieldItemBase {
    * {@inheritdoc}
    */
   public function prepareCache() {
-    
   }
 
   /**
    * {@inheritdoc}
    */
   public static function generateSampleValue(FieldDefinitionInterface $field_definition) {
-    $value = array(
+    $value = [
       'value' => \Drupal::service('geofield.wkt_generator')->WktGenerateGeometry(),
-    );
-
+    ];
     return $value;
   }
 

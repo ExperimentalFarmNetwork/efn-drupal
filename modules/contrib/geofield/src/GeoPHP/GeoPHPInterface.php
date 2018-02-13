@@ -2,7 +2,11 @@
 
 namespace Drupal\geofield\GeoPHP;
 
+/**
+ * Provides a GeoPHPInterface.
+ */
 interface GeoPHPInterface {
+
   /**
    * Retrieves the GeoPHP library current version.
    *
@@ -14,13 +18,21 @@ interface GeoPHPInterface {
   /**
    * Loads a geometry object given some parameters.
    *
-   * @return geometry
+   * @param mixed|null $data
+   *   The data to load.
+   * @param string $type
+   *   The string type.
+   *
+   * @return \Geometry|null
    *   The geometry object
    */
-  public function load();
+  public function load($data = NULL, $type = NULL);
 
   /**
+   * Get the Adapter Map.
+   *
    * @return mixed
+   *   The Adapter Map.
    */
   public function getAdapterMap();
 

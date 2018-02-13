@@ -31,7 +31,6 @@ class YamlFormSubmissionNotesForm extends ContentEntityForm {
       '#theme' => 'yamlform_submission_information',
       '#yamlform_submission' => $yamlform_submission,
       '#source_entity' => $source_entity,
-      '#open' => FALSE,
       '#access' => $this->isModalDialog() ? FALSE : TRUE,
     ];
 

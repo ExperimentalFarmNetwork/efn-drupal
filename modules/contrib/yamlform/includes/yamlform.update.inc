@@ -9,6 +9,7 @@ use Drupal\Core\Serialization\Yaml;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\yamlform\Entity\YamlForm;
 use Drupal\Core\Render\Element;
+use Drupal\yamlform\Utility\YamlFormArrayHelper;
 use Drupal\yamlform\Utility\YamlFormElementHelper;
 
 /**
@@ -1257,7 +1258,7 @@ function yamlform_update_8062() {
  */
 function yamlform_update_8063() {
   $settings_config = \Drupal::configFactory()->getEditable('yamlform.settings');
-  $settings_config->set('export.file_name', 'submission-[yamlform-submission:serial]');
+  $settings_config->set('export.file_name', 'submission-[yamlform_submission:serial]');
   $settings_config->save();
 }
 
@@ -1343,7 +1344,7 @@ function yamlform_update_8067(&$sandbox) {
       // @see \Drupal\yamlform\YamlFormTranslationManager::getBaseElements()
       $elements = Yaml::decode($config_elements);
       $elements = YamlFormElementHelper::getFlattened($elements);
-      $translatable_properties = YamlFormElementHelper::addPrefix($element_manager->getTranslatableProperties());
+      $translatable_properties = YamlFormArrayHelper::addPrefix($element_manager->getTranslatableProperties());
       foreach ($elements as $element_key => &$element) {
         foreach ($element as $property_key => $property_value) {
           $translatable_property_key = $property_key;
@@ -1420,4 +1421,30 @@ function yamlform_update_8072(&$sandbox) {
   $settings_config = \Drupal::configFactory()->getEditable('yamlform.settings');
   $settings_config->set('format', array_filter($settings_config->get('format')));
   $settings_config->save();
+}
+
+/**
+ * Issue #2823918: Add custom classes, styles, and properties to form settings and class names to submit buttons.
+ */
+function yamlform_update_8073(&$sandbox) {
+  // Update 'yamlform.settings' configuration.
+  $settings_config = \Drupal::configFactory()->getEditable('yamlform.settings');
+  $settings_config->set('form_classes', $settings_config->get('classes'));
+  $settings_config->set('button_classes', '');
+  $settings_config->clear('classes');
+  $settings_config->save();
+
+  // Update 'yamlform.yamlform.*' configuration.
+  _yamlform_update_form_settings();
+}
+
+/**
+ * Issue #2833576: Custom confirmation attributes and back link.
+ */
+function yamlform_update_8074(&$sandbox) {
+  // Update 'yamlform.settings' configuration.
+  _yamlform_update_admin_settings();
+
+  // Update 'yamlform.yamlform.*' configuration.
+  _yamlform_update_form_settings();
 }

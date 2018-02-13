@@ -1,0 +1,86 @@
+<?php
+
+/**
+ * @file
+ * Support module for YAML Form module custom properties testing.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * PLEASE NOTE:
+ * The custom_* prefix should be replaced with the custom module's namespace.
+ * For example, the Acme module (acme.module) should prefix all custom
+ * element properties with 'acme_'.
+ *
+ * @see \Drupal\yamlform_ui\Form\YamlFormUiElementFormBase
+ * @see \Drupal\yamlform\YamlFormElementBase::buildConfigurationForm
+ * @see \Drupal\yamlform\YamlFormElementBase::form
+ */
+function yamlform_test_custom_properties_form_yamlform_ui_element_form_alter(&$form, FormStateInterface $form_state) {
+  // Define default custom properties.
+  $default_custom_properties = [
+    'custom_data' => '',
+  ];
+
+  // Append the $default_custom_properties to $default_properties stored in the
+  // form's state. This allows default custom properties to be removed when the
+  // form is submitted. If this is omitted, custom properties will always
+  // be append to the element's properties.
+  // @see \Drupal\yamlform\YamlFormElementBase::getConfigurationFormProperties
+  $form_state->set(
+    'default_properties',
+    $form_state->get('default_properties') + $default_custom_properties
+  );
+
+  // Retrieve the values from the custom properties element's default value.
+  // @see \Drupal\yamlform\YamlFormElementBase::buildConfigurationForm
+  $custom_properties = $form['properties']['custom']['properties']['#default_value'];
+
+  // Make sure to unset the custom properties which are going to be handled via
+  // the below form elements.
+  $form['properties']['custom']['properties']['#default_value'] = array_diff_key(
+    $custom_properties,
+    $default_custom_properties
+  );
+
+  // Finally, append the default custom property values.
+  $custom_properties += $default_custom_properties;
+
+  // Set custom properties details element.
+  $form['properties']['custom_properties'] = [
+    '#type' => 'details',
+    '#title' => t('Custom properties'),
+    '#description' => t('The below custom properties are provided and managed by the yamlform_test_custom_properties.module.'),
+    '#open' => TRUE,
+    // Add custom properties after all fieldset elements, which have a
+    // weight of -20.
+    // @see \Drupal\yamlform\YamlFormElementBase::buildConfigurationForm
+    '#weight' => -10,
+  ];
+
+  // Set custom data.
+  $form['properties']['custom_properties']['custom_data'] = [
+    '#type' => 'textfield',
+    '#title' => t('Custom data'),
+    '#description' => t("The custom data value will be added to the \$element's render array attributes."),
+    // IMPORTANT:
+    // You must define the parents for all custom properties to ensure the
+    // submitted value is added to the element's properties render array.
+    // @see \Drupal\yamlform_ui\Form\YamlFormUiElementFormBase::submitForm
+    '#parents' => ['properties', 'custom_data'],
+    '#default_value' => $custom_properties['custom_data'],
+  ];
+}
+
+/**
+ * Implements hook_yamlform_element_alter().
+ */
+function yamlform_test_custom_properties_yamlform_element_alter(array &$element, FormStateInterface $form_state, array $context) {
+  // Add data-custom to the element's attributes.
+  if (!empty($element['#custom_data'])) {
+    $element['#attributes']['data-custom'] = $element['#custom_data'];
+  }
+}

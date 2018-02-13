@@ -127,7 +127,7 @@ class YamlFormUiElementTest extends YamlFormTestBase {
 
     // Check change element type.
     $this->drupalGet('admin/structure/yamlform/manage/contact/element/test/edit', ['query' => ['type' => 'value']]);
-    // Check value has not description.
+    // Check value has no description.
     $this->assertNoRaw(t('A short description of the element used as help for the user when he/she uses the form.'));
     $this->assertRaw('Value<a href="' . $base_path . 'admin/structure/yamlform/manage/contact/element/test/edit" class="button button--small use-ajax" data-dialog-type="modal" data-dialog-options="{&quot;width&quot;:800}" data-drupal-selector="edit-cancel" id="edit-cancel">Cancel</a>');
     $this->assertRaw('(Changing from <em class="placeholder">Text field</em>)');

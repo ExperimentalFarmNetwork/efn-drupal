@@ -7,6 +7,14 @@ table td {
   vertical-align: top;
 }
 
+details details {
+  background-color: #f8f8f8;
+}
+
+details details details {
+  background-color: #fff;
+}
+
 .yamlform-help-details {
   background-color: #f5f5f2;
 }

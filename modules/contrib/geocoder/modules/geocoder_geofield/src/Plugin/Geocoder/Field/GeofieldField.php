@@ -2,8 +2,8 @@
 
 namespace Drupal\geocoder_geofield\Plugin\Geocoder\Field;
 
+use Drupal\Core\Field\FieldConfigInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\field\FieldConfigInterface;
 use Drupal\geocoder_field\Plugin\Geocoder\Field\DefaultField;
 
 /**
@@ -24,11 +24,19 @@ class GeofieldField extends DefaultField {
    */
   public function getSettingsForm(FieldConfigInterface $field, array $form, FormStateInterface &$form_state) {
     $element = parent::getSettingsForm($field, $form, $form_state);
-    // On geofield the dumper is always 'wkt'.
+
+    // The Geofield can just be object of Geocoding.
+    $element['method']['#options'] = [
+      'none' => $this->t('No geocoding'),
+      'source' => $this->t('<b>Geocode</b> from an existing field'),
+    ];
+
+    // On Geofield the dumper should always be 'wkt'.
     $element['dumper'] = [
       '#type' => 'value',
       '#value' => 'wkt',
     ];
+
     return $element;
   }
 

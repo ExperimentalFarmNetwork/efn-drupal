@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geofield\Plugin\GeofieldBackendManager.
- */
-
 namespace Drupal\geofield\Plugin;
 
 use Drupal\Core\Cache\CacheBackendInterface;
@@ -33,4 +28,5 @@ class GeofieldBackendManager extends DefaultPluginManager {
     $this->alterInfo('geofield');
     $this->setCacheBackend($cache_backend, 'geofield_plugins');
   }
+
 }

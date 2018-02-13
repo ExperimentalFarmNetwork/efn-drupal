@@ -1,10 +1,10 @@
 // geo-location shim
-// Source: https://gist.github.com/366184
+// Source: https://gist.github.com/paulirish/366184
 
-// currentely only serves lat/long
+// Currently only serves lat/long
 // depends on jQuery
 
-;(function(geolocation, $){
+(function(geolocation, $){
   if (geolocation) return;
 
   var cache;
@@ -32,7 +32,7 @@
 
 })(navigator.geolocation, jQuery);
 
-;(function ($) {
+(function ($) {
   Drupal.behaviors.geofieldGeolocation = {
     attach: function (context, settings) {
       // callback for getCurrentPosition
@@ -45,14 +45,14 @@
         var $fields = $(context);
         // check that we have something to fill up
         // on muti values check only that the first one is empty
-        if ($fields.find('.auto-geocode .geofield-lat').val() == '' && $fields.find('.auto-geocode .geofield-lon').val() == '') {
+        if ($fields.find('.auto-geocode .geofield-lat').val() === '' && $fields.find('.auto-geocode .geofield-lon').val() === '') {
           // Check to see if we have geolocation support, either natively or through Google.
           if (navigator.geolocation) {
 	          navigator.geolocation.getCurrentPosition(updateLocation);
           }
         }
       }
-      $(':input[name="geofield-html5-geocode-button"]').once('geofield_geolocation').click(function(e) {
+      $('input[name="geofield-html5-geocode-button"]').once('geofield_geolocation').click(function(e) {
         e.preventDefault();
         $fields = $(this).parents('.auto-geocode').parent();
         if (navigator.geolocation) {

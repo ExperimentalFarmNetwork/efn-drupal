@@ -1,0 +1,120 @@
+<strong>There are two versions of this module for Drupal 7. When Geocoder 2.x will be stable, the old Geocoder 1.x will be deprecated. The API has changed between those two modules, so please, if you use this module, get ready to update your code.</strong>
+
+<h2>Geocoder 1.x</h2>
+This module will geocode just about anything you throw at it including addresses, GPX files, geo-tagged images, and KML files.
+
+It is commonly used to automatically geocode <a href="http://www.drupal.org/project/addressfield">Addressfield</a> addresses into <a href="/project/geofield">Geofield</a> points for display on <a href="/project/openlayers">Openlayers Maps</a>. It also supports the <a href="http://www.drupal.org/project/geolocation">geolocation</a>, and <a href="http://www.drupal.org/project/location">location</a> modules.
+
+This module also makes available an API to convert the information you already have into geographic information. It support a variety of input formats and runs them through pluggable backends to produce geographic information. In addition to Latitude / Longitude points, this API also supports more complex geographies such as lines and polygons.
+
+If you'd like to help improve the module your patches and co-maintenance are welcome!
+
+<h2>Features</h2>
+<ul>
+  <li>Geocode Address or location data from any text or <a rel="nofollow" href="/project/addressfield">Addressfield</a> value (using Google, Yahoo, Yandex, or MapQuest).</li>
+  <li>Read <a rel="nofollow" href="http://en.wikipedia.org/wiki/Geotagging#JPEG_photos">Geotags from EXIF data</a> in your photos.</li>
+  <li>Convert any <a rel="nofollow" href="http://en.wikipedia.org/wiki/GPS_eXchange_Format">GPX Tracklog</a> into a Linestring.</li>
+  <li>Convert uploaded <a rel="nofollow" href="http://en.wikipedia.org/wiki/KML">KML files</a> into geometries.</li>
+  <li>Convert uploaded or typed <a href="http://en.wikipedia.org/wiki/GeoJSON">GeoJSON</a> and <a href="http://en.wikipedia.org/wiki/Well-known_text">WKT</a> into geometries.</li>
+  <li><a href="/project/services">Services module</a> integration. You can easily transform Drupal into a general purpose geocoding server using REST, SOAP, XMLRPC etc.</li>
+</ul>
+
+<h2>Compatible modules</h2>
+<ul>
+  <li><a href="/project/geofield">Geofield</a> (recommended location storage)</li>
+  <li><a href="/project/addressfield">Addressfield</a> & <a href="/project/address">Address for D8</a> (recommended address storage)</li>
+  <li>Core Image and File modules (for images and uploaded files - KML, GPX etc.)</li>
+  <li>Core Text fields (alternative address storage)</li>
+  <li><a href="/project/location">location</a> (alternative location or address storage)</li>
+  <li><a href="/project/geolocation">geolocation</a> (alternative location storage)</li>
+  <li><a href="/project/geocoder_autocomplete">geocoder-autocomplete</a> Provides a nice auto-complete text-widget. (Doesn't use geocoder api)</li>
+  <li><a href="/project/computed_field">Computed Field</a></li>
+</ul>
+
+<h2>Installation</h2>
+
+All you need to do is install the <a href="/project/geophp">geoPHP module</a>, which is required by geocoder.
+
+<h2>Tutorial</h2>
+
+There's a nice video tutorial on using geocoder, addressfield, and geofield here: http://vimeo.com/38558646
+
+<h3>API</h3>
+
+In addition to the GUI-based widget, geocoder also provides a nice general API for doing geocoding. Here's an example:
+
+<?php
+// Geocode an address
+$address = '4925 Gair Ave, Terrace, BC';
+$point = geocoder('google',$address);
+$geoJSON = $point->out('json');
+
+// List all available handlers
+$handlers = geocoder_handler_info();
+dpm($handlers);
+?>
+
+New geocoder handlers as easy to define. Simply create a new ctools plugin of the type "geocoder_handler".
+
+<h2>Geocoder 2.x</h2>
+
+This is a complete rewrite of the Geocoder module, based on the <a href="http://geocoder-php.org/">Geocoder PHP library</a> - <a href="https://github.com/geocoder-php/Geocoder/tree/3.x">Version 3.x</a>.
+
+<h3>Features</h3>
+<ul>
+  <li>Solid API based on <a href="http://geocoder-php.org">Geocoder PHP library</a></li>
+  <li>Geocode and Reverse Geocode using one or multiple Geocoder providers (ArcGISOnline, BingMaps, File, GoogleMaps,  Nominatim, OpeneStreetMap, etc);</li>
+  <li>Results can be dumped into multiple formats such as WKT, GeoJson, etc ...</li>
+  <li>The Geocoder Provider and Dumper plugins are extendable through a custom module;</li>
+  <li>Submodule Geocoder Field provides Drupal fields widgets and formatters, with even more options;</li>
+  <li><a href="https://www.drupal.org/project/geofield">Geofield</a> and <a href="https://www.drupal.org/project/address">Address</a> field integration;</li>
+  <li>Caching results capabilities, enabled by default;</li>
+</ul>
+
+<h3>Requirements for D8</h3>
+<ul>
+  <li><a href="https://getcomposer.org">Composer</a>, to add the module to your codebase (for more info refer to <a href="https://www.drupal.org/node/2718229">Using Composer to manage Drupal site dependencies)</a></li>
+  <li><a href="http://drush.org">Drush</a>, to enable the module (and its dependencies) from the shell;</li>
+  <li>No other external requirements for the main geocoder Module: the <a href="http://geocoder-php.org">Geocoder PHP library</a> will be downloaded automatically via composer;</li>
+  <li>The embedded "Geocoder Address" submodule requires the <a href="https://www.drupal.org/project/geofield">Geofield Module</a>;</li>
+  <li>The embedded "Geocoder Address" submodule requires the <a href="https://www.drupal.org/project/address">Address Module</a>;</li>
+</ul>
+
+<h3>Installation for D8</h3>
+
+<ol>
+  <li>Download the module running the following shell command from you project root (at the composer.json file level):
+
+    <b>$ composer require "drupal/geocoder"</b>
+
+    <u>Note:</u> this will also download the Geocoder PHP library as vendor/willdurand/geocoder</li>
+
+  <li>Enable the module via Drush
+
+    <b>$ drush en geocoder</b>
+
+    or the website back-end/administration interface;</li>
+
+  <li>Eventually enable also the submodules: geocoder_field and geocoder_geofield / geocoder_address;</li>
+</ol>
+
+<h3>Installation for D7</h3>
+
+<ol>
+  <li>drush dl composer_manager</li>
+  <li>drush dl service_container</li>
+  <li>drush dl composer-8.x-1.x</li>
+  <li>drush dl geocoder-7.x-2.x</li>
+  <li>drush en geocoder -y</li>
+  <li>Eventually enable also the submodules: geocoder_field and geocoder_geofield / geocoder_address</li>
+
+</ol>
+
+<h3>API</h3>
+
+Find the documentation on the API in the README.md file.
+
+<h3>Modules using Geocoder 2.x</h3>
+<ul>
+  <li><a href="https://www.drupal.org/project/openlayers">Openlayers 3.x</a></li>
+</ul>

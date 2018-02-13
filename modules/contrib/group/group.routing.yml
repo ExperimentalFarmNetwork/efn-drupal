@@ -1,6 +1,6 @@
 # General routes for the Group module.
 group.settings:
-  path: 'admin/group/settings'
+  path: '/admin/group/settings'
   defaults:
     _form: '\Drupal\group\Form\GroupSettingsForm'
     _title: 'Group settings'

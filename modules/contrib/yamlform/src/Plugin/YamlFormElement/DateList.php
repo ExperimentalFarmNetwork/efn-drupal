@@ -142,11 +142,11 @@ class DateList extends DateBase {
   /**
    * {@inheritdoc}
    */
-  protected function setConfigurationFormDefaultValue(array &$form, array &$properties, array &$property_element, $property_name) {
+  protected function setConfigurationFormDefaultValue(array &$form, array &$element_properties, array &$property_element, $property_name) {
     if (in_array($property_name, ['date_text_parts', 'date_part_order'])) {
-      $properties[$property_name] = array_combine($properties[$property_name], $properties[$property_name]);
+      $element_properties[$property_name] = array_combine($element_properties[$property_name], $element_properties[$property_name]);
     }
-    parent::setConfigurationFormDefaultValue($form, $properties, $property_element, $property_name);
+    parent::setConfigurationFormDefaultValue($form, $element_properties, $property_element, $property_name);
   }
 
 }

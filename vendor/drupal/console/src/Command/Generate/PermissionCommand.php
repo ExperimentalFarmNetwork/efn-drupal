@@ -10,19 +10,18 @@ namespace Drupal\Console\Command\Generate;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\Command;
 use Drupal\Console\Command\Shared\ModuleTrait;
 use Drupal\Console\Command\Shared\PermissionTrait;
 use Drupal\Console\Generator\PermissionGenerator;
 use Drupal\Console\Command\Shared\ConfirmationTrait;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Extension\Manager;
 use Drupal\Console\Core\Utils\StringConverter;
+use Drupal\Console\Utils\Validator;
 
 class PermissionCommand extends Command
 {
-    use CommandTrait;
     use ModuleTrait;
     use PermissionTrait;
     use ConfirmationTrait;
@@ -43,6 +42,11 @@ class PermissionCommand extends Command
     protected $generator;
 
     /**
+     * @var Validator
+     */
+    protected $validator;
+
+    /**
      * PermissionCommand constructor.
      *
      * @param Manager         $extensionManager
@@ -51,11 +55,13 @@ class PermissionCommand extends Command
     public function __construct(
         Manager $extensionManager,
         StringConverter $stringConverter,
-        PermissionGenerator $permissionGenerator
+        PermissionGenerator $permissionGenerator,
+        Validator $validator
     ) {
         $this->extensionManager = $extensionManager;
         $this->stringConverter = $stringConverter;
         $this->generator = $permissionGenerator;
+        $this->validator = $validator;
         parent::__construct();
     }
 
@@ -66,8 +72,8 @@ class PermissionCommand extends Command
     {
         $this
             ->setName('generate:permissions')
-            ->setDescription($this->trans('commands.generate.permission.description'))
-            ->setHelp($this->trans('commands.generate.permission.help'))
+            ->setDescription($this->trans('commands.generate.permissions.description'))
+            ->setHelp($this->trans('commands.generate.permissions.help'))
             ->addOption(
                 'module',
                 null,
@@ -79,7 +85,8 @@ class PermissionCommand extends Command
                 null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.common.options.permissions')
-            );
+            )
+            ->setAliases(['gp']);
     }
 
     /**
@@ -103,12 +110,7 @@ class PermissionCommand extends Command
         $io = new DrupalStyle($input, $output);
 
         // --module option
-        $module = $input->getOption('module');
-        if (!$module) {
-            // @see Drupal\Console\Command\Shared\ModuleTrait::moduleQuestion
-            $module = $this->moduleQuestion($io);
-            $input->setOption('module', $module);
-        }
+        $this->getModuleOption();
 
         // --permissions option
         $permissions = $input->getOption('permissions');

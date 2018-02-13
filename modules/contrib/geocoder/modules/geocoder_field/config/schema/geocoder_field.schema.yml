@@ -30,7 +30,7 @@ field.field.*.*.*.third_party.geocoder_field:
           label: 'Handling of geocoding failure'
         status_message:
           type: boolean
-          label: 'Display a status mesage in case of failure'
+          label: 'Display a status message in case of failure'
         log:
           type: boolean
           label: 'Log the failure'

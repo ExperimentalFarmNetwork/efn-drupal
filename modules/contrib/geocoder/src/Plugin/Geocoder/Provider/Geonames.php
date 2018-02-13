@@ -12,7 +12,8 @@ use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
  *   name = "Geonames",
  *   handler = "\Geocoder\Provider\Geonames",
  *   arguments = {
- *     "username"
+ *     "username" = NULL,
+ *     "locale" = NULL
  *   }
  * )
  */

@@ -13,6 +13,11 @@
       "name": "Pablo López",
       "homepage": "https://www.drupal.org/u/plopesc",
       "role": "Maintainer"
+    },
+    {
+      "name": "Italo Mairo",
+      "homepage": "https://www.drupal.org/u/itamair",
+      "role": "Maintainer"
     }
   ],
   "support": {
@@ -23,6 +28,6 @@
   "license": "GPL-2.0+",
   "minimum-stability": "dev",
   "require": {
-    "phayes/geophp": "dev-master"
+    "phayes/geophp": "dev-master#6855624"
   }
 }

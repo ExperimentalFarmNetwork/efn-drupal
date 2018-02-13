@@ -147,7 +147,7 @@ class YamlFormSubmissionResendForm extends FormBase {
     // Message.
     $form['message'] = [
       '#type' => 'details',
-      '#title' => 'Message',
+      '#title' => $this->t('Message'),
       '#open' => TRUE,
       '#tree' => TRUE,
       '#prefix' => '<div id="edit-yamlform-message-wrapper">',
@@ -173,7 +173,6 @@ class YamlFormSubmissionResendForm extends FormBase {
       '#theme' => 'yamlform_submission_information',
       '#yamlform_submission' => $yamlform_submission,
       '#source_entity' => $source_entity,
-      '#open' => FALSE,
       '#weight' => -19,
     ];
     $form['#attached']['library'][] = 'yamlform/yamlform.admin';

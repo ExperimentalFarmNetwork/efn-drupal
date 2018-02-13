@@ -7,6 +7,7 @@
 
 namespace Drupal\Console\Command\Generate;
 
+use Drupal\Console\Utils\Validator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -15,10 +16,9 @@ use Drupal\Console\Command\Shared\ModuleTrait;
 use Drupal\Console\Command\Shared\FormTrait;
 use Drupal\Console\Generator\PluginRestResourceGenerator;
 use Drupal\Console\Command\Shared\ConfirmationTrait;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\Command;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Extension\Manager;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Utils\StringConverter;
 use Drupal\Console\Core\Utils\ChainQueue;
 
@@ -33,22 +33,26 @@ class PluginRestResourceCommand extends Command
     use ModuleTrait;
     use FormTrait;
     use ConfirmationTrait;
-    use CommandTrait;
 
     /**
- * @var Manager
-*/
+     * @var Manager
+     */
     protected $extensionManager;
 
     /**
- * @var PluginRestResourceGenerator
-*/
+     * @var PluginRestResourceGenerator
+     */
     protected $generator;
 
     /**
      * @var StringConverter
      */
     protected $stringConverter;
+
+    /**
+     * @var Validator
+     */
+    protected $validator;
 
     /**
      * @var ChainQueue
@@ -62,17 +66,20 @@ class PluginRestResourceCommand extends Command
      * @param Manager                     $extensionManager
      * @param PluginRestResourceGenerator $generator
      * @param StringConverter             $stringConverter
+     * @param Validator                   $validator
      * @param ChainQueue                  $chainQueue
      */
     public function __construct(
         Manager $extensionManager,
         PluginRestResourceGenerator $generator,
         StringConverter $stringConverter,
+        Validator $validator,
         ChainQueue $chainQueue
     ) {
         $this->extensionManager = $extensionManager;
         $this->generator = $generator;
         $this->stringConverter = $stringConverter;
+        $this->validator = $validator;
         $this->chainQueue = $chainQueue;
         parent::__construct();
     }
@@ -83,18 +90,17 @@ class PluginRestResourceCommand extends Command
             ->setName('generate:plugin:rest:resource')
             ->setDescription($this->trans('commands.generate.plugin.rest.resource.description'))
             ->setHelp($this->trans('commands.generate.plugin.rest.resource.help'))
-            ->addOption('module', null, InputOption::VALUE_REQUIRED, $this->trans('commands.common.options.module'))
+            ->addOption(
+                'module',
+                null,
+                InputOption::VALUE_REQUIRED,
+                $this->trans('commands.common.options.module')
+            )
             ->addOption(
                 'class',
                 null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.generate.plugin.rest.resource.options.class')
-            )
-            ->addOption(
-                'name',
-                null,
-                InputOption::VALUE_OPTIONAL,
-                $this->trans('commands.generate.service.options.name')
             )
             ->addOption(
                 'plugin-id',
@@ -119,7 +125,8 @@ class PluginRestResourceCommand extends Command
                 null,
                 InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
                 $this->trans('commands.generate.plugin.rest.resource.options.plugin-states')
-            );
+            )
+            ->setAliases(['gprr']);
     }
 
     /**
@@ -130,18 +137,24 @@ class PluginRestResourceCommand extends Command
         $io = new DrupalStyle($input, $output);
 
         // @see use Drupal\Console\Command\Shared\ConfirmationTrait::confirmGeneration
-        if (!$this->confirmGeneration($io)) {
+        if (!$this->confirmGeneration($io, $input)) {
             return 1;
         }
 
+        $http_methods = $this->getHttpMethods();
         $module = $input->getOption('module');
-        $class_name = $input->getOption('class');
+        $class_name = $this->validator->validateClassName($input->getOption('class'));
         $plugin_id = $input->getOption('plugin-id');
         $plugin_label = $input->getOption('plugin-label');
         $plugin_url = $input->getOption('plugin-url');
-        $plugin_states = $input->getOption('plugin-states');
+        $plugin_states = $this->validator->validateHttpMethods($input->getOption('plugin-states'), $http_methods);
 
-        $this->generator->generate($module, $class_name, $plugin_label, $plugin_id, $plugin_url, $plugin_states);
+        $prepared_plugin = [];
+        foreach ($plugin_states as $plugin_state) {
+            $prepared_plugin[$plugin_state] = $http_methods[$plugin_state];
+        }
+
+        $this->generator->generate($module, $class_name, $plugin_label, $plugin_id, $plugin_url, $prepared_plugin);
 
         $this->chainQueue->addCommand('cache:rebuild', ['cache' => 'discovery']);
 
@@ -153,26 +166,16 @@ class PluginRestResourceCommand extends Command
         $io = new DrupalStyle($input, $output);
 
         // --module option
-        $module = $input->getOption('module');
-        if (!$module) {
-            // @see Drupal\Console\Command\Shared\ModuleTrait::moduleQuestion
-            $module = $this->moduleQuestion($io);
-            $input->setOption('module', $module);
-        }
+        $this->getModuleOption();
 
         // --class option
         $class_name = $input->getOption('class');
         if (!$class_name) {
-            $stringUtils = $this->stringConverter;
             $class_name = $io->ask(
                 $this->trans('commands.generate.plugin.rest.resource.questions.class'),
                 'DefaultRestResource',
-                function ($class_name) use ($stringUtils) {
-                    if (!strlen(trim($class_name))) {
-                        throw new \Exception('The Class name can not be empty');
-                    }
-
-                    return $stringUtils->humanToCamelCase($class_name);
+                function ($class) {
+                    return $this->validator->validateClassName($class);
                 }
             );
             $input->setOption('class', $class_name);
@@ -207,10 +210,11 @@ class PluginRestResourceCommand extends Command
             $input->setOption('plugin-url', $plugin_url);
         }
 
+
         // --plugin-states option
         $plugin_states = $input->getOption('plugin-states');
         if (!$plugin_states) {
-            $states = ['GET', 'PUT', 'POST', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'];
+            $states = array_keys($this->getHttpMethods());
             $plugin_states = $io->choice(
                 $this->trans('commands.generate.plugin.rest.resource.questions.plugin-states'),
                 $states,
@@ -220,5 +224,45 @@ class PluginRestResourceCommand extends Command
 
             $input->setOption('plugin-states', $plugin_states);
         }
+    }
+
+    /**
+     * Returns available HTTP methods.
+     *
+     * @return array
+     *   Available HTTP methods.
+     */
+    protected function getHttpMethods()
+    {
+        return [
+            'GET' => [
+              'http_code' => 200,
+              'response_class' => 'ResourceResponse',
+            ],
+            'PUT' => [
+              'http_code' => 201,
+              'response_class' => 'ModifiedResourceResponse',
+            ],
+            'POST' => [
+              'http_code' => 200,
+              'response_class' => 'ModifiedResourceResponse',
+            ],
+            'PATCH' => [
+              'http_code' => 204,
+              'response_class' => 'ModifiedResourceResponse',
+            ],
+            'DELETE' => [
+              'http_code' => 204,
+              'response_class' => 'ModifiedResourceResponse',
+            ],
+            'HEAD' => [
+              'http_code' => 200,
+              'response_class' => 'ResourceResponse',
+            ],
+            'OPTIONS' => [
+              'http_code' => 200,
+              'response_class' => 'ResourceResponse',
+            ],
+        ];
     }
 }

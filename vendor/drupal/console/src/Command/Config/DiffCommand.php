@@ -12,16 +12,13 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\Command;
 use Drupal\Core\Config\CachedStorage;
 use Drupal\Core\Config\ConfigManager;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Style\DrupalStyle;
 
 class DiffCommand extends Command
 {
-    use CommandTrait;
-
     /**
      * @var CachedStorage
      */
@@ -79,7 +76,7 @@ class DiffCommand extends Command
                 null,
                 InputOption::VALUE_NONE,
                 $this->trans('commands.config.diff.options.reverse')
-            );
+            )->setAliases(['cdi']);
     }
 
     /**
@@ -94,7 +91,7 @@ class DiffCommand extends Command
         if (!$directory) {
             $directory = $io->choice(
                 $this->trans('commands.config.diff.questions.directories'),
-                array_keys($config_directories),
+                $config_directories,
                 CONFIG_SYNC_DIRECTORY
             );
 
@@ -107,8 +104,12 @@ class DiffCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        global $config_directories;
         $io = new DrupalStyle($input, $output);
-        $directory = $input->getArgument('directory');
+        $directory = $input->getArgument('directory') ?: CONFIG_SYNC_DIRECTORY;
+        if (array_key_exists($directory, $config_directories)) {
+            $directory = $config_directories[$directory];
+        }
         $source_storage = new FileStorage($directory);
 
         if ($input->getOption('reverse')) {

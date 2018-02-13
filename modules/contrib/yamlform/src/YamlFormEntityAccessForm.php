@@ -7,7 +7,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\user\Entity\User;
 
 /**
- * Base for controller for form access.
+ * Provides a form to manage access.
  */
 class YamlFormEntityAccessForm extends EntityForm {
 

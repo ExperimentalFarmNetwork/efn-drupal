@@ -19,9 +19,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class Geometry extends GeoJson {
 
   /**
-   * The geophp service.
+   * Geophp interface.
    *
-   * @var Drupal\geofield\GeoPHP\GeoPHPInterface
+   * @var \Drupal\geofield\GeoPHP\GeoPHPInterface
    */
   protected $geophp;
 
@@ -34,7 +34,7 @@ class Geometry extends GeoJson {
    *   The plugin_id for the plugin instance.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
-   * @param Drupal\geofield\GeoPHP\GeoPHPInterface $geophp
+   * @param \Drupal\geofield\GeoPHP\GeoPHPInterface $geophp
    *   The geophp service.
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, GeoPHPInterface $geophp) {
@@ -58,7 +58,7 @@ class Geometry extends GeoJson {
    * {@inheritdoc}
    */
   public function dump(Address $address) {
-    return $this->geophp->load(parent::dump($address), 'json');
+    return json_encode($this->geophp->load(parent::dump($address), 'json'));
   }
 
 }

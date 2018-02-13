@@ -119,6 +119,7 @@ elements: |
     visible_yamlform_message:
       '#type': message
       '#title': Message
+      '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/77245">Issue #77245: A place for JavaScript status messages</a>'
       '#message_type': warning
       '#message_message': 'This is a <strong>warning</strong> message.'
       visible_yamlform_message_content:
@@ -161,9 +162,9 @@ elements: |
         address: '11 Brook Alley Road. APT 1'
         address_2: '11 Brook Alley Road. APT 1'
         city: Springfield
-        state_province: 'New Mexico'
+        state_province: Hawaii
         postal_code: Loremipsum
-        country: Guadeloupe
+        country: Kiribati
       '#states':
         visible:
           ':input[name="visible_trigger"]':
@@ -184,7 +185,7 @@ elements: |
     visible_yamlform_autocomplete:
       '#type': autocomplete
       '#title': Autocomplete
-      '#autocomplete_options': country_names
+      '#autocomplete_items': country_names
       '#default_value': Dixisset
       '#states':
         visible:
@@ -215,7 +216,7 @@ elements: |
         One: One
         Two: Two
         Three: Three
-      '#default_value': Two
+      '#default_value': Three
       '#states':
         visible:
           ':input[name="visible_trigger"]':
@@ -237,12 +238,13 @@ elements: |
     visible_checkboxes:
       '#type': checkboxes
       '#title': Checkboxes
+      '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/994360">Issue #994360: #states cannot disable/enable radios and checkboxes</a><br/><a href="https://www.drupal.org/node/2836364">Issue #2836364: Wrapper attributes are not supported by composite elements, this includes radios, checkboxes, and buttons.</a>'
       '#options':
         One: One
         Two: Two
         Three: Three
       '#default_value':
-        - Two
+        - Three
       '#states':
         visible:
           ':input[name="visible_trigger"]':
@@ -258,7 +260,7 @@ elements: |
         Two: Two
         Three: Three
       '#default_value':
-        - One
+        - Two
       '#states':
         visible:
           ':input[name="visible_trigger"]':
@@ -281,7 +283,7 @@ elements: |
     visible_color:
       '#type': color
       '#title': Color
-      '#default_value': '#ccffff'
+      '#default_value': '#ffffcc'
       '#states':
         visible:
           ':input[name="visible_trigger"]':
@@ -293,16 +295,16 @@ elements: |
       '#type': contact
       '#title': Contact
       '#default_value':
-        name: Loremipsum
+        name: Oratione
         company: Dixisset
-        email: example@example.com
+        email: test@test.com
         phone: 123-456-7890
         address: '11 Brook Alley Road. APT 1'
-        address_2: '11 Brook Alley Road. APT 1'
-        city: 'Hill Valley'
-        state_province: Alaska
-        postal_code: Dixisset
-        country: Swaziland
+        address_2: '10 Main Street'
+        city: Pleasantville
+        state_province: Guam
+        postal_code: Oratione
+        country: 'San Marino'
       '#states':
         visible:
           ':input[name="visible_trigger"]':
@@ -315,13 +317,13 @@ elements: |
       '#title': 'Credit card'
       '#default_value':
         warning: null
-        name: Dixisset
+        name: Loremipsum
         type: DC
         number: '4111111111111111'
         civ: 222
         expiration: null
-        expiration_month: 3
-        expiration_year: 2025
+        expiration_month: 11
+        expiration_year: 2021
       '#states':
         visible:
           ':input[name="visible_trigger"]':
@@ -355,7 +357,7 @@ elements: |
       '#type': datetime
       '#title': Date/time
       '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/2419131">Issue #2419131: #states attribute does not work on #type datetime</a>'
-      '#default_value': '1943-02-25'
+      '#default_value': '1940-07-07'
       '#states':
         visible:
           ':input[name="visible_trigger"]':
@@ -366,7 +368,7 @@ elements: |
     visible_datelist:
       '#type': datelist
       '#title': 'Date list'
-      '#default_value': '1940-10-09'
+      '#default_value': '1940-07-07'
       '#states':
         visible:
           ':input[name="visible_trigger"]':
@@ -398,7 +400,7 @@ elements: |
     visible_yamlform_email_confirm:
       '#type': email_confirm
       '#title': 'Email confirm'
-      '#default_value': random@random.com
+      '#default_value': example@example.com
       '#states':
         visible:
           ':input[name="visible_trigger"]':
@@ -441,7 +443,7 @@ elements: |
       '#selection_settings':
         include_anonymous: true
       '#default_value':
-        - Oratione
+        - Loremipsum
       '#states':
         visible:
           ':input[name="visible_trigger"]':
@@ -456,7 +458,7 @@ elements: |
       '#selection_handler': 'default:user'
       '#selection_settings':
         include_anonymous: true
-      '#default_value': Oratione
+      '#default_value': Dixisset
       '#states':
         visible:
           ':input[name="visible_trigger"]':
@@ -526,9 +528,9 @@ elements: |
         4: 4
         5: 5
       '#default_value':
-        q1: 1
-        q2: 5
-        q3: 1
+        q1: 2
+        q2: 4
+        q3: 3
       '#states':
         visible:
           ':input[name="visible_trigger"]':
@@ -562,7 +564,7 @@ elements: |
     visible_managed_file:
       '#type': managed_file
       '#title': 'Managed file'
-      '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/2705471">Issue #2705471: Form states managed file fields</a>'
+      '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/2705471">Issue #2705471: Form states managed file fields</a><br/><a href="https://www.drupal.org/node/2113931">Issue #2113931: File Field design update</a>'
       '#states':
         visible:
           ':input[name="visible_trigger"]':
@@ -574,12 +576,12 @@ elements: |
       '#type': name
       '#title': Name
       '#default_value':
-        title: Mr
-        first: Oratione
+        title: Dr
+        first: Loremipsum
         middle: Oratione
         last: Loremipsum
-        suffix: Loremipsum
-        degree: Loremipsum
+        suffix: Oratione
+        degree: Dixisset
       '#states':
         visible:
           ':input[name="visible_trigger"]':
@@ -593,7 +595,7 @@ elements: |
       '#min': 0
       '#max': 10
       '#step': 1
-      '#default_value': 8
+      '#default_value': 9
       '#states':
         visible:
           ':input[name="visible_trigger"]':
@@ -604,7 +606,7 @@ elements: |
     visible_password:
       '#type': password
       '#title': Password
-      '#default_value': Dixisset
+      '#default_value': Loremipsum
       '#states':
         visible:
           ':input[name="visible_trigger"]':
@@ -627,12 +629,12 @@ elements: |
     visible_radios:
       '#type': radios
       '#title': Radios
-      '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/2731991">Issue #2731991: Setting required on radios marks all options required</a><br/><a href="https://www.drupal.org/node/994360">Issue #994360: #states cannot disable/enable radios and checkboxes</a>'
+      '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/2731991">Issue #2731991: Setting required on radios marks all options required</a><br/><a href="https://www.drupal.org/node/994360">Issue #994360: #states cannot disable/enable radios and checkboxes</a><br/><a href="https://www.drupal.org/node/2836364">Issue #2836364: Wrapper attributes are not supported by composite elements, this includes radios, checkboxes, and buttons.</a>'
       '#options':
         One: One
         Two: Two
         Three: Three
-      '#default_value': Two
+      '#default_value': One
       '#states':
         visible:
           ':input[name="visible_trigger"]':
@@ -647,7 +649,7 @@ elements: |
         One: One
         Two: Two
         Three: Three
-      '#default_value': One
+      '#default_value': Two
       '#states':
         visible:
           ':input[name="visible_trigger"]':
@@ -664,7 +666,7 @@ elements: |
       '#range__output': true
       '#range__output_prefix': $
       '#range__output_suffix': '.00'
-      '#default_value': 38
+      '#default_value': 76
       '#states':
         visible:
           ':input[name="visible_trigger"]':
@@ -686,7 +688,7 @@ elements: |
     visible_search:
       '#type': search
       '#title': Search
-      '#default_value': Loremipsum
+      '#default_value': Dixisset
       '#states':
         visible:
           ':input[name="visible_trigger"]':
@@ -697,12 +699,12 @@ elements: |
     visible_select:
       '#type': select
       '#title': Select
-      '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/1426646">Issue #1426646: "-Select-" option is lost when form elements uses ''#states''</a><br/><a href="https://www.drupal.org/node/1149078">Issue #1149078: States API doesn''t work with multiple select fields</a><br/><a href="https://www.drupal.org/node/2791741">Issue #2791741: FAPI states: fields aren''t hidden initally when depending on multi-value selection</a>'
+      '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/1426646">Issue #1426646: "-Select-" option is lost when form elements uses ''#states''</a><br/><a href="https://www.drupal.org/node/1149078">Issue #1149078: States API doesn''t work with multiple select fields</a><br/><a href="https://www.drupal.org/node/2791741">Issue #2791741: FAPI states: fields aren''t hidden initially when depending on multi-value selection</a>'
       '#options':
         One: One
         Two: Two
         Three: Three
-      '#default_value': Two
+      '#default_value': One
       '#states':
         visible:
           ':input[name="visible_trigger"]':
@@ -744,7 +746,7 @@ elements: |
         Two: Two
         Three: Three
       '#default_value':
-        - One
+        - Three
       '#states':
         visible:
           ':input[name="visible_trigger"]':
@@ -809,7 +811,7 @@ elements: |
     visible_textfield:
       '#type': textfield
       '#title': 'Text field'
-      '#default_value': Oratione
+      '#default_value': Dixisset
       '#states':
         visible:
           ':input[name="visible_trigger"]':
@@ -822,7 +824,7 @@ elements: |
       '#title': 'Text format'
       '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/997826">Issue #997826: #states doesn''t work correctly with type text_format</a><br/><a href="https://www.drupal.org/node/2625128">Issue #2625128: Text format selection stays visible when using editor and a hidden form state</a><br/><a href="https://www.drupal.org/node/1954968">Issue #1954968: Required CKEditor fields always fail HTML5 validation</a>'
       '#default_value':
-        value: '<p>Huius, Lyco, oratione locuples, rebus ipsis ielunior. Duo Reges: constructio interrete. Sed haec in pueris; Sed utrum hortandus es nobis, Luci, inquit, an etiam tua sponte propensus es? Sapiens autem semper beatus est et est aliquando in dolore; Immo videri fortasse. Paulum, cum regem Persem captum adduceret, eodem flumine invectio? Et ille ridens: Video, inquit, quid agas;</p>'
+        value: '<p>Quae cum dixisset, finem ille. Quamquam non negatis nos intellegere quid sit voluptas, sed quid ille dicat. Progredientibus autem aetatibus sensim tardeve potius quasi nosmet ipsos cognoscimus. Gloriosa ostentatio in constituendo summo bono. Qui-vere falsone, quaerere mittimus-dicitur oculis se privasse; Duarum enim vitarum nobis erunt instituta capienda. Comprehensum, quod cognitum non habet? Qui enim existimabit posse se miserum esse beatus non erit. Causa autem fuit huc veniendi ut quosdam hinc libros promerem. Nunc omni virtuti vitium contrario nomine opponitur.</p>'
       '#states':
         visible:
           ':input[name="visible_trigger"]':
@@ -845,7 +847,23 @@ elements: |
     visible_yamlform_toggle:
       '#type': toggle
       '#title': Toggle
-      '#default_value': Loremipsum
+      '#default_value': Oratione
+      '#states':
+        visible:
+          ':input[name="visible_trigger"]':
+            checked: true
+        required:
+          ':input[name="visible_trigger"]':
+            checked: true
+    visible_yamlform_toggles:
+      '#type': toggles
+      '#title': Toggles
+      '#options':
+        One: One
+        Two: Two
+        Three: Three
+      '#default_value':
+        - One
       '#states':
         visible:
           ':input[name="visible_trigger"]':
@@ -856,7 +874,7 @@ elements: |
     visible_url:
       '#type': url
       '#title': URL
-      '#default_value': 'http://example.com'
+      '#default_value': 'http://test.com'
       '#states':
         visible:
           ':input[name="visible_trigger"]':
@@ -969,6 +987,7 @@ elements: |
     invisible_yamlform_message:
       '#type': message
       '#title': Message
+      '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/77245">Issue #77245: A place for JavaScript status messages</a>'
       '#message_type': warning
       '#message_message': 'This is a <strong>warning</strong> message.'
       invisible_yamlform_message_content:
@@ -999,12 +1018,12 @@ elements: |
       '#type': address
       '#title': Address
       '#default_value':
-        address: '11 Brook Alley Road. APT 1'
-        address_2: '11 Brook Alley Road. APT 1'
+        address: '10 Main Street'
+        address_2: '10 Main Street'
         city: Pleasantville
-        state_province: Minnesota
+        state_province: 'Northern Mariana Islands'
         postal_code: Dixisset
-        country: Iran
+        country: Ireland
       '#states':
         invisible:
           ':input[name="invisible_trigger"]':
@@ -1019,7 +1038,7 @@ elements: |
     invisible_yamlform_autocomplete:
       '#type': autocomplete
       '#title': Autocomplete
-      '#autocomplete_options': country_names
+      '#autocomplete_items': country_names
       '#default_value': Loremipsum
       '#states':
         invisible:
@@ -1060,6 +1079,7 @@ elements: |
     invisible_checkboxes:
       '#type': checkboxes
       '#title': Checkboxes
+      '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/994360">Issue #994360: #states cannot disable/enable radios and checkboxes</a><br/><a href="https://www.drupal.org/node/2836364">Issue #2836364: Wrapper attributes are not supported by composite elements, this includes radios, checkboxes, and buttons.</a>'
       '#options':
         One: One
         Two: Two
@@ -1078,7 +1098,7 @@ elements: |
         Two: Two
         Three: Three
       '#default_value':
-        - Three
+        - One
       '#states':
         invisible:
           ':input[name="invisible_trigger"]':
@@ -1095,7 +1115,7 @@ elements: |
     invisible_color:
       '#type': color
       '#title': Color
-      '#default_value': '#ffffcc'
+      '#default_value': '#ccffff'
       '#states':
         invisible:
           ':input[name="invisible_trigger"]':
@@ -1107,13 +1127,13 @@ elements: |
         name: Loremipsum
         company: Dixisset
         email: example@example.com
-        phone: 123-456-7890
-        address: '11 Brook Alley Road. APT 1'
+        phone: 098-765-4321
+        address: '10 Main Street'
         address_2: '11 Brook Alley Road. APT 1'
-        city: 'Hill Valley'
-        state_province: Nevada
-        postal_code: Oratione
-        country: 'Diego Garcia'
+        city: Springfield
+        state_province: Washington
+        postal_code: Loremipsum
+        country: Romania
       '#states':
         invisible:
           ':input[name="invisible_trigger"]':
@@ -1123,13 +1143,13 @@ elements: |
       '#title': 'Credit card'
       '#default_value':
         warning: null
-        name: Loremipsum
+        name: Oratione
         type: DC
         number: '4111111111111111'
-        civ: 111
+        civ: 222
         expiration: null
-        expiration_month: 3
-        expiration_year: 2024
+        expiration_month: 4
+        expiration_year: 2022
       '#states':
         invisible:
           ':input[name="invisible_trigger"]':
@@ -1162,7 +1182,7 @@ elements: |
     invisible_datelist:
       '#type': datelist
       '#title': 'Date list'
-      '#default_value': '1943-02-25'
+      '#default_value': '1940-07-07'
       '#states':
         invisible:
           ':input[name="invisible_trigger"]':
@@ -1177,7 +1197,7 @@ elements: |
     invisible_email:
       '#type': email
       '#title': Email
-      '#default_value': test@test.com
+      '#default_value': example@example.com
       '#states':
         invisible:
           ':input[name="invisible_trigger"]':
@@ -1185,7 +1205,7 @@ elements: |
     invisible_yamlform_email_confirm:
       '#type': email_confirm
       '#title': 'Email confirm'
-      '#default_value': random@random.com
+      '#default_value': test@test.com
       '#states':
         invisible:
           ':input[name="invisible_trigger"]':
@@ -1206,7 +1226,7 @@ elements: |
       '#selection_handler': 'default:user'
       '#selection_settings':
         include_anonymous: true
-      '#default_value': Dixisset
+      '#default_value': Loremipsum
       '#states':
         invisible:
           ':input[name="invisible_trigger"]':
@@ -1231,7 +1251,7 @@ elements: |
       '#selection_handler': 'default:user'
       '#selection_settings':
         include_anonymous: true
-      '#default_value': Dixisset
+      '#default_value': Loremipsum
       '#states':
         invisible:
           ':input[name="invisible_trigger"]':
@@ -1243,7 +1263,7 @@ elements: |
       '#selection_handler': 'default:user'
       '#selection_settings':
         include_anonymous: true
-      '#default_value': Oratione
+      '#default_value': Loremipsum
       '#states':
         invisible:
           ':input[name="invisible_trigger"]':
@@ -1251,7 +1271,7 @@ elements: |
     invisible_yamlform_element:
       '#type': element
       '#title': 'Generic element'
-      '#default_value': Loremipsum
+      '#default_value': Oratione
       '#states':
         invisible:
           ':input[name="invisible_trigger"]':
@@ -1286,8 +1306,8 @@ elements: |
         4: 4
         5: 5
       '#default_value':
-        q1: 1
-        q2: 2
+        q1: 3
+        q2: 4
         q3: 2
       '#states':
         invisible:
@@ -1297,7 +1317,7 @@ elements: |
       '#type': location
       '#title': Location
       '#default_value':
-        value: 'Moscow, Russia, 10307'
+        value: 'The White House, 1600 Pennsylvania Ave NW, Washington, DC 20500, USA'
       '#states':
         invisible:
           ':input[name="invisible_trigger"]':
@@ -1313,7 +1333,7 @@ elements: |
     invisible_managed_file:
       '#type': managed_file
       '#title': 'Managed file'
-      '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/2705471">Issue #2705471: Form states managed file fields</a>'
+      '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/2705471">Issue #2705471: Form states managed file fields</a><br/><a href="https://www.drupal.org/node/2113931">Issue #2113931: File Field design update</a>'
       '#states':
         invisible:
           ':input[name="invisible_trigger"]':
@@ -1322,12 +1342,12 @@ elements: |
       '#type': name
       '#title': Name
       '#default_value':
-        title: Dr
-        first: Dixisset
+        title: Mrs
+        first: Loremipsum
         middle: Loremipsum
-        last: Loremipsum
+        last: Dixisset
         suffix: Loremipsum
-        degree: Loremipsum
+        degree: Dixisset
       '#states':
         invisible:
           ':input[name="invisible_trigger"]':
@@ -1338,7 +1358,6 @@ elements: |
       '#min': 0
       '#max': 10
       '#step': 1
-      '#default_value': 3
       '#states':
         invisible:
           ':input[name="invisible_trigger"]':
@@ -1355,7 +1374,7 @@ elements: |
       '#type': password_confirm
       '#title': 'Password confirm'
       '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/1427838">Issue #1427838: password and password_confirm children do not pick up #states or #attributes</a>'
-      '#default_value': Loremipsum
+      '#default_value': Oratione
       '#states':
         invisible:
           ':input[name="invisible_trigger"]':
@@ -1363,12 +1382,12 @@ elements: |
     invisible_radios:
       '#type': radios
       '#title': Radios
-      '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/2731991">Issue #2731991: Setting required on radios marks all options required</a><br/><a href="https://www.drupal.org/node/994360">Issue #994360: #states cannot disable/enable radios and checkboxes</a>'
+      '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/2731991">Issue #2731991: Setting required on radios marks all options required</a><br/><a href="https://www.drupal.org/node/994360">Issue #994360: #states cannot disable/enable radios and checkboxes</a><br/><a href="https://www.drupal.org/node/2836364">Issue #2836364: Wrapper attributes are not supported by composite elements, this includes radios, checkboxes, and buttons.</a>'
       '#options':
         One: One
         Two: Two
         Three: Three
-      '#default_value': Two
+      '#default_value': One
       '#states':
         invisible:
           ':input[name="invisible_trigger"]':
@@ -1380,7 +1399,7 @@ elements: |
         One: One
         Two: Two
         Three: Three
-      '#default_value': Three
+      '#default_value': One
       '#states':
         invisible:
           ':input[name="invisible_trigger"]':
@@ -1394,7 +1413,7 @@ elements: |
       '#range__output': true
       '#range__output_prefix': $
       '#range__output_suffix': '.00'
-      '#default_value': 53
+      '#default_value': 11
       '#states':
         invisible:
           ':input[name="invisible_trigger"]':
@@ -1402,7 +1421,7 @@ elements: |
     invisible_yamlform_rating:
       '#type': rating
       '#title': Rating
-      '#default_value': Oratione
+      '#default_value': Loremipsum
       '#states':
         invisible:
           ':input[name="invisible_trigger"]':
@@ -1418,12 +1437,12 @@ elements: |
     invisible_select:
       '#type': select
       '#title': Select
-      '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/1426646">Issue #1426646: "-Select-" option is lost when form elements uses ''#states''</a><br/><a href="https://www.drupal.org/node/1149078">Issue #1149078: States API doesn''t work with multiple select fields</a><br/><a href="https://www.drupal.org/node/2791741">Issue #2791741: FAPI states: fields aren''t hidden initally when depending on multi-value selection</a>'
+      '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/1426646">Issue #1426646: "-Select-" option is lost when form elements uses ''#states''</a><br/><a href="https://www.drupal.org/node/1149078">Issue #1149078: States API doesn''t work with multiple select fields</a><br/><a href="https://www.drupal.org/node/2791741">Issue #2791741: FAPI states: fields aren''t hidden initially when depending on multi-value selection</a>'
       '#options':
         One: One
         Two: Two
         Three: Three
-      '#default_value': Two
+      '#default_value': Three
       '#states':
         invisible:
           ':input[name="invisible_trigger"]':
@@ -1435,7 +1454,7 @@ elements: |
         One: One
         Two: Two
         Three: Three
-      '#default_value': Three
+      '#default_value': One
       '#states':
         invisible:
           ':input[name="invisible_trigger"]':
@@ -1469,7 +1488,7 @@ elements: |
         Two: Two
         Three: Three
       '#default_value':
-        - Three
+        - Two
       '#states':
         invisible:
           ':input[name="invisible_trigger"]':
@@ -1482,7 +1501,7 @@ elements: |
         Two: Two
         Three: Three
       '#default_value':
-        - One
+        - Three
       '#states':
         invisible:
           ':input[name="invisible_trigger"]':
@@ -1506,7 +1525,7 @@ elements: |
     invisible_textfield:
       '#type': textfield
       '#title': 'Text field'
-      '#default_value': Dixisset
+      '#default_value': Oratione
       '#states':
         invisible:
           ':input[name="invisible_trigger"]':
@@ -1516,7 +1535,7 @@ elements: |
       '#title': 'Text format'
       '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/997826">Issue #997826: #states doesn''t work correctly with type text_format</a><br/><a href="https://www.drupal.org/node/2625128">Issue #2625128: Text format selection stays visible when using editor and a hidden form state</a><br/><a href="https://www.drupal.org/node/1954968">Issue #1954968: Required CKEditor fields always fail HTML5 validation</a>'
       '#default_value':
-        value: '<p>Huius, Lyco, oratione locuples, rebus ipsis ielunior. Duo Reges: constructio interrete. Sed haec in pueris; Sed utrum hortandus es nobis, Luci, inquit, an etiam tua sponte propensus es? Sapiens autem semper beatus est et est aliquando in dolore; Immo videri fortasse. Paulum, cum regem Persem captum adduceret, eodem flumine invectio? Et ille ridens: Video, inquit, quid agas;</p>'
+        value: '<p>Quae cum dixisset, finem ille. Quamquam non negatis nos intellegere quid sit voluptas, sed quid ille dicat. Progredientibus autem aetatibus sensim tardeve potius quasi nosmet ipsos cognoscimus. Gloriosa ostentatio in constituendo summo bono. Qui-vere falsone, quaerere mittimus-dicitur oculis se privasse; Duarum enim vitarum nobis erunt instituta capienda. Comprehensum, quod cognitum non habet? Qui enim existimabit posse se miserum esse beatus non erit. Causa autem fuit huc veniendi ut quosdam hinc libros promerem. Nunc omni virtuti vitium contrario nomine opponitur.</p>'
       '#states':
         invisible:
           ':input[name="invisible_trigger"]':
@@ -1525,7 +1544,7 @@ elements: |
       '#type': time
       '#title': Time
       '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/1838234">Issue #1838234: Add jQuery Timepicker for the Time element of the datetime field</a>'
-      '#default_value': '17:00'
+      '#default_value': '09:00'
       '#states':
         invisible:
           ':input[name="invisible_trigger"]':
@@ -1534,6 +1553,19 @@ elements: |
       '#type': toggle
       '#title': Toggle
       '#default_value': Oratione
+      '#states':
+        invisible:
+          ':input[name="invisible_trigger"]':
+            checked: true
+    invisible_yamlform_toggles:
+      '#type': toggles
+      '#title': Toggles
+      '#options':
+        One: One
+        Two: Two
+        Three: Three
+      '#default_value':
+        - Two
       '#states':
         invisible:
           ':input[name="invisible_trigger"]':
@@ -1571,11 +1603,11 @@ elements: |
       '#title': Address
       '#default_value':
         address: '10 Main Street'
-        address_2: '10 Main Street'
-        city: Pleasantville
-        state_province: 'Northern Mariana Islands'
+        address_2: '11 Brook Alley Road. APT 1'
+        city: 'Hill Valley'
+        state_province: Kansas
         postal_code: Dixisset
-        country: Antarctica
+        country: Libya
       '#states':
         disabled:
           ':input[name="disabled_trigger"]':
@@ -1590,8 +1622,8 @@ elements: |
     disabled_yamlform_autocomplete:
       '#type': autocomplete
       '#title': Autocomplete
-      '#autocomplete_options': country_names
-      '#default_value': Loremipsum
+      '#autocomplete_items': country_names
+      '#default_value': Oratione
       '#states':
         disabled:
           ':input[name="disabled_trigger"]':
@@ -1603,7 +1635,7 @@ elements: |
         One: One
         Two: Two
         Three: Three
-      '#default_value': Two
+      '#default_value': One
       '#states':
         disabled:
           ':input[name="disabled_trigger"]':
@@ -1631,6 +1663,7 @@ elements: |
     disabled_checkboxes:
       '#type': checkboxes
       '#title': Checkboxes
+      '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/994360">Issue #994360: #states cannot disable/enable radios and checkboxes</a><br/><a href="https://www.drupal.org/node/2836364">Issue #2836364: Wrapper attributes are not supported by composite elements, this includes radios, checkboxes, and buttons.</a>'
       '#options':
         One: One
         Two: Two
@@ -1649,7 +1682,7 @@ elements: |
         Two: Two
         Three: Three
       '#default_value':
-        - One
+        - Two
       '#states':
         disabled:
           ':input[name="disabled_trigger"]':
@@ -1666,7 +1699,7 @@ elements: |
     disabled_color:
       '#type': color
       '#title': Color
-      '#default_value': '#ffffcc'
+      '#default_value': '#ccffff'
       '#states':
         disabled:
           ':input[name="disabled_trigger"]':
@@ -1676,15 +1709,15 @@ elements: |
       '#title': Contact
       '#default_value':
         name: Oratione
-        company: Loremipsum
+        company: Oratione
         email: test@test.com
         phone: 098-765-4321
         address: '11 Brook Alley Road. APT 1'
-        address_2: '10 Main Street'
-        city: 'Hill Valley'
-        state_province: Florida
+        address_2: '11 Brook Alley Road. APT 1'
+        city: Pleasantville
+        state_province: Massachusetts
         postal_code: Dixisset
-        country: Guam
+        country: 'Saint Pierre and Miquelon'
       '#states':
         disabled:
           ':input[name="disabled_trigger"]':
@@ -1694,13 +1727,13 @@ elements: |
       '#title': 'Credit card'
       '#default_value':
         warning: null
-        name: Dixisset
-        type: DC
+        name: Oratione
+        type: VI
         number: '4111111111111111'
-        civ: 333
+        civ: 222
         expiration: null
-        expiration_month: 5
-        expiration_year: 2016
+        expiration_month: 2
+        expiration_year: 2023
       '#states':
         disabled:
           ':input[name="disabled_trigger"]':
@@ -1725,7 +1758,7 @@ elements: |
       '#type': datetime
       '#title': Date/time
       '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/2419131">Issue #2419131: #states attribute does not work on #type datetime</a>'
-      '#default_value': '1943-02-25'
+      '#default_value': '1942-06-18'
       '#states':
         disabled:
           ':input[name="disabled_trigger"]':
@@ -1733,7 +1766,7 @@ elements: |
     disabled_datelist:
       '#type': datelist
       '#title': 'Date list'
-      '#default_value': '1940-10-09'
+      '#default_value': '1943-02-25'
       '#states':
         disabled:
           ':input[name="disabled_trigger"]':
@@ -1756,7 +1789,7 @@ elements: |
     disabled_yamlform_email_confirm:
       '#type': email_confirm
       '#title': 'Email confirm'
-      '#default_value': test@test.com
+      '#default_value': example@example.com
       '#states':
         disabled:
           ':input[name="disabled_trigger"]':
@@ -1790,7 +1823,7 @@ elements: |
       '#selection_settings':
         include_anonymous: true
       '#default_value':
-        - Loremipsum
+        - Dixisset
       '#states':
         disabled:
           ':input[name="disabled_trigger"]':
@@ -1802,7 +1835,7 @@ elements: |
       '#selection_handler': 'default:user'
       '#selection_settings':
         include_anonymous: true
-      '#default_value': Oratione
+      '#default_value': Loremipsum
       '#states':
         disabled:
           ':input[name="disabled_trigger"]':
@@ -1814,7 +1847,7 @@ elements: |
       '#selection_handler': 'default:user'
       '#selection_settings':
         include_anonymous: true
-      '#default_value': Loremipsum
+      '#default_value': Dixisset
       '#states':
         disabled:
           ':input[name="disabled_trigger"]':
@@ -1822,7 +1855,7 @@ elements: |
     disabled_yamlform_element:
       '#type': element
       '#title': 'Generic element'
-      '#default_value': Oratione
+      '#default_value': Loremipsum
       '#states':
         disabled:
           ':input[name="disabled_trigger"]':
@@ -1859,7 +1892,7 @@ elements: |
       '#default_value':
         q1: 4
         q2: 3
-        q3: 5
+        q3: 3
       '#states':
         disabled:
           ':input[name="disabled_trigger"]':
@@ -1876,7 +1909,7 @@ elements: |
     disabled_machine_name:
       '#type': machine_name
       '#title': 'Machine name'
-      '#default_value': oratione
+      '#default_value': dixisset
       '#states':
         disabled:
           ':input[name="disabled_trigger"]':
@@ -1884,7 +1917,7 @@ elements: |
     disabled_managed_file:
       '#type': managed_file
       '#title': 'Managed file'
-      '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/2705471">Issue #2705471: Form states managed file fields</a>'
+      '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/2705471">Issue #2705471: Form states managed file fields</a><br/><a href="https://www.drupal.org/node/2113931">Issue #2113931: File Field design update</a>'
       '#states':
         disabled:
           ':input[name="disabled_trigger"]':
@@ -1895,9 +1928,9 @@ elements: |
       '#default_value':
         title: Mr
         first: Loremipsum
-        middle: Loremipsum
-        last: Dixisset
-        suffix: Loremipsum
+        middle: Dixisset
+        last: Loremipsum
+        suffix: Oratione
         degree: Oratione
       '#states':
         disabled:
@@ -1909,7 +1942,7 @@ elements: |
       '#min': 0
       '#max': 10
       '#step': 1
-      '#default_value': 10
+      '#default_value': 5
       '#states':
         disabled:
           ':input[name="disabled_trigger"]':
@@ -1934,12 +1967,12 @@ elements: |
     disabled_radios:
       '#type': radios
       '#title': Radios
-      '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/2731991">Issue #2731991: Setting required on radios marks all options required</a><br/><a href="https://www.drupal.org/node/994360">Issue #994360: #states cannot disable/enable radios and checkboxes</a>'
+      '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/2731991">Issue #2731991: Setting required on radios marks all options required</a><br/><a href="https://www.drupal.org/node/994360">Issue #994360: #states cannot disable/enable radios and checkboxes</a><br/><a href="https://www.drupal.org/node/2836364">Issue #2836364: Wrapper attributes are not supported by composite elements, this includes radios, checkboxes, and buttons.</a>'
       '#options':
         One: One
         Two: Two
         Three: Three
-      '#default_value': One
+      '#default_value': Three
       '#states':
         disabled:
           ':input[name="disabled_trigger"]':
@@ -1951,7 +1984,7 @@ elements: |
         One: One
         Two: Two
         Three: Three
-      '#default_value': Three
+      '#default_value': One
       '#states':
         disabled:
           ':input[name="disabled_trigger"]':
@@ -1965,7 +1998,7 @@ elements: |
       '#range__output': true
       '#range__output_prefix': $
       '#range__output_suffix': '.00'
-      '#default_value': 51
+      '#default_value': 34
       '#states':
         disabled:
           ':input[name="disabled_trigger"]':
@@ -1981,7 +2014,7 @@ elements: |
     disabled_search:
       '#type': search
       '#title': Search
-      '#default_value': Oratione
+      '#default_value': Loremipsum
       '#states':
         disabled:
           ':input[name="disabled_trigger"]':
@@ -1989,12 +2022,12 @@ elements: |
     disabled_select:
       '#type': select
       '#title': Select
-      '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/1426646">Issue #1426646: "-Select-" option is lost when form elements uses ''#states''</a><br/><a href="https://www.drupal.org/node/1149078">Issue #1149078: States API doesn''t work with multiple select fields</a><br/><a href="https://www.drupal.org/node/2791741">Issue #2791741: FAPI states: fields aren''t hidden initally when depending on multi-value selection</a>'
+      '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/1426646">Issue #1426646: "-Select-" option is lost when form elements uses ''#states''</a><br/><a href="https://www.drupal.org/node/1149078">Issue #1149078: States API doesn''t work with multiple select fields</a><br/><a href="https://www.drupal.org/node/2791741">Issue #2791741: FAPI states: fields aren''t hidden initially when depending on multi-value selection</a>'
       '#options':
         One: One
         Two: Two
         Three: Three
-      '#default_value': Two
+      '#default_value': One
       '#states':
         disabled:
           ':input[name="disabled_trigger"]':
@@ -2006,7 +2039,7 @@ elements: |
         One: One
         Two: Two
         Three: Three
-      '#default_value': Two
+      '#default_value': Three
       '#states':
         disabled:
           ':input[name="disabled_trigger"]':
@@ -2027,7 +2060,7 @@ elements: |
         Two: Two
         Three: Three
       '#default_value':
-        - Two
+        - Three
       '#states':
         disabled:
           ':input[name="disabled_trigger"]':
@@ -2040,7 +2073,7 @@ elements: |
         Two: Two
         Three: Three
       '#default_value':
-        - One
+        - Three
       '#states':
         disabled:
           ':input[name="disabled_trigger"]':
@@ -2053,7 +2086,7 @@ elements: |
         Two: Two
         Three: Three
       '#default_value':
-        - One
+        - Two
       '#states':
         disabled:
           ':input[name="disabled_trigger"]':
@@ -2077,7 +2110,7 @@ elements: |
     disabled_textfield:
       '#type': textfield
       '#title': 'Text field'
-      '#default_value': Loremipsum
+      '#default_value': Dixisset
       '#states':
         disabled:
           ':input[name="disabled_trigger"]':
@@ -2087,7 +2120,7 @@ elements: |
       '#title': 'Text format'
       '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/997826">Issue #997826: #states doesn''t work correctly with type text_format</a><br/><a href="https://www.drupal.org/node/2625128">Issue #2625128: Text format selection stays visible when using editor and a hidden form state</a><br/><a href="https://www.drupal.org/node/1954968">Issue #1954968: Required CKEditor fields always fail HTML5 validation</a>'
       '#default_value':
-        value: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Negat esse eam, inquit, propter se expetendam. Primum Theophrasti, Strato, physicum se voluit; Id mihi magnum videtur. Itaque mihi non satis videmini considerare quod iter sit naturae quaeque progressio. Quare hoc videndum est, possitne nobis hoc ratio philosophorum dare. Est enim tanti philosophi tamque nobilis audacter sua decreta defendere.</p>'
+        value: '<p>Huius, Lyco, oratione locuples, rebus ipsis ielunior. Duo Reges: constructio interrete. Sed haec in pueris; Sed utrum hortandus es nobis, Luci, inquit, an etiam tua sponte propensus es? Sapiens autem semper beatus est et est aliquando in dolore; Immo videri fortasse. Paulum, cum regem Persem captum adduceret, eodem flumine invectio? Et ille ridens: Video, inquit, quid agas;</p>'
       '#states':
         disabled:
           ':input[name="disabled_trigger"]':
@@ -2109,10 +2142,23 @@ elements: |
         disabled:
           ':input[name="disabled_trigger"]':
             checked: true
+    disabled_yamlform_toggles:
+      '#type': toggles
+      '#title': Toggles
+      '#options':
+        One: One
+        Two: Two
+        Three: Three
+      '#default_value':
+        - Three
+      '#states':
+        disabled:
+          ':input[name="disabled_trigger"]':
+            checked: true
     disabled_url:
       '#type': url
       '#title': URL
-      '#default_value': 'http://test.com'
+      '#default_value': 'http://example.com'
       '#states':
         disabled:
           ':input[name="disabled_trigger"]':
@@ -2138,6 +2184,7 @@ settings:
   page_submit_path: ''
   page_confirm_path: ''
   form_submit_label: ''
+  form_submit_attributes: {  }
   form_exception_message: ''
   form_closed_message: ''
   form_confidential: false
@@ -2153,22 +2200,31 @@ settings:
   wizard_progress_pages: false
   wizard_progress_percentage: false
   wizard_next_button_label: ''
+  wizard_next_button_attributes: {  }
   wizard_prev_button_label: ''
+  wizard_prev_button_attributes: {  }
   wizard_start_label: ''
   wizard_complete: true
   wizard_complete_label: ''
   preview: 0
   preview_next_button_label: ''
+  preview_next_button_attributes: {  }
   preview_prev_button_label: ''
+  preview_prev_button_attributes: {  }
   preview_message: ''
   draft: false
   draft_auto_save: false
   draft_button_label: ''
+  draft_button_attributes: {  }
   draft_saved_message: ''
   draft_loaded_message: ''
   confirmation_type: page
   confirmation_message: ''
   confirmation_url: ''
+  confirmation_attributes: {  }
+  confirmation_back: true
+  confirmation_back_label: ''
+  confirmation_back_attributes: {  }
   limit_total: null
   limit_total_message: ''
   limit_user: null

@@ -19,6 +19,10 @@ function yamlform_test_theme() {
   ];
 }
 
+/******************************************************************************/
+// Alter options.
+/******************************************************************************/
+
 /**
  * Implements hook_yamlform_options_YAMLFORM_OPTIONS_ID_alter().
  */
@@ -28,7 +32,38 @@ function yamlform_test_yamlform_options_test_alter(array &$options, array &$elem
     'two' => t('Two'),
     'three' => t('Three'),
   ];
+}
 
+/******************************************************************************/
+// Alter forms.
+/******************************************************************************/
+
+/**
+ * Implements hook_yamlform_form_FORM_ID_alter().
+ */
+function yamlform_test_form_yamlform_submission_test_form_wizard_custom_form_alter(array &$form, FormStateInterface $form_state) {
+  $form['#validate'][] = '_yamlform_test_form_yamlform_submission_test_form_wizard_custom_form_validate';
+}
+
+/**
+ * Validate handler for 'test_form_wizard_custom'.
+ */
+function _yamlform_test_form_yamlform_submission_test_form_wizard_custom_form_validate(array &$form, FormStateInterface $form_state) {
+  if ($form_state->hasAnyErrors()) {
+    return;
+  }
+
+  // Ge submitted values.
+  $values  = $form_state->getValues();
+
+  // Alter pages based on selected 'pages'.
+  $pages = $form_state->get('pages');
+  foreach ($pages as $page_key => &$page) {
+    if (isset($form['elements'][$page_key])) {
+      $page['#access'] = in_array($page_key, $values['pages']);
+    }
+  }
+  $form_state->set('pages', $pages);
 }
 
 /**
@@ -47,6 +82,10 @@ function yamlform_test_form_yamlform_submission_test_form_validate_form_validate
     $form_state->setErrorByName('custom', t('Custom element is required.'));
   }
 }
+
+/******************************************************************************/
+// Generate elements.
+/******************************************************************************/
 
 /**
  * Implements hook_yamlform_load().
@@ -94,43 +133,55 @@ function yamlform_test_yamlform_load(array $entities) {
  */
 function _yamlform_test_issues() {
   return [
+    'submit' => [
+      '1671190' => 'Use <button /> form element type instead of <input type="submit" />',
+    ],
     'datetime' => [
-      2419131 => '#states attribute does not work on #type datetime',
+      '2419131' => '#states attribute does not work on #type datetime',
     ],
     'details' => [
-      2348851 => 'Regression: Allow HTML tags inside detail summary',
+      '2348851' => 'Regression: Allow HTML tags inside detail summary',
     ],
     'entity_autocomplete' => [
-      2826451 => 'TermSelection returning HTML characters in select list',
+      '2826451' => 'TermSelection returning HTML characters in select list',
     ],
     'item' => [
-      783438 => '#states doesn\'t work for #type item',
+      '783438' => '#states doesn\'t work for #type item',
     ],
     'managed_file' => [
-      2705471 => 'Form states managed file fields',
+      '2705471' => 'Form states managed file fields',
+      '2113931' => 'File Field design update',
     ],
     'password_confirm' => [
-      1427838 => 'password and password_confirm children do not pick up #states or #attributes',
+      '1427838' => 'password and password_confirm children do not pick up #states or #attributes',
     ],
     'select' => [
-      1426646 => '"-Select-" option is lost when form elements uses \'#states\'',
-      1149078 => 'States API doesn\'t work with multiple select fields',
-      2791741 => 'FAPI states: fields aren\'t hidden initally when depending on multi-value selection',
+      '1426646' => '"-Select-" option is lost when form elements uses \'#states\'',
+      '1149078' => 'States API doesn\'t work with multiple select fields',
+      '2791741' => 'FAPI states: fields aren\'t hidden initially when depending on multi-value selection',
     ],
     'radios' => [
-      2731991 => 'Setting required on radios marks all options required',
-      994360 => '#states cannot disable/enable radios and checkboxes',
+      '2731991' => 'Setting required on radios marks all options required',
+      '994360' => '#states cannot disable/enable radios and checkboxes',
+      '2836364' => 'Wrapper attributes are not supported by composite elements, this includes radios, checkboxes, and buttons.',
+    ],
+    'checkboxes' => [
+      '994360' => '#states cannot disable/enable radios and checkboxes',
+      '2836364' => 'Wrapper attributes are not supported by composite elements, this includes radios, checkboxes, and buttons.',
     ],
     'text_format' => [
-      997826 => '#states doesn\'t work correctly with type text_format',
-      2625128 => 'Text format selection stays visible when using editor and a hidden form state',
-      1954968 => 'Required CKEditor fields always fail HTML5 validation',
+      '997826' => '#states doesn\'t work correctly with type text_format',
+      '2625128' => 'Text format selection stays visible when using editor and a hidden form state',
+      '1954968' => 'Required CKEditor fields always fail HTML5 validation',
     ],
     'yamlform_markup' => [
-      2700667 => 'Notice: Undefined index: #type in drupal_process_states()',
+      '2700667' => 'Notice: Undefined index: #type in drupal_process_states()',
+    ],
+    'yamlform_message' => [
+      '77245' => 'A place for JavaScript status messages',
     ],
     'yamlform_time' => [
-      1838234 => 'Add jQuery Timepicker for the Time element of the datetime field',
+      '1838234' => 'Add jQuery Timepicker for the Time element of the datetime field',
     ],
   ];
 }

@@ -104,3 +104,5 @@ services:
   plugin.manager.group_content_enabler:
     class: 'Drupal\group\Plugin\GroupContentEnablerManager'
     arguments: ['@container.namespaces', '@cache.discovery', '@module_handler', '@entity_type.manager']
+    tags:
+      - { name: plugin_manager_cache_clear }

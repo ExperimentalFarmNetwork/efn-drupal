@@ -11,6 +11,7 @@ use Symfony\Component\Yaml\Yaml;
 
 /**
  * Class ChainDiscovery
+ *
  * @package Drupal\Console\Core\Utils
  */
 class ChainDiscovery
@@ -30,6 +31,9 @@ class ChainDiscovery
      */
     private $directories = [];
 
+    const INLINE_REGEX = '/{{(.*?)}}/';
+    const ENV_REGEX =  '/%env\((.*?)\)%/';
+
     /**
      * ChainDiscovery constructor.
      *
@@ -43,13 +47,14 @@ class ChainDiscovery
         $this->appRoot = $appRoot;
         $this->configurationManager = $configurationManager;
 
-        $this->addDirectories(
-            [
-            $this->configurationManager->getHomeDirectory() . DIRECTORY_SEPARATOR . '.console'. DIRECTORY_SEPARATOR .'chain',
-            $this->appRoot . DIRECTORY_SEPARATOR . 'console'. DIRECTORY_SEPARATOR .'chain',
-            $this->appRoot . DIRECTORY_SEPARATOR . '.console'. DIRECTORY_SEPARATOR .'chain',
-            ]
+        $directories = array_map(
+            function ($item) {
+                return $item . 'chain/';
+            },
+            $configurationManager->getConfigurationDirectories(true)
         );
+
+        $this->addDirectories($directories);
     }
 
     /**
@@ -77,7 +82,7 @@ class ChainDiscovery
                 ->in($directory);
             foreach ($finder as $file) {
                 $chainFiles[$file->getPath()][] = sprintf(
-                    '%s/%s',
+                    '%s%s',
                     $directory,
                     $file->getBasename()
                 );
@@ -103,7 +108,8 @@ class ChainDiscovery
         $chainCommands = [];
         $files = $this->getChainFiles(true);
         foreach ($files as $file) {
-            $chain = Yaml::parse(file_get_contents($file));
+            $chainContent = $this->getFileContents($file);
+            $chain = Yaml::parse($chainContent);
             if (!array_key_exists('command', $chain)) {
                 continue;
             }
@@ -118,9 +124,85 @@ class ChainDiscovery
             $chainCommands[$name] = [
                 'description' => $description,
                 'file' => $file,
+                'commands' => $chain['commands'],
+                'placeholders' => [
+                    'inline' => $this->extractInlinePlaceHolders($chainContent),
+                    'environment' => $this->extractEnvironmentPlaceHolders($chainContent)
+                ],
             ];
         }
 
         return $chainCommands;
+    }
+
+    /**
+     * Helper to load and clean up the chain file.
+     *
+     * @param string $file The file name
+     *
+     * @return string $contents The contents of the file
+     */
+    public function getFileContents($file)
+    {
+        $contents = file_get_contents($file);
+        // Remove lines with comments.
+        $contents = preg_replace('![ \t]*#.*[ \t]*[\r|\r\n|\n]!', PHP_EOL, $contents);
+        //  Strip blank lines
+        $contents = preg_replace("/(^[\r\n]*|[\r\n]+)[\t]*[\r\n]+/", PHP_EOL, $contents);
+
+        return $contents;
+    }
+
+    private function extractPlaceHolders(
+        $chainContent,
+        $regex
+    ) {
+        $placeHoldersExtracted = [];
+        preg_match_all(
+            $regex,
+            $chainContent,
+            $placeHoldersExtracted
+        );
+
+        if (!$placeHoldersExtracted) {
+            return [];
+        }
+
+        return array_unique($placeHoldersExtracted[1]);
+    }
+
+    public function extractInlinePlaceHolders($chainContent)
+    {
+        $extractedInlinePlaceHolders = $this->extractPlaceHolders(
+            $chainContent,
+            $this::INLINE_REGEX
+        );
+        $extractedVars = $this->extractVars($chainContent);
+
+        $inlinePlaceHolders = [];
+        foreach ($extractedInlinePlaceHolders as $key => $inlinePlaceHolder) {
+            $placeholderValue = null;
+            if (array_key_exists($inlinePlaceHolder, $extractedVars)) {
+                $placeholderValue = $extractedVars[$inlinePlaceHolder];
+            }
+            $inlinePlaceHolders[$inlinePlaceHolder] = $placeholderValue;
+        }
+
+        return $inlinePlaceHolders;
+    }
+
+    public function extractEnvironmentPlaceHolders($chainContent)
+    {
+        return $this->extractPlaceHolders($chainContent, $this::ENV_REGEX);
+    }
+
+    public function extractVars($chainContent)
+    {
+        $chain = Yaml::parse($chainContent);
+        if (!array_key_exists('vars', $chain)) {
+            return [];
+        }
+
+        return $chain['vars'];
     }
 }

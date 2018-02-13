@@ -77,15 +77,34 @@ elements: |
     '#open': true
     toggle_basic:
       '#type': toggle
-      '#title': 'This is a basic toggle'
+      '#title': 'Basic toggle'
     toggle_advanced:
       '#type': toggle
-      '#title': 'This is an advanced toggle'
+      '#title': 'Advanced toggle'
       '#title_display': before
       '#toggle_theme': iphone
       '#toggle_size': large
       '#on_text': Yes
       '#off_text': No
+    toggles_basic:
+      '#type': toggles
+      '#title': 'Basic toggles'
+      '#options':
+        one: One
+        two: Two
+        three: Three
+    toggles_advanced:
+      '#type': toggles
+      '#title': 'Advanced toggles'
+      '#title_display': before
+      '#toggle_theme': iphone
+      '#toggle_size': large
+      '#on_text': Yes
+      '#off_text': No
+      '#options':
+        one: One
+        two: Two
+        three: Three
   rating_elements:
     '#type': details
     '#title': 'Rating Elements'
@@ -208,21 +227,6 @@ elements: |
         civ: 111
         expiration_month: 1
         expiration_year: 2025
-  message:
-    '#type': details
-    '#title': 'Message elements'
-    '#open': true
-    message_default:
-      '#type': message
-      '#message_message': 'This is a <strong>default</strong> message.'
-    message_custom:
-      '#type': message
-      '#message_type': warning
-      '#message_message': 'This is a <strong>custom</strong> message.'
-      '#states':
-        visible:
-          ':input[name="not_an_element"]':
-            checked: true
 css: ''
 javascript: ''
 settings:
@@ -230,6 +234,7 @@ settings:
   page_submit_path: ''
   page_confirm_path: ''
   form_submit_label: ''
+  form_submit_attributes: {  }
   form_exception_message: ''
   form_closed_message: ''
   form_confidential: false
@@ -245,22 +250,31 @@ settings:
   wizard_progress_pages: false
   wizard_progress_percentage: false
   wizard_next_button_label: ''
+  wizard_next_button_attributes: {  }
   wizard_prev_button_label: ''
+  wizard_prev_button_attributes: {  }
   wizard_start_label: ''
   wizard_complete: true
   wizard_complete_label: ''
   preview: 0
   preview_next_button_label: ''
+  preview_next_button_attributes: {  }
   preview_prev_button_label: ''
+  preview_prev_button_attributes: {  }
   preview_message: ''
   draft: false
   draft_auto_save: false
   draft_button_label: ''
+  draft_button_attributes: {  }
   draft_saved_message: ''
   draft_loaded_message: ''
   confirmation_type: message
   confirmation_message: ''
   confirmation_url: ''
+  confirmation_attributes: {  }
+  confirmation_back: true
+  confirmation_back_label: ''
+  confirmation_back_attributes: {  }
   limit_total: null
   limit_total_message: ''
   limit_user: null

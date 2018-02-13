@@ -4,12 +4,13 @@ namespace Drupal\yamlform\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Component\Plugin\PluginManagerInterface;
+use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Controller for all results exporters.
  */
-class YamlFormPluginExporterController extends ControllerBase {
+class YamlFormPluginExporterController extends ControllerBase implements ContainerInjectionInterface {
 
   /**
    * A results exporter plugin manager.

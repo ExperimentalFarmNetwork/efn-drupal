@@ -84,7 +84,7 @@ function drush_views_slideshow_cycle_cycle() {
     'jQuery Cycle',
     'libraries/jquery.cycle',
     'jquery.cycle.all.js',
-    'http://malsup.github.com/jquery.cycle.all.js',
+    'https://raw.githubusercontent.com/malsup/cycle/3.0.3/jquery.cycle.all.js',
     func_get_args()
   );
 }

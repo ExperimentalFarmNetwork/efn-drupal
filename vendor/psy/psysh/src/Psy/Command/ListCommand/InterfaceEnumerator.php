@@ -11,13 +11,21 @@
 
 namespace Psy\Command\ListCommand;
 
+use Psy\VarDumper\Presenter;
 use Symfony\Component\Console\Input\InputInterface;
 
 /**
  * Interface Enumerator class.
+ *
+ * @deprecated Nothing should use this anymore
  */
 class InterfaceEnumerator extends Enumerator
 {
+    public function __construct(Presenter $presenter)
+    {
+        @trigger_error('InterfaceEnumerator is no longer used', E_USER_DEPRECATED);
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -25,7 +33,7 @@ class InterfaceEnumerator extends Enumerator
     {
         // only list interfaces when no Reflector is present.
         //
-        // TODO: make a NamespaceReflector and pass that in for commands like:
+        // @todo make a NamespaceReflector and pass that in for commands like:
         //
         //     ls --interfaces Foo
         //

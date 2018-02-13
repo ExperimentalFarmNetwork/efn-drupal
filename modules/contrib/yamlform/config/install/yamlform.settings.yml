@@ -8,12 +8,13 @@ settings:
   default_form_unsaved: false
   default_form_novalidate: false
   default_form_details_toggle: true
-  classes: |
+  form_classes: |
     container-inline clearfix
     form--inline clearfix
     messages messages--error
     messages messages--warning
     messages messages--status
+  button_classes: ''
   default_wizard_prev_button_label: '< Previous Page'
   default_wizard_next_button_label: 'Next Page >'
   default_wizard_start_label: Start
@@ -25,13 +26,20 @@ settings:
   default_draft_saved_message: 'Submission saved. You may return to this form later and it will restore the current values.'
   default_draft_loaded_message: 'A partially-completed form was found. Please complete the remaining portions.'
   default_confirmation_message: 'New submission added to [yamlform:title].'
+  default_confirmation_back_label: 'Back to form'
+  confirmation_classes: |
+    messages messages--error
+    messages messages--warning
+    messages messages--status
+  confirmation_back_classes: |
+    button
   default_limit_total_message: 'No more submissions are permitted.'
   default_limit_user_message: 'No more submissions are permitted.'
 export:
   exporter: delimited
   delimiter: ','
   excel: false
-  file_name: 'submission-[yamlform-submission:serial]'
+  file_name: 'submission-[yamlform_submission:serial]'
   header_format: label
   header_prefix: true
   header_prefix_label_delimiter: ': '
@@ -74,18 +82,18 @@ format: {  }
 mail:
   default_from_mail: '[site:mail]'
   default_from_name: '[site:name]'
-  default_subject: 'Form submission from: [yamlform-submission:source-entity]'
+  default_subject: 'Form submission from: [yamlform_submission:source-entity]'
   default_body_text: |
-    Submitted on [yamlform-submission:created]
-    Submitted by: [yamlform-submission:user]
-    
+    Submitted on [yamlform_submission:created]
+    Submitted by: [yamlform_submission:user]
+
     Submitted values are:
-    [yamlform-submission:values]
+    [yamlform_submission:values]
   default_body_html: |
-    <p>Submitted on [yamlform-submission:created]</p>
-    <p>Submitted by: [yamlform-submission:user]</p>
+    <p>Submitted on [yamlform_submission:created]</p>
+    <p>Submitted by: [yamlform_submission:user]</p>
     <p>Submitted values are:</p>
-    [yamlform-submission:values]
+    [yamlform_submission:values]
 test:
   types: |
     checkbox:
@@ -186,6 +194,6 @@ ui:
   dialog_disabled: false
   html_editor_disabled: false
 library:
-  cdn: true
+  cdn: false
 langcode: en
 third_party_settings: {  }

@@ -1,15 +1,6 @@
 YAML Form
 ---------
 
-> GOOD NEWS!!!
-
-### The YAML Form module is moving to the Webform module. 
-
-An experimental YAML Form to Webform migration module is now being included 
-with the YAML Form module. Read more about the 
-[YAML Form to Webform migration](https://www.drupal.org/node/2827845) 
-        
-
 ### About this Module
 
 The YAML Form module is a form builder and submission manager for Drupal 8.
@@ -42,6 +33,7 @@ The primary use case for this module is to:
 
 - [Getting NYU onto YAML Form](https://www.fourkitchens.com/blog/article/getting-nyu-yaml-form)
 - [YAML Forms for Drupal 8](https://www.gaiaresources.com.au/yaml-forms-drupal-8/)
+- [Creating YAML Form Handlers in Drupal 8](http://fivemilemedia.co.uk/blog/creating-yaml-form-handlers-drupal-8)
 
 
 ### Installing the YAML Form Module
@@ -87,7 +79,14 @@ hooks, and overriding templates, you will need to read each release's
 notes and assume that _things will be changing_.
 
 
+### Project Status
+
+- [YAML Form Project Board](https://contribkanban.com/board/yamlform/8.x-1.x)
+- [Webform 4.x features currently missing from the YAML Form module](https://www.drupal.org/node/2807571)
+
+
 ### Similar Modules
+
 
 - **[Comparison of Form Building Modules](https://www.drupal.org/node/2083353)**  
   Drupal has a lot of modules aimed at helping site builders and users add forms 

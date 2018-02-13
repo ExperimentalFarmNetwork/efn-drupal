@@ -134,10 +134,18 @@ abstract class GroupNodeAccessTestBase extends EntityKernelTestBase {
       'update own group_node:b entity',
       'delete own group_node:b entity',
     ];
+    $anonymous_a = [
+      'view group_node:a entity',
+    ];
+    $anonymous_b = [
+      'update any group_node:a entity',
+    ];
     $this->groupTypeA->getMemberRole()->grantPermissions($member_a)->save();
     $this->groupTypeB->getMemberRole()->grantPermissions($member_b)->save();
     $this->groupTypeA->getOutsiderRole()->grantPermissions($outsider_a)->save();
     $this->groupTypeB->getOutsiderRole()->grantPermissions($outsider_b)->save();
+    $this->groupTypeA->getAnonymousRole()->grantPermissions($anonymous_a)->save();
+    $this->groupTypeB->getAnonymousRole()->grantPermissions($anonymous_b)->save();
 
     // Create some groups.
     $storage = $this->entityTypeManager->getStorage('group');

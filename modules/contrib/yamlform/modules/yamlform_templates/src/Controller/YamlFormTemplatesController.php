@@ -108,6 +108,7 @@ class YamlFormTemplatesController extends ControllerBase implements ContainerInj
             'duplicate' => [
               'title' => $this->t('Select'),
               'url' => Url::fromRoute('entity.yamlform.duplicate_form', $route_parameters),
+              'attributes' => YamlFormDialogHelper::getModalDialogAttributes(640),
             ],
           ],
         ];
@@ -137,7 +138,9 @@ class YamlFormTemplatesController extends ControllerBase implements ContainerInj
         'tags' => $this->yamlformStorage->getEntityType()->getListCacheTags(),
       ],
     ];
-    $build['#attached']['library'][] = 'yamlform/yamlform.admin';
+
+    // Must preload libraries required by (modal) dialogs.
+    $build['#attached']['library'][] = 'yamlform/yamlform.admin.dialog';
 
     return $build;
   }

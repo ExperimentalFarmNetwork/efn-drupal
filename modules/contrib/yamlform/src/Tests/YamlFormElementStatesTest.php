@@ -20,7 +20,7 @@ class YamlFormElementStatesTest extends WebTestBase {
    *
    * @var array
    */
-  public static $modules = ['system', 'filter', 'file', 'language', 'node', 'user', 'yamlform', 'yamlform_examples', 'yamlform_test'];
+  protected static $modules = ['system', 'filter', 'file', 'language', 'node', 'user', 'yamlform', 'yamlform_examples', 'yamlform_test'];
 
   /**
    * Tests element #states selectors.

@@ -41,7 +41,6 @@
       $input.data('yamlform-value', $input.val());
       // Empty and un-required the input.
       $input.find('input').val('').prop('required', false);
-
     }
   }
 
@@ -52,7 +51,7 @@
    */
   Drupal.behaviors.yamlFormSelectOther = {
     attach: function (context) {
-      $(context).find('.form-type-yamlform-select-other').once('yamlform-select-other').each(function () {
+      $(context).find('.js-yamlform-select-other').once('yamlform-select-other').each(function () {
         var $element = $(this);
 
         var $select = $element.find('.form-type-select');
@@ -77,7 +76,7 @@
    */
   Drupal.behaviors.yamlFormCheckboxesOther = {
     attach: function (context) {
-      $(context).find('.form-type-yamlform-checkboxes-other').once('yamlform-checkboxes-other').each(function () {
+      $(context).find('.js-yamlform-checkboxes-other').once('yamlform-checkboxes-other').each(function () {
         var $element = $(this);
         var $checkbox = $element.find('input[value="_other_"]');
         var $input = $element.find('.js-yamlform-checkboxes-other-input');
@@ -100,7 +99,7 @@
    */
   Drupal.behaviors.yamlFormRadiosOther = {
     attach: function (context) {
-      $(context).find('.form-type-yamlform-radios-other').once('yamlform-radios-other').each(function () {
+      $(context).find('.js-yamlform-radios-other').once('yamlform-radios-other').each(function () {
         var $element = $(this);
 
         var $radios = $element.find('input[type="radio"]');
@@ -124,7 +123,7 @@
    */
   Drupal.behaviors.yamlFormButtonsOther = {
     attach: function (context) {
-      $(context).find('.form-type-yamlform-buttons-other').once('yamlform-buttons-other').each(function () {
+      $(context).find('.js-yamlform-buttons-other').once('yamlform-buttons-other').each(function () {
         var $element = $(this);
 
         var $buttons = $element.find('input[type="radio"]');

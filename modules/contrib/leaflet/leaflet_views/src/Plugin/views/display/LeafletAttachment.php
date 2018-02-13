@@ -2,13 +2,11 @@
 
 namespace Drupal\leaflet_views\Plugin\views\display;
 
-
 use Drupal\views\Plugin\views\display\Attachment;
 use Drupal\views\ViewExecutable;
 
 /**
- * The plugin which handles attachment of additional leaflet features to
- * leaflet map views.
+ * Plugin attachment of additional leaflet features to leaflet map views.
  *
  * @ingroup views_display_plugins
  *
@@ -65,7 +63,7 @@ class LeafletAttachment extends Attachment {
       return;
     }
 
-    $args = $this->getOption('inherit_arguments') ? $this->view->args : array();
+    $args = $this->getOption('inherit_arguments') ? $this->view->args : [];
     $view->setArguments($args);
     $view->setDisplay($this->display['id']);
     if ($this->getOption('inherit_pager')) {
@@ -75,9 +73,9 @@ class LeafletAttachment extends Attachment {
         ->getOption('pager'));
     }
     if ($render = $view->render()) {
-      $this->view->attachment_before[] = $render + array(
-          '#leaflet-attachment' => TRUE,
-        );
+      $this->view->attachment_before[] = $render + [
+        '#leaflet-attachment' => TRUE,
+      ];
     }
   }
 
@@ -85,17 +83,17 @@ class LeafletAttachment extends Attachment {
    * {@inheritdoc}
    */
   public function render() {
-    $rows = (!empty($this->view->result) || $this->view->style_plugin->evenEmpty()) ? $this->view->style_plugin->render($this->view->result) : array();
+    $rows = (!empty($this->view->result) || $this->view->style_plugin->evenEmpty()) ? $this->view->style_plugin->render($this->view->result) : [];
 
     // The element is rendered during preview only; when used as an attachment
     // in the Leaflet class, only the 'rows' property is used.
-    $element = array(
+    $element = [
       '#markup' => print_r($rows, TRUE),
       '#prefix' => '<pre>',
       '#suffix' => '</pre>',
       '#attached' => &$this->view->element['#attached'],
       'rows' => $rows,
-    );
+    ];
 
     return $element;
   }
@@ -121,4 +119,5 @@ class LeafletAttachment extends Attachment {
 
     return $options;
   }
+
 }

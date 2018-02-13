@@ -7,7 +7,7 @@ libraries:
     destination: libraries
     download:
       type: get
-      url: 'https://github.com/codemirror/CodeMirror/archive/5.21.0.zip'
+      url: 'https://github.com/components/codemirror/archive/5.21.0.zip'
 
   ckeditor:
     directory_name: ckeditor
@@ -57,7 +57,7 @@ libraries:
     destination: libraries
     download:
       type: get
-      url: 'https://github.com/jonthornton/jquery-timepicker/archive/1.11.6.zip'
+      url: 'https://github.com/jonthornton/jquery-timepicker/archive/1.11.8.zip'
 
   toggles:
     directory_name: jquery.toggles

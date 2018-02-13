@@ -68,15 +68,27 @@ yamlform.settings:
         default_confirmation_message:
           type: text
           label: 'Default confirmation message'
+        default_confirmation_back_label:
+          type: text
+          label: 'Default confirmation back label'
         default_limit_total_message:
           type: text
           label: 'Default limit total message'
         default_limit_user_message:
           type: text
           label: 'Default limit user message'
-        classes:
+        form_classes:
           type: string
           label: 'Form CSS classes'
+        button_classes:
+          type: string
+          label: 'Button CSS classes'
+        confirmation_classes:
+          type: string
+          label: 'Confirmation CSS classes'
+        confirmation_back_classes:
+          type: string
+          label: 'Confirmation back link CSS classes'
     elements:
       type: mapping
       label: 'Elements default settings'
@@ -291,6 +303,9 @@ yamlform.yamlform.*:
         form_submit_label:
           type: label
           label: 'Form submit text'
+        form_submit_attributes:
+          type: ignore
+          label: 'Form submit attributes'
         form_closed_message:
           type: text
           label: 'Form closed message'
@@ -336,6 +351,9 @@ yamlform.yamlform.*:
         wizard_start_label:
           type: label
           label: 'Wizard start label'
+        wizard_start_attributes:
+          type: ignore
+          label: 'Wizard start attributes'
         wizard_complete:
           type: boolean
           label: 'Include confirmation page in progress'
@@ -344,19 +362,31 @@ yamlform.yamlform.*:
           label: 'Wizard complete label'
         wizard_prev_button_label:
           type: label
-          label: 'Default wizard previous page button label'
+          label: 'Wizard previous page button label'
+        wizard_prev_button_attributes:
+          type: ignore
+          label: 'Wizard previous page button attributes'
         wizard_next_button_label:
           type: label
-          label: 'Default wizard next page button label'
+          label: 'Wizard next page button label'
+        wizard_next_button_attributes:
+          type: ignore
+          label: 'Wizard next page button attributes'
         preview:
           type: integer
           label: 'Enable preview page'
         preview_next_button_label:
           type: label
           label: 'Preview button label'
+        preview_next_button_attributes:
+          type: ignore
+          label: 'Preview button attributes'
         preview_prev_button_label:
           type: label
           label: 'Previous page button label'
+        preview_prev_button_attributes:
+          type: ignore
+          label: 'Previous page button attributes'
         preview_message:
           type: text
           label: 'Preview message'
@@ -369,6 +399,9 @@ yamlform.yamlform.*:
         draft_button_label:
           type: label
           label: 'Draft button label'
+        draft_button_attributes:
+          type: ignore
+          label: 'Draft button attributes'
         draft_saved_message:
           type: text
           label: 'Draft saved message'
@@ -384,6 +417,18 @@ yamlform.yamlform.*:
         confirmation_message:
           type: text
           label: 'Confirmation message'
+        confirmation_attributes:
+          type: ignore
+          label: 'Confirmation attributes'
+        confirmation_back:
+          type: boolean
+          label: 'Display back to form link.'
+        confirmation_back_label:
+          type: text
+          label: 'Confirmation back link label'
+        confirmation_back_attributes:
+          type: ignore
+          label: 'Confirmation back link attributes'
         limit_total:
           type: integer
           label: 'Limit total submissions'
@@ -598,7 +643,7 @@ yamlform.handler.email:
       type: text
     excluded_elements:
       type: sequence
-      label: 'Exclude Elements'
+      label: 'Exclude elements'
       sequence:
         type: string
         label: 'Element name'
@@ -628,6 +673,24 @@ yamlform.handler.remote_post:
     delete_url:
       label: 'Delete URL'
       type: uri
+    excluded_data:
+      type: sequence
+      label: 'Excluded data'
+      sequence:
+        type: string
+        label: 'Data name'
+    custom_data:
+      label: 'Custom data'
+      type: string
+    insert_custom_data:
+      label: 'Insert custom data'
+      type: string
+    update_custom_data:
+      label: 'Update custom data'
+      type: string
+    delete_custom_data:
+      label: 'Delete custom data'
+      type: string
     debug:
       type: boolean
       label: 'Enable debugging'

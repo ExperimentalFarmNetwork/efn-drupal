@@ -57,7 +57,7 @@ class AllowedValuesConstraintValidator extends ChoiceValidator implements Contai
       $this->validateUsingCoreValidation($value, $constraint);
     }
     else {
-      $constraint->choices = $this->getValidChoices($typed_data);
+      $constraint->choices = array_keys($this->getValidChoices($typed_data));
       $value = $this->getMainPropertyValue($typed_data);
 
       if (isset($value)) {

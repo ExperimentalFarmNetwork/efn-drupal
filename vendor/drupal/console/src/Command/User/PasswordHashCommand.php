@@ -10,17 +10,12 @@ namespace Drupal\Console\Command\User;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
+use Drupal\Console\Core\Command\Command;
 use Drupal\Core\Password\PasswordInterface;
-use Drupal\Console\Command\Shared\ConfirmationTrait;
 use Drupal\Console\Core\Style\DrupalStyle;
 
 class PasswordHashCommand extends Command
 {
-    use CommandTrait;
-    use ConfirmationTrait;
-
     /**
      * @var PasswordInterface
      */
@@ -46,7 +41,29 @@ class PasswordHashCommand extends Command
             ->setName('user:password:hash')
             ->setDescription($this->trans('commands.user.password.hash.description'))
             ->setHelp($this->trans('commands.user.password.hash.help'))
-            ->addArgument('password', InputArgument::IS_ARRAY, $this->trans('commands.user.password.hash.options.password'));
+            ->addArgument(
+                'password',
+                InputArgument::IS_ARRAY,
+                $this->trans('commands.user.password.hash.options.password')
+            )
+            ->setAliases(['uph']);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function interact(InputInterface $input, OutputInterface $output)
+    {
+        $io = new DrupalStyle($input, $output);
+
+        $password = $input->getArgument('password');
+        if (!$password) {
+            $password = $io->ask(
+                $this->trans('commands.user.password.hash.questions.password')
+            );
+
+            $input->setArgument('password', [$password]);
+        }
     }
 
     /**
@@ -72,49 +89,5 @@ class PasswordHashCommand extends Command
         }
 
         $io->table($tableHeader, $tableRows, 'compact');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function interact(InputInterface $input, OutputInterface $output)
-    {
-        $io = new DrupalStyle($input, $output);
-
-        $passwords = $input->getArgument('password');
-        if (!$passwords) {
-            $passwords = [];
-            while (true) {
-                $password = $io->ask(
-                    $this->trans('commands.user.password.hash.questions.password'),
-                    '',
-                    function ($pass) use ($passwords, $io) {
-                        if (!empty($pass) || count($passwords) >= 1) {
-                            if ($pass == '') {
-                                return true;
-                            }
-
-                            return $pass;
-                        } else {
-                            $io->error(
-                                sprintf($this->trans('commands.user.password.hash.questions.invalid-pass'), $pass)
-                            );
-
-                            return false;
-                        }
-                    }
-                );
-
-                if ($password && !is_string($password)) {
-                    break;
-                }
-
-                if (is_string($password)) {
-                    $passwords[] = $password;
-                }
-            }
-
-            $input->setArgument('password', $passwords);
-        }
     }
 }

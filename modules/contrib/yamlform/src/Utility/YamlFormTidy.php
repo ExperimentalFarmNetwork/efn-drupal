@@ -60,7 +60,7 @@ class YamlFormTidy {
       }
     }
     $yaml = implode("\n", $lines);
-    return $yaml;
+    return trim($yaml);
   }
 
 }

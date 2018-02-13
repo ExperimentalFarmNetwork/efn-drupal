@@ -5,8 +5,10 @@
  *
  * Available variables:
  * - yamlform: A form.
- * - pages: Array of wizard pages.
- * - current_page: Current wizard page.
+ * - pages: Associatve array of wizard pages.
+ * - progress: Array of wizard progress containing page titles.
+ * - current_page: Current wizard page key.
+ * - current_index: The current wizard page index.
  * - max_pages: Maximum number of pages to be displayed.
  *
  * @see template_preprocess_yamlform_progress_bar()
@@ -16,13 +18,13 @@
 #}
 {{ attach_library('yamlform/yamlform.progress.bar') }}
 
-{% if pages|length < max_pages %}
-<ol class="yamlform-progress-bar" data-steps="{{ pages|length }}">
-{% for index, title in pages %}{%
+{% if progress|length < max_pages %}
+<ol class="yamlform-progress-bar" data-steps="{{ progress|length }}">
+{% for index, title in progress %}{%
   set classes = [
     'yamlform-progress-bar__page',
-    index < current_page ? 'yamlform-progress-bar__page--done',
-    index == current_page ? 'yamlform-progress-bar__page--current',
+    index < current_index ? 'yamlform-progress-bar__page--done',
+    index == current_index ? 'yamlform-progress-bar__page--current',
   ]
 %}<li{{ attributes.setAttribute('class', '').addClass(classes) }}>
   <b>{{ title }}</b>{% if (loop.first	or loop.last) %}<span></span>{% endif %}

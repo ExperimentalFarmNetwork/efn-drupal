@@ -1,0 +1,72 @@
+/**
+ * @file
+ * Multiple element styles.
+ */
+
+.yamlform-multiple-table td {
+  white-space: nowrap;
+}
+
+.yamlform-multiple-table th:first-child,
+.yamlform-multiple-table td:first-child {
+  padding: 0 0 0 1em;
+  width: 26px !important;
+  vertical-align: middle;
+  text-align: center !important;
+}
+
+.yamlform-multiple-table th:last-child,
+.yamlform-multiple-table td:last-child {
+  padding: 0 2px;
+  vertical-align: middle;
+  text-align: center !important;
+  width: 60px !important;
+}
+
+.yamlform-multiple-table td:last-child input {
+  margin: 0 2px;
+}
+
+.yamlform-multiple-table td:last-child input {
+  opacity: 0.4;
+}
+
+.yamlform-multiple-table td:last-child input:hover,
+.yamlform-multiple-table td:last-child input:focus,
+.yamlform-multiple-table td:last-child input:active {
+  opacity: 1;
+  background: none;
+}
+
+.yamlform-multiple-table td input[type="text"] {
+  width: 95%;
+}
+
+.yamlform-multiple-table .yamlform-multiple-sort-weight {
+  width: 4em;
+}
+
+.yamlform-multiple-table td input[type="image"] {
+  padding: 0;
+  width: 16px;
+  height: 16px;
+}
+
+.yamlform-multiple-table .container-inline input[type="submit"] {
+  width: inherit !important;
+}
+
+/**
+ * Hide AJAX throbber.
+ */
+.form-type-yamlform-multiple .ajax-progress-throbber {
+  display: none;
+}
+
+/**
+ * Suppress table drag warnings.
+ */
+.yamlform-multiple-table .tabledrag-changed-warning,
+.yamlform-multiple-table .tabledrag-changed {
+  display: none !important;
+}

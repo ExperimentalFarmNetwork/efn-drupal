@@ -7,23 +7,21 @@
 
 namespace Drupal\Console\Command\Generate;
 
-use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Drupal\Console\Generator\ModuleGenerator;
 use Drupal\Console\Command\Shared\ConfirmationTrait;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\Command;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Utils\Validator;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Utils\StringConverter;
 use Drupal\Console\Utils\DrupalApi;
+use Webmozart\PathUtil\Path;
 
 class ModuleCommand extends Command
 {
     use ConfirmationTrait;
-    use CommandTrait;
 
     /**
      * @var ModuleGenerator
@@ -164,7 +162,8 @@ class ModuleCommand extends Command
                 null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.generate.module.options.twigtemplate')
-            );
+            )
+            ->setAliases(['gm']);
     }
 
     /**
@@ -173,16 +172,19 @@ class ModuleCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new DrupalStyle($input, $output);
-        $yes = $input->hasOption('yes')?$input->getOption('yes'):false;
 
         // @see use Drupal\Console\Command\Shared\ConfirmationTrait::confirmGeneration
-        if (!$this->confirmGeneration($io, $yes)) {
+        if (!$this->confirmGeneration($io, $input)) {
             return 1;
         }
 
         $module = $this->validator->validateModuleName($input->getOption('module'));
 
-        $modulePath = $this->appRoot . $input->getOption('module-path');
+        // Get the profile path and define a profile path if it is null
+        // Check that it is an absolute path or otherwise create an absolute path using appRoot
+        $modulePath = $input->getOption('module-path');
+        $modulePath = $modulePath == null ? 'modules/custom' : $modulePath;
+        $modulePath = Path::isAbsolute($modulePath) ? $modulePath : Path::makeAbsolute($modulePath, $this->appRoot);
         $modulePath = $this->validator->validateModulePath($modulePath, true);
 
         $machineName = $this->validator->validateMachineName($input->getOption('machine-name'));
@@ -271,13 +273,12 @@ class ModuleCommand extends Command
 
         $modulePath = $input->getOption('module-path');
         if (!$modulePath) {
-            $drupalRoot = $this->appRoot;
             $modulePath = $io->ask(
                 $this->trans('commands.generate.module.questions.module-path'),
-                '/modules/custom',
-                function ($modulePath) use ($drupalRoot, $machineName) {
-                    $modulePath = ($modulePath[0] != '/' ? '/' : '').$modulePath;
-                    $fullPath = $drupalRoot.$modulePath.'/'.$machineName;
+                'modules/custom',
+                function ($modulePath) use ($machineName) {
+                    $fullPath = Path::isAbsolute($modulePath) ? $modulePath : Path::makeAbsolute($modulePath, $this->appRoot);
+                    $fullPath = $fullPath.'/'.$machineName;
                     if (file_exists($fullPath)) {
                         throw new \InvalidArgumentException(
                             sprintf(
@@ -297,7 +298,7 @@ class ModuleCommand extends Command
         if (!$description) {
             $description = $io->ask(
                 $this->trans('commands.generate.module.questions.description'),
-                'My Awesome Module'
+                $this->trans('commands.generate.module.suggestions.my-awesome-module')
             );
         }
         $input->setOption('description', $description);

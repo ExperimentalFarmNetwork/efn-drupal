@@ -72,7 +72,6 @@ class YamlFormSubmissionController extends ControllerBase implements ContainerIn
       '#theme' => 'yamlform_submission_information',
       '#yamlform_submission' => $yamlform_submission,
       '#source_entity' => $source_entity,
-      '#open' => FALSE,
     ];
 
     // Submission.
@@ -118,7 +117,6 @@ class YamlFormSubmissionController extends ControllerBase implements ContainerIn
       new FormattableMarkup('<span class="yamlform-icon yamlform-icon-sticky yamlform-icon-sticky--@state"></span>', ['@state' => $state])
     ));
     return $response;
-
   }
 
   /**

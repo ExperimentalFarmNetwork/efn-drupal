@@ -375,13 +375,13 @@ interface YamlFormInterface extends ConfigEntityInterface, EntityWithPluginColle
   /**
    * Get form wizard page.
    *
-   * @param string|int $index
-   *   The name or index of a form wizard page.
+   * @param string|int $key
+   *   The name/key of a form wizard page.
    *
    * @return array|null
    *   A form wizard page element.
    */
-  public function getPage($index);
+  public function getPage($key);
 
   /**
    * Update submit and confirm paths (ie URL aliases) associated with this form.

@@ -51,7 +51,7 @@ and [more...](http://yamlform.io/yamlform/).
 
 - [Getting NYU onto YAML Form](https://www.fourkitchens.com/blog/article/getting-nyu-yaml-form)
 - [YAML Forms for Drupal 8](https://www.gaiaresources.com.au/yaml-forms-drupal-8/)
-
+- [Creating YAML Form Handlers in Drupal 8](http://fivemilemedia.co.uk/blog/creating-yaml-form-handlers-drupal-8)
 
 ### Releases
 

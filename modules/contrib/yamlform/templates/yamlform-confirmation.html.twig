@@ -14,7 +14,7 @@
  */
 #}
 {{ attach_library('yamlform/yamlform.confirmation') }}
-<div class="yamlform-confirmation">
+<div{{ attributes.addClass('yamlform-confirmation') }}>
   {% if progress %}
     {{ progress }}
   {% endif %}
@@ -23,7 +23,9 @@
     <div class="yamlform-confirmation__message">{{ message }}</div>
   {% endif %}
 
+  {% if back %}
   <div class="yamlform-confirmation__back">
-    <a href="{{ back_url }}" rel="back" title="{{ 'Go back to form'|t }}">{{ 'Back to form'|t }}</a>
+    <a href="{{ back_url }}" rel="back" title="{{ back_label }}"{{ back_attributes }}>{{ back_label }}</a>
   </div>
+  {% endif %}
 </div>

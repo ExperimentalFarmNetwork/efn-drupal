@@ -9,20 +9,17 @@ namespace Drupal\Console\Command\Config;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\Command;
 use Drupal\Core\Config\CachedStorage;
 use Drupal\Core\Config\ConfigManager;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Core\Config\ConfigImporterException;
 use Drupal\Core\Config\ConfigImporter;
 use Drupal\Core\Config\FileStorage;
-use Drupal\Core\Config\StorageComparer;
+use Drupal\Core\Config\StorageComparerInterface;
 
 class ImportCommand extends Command
 {
-    use CommandTrait;
-
     /**
      * @var CachedStorage
      */
@@ -73,7 +70,14 @@ class ImportCommand extends Command
                 null,
                 InputOption::VALUE_NONE,
                 $this->trans('commands.config.import.options.remove-files')
-            );
+            )
+            ->addOption(
+                'skip-uuid',
+                null,
+                InputOption::VALUE_NONE,
+                $this->trans('commands.config.import.options.skip-uuid')
+            )
+            ->setAliases(['ci']);
     }
 
     /**
@@ -83,6 +87,7 @@ class ImportCommand extends Command
     {
         $io = new DrupalStyle($input, $output);
         $directory = $input->getOption('directory');
+        $skipUuid = $input->getOption('skip-uuid');
 
         if ($directory) {
             $configSyncDir = $directory;
@@ -94,7 +99,16 @@ class ImportCommand extends Command
 
         $source_storage = new FileStorage($configSyncDir);
 
-        $storage_comparer = new StorageComparer($source_storage, $this->configStorage, $this->configManager);
+        $storageComparer = '\Drupal\Core\Config\StorageComparer';
+        if ($skipUuid) {
+            $storageComparer = '\Drupal\Console\Override\StorageComparer';
+        }
+
+        $storage_comparer = new $storageComparer(
+            $source_storage,
+            $this->configStorage,
+            $this->configManager
+        );
 
         if (!$storage_comparer->createChangelist()->hasChanges()) {
             $io->success($this->trans('commands.config.import.messages.nothing-to-do'));
@@ -108,7 +122,7 @@ class ImportCommand extends Command
     }
 
 
-    private function configImport(DrupalStyle $io, StorageComparer $storage_comparer)
+    private function configImport(DrupalStyle $io, StorageComparerInterface $storage_comparer)
     {
         $config_importer = new ConfigImporter(
             $storage_comparer,
@@ -130,12 +144,10 @@ class ImportCommand extends Command
                 $config_importer->import();
                 return true;
             } catch (ConfigImporterException $e) {
-                $message = 'The import failed due to the following reasons:' . "\n";
-                $message .= implode("\n", $config_importer->getErrors());
                 $io->error(
                     sprintf(
                         $this->trans('commands.site.import.local.messages.error-writing'),
-                        $message
+                        implode("\n", $config_importer->getErrors())
                     )
                 );
             } catch (\Exception $e) {

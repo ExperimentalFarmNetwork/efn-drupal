@@ -4,9 +4,9 @@
  */
 
 
-html.js .form-type-yamlform-select-other .yamlform-select-other-input,
-html.js .form-type-yamlform-checkboxes-other .yamlform-checkboxes-other-input,
-html.js .form-type-yamlform-radios-other .yamlform-radios-other-input,
-html.js .form-type-yamlform-buttons-other .yamlform-buttons-other-input {
+html.js .yamlform-select-other .yamlform-select-other-input,
+html.js .yamlform-checkboxes-other .yamlform-checkboxes-other-input,
+html.js .yamlform-radios-other .yamlform-radios-other-input,
+html.js .yamlform-buttons-other .yamlform-buttons-other-input {
   display: none;
 }

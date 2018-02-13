@@ -3,6 +3,7 @@
 namespace Drupal\yamlform\Controller;
 
 use Drupal\Component\Render\FormattableMarkup;
+use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Render\ElementInfoManagerInterface;
@@ -14,7 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Controller for all form elements.
  */
-class YamlFormPluginElementController extends ControllerBase {
+class YamlFormPluginElementController extends ControllerBase implements ContainerInjectionInterface {
 
   /**
    * The module handler.
@@ -87,11 +88,9 @@ class YamlFormPluginElementController extends ControllerBase {
       'unique',
       // Submission display.
       'format',
-      // Custom attributes.
-      'wrapper_attributes__class',
-      'wrapper_attributes__style',
-      'attributes__class',
-      'attributes__style',
+      // Attributes.
+      'wrapper_attributes',
+      'attributes',
       // Administration.
       'admin_title',
       'private',
@@ -255,7 +254,7 @@ class YamlFormPluginElementController extends ControllerBase {
     $build['elements'] = [
       '#type' => 'details',
       '#title' => $this->t('Additional elements'),
-      '#description' => $this->t('Below are elements that available but do not have a YAML Form Element integration plugin.'),
+      '#description' => $this->t('Below are elements that are available but do not have a YAML Form Element integration plugin.'),
       'table' => [
         '#type' => 'table',
         '#header' => [

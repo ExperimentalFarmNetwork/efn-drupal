@@ -13,6 +13,8 @@ namespace Symfony\Component\Cache\Simple;
 
 use Psr\SimpleCache\CacheInterface;
 use Symfony\Component\Cache\Exception\InvalidArgumentException;
+use Symfony\Component\Cache\PruneableInterface;
+use Symfony\Component\Cache\ResettableInterface;
 
 /**
  * Chains several caches together.
@@ -22,7 +24,7 @@ use Symfony\Component\Cache\Exception\InvalidArgumentException;
  *
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class ChainCache implements CacheInterface
+class ChainCache implements CacheInterface, PruneableInterface, ResettableInterface
 {
     private $miss;
     private $caches = array();
@@ -33,7 +35,7 @@ class ChainCache implements CacheInterface
      * @param CacheInterface[] $caches          The ordered list of caches used to fetch cached items
      * @param int              $defaultLifetime The lifetime of items propagated from lower caches to upper ones
      */
-    public function __construct(array $caches, $defaultLifetime = 0)
+    public function __construct(array $caches, int $defaultLifetime = 0)
     {
         if (!$caches) {
             throw new InvalidArgumentException('At least one cache must be specified.');
@@ -48,7 +50,7 @@ class ChainCache implements CacheInterface
         $this->miss = new \stdClass();
         $this->caches = array_values($caches);
         $this->cacheCount = count($this->caches);
-        $this->defaultLifetime = 0 < $defaultLifetime ? (int) $defaultLifetime : null;
+        $this->defaultLifetime = 0 < $defaultLifetime ? $defaultLifetime : null;
     }
 
     /**
@@ -218,5 +220,33 @@ class ChainCache implements CacheInterface
         }
 
         return $saved;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function prune()
+    {
+        $pruned = true;
+
+        foreach ($this->caches as $cache) {
+            if ($cache instanceof PruneableInterface) {
+                $pruned = $cache->prune() && $pruned;
+            }
+        }
+
+        return $pruned;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function reset()
+    {
+        foreach ($this->caches as $cache) {
+            if ($cache instanceof ResettableInterface) {
+                $cache->reset();
+            }
+        }
     }
 }

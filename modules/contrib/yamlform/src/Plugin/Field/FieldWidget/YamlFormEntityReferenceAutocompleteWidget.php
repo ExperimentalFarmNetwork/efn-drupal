@@ -47,15 +47,9 @@ class YamlFormEntityReferenceAutocompleteWidget extends EntityReferenceAutocompl
       '#default_value' => $items[$delta]->default_data,
     ];
 
-    if (\Drupal::moduleHandler()->moduleExists('token')) {
-      $element['token_tree_link'] = [
-        '#theme' => 'token_tree_link',
-        '#token_types' => ['yamlform', 'yamlform-submission'],
-        '#click_insert' => FALSE,
-        '#dialog' => TRUE,
-        '#weight' => $weight++,
-      ];
-    }
+    /** @var \Drupal\yamlform\YamlFormTokenManagerInterface $token_manager */
+    $token_manager = \Drupal::service('yamlform.token_manager');
+    $element['token_tree_link'] = $token_manager->buildTreeLink();
 
     $element['status'] = [
       '#type' => 'radios',

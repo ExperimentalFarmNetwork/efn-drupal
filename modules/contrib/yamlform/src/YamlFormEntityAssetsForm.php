@@ -6,7 +6,7 @@ use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Base for controller for form assets.
+ * Provides a form to inject CSS and JS assets.
  */
 class YamlFormEntityAssetsForm extends EntityForm {
 

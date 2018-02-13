@@ -54,7 +54,7 @@ class GeocoderGeofieldIntegrationTest extends KernelTestBase {
       'type' => 'geofield',
       'field_name' => 'bar',
     ])->save();
-    /** @var \Drupal\field\FieldConfigInterface $field */
+    /** @var \Drupal\Core\Field\FieldConfigInterface $field */
     $field = FieldConfig::create([
       'entity_type' => 'entity_test',
       'bundle' => 'entity_test',

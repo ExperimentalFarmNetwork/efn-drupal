@@ -182,6 +182,11 @@ class Standard extends PrettyPrinterAbstract
             $stringValue = sprintf('%.17G', $node->value);
         }
 
+        // %G is locale dependent and there exists no locale-independent alternative. We don't want
+        // mess with switching locales here, so let's assume that a comma is the only non-standard
+        // decimal separator we may encounter...
+        $stringValue = str_replace(',', '.', $stringValue);
+
         // ensure that number is really printed as float
         return preg_match('/^-?[0-9]+$/', $stringValue) ? $stringValue . '.0' : $stringValue;
     }
@@ -369,10 +374,18 @@ class Standard extends PrettyPrinterAbstract
     }
 
     protected function pExpr_UnaryMinus(Expr\UnaryMinus $node) {
+        if ($node->expr instanceof Expr\UnaryMinus || $node->expr instanceof Expr\PreDec) {
+            // Enforce -(-$expr) instead of --$expr
+            return '-(' . $this->p($node->expr) . ')';
+        }
         return $this->pPrefixOp('Expr_UnaryMinus', '-', $node->expr);
     }
 
     protected function pExpr_UnaryPlus(Expr\UnaryPlus $node) {
+        if ($node->expr instanceof Expr\UnaryPlus || $node->expr instanceof Expr\PreInc) {
+            // Enforce +(+$expr) instead of ++$expr
+            return '+(' . $this->p($node->expr) . ')';
+        }
         return $this->pPrefixOp('Expr_UnaryPlus', '+', $node->expr);
     }
 
@@ -438,12 +451,12 @@ class Standard extends PrettyPrinterAbstract
 
     protected function pExpr_FuncCall(Expr\FuncCall $node) {
         return $this->pCallLhs($node->name)
-             . '(' . $this->pCommaSeparated($node->args) . ')';
+             . '(' . $this->pMaybeMultiline($node->args) . ')';
     }
 
     protected function pExpr_MethodCall(Expr\MethodCall $node) {
         return $this->pDereferenceLhs($node->var) . '->' . $this->pObjectProperty($node->name)
-             . '(' . $this->pCommaSeparated($node->args) . ')';
+             . '(' . $this->pMaybeMultiline($node->args) . ')';
     }
 
     protected function pExpr_StaticCall(Expr\StaticCall $node) {
@@ -453,7 +466,7 @@ class Standard extends PrettyPrinterAbstract
                    ? $this->p($node->name)
                    : '{' . $this->p($node->name) . '}')
                 : $node->name)
-             . '(' . $this->pCommaSeparated($node->args) . ')';
+             . '(' . $this->pMaybeMultiline($node->args) . ')';
     }
 
     protected function pExpr_Empty(Expr\Empty_ $node) {
@@ -501,9 +514,9 @@ class Standard extends PrettyPrinterAbstract
         $syntax = $node->getAttribute('kind',
             $this->options['shortArraySyntax'] ? Expr\Array_::KIND_SHORT : Expr\Array_::KIND_LONG);
         if ($syntax === Expr\Array_::KIND_SHORT) {
-            return '[' . $this->pCommaSeparated($node->items) . ']';
+            return '[' . $this->pMaybeMultiline($node->items, true) . ']';
         } else {
-            return 'array(' . $this->pCommaSeparated($node->items) . ')';
+            return 'array(' . $this->pMaybeMultiline($node->items, true) . ')';
         }
     }
 
@@ -553,10 +566,10 @@ class Standard extends PrettyPrinterAbstract
 
     protected function pExpr_New(Expr\New_ $node) {
         if ($node->class instanceof Stmt\Class_) {
-            $args = $node->args ? '(' . $this->pCommaSeparated($node->args) . ')' : '';
+            $args = $node->args ? '(' . $this->pMaybeMultiline($node->args) . ')' : '';
             return 'new ' . $this->pClassCommon($node->class, $args);
         }
-        return 'new ' . $this->p($node->class) . '(' . $this->pCommaSeparated($node->args) . ')';
+        return 'new ' . $this->p($node->class) . '(' . $this->pMaybeMultiline($node->args) . ')';
     }
 
     protected function pExpr_Clone(Expr\Clone_ $node) {
@@ -942,6 +955,23 @@ class Standard extends PrettyPrinterAbstract
             return $this->p($node);
         } else  {
             return '(' . $this->p($node) . ')';
+        }
+    }
+
+    private function hasNodeWithComments(array $nodes) {
+        foreach ($nodes as $node) {
+            if ($node && $node->getAttribute('comments')) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private function pMaybeMultiline(array $nodes, $trailingComma = false) {
+        if (!$this->hasNodeWithComments($nodes)) {
+            return $this->pCommaSeparated($nodes);
+        } else {
+            return $this->pCommaSeparatedMultiline($nodes, $trailingComma) . "\n";
         }
     }
 }

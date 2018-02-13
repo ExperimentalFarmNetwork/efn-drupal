@@ -19,7 +19,7 @@ class YamlFormResultsExportTest extends YamlFormTestBase {
    *
    * @var array
    */
-  public static $modules = ['system', 'block', 'node', 'user', 'locale', 'yamlform', 'yamlform_test'];
+  protected static $modules = ['system', 'block', 'node', 'user', 'locale', 'yamlform', 'yamlform_test'];
 
   /**
    * Tests download files.

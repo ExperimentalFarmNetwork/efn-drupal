@@ -7,14 +7,14 @@
 
 namespace Drupal\Console\Command\Generate;
 
+use Drupal\Console\Utils\Validator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\Command;
 use Drupal\Console\Generator\PluginCKEditorButtonGenerator;
 use Drupal\Console\Command\Shared\ModuleTrait;
 use Drupal\Console\Command\Shared\ConfirmationTrait;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Core\Utils\ChainQueue;
 use Drupal\Console\Extension\Manager;
@@ -22,7 +22,6 @@ use Drupal\Console\Core\Utils\StringConverter;
 
 class PluginCKEditorButtonCommand extends Command
 {
-    use CommandTrait;
     use ModuleTrait;
     use ConfirmationTrait;
 
@@ -48,6 +47,11 @@ class PluginCKEditorButtonCommand extends Command
      */
     protected $stringConverter;
 
+    /**
+     * @var Validator
+     */
+    protected $validator;
+
 
     /**
      * PluginCKEditorButtonCommand constructor.
@@ -56,17 +60,20 @@ class PluginCKEditorButtonCommand extends Command
      * @param PluginCKEditorButtonGenerator $generator
      * @param Manager                       $extensionManager
      * @param StringConverter               $stringConverter
+     * @param Validator                     $validator
      */
     public function __construct(
         ChainQueue $chainQueue,
         PluginCKEditorButtonGenerator $generator,
         Manager $extensionManager,
-        StringConverter $stringConverter
+        StringConverter $stringConverter,
+        Validator $validator
     ) {
         $this->chainQueue = $chainQueue;
         $this->generator = $generator;
         $this->extensionManager = $extensionManager;
         $this->stringConverter = $stringConverter;
+        $this->validator = $validator;
         parent::__construct();
     }
 
@@ -111,7 +118,7 @@ class PluginCKEditorButtonCommand extends Command
                 null,
                 InputOption::VALUE_REQUIRED,
                 $this->trans('commands.generate.plugin.ckeditorbutton.options.button-icon-path')
-            );
+            )->setAliases(['gpc']);
     }
 
     /**
@@ -122,12 +129,12 @@ class PluginCKEditorButtonCommand extends Command
         $io = new DrupalStyle($input, $output);
 
         // @see use Drupal\Console\Command\Shared\ConfirmationTrait::confirmGeneration
-        if (!$this->confirmGeneration($io)) {
+        if (!$this->confirmGeneration($io, $input)) {
             return 1;
         }
 
         $module = $input->getOption('module');
-        $class_name = $input->getOption('class');
+        $class_name = $this->validator->validateClassName($input->getOption('class'));
         $label = $input->getOption('label');
         $plugin_id = $input->getOption('plugin-id');
         $button_name = $input->getOption('button-name');
@@ -147,19 +154,17 @@ class PluginCKEditorButtonCommand extends Command
         $io = new DrupalStyle($input, $output);
 
         // --module option
-        $module = $input->getOption('module');
-        if (!$module) {
-            // @see Drupal\Console\Command\Shared\ModuleTrait::moduleQuestion
-            $module = $this->moduleQuestion($io);
-            $input->setOption('module', $module);
-        }
+        $module = $this->getModuleOption();
 
         // --class option
         $class_name = $input->getOption('class');
         if (!$class_name) {
             $class_name = $io->ask(
                 $this->trans('commands.generate.plugin.ckeditorbutton.questions.class'),
-                'DefaultCKEditorButton'
+                'DefaultCKEditorButton',
+                function ($class_name) {
+                    return $this->validator->validateClassName($class_name);
+                }
             );
             $input->setOption('class', $class_name);
         }

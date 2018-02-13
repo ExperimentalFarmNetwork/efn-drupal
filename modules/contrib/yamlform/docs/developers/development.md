@@ -125,8 +125,8 @@ drush en -y yamlform yamlform_ui yamlform_devel yamlform_examples yamlform_templ
 # Optional.
 drush en -y yamlform_test;
 drush en -y yamlform_test_third_party_settings;
-drush en -y yamlform_translation_test;
-drush pmu -y yamlform_test_third_party_settings yamlform_translation_test;
+drush en -y yamlform_test_translation;
+drush pmu -y yamlform_test_third_party_settings yamlform_test_translation;
 ```
 
 **Reinstall YAML Form Test module.**
@@ -147,23 +147,26 @@ drush features-diff yamlform_test
 
 # Export form configuration from your site.          
 drush features-export -y yamlform
-drush features-export -y yamlform_test
 drush features-export -y yamlform_examples
 drush features-export -y yamlform_templates
+drush features-export -y yamlform_test
+drush features-export -y yamlform_test_translation
 drush features-export -y yamlform_node
 
 # Tidy form configuration from your site.          
 drush yamlform-tidy -y --dependencies yamlform
-drush yamlform-tidy -y --dependencies yamlform_test
 drush yamlform-tidy -y --dependencies yamlform_examples
 drush yamlform-tidy -y --dependencies yamlform_templates
+drush yamlform-tidy -y --dependencies yamlform_test
+drush yamlform-tidy -y --dependencies yamlform_test_translation
 drush yamlform-tidy -y --dependencies yamlform_node
 
 # Re-import all form configuration into your site.      
 drush features-import -y yamlform
-drush features-import -y yamlform_test
 drush features-import -y yamlform_examples
 drush features-import -y yamlform_templates
+drush features-import -y yamlform_test
+drush features-import -y yamlform_test_translation
 drush features-import -y yamlform_node
 ```
 
@@ -239,7 +242,7 @@ drush -y site-install\
   --account-name="webmaster"\
   --account-pass="drupal.admin"\
   --site-mail="example@example.com"\
-  --site-name="Drupal 8 (dev)";
+  --site-name="Drupal 8 (YAML Form)";
 
 # Enable core modules
 drush -y pm-enable\
@@ -267,5 +270,40 @@ drush -y pm-enable\
   yamlform_node\
   yamlform_templates\
   yamlform_test\
-  yamlform_translation_test;
+  yamlform_test_translation;
 ```
+
+### How to take a screencast
+
+**Setup**
+
+- Drupal
+    - Install Drupal locally.
+    - Remove all blocks in first sidebar.  
+      http://localhost/d8_dev/admin/structure/block
+- Desktop
+    - Switch to laptop.
+    - Turn 'Hiding on' in the Dock System Preferences.
+    - Set screen display to 'Large Text'
+- Chrome
+    - Hide Bookmarks.
+    - Hide Extra Icons.
+    - Always Show Toolbar in Full Screen.
+    - Delete all yamlform.* keys from local storage.
+
+**Generate list of screencasts**
+
+    $help = _yamlform_help();
+    print '<pre>';
+    foreach ($help as $name => $info) {
+      print "yamlform-" . $name . "\n";
+      print 'YAML Form Help: ' . $info['title'] . "\n";
+      print "\n";
+    }
+    print '</pre>'; exit;
+  
+**Uploading**
+
+- Title : YAML Form Help: {title} [v01]
+- Tags: Drupal 8,YAML Form,Form Builder
+- Privacy: Unlisted

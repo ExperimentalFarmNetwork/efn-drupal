@@ -1,13 +1,13 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geofield\Plugin\Field\FieldFormatter\GeofieldDefaultFormatter.
- */
-
 namespace Drupal\geofield\Plugin\Field\FieldFormatter;
 
+use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FormatterBase;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\geofield\GeoPHP\GeoPHPInterface;
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
 
@@ -22,15 +22,90 @@ use Drupal\Core\Form\FormStateInterface;
  *   }
  * )
  */
-class GeofieldDefaultFormatter extends FormatterBase {
+class GeofieldDefaultFormatter extends FormatterBase implements ContainerFactoryPluginInterface {
+
+  /**
+   * The geoPhpWrapper service.
+   *
+   * @var \Drupal\geofield\GeoPHP\GeoPHPInterface
+   */
+  protected $geoPhpWrapper;
+
+  /**
+   * The Adapter Map Options.
+   *
+   * @var array
+   */
+  protected $options;
+
+  /**
+   * GeofieldDefaultFormatter constructor.
+   *
+   * @param string $plugin_id
+   *   The plugin_id for the formatter.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
+   * @param \Drupal\Core\Field\FieldDefinitionInterface $field_definition
+   *   The definition of the field to which the formatter is associated.
+   * @param array $settings
+   *   The formatter settings.
+   * @param string $label
+   *   The formatter label display setting.
+   * @param string $view_mode
+   *   The view mode.
+   * @param array $third_party_settings
+   *   Any third party settings settings.
+   * @param \Drupal\geofield\GeoPHP\GeoPHPInterface $geophp_wrapper
+   *   The The geoPhpWrapper.
+   */
+  public function __construct(
+    $plugin_id,
+    $plugin_definition,
+    FieldDefinitionInterface $field_definition,
+    array $settings,
+    $label,
+    $view_mode,
+    array $third_party_settings,
+    GeoPHPInterface $geophp_wrapper
+  ) {
+    parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
+    $this->geoPhpWrapper = $geophp_wrapper;
+    $this->options = $this->geoPhpWrapper->getAdapterMap();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $plugin_id,
+      $plugin_definition,
+      $configuration['field_definition'],
+      $configuration['settings'],
+      $configuration['label'],
+      $configuration['view_mode'],
+      $configuration['third_party_settings'],
+      $container->get('geofield.geophp')
+    );
+  }
 
   /**
    * {@inheritdoc}
    */
   public static function defaultSettings() {
-    return array(
-      'output_format' => 'wkt'
-    );
+    return [
+      'output_format' => 'wkt',
+    ];
+  }
+
+  /**
+   * Returns the output format, set or default one.
+   *
+   * @return string
+   *   The output format string.
+   */
+  protected function getOutputFormat() {
+    return in_array($this->getSetting('output_format'), array_keys($this->options)) ? $this->getSetting('output_format') : self::defaultSettings()['output_format'];
   }
 
   /**
@@ -38,17 +113,15 @@ class GeofieldDefaultFormatter extends FormatterBase {
    */
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $elements = parent::settingsForm($form, $form_state);
+    unset($this->options['google_geocode']);
 
-    $options = \Drupal::service('geofield.geophp')->getAdapterMap();
-    unset($options['google_geocode']);
-
-    $elements['output_format'] = array(
-      '#title' => t('Output Format'),
+    $elements['output_format'] = [
+      '#title' => $this->t('Output Format'),
       '#type' => 'select',
-      '#default_value' => $this->getSetting('output_format'),
-      '#options' => $options,
+      '#default_value' => $this->getOutputFormat(),
+      '#options' => $this->options,
       '#required' => TRUE,
-    );
+    ];
     return $elements;
   }
 
@@ -56,9 +129,8 @@ class GeofieldDefaultFormatter extends FormatterBase {
    * {@inheritdoc}
    */
   public function settingsSummary() {
-    $formatOptions = \Drupal::service('geofield.geophp')->getAdapterMap();
-    $summary = array();
-    $summary[] = t('Geospatial output format: @format', array('@format' => $formatOptions[$this->getSetting('output_format')]));
+    $summary = [];
+    $summary[] = $this->t('Geospatial output format: @format', ['@format' => $this->getOutputFormat()]);
     return $summary;
   }
 
@@ -66,13 +138,12 @@ class GeofieldDefaultFormatter extends FormatterBase {
    * {@inheritdoc}
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
-    $elements = array();
-    $geophp = \Drupal::service('geofield.geophp');
+    $elements = [];
 
     foreach ($items as $delta => $item) {
-      $geom = $geophp->load($item->value);
-      $output = $geom ? $geom->out($this->getSetting('output_format')) : '';
-      $elements[$delta] = array('#markup' => $output);
+      $geom = $this->geoPhpWrapper->load($item->value);
+      $output = $geom ? $geom->out($this->getOutputFormat()) : '';
+      $elements[$delta] = ['#markup' => Html::escape($output)];
     }
 
     return $elements;

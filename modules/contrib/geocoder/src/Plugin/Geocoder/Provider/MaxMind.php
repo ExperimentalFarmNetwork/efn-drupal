@@ -12,9 +12,9 @@ use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
  *   name = "MaxMind",
  *   handler = "\Geocoder\Provider\MaxMind",
  *   arguments = {
- *     "apiKey",
+ *     "apikey" = NULL,
  *     "service" = "f",
- *     "useSsl" = FALSE
+ *     "usessl" = FALSE
  *   }
  * )
  */

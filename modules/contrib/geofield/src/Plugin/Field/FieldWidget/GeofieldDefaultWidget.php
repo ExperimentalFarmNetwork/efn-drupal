@@ -1,14 +1,8 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geofield\Plugin\Field\FieldWidget\GeofieldDefaultWidget.
- */
-
 namespace Drupal\geofield\Plugin\Field\FieldWidget;
 
 use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
@@ -22,15 +16,30 @@ use Drupal\Core\Form\FormStateInterface;
  *   }
  * )
  */
-class GeofieldDefaultWidget extends WidgetBase {
+class GeofieldDefaultWidget extends GeofieldBaseWidget {
+
   /**
    * {@inheritdoc}
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
-    $element += array(
+    $element += [
       '#type' => 'textarea',
       '#default_value' => $items[$delta]->value ?: NULL,
-    );
-    return array('value' => $element);
+    ];
+    return ['value' => $element];
   }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
+    foreach ($values as $delta => $value) {
+      /* @var \Geometry $geom */
+      if ($geom = $this->geoPhpWrapper->load($value['value'])) {
+        $values[$delta]['value'] = $geom->out('wkt');
+      }
+    }
+    return $values;
+  }
+
 }

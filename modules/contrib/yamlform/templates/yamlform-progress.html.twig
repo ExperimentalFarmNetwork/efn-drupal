@@ -8,6 +8,7 @@
  * - pages: Array of wizard pages.
  * - current_page: Current wizard page.
  * - total_pages: Current wizard page.
+ * - summary: Summary of progress.
  * - percentage: Percentage completed.
  * - bar: A progress bar.
  *
@@ -22,10 +23,10 @@
 
   {{ bar }}
 
-  {% if pages or percentage %}
+  {% if summary or percentage %}
     <div class="yamlform-progress__status">
-      {% if pages %}
-        <span class="yamlform-progress__pages">{{ pages }}</span>
+      {% if summary %}
+        <span class="yamlform-progress__'summary">{{ summary }}</span>
         {% if percentage %}
           <span class="yamlform-progress__percentage">({{ percentage }})</span>
         {% endif %}

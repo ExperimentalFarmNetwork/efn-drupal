@@ -2,6 +2,7 @@
 /.rules
 
 # Composer
+composer.lock
 /vendor
 /bin/phpunit
 /bin/jsonlint
@@ -33,3 +34,4 @@ autoload.local.php
 
 # drupal/console-extend-plugin generated files
 extend.console.*.yml
+*-console.services.yml

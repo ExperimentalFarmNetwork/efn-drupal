@@ -15,12 +15,22 @@ class YamlFormToggle extends Checkbox {
    * {@inheritdoc}
    */
   public function getInfo() {
+    return self::getDefaultProperties() + parent::getInfo();
+  }
+
+  /**
+   * Get default properties for a toggle element.
+   *
+   * @return array
+   *   An associative array container default properties for a toggle element.
+   */
+  public static function getDefaultProperties() {
     return [
       '#toggle_theme' => 'light',
       '#toggle_size' => 'medium',
       '#on_text' => '',
       '#off_text' => '',
-    ] + parent::getInfo();
+    ];
   }
 
   /**

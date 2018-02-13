@@ -15,9 +15,20 @@
     margin: 1em 0;
   }
 
-  .yamlform-flexbox--flex-start { -webkit-align-items: flex-start; align-items: flex-start; }
-  .yamlform-flexbox--flex-end { -webkit-align-items: flex-end; align-items: flex-end; }
-  .yamlform-flexbox--center { -webkit-align-items: center; align-items: center; }
+  .yamlform-flexbox--flex-start {
+    -webkit-align-items: flex-start;
+    align-items: flex-start;
+  }
+
+  .yamlform-flexbox--flex-end {
+    -webkit-align-items: flex-end;
+    align-items: flex-end;
+  }
+
+  .yamlform-flexbox--center {
+    -webkit-align-items: center;
+    align-items: center;
+  }
 
   .yamlform-flexbox input[type="checkbox"],
   .yamlform-flexbox input[type="radio"] /* Never allow checkboxes and radio buttons to have a width */{
@@ -56,10 +67,6 @@
   .yamlform-flex--container > .yamlform-has-field-prefix.yamlform-flex.yamlform-has-field-suffix > input,
   .yamlform-flex--container > .yamlform-has-field-prefix.yamlform-flex.yamlform-has-field-suffix > select {
     width: 70%;
-  }
-
-  .yamlform-flex--0 {
-    /* None */
   }
 
   .yamlform-flex--1 {
@@ -140,7 +147,6 @@
   /**
    * Range.
    */
-
   .yamlform-flex--container > .form-type-range-output > .form-range-output {
     width: 66%;
   }

@@ -17,9 +17,6 @@ function views_send_send_from_spool() {
   $limit = \Drupal::config('views_send.settings')->get('throttle'); 
   $ok = $fail = $check = 0;
 
-  // Get PHP maximum execution time. 30 seconds default.
-  $max_execution_time = ini_get('max_execution_time') ? ini_get('max_execution_time') : VIEWS_SEND_MAX_EXECUTION_TIME;
-
   // Reset a Drupal timer.
   Timer::start('views_send');
 
@@ -57,7 +54,7 @@ function views_send_send_from_spool() {
       $check = 0;
 
       // Break if exceded.
-      if (Timer::read('views_send') / 1000 > .8 * $max_execution_time) {
+      if (Timer::read('views_send') / 1000 > .8 * ini_get('max_execution_time')) {
         \Drupal::logger('views_send')->notice(t('PHP maximum execution time almost exceeded. Remaining e-mail messages will be sent during the next cron run. If this warning occurs regularly you should reduce the cron throttle setting.'));
         break;
       }
@@ -73,10 +70,13 @@ function views_send_send_from_spool() {
 }
 
 /**
- * Clear the expired items from spool.
+ * Clear items from spool.
  */
 function views_send_clear_spool() {
-  // TODO: Drupal 7: replace time() with REQUEST_TIME.
+  // Remove expired sent messages.
   $expiration_time = time() - \Drupal::config('views_send.settings')->get('spool_expire') * 86400;
   db_query("DELETE FROM {views_send_spool} WHERE status = :status AND timestamp <= :expiry", array(':status' => 1, 'expiry' => $expiration_time));
+  // Remove unsent messages which have failed more times than the retry limit.
+  $retry_limit = \Drupal::config('views_send.settings')->get('retry');
+  db_query("DELETE FROM {views_send_spool} WHERE status = :status AND tentatives > :retry", array(':status' => 0, 'retry' => $retry_limit));
 }

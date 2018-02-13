@@ -69,3 +69,19 @@ field.widget.settings.geofield_latlon:
     html5_geolocation:
       type: boolean
       label: 'Use HTML5 Geolocation to set default values'
+
+field.formatter.settings.geofield_default:
+  type: mapping
+  label: 'Geofield default display format settings'
+  mapping:
+    output_format:
+      type: string
+      label: 'Output format'
+
+field.formatter.settings.geofield_latlon:
+  type: mapping
+  label: 'Geofield LatLon display format settings'
+  mapping:
+    output_format:
+      type: string
+      label: 'Output format'

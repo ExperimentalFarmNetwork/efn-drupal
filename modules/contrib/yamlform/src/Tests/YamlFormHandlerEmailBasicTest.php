@@ -45,14 +45,14 @@ class YamlFormHandlerEmailBasicTest extends YamlFormTestBase {
     // Check sending a custom email using tokens.
     $this->drupalLogin($this->adminFormUser);
     $body = implode("\n", [
-      'full name: [yamlform-submission:values:first_name] [yamlform-submission:values:last_name]',
-      'uuid: [yamlform-submission:uuid]',
-      'sid: [yamlform-submission:sid]',
-      'date: [yamlform-submission:created]',
-      'ip-address: [yamlform-submission:ip-address]',
-      'user: [yamlform-submission:user]',
-      'url: [yamlform-submission:url]',
-      'edit-url: [yamlform-submission:url:edit-form]',
+      'full name: [yamlform_submission:values:first_name] [yamlform_submission:values:last_name]',
+      'uuid: [yamlform_submission:uuid]',
+      'sid: [yamlform_submission:sid]',
+      'date: [yamlform_submission:created]',
+      'ip-address: [yamlform_submission:ip-address]',
+      'user: [yamlform_submission:user]',
+      'url: [yamlform_submission:url]',
+      'edit-url: [yamlform_submission:url:edit-form]',
       'Test that "double quotes" are not encoded.',
     ]);
 

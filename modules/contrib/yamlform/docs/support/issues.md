@@ -5,15 +5,15 @@ Below are known Drupal 8 core issues that are affecting the YAML Form module.
 
 ### Configuration Management
 
-** [Issue #2808287: Importing YAML Form config file via the UI is throwing serialization error](https://www.drupal.org/node/2808287
+**[Issue #2808287: Importing YAML Form config file via the UI is throwing serialization error](https://www.drupal.org/node/2808287)**
 
-> Importing configuration file using Drush is working fine.
+> Importing configuration files using Drush is working fine.
 
 **[Issue #1920902: Unable to tidy the bulk export of YamlForm and YamlFormOptions config files 
 because Drupal's YAML utility is not a service.](https://www.drupal.org/node/1920902)**
 
 > The YAML Form module provides drush commands to 'tidy' exported YAML and
-> configuration files so they are easier to read and edit.
+> configuration files that so they are easier to read and edit.
 
 ### Form Elements
     
@@ -33,15 +33,17 @@ because Drupal's YAML utility is not a service.](https://www.drupal.org/node/192
 > Impacts displaying element description in a tooltip. jQuery UI's tooltip's UX
 > is not great.
 
-**Drupal's CKEditor link dialog replaces open dialog.**
+**[Issue #2741877: Nested modals don't work: when using CKEditor in a modal, then clicking the image button opens another modal, which closes the original modal](https://www.drupal.org/node/2741877)**
 
 > Makes it impossible to display the CKEditor in a dialog.
-> Workaround: Use CKEditor's link dialog.
-
-_Not sure this issue should be addressed by core._
+> Workaround: Use custom download of CKEditor which include a CKEditor specific 
+> link dialog.
 
 ### \#states API (Conditionals)
 
+#### Button (button & submit)
+
+**[Issue #1671190 by Lucasljj, idebr, Cameron Tod: Use <button /> form element type instead of <input type="submit" />](https://www.drupal.org/node/1671190)**
 
 #### Date/time (datetime)
 
@@ -73,7 +75,7 @@ _Not sure this issue should be addressed by core._
 
 **[Issue #1149078: States API doesn't work with multiple select fields](https://www.drupal.org/node/1149078)**
 
-**[Issue #2791741: FAPI states: fields aren't hidden initally when depending on multi-value selection](https://www.drupal.org/node/2791741)**
+**[Issue #2791741: FAPI states: fields aren't hidden initially when depending on multi-value selection](https://www.drupal.org/node/2791741)**
 
 #### Radios (radios)
 

@@ -7,12 +7,11 @@
 
 namespace Drupal\Console\Command\Module;
 
-use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\Command;
 use Drupal\Console\Command\Shared\ProjectDownloadTrait;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Utils\DrupalApi;
@@ -25,7 +24,6 @@ use Drupal\Console\Core\Utils\ShellProcess;
 
 class DownloadCommand extends Command
 {
-    use CommandTrait;
     use ProjectDownloadTrait;
 
     /**
@@ -136,8 +134,9 @@ class DownloadCommand extends Command
                 'unstable',
                 null,
                 InputOption::VALUE_NONE,
-                $this->trans('commands.module.install.options.unstable')
-            );
+                $this->trans('commands.module.download.options.unstable')
+            )
+            ->setAliases(['mod']);
     }
 
     /**
@@ -230,7 +229,7 @@ class DownloadCommand extends Command
                 }
 
                 // Register composer repository
-                $command = "composer config repositories.drupal composer https://packagist.drupal-composer.org";
+                $command = "composer config repositories.drupal composer https://packages.drupal.org/8";
                 $this->shellProcess->exec($command, $this->root);
 
                 $command = sprintf(

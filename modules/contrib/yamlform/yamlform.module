@@ -20,7 +20,6 @@ use Drupal\yamlform\Utility\YamlFormArrayHelper;
 use Drupal\yamlform\YamlFormInterface;
 use Drupal\yamlform\YamlFormSubmissionForm;
 
-module_load_include('inc', 'yamlform', 'includes/yamlform.help');
 module_load_include('inc', 'yamlform', 'includes/yamlform.libraries');
 module_load_include('inc', 'yamlform', 'includes/yamlform.options');
 module_load_include('inc', 'yamlform', 'includes/yamlform.translation');
@@ -29,6 +28,36 @@ module_load_include('inc', 'yamlform', 'includes/yamlform.translation');
  * Return status for saving which deleted an existing item.
  */
 const YAMLFORM_SAVED_DRAFT = 4;
+
+/**
+ * Implements hook_help().
+ */
+function yamlform_help($route_name, RouteMatchInterface $route_match) {
+  // Get path from route match.
+  $path = preg_replace('/^' . preg_quote(base_path(), '/') . '/', '/', Url::fromRouteMatch($route_match)->setAbsolute(FALSE)->toString());
+  if (!in_array($route_name, ['system.modules_list']) && strpos($route_name, 'yamlform') === FALSE && strpos($path, '/yamlform') === FALSE) {
+    return NULL;
+  }
+
+  /** @var \Drupal\yamlform\YamlFormHelpManagerInterface $help_manager */
+  $help_manager = \Drupal::service('yamlform.help_manager');
+  if ($route_name == 'help.page.yamlform') {
+    $build = $help_manager->buildIndex();
+  }
+  else {
+    $build = $help_manager->buildHelp($route_name, $route_match);
+  }
+
+  if ($build) {
+    $renderer = \Drupal::service('renderer');
+    $config = \Drupal::config('yamlform.settings');
+    $renderer->addCacheableDependency($build, $config);
+    return $build;
+  }
+  else {
+    return NULL;
+  }
+}
 
 /**
  * Implements hook_modules_installed().
@@ -254,7 +283,7 @@ function yamlform_page_attachments(&$page) {
  * @see \Drupal\yamlform\YamlFormSubmissionForm::form
  */
 function yamlform_css_alter(&$css, AttachedAssetsInterface $assets) {
-  _yamlform_asset_alter($css, $assets, 'css');
+  _yamlform_asset_alter($css, $assets, 'css', 'css');
 }
 
 /**
@@ -263,7 +292,7 @@ function yamlform_css_alter(&$css, AttachedAssetsInterface $assets) {
  * @see \Drupal\yamlform\YamlFormSubmissionForm::form
  */
 function yamlform_js_alter(&$javascript, AttachedAssetsInterface $assets) {
-  _yamlform_asset_alter($javascript, $assets, 'javascript');
+  _yamlform_asset_alter($javascript, $assets, 'javascript', 'js');
 }
 
 /**
@@ -279,19 +308,26 @@ function yamlform_js_alter(&$javascript, AttachedAssetsInterface $assets) {
  *   The assets attached to the current response.
  * @param string $type
  *   The type of asset being attached.
+ * @param string $extension
+ *   The asset file extension being attached.
  */
-function _yamlform_asset_alter(array &$items, AttachedAssetsInterface $assets, $type) {
+function _yamlform_asset_alter(array &$items, AttachedAssetsInterface $assets, $type, $extension) {
   $settings = $assets->getSettings();
-  if (!empty($settings['yamlform']['assets'][$type])) {
-    foreach ($settings['yamlform']['assets'][$type] as $id => $hash) {
-      $items["yamlform/$id/assets/javascript"] = [
+  if (empty($settings['yamlform']['assets'][$type])) {
+    return;
+  }
+
+  $path = drupal_get_path('module', 'yamlform');
+  foreach ($settings['yamlform']['assets'][$type] as $id => $hash) {
+    $key = "$path/$extension/yamlform.assets.$extension";
+    if (isset($items[$key])) {
+      $items[$key] = [
         'data' => base_path() . "yamlform/$id/assets/$type?v=$hash",
         'group' => 1000,
         'weight' => 1000,
-      ] + $items["//yamlform/{yamlform}/assets/$type"];
+      ] + $items[$key];
     }
   }
-  unset($items["//yamlform/{yamlform}/assets/$type"]);
 }
 
 /**
@@ -334,7 +370,7 @@ function yamlform_theme() {
       'variables' => ['yamlform_submission' => NULL],
     ],
     'yamlform_submission_information' => [
-      'variables' => ['yamlform_submission' => NULL, 'source_entity' => NULL, 'open' => TRUE],
+      'variables' => ['yamlform_submission' => NULL, 'source_entity' => NULL, 'open' => FALSE],
     ],
 
     'yamlform_submission_html' => [
@@ -384,6 +420,9 @@ function yamlform_theme() {
       'variables' => ['element' => NULL, 'value' => NULL, 'options' => [], 'file' => NULL],
     ],
 
+    'yamlform_message' => [
+      'render element' => 'element',
+    ],
     'yamlform_composite_address' => [
       'render element' => 'element',
     ],
@@ -555,7 +594,7 @@ function yamlform_process_states(&$elements, $key = '#attributes') {
  *
  * @see \Drupal\yamlform\YamlFormEntityElementsValidator::validateRendering()
  */
-function _yamlform_entity_element_validate_rendering_error_handler($error_level, $message, $filename, $line, $context) {
+function _yamlform_entity_element_validate_rendering_error_handler($error_level, $message, $filename, $line, array $context) {
   // From: http://stackoverflow.com/questions/15461611/php-try-catch-not-catching-all-exceptions
   if (E_RECOVERABLE_ERROR === $error_level) {
     // Allow Drupal to still log the error but convert it to a warning.

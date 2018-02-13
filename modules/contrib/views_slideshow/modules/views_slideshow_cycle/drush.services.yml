@@ -1,0 +1,5 @@
+services:
+  views_slideshow_cycle.commands:
+    class: \Drupal\views_slideshow_cycle\Commands\ViewsSlideshowCycleCommands
+    tags:
+      - { name: drush.command }

@@ -16,7 +16,7 @@ class YamlFormElementLikertTest extends WebTestBase {
    *
    * @var array
    */
-  public static $modules = ['yamlform', 'yamlform_test'];
+  protected static $modules = ['yamlform', 'yamlform_test'];
 
   /**
    * Test likert element.

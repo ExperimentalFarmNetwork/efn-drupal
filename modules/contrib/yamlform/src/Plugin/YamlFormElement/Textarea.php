@@ -57,10 +57,9 @@ class Textarea extends TextBase {
    * {@inheritdoc}
    */
   public function formatHtml(array &$element, $value, array $options = []) {
-    $build = [
+    return [
       '#markup' => nl2br(new HtmlEscapedText($value)),
     ];
-    return \Drupal::service('renderer')->renderPlain($build);
   }
 
   /**

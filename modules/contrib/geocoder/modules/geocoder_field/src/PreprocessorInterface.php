@@ -35,6 +35,6 @@ interface PreprocessorInterface {
    * @todo [cc]: When fixing reverse operation, clarify the interface for this
    *   method, including the method name.
    */
-  public function getPreparedReverseGeocodeValues(array $values = array());
+  public function getPreparedReverseGeocodeValues(array $values = []);
 
 }

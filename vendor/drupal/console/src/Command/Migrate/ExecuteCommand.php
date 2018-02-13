@@ -16,18 +16,23 @@ use Drupal\migrate\MigrateExecutable;
 use Drupal\Console\Utils\MigrateExecuteMessageCapture;
 use Drupal\Console\Command\Shared\MigrationTrait;
 use Drupal\Console\Command\Shared\DatabaseTrait;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\State\StateInterface;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\Command;
 use Drupal\migrate\Plugin\MigrationPluginManagerInterface;
+use Drupal\Console\Annotations\DrupalCommand;
 
+/**
+ * @DrupalCommand(
+ *     extension = "migrate",
+ *     extensionType = "module"
+ * )
+ */
 class ExecuteCommand extends Command
 {
     use DatabaseTrait;
     use MigrationTrait;
-    use CommandTrait;
 
     protected $migrateConnection;
 
@@ -41,8 +46,9 @@ class ExecuteCommand extends Command
      *
      * @param MigrationPluginManagerInterface $pluginManagerMigration
      */
-    public function __construct(MigrationPluginManagerInterface $pluginManagerMigration)
-    {
+    public function __construct(
+        MigrationPluginManagerInterface $pluginManagerMigration
+    ) {
         $this->pluginManagerMigration = $pluginManagerMigration;
         parent::__construct();
     }
@@ -63,7 +69,7 @@ class ExecuteCommand extends Command
                 'db-type',
                 null,
                 InputOption::VALUE_REQUIRED,
-                $this->trans('commands.migrate.setup.migrations.options.db-type')
+                $this->trans('commands.migrate.execute.migrations.options.db-type')
             )
             ->addOption(
                 'db-host',
@@ -112,8 +118,9 @@ class ExecuteCommand extends Command
                 'source-base_path',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                $this->trans('commands.migrate.execute.options.source-base_path')
-            );
+                $this->trans('commands.migrate.execute.options.source-base-path')
+            )
+            ->setAliases(['mie']);
         ;
     }
 
@@ -265,7 +272,7 @@ class ExecuteCommand extends Command
         $sourceBasepath = $input->getOption('source-base_path');
         if (!$sourceBasepath) {
             $sourceBasepath = $io->ask(
-                $this->trans('commands.migrate.setup.questions.source-base_path'),
+                $this->trans('commands.migrate.setup.questions.source-base-path'),
                 ''
             );
             $input->setOption('source-base_path', $sourceBasepath);

@@ -61,10 +61,10 @@ class Random extends ProviderBase {
     });
     $country = array_slice($countries, 0, 1);
 
-    $value = array(
+    $value = [
       'code' => key($country),
       'name' => reset($country),
-    );
+    ];
 
     if (is_null($type)) {
       return $value;
@@ -83,7 +83,7 @@ class Random extends ProviderBase {
    */
   protected function getRandomResult() {
     $country = $this->getRandomCountryInfo();
-    $streetTypes = array(
+    $streetTypes = [
       'street',
       'avenue',
       'square',
@@ -95,9 +95,9 @@ class Random extends ProviderBase {
       'hill',
       'gardens',
       'park',
-    );
+    ];
 
-    return array(
+    return [
       'latitude' => mt_rand(0, 90) + mt_rand() / mt_getrandmax(),
       'longitude' => mt_rand(-180, 180) + mt_rand() / mt_getrandmax(),
       'streetName' => $this->getRandomCountryInfo('name') . ' ' . $streetTypes[mt_rand(0, count($streetTypes) - 1)],
@@ -106,7 +106,7 @@ class Random extends ProviderBase {
       'locality' => sha1(mt_rand() / mt_getrandmax()),
       'country' => $country['name'],
       'countryCode' => $country['code'],
-    );
+    ];
   }
 
   /**

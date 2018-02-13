@@ -98,10 +98,10 @@ class Manager
     }
 
     /**
-     * @param string $nameOnly
+     * @param boolean $nameOnly
      * @return array
      */
-    public function getList($nameOnly)
+    public function getList($nameOnly = false)
     {
         return $this->getExtensions($this->extension, $nameOnly);
     }
@@ -369,9 +369,9 @@ class Manager
     public function checkExtensions(array $extensions, $type = 'module')
     {
         $checkextensions = [
-          'local_extensions' => [],
-          'drupal_extensions' => [],
-          'no_extensions' => [],
+            'local_extensions' => [],
+            'drupal_extensions' => [],
+            'no_extensions' => [],
         ];
 
         $local_extensions = $this->discoverExtension($type)

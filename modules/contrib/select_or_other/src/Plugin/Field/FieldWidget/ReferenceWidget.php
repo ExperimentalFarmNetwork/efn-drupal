@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- * Contains \Drupal\select_or_other\Plugin\Field\FieldWidget\ReferenceWidget.
- */
 
 namespace Drupal\select_or_other\Plugin\Field\FieldWidget;
 

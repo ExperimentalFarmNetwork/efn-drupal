@@ -7,24 +7,22 @@
 
 namespace Drupal\Console\Core\Command\Exec;
 
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\ExecutableFinder;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Utils\ShellProcess;
 use Drupal\Console\Core\Style\DrupalStyle;
+use Drupal\Console\Core\Command\Command;
 
 /**
  * Class ExecCommand
+ *
  * @package Drupal\Console\Core\Command\Exec
  */
 class ExecCommand extends Command
 {
-    use CommandTrait;
-
     /**
      * @var ShellProcess
      */
@@ -32,6 +30,7 @@ class ExecCommand extends Command
 
     /**
      * ExecCommand constructor.
+     *
      * @param ShellProcess $shellProcess
      */
     public function __construct(ShellProcess $shellProcess)

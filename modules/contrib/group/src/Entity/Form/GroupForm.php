@@ -56,25 +56,35 @@ class GroupForm extends ContentEntityForm {
     $replace = ['@group_type' => $group_type->label()];
 
     // We need to adjust the actions when using the group creator wizard.
-    if ($form_state->get('group_wizard') && $form_state->get('group_wizard_id') == 'group_creator') {
-      // Store a group instead of saving it.
-      $actions['submit']['#submit'] = ['::submitForm', '::store'];
+    if ($this->operation == 'add') {
+      if ($form_state->get('group_wizard') && $form_state->get('group_wizard_id') == 'group_creator') {
+        // If we are using the group creator wizard, then we should not save the
+        // group right away. Instead, we should store the data we have and wait
+        // until the end of the wizard to save.
+        $actions['submit']['#submit'] = ['::submitForm', '::store'];
 
-      // Update the label to be more user friendly.
-      $actions['submit']['#value'] = $this->t('Create @group_type and complete your membership', $replace);
+        // Update the label to be more user friendly by indicating that the user
+        // needs to go through an extra step to finish the group creation.
+        $actions['submit']['#value'] = $this->t('Create @group_type and complete your membership', $replace);
 
-      // Add a cancel button to clear the private temp store.
-      $actions['cancel'] = [
-        '#type' => 'submit',
-        '#value' => $this->t('Cancel'),
-        '#submit' => ['::cancel'],
-        '#limit_validation_errors' => [],
-      ];
-    }
-    // If we are not in the wizard, but creator memberships are enabled, we need
-    // to reflect that on the submit button as well.
-    elseif ($group_type->creatorGetsMembership()) {
-      $actions['submit']['#value'] = $this->t('Create @group_type and become a member', $replace);
+        // Add a cancel button to clear the private temp store. This exits the
+        // wizard without saving,
+        $actions['cancel'] = [
+          '#type' => 'submit',
+          '#value' => $this->t('Cancel'),
+          '#submit' => ['::cancel'],
+          '#limit_validation_errors' => [],
+        ];
+      }
+      // Update the label if we are not using the wizard, but the group creator
+      // still gets a membership upon group creation.
+      elseif ($group_type->creatorGetsMembership()) {
+        $actions['submit']['#value'] = $this->t('Create @group_type and become a member', $replace);
+      }
+      // Use a simple submit label if none of the above applies.
+      else {
+        $actions['submit']['#value'] = $this->t('Create @group_type', $replace);
+      }
     }
 
     return $actions;

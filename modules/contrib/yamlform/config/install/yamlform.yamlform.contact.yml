@@ -37,6 +37,7 @@ settings:
   page_submit_path: ''
   page_confirm_path: ''
   form_submit_label: 'Send message'
+  form_submit_attributes: {  }
   form_exception_message: ''
   form_closed_message: ''
   form_confidential: false
@@ -52,22 +53,31 @@ settings:
   wizard_progress_pages: false
   wizard_progress_percentage: false
   wizard_next_button_label: ''
+  wizard_next_button_attributes: {  }
   wizard_prev_button_label: ''
+  wizard_prev_button_attributes: {  }
   wizard_start_label: ''
   wizard_complete: true
   wizard_complete_label: ''
   preview: 0
   preview_next_button_label: ''
+  preview_next_button_attributes: {  }
   preview_prev_button_label: ''
+  preview_prev_button_attributes: {  }
   preview_message: ''
   draft: false
   draft_auto_save: false
   draft_button_label: ''
+  draft_button_attributes: {  }
   draft_saved_message: ''
   draft_loaded_message: ''
   confirmation_type: url_message
   confirmation_message: 'Your message has been sent.'
   confirmation_url: '<front>'
+  confirmation_attributes: {  }
+  confirmation_back: true
+  confirmation_back_label: ''
+  confirmation_back_attributes: {  }
   limit_total: null
   limit_total_message: ''
   limit_user: null
@@ -112,13 +122,13 @@ handlers:
     status: true
     weight: 1
     settings:
-      to_mail: '[yamlform-submission:values:email:raw]'
+      to_mail: '[yamlform_submission:values:email:raw]'
       cc_mail: ''
       bcc_mail: ''
       from_mail: default
       from_name: default
-      subject: '[yamlform-submission:values:subject:value]'
-      body: '[yamlform-submission:values:message:value]'
+      subject: '[yamlform_submission:values:subject:value]'
+      body: '[yamlform_submission:values:message:value]'
       excluded_elements: {  }
       html: true
       attachments: false
@@ -133,10 +143,10 @@ handlers:
       to_mail: default
       cc_mail: ''
       bcc_mail: ''
-      from_mail: '[yamlform-submission:values:email:raw]'
-      from_name: '[yamlform-submission:values:name:value]'
-      subject: '[yamlform-submission:values:subject:value]'
-      body: '[yamlform-submission:values:message:value]'
+      from_mail: '[yamlform_submission:values:email:raw]'
+      from_name: '[yamlform_submission:values:name:value]'
+      subject: '[yamlform_submission:values:subject:value]'
+      body: '[yamlform_submission:values:message:value]'
       excluded_elements: {  }
       html: true
       attachments: false

@@ -14,7 +14,7 @@ class YamlFormThirdPartySettingsTest extends YamlFormTestBase {
    *
    * @var array
    */
-  public static $modules = ['system', 'node', 'user', 'yamlform'];
+  protected static $modules = ['system', 'node', 'user', 'yamlform'];
 
   /**
    * Tests form third party settings.

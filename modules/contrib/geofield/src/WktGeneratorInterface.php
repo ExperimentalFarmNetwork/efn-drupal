@@ -1,12 +1,10 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geofield\WktGeneratorInterface.
- */
-
 namespace Drupal\geofield;
 
+/**
+ * Defines an interface for WktGenerator.
+ */
 interface WktGeneratorInterface {
 
   /**
@@ -17,7 +15,7 @@ interface WktGeneratorInterface {
    * @return string
    *   The random WKT value.
    */
-  public function WktGenerateGeometry();
+  public function wktGenerateGeometry();
 
   /**
    * Returns a WKT format point feature given a point.
@@ -28,7 +26,7 @@ interface WktGeneratorInterface {
    * @return string
    *   The WKT point feature.
    */
-  public function WktBuildPoint($point);
+  public function wktBuildPoint(array $point);
 
   /**
    * Returns a WKT format point feature.
@@ -39,7 +37,7 @@ interface WktGeneratorInterface {
    * @return string
    *   The WKT point feature.
    */
-  public function WktGeneratePoint($point = NULL);
+  public function wktGeneratePoint(array $point = NULL);
 
   /**
    * Returns a WKT format multipoint feature.
@@ -47,7 +45,7 @@ interface WktGeneratorInterface {
    * @return string
    *   The WKT multipoint feature.
    */
-  public function WktGenerateMultipoint();
+  public function wktGenerateMultipoint();
 
   /**
    * Returns a WKT format linestring feature given an array of points.
@@ -58,7 +56,7 @@ interface WktGeneratorInterface {
    * @return string
    *   The WKT linestring feature.
    */
-  public function WktBuildLinestring($points);
+  public function wktBuildLinestring(array $points);
 
   /**
    * Returns a WKT format linestring feature.
@@ -71,7 +69,7 @@ interface WktGeneratorInterface {
    * @return string
    *   The WKT linestring feature.
    */
-  public function WktGenerateLinestring($start = NULL, $segments = NULL);
+  public function wktGenerateLinestring(array $start = NULL, $segments = NULL);
 
   /**
    * Returns a WKT format multilinestring feature.
@@ -79,7 +77,7 @@ interface WktGeneratorInterface {
    * @return string
    *   The WKT multilinestring feature.
    */
-  public function WktGenerateMultilinestring();
+  public function wktGenerateMultilinestring();
 
   /**
    * Returns a WKT format polygon feature given an array of points.
@@ -90,7 +88,7 @@ interface WktGeneratorInterface {
    * @return string
    *   The WKT polygon feature.
    */
-  public function WktBuildPolygon($points);
+  public function wktBuildPolygon(array $points);
 
   /**
    * Returns a WKT format polygon feature.
@@ -103,7 +101,7 @@ interface WktGeneratorInterface {
    * @return string
    *   The WKT polygon feature.
    */
-  public function WktGeneratePolygon($start = NULL, $segments = NULL);
+  public function wktGeneratePolygon(array $start = NULL, $segments = NULL);
 
   /**
    * Returns a WKT format multipolygon feature.
@@ -111,6 +109,6 @@ interface WktGeneratorInterface {
    * @return string
    *   The WKT multipolygon feature.
    */
-  public function WktGenerateMultipolygon();
+  public function wktGenerateMultipolygon();
 
 }

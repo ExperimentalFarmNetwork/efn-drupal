@@ -18,7 +18,7 @@ class YamlFormElementManagedFileTest extends YamlFormTestBase {
    *
    * @var array
    */
-  public static $modules = ['system', 'block', 'file', 'user', 'yamlform', 'yamlform_test'];
+  protected static $modules = ['system', 'block', 'file', 'user', 'yamlform', 'yamlform_test'];
 
   /**
    * File usage manager.

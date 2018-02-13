@@ -12,6 +12,9 @@ use Drupal\geocoder_field\Plugin\Field\GeocodeFormatterBase;
  *   label = @Translation("Geocode"),
  *   field_types = {
  *     "string",
+ *     "string_long",
+ *     "text",
+ *     "text_long",
  *   }
  * )
  */

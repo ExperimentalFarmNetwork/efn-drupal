@@ -149,7 +149,7 @@ class YamlFormLocation extends YamlFormCompositeBase {
 
     $element['#attached']['library'][] = 'yamlform/yamlform.element.location';
 
-    $element['#element_validate'] = [[get_called_class(), 'validateLocation']];
+    $element['#element_validate'] = [[get_called_class(), 'validateYamlFormLocation']];
 
     return $element;
   }
@@ -157,7 +157,7 @@ class YamlFormLocation extends YamlFormCompositeBase {
   /**
    * Validates location.
    */
-  public static function validateLocation(&$element, FormStateInterface $form_state, &$complete_form) {
+  public static function validateYamlFormLocation(&$element, FormStateInterface $form_state, &$complete_form) {
     $value = $element['#value'];
 
     $has_access = (!isset($element['#access']) || $element['#access'] === TRUE);

@@ -27,4 +27,15 @@ interface GroupRoleStorageInterface extends ConfigEntityStorageInterface {
    */
   public function loadByUserAndGroup(AccountInterface $account, GroupInterface $group, $include_implied = TRUE);
 
+  /**
+   * Resets the internal, static cache used by ::loadByUserAndGroup().
+   *
+   * @param \Drupal\Core\Session\AccountInterface $account
+   *   The account to reset the cached group roles for.
+   * @param \Drupal\group\Entity\GroupInterface $group
+   *   (optional) The group to reset the user's cached group roles for. Leave
+   *   blank to reset the user's roles in all groups.
+   */
+  public function resetUserGroupRoleCache(AccountInterface $account, GroupInterface $group = NULL);
+
 }

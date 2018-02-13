@@ -29,7 +29,7 @@ trait ProfileTestTrait {
    * @return \Drupal\profile\Entity\ProfileTypeInterface
    *   Returns a profile type entity.
    */
-  protected function createProfileType($id = NULL, $label = NULL, $registration = FALSE, $roles = []) {
+  protected function createProfileType($id = NULL, $label = NULL, $registration = FALSE, array $roles = []) {
     $id = !empty($id) ? $id : $this->randomMachineName();
     $label = !empty($label) ? $label : $this->randomMachineName();
 

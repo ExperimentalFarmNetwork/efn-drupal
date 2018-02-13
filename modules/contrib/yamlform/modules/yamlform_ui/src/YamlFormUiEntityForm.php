@@ -274,13 +274,9 @@ class YamlFormUiEntityForm extends YamlFormEntityForm {
       ],
     ] + $rows;
 
+    // Must preload libraries required by (modal) dialogs.
+    $form['#attached']['library'][] = 'yamlform/yamlform.admin.dialog';
     $form['#attached']['library'][] = 'yamlform_ui/yamlform_ui';
-
-    // Must preload CKEditor and CodeMirror library so that the
-    // window.dialog:aftercreate trigger is set before any dialogs are opened.
-    // @see js/yamlform.element.codemirror.js
-    $form['#attached']['library'][] = 'yamlform/yamlform.element.codemirror.yaml';
-    $form['#attached']['library'][] = 'yamlform/yamlform.element.html_editor';
 
     return $form;
   }

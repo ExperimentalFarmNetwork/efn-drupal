@@ -332,7 +332,7 @@ trait YamlFormEntityReferenceTrait {
    *   A render array containing an entity autocomplete targets using a view
    *   mode.
    */
-  protected function formatView(array $element, $value, $options) {
+  protected function formatView(array $element, $value, array $options) {
     list($entity_ids, $entities) = $this->getTargetEntities($element, $value, $options);
 
     $view_mode = $this->getFormat($element);
@@ -340,7 +340,7 @@ trait YamlFormEntityReferenceTrait {
     $build = [];
     foreach ($entity_ids as $entity_id) {
       $entity = (isset($entities[$entity_id])) ? $entities[$entity_id] : NULL;
-      $build[$entity_id] = ($entity) ? $this->entityTypeManager($entity, $view_mode) : ['#markup' => $entity_id];
+      $build[$entity_id] = ($entity) ? \Drupal::entityTypeManager()->getViewBuilder($entity->getEntityTypeId())->view($entity, $view_mode) : ['#markup' => $entity_id];
     }
 
     if ($this->isMultiline($element) || count($build) > 1) {
@@ -364,7 +364,7 @@ trait YamlFormEntityReferenceTrait {
    * @return array|string
    *   A array containing $entity_ids and $entityies.
    */
-  protected function getTargetEntities(array $element, $value, $options) {
+  protected function getTargetEntities(array $element, $value, array $options) {
     $langcode = (!empty($options['langcode'])) ? $options['langcode'] : \Drupal::languageManager()->getCurrentLanguage()->getId();
 
     $entity_ids = $this->getTargetEntityIds($value);
@@ -383,6 +383,8 @@ trait YamlFormEntityReferenceTrait {
   public function form(array $form, FormStateInterface $form_state) {
     $form = parent::form($form, $form_state);
 
+    $element_properties = $form_state->get('element_properties');
+
     if ($properties = $form_state->getValue('properties')) {
       $target_type = $properties['target_type'];
       $selection_handler = $properties['selection_handler'];
@@ -390,16 +392,18 @@ trait YamlFormEntityReferenceTrait {
     }
     else {
       // Set default #target_type and #selection_handler.
-      if (empty($this->properties['target_type'])) {
-        $this->properties['target_type'] = 'node';
+      if (empty($element_properties['target_type'])) {
+        $element_properties['target_type'] = 'node';
       }
-      if (empty($this->properties['selection_handler'])) {
-        $this->properties['selection_handler'] = 'default:' . $this->properties['target_type'];
+      if (empty($element_properties['selection_handler'])) {
+        $element_properties['selection_handler'] = 'default:' . $element_properties['target_type'];
       }
-      $target_type = $this->properties['target_type'];
-      $selection_handler = $this->properties['selection_handler'];
-      $selection_settings = $this->properties['selection_settings'];
+      $target_type = $element_properties['target_type'];
+      $selection_handler = $element_properties['selection_handler'];
+      $selection_settings = $element_properties['selection_settings'];
     }
+
+    $form_state->set('element_properties', $element_properties);
 
     /** @var \Drupal\Core\Entity\EntityReferenceSelection\SelectionPluginManagerInterface $entity_reference_selection_manager */
     $entity_reference_selection_manager = \Drupal::service('plugin.manager.entity_reference_selection');

@@ -9,7 +9,7 @@ namespace Drupal\yamlform\Tests;
  */
 class YamlFormPathTest extends YamlFormTestBase {
 
-  public static $modules = ['system', 'block', 'node', 'user', 'path', 'yamlform'];
+  protected static $modules = ['system', 'block', 'node', 'user', 'path', 'yamlform'];
 
   /**
    * Tests YAML page and title.

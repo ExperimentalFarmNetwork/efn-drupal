@@ -110,3 +110,10 @@ function gnode_update_8004() {
     $group_role->save();
   }
 }
+
+/**
+ * Flag node access for rebuild to reflect recent changes to node access realms.
+ */
+function gnode_update_8005() {
+  node_access_needs_rebuild(TRUE);
+}

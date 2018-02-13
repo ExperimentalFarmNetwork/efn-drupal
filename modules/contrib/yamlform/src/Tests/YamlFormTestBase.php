@@ -16,7 +16,7 @@ abstract class YamlFormTestBase extends WebTestBase {
    *
    * @var array
    */
-  public static $modules = ['system', 'block', 'node', 'user', 'yamlform', 'yamlform_test'];
+  protected static $modules = ['system', 'block', 'node', 'user', 'yamlform', 'yamlform_test'];
 
   /**
    * Form submission storage.

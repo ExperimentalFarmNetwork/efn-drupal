@@ -1,15 +1,11 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geofield\Plugin\GeofieldBackendPluginInterface.
- */
-
 namespace Drupal\geofield\Plugin;
+
 use Drupal\Component\Plugin\PluginInspectionInterface;
 
 /**
- * Defines an interface for geofield backends.
+ * Defines an interface for Geofield backends.
  *
  * Modules implementing this interface may want to extend GeofieldBackendBase
  * class, which provides default implementations of each method.
@@ -25,6 +21,7 @@ interface GeofieldBackendPluginInterface extends PluginInspectionInterface {
    * Provides the specific database schema for the specific backend.
    *
    * @return array
+   *   The schema.
    */
   public function schema();
 
@@ -32,6 +29,7 @@ interface GeofieldBackendPluginInterface extends PluginInspectionInterface {
    * Saves the Geo value into the specific backend.
    *
    * @param string $geometry
+   *   The Geometry to save.
    */
   public function save($geometry);
 
@@ -39,8 +37,11 @@ interface GeofieldBackendPluginInterface extends PluginInspectionInterface {
    * Loads the Geo value from the specific backend.
    *
    * @param string $geometry
+   *   The geometry to load.
    *
-   * @return string
+   * @return \Geometry|null
+   *   The geometry output.
    */
   public function load($geometry);
+
 }

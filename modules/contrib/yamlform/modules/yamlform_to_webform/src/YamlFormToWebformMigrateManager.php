@@ -21,7 +21,7 @@ class YamlFormToWebformMigrateManager implements YamlFormToWebformMigrateManager
    *
    * @var array
    */
-  protected $yamlforModules = [
+  protected $yamlformModules = [
     'yamlform',
     'yamlform_devel',
     'yamlform_examples',
@@ -31,7 +31,7 @@ class YamlFormToWebformMigrateManager implements YamlFormToWebformMigrateManager
     'yamlform_ui',
     'yamlform_test',
     'yamlform_test_third_party_settings',
-    'yamlform_translation_test',
+    'yamlform_test_translation',
   ];
 
   /**
@@ -52,8 +52,13 @@ class YamlFormToWebformMigrateManager implements YamlFormToWebformMigrateManager
     'file_usage.module' => 'string',
     'file_usage.type' => 'string',
 
+    'key_value.collection' => 'string',
     'key_value.name' => 'string',
     'key_value.value' => 'serial',
+
+    'key_value_expire.collection' => 'string',
+    'key_value_expire.name' => 'string',
+    'key_value_expire.value' => 'serial',
 
     'menu_tree.menu_name' => 'string',
     'menu_tree.id' => 'string',
@@ -159,7 +164,7 @@ class YamlFormToWebformMigrateManager implements YamlFormToWebformMigrateManager
     // Check for unsupported YAML Form modules.
     $modules = $this->moduleHandler->getModuleList();
     foreach ($modules as $module_name => $module_info) {
-      if (strpos($module_name, 'yamlform') !== FALSE && !in_array($module_name, $this->yamlforModules)) {
+      if (strpos($module_name, 'yamlform') !== FALSE && !in_array($module_name, $this->yamlformModules)) {
         $t_args = [
           '@name' => $module_name,
           '@title' => $module_info->getName(),
@@ -192,14 +197,29 @@ class YamlFormToWebformMigrateManager implements YamlFormToWebformMigrateManager
       }
     }
 
+    // Manually fix the YAML Form node module's configuration.
+    if (\Drupal::moduleHandler()->moduleExists('yamlform_node')) {
+      $this->configFactory->getEditable('node.type.yamlform')
+        ->set('name', 'Webform')
+        ->set('type', 'webform')
+        ->set('description', 'A basic page with a webform attached.')
+        ->save();
+      $this->configFactory->getEditable('field.field.node.yamlform.yamlform')
+        ->set('label', 'Webform')
+        ->save();
+    }
+
     // Manually uninstall the yamlform_to_webform.module.
     $config = $this->configFactory->getEditable('core.extension');
     $config->clear('module.yamlform_to_webform');
     $config->save();
     $this->connection->query("DELETE FROM {key_value} WHERE name='yamlform_to_webform'");
 
-    // Reset schema.
-    $this->connection->query("UPDATE {key_value} SET value=:value WHERE collection = 'system.schema' AND name LIKE 'yamlform%'", [':value' => 'i:8000;']);
+    // Set webform module schema to 8006.
+    $this->connection->query("UPDATE {key_value} SET value=:value WHERE collection = 'system.schema' AND name='yamlform'", [':value' => 'i:8006;']);
+
+    // Reset webform sub module schemas to 8000.
+    $this->connection->query("UPDATE {key_value} SET value=:value WHERE collection = 'system.schema' AND name LIKE 'yamlform_%'", [':value' => 'i:8000;']);
 
     // Rename database tables, indexes, and columns.
     $messages = [];
@@ -231,16 +251,19 @@ class YamlFormToWebformMigrateManager implements YamlFormToWebformMigrateManager
    *   An associative array containing status messages.
    */
   protected function renameTable($table_name) {
-    if (strpos($table_name, 'yamlform') === FALSE) {
+    if (strpos($table_name, 'yamlform') === FALSE && strpos($table_name, 'yaml_form') === FALSE) {
       return [];
     }
-
-    $new_table_name = str_replace('yamlform', 'webform', $table_name);
+    $new_table_name = str_replace(
+      ['yamlform', 'yaml_form'],
+      ['webform', 'webform'],
+      $table_name
+    );
     $t_args = [
       '@source' => $table_name,
       '@destination' => $new_table_name,
     ];
-    $this->connection->schema()->renameTable($table_name, $new_table_name);
+    $this->connection->query("RENAME TABLE $table_name TO $new_table_name");
     return ["$table_name" => $this->t("Renamed '@source' to '@destination'", $t_args)];
   }
 
@@ -257,7 +280,11 @@ class YamlFormToWebformMigrateManager implements YamlFormToWebformMigrateManager
     $messages = [];
     $indexes = $this->getIndexes($table_name);
     foreach ($indexes as $index_name => $index_columns) {
-      $new_index_name = str_replace('yamlform', 'webform', $index_name);
+      $new_index_name = str_replace(
+        ['yamlform', 'yaml_form'],
+        ['webform', 'webform'],
+        $index_name
+      );
       $t_args = [
         '@source' => "$table_name.$index_name",
         '@destination' => "$table_name.$new_index_name ",
@@ -266,8 +293,8 @@ class YamlFormToWebformMigrateManager implements YamlFormToWebformMigrateManager
       $column_list = implode(',', $index_columns);
 
       // Execute MySQL specific ALTER TABLE commands.
-      $this->connection->query("ALTER TABLE {$table_name} DROP INDEX $index_name");
-      $this->connection->query("ALTER TABLE {$table_name} ADD INDEX $new_index_name ($column_list)");
+      $this->connection->query("ALTER TABLE $table_name DROP INDEX $index_name");
+      $this->connection->query("ALTER TABLE $table_name ADD INDEX $new_index_name ($column_list)");
 
       $messages["$table_name.$index_name"] = $this->t("Renamed '@source' to '@destination'", $t_args);
     }
@@ -288,7 +315,11 @@ class YamlFormToWebformMigrateManager implements YamlFormToWebformMigrateManager
     $messages = [];
     $columns = $this->getColumns($table_name);
     foreach ($columns as $column_name => $column) {
-      $new_column_name = str_replace('yamlform', 'webform', $column_name);
+      $new_column_name = str_replace(
+        ['yamlform', 'yaml_form'],
+        ['webform', 'webform'],
+        $column_name
+      );
       $t_args = [
         '@source' => "$table_name.$column_name",
         '@destination' => "$table_name.$new_column_name",
@@ -305,11 +336,11 @@ class YamlFormToWebformMigrateManager implements YamlFormToWebformMigrateManager
       if ($replace_type) {
         switch ($replace_type) {
           case 'serial':
-            $result = $this->connection->query("SELECT $column_name FROM {$table_name} WHERE $column_name LIKE '%yaml%' OR $column_name LIKE '%Yaml%' OR $column_name LIKE '%YAML%'");
+            $result = $this->connection->query("SELECT $column_name FROM $table_name WHERE $column_name LIKE '%yaml%' OR $column_name LIKE '%Yaml%' OR $column_name LIKE '%YAML%'");
             while ($record = $result->fetchAssoc()) {
               $value = $record[$column_name];
               $new_value = $value;
-              if (preg_match_all('/s:\d+:"[^"]*?(yamlform|yaml form)[^"]*?";/i', $value, $matches)) {
+              if (preg_match_all('/s:\d+:"[^"]*?(yamlform|yaml form|yaml_form)[^"]*?";/i', $value, $matches)) {
                 foreach ($matches[0] as $match) {
                   $string = unserialize($match);
                   $new_string = $this->replace($string);
@@ -319,13 +350,14 @@ class YamlFormToWebformMigrateManager implements YamlFormToWebformMigrateManager
                   ':value' => $value,
                   ':new_value' => $new_value,
                 ];
-                $this->connection->query("UPDATE {$table_name} SET $column_name=:new_value WHERE $column_name=:value", $params);
+                $this->connection->query("UPDATE $table_name SET $column_name=:new_value WHERE $column_name=:value", $params);
               }
             }
             break;
 
           default:
-            $this->connection->query("UPDATE {$table_name} SET $column_name = REPLACE($column_name, 'yamlform', 'webform')");
+            $this->connection->query("UPDATE $table_name SET $column_name = REPLACE($column_name, 'yamlform', 'webform')");
+            $this->connection->query("UPDATE $table_name SET $column_name = REPLACE($column_name, 'yaml_form', 'webform')");
             break;
         }
         $messages["$table_name.$column_name.value"] = $this->t("Changed 'yamlform' to 'webform in '@destination' (@type)", ['@type' => $replace_type] + $t_args);
@@ -335,7 +367,7 @@ class YamlFormToWebformMigrateManager implements YamlFormToWebformMigrateManager
       if ($column_name !== $new_column_name) {
         $column_type = $column['type'];
         // Execute MySQL specific ALTER TABLE commands.
-        $this->connection->query("ALTER TABLE {$table_name} CHANGE {$column_name} {$new_column_name} $column_type");
+        $this->connection->query("ALTER TABLE $table_name CHANGE {$column_name} {$new_column_name} $column_type");
         $messages["$table_name.$column_name"] = $this->t("Renamed '@source' to '@destination'", $t_args);
       }
     }
@@ -350,12 +382,27 @@ class YamlFormToWebformMigrateManager implements YamlFormToWebformMigrateManager
    */
   protected function getTables() {
     $tables = $this->connection->schema()->findTables('%%');
+    $prefixed_tables = [];
     foreach ($tables as $index => $table_name) {
-      if (preg_match('/^test\d+/', $table_name)) {
-        unset($tables[$index]);
+      if (!preg_match('/^test\d+/', $table_name)) {
+        $prefixed_table_name = $this->connection->tablePrefix($table_name) . $table_name;
+        $prefixed_tables[$table_name] = $prefixed_table_name;
       }
     }
-    return array_values($tables);
+
+    // Map replace columns to prefixed table names.
+    foreach ($this->replaceColumns as $replace_column => $data_type) {
+      if (strpos($replace_column, '.') !== FALSE) {
+        list($table_name, $column_name) = explode('.', $replace_column);
+        if (isset($prefixed_tables[$table_name])) {
+          $prefixed_table_name = $prefixed_tables[$table_name];
+          unset($this->replaceColumns[$replace_column]);
+          $this->replaceColumns["$prefixed_table_name.$column_name"] = $data_type;
+        }
+      }
+    }
+
+    return array_values($prefixed_tables);
   }
 
   /**
@@ -370,7 +417,7 @@ class YamlFormToWebformMigrateManager implements YamlFormToWebformMigrateManager
   protected function getColumns($table_name) {
     $columns = [];
     // Execute MySQL specific SHOW COLUMNS commands.
-    $table_columns = $this->connection->query("SHOW FULL COLUMNS FROM {$table_name}")->fetchAllAssoc('Field');
+    $table_columns = $this->connection->query("SHOW FULL COLUMNS FROM $table_name")->fetchAllAssoc('Field');
     foreach ($table_columns as $table_column_name => $table_column) {
       $columns[$table_column_name] = [
         'type' => $table_column->Type,
@@ -391,7 +438,7 @@ class YamlFormToWebformMigrateManager implements YamlFormToWebformMigrateManager
   protected function getIndexes($table_name) {
     $indexes = [];
     // Execute MySQL specific SHOW INDEXES commands.
-    $table_indexes = $this->connection->query("SHOW INDEXES FROM {$table_name} WHERE key_name LIKE '%yamlform%'")->fetchAllAssoc('Key_name');
+    $table_indexes = $this->connection->query("SHOW INDEXES FROM $table_name WHERE key_name LIKE '%yamlform%'")->fetchAllAssoc('Key_name');
     foreach ($table_indexes as $table_index_name => $table_index) {
       $indexes[$table_index_name][$table_index->Seq_in_index] = $table_index->Column_name;
     }
@@ -410,8 +457,8 @@ class YamlFormToWebformMigrateManager implements YamlFormToWebformMigrateManager
    */
   protected function replace($string) {
     $string = str_replace(
-      ['yamlform', 'YamlForm', 'yaml form', 'YAML Form'],
-      ['webform', 'Webform', 'webform', 'Webform'],
+      ['yamlform', 'YamlForm', 'yaml form', 'yaml_form', 'YAML Form'],
+      ['webform', 'Webform', 'webform', 'webform', 'Webform'],
       $string
     );
     $string = str_ireplace(

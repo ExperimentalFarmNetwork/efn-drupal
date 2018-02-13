@@ -6,13 +6,11 @@
  */
 
 use Drupal\Component\Render\FormattableMarkup;
+use Drupal\Core\Database\Database;
 use Drupal\Core\Serialization\Yaml;
 use Drupal\yamlform\Entity\YamlForm;
 use Drupal\yamlform\Plugin\YamlFormElement\ManagedFile;
 
-// Using include_once instead of module_load_include() to make sure all
-// update hooks are loaded even when a module is not fully installed.
-// @see https://www.drupal.org/node/2813333
 include_once 'includes/yamlform.update.inc';
 
 /**
@@ -191,5 +189,129 @@ function _yamlform_update_form_settings() {
 
     // Save data.
     $yamlform_config->setData($data)->save();
+  }
+}
+
+/**
+ * Issue #2834203: Convert yamlform field target_id to 32 characters.
+ */
+function yamlform_update_8075() {
+  $database_schema = \Drupal::database()->schema();
+  $schema = \Drupal::keyValue('entity.storage_schema.sql')->getAll();
+  foreach ($schema as $item_name => $item) {
+    foreach ($item as $table_name => $table_schema) {
+      foreach ($table_schema as $schema_key => $schema_data) {
+        if ($schema_key == 'fields') {
+          foreach ($schema_data as $field_name => $field_data) {
+            if (preg_match('/_target_id$/', $field_name) && $field_data['description'] == 'The ID of the form entity.' && $schema[$item_name][$table_name]['fields'][$field_name]['length'] === 255) {
+              $schema[$item_name][$table_name]['fields'][$field_name]['length'] = 32;
+              $database_schema->changeField($table_name, $field_name, $field_name, $schema[$item_name][$table_name]['fields'][$field_name]);
+            }
+          }
+        }
+      }
+    }
+  }
+  \Drupal::keyValue('entity.storage_schema.sql')->setMultiple($schema);
+}
+
+/**
+ * Issue #2834572: Refactor and improve token management.
+ */
+function yamlform_update_8076() {
+  $config_factory = \Drupal::configFactory();
+
+  // Update 'yamlform.settings' configuration.
+  $settings_config = \Drupal::configFactory()->getEditable('yamlform.settings');
+  $yaml = Yaml::encode($settings_config->getRawData());
+  $yaml = str_replace('[yamlform_submission:', '[yamlform_submission:', $yaml);
+  $settings_config->setData(Yaml::decode($yaml));
+  $settings_config->save();
+
+  // Update 'yamlform.yamlform.*' configuration.
+  foreach ($config_factory->listAll('yamlform.yamlform.') as $yamlform_config_name) {
+    $yamlform_config = $config_factory->getEditable($yamlform_config_name);
+    $yaml = Yaml::encode($yamlform_config->getRawData());
+    $yaml = str_replace('[yamlform_submission:', '[yamlform_submission:', $yaml);
+    $yamlform_config->setData(Yaml::decode($yaml));
+    $yamlform_config->save();
+  }
+}
+
+/**
+ * Issue #2834654: Add close button to messages.
+ */
+function yamlform_update_8077() {
+  // Change yamlform.* to yamlform.* state.
+  $yamlforms = YamlForm::loadMultiple();
+  foreach ($yamlforms as $yamlform) {
+    $state = \Drupal::state()->get('yamlform.' . $yamlform->id(), NULL);
+    if ($state !== NULL) {
+      \Drupal::state()->set('yamlform.yamlform.' . $yamlform->id(), $state);
+      \Drupal::state()->delete('yamlform.' . $yamlform->id());
+    }
+  }
+}
+
+/**
+ * Issue #2836948: Problem with autocomplete field. Change '#autocomplete_options' to '#autocomplete_items'.
+ */
+function yamlform_update_8078() {
+  $config_factory = \Drupal::configFactory();
+  foreach ($config_factory->listAll('yamlform.yamlform.') as $yamlform_config_name) {
+    $yamlform_config = $config_factory->getEditable($yamlform_config_name);
+    $elements = $yamlform_config->get('elements');
+    if (strpos($elements, '#autocomplete_options') !== FALSE) {
+      $elements = str_replace('#autocomplete_options', '#autocomplete_items', $elements);
+      $yamlform_config->set('elements', $elements);
+      $yamlform_config->save(TRUE);
+    }
+  }
+}
+
+/**
+ * Issue #2837090: Undefined function call webform_schema.
+ */
+function yamlform_update_8079() {
+  // @see yamlform_update_8080() which fixes this broken hook.
+}
+
+/**
+ * Issue #2837090: Undefined function call webform_schema.
+ */
+function yamlform_update_8080() {
+  // Fix key_value.collection which was no updated during the migration.
+  $module_handler = \Drupal::moduleHandler();
+  $database_type = Database::getConnection('default')->databaseType();
+  if ($module_handler->moduleExists('webform') && !$module_handler->moduleExists('yamlform') && $database_type == 'mysql') {
+    $database = \Drupal::database();
+
+    $select = $database->select('key_value', 'kv');
+    $select->fields('kv', ['collection', 'name', 'value']);
+    $select->condition('collection', '%yamlform%', 'LIKE');
+    $result = $select->execute();
+    while ($record = $result->fetchAssoc()) {
+      $old_collection = $record['collection'];
+      $new_collection = str_replace('yamlform', 'webform', $record['collection']);
+
+      $collection_select = $database->select('key_value', 'kv');
+      $collection_select->fields('kv', ['collection', 'name', 'value']);
+      $collection_select->condition('collection', $new_collection);
+      $collection_result = $collection_select->execute();
+
+      // Only insert the new record if there the collection does not exist.
+      if (!$collection_result->fetchAll()) {
+        $record['collection'] = $new_collection;
+        $database->insert('key_value')
+          ->fields(['collection', 'name', 'value'])
+          ->values(array_values($record))
+          ->execute();
+      }
+
+      // Delete the old record.
+      $database->delete('key_value')
+        ->condition('collection', $old_collection)
+        ->execute();
+    }
   }
 }
