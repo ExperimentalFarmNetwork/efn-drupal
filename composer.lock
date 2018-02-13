@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "6d17a4ec1ba112347aa8a72ed5e7a5e1",
+    "content-hash": "e82e73ceca6168aa9032c99132b0a193",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -9177,7 +9177,6 @@
     "stability-flags": {
         "drupal/ajax_comments": 10,
         "drupal/devel": 5,
-        "drupal/geocoder": 15,
         "drupal/geophp": 10,
         "drupal/default_content": 15,
         "drupal/select_or_other": 15,
@@ -9188,7 +9187,6 @@
         "drupal/smtp": 10,
         "drupal/email_registration": 5,
         "drupal/markup": 10,
-        "drupal/address": 5,
         "drupal/leaflet_more_maps": 15,
         "behat/mink": 20
     },

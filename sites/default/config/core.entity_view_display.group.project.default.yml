@@ -42,7 +42,7 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-    type: address_default
+    type: address_plain
     region: content
   field_misc:
     weight: 10

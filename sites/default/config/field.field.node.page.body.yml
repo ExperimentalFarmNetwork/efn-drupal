@@ -6,19 +6,7 @@ dependencies:
     - field.storage.node.body
     - node.type.page
   module:
-    - geocoder_field
     - text
-third_party_settings:
-  geocoder_field:
-    method: none
-    field: title
-    plugins: {  }
-    dumper: wkt
-    delta_handling: default
-    failure:
-      handling: preserve
-      status_message: true
-      log: true
 id: node.page.body
 field_name: body
 entity_type: node

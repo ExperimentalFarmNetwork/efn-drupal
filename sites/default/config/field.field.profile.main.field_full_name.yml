@@ -5,19 +5,6 @@ dependencies:
   config:
     - field.storage.profile.field_full_name
     - profile.type.main
-  module:
-    - geocoder_field
-third_party_settings:
-  geocoder_field:
-    method: none
-    field: field_location
-    plugins: {  }
-    dumper: wkt
-    delta_handling: default
-    failure:
-      handling: preserve
-      status_message: true
-      log: true
 id: profile.main.field_full_name
 field_name: field_full_name
 entity_type: profile

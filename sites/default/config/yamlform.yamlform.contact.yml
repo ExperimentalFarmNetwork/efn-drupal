@@ -1,12 +1,9 @@
-uuid: aca923ae-5463-426d-89e6-84ba92e275e9
 langcode: en
 status: true
 dependencies:
   enforced:
     module:
       - yamlform
-_core:
-  default_config_hash: JD-fKiEs22szoXqnfgBNWlA8JkGS24DfvLYrkWJoVk0
 uid: null
 template: false
 id: contact
@@ -20,6 +17,7 @@ settings:
   page_submit_path: ''
   page_confirm_path: ''
   form_submit_label: 'Send message'
+  form_submit_attributes: {  }
   form_exception_message: ''
   form_closed_message: ''
   form_confidential: false
@@ -35,22 +33,31 @@ settings:
   wizard_progress_pages: false
   wizard_progress_percentage: false
   wizard_next_button_label: ''
+  wizard_next_button_attributes: {  }
   wizard_prev_button_label: ''
+  wizard_prev_button_attributes: {  }
   wizard_start_label: ''
   wizard_complete: true
   wizard_complete_label: ''
   preview: 0
   preview_next_button_label: ''
+  preview_next_button_attributes: {  }
   preview_prev_button_label: ''
+  preview_prev_button_attributes: {  }
   preview_message: ''
   draft: false
   draft_auto_save: false
   draft_button_label: ''
+  draft_button_attributes: {  }
   draft_saved_message: ''
   draft_loaded_message: ''
   confirmation_type: url_message
   confirmation_message: 'Your message has been sent.'
   confirmation_url: '<front>'
+  confirmation_attributes: {  }
+  confirmation_back: true
+  confirmation_back_label: ''
+  confirmation_back_attributes: {  }
   limit_total: null
   limit_total_message: ''
   limit_user: null
@@ -124,3 +131,6 @@ handlers:
       html: true
       attachments: false
       debug: false
+uuid: aca923ae-5463-426d-89e6-84ba92e275e9
+_core:
+  default_config_hash: JD-fKiEs22szoXqnfgBNWlA8JkGS24DfvLYrkWJoVk0

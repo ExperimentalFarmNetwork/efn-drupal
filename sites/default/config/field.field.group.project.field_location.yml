@@ -7,6 +7,23 @@ dependencies:
     - group.type.project
   module:
     - address
+    - geocoder_field
+third_party_settings:
+  geocoder_field:
+    method: none
+    weight: '0'
+    geocode_field: label
+    reverse_geocode_field: field_location_geo
+    hidden: 0
+    disabled: 0
+    plugins:
+      - freegeoip
+    dumper: geojson
+    delta_handling: default
+    failure:
+      handling: preserve
+      status_message: true
+      log: true
 id: group.project.field_location
 field_name: field_location
 entity_type: group
@@ -17,8 +34,8 @@ required: true
 translatable: false
 default_value:
   -
-    langcode: null
     country_code: US
+    langcode: null
     administrative_area: ''
     locality: ''
     dependent_locality: ''

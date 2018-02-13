@@ -6,7 +6,6 @@ dependencies:
     - field.storage.profile.field_user_image
     - group.type.project
     - image.style.220x220
-    - image.style.80x80
     - image.style.thumbnail
   module:
     - comment

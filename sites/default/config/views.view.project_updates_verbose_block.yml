@@ -516,7 +516,7 @@ display:
           decimal: .
           separator: ','
           format_plural: true
-          format_plural_string: "1 comment\x03@count comments"
+          format_plural_string: !!binary MSBjb21tZW50A0Bjb3VudCBjb21tZW50cw==
           prefix: ''
           suffix: ''
           plugin_id: numeric

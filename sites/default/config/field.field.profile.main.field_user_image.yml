@@ -28,7 +28,7 @@ settings:
   title_field: false
   title_field_required: false
   default_image:
-    uuid: 9b9dc56f-74b8-48c0-804e-8c86d2984284
+    uuid: b6e78fde-e79b-49d1-9670-120c38bbf14a
     alt: 'Profile Pic'
     title: 'Profile image'
     width: 292

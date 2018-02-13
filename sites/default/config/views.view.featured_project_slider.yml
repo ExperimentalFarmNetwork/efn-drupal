@@ -7,8 +7,8 @@ dependencies:
     - field.storage.group.field_project_image
     - field.storage.group.field_project_summary
     - group.type.project
-    - image.style.140x140
     - image.style.project_banner
+    - image.style.thumbnail
   module:
     - group
     - image
@@ -56,8 +56,8 @@ display:
       pager:
         type: some
         options:
-          items_per_page: 4
-          offset: 1
+          items_per_page: 3
+          offset: 0
       style:
         type: slideshow
         options:
@@ -221,7 +221,7 @@ display:
           group_type: group
           admin_label: ''
           label: ''
-          exclude: true
+          exclude: false
           alter:
             alter_text: false
             text: ''
@@ -239,24 +239,24 @@ display:
             suffix: ''
             target: ''
             nl2br: false
-            max_length: 100
+            max_length: 0
             word_boundary: true
             ellipsis: true
             more_link: false
             more_link_text: ''
             more_link_path: ''
             strip_tags: false
-            trim: true
+            trim: false
             preserve_tags: ''
             html: false
-          element_type: h1
+          element_type: h2
           element_class: ''
           element_label_type: ''
           element_label_class: ''
           element_label_colon: false
           element_wrapper_type: ''
           element_wrapper_class: ''
-          element_default_classes: false
+          element_default_classes: true
           empty: ''
           hide_empty: false
           empty_zero: false
@@ -286,10 +286,10 @@ display:
           group_type: group
           admin_label: ''
           label: ''
-          exclude: false
+          exclude: true
           alter:
-            alter_text: true
-            text: "<h1>{{ label }}</h1>\n{{ field_project_summary }}"
+            alter_text: false
+            text: "<h2>{{ label }}</h2> \n{{ field_project_summary }}"
             make_link: false
             path: ''
             absolute: false
@@ -582,7 +582,7 @@ display:
           click_sort_column: target_id
           type: image
           settings:
-            image_style: 140x140
+            image_style: thumbnail
             image_link: ''
           group_column: ''
           group_columns: {  }
@@ -658,22 +658,14 @@ display:
           entity_field: created
           plugin_id: date
       title: Project
-      header:
+      header: {  }
+      footer: {  }
+      empty:
         area:
           id: area
           table: views
           field: area
-          relationship: none
-          group_type: group
-          admin_label: ''
-          empty: false
-          tokenize: false
-          content:
-            value: 'featured project:'
-            format: raw_html
           plugin_id: text
-      footer: {  }
-      empty: {  }
       relationships:
         uid:
           id: uid

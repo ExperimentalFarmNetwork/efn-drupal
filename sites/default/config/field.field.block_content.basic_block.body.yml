@@ -6,19 +6,7 @@ dependencies:
     - block_content.type.basic_block
     - field.storage.block_content.body
   module:
-    - geocoder_field
     - text
-third_party_settings:
-  geocoder_field:
-    method: none
-    field: info
-    plugins: {  }
-    dumper: wkt
-    delta_handling: default
-    failure:
-      handling: preserve
-      status_message: false
-      log: false
 id: block_content.basic_block.body
 field_name: body
 entity_type: block_content

@@ -11,8 +11,8 @@ dependencies:
     - minimus
 id: views_block__featured_project_slider_block_1
 theme: minimus
-region: front_slider
-weight: -13
+region: content
+weight: -12
 provider: null
 plugin: 'views_block:featured_project_slider-block_1'
 settings:
@@ -25,6 +25,6 @@ settings:
 visibility:
   request_path:
     id: request_path
-    pages: '<front>'
+    pages: '<frozznt>'
     negate: false
     context_mapping: {  }

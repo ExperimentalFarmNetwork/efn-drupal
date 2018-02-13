@@ -8,7 +8,8 @@ settings:
   default_form_unsaved: false
   default_form_novalidate: false
   default_form_details_toggle: true
-  classes: "container-inline clearfix\nform--inline clearfix\nmessages messages--error\nmessages messages--warning\nmessages messages--status\n"
+  form_classes: "container-inline clearfix\nform--inline clearfix\nmessages messages--error\nmessages messages--warning\nmessages messages--status\n"
+  button_classes: ''
   default_wizard_prev_button_label: '< Previous Page'
   default_wizard_next_button_label: 'Next Page >'
   default_wizard_start_label: Start
@@ -20,6 +21,9 @@ settings:
   default_draft_saved_message: 'Submission saved. You may return to this form later and it will restore the current values.'
   default_draft_loaded_message: 'A partially-completed form was found. Please complete the remaining portions.'
   default_confirmation_message: 'New submission added to [yamlform:title].'
+  default_confirmation_back_label: 'Back to form'
+  confirmation_classes: "messages messages--error\nmessages messages--warning\nmessages messages--status\n"
+  confirmation_back_classes: "button\n"
   default_limit_total_message: 'No more submissions are permitted.'
   default_limit_user_message: 'No more submissions are permitted.'
 export:
@@ -74,5 +78,3 @@ library:
   cdn: true
 langcode: en
 third_party_settings: {  }
-_core:
-  default_config_hash: EXRM19pTFerZQHlw2v949L8t88FWv5QZMaHqp_KM0xI
