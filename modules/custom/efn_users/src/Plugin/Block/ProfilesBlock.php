@@ -35,10 +35,10 @@ class ProfilesBlock extends BlockBase {
 
 				if (!$volunteerProfile) {
 					$markup .= '<p>';
-					$markup .= t('Start joining joining projects and connecting to 
+					$markup .= t('Start joining joining projects and connecting to
 						others in the network:');
 
-					$url = Url::fromRoute('entity.profile.type.main.user_profile_form', ['user' => $user->id(), 'profile_type' => 'volunteer']);
+					$url = Url::fromRoute('entity.profile.type.user_profile_form', ['user' => $user->id(), 'profile_type' => 'volunteer']);
 					$link_options = [
 					  'attributes' => [
 					    'class' => ['btn', 'btn-primary'],
@@ -57,7 +57,7 @@ class ProfilesBlock extends BlockBase {
 					$markup .= '<p>';
 					$markup .= t('Start creating and leading your own projects:');
 
-					$url = Url::fromRoute('entity.profile.type.main.user_profile_form', ['user' => $user->id(), 'profile_type' => 'researcher']);
+					$url = Url::fromRoute('entity.profile.type.user_profile_form', ['user' => $user->id(), 'profile_type' => 'researcher']);
 					$link_options = [
 					  'attributes' => [
 					    'class' => ['btn', 'btn-primary'],
@@ -72,13 +72,13 @@ class ProfilesBlock extends BlockBase {
 				if ($markup) {
 					return array(
 					  '#markup' => $markup,
-					);				
+					);
 				}
 	  	}
 	  }
  		return array();
   }
-  
+
   public function getCacheTags() {
     if ($user = \Drupal::routeMatch()->getParameter('user')) {
       // Clear cache if user object updated
