@@ -23,6 +23,7 @@ module:
   devel: 0
   dynamic_page_cache: 0
   editor: 0
+  efn: 0
   efn_default_content: 0
   efn_users: 0
   email_registration: 0
@@ -34,9 +35,6 @@ module:
   file: 0
   filter: 0
   geocoder: 0
-  geocoder_address: 0
-  geocoder_field: 0
-  geocoder_geofield: 0
   geofield: 0
   geophp: 0
   gnode: 0

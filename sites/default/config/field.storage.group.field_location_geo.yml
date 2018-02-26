@@ -1,4 +1,4 @@
-uuid: f4919c75-21d7-4b41-b661-13f0384dfca4
+uuid: a6ae0119-d962-4ea6-a77c-fa44d07207ef
 langcode: en
 status: true
 dependencies:
@@ -9,8 +9,7 @@ id: group.field_location_geo
 field_name: field_location_geo
 entity_type: group
 type: geofield
-settings:
-  backend: geofield_backend_default
+settings: {  }
 module: geofield
 locked: false
 cardinality: 1
