@@ -1,6 +1,6 @@
 uuid: 71f1c331-dd7b-4d43-85c2-f8be7627fc3d
 langcode: en
-status: true
+status: false
 dependencies:
   config:
     - views.view.project_creator
@@ -12,7 +12,7 @@ dependencies:
 id: views_block__project_creator_project_creator
 theme: minimus
 region: sidebar_second
-weight: -11
+weight: -12
 provider: null
 plugin: 'views_block:project_creator-project_creator'
 settings:
@@ -22,7 +22,8 @@ settings:
   label_display: '0'
   views_label: ''
   items_per_page: none
-  context_mapping: {  }
+  context_mapping:
+    gid: '@group.group_route_context:group'
 visibility:
   group_type:
     id: group_type

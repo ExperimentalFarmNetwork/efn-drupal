@@ -1,0 +1,26 @@
+uuid: 285d121b-58d8-4af3-8c8d-225ef8e00e0d
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.project_owner
+  module:
+    - views
+  theme:
+    - minimus
+id: views_block__project_owner_block_1
+theme: minimus
+region: sidebar_second
+weight: -11
+provider: null
+plugin: 'views_block:project_owner-block_1'
+settings:
+  id: 'views_block:project_owner-block_1'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+  items_per_page: none
+  context_mapping:
+    gid: '@group.group_route_context:group'
+visibility: {  }

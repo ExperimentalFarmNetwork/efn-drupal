@@ -6826,12 +6826,12 @@ body.path-group {
         border: thin solid #eeeeee;
         padding: 3px;
         display: inline; }
-  .region-sidebar-second .view-project-creator {
+  .region-sidebar-second .view-project-creator, .region-sidebar-second .view-project-owner {
     font-size: .8em;
     text-align: center; }
-    .region-sidebar-second .view-project-creator a {
+    .region-sidebar-second .view-project-creator a, .region-sidebar-second .view-project-owner a {
       text-align: center; }
-    .region-sidebar-second .view-project-creator img {
+    .region-sidebar-second .view-project-creator img, .region-sidebar-second .view-project-owner img {
       display: inline-block;
       border-radius: 50%;
       border: thin solid #eeeeee;
@@ -7021,7 +7021,7 @@ footer.footer {
     body.user-logged-in header.navbar-default #block-newprojectbutton .field--name-body a:after {
       content: '+';
       font-size: 31px;
-      line-height: 32px; } }
+      line-height: 38px; } }
 @media screen and (max-width: 1297px) {
   .path-frontpage .bnrPic .efntxt_frnt p {
     margin-left: 1em; }
