@@ -5,6 +5,7 @@ dependencies:
   config:
     - views.view.project_owner
   module:
+    - ctools
     - views
   theme:
     - minimus
@@ -23,4 +24,11 @@ settings:
   items_per_page: none
   context_mapping:
     gid: '@group.group_route_context:group'
-visibility: {  }
+visibility:
+  'entity_bundle:group':
+    id: 'entity_bundle:group'
+    bundles:
+      project: project
+    negate: false
+    context_mapping:
+      group: '@group.group_route_context:group'
