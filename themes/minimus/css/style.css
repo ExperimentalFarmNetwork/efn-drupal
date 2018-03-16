@@ -6847,10 +6847,12 @@ body.path-group {
       height: 220px;
       background: #efefef url(/sites/default/files/styles/large/public/default_images/efn_user.png);
       margin: 0 auto; }
-    .region-sidebar-second .view-project-creator .organizer-name a, .region-sidebar-second .view-project-owner .organizer-name a {
+    .region-sidebar-second .view-project-creator .organizer-name, .region-sidebar-second .view-project-owner .organizer-name {
       display: block;
       color: #242029;
       font-size: inherit; }
+      .region-sidebar-second .view-project-creator .organizer-name a, .region-sidebar-second .view-project-owner .organizer-name a {
+        font-size: inherit; }
 
 .panel#edit-timezone {
   border: 0;

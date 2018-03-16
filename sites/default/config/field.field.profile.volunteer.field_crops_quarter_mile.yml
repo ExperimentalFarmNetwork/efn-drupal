@@ -5,6 +5,17 @@ dependencies:
   config:
     - field.storage.profile.field_crops_quarter_mile
     - profile.type.volunteer
+third_party_settings:
+  geocoder_field:
+    method: none
+    field: field_location
+    plugins: {  }
+    dumper: wkt
+    delta_handling: default
+    failure:
+      handling: preserve
+      status_message: true
+      log: true
 id: profile.volunteer.field_crops_quarter_mile
 field_name: field_crops_quarter_mile
 entity_type: profile

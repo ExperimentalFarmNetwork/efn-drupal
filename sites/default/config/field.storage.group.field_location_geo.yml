@@ -9,7 +9,8 @@ id: group.field_location_geo
 field_name: field_location_geo
 entity_type: group
 type: geofield
-settings: {  }
+settings:
+  backend: geofield_backend_default
 module: geofield
 locked: false
 cardinality: 1

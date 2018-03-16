@@ -789,10 +789,13 @@ body.path-group{
 				background: #efefef url(/sites/default/files/styles/large/public/default_images/efn_user.png);
 				margin: 0 auto;
 		}
-		.organizer-name a {
+		.organizer-name {
 			display: block;
 			color: #242029;
 			font-size: inherit;
+			a{
+				font-size: inherit;
+			}
 		}
 	}
 }
