@@ -762,17 +762,37 @@ body.path-group{
 			}
 		}
 	}
-	.view-project-creator, .view-project-owner{
-		font-size:.8em;
+	.view-project-creator, .view-project-owner {
 		text-align:center;
-		a{
+		// display: none;
+		font-size: 0.1;
+		color: transparent;
+		a {
+			font-size:.8em;
+			color: inherit;
 			text-align:center;
+			display: block;
 		}
-		img{
+
+		.field--name-field-full-name {
+			display: none;
+		}
+
+		img {
 			display:inline-block;
 		    border-radius: 50%;
 		    border: thin solid #eeeeee;
 		    padding: 3px;
+				display: block;
+				width: 220px;
+				height: 220px;
+				background: #efefef url(/sites/default/files/styles/large/public/default_images/efn_user.png);
+				margin: 0 auto;
+		}
+		.organizer-name a {
+			display: block;
+			color: #242029;
+			font-size: inherit;
 		}
 	}
 }
