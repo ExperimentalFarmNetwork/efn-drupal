@@ -45,12 +45,16 @@ function minimus_preprocess_group(&$variables, $hook){
 
 }
 
+// Project header image for page--group.html.twig
 function minimus_preprocess_page__group(&$variables, $hook){
+  $route = \Drupal::routeMatch()->getRouteName();
+  if ($route === 'entity.group.canonical' || $route === 'entity.group.edit_form' || $route === 'view.group_members.page_1' || $route === 'entity.group_content.collection' || $route === 'view.group_nodes.page_1'){
+  $group_id = \Drupal::routeMatch()->getRawParameter('group');
   $group_storage = \Drupal::entityManager()->getStorage('group');
-  $project_image = $group_storage->load(13)->get('field_project_image')->entity->uri->value;
+  $project_image = $group_storage->load($group_id)->get('field_project_image')->entity->uri->value;
   $url = ImageStyle::load('project_banner')->buildUrl($project_image);
-  // kint($url);
   $variables['project_image'] = $url;
+  }
 }
 
 function minimus_preprocess(&$variables, $hook){
