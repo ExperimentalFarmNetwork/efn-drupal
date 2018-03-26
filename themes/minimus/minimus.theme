@@ -1,6 +1,9 @@
 <?php
 
+use Drupal\image\Entity\ImageStyle;
+
 function minimus_preprocess_node(&$variables) {
+
 // a little help from http://drupal.stackexchange.com/a/205375/61845
   $variables['author'] = \Drupal::entityTypeManager()->getViewBuilder('user')->view($variables['node']->getOwner(), 'nodeview');
 
@@ -36,12 +39,18 @@ function getAuthorpic($user, $profile_type){
 
 function minimus_preprocess_group(&$variables, $hook){
 
-  // add title styling to view and edit of group pages
-
   if ((\Drupal::routeMatch()->getRouteName() === 'entity.group.canonical' || \Drupal::routeMatch()->getRouteName() === 'entity.group.edit_form')) {
   $variables['#attached']['library'][] = 'minimus/group-view';
   }
 
+}
+
+function minimus_preprocess_page__group(&$variables, $hook){
+  $group_storage = \Drupal::entityManager()->getStorage('group');
+  $project_image = $group_storage->load(13)->get('field_project_image')->entity->uri->value;
+  $url = ImageStyle::load('project_banner')->buildUrl($project_image);
+  // kint($url);
+  $variables['project_image'] = $url;
 }
 
 function minimus_preprocess(&$variables, $hook){

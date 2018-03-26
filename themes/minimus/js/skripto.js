@@ -37,13 +37,6 @@
         $(".group-header").remove();
     }
 
-    // front page image to background of card
-    if ($("body").hasClass('path-frontpage')) {
-        $(".view-id-project .views-row").each(function(index, el) {
-            var cardPic = $(this).find(".views-field-field-project-image img").attr('src');
-        });
-    }
-
     // user icons
     $("[data-drupal-link-system-path='user']").before('<a href="/user" class="glyphicon glyphicon-user"></a>');
     $("[data-drupal-link-system-path='user/logout']").before('<a href="/user" class="glyphicon glyphicon-log-out"></a>');

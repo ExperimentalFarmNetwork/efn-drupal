@@ -6578,7 +6578,8 @@ body.path-group {
   body.path-group .group-content-project-group-membership-group-join-form {
     margin-bottom: 1em; }
   body.path-group .group-header {
-    height: 400px; }
+    height: 400px;
+    overflow: hidden; }
   body.path-group .nu-project-header {
     background: url("/themes/minimus/images/project_default.png") no-repeat;
     background-size: cover;
@@ -7021,7 +7022,7 @@ footer.footer {
     body.user-logged-in header.navbar-default #block-newprojectbutton .field--name-body a:after {
       content: '+';
       font-size: 31px;
-      line-height: 32px; } }
+      line-height: 38px; } }
 @media screen and (max-width: 1297px) {
   .path-frontpage .bnrPic .efntxt_frnt p {
     margin-left: 1em; }

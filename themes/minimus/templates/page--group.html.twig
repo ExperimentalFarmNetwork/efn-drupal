@@ -97,7 +97,9 @@
   {% endblock %}
 {% endif %}
 {# Group Header #}
-<div class="group-header"></div>
+<div class="group-header">
+  <img class="top-article-image" src="{{ file_url(project_image) }}" />
+</div>
 {# Main #}
 {% block main %}
   <div role="main" class="main-container {{ container }} js-quickedit-main-content">

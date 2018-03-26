@@ -410,6 +410,7 @@ body.path-group{
 	}
 	.group-header{
 		height:400px; //put this in mediaquery
+		overflow: hidden;
 	}
 	.nu-project-header{
 		background: url("/themes/minimus/images/project_default.png") no-repeat;
