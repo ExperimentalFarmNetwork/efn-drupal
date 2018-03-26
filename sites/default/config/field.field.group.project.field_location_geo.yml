@@ -1,4 +1,4 @@
-uuid: 9371b88f-aa72-4ada-87f5-f53badf6f1c1
+uuid: db4bcf1f-39f3-4de1-bfd5-b702a35c6193
 langcode: en
 status: true
 dependencies:
@@ -6,24 +6,7 @@ dependencies:
     - field.storage.group.field_location_geo
     - group.type.project
   module:
-    - geocoder_field
     - geofield
-third_party_settings:
-  geocoder_field:
-    method: source
-    weight: '0'
-    geocode_field: field_location
-    reverse_geocode_field: {  }
-    hidden: 1
-    disabled: 0
-    plugins:
-      - googlemaps
-    dumper: wkt
-    delta_handling: default
-    failure:
-      handling: preserve
-      status_message: true
-      log: true
 id: group.project.field_location_geo
 field_name: field_location_geo
 entity_type: group

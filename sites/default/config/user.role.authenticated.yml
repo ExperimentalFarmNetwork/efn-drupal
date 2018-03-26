@@ -19,6 +19,7 @@ permissions:
   - 'add own volunteer profile'
   - 'change own username'
   - 'create main profile'
+  - 'create project group'
   - 'create researcher profile'
   - 'create volunteer profile'
   - 'delete own main profile'

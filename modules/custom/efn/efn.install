@@ -1,0 +1,14 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the rest module.
+ */
+
+ /**
+  * Uninstall and re-install geocoder to fix error.
+  */
+function efn_update_8001() {
+  \Drupal::service('module_installer')->uninstall(['geocoder']);
+  \Drupal::service('module_installer')->install(['geocoder']);
+}

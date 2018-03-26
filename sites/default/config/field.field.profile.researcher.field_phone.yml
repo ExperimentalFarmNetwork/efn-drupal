@@ -5,6 +5,17 @@ dependencies:
   config:
     - field.storage.profile.field_phone
     - profile.type.researcher
+third_party_settings:
+  geocoder_field:
+    method: none
+    field: field_address
+    plugins: {  }
+    dumper: wkt
+    delta_handling: default
+    failure:
+      handling: preserve
+      status_message: true
+      log: true
 id: profile.researcher.field_phone
 field_name: field_phone
 entity_type: profile

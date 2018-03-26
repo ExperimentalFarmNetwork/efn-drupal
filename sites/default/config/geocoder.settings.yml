@@ -12,7 +12,7 @@ plugins_options:
     username: ''
     locale: ''
   googlemaps:
-    apikey: 'AIzaSyCl_iGhMj9jQWBEQyYzq5raDSMjm1ZCpzw '
+    apikey: AIzaSyCl_iGhMj9jQWBEQyYzq5raDSMjm1ZCpzw
     locale: ''
     region: ''
     usessl: true
@@ -40,7 +40,6 @@ plugins_options:
   freegeoip: {  }
   geoip: {  }
   geoplugin: {  }
-  gpxfile: {  }
   hostip: {  }
   openstreetmap: {  }
   random: {  }

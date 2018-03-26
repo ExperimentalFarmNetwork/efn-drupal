@@ -6827,16 +6827,33 @@ body.path-group {
         border: thin solid #eeeeee;
         padding: 3px;
         display: inline; }
-  .region-sidebar-second .view-project-creator {
-    font-size: .8em;
-    text-align: center; }
-    .region-sidebar-second .view-project-creator a {
-      text-align: center; }
-    .region-sidebar-second .view-project-creator img {
+  .region-sidebar-second .view-project-creator, .region-sidebar-second .view-project-owner {
+    text-align: center;
+    font-size: 0.1;
+    color: transparent; }
+    .region-sidebar-second .view-project-creator a, .region-sidebar-second .view-project-owner a {
+      font-size: .8em;
+      color: inherit;
+      text-align: center;
+      display: block; }
+    .region-sidebar-second .view-project-creator .field--name-field-full-name, .region-sidebar-second .view-project-owner .field--name-field-full-name {
+      display: none; }
+    .region-sidebar-second .view-project-creator img, .region-sidebar-second .view-project-owner img {
       display: inline-block;
       border-radius: 50%;
       border: thin solid #eeeeee;
-      padding: 3px; }
+      padding: 3px;
+      display: block;
+      width: 220px;
+      height: 220px;
+      background: #efefef;
+      margin: 0 auto; }
+    .region-sidebar-second .view-project-creator .organizer-name, .region-sidebar-second .view-project-owner .organizer-name {
+      display: block;
+      color: #242029;
+      font-size: inherit; }
+      .region-sidebar-second .view-project-creator .organizer-name a, .region-sidebar-second .view-project-owner .organizer-name a {
+        font-size: inherit; }
 
 .panel#edit-timezone {
   border: 0;

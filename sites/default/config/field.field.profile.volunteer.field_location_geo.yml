@@ -7,6 +7,18 @@ dependencies:
     - profile.type.volunteer
   module:
     - geofield
+third_party_settings:
+  geocoder_field:
+    method: source
+    field: field_location
+    plugins:
+      - googlemaps
+    dumper: wkt
+    delta_handling: default
+    failure:
+      handling: preserve
+      status_message: true
+      log: true
 id: profile.volunteer.field_location_geo
 field_name: field_location_geo
 entity_type: profile
