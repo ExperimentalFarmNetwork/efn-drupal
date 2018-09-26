@@ -7,9 +7,21 @@ field.field.*.*.*.third_party.geocoder_field:
     method:
       type: string
       label: 'Geocode method'
-    field:
+    weight:
+      type: integer
+      label: 'Weight'
+    geocode_field:
       type: string
-      label: 'Field to geocode from or to'
+      label: 'Field to geocode from'
+    reverse_geocode_field:
+      type: string
+      label: 'Field to geocode to'
+    hidden:
+      type: boolean
+      label: 'Hide field'
+    disabled:
+      type: boolean
+      label: 'Disable field'
     plugins:
       type: sequence
       label: 'Geocoding plugins'

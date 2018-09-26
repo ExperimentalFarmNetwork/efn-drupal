@@ -6,7 +6,6 @@ use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\geocoder\Annotation\GeocoderProvider;
 use Drupal\Core\Serialization\Yaml;
-use Drupal\Component\Serialization\Json;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Url;
@@ -87,23 +86,7 @@ class ProviderPluginManager extends GeocoderPluginManagerBase {
    *   A list of plugins with their settings.
    */
   public function getPlugins() {
-    $plugins_arguments = $this->config->get('plugins_options');
-
-    // Convert old JSON config.
-    // @TODO: This should be removed before the stable release 8.x-2.0.
-    if (is_string($plugins_arguments) && $json = Json::decode($plugins_arguments)) {
-      // Convert each plugins property in lowercase.
-      $plugins_arguments = array_map(function ($old_plugin_arguments) {
-        return array_combine(
-          array_map(function ($k) {
-            return strtolower($k);
-          }, array_keys($old_plugin_arguments)),
-          $old_plugin_arguments
-        );
-      }, $json);
-    }
-
-    $plugins_arguments = (array) $plugins_arguments;
+    $plugins_arguments = (array) $this->config->get('plugins_options');
 
     $definitions = array_map(function (array $definition) use ($plugins_arguments) {
       $plugins_arguments += [$definition['id'] => []];
@@ -237,20 +220,6 @@ class ProviderPluginManager extends GeocoderPluginManagerBase {
     }
 
     return $element['plugins'];
-  }
-
-  /**
-   * Eventually converts Plugins Options in Beta1 Json format.
-   *
-   * @param string $plugins_options
-   *   The plugins_options in string format.
-   *
-   * @TODO: This should be removed before the stable release 8.x-2.0.
-   */
-  public function conditionalGetJsonPluginsOptions(&$plugins_options) {
-    if (!empty(Json::decode($plugins_options))) {
-      $plugins_options = $this->arrayLowerKeyCaseRecursive(Json::decode($plugins_options));
-    }
   }
 
   /**

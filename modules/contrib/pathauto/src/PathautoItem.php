@@ -45,14 +45,4 @@ class PathautoItem extends PathItem {
     return !$this->alias && !$this->get('pathauto')->hasValue();
   }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function applyDefaultValue($notify = TRUE) {
-    parent::applyDefaultValue($notify);
-    // Created fields default creating a new alias.
-    $this->setValue(array('pathauto' => PathautoState::CREATE), $notify);
-    return $this;
-  }
-
 }

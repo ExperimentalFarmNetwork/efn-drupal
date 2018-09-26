@@ -10,7 +10,7 @@ use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
  * @GeocoderProvider(
  *   id = "opencage",
  *   name = "OpenCage",
- *   handler = "",
+ *   handler = "\Geocoder\Provider\OpenCage",
  *   arguments = {
  *     "apikey" = NULL,
  *     "usessl" = FALSE,

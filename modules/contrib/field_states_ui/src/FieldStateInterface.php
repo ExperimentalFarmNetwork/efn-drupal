@@ -35,6 +35,8 @@ interface FieldStateInterface extends PluginInspectionInterface, ConfigurablePlu
    *     dummy form to set default values.
    * @param array $element
    *   The field widget form element as constructed by hook_field_widget_form().
+   * @param array $parents
+   *   The parents array from the element.
    *
    * @see \Drupal\Core\Field\WidgetBase::formSingleElement()
    * @see hook_field_widget_form_alter()
@@ -42,7 +44,7 @@ interface FieldStateInterface extends PluginInspectionInterface, ConfigurablePlu
    * @return bool
    *   TRUE on success. FALSE if unable to calculate the field state.
    */
-  public function applyState(array &$states, FormStateInterface $form_state, array $context, array $element);
+  public function applyState(array &$states, FormStateInterface $form_state, array $context, array $element, array $parents = NULL);
 
   /**
    * Returns a render array summarizing the configuration of the image effect.

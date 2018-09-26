@@ -28,6 +28,6 @@
   "license": "GPL-2.0+",
   "minimum-stability": "dev",
   "require": {
-    "phayes/geophp": "dev-master#6855624"
+    "phayes/geophp": "^1.2"
   }
 }

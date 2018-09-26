@@ -39,7 +39,8 @@ abstract class GeofieldElementBase extends FormElement {
     foreach (static::$components as $name => $component) {
       $element[$name] = [
         '#type' => 'textfield',
-        '#title' => $component['title'],
+        // The t func is needed to make component translatable throw interface.
+        '#title' => t($component['title']),
         '#required' => (!empty($element['#required'])) ? $element['#required'] : FALSE,
         '#default_value' => (isset($element['#default_value'][$name])) ? $element['#default_value'][$name] : '',
         '#attributes' => [

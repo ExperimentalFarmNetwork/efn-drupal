@@ -24,8 +24,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * - target: (optional) The database target name. Defaults to 'default'.
  * - batch_size: (optional) Number of records to fetch from the database during
  *   each batch. If omitted, all records are fetched in a single query.
- * - ignore_map: (optional) Source data is joined to the map table by default.
- *   If set to TRUE, the map table will not be joined.
+ * - ignore_map: (optional) Source data is joined to the map table by default to
+ *   improve migration performance. If set to TRUE, the map table will not be
+ *   joined. Using expressions in the query may result in column aliases in the
+ *   JOIN clause which would be invalid SQL. If you run into this, set
+ *   ignore_map to TRUE.
  *
  * For other optional configuration keys inherited from the parent class, refer
  * to \Drupal\migrate\Plugin\migrate\source\SourcePluginBase.
@@ -346,7 +349,9 @@ abstract class SqlBase extends SourcePluginBase implements ContainerFactoryPlugi
     if (($this->batchSize > 0)) {
       $this->query->range($this->batch * $this->batchSize, $this->batchSize);
     }
-    return new \IteratorIterator($this->query->execute());
+    $statement = $this->query->execute();
+    $statement->setFetchMode(\PDO::FETCH_ASSOC);
+    return new \IteratorIterator($statement);
   }
 
   /**
@@ -379,7 +384,7 @@ abstract class SqlBase extends SourcePluginBase implements ContainerFactoryPlugi
    * {@inheritdoc}
    */
   public function count($refresh = FALSE) {
-    return $this->query()->countQuery()->execute()->fetchField();
+    return (int) $this->query()->countQuery()->execute()->fetchField();
   }
 
   /**

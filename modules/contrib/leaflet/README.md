@@ -37,9 +37,9 @@ View mode.
 
 Rendering a map is as simple as instantiating the LeafletService and its 
 leafletRenderMap method 
-```
-\Drupal::service('leaflet.service')->leafletRenderMap($map, $features, $height)
-```
+
+    \Drupal::service('leaflet.service')->leafletRenderMap($map, $features, $height)
+
 which takes 3 parameters:
 
 * $map:
@@ -56,16 +56,14 @@ so they can be controlled together,
 * $height:
 The map height, expressed in css units.
 
-Roadmap
--------
+####Roadmap
 
-* Better UI for managing maps
-* Move static & procedural API functions into Leaflet Services
-* Purge of not working / useless leaflet_views views classes
-* Better documentation
+* Better UI for managing maps: further functionalities for the Leaflet Map 
+Formatter and Leaflet Views and integration with Leaflet library API
+* Review & Purge of not working / useless leaflet_views views classes
+* Update documentation
 
-Authors/Credits
----------------
+####Authors/Credits
 
 * [levelos](http://drupal.org/user/54135)
 * [pvhee](http://drupal.org/user/108811)

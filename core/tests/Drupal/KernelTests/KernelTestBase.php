@@ -251,7 +251,7 @@ abstract class KernelTestBase extends TestCase implements ServiceProviderInterfa
    * Should not be called by tests. Only visible for DrupalKernel integration
    * tests.
    *
-   * @see \Drupal\system\Tests\DrupalKernel\DrupalKernelTest
+   * @see \Drupal\KernelTests\Core\DrupalKernel\DrupalKernelTest
    * @internal
    */
   protected function bootEnvironment() {
@@ -1027,7 +1027,7 @@ abstract class KernelTestBase extends TestCase implements ServiceProviderInterfa
    * Test authors should follow the provided instructions and adjust their tests
    * accordingly.
    *
-   * @deprecated in Drupal 8.0.x, will be removed before Drupal 8.2.0.
+   * @deprecated in Drupal 8.0.0, will be removed before Drupal 9.0.0.
    */
   public function __get($name) {
     if (in_array($name, [

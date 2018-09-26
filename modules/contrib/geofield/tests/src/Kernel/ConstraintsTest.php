@@ -4,6 +4,7 @@ namespace Drupal\Tests\geofield\Kernel;
 
 use Drupal\geofield\Plugin\Validation\Constraint\GeoConstraint;
 use Drupal\geofield\Plugin\Validation\Constraint\GeoConstraintValidator;
+use Drupal\geofield\GeoPHP\GeoPHPWrapper;
 use Drupal\KernelTests\KernelTestBase;
 
 /**
@@ -47,7 +48,8 @@ class ConstraintsTest extends KernelTestBase {
         ->method('addViolation');
     }
 
-    $validator = new GeoConstraintValidator();
+    $geophp_wrapper = new GeoPHPWrapper();
+    $validator = new GeoConstraintValidator($geophp_wrapper);
     $validator->initialize($execution_context);
 
     $validator->validate($coordinates, $constraint);

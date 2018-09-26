@@ -54,15 +54,15 @@ abstract class FieldStateBase extends PluginBase implements FieldStateInterface,
   /**
    * {@inheritdoc}
    */
-  public function applyState(array &$states, FormStateInterface $form_state, array $context, array $element) {
+  public function applyState(array &$states, FormStateInterface $form_state, array $context, array $element, array $parents = NULL) {
     $target_field = $form_state->getFormObject()
       ->getFormDisplay($form_state)
       ->getComponent($this->configuration['target']);
 
     // If dealing with a field on an Inline Entity Form or a Field Collection
     // have to include the field parents in the selector.
-    if (!empty($element['#field_parents'])) {
-      $target = array_shift($element['#field_parents']) . '[' . implode('][', $element['#field_parents']) . '][' . $this->configuration['target'] . ']';
+    if (!empty($parents)) {
+      $target = array_shift($parents) . '[' . implode('][', $parents) . '][' . $this->configuration['target'] . ']';
     }
     else {
       $target = $this->configuration['target'];
@@ -77,7 +77,7 @@ abstract class FieldStateBase extends PluginBase implements FieldStateInterface,
         break;
     }
 
-    $states[$this->pluginDefinition['id']] = [
+    $states[$this->pluginDefinition['id']][] = [
       $selector => [
         $this->configuration['comparison'] => $this->configuration['value'],
       ],
@@ -114,11 +114,11 @@ abstract class FieldStateBase extends PluginBase implements FieldStateInterface,
    * {@inheritdoc}
    */
   public function getConfiguration() {
-    return array(
+    return [
       'uuid' => $this->getUuid(),
       'id' => $this->getPluginId(),
       'data' => $this->configuration,
-    );
+    ];
   }
 
   /**
@@ -150,6 +150,7 @@ abstract class FieldStateBase extends PluginBase implements FieldStateInterface,
     }
     return $form;
   }
+
   /**
    * {@inheritdoc}
    */
@@ -163,7 +164,7 @@ abstract class FieldStateBase extends PluginBase implements FieldStateInterface,
    * {@inheritdoc}
    */
   public function calculateDependencies() {
-    return array();
+    return [];
   }
 
   /**
@@ -225,9 +226,10 @@ abstract class FieldStateBase extends PluginBase implements FieldStateInterface,
     $form['value'] = [
       '#type' => 'textfield',
       '#title' => t('Value'),
+      '#default_value' => isset($this->configuration['value']) ? $this->configuration['value'] : '',
       '#states' => [
         'visible' => [
-          ':input[name$="[comparison]"]' => ['value' => 'value'],
+          'select[name$="[comparison]"]' => ['value' => 'value'],
         ],
       ],
     ];

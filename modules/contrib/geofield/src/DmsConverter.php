@@ -13,8 +13,8 @@ class DmsConverter implements DmsConverterInterface {
   public static function dmsToDecimal(DmsPoint $point) {
     $lon_data = $point->getLon();
     $lat_data = $point->getLat();
-    $lon = $lon_data['degrees'] + ($lon_data['minutes'] / 60) + ($lon_data['seconds'] / 3600);
-    $lat = $lat_data['degrees'] + ($lat_data['minutes'] / 60) + ($lat_data['seconds'] / 3600);
+    $lon = round($lon_data['degrees'] + ($lon_data['minutes'] / 60) + ($lon_data['seconds'] / 3600), 10);
+    $lat = round($lat_data['degrees'] + ($lat_data['minutes'] / 60) + ($lat_data['seconds'] / 3600), 10);
 
     $lon = ($lon_data['orientation'] == 'W') ? (-1 * $lon) : $lon;
     $lat = ($lat_data['orientation'] == 'S') ? (-1 * $lat) : $lat;

@@ -94,11 +94,11 @@ function chosen_pre_render_select($element) {
     }
   }
   elseif (isset($element['#attributes']['class']) && is_array($element['#attributes']['class'])) {
-    if (array_intersect($element['#attributes']['class'], array('chosen-disable'))) {
+    if (array_intersect($element['#attributes']['class'], ['chosen-disable'])) {
       // Element has opted-out of Chosen. Do not add the library now.
       return $element;
     }
-    elseif (array_intersect($element['#attributes']['class'], array('chosen-enable'))) {
+    elseif (array_intersect($element['#attributes']['class'], ['chosen-enable'])) {
       // Element has opted-in for Chosen, ensure the library gets added.
     }
   }
@@ -146,7 +146,7 @@ function chosen_attach_library(array &$element) {
 
   $css_disabled_themes = $chosen_conf->get('disabled_themes');
   if (empty($css_disabled_themes)) {
-    $css_disabled_themes = array();
+    $css_disabled_themes = [];
   }
 
   // Only add the Chosen CSS if it is not disabled for the active theme.
@@ -155,7 +155,7 @@ function chosen_attach_library(array &$element) {
     $element['#attached']['library'][] = 'chosen_lib/chosen.css';
   }
 
-  $options = array(
+  $options = [
     'disable_search' => (bool) $chosen_conf->get('disable_search'),
     'disable_search_threshold' => (int) $chosen_conf->get('disable_search_threshold'),
     'allow_single_deselect' => (bool) $chosen_conf->get('allow_single_deselect'),
@@ -164,15 +164,15 @@ function chosen_attach_library(array &$element) {
     'placeholder_text_single' => $chosen_conf->get('placeholder_text_single'),
     'no_results_text' => $chosen_conf->get('no_results_text'),
     'inherit_select_classes' => TRUE,
-  );
+  ];
 
-  $element['#attached']['drupalSettings']['chosen'] = array(
+  $element['#attached']['drupalSettings']['chosen'] = [
     'selector' => $chosen_conf->get('jquery_selector'),
     'minimum_single' => (int) $chosen_conf->get('minimum_single'),
     'minimum_multiple' => (int) $chosen_conf->get('minimum_multiple'),
     'minimum_width' => (int) $chosen_conf->get('minimum_width'),
     'options' => $options,
-  );
+  ];
 }
 
 /**

@@ -4,8 +4,8 @@ description: An API to geocode and reverse geocode data into other GIS data type
 # core: 8.x
 configure: geocoder.settings
 
-# Information added by Drupal.org packaging script on 2018-01-23
-version: '8.x-2.0-beta2'
+# Information added by Drupal.org packaging script on 2018-08-10
+version: '8.x-2.0-beta5'
 core: '8.x'
 project: 'geocoder'
-datestamp: 1516738693
+datestamp: 1533910985

@@ -399,7 +399,7 @@ function views_send_confirm_form(&$form, &$form_state, $view) {
   );
   if (VIEWS_SEND_MIMEMAIL && !empty($configuration['views_send_attachments']) && Drupal::currentUser()->hasPermission('attachments with views_send')) {
     foreach ($configuration['views_send_attachments'] as $attachment) {
-      $attachments[] = Html::escape($attachment['filename']);
+      $attachments[] = Html::escape($attachment->getFilename());
     }
     $form['attachments'] = array(
       '#type' => 'item',
@@ -554,6 +554,7 @@ function views_send_queue_mail($params, $selected_rows, $view) {
       $message['to_mail'] = $from_mail;
       $operations[] = array('views_send_batch_deliver', array($message, $plain_format, $attachments));
     }
+    $operations[] = array('views_send_remove_uploaded', array($attachments));
 
     $batch = array(
       'operations' => $operations,
@@ -571,6 +572,7 @@ function views_send_queue_mail($params, $selected_rows, $view) {
       $message['to_mail'] = $from_mail;
       db_insert('views_send_spool')->fields($message)->execute();
     }
+    views_send_remove_uploaded($attachments);
 
     drupal_set_message(
       \Drupal::translation()->formatPlural(count($selected_rows), '1 message added to the spool.', '@count messages added to the spool.')
@@ -788,7 +790,17 @@ function _views_send_prepare_mail(&$message, $plain_format=TRUE, $attachments=ar
   $params['headers'] = $headers;
 
   if (VIEWS_SEND_MIMEMAIL) {
-    $params['attachments'] = $attachments;
+    // Mimemail and probably other modules, still don't expect the attachment to be
+    // a File entity, so we convert it to an array. (Attachments currently don't work
+    // at all with Swiftmailer because of design flaw - see issue #2841663.)
+    $params['attachments'] = [];
+    foreach ($attachments as $attachment) {
+      $params['attachments'][] = [
+        'filepath' => $attachment->getFileUri(),
+        'filename' => $attachment->getFilename(),
+        'filemime' => $attachment->getMimeType()
+      ];
+    }
     if ($plain_format) {
       // Tell Mimemail module that this is a plain text message as HTML is the default.
       $params['plain'] = TRUE;
@@ -876,6 +888,17 @@ function views_send_batch_deliver_finished($success, $results, $operations) {
     foreach ($results as $result) {
       drupal_set_message($result);
     }
+  }
+}
+
+/**
+ * Remove uploaded files.
+ *
+ * @param $attachments: An array with file entities (coming from file_save_upload).
+ */
+function views_send_remove_uploaded($attachments) {
+  foreach ($attachments as $attachment) {
+    $attachment->delete();
   }
 }
 

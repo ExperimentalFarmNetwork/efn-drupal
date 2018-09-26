@@ -11,6 +11,8 @@ use Drupal\migrate\Plugin\MigrationInterface;
  *   type_map = {
  *     "nodereference" = "entity_reference",
  *   },
+ *   source_module = "nodereference",
+ *   destination_module = "core",
  * )
  */
 class NodeReference extends FieldPluginBase {
@@ -24,8 +26,7 @@ class NodeReference extends FieldPluginBase {
       'source' => $field_name,
       'process' => [
         'target_id' => [
-          'plugin' => 'migration_lookup',
-          'migration' => 'd6_node',
+          'plugin' => 'get',
           'source' => 'nid',
         ],
       ],

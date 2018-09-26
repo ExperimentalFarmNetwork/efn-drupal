@@ -8,9 +8,14 @@
           var $container = $(this);
 
           // If the attached context contains any leaflet maps, make sure we have a Drupal.leaflet_widget object.
-          if ($container.data('leaflet') == undefined) {
+          if ($container.data('leaflet') === undefined) {
             $container.data('leaflet', new Drupal.Leaflet(L.DomUtil.get(data.mapId), data.mapId, data.map));
-            $container.data('leaflet').add_features(data.features, true);
+            if (data.features.length > 0) {
+              $container.data('leaflet').add_features(data.features, true);
+            }
+
+            // Set map position features.
+            $container.data('leaflet').fitbounds();
 
             // Add the leaflet map to our settings object to make it accessible
             data.lMap = $container.data('leaflet').lMap;
@@ -18,15 +23,11 @@
           else {
             // If we already had a map instance, add new features.
             // @todo Does this work? Needs testing.
-            if (data.features != undefined) {
+            if (data.features !== undefined) {
               $container.data('leaflet').add_features(data.features);
             }
           }
         });
-        // Destroy features so that an AJAX reload does not get parts of the old set.
-        // Required when the View has "Use AJAX" set to Yes.
-        // @todo Is this still necessary? Needs testing.
-        data.features = null;
       });
     }
   };
@@ -156,9 +157,6 @@
       $(document).trigger('leaflet.feature', [lFeature, feature, this]);
     }
 
-    // Fit bounds after adding features.
-    this.fitbounds();
-
     // Allow plugins to do things after features have been added.
     $(document).trigger('leaflet.features', [initial || false, this])
   };
@@ -255,6 +253,9 @@
     if (options.shadowAnchor) {
       icon.options.shadowAnchor = new L.Point(parseInt(options.shadowAnchor.x), parseInt(options.shadowAnchor.y));
     }
+    if (options.className) {
+      icon.options.className = options.className;
+    }
 
     return icon;
   };
@@ -264,12 +265,14 @@
     this.bounds.push(latLng);
     var lMarker;
 
+    var tooltip = marker.label ? marker.label.replace(/<[^>]*>/g, '').trim() : '';
+
     if (marker.icon) {
       var icon = this.create_icon(marker.icon);
-      lMarker = new L.Marker(latLng, {icon: icon});
+      lMarker = new L.Marker(latLng, {icon: icon, title: tooltip});
     }
     else {
-      lMarker = new L.Marker(latLng);
+      lMarker = new L.Marker(latLng, {title: tooltip});
     }
     return lMarker;
   };
@@ -317,35 +320,39 @@
   Drupal.Leaflet.prototype.create_json = function (json) {
     lJSON = new L.GeoJSON();
 
-    lJSON.on('featureparse', function (e) {
-      e.layer.bindPopup(e.properties.popup);
-
-      for (var layer_id in e.layer._layers) {
-        for (var i in e.layer._layers[layer_id]._latlngs) {
-          Drupal.Leaflet.bounds.push(e.layer._layers[layer_id]._latlngs[i]);
+    lJSON.options.onEachFeature = function(feature, layer){
+      for (var layer_id in layer._layers) {
+        for (var i in layer._layers[layer_id]._latlngs) {
+          Drupal.Leaflet.bounds.push(layer._layers[layer_id]._latlngs[i]);
         }
       }
-
-      if (e.properties.style) {
-        e.layer.setStyle(e.properties.style);
+      if (feature.properties.style) {
+        layer.setStyle(feature.properties.style);
       }
-
-      if (e.properties.leaflet_id) {
-        e.layer._leaflet_id = e.properties.leaflet_id;
+      if (feature.properties.leaflet_id) {
+        layer._leaflet_id = feature.properties.leaflet_id;
       }
-    });
+      if (feature.properties.popup) {
+        layer.bindPopup(feature.properties.popup);
+      }
+    };
 
     lJSON.addData(json);
     return lJSON;
   };
 
+  // Set Map position, fitting Bounds in case of more than one feature
+  // @NOTE: This method used by Leaflet Markecluster module (don't remove/rename)
   Drupal.Leaflet.prototype.fitbounds = function () {
-    if (this.bounds.length > 0) {
+    // Fit Bounds if both them and features exist, and the Map Position in not forced.
+    if (!this.settings.map_position_force && this.bounds.length > 0) {
       this.lMap.fitBounds(new L.LatLngBounds(this.bounds));
-    }
-    // If we have provided a zoom level, then use it after fitting bounds.
-    if (this.settings.zoom) {
-      this.lMap.setZoom(this.settings.zoom);
+
+      // In case of single result use the custom Map Zoom set.
+      if (this.bounds.length === 1 && this.settings.zoom) {
+        this.lMap.setZoom(this.settings.zoom);
+      }
+
     }
   };
 

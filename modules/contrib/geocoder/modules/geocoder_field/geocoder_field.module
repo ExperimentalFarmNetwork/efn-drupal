@@ -11,6 +11,7 @@ use Drupal\Core\Field\FieldConfigInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Form\FormState;
 use Drupal\Core\Entity\ContentEntityFormInterface;
+use Drupal\Core\Locale\CountryManager;
 
 /**
  * Implements hook_form_alter().
@@ -81,6 +82,15 @@ function geocoder_field_form_field_config_edit_form_alter(array &$form, FormStat
  *   The form state object.
  */
 function geocoder_field_field_config_edit_form_validate(array $form, FormStateInterface $form_state) {
+  // Don't store any settings for this field if it's not configured to use
+  // geocoding.
+  $third_party_settings = $form_state->getValue('third_party_settings');
+  if ($third_party_settings['geocoder_field']['method'] == 'none') {
+    unset($third_party_settings['geocoder_field']);
+    $form_state->setValue('third_party_settings', $third_party_settings);
+    return;
+  }
+
   // Clean-up and normalize the plugin list.
   $trail = ['third_party_settings', 'geocoder_field', 'plugins'];
   $plugins = array_keys(
@@ -128,14 +138,7 @@ function geocoder_field_entity_presave(EntityInterface $entity) {
   $dumper_manager = \Drupal::service('plugin.manager.geocoder.dumper');
 
   $geocoder_config = \Drupal::configFactory()->get('geocoder.settings');
-  $geocoder_plugins_options = $geocoder_config->get('plugins_options');
-
-  // Eventually converts Plugins Options in Beta1 Json format.
-  // @TODO: This should be removed before the stable release 8.x-2.0.
-  if (is_string($geocoder_plugins_options)) {
-    $provider_plugin_manager = \Drupal::service('plugin.manager.geocoder.provider');
-    $provider_plugin_manager->conditionalGetJsonPluginsOptions($geocoder_plugins_options);
-  }
+  $geocoder_plugins_options = (array) $geocoder_config->get('plugins_options');
 
   // Reorder the list of fields to be Geocoded | Reverse Geocoded.
   $order_geocoder_fields = $preprocessor_manager->getOrderedGeocodeFields($entity);
@@ -156,23 +159,39 @@ function geocoder_field_entity_presave(EntityInterface $entity) {
 
     switch ($geocoder['method']) {
       case 'source':
-        $remote_field = $entity->get($geocoder['geocode_field']);
+        /* @var Drupal\Core\Field\FieldItemListInterface $remote_field */
+        $remote_field = isset($geocoder['geocode_field']) ? $entity->get($geocoder['geocode_field']) : NULL;
+        if (isset($entity->original) && isset($geocoder['geocode_field'])) {
+          /* @var Drupal\Core\Field\FieldItemListInterface $original_field */
+          $original_field = $entity->original->get($geocoder['geocode_field']);
+        }
         break;
 
       case 'destination':
-        $remote_field = $entity->get($geocoder['reverse_geocode_field']);
+        $remote_field = isset($geocoder['reverse_geocode_field']) ? $entity->get($geocoder['reverse_geocode_field']) : NULL;
+        if (isset($entity->original) && isset($geocoder['reverse_geocode_field'])) {
+          /* @var Drupal\Core\Field\FieldItemListInterface $original_field */
+          $original_field = $entity->original->get($geocoder['reverse_geocode_field']);
+        }
         break;
 
       default:
     }
 
     if (isset($remote_field)) {
-      if (empty($remote_field->getValue()) && $geocoder['failure']['handling'] == 'preserve') {
-        return;
-      }
 
-      // Pre-process field.
+      // First we need to Pre-process field.
+      // Note: in case of Address module integration this creates the
+      // value as formatted address.
       $preprocessor_manager->preprocess($remote_field);
+
+      // Skip any action if:
+      // remote value is null and the field value should be preserved
+      // geofield has value and remote field value has not changed.
+      if ((empty($remote_field->getValue()) && $geocoder['failure']['handling'] == 'preserve') ||
+      (isset($original_field) && !$entity->get($field_name)->isEmpty() && $remote_field->getValue() == $original_field->getValue())) {
+        continue;
+      }
 
       /** @var \Drupal\geocoder\DumperInterface|\Drupal\Component\Plugin\PluginInspectionInterface $dumper */
       $dumper = $dumper_manager->createInstance($geocoder['dumper']);
@@ -181,11 +200,16 @@ function geocoder_field_entity_presave(EntityInterface $entity) {
       $failure_status_message = '';
 
       foreach ($remote_field->getValue() as $delta => $value) {
+
+        if ($remote_field->getFieldDefinition()->getType() == 'address_country') {
+          $value['value'] = CountryManager::getStandardList()[$value['value']];
+        }
+
         /* @var \Geocoder\Model\AddressCollection $address_collection */
         switch ($geocoder['method']) {
           case 'source':
-            $failure_status_message = t("Unable to geocode '@text'.", ['@text' => $value['value']]);
-            $address_collection = \Drupal::service('geocoder')->geocode($value['value'], $geocoder['plugins'], $geocoder_plugins_options);
+            $failure_status_message = t("Unable to geocode '@text'.", ['@text' => isset($value['value']) ? $value['value'] : '']);
+            $address_collection = isset($value['value']) ? \Drupal::service('geocoder')->geocode($value['value'], $geocoder['plugins'], $geocoder_plugins_options) : NULL;
             break;
 
           case 'destination':
@@ -221,6 +245,10 @@ function geocoder_field_entity_presave(EntityInterface $entity) {
               // string result into array to comply to Address entity->set Api.
               if ($field_config->getType() == 'address' && $dumper->getPluginId() == 'geojson') {
                 $result[$delta] = $dumper_manager->setAddressFieldFromGeojson($result[$delta]);
+              }
+              // Or an Address Country field is being processed ...
+              if ($field_config->getType() === 'address_country' && $dumper->getPluginId() === 'geojson') {
+                $result[$delta] = $dumper_manager->setCountryFromGeojson($result[$delta]);
               }
           }
           continue;

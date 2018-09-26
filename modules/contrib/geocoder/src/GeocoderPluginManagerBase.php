@@ -19,7 +19,6 @@ abstract class GeocoderPluginManagerBase extends DefaultPluginManager {
     "string_long",
     "text",
     "text_long",
-    "address",
     "text_with_summary",
   ];
 

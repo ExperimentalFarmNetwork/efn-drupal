@@ -12,7 +12,7 @@ use Drupal\Core\Link;
  * Implements hook_requirements().
  */
 function chosen_requirements($phase) {
-  $requirements = array();
+  $requirements = [];
 
   switch ($phase) {
     case 'runtime':
@@ -23,19 +23,19 @@ function chosen_requirements($phase) {
         $url = Url::fromUri(CHOSEN_WEBSITE_URL);
         $link = Link::fromTextAndUrl(t('Chosen JavaScript file'), $url)->toString();
 
-        $requirements['chosen_js'] = array(
+        $requirements['chosen_js'] = [
           'title' => t('Chosen JavaScript file'),
           'value' => t('Not Installed'),
           'severity' => REQUIREMENT_ERROR,
-          'description' => t('You need to <a href="@url">download</a> the @chosen and extract the entire contents of the archive into the %path directory in your Drupal installation directory.', array('@chosen' => $link, '%path' => 'libraries/chosen', '@url' => 'https://github.com/harvesthq/chosen/releases/latest')),
-        );
+          'description' => t('You need to <a href="@url">download</a> the @chosen and extract the entire contents of the archive into the %path directory in your Drupal installation directory.', ['@chosen' => $link, '%path' => 'libraries/chosen', '@url' => 'https://github.com/harvesthq/chosen/releases/latest']),
+        ];
       }
       else {
-        $requirements['chosen_js'] = array(
+        $requirements['chosen_js'] = [
           'title' => t('Chosen JavaScript file'),
           'severity' => REQUIREMENT_OK,
           'value' => t('Installed'),
-        );
+        ];
       }
       break;
   }

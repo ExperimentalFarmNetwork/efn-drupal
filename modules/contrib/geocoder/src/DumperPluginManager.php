@@ -48,14 +48,7 @@ class DumperPluginManager extends GeocoderPluginManagerBase {
   public function setAddressFieldFromGeojson($geojson) {
     $geojson_array = Json::decode($geojson);
 
-    $country_code = isset($geojson_array['properties']['countryCode']) ? strtoupper(substr($geojson_array['properties']['countryCode'], 0, 2)) : NULL;
-
-    // Some provider (like MapQuest) might not return the countryCode but just
-    // the country name, so try to convert it into countryCode, as it seems to
-    // be mandatory in Address Field Entity API.
-    if (!isset($country_code)) {
-      $country_code = isset($geojson_array['properties']['country']) ? strtoupper(substr($geojson_array['properties']['country'], 0, 2)) : '';
-    }
+    $country_code = $this->setCountryFromGeojson($geojson);
 
     $geojson_array['properties'] += [
       'streetName' => '',
@@ -69,6 +62,30 @@ class DumperPluginManager extends GeocoderPluginManagerBase {
       'postal_code' => $geojson_array['properties']['postalCode'],
       'locality' => $geojson_array['properties']['locality'],
     ];
+  }
+
+  /**
+   * Define a Country value from a Geojson string.
+   *
+   * @param string $geojson
+   *   The GeoJson place string.
+   *
+   * @return string
+   *   A country code.
+   */
+  public function setCountryFromGeojson($geojson) {
+    $geojson_array = Json::decode($geojson);
+
+    $country_code = isset($geojson_array['properties']['countryCode']) ? strtoupper(substr($geojson_array['properties']['countryCode'], 0, 2)) : NULL;
+
+    // Some provider (like MapQuest) might not return the countryCode but just
+    // the country name, so try to convert it into countryCode, as it seems to
+    // be mandatory in Address Field Entity API.
+    if (!isset($country_code)) {
+      $country_code = isset($geojson_array['properties']['country']) ? strtoupper(substr($geojson_array['properties']['country'], 0, 2)) : '';
+    }
+
+    return $country_code;
   }
 
   /**

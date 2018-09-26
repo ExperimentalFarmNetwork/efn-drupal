@@ -33,6 +33,28 @@ geocoder.settings.plugins.googlemaps:
       type: boolean
       label: 'Use SSL'
 
+geocoder.settings.plugins.googlemaps_business:
+  type: mapping
+  label: 'GoogleMaps for Business arguments'
+  mapping:
+    clientId:
+      type: string
+      label: 'The client ID'
+      description: '<a href="https://developers.google.com/maps/documentation/javascript/get-api-key">Get a valid Google Maps Client ID</a>'
+    privateKey:
+      type: string
+      label: 'The private key'
+      description: '<a href="https://developers.google.com/maps/documentation/javascript/get-api-key#client-id">Get a valid Google Maps Private Key</a>'
+    locale:
+      type: string
+      label: 'The locale'
+    region:
+      type: string
+      label: 'The region'
+    usessl:
+      type: boolean
+      label: 'Use SSL'
+
 geocoder.settings.plugins.arcgisonline:
   type: mapping
   label: 'ArcGISOnline arguments'
@@ -137,3 +159,48 @@ geocoder.settings.plugins.tomtom:
     locale:
       type: string
       label: 'The locale'
+
+geocoder.settings.plugins.file:
+  type: sequence
+  label: 'File arguments'
+  sequence:
+
+geocoder.settings.plugins.freegeoip:
+  type: sequence
+  label: 'Freegeoip arguments'
+  sequence:
+
+geocoder.settings.plugins.geoip:
+  type: sequence
+  label: 'Geoip arguments'
+  sequence:
+
+geocoder.settings.plugins.geoplugin:
+  type: sequence
+  label: 'Geoplugin arguments'
+  sequence:
+
+geocoder.settings.plugins.gpxfile:
+  type: sequence
+  label: 'Gpxfile arguments'
+  sequence:
+
+geocoder.settings.plugins.hostip:
+  type: sequence
+  label: 'Hostip arguments'
+  sequence:
+
+geocoder.settings.plugins.openstreetmap:
+  type: sequence
+  label: 'Openstreetmap arguments'
+  sequence:
+
+geocoder.settings.plugins.random:
+  type: sequence
+  label: 'Random arguments'
+  sequence:
+
+geocoder.settings.plugins.yandex:
+  type: sequence
+  label: 'Yandex arguments'
+  sequence:

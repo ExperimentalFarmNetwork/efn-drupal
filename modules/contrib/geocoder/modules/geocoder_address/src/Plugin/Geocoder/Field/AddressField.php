@@ -13,7 +13,8 @@ use Drupal\geocoder_field\Plugin\Geocoder\Field\DefaultField;
  *   id = "address_field",
  *   label = @Translation("Address field plugin"),
  *   field_types = {
- *     "address"
+ *     "address",
+ *     "address_country"
  *   }
  * )
  */

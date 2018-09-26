@@ -157,9 +157,7 @@ class LeafletMarker extends RowPluginBase implements ContainerFactoryPluginInter
   public function init(ViewExecutable $view, DisplayPluginBase $display, array &$options = NULL) {
     parent::init($view, $display, $options);
     // First base table should correspond to main entity type.
-    $base_table = key($this->view->getBaseTables());
-    $views_definition = $this->viewsData->get($base_table);
-    $this->entityTypeId = $views_definition['table']['entity type'];
+    $this->entityTypeId = $view->getBaseEntityType()->id();
   }
 
   /**
@@ -296,7 +294,7 @@ class LeafletMarker extends RowPluginBase implements ContainerFactoryPluginInter
     if ($this->options['description_field'] === '#rendered_entity' && is_object($row->_entity)) {
       $entity = $row->_entity;
       $build = $this->entityManager->getViewBuilder($entity->getEntityTypeId())->view($entity, $this->options['view_mode'], $entity->language());
-      $popup_body = $this->renderer->renderRoot($build);
+      $popup_body = $this->renderer->renderPlain($build);
     }
     // Normal rendering via fields.
     elseif ($this->options['description_field']) {

@@ -112,6 +112,9 @@ class GeofieldItemTest extends FieldKernelTestBase {
       'field_storage' => $this->fieldStorage,
       'bundle' => $entity_type,
       'description' => 'Description for geofield_field',
+      'settings' => [
+        'backend' => 'geofield_backend_default',
+      ],
       'required' => TRUE,
     ]);
     $this->field->save();

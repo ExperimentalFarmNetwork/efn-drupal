@@ -11,10 +11,14 @@
 
 namespace Symfony\Component\ClassLoader;
 
+@trigger_error('The '.__NAMESPACE__.'\ClassMapGenerator class is deprecated since Symfony 3.3 and will be removed in 4.0. Use Composer instead.', E_USER_DEPRECATED);
+
 /**
  * ClassMapGenerator.
  *
  * @author Gyula Sallai <salla016@gmail.com>
+ *
+ * @deprecated since version 3.3, to be removed in 4.0.
  */
 class ClassMapGenerator
 {
@@ -45,7 +49,7 @@ class ClassMapGenerator
      */
     public static function createMap($dir)
     {
-        if (is_string($dir)) {
+        if (\is_string($dir)) {
             $dir = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($dir));
         }
 
@@ -58,7 +62,7 @@ class ClassMapGenerator
 
             $path = $file->getRealPath() ?: $file->getPathname();
 
-            if (pathinfo($path, PATHINFO_EXTENSION) !== 'php') {
+            if ('php' !== pathinfo($path, PATHINFO_EXTENSION)) {
                 continue;
             }
 
@@ -106,7 +110,7 @@ class ClassMapGenerator
                     $namespace = '';
                     // If there is a namespace, extract it
                     while (isset($tokens[++$i][1])) {
-                        if (in_array($tokens[$i][0], array(T_STRING, T_NS_SEPARATOR))) {
+                        if (\in_array($tokens[$i][0], array(T_STRING, T_NS_SEPARATOR))) {
                             $namespace .= $tokens[$i][1];
                         }
                     }
@@ -125,7 +129,7 @@ class ClassMapGenerator
                         if (T_DOUBLE_COLON === $tokens[$j][0]) {
                             $isClassConstant = true;
                             break;
-                        } elseif (!in_array($tokens[$j][0], array(T_WHITESPACE, T_DOC_COMMENT, T_COMMENT))) {
+                        } elseif (!\in_array($tokens[$j][0], array(T_WHITESPACE, T_DOC_COMMENT, T_COMMENT))) {
                             break;
                         }
                     }

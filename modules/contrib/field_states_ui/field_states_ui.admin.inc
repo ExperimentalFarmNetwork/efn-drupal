@@ -66,7 +66,7 @@ function field_states_ui_settings_form(WidgetInterface $plugin, FieldDefinitionI
             '#submit' => ['field_states_ui_submit'],
             '#field_name' => $field_name,
             '#key' => $key,
-            '#name' => 'edit-'.$key,
+            '#name' => 'edit-' . $key,
           ],
           'delete' => [
             '#type' => 'submit',
@@ -75,7 +75,7 @@ function field_states_ui_settings_form(WidgetInterface $plugin, FieldDefinitionI
             '#submit' => ['field_states_ui_submit'],
             '#field_name' => $field_name,
             '#key' => $key,
-            '#name' => 'delete-'.$key,
+            '#name' => 'delete-' . $key,
           ],
         ],
       ];
@@ -157,7 +157,7 @@ function field_states_ui_settings_form(WidgetInterface $plugin, FieldDefinitionI
     ];
   }
 
-  //Provide form elements to select a new form state type.
+  // Provide form elements to select a new form state type.
   else {
     $field_state_options = [];
     $field_states = $field_state_manager->getDefinitions();

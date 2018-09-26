@@ -6,9 +6,11 @@ package: Field types
 config: entity.address_format.collection
 dependencies:
   - drupal:field
+test_dependencies:
+ - token:token
 
-# Information added by Drupal.org packaging script on 2017-11-22
-version: '8.x-1.3'
+# Information added by Drupal.org packaging script on 2018-05-23
+version: '8.x-1.4'
 core: '8.x'
 project: 'address'
-datestamp: 1511382787
+datestamp: 1527081787

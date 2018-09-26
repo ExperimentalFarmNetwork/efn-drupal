@@ -5,7 +5,7 @@ namespace Drupal\field_states_ui\Plugin\FieldState;
 use Drupal\field_states_ui\FieldStateBase;
 
 /**
- * Control checkbox field widget check state in relation to other fields dynamically.
+ * Controls checkbox field widget unchecked state in relation to other fields.
  *
  * @FieldState(
  *   id = "unchecked",

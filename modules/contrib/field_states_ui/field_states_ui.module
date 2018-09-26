@@ -36,12 +36,11 @@ function field_states_ui_field_widget_form_alter(&$element, FormStateInterface $
 }
 
 /**
- * Implements hook_field_widget_multiple_form_alter().
+ * Implements hook_field_widget_multivalue_form_alter().
  */
-function field_states_ui_field_widget_multiple_form_alter(&$elements, FormStateInterface $form_state, $context) {
+function field_states_ui_field_widget_multivalue_form_alter(&$elements, FormStateInterface $form_state, $context) {
   Drupal::service('module_handler')->loadInclude('field_states_ui', 'inc', 'field_states_ui.form');
-  $context['multiple'] = TRUE;
-  field_states_ui_field_widget_alter($elements, $form_state, $context);
+  field_states_ui_field_widget_alter($elements, $form_state, $context, TRUE);
 }
 
 /**

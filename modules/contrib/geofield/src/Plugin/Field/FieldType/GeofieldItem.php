@@ -33,6 +33,15 @@ class GeofieldItem extends FieldItemBase {
   /**
    * {@inheritdoc}
    */
+  public static function defaultFieldSettings() {
+    return [
+      'backend' => 'geofield_backend_default',
+    ] + parent::defaultFieldSettings();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public static function schema(FieldStorageDefinitionInterface $field) {
     $backend_manager = \Drupal::service('plugin.manager.geofield_backend');
     $backend_plugin = NULL;

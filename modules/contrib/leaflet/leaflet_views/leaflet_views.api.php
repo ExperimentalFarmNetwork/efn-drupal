@@ -6,7 +6,7 @@
  */
 
 use Drupal\views\ResultRow;
-use Drupal\leaflet_views\Plugin\views\row\LeafletMarker;
+use Drupal\views\Plugin\views\row\RowPluginBase;
 use Drupal\leaflet_views\Plugin\views\style\MarkerDefault;
 
 /**
@@ -25,10 +25,11 @@ use Drupal\leaflet_views\Plugin\views\style\MarkerDefault;
  *     for details.
  * @param \Drupal\views\ResultRow $row
  *   The views result row.
- * @param \Drupal\leaflet_views\Plugin\views\row\LeafletMarker $rowPlugin
- *   The row plugin used for rendering the feature.
+ * @param \Drupal\views\Plugin\views\row\RowPluginBase $rowPlugin
+ *   (optional) The row plugin used for rendering the feature.
  */
-function hook_leaflet_views_feature_alter(array &$feature, ResultRow $row, LeafletMarker $rowPlugin) {
+function hook_leaflet_views_feature_alter(array &$feature, ResultRow $row, RowPluginBase $rowPlugin = NULL) {
+
 }
 
 /**

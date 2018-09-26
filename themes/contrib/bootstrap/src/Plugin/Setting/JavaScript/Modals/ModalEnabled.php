@@ -15,7 +15,6 @@ use Drupal\Core\Form\FormStateInterface;
  *   id = "modal_enabled",
  *   type = "checkbox",
  *   title = @Translation("Enable Bootstrap Modals"),
- *   description = @Translation("Enabling this will replace core's jQuery UI Dialog implementations with modals from the Bootstrap Framework."),
  *   defaultValue = 1,
  *   weight = -1,
  *   groups = {

@@ -16,7 +16,7 @@ class ChosenFieldWidgetsTest extends FieldTestBase {
    *
    * @var array
    */
-  public static $modules = array(
+  public static $modules = [
     'node',
     'options',
     'entity_test',
@@ -24,7 +24,7 @@ class ChosenFieldWidgetsTest extends FieldTestBase {
     'field_ui',
     'options_test',
     'chosen_field',
-  );
+  ];
 
   /**
    * A field with cardinality 1 to use in this test class.
@@ -107,17 +107,17 @@ class ChosenFieldWidgetsTest extends FieldTestBase {
       ->save();
 
     // Create an entity.
-    $entity = \Drupal::entityTypeManager()->getStorage('entity_test')->create(array(
+    $entity = \Drupal::entityTypeManager()->getStorage('entity_test')->create([
       'user_id' => 1,
       'name' => $this->randomMachineName(),
-    ));
+    ]);
     $entity->save();
     $entity_init = clone $entity;
 
     // Display form.
     $this->drupalGet('entity_test/manage/' . $entity->id() . '/edit');
     // A required field without any value has a "none" option.
-    $this->assertTrue($this->xpath('//select[@id=:id]//option[@value="_none" and text()=:label]', array(':id' => 'edit-card-1', ':label' => t('- Select a value -'))), 'A non-required select list has a "Select a value" choice.');
+    $this->assertTrue($this->xpath('//select[@id=:id]//option[@value="_none" and text()=:label]', [':id' => 'edit-card-1', ':label' => t('- Select a value -')]), 'A non-required select list has a "Select a value" choice.');
 
     // With no field data, nothing is selected.
     $this->assertNoOptionSelected('edit-card-1', '_none');
@@ -127,19 +127,19 @@ class ChosenFieldWidgetsTest extends FieldTestBase {
     $this->assertRaw('Some dangerous &amp; unescaped markup', 'Option text was properly filtered.');
 
     // Submit form: select invalid 'none' option.
-    $edit = array('card_1' => '_none');
+    $edit = ['card_1' => '_none'];
     $this->drupalPostForm(NULL, $edit, t('Save'));
-    $this->assertRaw(t('@title field is required.', array('@title' => $instance->getName())), 'Cannot save a required field when selecting "none" from the select list.');
+    $this->assertRaw(t('@title field is required.', ['@title' => $instance->getName()]), 'Cannot save a required field when selecting "none" from the select list.');
 
     // Submit form: select first option.
-    $edit = array('card_1' => 0);
+    $edit = ['card_1' => 0];
     $this->drupalPostForm(NULL, $edit, t('Save'));
-    $this->assertFieldValues($entity_init, 'card_1', array(0));
+    $this->assertFieldValues($entity_init, 'card_1', [0]);
 
     // Display form: check that the right options are selected.
     $this->drupalGet('entity_test/manage/' . $entity->id() . '/edit');
     // A required field with a value has no 'none' option.
-    $this->assertFalse($this->xpath('//select[@id=:id]//option[@value="_none"]', array(':id' => 'edit-card-1')), 'A required select list with an actual value has no "none" choice.');
+    $this->assertFalse($this->xpath('//select[@id=:id]//option[@value="_none"]', [':id' => 'edit-card-1']), 'A required select list with an actual value has no "none" choice.');
     $this->assertOptionSelected('edit-card-1', 0);
     $this->assertNoOptionSelected('edit-card-1', 1);
     $this->assertNoOptionSelected('edit-card-1', 2);
@@ -151,11 +151,11 @@ class ChosenFieldWidgetsTest extends FieldTestBase {
     // Display form.
     $this->drupalGet('entity_test/manage/' . $entity->id() . '/edit');
     // A non-required field has a 'none' option.
-    $this->assertTrue($this->xpath('//select[@id=:id]//option[@value="_none" and text()=:label]', array(':id' => 'edit-card-1', ':label' => t('- None -'))), 'A non-required select list has a "None" choice.');
+    $this->assertTrue($this->xpath('//select[@id=:id]//option[@value="_none" and text()=:label]', [':id' => 'edit-card-1', ':label' => t('- None -')]), 'A non-required select list has a "None" choice.');
     // Submit form: Unselect the option.
-    $edit = array('card_1' => '_none');
+    $edit = ['card_1' => '_none'];
     $this->drupalPostForm('entity_test/manage/' . $entity->id() . '/edit', $edit, t('Save'));
-    $this->assertFieldValues($entity_init, 'card_1', array());
+    $this->assertFieldValues($entity_init, 'card_1', []);
 
     // Test optgroups.
     $this->card_1->setSetting('allowed_values', []);
@@ -171,9 +171,9 @@ class ChosenFieldWidgetsTest extends FieldTestBase {
     $this->assertRaw('Group 1', 'Option groups are displayed.');
 
     // Submit form: select first option.
-    $edit = array('card_1' => 0);
+    $edit = ['card_1' => 0];
     $this->drupalPostForm(NULL, $edit, t('Save'));
-    $this->assertFieldValues($entity_init, 'card_1', array(0));
+    $this->assertFieldValues($entity_init, 'card_1', [0]);
 
     // Display form: check that the right options are selected.
     $this->drupalGet('entity_test/manage/' . $entity->id() . '/edit');
@@ -182,9 +182,9 @@ class ChosenFieldWidgetsTest extends FieldTestBase {
     $this->assertNoOptionSelected('edit-card-1', 2);
 
     // Submit form: Unselect the option.
-    $edit = array('card_1' => '_none');
+    $edit = ['card_1' => '_none'];
     $this->drupalPostForm('entity_test/manage/' . $entity->id() . '/edit', $edit, t('Save'));
-    $this->assertFieldValues($entity_init, 'card_1', array());
+    $this->assertFieldValues($entity_init, 'card_1', []);
   }
 
   /**
@@ -205,10 +205,10 @@ class ChosenFieldWidgetsTest extends FieldTestBase {
       ->save();
 
     // Create an entity.
-    $entity = \Drupal::entityTypeManager()->getStorage('entity_test')->create(array(
+    $entity = \Drupal::entityTypeManager()->getStorage('entity_test')->create([
       'user_id' => 1,
       'name' => $this->randomMachineName(),
-    ));
+    ]);
     $entity->save();
     $entity_init = clone $entity;
 
@@ -220,9 +220,9 @@ class ChosenFieldWidgetsTest extends FieldTestBase {
     $this->assertRaw('Some dangerous &amp; unescaped markup', 'Option text was properly filtered.');
 
     // Submit form: select first and third options.
-    $edit = array('card_2[]' => array(0 => 0, 2 => 2));
+    $edit = ['card_2[]' => [0 => 0, 2 => 2]];
     $this->drupalPostForm(NULL, $edit, t('Save'));
-    $this->assertFieldValues($entity_init, 'card_2', array(0, 2));
+    $this->assertFieldValues($entity_init, 'card_2', [0, 2]);
 
     // Display form: check that the right options are selected.
     $this->drupalGet('entity_test/manage/' . $entity->id() . '/edit');
@@ -231,9 +231,9 @@ class ChosenFieldWidgetsTest extends FieldTestBase {
     $this->assertOptionSelected('edit-card-2', 2);
 
     // Submit form: select only first option.
-    $edit = array('card_2[]' => array(0 => 0));
+    $edit = ['card_2[]' => [0 => 0]];
     $this->drupalPostForm(NULL, $edit, t('Save'));
-    $this->assertFieldValues($entity_init, 'card_2', array(0));
+    $this->assertFieldValues($entity_init, 'card_2', [0]);
 
     // Display form: check that the right options are selected.
     $this->drupalGet('entity_test/manage/' . $entity->id() . '/edit');
@@ -242,20 +242,20 @@ class ChosenFieldWidgetsTest extends FieldTestBase {
     $this->assertNoOptionSelected('edit-card-2', 2);
 
     // Submit form: select the three options while the field accepts only 2.
-    $edit = array('card_2[]' => array(0 => 0, 1 => 1, 2 => 2));
+    $edit = ['card_2[]' => [0 => 0, 1 => 1, 2 => 2]];
     $this->drupalPostForm(NULL, $edit, t('Save'));
     $this->assertText('this field cannot hold more than 2 values', 'Validation error was displayed.');
 
     // Submit form: uncheck all options.
-    $edit = array('card_2[]' => array());
+    $edit = ['card_2[]' => []];
     $this->drupalPostForm(NULL, $edit, t('Save'));
-    $this->assertFieldValues($entity_init, 'card_2', array());
+    $this->assertFieldValues($entity_init, 'card_2', []);
 
     // A required select list does not have an empty key.
     $instance->setRequired(TRUE);
     $instance->save();
     $this->drupalGet('entity_test/manage/' . $entity->id() . '/edit');
-    $this->assertFalse($this->xpath('//select[@id=:id]//option[@value=""]', array(':id' => 'edit-card-2')), 'A required select list does not have an empty key.');
+    $this->assertFalse($this->xpath('//select[@id=:id]//option[@value=""]', [':id' => 'edit-card-2']), 'A required select list does not have an empty key.');
 
     // We do not have to test that a required select list with one option is
     // auto-selected because the browser does it for us.
@@ -277,9 +277,9 @@ class ChosenFieldWidgetsTest extends FieldTestBase {
     $this->assertRaw('Group 1', 'Option groups are displayed.');
 
     // Submit form: select first option.
-    $edit = array('card_2[]' => array(0 => 0));
+    $edit = ['card_2[]' => [0 => 0]];
     $this->drupalPostForm(NULL, $edit, t('Save'));
-    $this->assertFieldValues($entity_init, 'card_2', array(0));
+    $this->assertFieldValues($entity_init, 'card_2', [0]);
 
     // Display form: check that the right options are selected.
     $this->drupalGet('entity_test/manage/' . $entity->id() . '/edit');

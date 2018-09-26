@@ -5,7 +5,8 @@ services:
     arguments: ['@plugin.manager.geocoder.provider']
 
   geocoder.http_adapter:
-    class: Ivory\HttpAdapter\CurlHttpAdapter
+    class: Drupal\geocoder\GeocoderHttpAdapter
+    arguments: ['@http_client']
 
   plugin.manager.geocoder.provider:
     class: Drupal\geocoder\ProviderPluginManager

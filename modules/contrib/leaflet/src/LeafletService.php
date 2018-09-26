@@ -5,6 +5,9 @@ namespace Drupal\leaflet;
 use Drupal\geofield\GeoPHP\GeoPHPInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Component\Utility\Html;
+use Drupal\Component\Utility\UrlHelper;
+use Drupal\Core\Url;
+use Drupal\Core\Utility\LinkGeneratorInterface;
 
 /**
  * Provides a  LeafletService class.
@@ -26,19 +29,30 @@ class LeafletService {
   protected $moduleHandler;
 
   /**
+   * The Link generator Service.
+   *
+   * @var \Drupal\Core\Utility\LinkGeneratorInterface
+   */
+  protected $link;
+
+  /**
    * GeofieldMapWidget constructor.
    *
    * @param \Drupal\geofield\GeoPHP\GeoPHPInterface $geophp_wrapper
    *   The geoPhpWrapper.
    * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
    *   The module handler.
+   * @param \Drupal\Core\Utility\LinkGeneratorInterface $link_generator
+   *   The Link Generator service.
    */
   public function __construct(
     GeoPHPInterface $geophp_wrapper,
-    ModuleHandlerInterface $module_handler
+    ModuleHandlerInterface $module_handler,
+    LinkGeneratorInterface $link_generator
   ) {
     $this->geoPhpWrapper = $geophp_wrapper;
     $this->moduleHandler = $module_handler;
+    $this->link = $link_generator;
   }
 
   /**
@@ -176,18 +190,32 @@ class LeafletService {
           break;
 
         case 'multipolygon':
+          $components = [];
+          $tmp = $geom->getComponents();
+          foreach ($tmp as $delta => $polygon) {
+            $polygon_component = $polygon->getComponents();
+            foreach ($polygon_component as $delta => $linestring) {
+              $components[] = $linestring;
+            }
+          }
+          foreach ($components as $key => $component) {
+            $subcomponents = $component->getComponents();
+            foreach ($subcomponents as $subcomponent) {
+              $datum['component'][$key]['points'][] = array(
+                'lat' => $subcomponent->getY(),
+                'lon' => $subcomponent->getX(),
+              );
+            }
+          }
+
+          $data[] = $datum;
+          break;
         case 'multipolyline':
         case 'multilinestring':
           if ($datum['type'] == 'multilinestring') {
             $datum['type'] = 'multipolyline';
           }
-          if ($datum['type'] == 'multipolygon') {
-            $tmp = $geom->getComponents();
-            $components = $tmp[0]->getComponents();
-          }
-          else {
-            $components = $geom->getComponents();
-          }
+          $components = $geom->getComponents();
           foreach ($components as $key => $component) {
             /* @var \GeometryCollection $component */
             $subcomponents = $component->getComponents();
@@ -198,13 +226,45 @@ class LeafletService {
                 'lon' => $subcomponent->getX(),
               ];
             }
-            unset($subcomponent);
           }
           break;
       }
       $data[] = $datum;
     }
     return $data;
+  }
+
+  /**
+   * Pre Process the MapSettings.
+   *
+   * Performs some preprocess on the maps settings before sending to js.
+   *
+   * @param array $map_settings
+   *   The map settings.
+   */
+  public function preProcessMapSettings(array &$map_settings) {
+    // Generate correct Absolute iconUrl & shadowUrl, if not external.
+    if (!empty($map_settings['icon']['iconUrl']) && !UrlHelper::isExternal($map_settings['icon']['iconUrl'])) {
+      $map_settings['icon']['iconUrl'] = Url::fromUri('base:' . $map_settings['icon']['iconUrl'], ['absolute' => TRUE])
+        ->toString();
+    }
+    if (!empty($map_settings['icon']['shadowUrl']) && !UrlHelper::isExternal($map_settings['icon']['shadowUrl'])) {
+      $map_settings['icon']['shadowUrl'] = Url::fromUri('base:' . $map_settings['icon']['shadowUrl'], ['absolute' => TRUE])
+        ->toString();
+    }
+  }
+
+  /**
+   * Leaflet Icon Documentation Link.
+   *
+   * @return \Drupal\Core\GeneratedLink
+   *   The Leaflet Icon Documentation Link.
+   */
+  public function leafletIconDocumentationLink() {
+    return $this->link->generate(t('Leaflet Icon Documentation'), Url::fromUri('https://leafletjs.com/reference-1.3.0.html#icon', [
+      'absolute' => TRUE,
+      'attributes' => ['target' => 'blank'],
+    ]));
   }
 
 }

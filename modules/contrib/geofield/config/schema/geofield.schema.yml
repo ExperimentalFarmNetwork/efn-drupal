@@ -1,17 +1,20 @@
 # Schema for the configuration files of the geofield module.
 
-field.geofield.storage_settings:
+field.storage_settings.geofield:
+  type: mapping
+  label: 'Geofield Settings'
+  mapping:
+    backend:
+      type: string
+      label: 'Backend storage'
+
+field.field_settings.geofield:
   label: 'Geofield settings'
   type: mapping
   mapping:
     backend:
       type: string
       label: 'Backend storage'
-
-field.geofield.field_settings:
-  type: mapping
-  label: 'Geofield settings'
-  mapping: {  }
 
 field.geofield.value:
   type: sequence

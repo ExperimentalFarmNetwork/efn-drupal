@@ -4,8 +4,8 @@ description: 'Provides a user interface for using the States API on form fields.
 # core: 8.x
 package: fields
 
-# Information added by Drupal.org packaging script on 2016-10-27
-version: '8.x-1.0-rc2'
+# Information added by Drupal.org packaging script on 2018-08-28
+version: '8.x-1.0-rc4'
 core: '8.x'
 project: 'field_states_ui'
-datestamp: 1477602711
+datestamp: 1535491684

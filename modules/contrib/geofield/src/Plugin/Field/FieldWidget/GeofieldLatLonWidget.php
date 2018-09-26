@@ -88,9 +88,10 @@ class GeofieldLatLonWidget extends GeofieldBaseWidget {
           $values[$delta]['value'] = '';
           continue 2;
         }
+
       }
       $components = $value['value'];
-      $values[$delta]['value'] = $this->wktGenerator->wktBuildPoint([$components['lon'], $components['lat']]);
+      $values[$delta]['value'] = $this->wktGenerator->wktBuildPoint([trim($components['lon']), trim($components['lat'])]);
     }
 
     return $values;

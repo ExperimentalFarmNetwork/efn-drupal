@@ -129,15 +129,15 @@ class ViewsSend extends BulkForm {
           // attempt to save the uploaded file
           $dir = file_default_scheme() . '://views_send_attachments';
           file_prepare_directory($dir, FILE_CREATE_DIRECTORY);
-          $file = file_save_upload('views_send_attachments', $form_state, array(), $dir);
+          $files = file_save_upload('views_send_attachments', [], $dir);
           // set error if file was not uploaded
-          if (!$file) {
+          if (!$files) {
             $form_state->setErrorByName('views_send_attachment', $this->t('Error uploading file.'));
           }
           else {
             // set files to form_state, to process when form is submitted
             // @todo: when we add a multifile formfield then loop through to add each file to attachments array
-            $form_state->set(array('configuration', 'views_send_attachments'), (array)$file);
+            $form_state->set(array('configuration', 'views_send_attachments'), $files);
           }
         }
 

@@ -127,11 +127,23 @@ class GeocoderFieldPluginManager extends DefaultPluginManager {
    *   The array of source fields and their label.
    */
   public function getGeocodeSourceFields($entity_type_id, $bundle, $field_name) {
+
+    // List the possible Geocoding Field Types.
+    $source_fields_types = $this->preprocessorPluginManager->getGeocodeSourceFieldsTypes();
+
+    // Add Address and Country Field types, for Address module integration.
+    if ($this->moduleHandler->moduleExists('geocoder_address')) {
+      array_push($source_fields_types,
+        "address",
+        "address_country"
+      );
+    }
+
     return $this->getFieldsOptions(
       $entity_type_id,
       $bundle,
       $field_name,
-      $this->preprocessorPluginManager->getGeocodeSourceFieldsTypes()
+      $source_fields_types
     );
   }
 
@@ -149,11 +161,15 @@ class GeocoderFieldPluginManager extends DefaultPluginManager {
    *   The array of source fields and their label.
    */
   public function getReverseGeocodeSourceFields($entity_type_id, $bundle, $field_name) {
+
+    // List the possible Reverse Geocoding Field Types.
+    $source_fields_types = $this->preprocessorPluginManager->getReverseGeocodeSourceFieldsTypes();
+
     return $this->getFieldsOptions(
       $entity_type_id,
       $bundle,
       $field_name,
-      $this->preprocessorPluginManager->getReverseGeocodeSourceFieldsTypes()
+      $source_fields_types
     );
   }
 

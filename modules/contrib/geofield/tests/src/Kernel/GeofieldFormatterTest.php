@@ -56,6 +56,9 @@ class GeofieldFormatterTest extends EntityKernelTestBase {
       'bundle' => $this->bundle,
       'field_name' => 'geofield',
       'label' => 'GeoField',
+      'settings' => [
+        'backend' => 'geofield_backend_default',
+      ],
     ])->save();
   }
 

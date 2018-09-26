@@ -22,4 +22,3 @@ field_states_ui.state.visible:
 field_states_ui.state.required:
   type: field_state
   label: 'Required'
-  

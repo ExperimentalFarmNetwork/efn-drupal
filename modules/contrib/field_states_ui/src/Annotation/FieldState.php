@@ -31,20 +31,20 @@ class FieldState extends Plugin {
   /**
    * The human-readable name of the field state.
    *
-   * @ingroup plugin_translatable
-   *
    * @var \Drupal\Core\Annotation\Translation
+   *
+   * @ingroup plugin_translatable
    */
   public $label;
 
   /**
-   * A brief description of the field state.
+   * Optional: a brief description of the field state.
    *
    * This will be shown when adding or configuring this field state.
    *
-   * @ingroup plugin_translatable
+   * @var \Drupal\Core\Annotation\Translation
    *
-   * @var \Drupal\Core\Annotation\Translation (optional)
+   * @ingroup plugin_translatable
    */
   public $description = '';
 

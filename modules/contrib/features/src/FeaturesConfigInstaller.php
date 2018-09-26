@@ -57,7 +57,7 @@ class FeaturesConfigInstaller extends ConfigInstaller {
     list($major, $minor, ) = explode('.', \Drupal::VERSION);
     if ($major == 8 && $minor > 2) {
       // D8.3 added the %install_profile% argument.
-      $install_profile = drupal_get_profile();
+      $install_profile = \Drupal::installProfile();
       parent::__construct($config_factory, $active_storage, $typed_config, $config_manager, $event_dispatcher, $install_profile);
     }
     else {
@@ -75,7 +75,7 @@ class FeaturesConfigInstaller extends ConfigInstaller {
     $features_config = array_keys($this->featuresManager->listExistingConfig());
     // Map array so we can use isset instead of in_array for faster access.
     $features_config = array_combine($features_config, $features_config);
-    $existing_configuration = array();
+    $existing_configuration = [];
     // Gather information about all the supported collections.
     $collection_info = $this->configManager->getConfigCollectionInfo();
 

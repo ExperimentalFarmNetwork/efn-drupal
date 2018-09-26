@@ -5,7 +5,7 @@ namespace Drupal\field_states_ui\Plugin\FieldState;
 use Drupal\field_states_ui\FieldStateBase;
 
 /**
- * Control field widget interactability in relation to other fields dynamically.
+ * Controls field widget disabled state in relation to other fields dynamically.
  *
  * @FieldState(
  *   id = "disabled",

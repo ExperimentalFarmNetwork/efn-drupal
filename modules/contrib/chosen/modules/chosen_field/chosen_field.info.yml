@@ -5,10 +5,10 @@ configure: chosen.admin
 # core: 8.x
 type: module
 dependencies:
-  - chosen
+  - chosen:chosen
 
-# Information added by Drupal.org packaging script on 2017-08-04
-version: '8.x-2.4'
+# Information added by Drupal.org packaging script on 2018-07-14
+version: '8.x-2.6'
 core: '8.x'
 project: 'chosen'
-datestamp: 1501858754
+datestamp: 1531588126

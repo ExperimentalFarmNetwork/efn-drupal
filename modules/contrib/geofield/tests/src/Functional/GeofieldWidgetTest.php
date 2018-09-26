@@ -63,6 +63,9 @@ class GeofieldWidgetTest extends FieldTestBase {
       'field_storage' => $this->fieldStorage,
       'bundle' => 'entity_test',
       'description' => 'Description for geofield_field',
+      'settings' => [
+        'backend' => 'geofield_backend_default',
+      ],
       'required' => TRUE,
     ]);
     $this->field->save();
@@ -276,7 +279,7 @@ class GeofieldWidgetTest extends FieldTestBase {
       'geofield_field[0][value][lon][seconds]' => 7,
     ];
     $this->drupalPostForm(NULL, $edit, t('Save'));
-    $this->assertFieldValues($entity, 'geofield_field', ['POINT (-2.1019444444444 42.225555555556)']);
+    $this->assertFieldValues($entity, 'geofield_field', ['POINT (-2.1019444444 42.2255555556)']);
 
     // Add invalid data.
     $edit = [

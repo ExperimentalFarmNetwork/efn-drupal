@@ -39,7 +39,7 @@ class MarkerLayerGroup extends MarkerDefault {
   /**
    * {@inheritdoc}
    */
-  protected function renderLeafletGroup(array $features = [], $title = '', $level = 0) {
+  protected function renderLeafletGroup($title, $level, array $features = []) {
     return [
       'group' => TRUE,
       'label' => $title,

@@ -10,6 +10,8 @@ namespace Drupal\Console\Core\Generator;
 use Drupal\Console\Core\Utils\TwigRenderer;
 use Drupal\Console\Core\Utils\FileQueue;
 use Drupal\Console\Core\Utils\CountCodeLines;
+use Drupal\Console\Core\Utils\DrupalFinder;
+use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class Generator
@@ -34,6 +36,16 @@ abstract class Generator
     protected $countCodeLines;
 
     /**
+     * @var DrupalFinder
+     */
+    protected $drupalFinder;
+
+    /**
+     * @var DrupalStyle
+     */
+    protected $io;
+
+    /**
      * @param $renderer
      */
     public function setRenderer(TwigRenderer $renderer)
@@ -55,6 +67,28 @@ abstract class Generator
     public function setCountCodeLines(CountCodeLines $countCodeLines)
     {
         $this->countCodeLines = $countCodeLines;
+    }
+
+    /**
+     * @param DrupalFinder $drupalFinder
+     */
+    public function setDrupalFinder($drupalFinder)
+    {
+        $this->drupalFinder = $drupalFinder;
+    }
+
+    /**
+     * @return \Drupal\Console\Core\Style\DrupalStyle
+     */
+    public function getIo() {
+        return $this->io;
+    }
+
+    /**
+     * @param \Drupal\Console\Core\Style\DrupalStyle $io
+     */
+    public function setIo($io) {
+        $this->io = $io;
     }
 
     /**

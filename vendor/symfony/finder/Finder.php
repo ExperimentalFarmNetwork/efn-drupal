@@ -297,6 +297,10 @@ class Finder implements \IteratorAggregate, \Countable
     /**
      * Excludes directories.
      *
+     * Directories passed as argument must be relative to the ones defined with the `in()` method. For example:
+     *
+     *     $finder->in(__DIR__)->exclude('ruby');
+     *
      * @param string|array $dirs A directory path or an array of directories
      *
      * @return $this
@@ -312,6 +316,8 @@ class Finder implements \IteratorAggregate, \Countable
 
     /**
      * Excludes "hidden" directories and files (starting with a dot).
+     *
+     * This option is enabled by default.
      *
      * @param bool $ignoreDotFiles Whether to exclude "hidden" files or not
      *
@@ -332,6 +338,8 @@ class Finder implements \IteratorAggregate, \Countable
 
     /**
      * Forces the finder to ignore version control directories.
+     *
+     * This option is enabled by default.
      *
      * @param bool $ignoreVCS Whether to exclude VCS files or not
      *
@@ -532,9 +540,9 @@ class Finder implements \IteratorAggregate, \Countable
 
         foreach ((array) $dirs as $dir) {
             if (is_dir($dir)) {
-                $resolvedDirs[] = $dir;
-            } elseif ($glob = glob($dir, (defined('GLOB_BRACE') ? GLOB_BRACE : 0) | GLOB_ONLYDIR)) {
-                $resolvedDirs = array_merge($resolvedDirs, $glob);
+                $resolvedDirs[] = $this->normalizeDir($dir);
+            } elseif ($glob = glob($dir, (\defined('GLOB_BRACE') ? GLOB_BRACE : 0) | GLOB_ONLYDIR)) {
+                $resolvedDirs = array_merge($resolvedDirs, array_map(array($this, 'normalizeDir'), $glob));
             } else {
                 throw new \InvalidArgumentException(sprintf('The "%s" directory does not exist.', $dir));
             }
@@ -556,11 +564,11 @@ class Finder implements \IteratorAggregate, \Countable
      */
     public function getIterator()
     {
-        if (0 === count($this->dirs) && 0 === count($this->iterators)) {
+        if (0 === \count($this->dirs) && 0 === \count($this->iterators)) {
             throw new \LogicException('You must call one of in() or append() methods before iterating over a Finder.');
         }
 
-        if (1 === count($this->dirs) && 0 === count($this->iterators)) {
+        if (1 === \count($this->dirs) && 0 === \count($this->iterators)) {
             return $this->searchInDirectory($this->dirs[0]);
         }
 
@@ -593,7 +601,7 @@ class Finder implements \IteratorAggregate, \Countable
             $this->iterators[] = $iterator->getIterator();
         } elseif ($iterator instanceof \Iterator) {
             $this->iterators[] = $iterator;
-        } elseif ($iterator instanceof \Traversable || is_array($iterator)) {
+        } elseif ($iterator instanceof \Traversable || \is_array($iterator)) {
             $it = new \ArrayIterator();
             foreach ($iterator as $file) {
                 $it->append($file instanceof \SplFileInfo ? $file : new \SplFileInfo($file));
@@ -719,5 +727,17 @@ class Finder implements \IteratorAggregate, \Countable
         }
 
         return $iterator;
+    }
+
+    /**
+     * Normalizes given directory names by removing trailing slashes.
+     *
+     * @param string $dir
+     *
+     * @return string
+     */
+    private function normalizeDir($dir)
+    {
+        return rtrim($dir, '/'.\DIRECTORY_SEPARATOR);
     }
 }

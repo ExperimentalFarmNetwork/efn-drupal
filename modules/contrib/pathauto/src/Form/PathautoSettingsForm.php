@@ -35,7 +35,7 @@ class PathautoSettingsForm extends ConfigFormBase {
   protected $aliasTypeManager;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function __construct(ConfigFactoryInterface $config_factory, EntityTypeManagerInterface $entity_type_manager, EntityFieldManagerInterface $entity_field_manager, AliasTypeManager $alias_type_manager) {
     parent::__construct($config_factory);
@@ -45,7 +45,7 @@ class PathautoSettingsForm extends ConfigFormBase {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
     return new static(
@@ -195,14 +195,19 @@ class PathautoSettingsForm extends ConfigFormBase {
       '#title' => $this->t('Strings to Remove'),
       '#default_value' => $config->get('ignore_words'),
       '#description' => $this->t('Words to strip out of the URL alias, separated by commas. Do not use this to remove punctuation.'),
-      '#wysiwyg' => FALSE,
+    );
+
+    $form['safe_tokens'] = array(
+      '#type' => 'textarea',
+      '#title' => $this->t('Safe tokens'),
+      '#default_value' => implode(', ', $config->get('safe_tokens')),
+      '#description' => $this->t('List of tokens that are safe to use in alias patterns and do not need to be cleaned. For example urls, aliases, machine names. Separated with a comma.'),
     );
 
     $form['punctuation'] = array(
-      '#type' => 'fieldset',
+      '#type' => 'details',
       '#title' => $this->t('Punctuation'),
-      '#collapsible' => TRUE,
-      '#collapsed' => TRUE,
+      '#open' => FALSE,
       '#tree' => TRUE,
     );
 
@@ -241,7 +246,6 @@ class PathautoSettingsForm extends ConfigFormBase {
 
     $form_state->cleanValues();
 
-    $original_entity_types = $config->get('enabled_entity_types');
     foreach ($form_state->getValues() as $key => $value) {
       if ($key == 'enabled_entity_types') {
         $enabled_entity_types = [];
@@ -255,6 +259,9 @@ class PathautoSettingsForm extends ConfigFormBase {
           }
         }
         $value = $enabled_entity_types;
+      }
+      elseif ($key == 'safe_tokens') {
+        $value = array_filter(array_map('trim', explode(',', $value)));
       }
       $config->set($key, $value);
     }
