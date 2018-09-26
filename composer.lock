@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "280406bbec41e46711b51e834a7f233b",
+    "content-hash": "f82f59b2c9ebd410b513499edf8d38b9",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -3548,58 +3548,6 @@
                 "source": "https://cgit.drupalcode.org/views_slideshow",
                 "issues": "https://www.drupal.org/project/issues/views_slideshow",
                 "irc": "irc://irc.freenode.org/drupal-contribute"
-            }
-        },
-        {
-            "name": "drupal/yamlform",
-            "version": "1.0.0-beta29",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupal.org/project/yamlform",
-                "reference": "8.x-1.0-beta29"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/yamlform-8.x-1.0-beta29.zip",
-                "reference": "8.x-1.0-beta29",
-                "shasum": "02f31780340028b370b22233e8d3e1e97f54b9c7"
-            },
-            "require": {
-                "drupal/core": "*"
-            },
-            "require-dev": {
-                "drupal/devel": "*"
-            },
-            "type": "drupal-module",
-            "extra": {
-                "branch-alias": {
-                    "dev-1.x": "1.x-dev"
-                },
-                "drupal": {
-                    "version": "8.x-1.0-beta29",
-                    "datestamp": "1482752282",
-                    "security-coverage": {
-                        "status": "not-covered",
-                        "message": "Project has not opted into security advisory coverage!"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "authors": [
-                {
-                    "name": "Jacob Rockowitz (jrockowitz)",
-                    "homepage": "https://www.drupal.org/u/jrockowitz",
-                    "role": "Maintainer"
-                }
-            ],
-            "description": "Enables the creation of forms and questionnaires.",
-            "homepage": "https://drupal.org/project/yamlform",
-            "support": {
-                "source": "http://cgit.drupalcode.org/yamlform",
-                "issues": "https://drupal.org/project/issues/yamlform"
             }
         },
         {

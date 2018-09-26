@@ -415,7 +415,7 @@ display:
           hide_empty: false
           default_field_elements: true
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
         - 'languages:language_interface'
         - url

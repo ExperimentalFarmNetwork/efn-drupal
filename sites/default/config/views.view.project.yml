@@ -719,6 +719,7 @@ display:
               volunteer: '0'
               administrator: '0'
               researcher: '0'
+            placeholder: ''
           is_grouped: false
           group_info:
             label: ''

@@ -66,11 +66,10 @@ module:
   update: 0
   user: 0
   views: 0
+  views_send: 0
   views_slideshow: 0
   views_slideshow_cycle: 0
   views_ui: 0
-  yamlform: 0
-  yamlform_ui: 0
   pathauto: 1
   minimal: 1000
 theme:

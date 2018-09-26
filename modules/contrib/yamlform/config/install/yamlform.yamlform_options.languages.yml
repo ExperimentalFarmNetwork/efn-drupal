@@ -1,9 +1,0 @@
-langcode: en
-status: true
-dependencies:
-  enforced:
-    module:
-      - yamlform
-id: languages
-label: Languages
-options: ''
