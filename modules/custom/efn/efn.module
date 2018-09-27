@@ -11,6 +11,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use \Drupal\Core\Access\AccessibleInterface;
 use Drupal\group\Entity\GroupContent;
+use Drupal\Core\Url;
 
 /**
  * Implements hook_help().
@@ -39,7 +40,7 @@ function efn_theme() {
   ];
 }
 
-// hide text formatting widget
+// Hide text formatting widget
 
 /**
  * Implements hook_field_widget_form_alter().
@@ -59,9 +60,9 @@ function _allowed_formats_remove_textarea_help($form_element, FormStateInterface
     unset($form_element[0]['format']['#theme_wrappers']);
     $form_element[0]['format']['format']['#access'] = FALSE;
   }
-
   return $form_element;
 }
+
 // Tell the user to login or join
 
 /**
@@ -88,7 +89,6 @@ function efn_entity_view(array $build, EntityInterface $entity, EntityViewDispla
   }
 }
 
-
 // Make sure only researchers can create projects
 
 /**
@@ -110,7 +110,6 @@ function efn_form_group_project_add_form_alter(&$form, FormStateInterface &$form
       'contexts' => [],
       'max-age' => 0,
     ];
-
   }
 }
 
@@ -130,13 +129,40 @@ function efn_form_group_project_edit_form_alter(&$form, FormStateInterface &$for
   $form['actions']['submit']['#value'] = t('Save changes');
 }
 
-// Change error for bad zip code
+// Add tabs for mass email and csv export
 
-// function efn_form_group_project_edit_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
-// kint($form['field_location']);
-// }
-
-
+/**
+ * Implements hook_local_tasks_alter()
+ */
+function efn_menu_local_tasks_alter(&$data, $route_name) {
+  if ($route_name == 'entity.user.collection') {
+    // Add a tab linking to node/add to all pages.
+    $data['tabs'][0]['view.user_admin_people.page_2'] = [
+      '#theme' => 'menu_local_task',
+      '#link' => [
+        'title' => t('Email Users'),
+        'url' => Url::fromRoute('view.user_admin_people.page_2'),
+        'localized_options' => [
+          'attributes' => [
+            'title' => t('Email Users'),
+          ],
+        ],
+      ],
+    ];
+    $data['tabs'][0]['view.user_admin_people.rest_export_1'] = [
+      '#theme' => 'menu_local_task',
+      '#link' => [
+        'title' => t('Export Users'),
+        'url' => Url::fromRoute('view.user_admin_people.rest_export_1'),
+        'localized_options' => [
+          'attributes' => [
+            'title' => t('Export Users'),
+          ],
+        ],
+      ],
+    ];
+  }
+}
 
 // Make the member for label better
 
@@ -152,4 +178,3 @@ function efn_user_view_alter(array &$build, Drupal\Core\Entity\EntityInterface $
     ];
   }
 }
-

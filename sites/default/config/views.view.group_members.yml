@@ -885,6 +885,7 @@ display:
       defaults:
         title: false
         fields: false
+        header: false
       fields:
         name:
           id: name
@@ -1122,6 +1123,20 @@ display:
           enable_excluded_fields: 1
           plugin_id: views_send_bulk_form
       display_description: ''
+      header:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: false
+          tokenize: false
+          content:
+            value: 'Check off some or all of the users you want to mail and click the ''Next'' button at the bottom of the page to email the project volunteers!'
+            format: raw_html
+          plugin_id: text
     cache_metadata:
       max-age: 0
       contexts:

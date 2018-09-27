@@ -97,7 +97,7 @@ function minimus_form_alter(&$form, FormState $form_state, $form_id) {
 
     $form['views_send_direct']['#attributes']['class'][] = 'hidden';
     $form['views_send_direct']['#access'] = FALSE;
-    
+
     $form['views_send_tokens']['#attributes']['class'][] = 'hidden';
   }
 }

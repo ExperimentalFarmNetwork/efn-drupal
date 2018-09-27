@@ -23,10 +23,11 @@ settings:
   label_display: '0'
   views_label: ''
   items_per_page: none
+  context_mapping: {  }
 visibility:
   request_path:
     id: request_path
-    pages: "/group/*/join\r\n/group/*/members\r\n/group/*/content\r\n/group/*/nodes"
+    pages: "/group/*/join\r\n/group/*/members\r\n!/project/*/members/mail\r\n/group/*/content\r\n/group/*/nodes"
     negate: true
     context_mapping: {  }
   group_type:
