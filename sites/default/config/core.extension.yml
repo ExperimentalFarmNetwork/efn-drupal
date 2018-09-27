@@ -16,6 +16,7 @@ module:
   config_update: 0
   contact: 0
   contextual: 0
+  csv_serialization: 0
   ctools: 0
   datetime: 0
   dblog: 0
@@ -66,6 +67,7 @@ module:
   update: 0
   user: 0
   views: 0
+  views_data_export: 0
   views_send: 0
   views_slideshow: 0
   views_slideshow_cycle: 0

@@ -4,9 +4,16 @@ status: true
 dependencies:
   config:
     - field.storage.group_content.group_roles
+    - field.storage.profile.field_full_name
   module:
+    - csv_serialization
     - group
+    - profile
+    - rest
+    - serialization
     - user
+    - views_data_export
+    - views_send
 id: group_members
 label: 'Group members'
 module: group
@@ -48,26 +55,9 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       pager:
-        type: full
+        type: none
         options:
-          items_per_page: 50
           offset: 0
-          id: 0
-          total_pages: null
-          tags:
-            previous: ‹‹
-            next: ››
-            first: '« First'
-            last: 'Last »'
-          expose:
-            items_per_page: false
-            items_per_page_label: 'Items per page'
-            items_per_page_options: '5, 10, 25, 50'
-            items_per_page_options_all: false
-            items_per_page_options_all_label: '- All -'
-            offset: false
-            offset_label: Offset
-          quantity: 9
       style:
         type: table
         options:
@@ -628,6 +618,123 @@ display:
             created: '0'
           destination: true
           plugin_id: dropbutton
+        mail:
+          id: mail
+          table: users_field_data
+          field: mail
+          relationship: gc__user
+          group_type: group
+          admin_label: ''
+          label: Email
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: basic_string
+          settings: {  }
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          entity_type: user
+          entity_field: mail
+          plugin_id: field
+        views_send_bulk_form:
+          id: views_send_bulk_form
+          table: views
+          field: views_send_bulk_form
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: 'Send e-mail'
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: false
+          action_title: Action
+          include_exclude: exclude
+          selected_actions: {  }
+          enable_excluded_fields: 1
+          plugin_id: views_send_bulk_form
       filters: {  }
       sorts: {  }
       header: {  }
@@ -698,7 +805,7 @@ display:
       display_extenders: {  }
       title: Members
     cache_metadata:
-      max-age: -1
+      max-age: 0
       contexts:
         - group_membership.roles.permissions
         - 'languages:language_content'
@@ -724,8 +831,31 @@ display:
         weight: -3
         context: '0'
         menu_name: main
+      pager:
+        type: full
+        options:
+          items_per_page: 50
+          offset: 0
+          id: 0
+          total_pages: null
+          tags:
+            previous: '‹ Previous'
+            next: 'Next ›'
+            first: '« First'
+            last: 'Last »'
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+          quantity: 9
+      defaults:
+        pager: false
     cache_metadata:
-      max-age: -1
+      max-age: 0
       contexts:
         - group_membership.roles.permissions
         - 'languages:language_content'
@@ -734,3 +864,649 @@ display:
         - url.query_args
       tags:
         - 'config:field.storage.group_content.group_roles'
+  page_2:
+    display_plugin: page
+    id: page_2
+    display_title: 'Email Members'
+    position: 1
+    display_options:
+      display_extenders: {  }
+      path: project/%group/members/mail
+      menu:
+        type: none
+        title: Members
+        description: ''
+        expanded: false
+        parent: ''
+        weight: -3
+        context: '0'
+        menu_name: main
+      title: 'Email Project Members'
+      defaults:
+        title: false
+        fields: false
+      fields:
+        name:
+          id: name
+          table: users_field_data
+          field: name
+          relationship: gc__user
+          group_type: group
+          admin_label: ''
+          label: User
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: user_name
+          settings:
+            link_to_entity: true
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          entity_type: user
+          entity_field: name
+          plugin_id: field
+        view_group_content:
+          id: view_group_content
+          table: group_content
+          field: view_group_content
+          relationship: none
+          group_type: group
+          admin_label: 'View member link'
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          text: 'View member'
+          entity_type: group_content
+          plugin_id: entity_link
+          output_url_as_text: false
+          absolute: false
+        mail:
+          id: mail
+          table: users_field_data
+          field: mail
+          relationship: gc__user
+          group_type: group
+          admin_label: ''
+          label: Email
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: basic_string
+          settings: {  }
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          entity_type: user
+          entity_field: mail
+          plugin_id: field
+        views_send_bulk_form:
+          id: views_send_bulk_form
+          table: views
+          field: views_send_bulk_form
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: 'Send e-mail'
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: false
+          action_title: Action
+          include_exclude: exclude
+          selected_actions: {  }
+          enable_excluded_fields: 1
+          plugin_id: views_send_bulk_form
+      display_description: ''
+    cache_metadata:
+      max-age: 0
+      contexts:
+        - group_membership.roles.permissions
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+      tags: {  }
+  rest_export_2:
+    display_plugin: rest_export
+    id: rest_export_2
+    display_title: 'REST export'
+    position: 1
+    display_options:
+      display_extenders: {  }
+      path: project/%group/members/export.csv
+      pager:
+        type: none
+        options:
+          offset: 0
+      defaults:
+        pager: false
+        fields: false
+        relationships: false
+        group_by: false
+      fields:
+        field_full_name:
+          id: field_full_name
+          table: profile__field_full_name
+          field: field_full_name
+          relationship: profile
+          group_type: group
+          admin_label: ''
+          label: 'Full Name'
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: false
+          group_column: entity_id
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
+        name:
+          id: name
+          table: users_field_data
+          field: name
+          relationship: gc__user
+          group_type: group
+          admin_label: ''
+          label: User
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: user_name
+          settings:
+            link_to_entity: true
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          entity_type: user
+          entity_field: name
+          plugin_id: field
+        mail:
+          id: mail
+          table: users_field_data
+          field: mail
+          relationship: gc__user
+          group_type: group
+          admin_label: ''
+          label: Email
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: basic_string
+          settings: {  }
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          entity_type: user
+          entity_field: mail
+          plugin_id: field
+      relationships:
+        gc__user:
+          id: gc__user
+          table: group_content_field_data
+          field: gc__user
+          relationship: none
+          group_type: group
+          admin_label: 'Member account'
+          required: true
+          group_content_plugins:
+            group_membership: group_membership
+          entity_type: group_content
+          plugin_id: group_content_to_entity
+        profile:
+          id: profile
+          table: users_field_data
+          field: profile
+          relationship: gc__user
+          group_type: group
+          admin_label: Profile
+          required: false
+          entity_type: user
+          plugin_id: standard
+      display_description: ''
+      style:
+        type: data_export
+        options:
+          grouping: {  }
+          uses_fields: false
+          formats:
+            csv: csv
+          csv_settings:
+            delimiter: ','
+            enclosure: '"'
+            escape_char: \
+            strip_tags: true
+            trim: true
+            encoding: utf8
+          xls_settings:
+            xls_format: Excel2007
+      row:
+        type: data_field
+        options:
+          field_options:
+            name:
+              alias: ''
+              raw_output: false
+            group_roles:
+              alias: ''
+              raw_output: false
+            changed:
+              alias: ''
+              raw_output: false
+            created:
+              alias: ''
+              raw_output: false
+            field_bio:
+              alias: ''
+              raw_output: false
+            field_details:
+              alias: ''
+              raw_output: false
+            field_favorite_crops:
+              alias: ''
+              raw_output: false
+            field_full_name:
+              alias: ''
+              raw_output: false
+            field_growing_experience:
+              alias: ''
+              raw_output: false
+            delta:
+              alias: ''
+              raw_output: false
+            field_location:
+              alias: ''
+              raw_output: false
+            field_location_geo:
+              alias: ''
+              raw_output: false
+            field_location_additional_name:
+              alias: ''
+              raw_output: false
+            field_location_address_line1:
+              alias: ''
+              raw_output: false
+            field_location_address_line2:
+              alias: ''
+              raw_output: false
+            field_location_administrative_area:
+              alias: ''
+              raw_output: false
+            field_location_country_code:
+              alias: ''
+              raw_output: false
+            field_location_dependent_locality:
+              alias: ''
+              raw_output: false
+            field_location_family_name:
+              alias: ''
+              raw_output: false
+            field_location_given_name:
+              alias: ''
+              raw_output: false
+            field_location_locality:
+              alias: ''
+              raw_output: false
+            field_location_organization:
+              alias: ''
+              raw_output: false
+            field_location_postal_code:
+              alias: ''
+              raw_output: false
+            field_location_sorting_code:
+              alias: ''
+              raw_output: false
+            field_location_descriptors:
+              alias: ''
+              raw_output: false
+            delta_1:
+              alias: ''
+              raw_output: false
+            profile_id:
+              alias: ''
+              raw_output: false
+            field_crops_mile:
+              alias: ''
+              raw_output: false
+            field_crops_quarter_mile:
+              alias: ''
+              raw_output: false
+            field_other:
+              alias: ''
+              raw_output: false
+            field_other_limitations:
+              alias: ''
+              raw_output: false
+            uid:
+              alias: ''
+              raw_output: false
+            field_gmos:
+              alias: ''
+              raw_output: false
+            delta_2:
+              alias: ''
+              raw_output: false
+            field_soil_details:
+              alias: ''
+              raw_output: false
+            field_soil_type:
+              alias: ''
+              raw_output: false
+            field_space_available:
+              alias: ''
+              raw_output: false
+            field_time_commitment:
+              alias: ''
+              raw_output: false
+      group_by: true
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - group_membership.roles.permissions
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - request_format
+        - url
+      tags:
+        - 'config:field.storage.profile.field_full_name'

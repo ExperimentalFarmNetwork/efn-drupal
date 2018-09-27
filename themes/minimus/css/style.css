@@ -6658,7 +6658,8 @@ body.path-group {
 .js-form-submit[value='Join group'], .btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
   font-size: 2rem;
   border-radius: 5px;
-  padding: 1rem 2rem; }
+  padding: 1rem 2rem;
+  float: none; }
 
 .page-node-type-project-update article .view-project-updates-by-node .view-header, .path-group .view-project-updates-by-node .view-header {
   border-top: thin #A4AD23 solid;
@@ -6796,7 +6797,17 @@ body.path-group {
   padding: 5px;
   margin-top: 10px; }
   .region-sidebar-second section.block {
-    margin: 30px 0 60px; }
+    margin: 30px 0 0; }
+    .region-sidebar-second section.block.block-views-blockmember-admin-links-block-1 {
+      margin: 10px 0 0;
+      text-align: center; }
+      .region-sidebar-second section.block.block-views-blockmember-admin-links-block-1 a.btn-default {
+        margin: 5px; }
+        .region-sidebar-second section.block.block-views-blockmember-admin-links-block-1 a.btn-default .glyphicon {
+          margin-right: 5px; }
+    .region-sidebar-second section.block .view-profiles {
+      display: flex;
+      justify-content: center; }
   .region-sidebar-second #block-minimus-groupoperations {
     text-align: center; }
     .region-sidebar-second #block-minimus-groupoperations .btn-group > .btn-lg + .dropdown-toggle, .region-sidebar-second #block-minimus-groupoperations .btn-group-lg.btn-group > .btn + .dropdown-toggle,
@@ -6808,7 +6819,8 @@ body.path-group {
       background-color: transparent;
       box-shadow: none;
       text-align: center;
-      width: 100%; }
+      width: 100%;
+      position: unset; }
       .region-sidebar-second #block-minimus-groupoperations ul.dropdown-menu li a.hidden {
         display: block; }
       .region-sidebar-second #block-minimus-groupoperations ul.dropdown-menu li.leave-group a {

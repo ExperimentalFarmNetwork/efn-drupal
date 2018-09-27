@@ -10,7 +10,7 @@ dependencies:
 id: minimus_groupoperations
 theme: minimus
 region: sidebar_second
-weight: -13
+weight: -14
 provider: null
 plugin: group_operations
 settings:

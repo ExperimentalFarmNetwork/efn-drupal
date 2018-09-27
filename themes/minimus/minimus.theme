@@ -1,6 +1,7 @@
 <?php
 
 use Drupal\image\Entity\ImageStyle;
+use Drupal\Core\Form\FormState;
 
 function minimus_preprocess_node(&$variables) {
 
@@ -68,17 +69,46 @@ function minimus_preprocess(&$variables, $hook){
 }
 
 // change the title of the "Company" field to "Organization"
-function minimus_form_alter(&$form,  \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+function minimus_form_alter(&$form, FormState $form_state, $form_id) {
   if ($form_id =='profile_researcher_add_form') {
     $form['field_address']['widget'][0]['address']['#after_build'][] = 'minimus_address_label';
   }
+
+  // Some tweaks for views_send for project vounteer emails
+  if ($form_id == 'views_form_group_members_page_2_11') {
+    $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+    $profile = \Drupal::entityManager()->getStorage('profile')
+      ->loadByUser($user, 'main');
+    $full_name = $profile->get('field_full_name')->getValue();
+    $mail = $user->get('mail')->getValue()[0]['value'];
+    $form['from']['views_send_from_name']['#default_value'] = $full_name;
+    $form['from']['views_send_from_mail']['#default_value'] = $mail;
+    $form['from']['views_send_from_name']['#access'] = FALSE;
+    $form['from']['#attributes']['class'][] = 'hidden';
+
+    $form['to']['views_send_to_name']['#default_value'] = 'name_pos_0';
+    $form['to']['views_send_to_mail']['#default_value'] = 'mail_pos_2';
+    $form['to']['#attributes']['class'][] = 'hidden';
+
+    $form['additional']['#attributes']['class'][] = 'hidden';
+
+    $form['views_send_remember']['#attributes']['class'][] = 'hidden';
+    $form['views_send_remember']['#access'] = FALSE;
+
+    $form['views_send_direct']['#attributes']['class'][] = 'hidden';
+    $form['views_send_direct']['#access'] = FALSE;
+    
+    $form['views_send_tokens']['#attributes']['class'][] = 'hidden';
+  }
 }
+
 function minimus_address_label($element, $form_state) {
   $element['organization']['#title'] = t('Organization');
   return $element;
 }
 
-// function minimus_theme_suggestions_group_alter(array &$suggestions, array $variables){
-//     $request = \Drupal::routeMatch()->getRouteObject();
-//     kint($request);
-// }
+function minimus_preprocess_page_title(&$variables) {
+  if( strpos( $variables['route'], '/members/mail' ) !== false) {
+    $variables['title']['#markup'] = 'Email Project members';
+  }
+}

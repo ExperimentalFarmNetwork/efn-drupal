@@ -91,4 +91,6 @@
 
     $('body:not(".user-logged-in") .region-sidebar-second .views-field-view-user img').unwrap();
 
+    $(".view-project-owner .view-profiles table").removeClass('table table-striped table-hover');
+
 })(jQuery, Drupal);

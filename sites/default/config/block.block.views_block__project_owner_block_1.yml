@@ -12,7 +12,7 @@ dependencies:
 id: views_block__project_owner_block_1
 theme: minimus
 region: sidebar_second
-weight: -11
+weight: -12
 provider: null
 plugin: 'views_block:project_owner-block_1'
 settings:
