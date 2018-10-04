@@ -12,6 +12,7 @@ use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use \Drupal\Core\Access\AccessibleInterface;
 use Drupal\group\Entity\GroupContent;
 use Drupal\Core\Url;
+use Drupal\user\Entity\User;
 
 /**
  * Implements hook_help().
@@ -176,5 +177,85 @@ function efn_user_view_alter(array &$build, Drupal\Core\Entity\EntityInterface $
       '#type' => 'item',
       '#markup' => '<div class="member label">' . t('Member for') . '</div> ' . \Drupal::service('date.formatter')->formatTimeDiffSince($entity->getCreatedTime()),
     ];
+  }
+}
+
+// Notifications for new group content
+
+/**
+ * Implements hook_entity_insert().
+ */
+function efn_entity_insert(EntityInterface $entity) {
+ if ($entity->getEntityTypeId() === 'node' && $entity->bundle() === 'project_update') {
+   $group = \Drupal::routeMatch()->getParameter('group');
+   $gid =$group->id();
+
+   // Get group members
+   $query = \Drupal::database()
+   ->select('group_content_field_data', 'gc')
+   ->fields('gc', ['entity_id'])
+   ->condition('gc.gid', $gid)
+   ->condition('gc.type', 'project-group_membership')
+   ->execute();
+   $results = $query->fetchAll();
+
+   // Get their emails
+   foreach ($results as $result) {
+     $uid = $result->entity_id;
+     if($user_entity = User::load($uid)){
+       $mails[] = $user_entity->get('mail')->getValue()[0]['value'];
+     }
+   }
+
+   // Loop through them all and send them all an email
+   $mailManager = \Drupal::service('plugin.manager.mail');
+   foreach ($mails as $key => $mail) {
+     $module = 'efn';
+     $key = 'node_insert';
+     $to = $mail;
+     // $to = 'onion@riseup.net'; // Use this override to test
+
+     $author = $entity->getOwner()->getDisplayName();
+     $title = $entity->getTitle();
+     $group_title = $group->label();
+     $message = "➥ Project update:\n";
+     $message .= "\n" . $author . " just published: " . $title;
+     $message .= "\n\n" . html_entity_decode(strip_tags(($entity->get('body')->value)));
+     $message .= "\n\n * " . $group_title . ": https://www.experimentalfarmnetwork.org/project/" . $gid . " *";
+     // $message .= "\n\n Should have gone to: ". $mail . "\n";
+
+     $params['message'] = t($message);
+     $params['title'] = "✭✭✭ New EFN Project Update: " . $title ."✭✭✭";
+     $params['title'] = t($params['title']);
+     $params['node_title'] = $entity->label();
+     $langcode = \Drupal::currentUser()->getPreferredLangcode();
+     $send = true;
+
+     // The hook_mail function down below does things with this
+     $result = $mailManager->mail($module, $key, $to, $langcode, $params, NULL, $send);
+
+     if ($result['result'] !== true) {
+       $message = t('There was a problem sending your email notification to @email for creating node @id.', array('@email' => $to, '@id' => $entity->id()));
+       drupal_set_message($message, 'error');
+       \Drupal::logger('efn')->error($message);
+       return;
+     }
+
+     $message = t('An email notification has been sent to @email for Project Update @id.', array('@email' => $to, '@id' => $entity->id()));
+     drupal_set_message($message);
+     \Drupal::logger('efn')->notice($message);
+   }
+ }
+}
+
+/**
+ * Implements hook_mail().
+ */
+function efn_mail($key, &$message, $params) {
+  switch ($key) {
+    case 'node_insert':
+      $message['subject'] = $params['title'];
+      $message['body'][] = $params['message'];
+			break;
   }
 }
