@@ -1,5 +1,7 @@
 <?php
 
+// @codingStandardsIgnoreFile
+
 /*~ class.smtp.php
 Orginal release information:
 .---------------------------------------------------------------------------.

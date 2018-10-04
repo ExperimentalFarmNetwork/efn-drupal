@@ -28,18 +28,6 @@ function smtp_help($route_name, RouteMatchInterface $route_match) {
 }
 
 /**
- * Implements hook_menu().
- */
-function smtp_menu() {
-  $items['admin/config/system/smtp'] = [
-    'title' => 'SMTP Authentication Support',
-    'description' => 'Allow for site emails to be sent through an SMTP server of your choice.',
-    'route_name' => 'smtp.config',
-  ];
-  return $items;
-}
-
-/**
  * Implements hook_mail().
  */
 function smtp_mail($key, &$message, $params) {

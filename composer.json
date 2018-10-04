@@ -29,7 +29,7 @@
         "doctrine/common": "2.5.3",
         "drupal/pathauto": "^1.0@RC",
         "drupal/better_exposed_filters": "^3.0@alpha",
-        "drupal/smtp": "^1.0@beta",
+        "drupal/smtp": "1.x-dev",
         "drupal/email_registration": "^1.0@RC",
         "drupal/block_exclude_pages": "^1.2",
         "drupal/markup": "^1.0@beta",
