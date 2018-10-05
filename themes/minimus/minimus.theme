@@ -2,6 +2,8 @@
 
 use Drupal\image\Entity\ImageStyle;
 use Drupal\Core\Form\FormState;
+use Drupal\Core\Url;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 function minimus_preprocess_node(&$variables) {
 
@@ -118,5 +120,23 @@ function minimus_preprocess_page_title(&$variables) {
  */
 function minimus_preprocess_node__project_update(&$variables) {
   $variables['date'] = \Drupal::service('date.formatter')->format($variables['node']->getCreatedTime(), 'long');
+  $entity_id = $variables['node']->id();
 
+  if ($variables['view_mode'] = 'full') {
+    $query = \Drupal::database()
+    ->select('group_content_field_data', 'gc')
+    ->fields('gc', ['gid'])
+    ->condition('gc.entity_id', $entity_id)
+    ->condition('gc.type', 'group_content_type_43c14e35a52cb')
+    ->execute();
+    $results = $query->fetchAll();
+    $gid = $results[0]->gid;
+    if (isset($gid)){
+      $url = URL::fromUserInput('/project/' . $gid . '#updates');
+      $redir = new RedirectResponse($url->toString());
+      $redir->send();
+    } else {
+      ksm($results);
+    }
+  }
 }
