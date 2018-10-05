@@ -78,7 +78,6 @@
     'clearfix',
   ]
 %}
-
 <article{{ attributes.addClass(classes) }}>
   {{ title_prefix }}
   {% if not page %}
@@ -95,6 +94,9 @@
      project update by <br/> {{ author_name }}
    </div>
   {% endif %}
+
+  <div class="date">{{ date }}</div> 
+
 
   <div{{ content_attributes.addClass('content') }}>
     {{ content }}

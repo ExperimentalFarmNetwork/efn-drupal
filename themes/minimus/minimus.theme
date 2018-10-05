@@ -112,3 +112,11 @@ function minimus_preprocess_page_title(&$variables) {
     $variables['title']['#markup'] = 'Email Project members';
   }
 }
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function minimus_preprocess_node__project_update(&$variables) {
+  $variables['date'] = \Drupal::service('date.formatter')->format($variables['node']->getCreatedTime(), 'long');
+
+}
