@@ -31,7 +31,7 @@ function minimus_preprocess_comment(&$variables) {
 function getAuthorpic($user, $profile_type){
   $profile = \Drupal::entityManager()->getStorage('profile')
     ->loadByUser($user, $profile_type);
-  if ($profile->field_user_image->getValue()) {
+  if (!empty($profile) && !empty($profile->field_user_image->getValue())) {
     $file_uri = $profile->field_user_image->entity->getFileUri();
     $pic  = \Drupal\image\Entity\ImageStyle::load('80x80')->buildUri($file_uri);
     return $pic;

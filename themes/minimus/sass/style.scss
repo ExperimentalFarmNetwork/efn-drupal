@@ -42,6 +42,11 @@ h1.page-header, button, nav, h2, h3{
 	font-family: "open_sanslight", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+.date {
+	margin-bottom: 13px;
+
+}
+
 // fix for overlapping main container
 .col-sm-12{
 	float:none;
@@ -55,6 +60,12 @@ h1.page-header, button, nav, h2, h3{
 // forms
 .help-block {
 	font-size:.8em;
+}
+
+.image-widget {
+	.form-file.form-control {
+		height: auto;
+	}
 }
 
 // Header

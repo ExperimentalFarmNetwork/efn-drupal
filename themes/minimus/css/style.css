@@ -6350,6 +6350,9 @@ a {
 h1.page-header, button, nav, h2, h3 {
   font-family: "open_sanslight", "Helvetica Neue", Helvetica, Arial, sans-serif; }
 
+.date {
+  margin-bottom: 13px; }
+
 .col-sm-12 {
   float: none;
   background: #fff;
@@ -6359,6 +6362,9 @@ h1.page-header, button, nav, h2, h3 {
 
 .help-block {
   font-size: .8em; }
+
+.image-widget .form-file.form-control {
+  height: auto; }
 
 header.navbar-default {
   background: #242029;
