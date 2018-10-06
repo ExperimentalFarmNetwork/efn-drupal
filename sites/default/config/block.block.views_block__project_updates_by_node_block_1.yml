@@ -27,7 +27,7 @@ settings:
 visibility:
   request_path:
     id: request_path
-    pages: "/group/*/join\r\n/group/*/members\r\n!/project/*/members/mail\r\n/group/*/content\r\n/group/*/nodes"
+    pages: "/group/*/join\r\n/group/*/members\r\n/project/*/members/mail\r\n/group/*/content/*\r\n/group/*/nodes\r\n/group/*/content/create/group_node"
     negate: true
     context_mapping: {  }
   group_type:
