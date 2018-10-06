@@ -13,3 +13,7 @@ permissions:
   - 'access site-wide contact form'
   - 'access user profiles'
   - 'edit own main profile'
+  - 'view main profile'
+  - 'view profile'
+  - 'view researcher profile'
+  - 'view volunteer profile'
