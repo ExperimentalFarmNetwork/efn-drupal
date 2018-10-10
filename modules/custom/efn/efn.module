@@ -130,38 +130,26 @@ function efn_form_group_project_edit_form_alter(&$form, FormStateInterface &$for
   $form['actions']['submit']['#value'] = t('Save changes');
 }
 
-// Add tabs for mass email and csv export
+// Edit profile tabs.
 
 /**
  * Implements hook_local_tasks_alter()
  */
 function efn_menu_local_tasks_alter(&$data, $route_name) {
-  if ($route_name == 'entity.user.collection') {
-    // Add a tab linking to node/add to all pages.
-    $data['tabs'][0]['view.user_admin_people.page_2'] = [
-      '#theme' => 'menu_local_task',
-      '#link' => [
-        'title' => t('Email Users'),
-        'url' => Url::fromRoute('view.user_admin_people.page_2'),
-        'localized_options' => [
-          'attributes' => [
-            'title' => t('Email Users'),
-          ],
-        ],
-      ],
-    ];
-    $data['tabs'][0]['view.user_admin_people.rest_export_1'] = [
-      '#theme' => 'menu_local_task',
-      '#link' => [
-        'title' => t('Export Users'),
-        'url' => Url::fromRoute('view.user_admin_people.rest_export_1'),
-        'localized_options' => [
-          'attributes' => [
-            'title' => t('Export Users'),
-          ],
-        ],
-      ],
-    ];
+  foreach ($data['tabs'] as &$tabs) {
+    foreach ($tabs as &$tab) {
+      $route_name = $tab['#link']['url']->getRouteName();
+      if ($route_name == 'entity.profile.type.user_profile_form') {
+        // $tab['#link']['title'] = t('View profile');
+        $tab['#link']['title'] = "Edit " . $tab['#link']['title'];
+      }
+      elseif ($route_name == 'entity.user.edit_form') {
+        $tab['#link']['title'] = "Edit Account";
+      }
+      elseif ($route_name == 'entity.user.contact_form') {
+        $tab['#weight'] = 101;
+      }
+    }
   }
 }
 

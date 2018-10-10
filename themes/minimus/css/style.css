@@ -6363,7 +6363,7 @@ h1.page-header, button, nav, h2, h3 {
 .help-block {
   font-size: .8em; }
 
-.image-widget .form-file.form-control {
+.form-file.form-control {
   height: auto; }
 
 header.navbar-default {
