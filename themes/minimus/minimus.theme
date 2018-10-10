@@ -47,6 +47,12 @@ function minimus_preprocess_group(&$variables, $hook){
   }
 
 }
+function minimus_preprocess_page__user(&$variables, $hook){
+  $route = \Drupal::routeMatch()->getRouteName();
+  if ($route == 'entity.user.canonical') {
+    $variables['show_contact'] = true;
+  }
+}
 
 // Project header image for page--group.html.twig
 function minimus_preprocess_page__group(&$variables, $hook){

@@ -31,7 +31,7 @@ function efn_users_form_profile_form_alter(&$form, \Drupal\Core\Form\FormStateIn
 			// deny access to non -owners of form
 			$form["#access"]=FALSE;
 		}
-		$form['actions']['set_default']['#access']=FALSE;		
+		$form['actions']['set_default']['#access']=FALSE;
 	}
 
 }
