@@ -11,13 +11,16 @@ class RouteSubscriber extends RouteSubscriberBase {
    * {@inheritdoc}
    */
   public function alterRoutes(RouteCollection $collection) {
-    // Change path of mymodule.mypage to use a hyphen
     if ($route = $collection->get('entity.group.add_form')) {
-        // set the title (or override '_title_callback' below)
+        // set the title
         $route->setDefault('_title', 'Start a Project');
-        // // unset the _title_callback; alternatively you could override it here
+        // // unset the _title_callback;
+        $route->setDefault('_title_callback', '');
+    }
+    if ($route = $collection->get('entity.profile.type.user_profile_form')) {
+        // Note: get username and put it here
+        $route->setDefault('_title', 'Edit profile');
         $route->setDefault('_title_callback', '');
     }
   }
-
 }
