@@ -39,7 +39,6 @@ function getAuthorpic($user, $profile_type){
   return NULL;
 }
 
-
 function minimus_preprocess_group(&$variables, $hook){
 
   if ((\Drupal::routeMatch()->getRouteName() === 'entity.group.canonical' || \Drupal::routeMatch()->getRouteName() === 'entity.group.edit_form')) {
@@ -155,4 +154,11 @@ function minimus_preprocess_views_view(&$variables) {
   if ($variables['id'] == 'profiles'){
     unset($variables['title']);
   }
+}
+
+function minimus_menu__account(&$variables) {
+  // ksm($variables);
+  $variables['items']['user.logout']['attributes'] = [
+  'class' => ['use-ajax'],
+  'data-dialog-type' => 'modal'];
 }

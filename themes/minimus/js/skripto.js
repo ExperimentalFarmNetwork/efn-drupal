@@ -22,24 +22,10 @@
         });
       }
     }
-        // Put header image in background of group pages
-
-    // if (($("body").hasClass('path-group')) && $('.field--name-field-project-image')) {
-    //     var headerImg = $(".path-group .field--name-field-project-image img").attr('src');
-    //     $(".group-header").css({
-    //         'background': 'url(' + headerImg + ')',
-    //         'background-size': ' cover',
-    //         'background-repeat': 'no-repeat'
-    //     });
-    //
-    // }
-    // if (!$('.field--name-field-project-image').length) {
-    //     $(".group-header").remove();
-    // }
 
     // user icons
-    $("[data-drupal-link-system-path='user']").before('<a href="/user" class="glyphicon glyphicon-user"></a>');
-    $("[data-drupal-link-system-path='user/logout']").before('<a href="/user" class="glyphicon glyphicon-log-out"></a>');
+    // $("[data-drupal-link-system-path='user']").before('<a href="/user" class="glyphicon glyphicon-user"></a>');
+    // $("[data-drupal-link-system-path='user/logout']").before('<a href="/user" class="glyphicon glyphicon-log-out"></a>');
 
     // Volunteer Profile other checkbox
     $("input#edit-field-growing-experience-other").click(function(event) {

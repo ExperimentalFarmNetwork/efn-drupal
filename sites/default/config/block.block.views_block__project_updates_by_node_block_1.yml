@@ -5,7 +5,6 @@ dependencies:
   config:
     - views.view.project_updates_by_node
   module:
-    - group
     - system
     - views
   theme:
@@ -27,13 +26,6 @@ settings:
 visibility:
   request_path:
     id: request_path
-    pages: "!/group/*/j*\r\n!/project/*/j*\r\n!/group/*/m*\r\n!/project/*/m*\r\n!/group/*/c*\r\n!/project/*/c*\r\n!/group/*/n*\r\n!/project/*/n*\r\n/group/*\r\n/project/*"
+    pages: "/group/*\r\n/project/*\r\n/project/*#*\r\n!/group/*/j*\r\n!/project/*/j*\r\n!/group/*/m*\r\n!/project/*/m*\r\n!/group/*/c*\r\n!/project/*/c*\r\n!/group/*/n*\r\n!/project/*/n*\r\n!/group/*/e*\r\n!/project/*/e*\r\n!/group/*/d*\r\n!/project/*/d*"
     negate: false
     context_mapping: {  }
-  group_type:
-    id: group_type
-    group_types:
-      project: project
-    negate: false
-    context_mapping:
-      group: '@group.group_route_context:group'

@@ -1,0 +1,24 @@
+uuid: 55d22687-43b5-4e67-9a87-a48b0adceb79
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.account_menu
+  module:
+    - views
+  theme:
+    - minimus
+id: views_block__account_menu_block_1
+theme: minimus
+region: navigation_collapsible
+weight: 0
+provider: null
+plugin: 'views_block:account_menu-block_1'
+settings:
+  id: 'views_block:account_menu-block_1'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+  items_per_page: none
+visibility: {  }

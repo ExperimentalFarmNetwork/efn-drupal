@@ -1,5 +1,5 @@
-notify: false
+notify: true
 enable_scroll: true
-reply_autoclose: false
+reply_autoclose: true
 _core:
   default_config_hash: jjK2KuhE1deP19YD1H0v_8wtqSwcxuV3IOcPbf6gBzs

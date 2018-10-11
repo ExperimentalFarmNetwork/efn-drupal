@@ -70,6 +70,10 @@ h1.page-header, button, nav, h2, h3{
 	float:right;
 }
 
+.btn-contact {
+	margin: 1em;
+}
+
 // Header
 header.navbar-default{
 	background: $du-dark;
@@ -85,12 +89,12 @@ header.navbar-default{
 			transition:.3s cubic-bezier(0.4, 0, 0.2, 1);
 		}
 	}
-	#block-minimus-account-menu, #block-newproject, #block-newprojectbutton{
+	#block-minimus-account-menu, #block-newproject, #block-newprojectbutton, #block-views-block-account-menu-block-1{
 		display:inline-table;
 	}
 	#block-newproject, #block-newprojectbutton{
 		position: relative;
-		bottom: 10px;
+		bottom: 5px;
 		.field--name-body{
 			a{
 				background:$du-asparagus;
@@ -102,6 +106,57 @@ header.navbar-default{
 			}
 		}
 	}
+
+	#block-views-block-account-menu-block-1 {
+		.views-row, .view-empty {
+			display:flex;
+			font-size:.7em;
+			margin-left:2em;
+			margin-top:12px;
+			.views-field {
+				width: 60px;
+				margin-right: 5px;
+				text-align: center;
+			}
+			.views-field-field-user-image{
+				img {
+	 				border-radius: 50%;
+	 			}
+			}
+			a{
+				color: $du-green;
+				text-transform: uppercase;
+				border-bottom:thin solid $du-asparagus;
+				padding:0;
+				&:hover{
+					color:$du-orange;
+				}
+				&.img-responsive,&.glyphicon-log-out{
+					text-align:center;
+					border-bottom:0;
+					color:$gray-light;
+					margin-right:15px;
+				}
+				&.account-link,
+				&.logout{
+					border-bottom:0;
+					padding-top:.2em;
+				}
+			}
+			.glyphicon-log-out::before {
+				font-size:20px;
+			}
+		}
+		.view-empty {
+			margin-top: 22px;
+			a {
+				font-size: 19px;
+				line-height: 27px;
+			}
+		}
+	}
+
+	// clean up this block obsolete?
 	ul.navbar-nav{
 		margin-left:2em;
 		margin-top:22px;

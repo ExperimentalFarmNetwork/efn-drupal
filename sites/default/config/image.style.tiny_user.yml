@@ -1,0 +1,15 @@
+uuid: df1a30e1-6d19-426e-8fe5-8c73ecd5a60a
+langcode: en
+status: true
+dependencies: {  }
+name: tiny_user
+label: 'Tiny User'
+effects:
+  0545fee6-919c-44f5-aac5-b3ba7a3d8503:
+    uuid: 0545fee6-919c-44f5-aac5-b3ba7a3d8503
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 45
+      height: 45
+      anchor: center-center

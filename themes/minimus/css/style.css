@@ -6369,6 +6369,9 @@ h1.page-header, button, nav, h2, h3 {
 .btn-group > .btn + .dropdown-toggle {
   float: right; }
 
+.btn-contact {
+  margin: 1em; }
+
 header.navbar-default {
   background: #242029;
   border-bottom: #A4AD23 3px solid;
@@ -6379,17 +6382,50 @@ header.navbar-default {
     height: 50px;
     margin: 5px;
     transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-  header.navbar-default #block-minimus-account-menu, header.navbar-default #block-newproject, header.navbar-default #block-newprojectbutton {
+  header.navbar-default #block-minimus-account-menu, header.navbar-default #block-newproject, header.navbar-default #block-newprojectbutton, header.navbar-default #block-views-block-account-menu-block-1 {
     display: inline-table; }
   header.navbar-default #block-newproject, header.navbar-default #block-newprojectbutton {
     position: relative;
-    bottom: 10px; }
+    bottom: 5px; }
     header.navbar-default #block-newproject .field--name-body a, header.navbar-default #block-newprojectbutton .field--name-body a {
       background: #3B4A59;
       color: #A4AD23; }
       header.navbar-default #block-newproject .field--name-body a:ohver, header.navbar-default #block-newprojectbutton .field--name-body a:ohver {
         background: #418261;
         color: #242029; }
+  header.navbar-default #block-views-block-account-menu-block-1 .views-row, header.navbar-default #block-views-block-account-menu-block-1 .view-empty {
+    display: flex;
+    font-size: .7em;
+    margin-left: 2em;
+    margin-top: 12px; }
+    header.navbar-default #block-views-block-account-menu-block-1 .views-row .views-field, header.navbar-default #block-views-block-account-menu-block-1 .view-empty .views-field {
+      width: 60px;
+      margin-right: 5px;
+      text-align: center; }
+    header.navbar-default #block-views-block-account-menu-block-1 .views-row .views-field-field-user-image img, header.navbar-default #block-views-block-account-menu-block-1 .view-empty .views-field-field-user-image img {
+      border-radius: 50%; }
+    header.navbar-default #block-views-block-account-menu-block-1 .views-row a, header.navbar-default #block-views-block-account-menu-block-1 .view-empty a {
+      color: #418261;
+      text-transform: uppercase;
+      border-bottom: thin solid #3B4A59;
+      padding: 0; }
+      header.navbar-default #block-views-block-account-menu-block-1 .views-row a:hover, header.navbar-default #block-views-block-account-menu-block-1 .view-empty a:hover {
+        color: #FFA100; }
+      header.navbar-default #block-views-block-account-menu-block-1 .views-row a.img-responsive, header.navbar-default #block-views-block-account-menu-block-1 .views-row a.glyphicon-log-out, header.navbar-default #block-views-block-account-menu-block-1 .view-empty a.img-responsive, header.navbar-default #block-views-block-account-menu-block-1 .view-empty a.glyphicon-log-out {
+        text-align: center;
+        border-bottom: 0;
+        color: #777777;
+        margin-right: 15px; }
+      header.navbar-default #block-views-block-account-menu-block-1 .views-row a.account-link, header.navbar-default #block-views-block-account-menu-block-1 .views-row a.logout, header.navbar-default #block-views-block-account-menu-block-1 .view-empty a.account-link, header.navbar-default #block-views-block-account-menu-block-1 .view-empty a.logout {
+        border-bottom: 0;
+        padding-top: .2em; }
+    header.navbar-default #block-views-block-account-menu-block-1 .views-row .glyphicon-log-out::before, header.navbar-default #block-views-block-account-menu-block-1 .view-empty .glyphicon-log-out::before {
+      font-size: 20px; }
+  header.navbar-default #block-views-block-account-menu-block-1 .view-empty {
+    margin-top: 22px; }
+    header.navbar-default #block-views-block-account-menu-block-1 .view-empty a {
+      font-size: 19px;
+      line-height: 27px; }
   header.navbar-default ul.navbar-nav {
     margin-left: 2em;
     margin-top: 22px; }

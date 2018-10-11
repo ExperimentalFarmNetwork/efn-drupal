@@ -335,7 +335,7 @@ function efn_comment_insert($comment) {
       $module = 'efn';
       $key = 'comment_insert';
       $to = $mail;
-      // $to = 'onion@riseup.net'; // Use this override to test
+      $to = 'onion@riseup.net'; // Use this override to test
 
       $author = $comment->getOwner()->getDisplayName();
       $title = $entity->getTitle();
