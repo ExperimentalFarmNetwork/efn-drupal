@@ -6366,6 +6366,9 @@ h1.page-header, button, nav, h2, h3 {
 .form-file.form-control {
   height: auto; }
 
+.btn-group > .btn + .dropdown-toggle {
+  float: right; }
+
 header.navbar-default {
   background: #242029;
   border-bottom: #A4AD23 3px solid;

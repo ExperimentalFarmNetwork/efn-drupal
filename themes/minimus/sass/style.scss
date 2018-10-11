@@ -66,6 +66,10 @@ h1.page-header, button, nav, h2, h3{
 	height: auto;
 }
 
+.btn-group > .btn + .dropdown-toggle {
+	float:right;
+}
+
 // Header
 header.navbar-default{
 	background: $du-dark;
