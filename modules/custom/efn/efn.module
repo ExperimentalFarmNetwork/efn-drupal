@@ -195,6 +195,9 @@ function efn_entity_insert(EntityInterface $entity) {
      }
    }
 
+   // Add group owner
+   $mails[] = $group->getOwner()->getEmail();
+
    // Loop through them all and send them all an email
    $mailManager = \Drupal::service('plugin.manager.mail');
    foreach ($mails as $key => $mail) {
@@ -210,7 +213,7 @@ function efn_entity_insert(EntityInterface $entity) {
      $message .= "\n" . $author . " just published: " . $title;
      $message .= "\n\n" . html_entity_decode(strip_tags(($entity->get('body')->value)));
      $message .= "\n\n * " . $group_title . ": https://www.experimentalfarmnetwork.org/project/" . $gid . " *";
-     // $message .= "\n\n Should have gone to: ". $mail . "\n";
+     // $message .= "\n\n Should have gone to: ". implode(",", $mails) . "\n";
 
      $params['message'] = t($message);
      $params['title'] = "✭✭✭ New EFN Project Update: " . $title ."✭✭✭";
