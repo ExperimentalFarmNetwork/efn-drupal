@@ -128,7 +128,7 @@ function minimus_preprocess_node__project_update(&$variables) {
   $variables['date'] = \Drupal::service('date.formatter')->format($variables['node']->getCreatedTime(), 'long');
   $entity_id = $variables['node']->id();
 
-  if ($variables['view_mode'] = 'full') {
+  if ($variables['view_mode'] = 'full' && \Drupal::routeMatch()->getRouteName() === 'entity.node.canonical') {
     $query = \Drupal::database()
     ->select('group_content_field_data', 'gc')
     ->fields('gc', ['gid'])
