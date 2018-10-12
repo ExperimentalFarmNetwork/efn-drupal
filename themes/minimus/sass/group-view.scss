@@ -1,10 +1,19 @@
-body.path-group .bump-title h1 {
+body.path-group{
+  .bump-title h1 {
     position: absolute;
-    top: -110px;
+    top: -109px;
     left: 30px;
     background: #242029;
     color: #A4AD23;
     padding: 10px 15px;
     font-weight: 100;
-    // border-bottom: #FFA100 thin solid;
+    @media screen and (max-width:485px){
+      top: -255px;
+    }
+  }
+  .group-header {
+    @media screen and (max-width:485px){
+      height: 250px;
+    }
+  }
 }

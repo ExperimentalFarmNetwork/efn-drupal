@@ -6372,27 +6372,47 @@ h1.page-header, button, nav, h2, h3 {
 .btn-contact {
   margin: 1em; }
 
+#block-newproject, #block-newprojectbutton, #block-newprojectbutton-2 {
+  position: relative;
+  bottom: 5px; }
+  #block-newproject .field--name-body a, #block-newprojectbutton .field--name-body a, #block-newprojectbutton-2 .field--name-body a {
+    background: #3B4A59;
+    color: #A4AD23; }
+    #block-newproject .field--name-body a:hover, #block-newprojectbutton .field--name-body a:hover, #block-newprojectbutton-2 .field--name-body a:hover {
+      background: #A4AD23;
+      color: #242029; }
+
+#block-newprojectbutton {
+  display: inline-table; }
+  @media screen and (min-width: 767px) and (max-width: 1203px) {
+    #block-newprojectbutton {
+      display: none; } }
+
+#block-newprojectbutton-2 {
+  display: none; }
+  @media screen and (max-width: 1203px) {
+    #block-newprojectbutton-2 {
+      display: block;
+      text-align: center;
+      margin-top: 1rem; }
+      #block-newprojectbutton-2 .field--name-body a {
+        font-size: 2rem; } }
+
 header.navbar-default {
   background: #242029;
   border-bottom: #A4AD23 3px solid;
   text-align: right; }
   header.navbar-default .container-fluid {
     width: 90%; }
+    @media screen and (max-width: 1203px) and (min-width: 766px) {
+      header.navbar-default .container-fluid {
+        width: 100%; } }
   header.navbar-default .navbar-header .logo img {
     height: 50px;
     margin: 5px;
     transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-  header.navbar-default #block-minimus-account-menu, header.navbar-default #block-newproject, header.navbar-default #block-newprojectbutton, header.navbar-default #block-views-block-account-menu-block-1 {
+  header.navbar-default #block-minimus-account-menu, header.navbar-default #block-newproject, header.navbar-default #block-views-block-account-menu-block-1 {
     display: inline-table; }
-  header.navbar-default #block-newproject, header.navbar-default #block-newprojectbutton {
-    position: relative;
-    bottom: 5px; }
-    header.navbar-default #block-newproject .field--name-body a, header.navbar-default #block-newprojectbutton .field--name-body a {
-      background: #3B4A59;
-      color: #A4AD23; }
-      header.navbar-default #block-newproject .field--name-body a:ohver, header.navbar-default #block-newprojectbutton .field--name-body a:ohver {
-        background: #418261;
-        color: #242029; }
   header.navbar-default #block-views-block-account-menu-block-1 .views-row, header.navbar-default #block-views-block-account-menu-block-1 .view-empty {
     display: flex;
     font-size: .7em;
@@ -6426,6 +6446,18 @@ header.navbar-default {
     header.navbar-default #block-views-block-account-menu-block-1 .view-empty a {
       font-size: 19px;
       line-height: 27px; }
+  @media screen and (max-width: 766px) {
+    header.navbar-default #block-views-block-account-menu-block-1 {
+      margin-bottom: 18px; } }
+  header.navbar-default .region-navigation-collapsible {
+    text-align: center; }
+    header.navbar-default .region-navigation-collapsible ul.navbar-nav li a {
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      color: gray;
+      border-bottom: 0; }
+      header.navbar-default .region-navigation-collapsible ul.navbar-nav li a:hover {
+        background-color: #8080801a; }
   header.navbar-default ul.navbar-nav {
     margin-left: 2em;
     margin-top: 22px; }
@@ -6437,15 +6469,6 @@ header.navbar-default {
       padding: 0; }
       header.navbar-default ul.navbar-nav li a:hover {
         color: #FFA100; }
-      header.navbar-default ul.navbar-nav li a.glyphicon-user, header.navbar-default ul.navbar-nav li a.glyphicon-log-out {
-        text-align: center;
-        border-bottom: 0;
-        color: #777777;
-        margin-right: 15px; }
-      header.navbar-default ul.navbar-nav li a[data-drupal-link-system-path='user'], header.navbar-default ul.navbar-nav li a[data-drupal-link-system-path='user/logout'] {
-        font-size: .7em;
-        border-bottom: 0;
-        padding-top: .2em; }
     header.navbar-default ul.navbar-nav > .active > a, header.navbar-default ul.navbar-nav > .active > a:hover, header.navbar-default ul.navbar-nav > .active > a:focus {
       color: #418261;
       background-color: inherit;
@@ -6902,7 +6925,7 @@ body.path-group {
       padding: 3px;
       display: block;
       width: 220px;
-      height: 220px;
+      height: auto;
       background: #efefef;
       margin: 0 auto; }
     .region-sidebar-second .view-project-creator .organizer-name, .region-sidebar-second .view-project-owner .organizer-name {
@@ -6988,8 +7011,8 @@ footer.footer {
           font-size: 1.2em;
           margin: 0 auto;
           width: 6em;
-          font-weight: bold;
-          text-transform: lowercase; }
+          text-transform: uppercase;
+          text-align: center; }
           footer.footer #block-minimus-footer .nav > li > a:hover, footer.footer #block-minimus-footer .nav > li > a:focus {
             background: none; }
 
@@ -7035,7 +7058,7 @@ footer.footer {
 @media screen and (max-width: 767px) {
   button.navbar-toggle {
     margin-top: 16px; } }
-@media screen and (min-width: 768px) and (max-width: 881px) {
+@media screen and (min-width: 768px) and (max-width: 946px) {
   a.logo {
     width: 50px;
     height: 50px;
@@ -7085,18 +7108,6 @@ footer.footer {
     margin-right: 0; }
     .btns.pull-right a {
       width: 300px; } }
-@media all and (max-width: 1132px) {
-  header.navbar-default ul.navbar-right {
-    margin-left: 0; }
-
-  body.user-logged-in header.navbar-default #block-newprojectbutton .field--name-body a {
-    font-size: .01em;
-    line-height: 0;
-    background: none; }
-    body.user-logged-in header.navbar-default #block-newprojectbutton .field--name-body a:after {
-      content: '+';
-      font-size: 31px;
-      line-height: 38px; } }
 @media screen and (max-width: 1297px) {
   .path-frontpage .bnrPic .efntxt_frnt p {
     margin-left: 1em; }
@@ -7139,11 +7150,6 @@ footer.footer {
 @media screen and (min-width: 1104px) and (max-width: 1194px) {
   .view-project .views-row {
     width: 320px !important; } }
-@media screen and (max-width: 1250px) {
-  #navbar [data-drupal-link-system-path="user"], #navbar [data-drupal-link-system-path="user/logout"] {
-    display: none; }
-  #navbar #block-newprojectbutton {
-    bottom: -10px; } }
 @media screen and (min-width: 1300px) and (max-width: 1753px) {
   .view-project .views-row {
     margin: 10px;

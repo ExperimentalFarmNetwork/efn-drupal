@@ -74,6 +74,39 @@ h1.page-header, button, nav, h2, h3{
 	margin: 1em;
 }
 
+#block-newproject, #block-newprojectbutton, #block-newprojectbutton-2{
+	position: relative;
+	bottom: 5px;
+	.field--name-body{
+		a{
+			background:$du-asparagus;
+			color:$du-gold;
+			&:hover{
+				background: $du-gold;
+				color:$du-dark;
+			}
+		}
+	}
+}
+
+#block-newprojectbutton {
+	display: inline-table;
+	@media screen and (min-width:767px) and (max-width:1203px){
+		display: none;
+	}
+}
+#block-newprojectbutton-2 {
+	display: none;
+	@media screen and (max-width:1203px){
+		display: block;
+		text-align: center;
+		margin-top: 1rem;
+		.field--name-body a {
+			font-size: 2rem;
+		}
+	}
+}
+
 // Header
 header.navbar-default{
 	background: $du-dark;
@@ -81,6 +114,9 @@ header.navbar-default{
 	text-align:right;
 	.container-fluid{
 		width:90%;
+		@media screen and (max-width:1203px) and (min-width:766px) {
+			width: 100%;
+		}
 	}
 	.navbar-header{
 		.logo img{
@@ -89,22 +125,8 @@ header.navbar-default{
 			transition:.3s cubic-bezier(0.4, 0, 0.2, 1);
 		}
 	}
-	#block-minimus-account-menu, #block-newproject, #block-newprojectbutton, #block-views-block-account-menu-block-1{
+	#block-minimus-account-menu, #block-newproject, #block-views-block-account-menu-block-1{
 		display:inline-table;
-	}
-	#block-newproject, #block-newprojectbutton{
-		position: relative;
-		bottom: 5px;
-		.field--name-body{
-			a{
-				background:$du-asparagus;
-				color:$du-gold;
-				&:ohver{
-					background: $du-green;
-					color:$du-dark;
-				}
-			}
-		}
 	}
 
 	#block-views-block-account-menu-block-1 {
@@ -154,9 +176,24 @@ header.navbar-default{
 				line-height: 27px;
 			}
 		}
+		@media screen and (max-width:766px){
+			margin-bottom: 18px;
+		}
 	}
 
-	// clean up this block obsolete?
+	// Mobile Nav dropdown
+	.region-navigation-collapsible {
+		text-align: center;
+		ul.navbar-nav li a {
+			margin-bottom: 5px;
+			text-transform: uppercase;
+			color: gray;
+			border-bottom: 0;
+			&:hover {
+				background-color: #8080801a;
+			}
+		}
+	}
 	ul.navbar-nav{
 		margin-left:2em;
 		margin-top:22px;
@@ -170,18 +207,17 @@ header.navbar-default{
 				&:hover{
 					color:$du-orange;
 				}
-				&.glyphicon-user,&.glyphicon-log-out{
-					text-align:center;
-					border-bottom:0;
-					color:$gray-light;
-					margin-right:15px;
-				}
-				&[data-drupal-link-system-path='user'], &[data-drupal-link-system-path='user/logout']{
-					font-size:.7em;
-					border-bottom:0;
-					padding-top:.2em;
-
-				}
+				// &.glyphicon-user,&.glyphicon-log-out{
+				// 	text-align:center;
+				// 	border-bottom:0;
+				// 	color:$gray-light;
+				// 	margin-right:15px;
+				// }
+				// &[data-drupal-link-system-path='user'], &[data-drupal-link-system-path='user/logout']{
+				// 	font-size:.7em;
+				// 	border-bottom:0;
+				// 	padding-top:.2em;
+				// }
 			}
 		}
 		> .active > a {
@@ -822,7 +858,7 @@ body.path-group{
 				padding: 3px;
 				display: block;
 				width: 220px;
-				height: 220px;
+				height: auto;
 				background: #efefef;
 				margin: 0 auto;
 			}
@@ -911,8 +947,8 @@ body.path-group{
 						font-size:1.2em;
 						margin: 0 auto;
 						width: 6em;
-						font-weight:bold;
-						text-transform:lowercase;
+						text-transform: uppercase;
+						text-align: center;
 						&:hover, &:focus{
 							background:none;
 						}
@@ -1006,7 +1042,7 @@ body.path-group{
 		}
 	}
 
-	@media screen and (min-width:768px) and (max-width: 881px) {
+	@media screen and (min-width:768px) and (max-width: 946px) {
 		a.logo{
 			width:50px;
 			height:50px;
@@ -1092,23 +1128,23 @@ body.path-group{
 		}
 	}
 
-	@media all and (max-width: 1132px) {
-		header.navbar-default ul.navbar-right{
-			margin-left: 0;
-		}
-		body.user-logged-in {
-			header.navbar-default #block-newprojectbutton .field--name-body a{
-				font-size: .01em;
-				line-height: 0;
-				background: none;
-				&:after{
-					content:'+';
-					font-size: 31px;
-					line-height: 38px;
-				}
-			}
-		}
-	}
+	// @media all and (max-width: 1132px) {
+	// 	header.navbar-default ul.navbar-right{
+	// 		margin-left: 0;
+	// 	}
+	// 	body.user-logged-in {
+	// 		header.navbar-default #block-newprojectbutton .field--name-body a{
+	// 			font-size: .01em;
+	// 			line-height: 0;
+	// 			background: none;
+	// 			&:after{
+	// 				content:'+';
+	// 				font-size: 31px;
+	// 				line-height: 38px;
+	// 			}
+	// 		}
+	// 	}
+	// }
 
 	@media screen and (max-width: 1297px) {
 		.path-frontpage .bnrPic{
@@ -1187,16 +1223,16 @@ body.path-group{
 		}
 	}
 
-	@media screen and (max-width:1250px){
-		#navbar{
-			[data-drupal-link-system-path="user"], [data-drupal-link-system-path="user/logout"]{
-				display: none;
-			}
-			#block-newprojectbutton{
-				bottom: -10px;
-			}
-		}
-	}
+	// @media screen and (max-width:1250px){
+	// 	#navbar{
+	// 		[data-drupal-link-system-path="user"], [data-drupal-link-system-path="user/logout"]{
+	// 			display: none;
+	// 		}
+	// 		#block-newprojectbutton{
+	// 			bottom: -10px;
+	// 		}
+	// 	}
+	// }
 
 	@media screen and (min-width:1300px) and (max-width:1753px){
 		.view-project .views-row{
