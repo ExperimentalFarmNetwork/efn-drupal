@@ -17,25 +17,31 @@ function minimus_preprocess_node(&$variables) {
   $profile = \Drupal::entityManager()->getStorage('profile')
     ->loadByUser($user, $profile_type);
 
-  $variables['authpic'] = getAuthorpic($user, $profile_type);
+  $variables['authpic'] = getAuthorpic($user, $profile_type, $style);
 }
 
 function minimus_preprocess_comment(&$variables) {
   $profile_type = 'main';
   $user = $variables['comment']->getOwner();
   $style='80x80';
-  $variables['authpic'] = getAuthorpic($user, $profile_type);
+  $variables['authpic'] = getAuthorpic($user, $profile_type, $style);
 }
 
 
-function getAuthorpic($user, $profile_type){
+function getAuthorpic($user, $profile_type, $style){
   $profile = \Drupal::entityManager()->getStorage('profile')
     ->loadByUser($user, $profile_type);
   if (!empty($profile) && !empty($profile->field_user_image->getValue())) {
     $file_uri = $profile->field_user_image->entity->getFileUri();
-    $pic  = \Drupal\image\Entity\ImageStyle::load('80x80')->buildUri($file_uri);
+    $pic  = \Drupal\image\Entity\ImageStyle::load($style)->buildUri($file_uri);
     return $pic;
   }
+  else {
+    $file_uri = "public://default_images/efn_user.png";
+    $pic  = \Drupal\image\Entity\ImageStyle::load($style)->buildUri($file_uri);
+    return $pic;
+  }
+  ksm($user, $profile_type, $style);
   return NULL;
 }
 
