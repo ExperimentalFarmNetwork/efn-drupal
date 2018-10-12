@@ -207,17 +207,6 @@ header.navbar-default{
 				&:hover{
 					color:$du-orange;
 				}
-				// &.glyphicon-user,&.glyphicon-log-out{
-				// 	text-align:center;
-				// 	border-bottom:0;
-				// 	color:$gray-light;
-				// 	margin-right:15px;
-				// }
-				// &[data-drupal-link-system-path='user'], &[data-drupal-link-system-path='user/logout']{
-				// 	font-size:.7em;
-				// 	border-bottom:0;
-				// 	padding-top:.2em;
-				// }
 			}
 		}
 		> .active > a {
@@ -961,30 +950,17 @@ body.path-group{
 
 	// mediaqueries
 
-	@media screen and (max-width:490px) {
+	@media screen and (max-width:515px) {
 		.path-frontpage .bnrPic{
 			height:inherit;
 			.efntxt_frnt{
+				margin-top: 1rem;
 				p{
 					font-size:inherit;
 					padding:0;
 					text-align:center;
 					margin-left:0 !important;
 					width:100%;
-				}
-
-			}
-			.btns.pull-right{
-				margin-top:1em !important;
-			}
-
-		}
-	}
-
-	@media screen and (max-width:490px) {
-		.path-frontpage .bnrPic{
-			.efntxt_frnt{
-				p{
 					img[src="themes/minimus/images/e.png"]{
 						width: 242px;
 					}
@@ -995,6 +971,9 @@ body.path-group{
 						width: 156px;
 					}
 				}
+			}
+			.btns.pull-right{
+				margin-top:1em !important;
 			}
 		}
 	}
@@ -1037,9 +1016,25 @@ body.path-group{
 
 	// 767 = menu breakpoint
 	@media screen and (max-width: 767px) {
-		button.navbar-toggle{
+		.navbar-default button.navbar-toggle{
 			margin-top:16px;
+			border-color: gray;
+			.icon-bar {
+				background-color: gray;
+			}
+			&:hover,
+			&:focus {
+				border-color: $du-orange;
+				background-color: $du-dark;
+				.icon-bar {
+					background-color: $du-orange;
+				}
+			}
 		}
+		.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+    background-color: yellow;
+
+}
 	}
 
 	@media screen and (min-width:768px) and (max-width: 946px) {
@@ -1169,6 +1164,15 @@ body.path-group{
 		}
 	}
 
+	@media screen and (max-width:369px){
+		.view-project .views-row{
+			width: unset !important;
+		}
+		.path-frontpage .bnrPic .btns a {
+			width: auto;
+		}
+	}
+
 	@media screen and (min-width:370px) and (max-width:753px){
 		.view-project .views-row{
 			width: 320px !important;
@@ -1222,17 +1226,6 @@ body.path-group{
 			width: 320px !important;
 		}
 	}
-
-	// @media screen and (max-width:1250px){
-	// 	#navbar{
-	// 		[data-drupal-link-system-path="user"], [data-drupal-link-system-path="user/logout"]{
-	// 			display: none;
-	// 		}
-	// 		#block-newprojectbutton{
-	// 			bottom: -10px;
-	// 		}
-	// 	}
-	// }
 
 	@media screen and (min-width:1300px) and (max-width:1753px){
 		.view-project .views-row{
