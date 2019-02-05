@@ -335,7 +335,7 @@ function efn_comment_insert($comment) {
       $module = 'efn';
       $key = 'comment_insert';
       $to = $mail;
-      $to = 'onion@riseup.net'; // Use this override to test
+      // $to = 'onion@riseup.net'; // Use this override to test
 
       $author = $comment->getOwner()->getDisplayName();
       $title = $entity->getTitle();
@@ -344,8 +344,8 @@ function efn_comment_insert($comment) {
       $message .= "\n" . $author . " just commented on the Project update " . $title . ":";
       $message .= "\n\n" . html_entity_decode(strip_tags(($comment->get('field_comment_body')->value)));
       $message .= "\n\n * " . $group_title . ": https://www.experimentalfarmnetwork.org/project/" . $gid . " *";
-      $message .= "\n\n current email:" . $mail;
-      $message .= "\n\n Should have gone to: ". implode(", ", $mails) . "\n";
+      // $message .= "\n\n current email:" . $mail;
+      // $message .= "\n\n Should have gone to: ". implode(", ", $mails) . "\n";
 
       $params['message'] = t($message);
       $params['title'] = "✎✎✎ New Comment on EFN Project Update: " . $title ."✎✎✎";
