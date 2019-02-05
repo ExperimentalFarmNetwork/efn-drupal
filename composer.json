@@ -15,7 +15,7 @@
         "drupal/geocoder": "^2.0-beta",
         "drupal/geofield": "^1.0",
         "drupal/geophp": "^1.0@beta",
-        "drupal/group": "~1.0",
+        "drupal/group": "^1.0",
         "drupal/profile": "^1.0",
         "drupal/token": "^1.0",
         "symfony/dom-crawler": "2.8.11",

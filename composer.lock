@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e136483b5a8e78e633202a21e1e7271f",
+    "content-hash": "65c12cf6ecb3bb830006d68ffa7192b2",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -3415,8 +3415,7 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/smtp",
                 "issues": "https://www.drupal.org/project/issues/smtp"
-            },
-            "time": "2018-08-03T12:22:22+00:00"
+            }
         },
         {
             "name": "drupal/token",
