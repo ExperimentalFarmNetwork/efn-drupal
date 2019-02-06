@@ -46,6 +46,7 @@ function getAuthorpic($user, $profile_type, $style){
 }
 
 function minimus_preprocess_group(&$variables, $hook){
+  ksm($variables);
 
   if ((\Drupal::routeMatch()->getRouteName() === 'entity.group.canonical' || \Drupal::routeMatch()->getRouteName() === 'entity.group.edit_form')) {
   $variables['#attached']['library'][] = 'minimus/group-view';
@@ -123,6 +124,9 @@ function minimus_address_label($element, $form_state) {
 function minimus_preprocess_page_title(&$variables) {
   if( strpos( $variables['route'], '/members/mail' ) !== false) {
     $variables['title']['#markup'] = 'Email Project members';
+  }
+  if($variables['route'] ==  'group/add/project') {
+    $variables['#attached']['library'][] = 'minimus/group-view';
   }
 }
 
