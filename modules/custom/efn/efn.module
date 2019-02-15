@@ -239,7 +239,7 @@ function efn_entity_insert(EntityInterface $entity) {
    }
  }
  // Notifications for owner when new Group Members.
- if ($entity->bundle() === 'project-group_membership') {
+ if ($entity->bundle() === 'project-group_membership' && ($group = \Drupal::routeMatch()->getParameter('group'))) {
    $group = \Drupal::routeMatch()->getParameter('group');
    $gid =$group->id();
 
