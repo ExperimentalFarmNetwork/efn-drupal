@@ -205,7 +205,7 @@ function efn_entity_insert(EntityInterface $entity) {
      $module = 'efn';
      $key = 'node_insert';
      $to = $mail;
-     // $to = 'onion@riseup.net'; // Use this override to test
+
 
      $author = $entity->getOwner()->getDisplayName();
      $title = $entity->getTitle();
@@ -214,7 +214,8 @@ function efn_entity_insert(EntityInterface $entity) {
      $message .= "\n" . $author . " just published: " . $title;
      $message .= "\n\n" . html_entity_decode(strip_tags(($entity->get('body')->value)));
      $message .= "\n\n * " . $group_title . ": https://www.experimentalfarmnetwork.org/project/" . $gid . " *";
-     // $message .= "\n\n Should have gone to: ". implode(",", $mails) . "\n";
+
+     efn_stopdevmail($message, $to, $mails, $mail);
 
      $params['message'] = t($message);
      $params['title'] = "✭✭✭ New EFN Project Update: " . $title ."✭✭✭";
@@ -250,9 +251,7 @@ function efn_entity_insert(EntityInterface $entity) {
    $mailManager = \Drupal::service('plugin.manager.mail');
    $module = 'efn';
    $key = 'node_insert';
-
    $to = $mail;
-   // $to = 'onion@riseup.net'; // Use this override to test
 
    $group_title = $group->label();
    $uid = $entity->get('entity_id')->getValue()[0]['target_id'];
@@ -262,6 +261,8 @@ function efn_entity_insert(EntityInterface $entity) {
    $message = "➽ New Member Alert:\n";
    $message .= "\n" . $member_name . " just joined: " . $group_title;
    $message .= "\n\n * " . $group_title . ": https://www.experimentalfarmnetwork.org/group/" . $gid . "/members *";
+
+   efn_stopdevmail($message, $to, $mails, $mail);
 
    $params['message'] = t($message);
    $params['title'] = "🙋 New Member in the project: " . $group_title;
@@ -335,7 +336,6 @@ function efn_comment_insert($comment) {
       $module = 'efn';
       $key = 'comment_insert';
       $to = $mail;
-      // $to = 'onion@riseup.net'; // Use this override to test
 
       $author = $comment->getOwner()->getDisplayName();
       $title = $entity->getTitle();
@@ -344,8 +344,8 @@ function efn_comment_insert($comment) {
       $message .= "\n" . $author . " just commented on the Project update " . $title . ":";
       $message .= "\n\n" . html_entity_decode(strip_tags(($comment->get('field_comment_body')->value)));
       $message .= "\n\n * " . $group_title . ": https://www.experimentalfarmnetwork.org/project/" . $gid . " *";
-      // $message .= "\n\n current email:" . $mail;
-      // $message .= "\n\n Should have gone to: ". implode(", ", $mails) . "\n";
+
+      efn_stopdevmail($message, $to, $mails, $mail);
 
       $params['message'] = t($message);
       $params['title'] = "✎✎✎ New Comment on EFN Project Update: " . $title ."✎✎✎";
@@ -386,5 +386,13 @@ function efn_mail($key, &$message, $params) {
       $message['subject'] = $params['title'];
       $message['body'][] = $params['message'];
 			break;
+  }
+}
+
+function efn_stopdevmail(&$message, &$to, $mails, $mail) {
+  if ($_SERVER['HTTP_HOST'] != 'experimentalfarmnetwork.org') {
+    $to = 'onion@radicante.media';
+    $message .= "\n\n current email:" . $mail;
+    $message .= "\n\n Should have gone to: ". implode(", ", $mails) . "\n";
   }
 }
