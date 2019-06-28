@@ -77,10 +77,10 @@
 
   <mark class="hidden" data-comment-timestamp="{{ new_indicator_timestamp }}"></mark>
     {% if title %}
-      <div class="commentAuthor"{{ title_attributes }} id="comment-form"><img src="{{ file_url(authpic) }}"><br/> 
+      <div class="commentAuthor"{{ title_attributes }} id="comment-form"><img src="{{ file_url(authpic) }}"><br/>
       </div>
     {% endif %}
-    <div class="authsays">{{ author }}says:</div>
+    <div class="authsays">{{ author }} says:</div>
     {{ content.field_comment_body }}
     <footer>
     {#
