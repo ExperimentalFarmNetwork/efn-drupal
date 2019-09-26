@@ -359,6 +359,44 @@
         ]
     },
     {
+        "name": "brumann/polyfill-unserialize",
+        "version": "v1.0.4",
+        "version_normalized": "1.0.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/dbrumann/polyfill-unserialize.git",
+            "reference": "8ed1cd343ddc134a7ef649aca0aa0fe2a1b45008"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/dbrumann/polyfill-unserialize/zipball/8ed1cd343ddc134a7ef649aca0aa0fe2a1b45008",
+            "reference": "8ed1cd343ddc134a7ef649aca0aa0fe2a1b45008",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^5.3|^7.0"
+        },
+        "time": "2019-07-14T23:16:24+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Brumann\\Polyfill\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Denis Brumann",
+                "email": "denis.brumann@sensiolabs.de"
+            }
+        ],
+        "description": "Backports unserialize options introduced in PHP 7.0 to older PHP versions."
+    },
+    {
         "name": "commerceguys/addressing",
         "version": "v1.0.1",
         "version_normalized": "1.0.1.0",
@@ -1656,18 +1694,18 @@
     },
     {
         "name": "drupal/bootstrap",
-        "version": "3.13.0",
-        "version_normalized": "3.13.0.0",
+        "version": "3.20.0",
+        "version_normalized": "3.20.0.0",
         "source": {
             "type": "git",
             "url": "https://git.drupalcode.org/project/bootstrap.git",
-            "reference": "8.x-3.13"
+            "reference": "8.x-3.20"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/bootstrap-8.x-3.13.zip",
-            "reference": "8.x-3.13",
-            "shasum": "a75f0cd8e8b115282b419ca143d7810be1a4f5f3"
+            "url": "https://ftp.drupal.org/files/projects/bootstrap-8.x-3.20.zip",
+            "reference": "8.x-3.20",
+            "shasum": "dc8ecfca0b8e8e3598ba611e056f850f2ab497cb"
         },
         "require": {
             "drupal/core": "~8.0"
@@ -1678,8 +1716,8 @@
                 "dev-3.x": "3.x-dev"
             },
             "drupal": {
-                "version": "8.x-3.13",
-                "datestamp": "1536786480",
+                "version": "8.x-3.20",
+                "datestamp": "1561055630",
                 "security-coverage": {
                     "status": "covered",
                     "message": "Covered by Drupal's security advisory policy"
@@ -1706,10 +1744,6 @@
                 "name": "Fabiano Sant'Ana (wundo)",
                 "homepage": "https://www.drupal.org/u/wundo",
                 "role": "Co-maintainer"
-            },
-            {
-                "name": "wundo",
-                "homepage": "https://www.drupal.org/user/25523"
             }
         ],
         "description": "Built to use Bootstrap, a sleek, intuitive, and powerful front-end framework for faster and easier web development.",
@@ -2236,17 +2270,17 @@
     },
     {
         "name": "drupal/core",
-        "version": "8.6.5",
-        "version_normalized": "8.6.5.0",
+        "version": "8.6.11",
+        "version_normalized": "8.6.11.0",
         "source": {
             "type": "git",
             "url": "https://github.com/drupal/core.git",
-            "reference": "b66c9334d4a4264589c8b8a2fef73eefcb34a26e"
+            "reference": "95233343dca7d0276b800ec2a1d9a3e7d0fc622d"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/drupal/core/zipball/b66c9334d4a4264589c8b8a2fef73eefcb34a26e",
-            "reference": "b66c9334d4a4264589c8b8a2fef73eefcb34a26e",
+            "url": "https://api.github.com/repos/drupal/core/zipball/95233343dca7d0276b800ec2a1d9a3e7d0fc622d",
+            "reference": "95233343dca7d0276b800ec2a1d9a3e7d0fc622d",
             "shasum": ""
         },
         "require": {
@@ -2289,7 +2323,8 @@
             "symfony/translation": "~3.4.0",
             "symfony/validator": "~3.4.0",
             "symfony/yaml": "~3.4.5",
-            "twig/twig": "^1.35.0",
+            "twig/twig": "^1.38.2",
+            "typo3/phar-stream-wrapper": "^2.0.1",
             "zendframework/zend-diactoros": "^1.1",
             "zendframework/zend-feed": "^2.4"
         },
@@ -2418,7 +2453,7 @@
             "symfony/debug": "^3.4.0",
             "symfony/phpunit-bridge": "^3.4.3"
         },
-        "time": "2019-01-02T21:52:52+00:00",
+        "time": "2019-03-13T20:52:10+00:00",
         "type": "drupal-core",
         "extra": {
             "merge-plugin": {
@@ -8905,6 +8940,54 @@
         "homepage": "https://twig.symfony.com",
         "keywords": [
             "templating"
+        ]
+    },
+    {
+        "name": "typo3/phar-stream-wrapper",
+        "version": "v2.1.2",
+        "version_normalized": "2.1.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/TYPO3/phar-stream-wrapper.git",
+            "reference": "057622f5a3b92a5ffbea0fbaadce573500a62870"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/TYPO3/phar-stream-wrapper/zipball/057622f5a3b92a5ffbea0fbaadce573500a62870",
+            "reference": "057622f5a3b92a5ffbea0fbaadce573500a62870",
+            "shasum": ""
+        },
+        "require": {
+            "brumann/polyfill-unserialize": "^1.0",
+            "ext-json": "*",
+            "php": "^5.3.3|^7.0"
+        },
+        "require-dev": {
+            "ext-xdebug": "*",
+            "phpunit/phpunit": "^4.8.36"
+        },
+        "suggest": {
+            "ext-fileinfo": "For PHP builtin file type guessing, otherwise uses internal processing"
+        },
+        "time": "2019-05-14T13:14:31+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "TYPO3\\PharStreamWrapper\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "description": "Interceptors for PHP's native phar:// stream handling",
+        "homepage": "https://typo3.org/",
+        "keywords": [
+            "phar",
+            "php",
+            "security",
+            "stream-wrapper"
         ]
     },
     {

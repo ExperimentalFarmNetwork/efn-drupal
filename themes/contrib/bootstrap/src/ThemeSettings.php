@@ -2,6 +2,8 @@
 
 namespace Drupal\bootstrap;
 
+use Drupal\bootstrap\Plugin\Setting\DeprecatedSettingInterface;
+use Drupal\bootstrap\Plugin\Setting\SettingInterface;
 use Drupal\Core\Theme\ThemeSettings as CoreThemeSettings;
 use Drupal\Component\Utility\DiffArray;
 use Drupal\Component\Utility\NestedArray;
@@ -26,6 +28,13 @@ class ThemeSettings extends Config {
   protected $defaults;
 
   /**
+   * A list of deprecated settings, keyed by the newer setting name.
+   *
+   * @var array
+   */
+  protected $deprecated;
+
+  /**
    * The current theme object.
    *
    * @var \Drupal\bootstrap\Theme
@@ -33,11 +42,36 @@ class ThemeSettings extends Config {
   protected $theme;
 
   /**
+   * A list of available Setting plugins.
+   *
+   * @var \Drupal\bootstrap\Plugin\Setting\SettingInterface[]
+   */
+  protected $settings;
+
+  /**
    * {@inheritdoc}
    */
   public function __construct(Theme $theme) {
     parent::__construct($theme->getName() . '.settings', \Drupal::service('config.storage'), \Drupal::service('event_dispatcher'), \Drupal::service('config.typed'));
     $this->theme = $theme;
+
+    // Retrieve the available settings.
+    $this->settings = $theme->getSettingPlugin();
+
+    // Filter out the deprecated settings.
+    /** @var \Drupal\bootstrap\Plugin\Setting\DeprecatedSettingInterface[] $deprecated */
+    $deprecated = array_filter($this->settings, function ($setting) {
+      return $setting instanceof DeprecatedSettingInterface;
+    });
+
+    $this->deprecated = [];
+    foreach ($deprecated as $deprecatedName => $deprecatedSetting) {
+      $key = $deprecatedSetting->getDeprecatedReplacementSetting()->getPluginId();
+      if (!isset($this->deprecated[$key])) {
+        $this->deprecated[$key] = [];
+      }
+      $this->deprecated[$key][$deprecatedName] = $deprecatedSetting;
+    }
 
     // Retrieve cache.
     $cache = $theme->getCache('settings');
@@ -53,8 +87,12 @@ class ThemeSettings extends Config {
     $this->defaults = \Drupal::config('system.theme.global')->get();
 
     // Retrieve the theme setting plugin discovery defaults (code).
-    foreach ($theme->getSettingPlugin() as $name => $setting) {
-      $this->defaults[$name] = $setting->getDefaultValue();
+    foreach ($this->settings as $name => $deprecatedSetting) {
+      // Deprecated settings shouldn't provide default values, only set values.
+      if ($deprecatedSetting instanceof DeprecatedSettingInterface) {
+        continue;
+      }
+      $this->defaults[$name] = $deprecatedSetting->getDefaultValue();
     }
 
     // Retrieve the theme ancestry.
@@ -93,9 +131,73 @@ class ThemeSettings extends Config {
     else {
       $value = parent::get($key);
       if (!isset($value)) {
+        $value = $this->getDeprecatedValue($key);
+      }
+      if (!isset($value)) {
         $value = $this->getOriginal($key);
       }
     }
+    return $value;
+  }
+
+  /**
+   * Retrieves a deprecated value from other setting(s).
+   *
+   * @param string $key
+   *   The name of the setting to retrieve a deprecated value for.
+   *
+   * @return mixed
+   *   A value from deprecated setting(s) or NULL if there is no deprecated
+   *   value currently in use.
+   */
+  protected function getDeprecatedValue($key) {
+    $value = NULL;
+
+    // Immediately return if no deprecated settings to extract a values from.
+    if (!isset($this->settings[$key]) || empty($this->deprecated[$key])) {
+      return $value;
+    }
+
+    $setting = $this->settings[$key];
+    $deprecatedSettings = $this->deprecated[$key];
+
+    $values = [];
+    foreach (array_keys($deprecatedSettings) as $deprecatedName) {
+      $deprecatedValue = $this->get($deprecatedName);
+      if (isset($deprecatedValue)) {
+        $values[$deprecatedName] = $deprecatedValue;
+      }
+    }
+
+    // Immediately return if there are no deprecated values to process.
+    if (!$values) {
+      return $value;
+    }
+
+    // Let the new setting handle how it should process the deprecated values.
+    $value = $setting->processDeprecatedValues($values, $deprecatedSettings);
+
+    // Deprecated value(s) found, show a message and then migrate them.
+    if (isset($value)) {
+      if (count($values) > 1) {
+        Bootstrap::deprecated(NULL, NULL, t('The following theme settings have been deprecated and should no longer be used: "%deprecated". The values have been converted automatically for use with the supported theme setting "%name" instead. The configuration for the site should be exported to accommodate this change.', [
+          '%deprecated' => implode('", "', array_keys($deprecatedSettings)),
+          '%name' => $key,
+        ]));
+      }
+      else {
+        Bootstrap::deprecated(NULL, NULL, t('The following theme setting has been deprecated and should no longer be used: "%deprecated". The value has been converted automatically for use with the supported theme setting "%name" instead. The configuration for the site should be exported to accommodate this change.', [
+          '%deprecated' => array_keys($deprecatedSettings)[0],
+          '%name' => $key,
+        ]));
+      }
+      $this->set($key, $value);
+      foreach (array_keys($values) as $setting) {
+        $this->clear($setting);
+      }
+      $this->save();
+    }
+
     return $value;
   }
 

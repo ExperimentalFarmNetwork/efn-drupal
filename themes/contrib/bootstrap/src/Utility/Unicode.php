@@ -14,6 +14,34 @@ use Drupal\Component\Utility\Xss;
 class Unicode extends CoreUnicode {
 
   /**
+   * Casts a value to a string, recursively if an array.
+   *
+   * @param mixed $value
+   *   Any value.
+   * @param string $delimiter
+   *   The delimiter to use when joining multiple items in an array.
+   *
+   * @return string
+   *   The cast string.
+   */
+  public static function castToString($value = NULL, $delimiter = '.') {
+    if (is_object($value) && method_exists($value, '__toString')) {
+      return (string) ($value->__toString() ?: '');
+    }
+    if (is_array($value)) {
+      foreach ($value as $key => $item) {
+        $value[$key] = static::castToString($item, $delimiter);
+      }
+      return implode($delimiter, array_filter($value));
+    }
+    // Handle scalar values.
+    if (isset($value) && is_scalar($value) && !is_bool($value)) {
+      return (string) $value;
+    }
+    return '';
+  }
+
+  /**
    * Extracts the hook name from a function name.
    *
    * @param string $string
@@ -63,6 +91,26 @@ class Unicode extends CoreUnicode {
   }
 
   /**
+   * Escapes a delimiter in a string.
+   *
+   * Note: this is primarily useful in situations where dot notation is used
+   * where the values also contain dots, like in a semantic version string.
+   *
+   * @param string $string
+   *   The string to search in.
+   * @param string $delimiter
+   *   The delimiter to escape.
+   *
+   * @return string
+   *   The escaped string.
+   *
+   * @see \Drupal\bootstrap\Utility\Unicode::splitDelimiter()
+   */
+  public static function escapeDelimiter($string, $delimiter = '.') {
+    return str_replace($delimiter, "\\$delimiter", $string);
+  }
+
+  /**
    * Determines if a string of text is considered "simple".
    *
    * @param string $string
@@ -104,6 +152,40 @@ class Unicode extends CoreUnicode {
       $strings[$string_clone] = $simple;
     }
     return $strings[$string_clone];
+  }
+
+  /**
+   * Splits a string by a specified delimiter, allowing them to be escaped.
+   *
+   * Note: this is primarily useful in situations where dot notation is used
+   * where the values also contain dots, like in a semantic version string.
+   *
+   * @param string $string
+   *   The string to split into parts.
+   * @param string $delimiter
+   *   The delimiter used to split the string.
+   * @param bool $escapable
+   *   Flag indicating whether the $delimiter can be escaped using a backward
+   *   slash (\).
+   *
+   * @return array
+   *   An array of strings, split where the specified $delimiter was present.
+   *
+   * @see \Drupal\bootstrap\Utility\Unicode::escapeDelimiter()
+   * @see https://stackoverflow.com/a/6243797
+   */
+  public static function splitDelimiter($string, $delimiter = '.', $escapable = TRUE) {
+    if (!$escapable) {
+      return explode($delimiter, $string);
+    }
+
+    // Split based on delimiter.
+    $parts = preg_split('~\\\\' . preg_quote($delimiter, '~') . '(*SKIP)(*FAIL)|\.~s', $string);
+
+    // Iterate over the parts and remove backslashes from delimiters.
+    return array_map(function ($string) use ($delimiter) {
+      return str_replace("\\$delimiter", $delimiter, $string);
+    }, $parts);
   }
 
 }

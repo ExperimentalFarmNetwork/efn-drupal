@@ -245,7 +245,7 @@ Interface Translation (locale)
 
 JavaScript
 - Théodore Biadala 'nod_' https://www.drupal.org/u/nod_
-- Matthew Grill 'drpal' https://www.drupal.org/u/drpal
+- Matthew Grill 'alwaysworking' https://www.drupal.org/u/alwaysworking
 - Sally Young 'justafish' https://www.drupal.org/u/justafish
 
 Language
@@ -319,7 +319,7 @@ Quick Edit
 - Théodore Biadala 'nod_' https://www.drupal.org/u/nod_
 
 RDF
-- Stéphane Corlosquet 'scor' https://www.drupal.org/u/scor
+- ?
 
 Render API
 - Alex Bronstein 'effulgentsia' https://www.drupal.org/u/effulgentsia
@@ -479,7 +479,7 @@ API-first Initiative
 Admin UI & JavaScript Modernisation Initiative
 - Angela Byron 'webchick' https://www.drupal.org/u/webchick
 - Cristina Chumillas 'ckrina' https://www.drupal.org/u/ckrina
-- Matthew Grill 'drpal' https://www.drupal.org/u/drpal
+- Matthew Grill 'alwaysworking' https://www.drupal.org/u/alwaysworking
 - Sally Young 'justafish' https://www.drupal.org/u/justafish
 
 Layout Initiative
@@ -493,7 +493,6 @@ Out-of-the-Box Initiative
 - Mark Conroy 'markconroy' https://www.drupal.org/u/markconroy
 - Gareth Goodwin 'smaz' https://www.drupal.org/u/smaz
 - Keith Jay 'kjay' https://www.drupal.org/u/kjay
-- Elliot Ward 'eli-t' https://www.drupal.org/u/eli-t
 
 PHPUnit Initiative
 - Daniel Wehner 'dawehner' https://www.drupal.org/u/dawehner

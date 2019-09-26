@@ -200,7 +200,7 @@ class Schemas extends SettingBase {
         '#items' => $results['success'],
         '#context' => ['type' => 'success'],
       ]);
-      drupal_set_message(new FormattableMarkup('@message' . $list->renderPlain(), [
+      Bootstrap::message(new FormattableMarkup('@message' . $list->renderPlain(), [
         '@message' => t('Successfully completed the following theme updates:'),
       ]));
     }
@@ -212,7 +212,7 @@ class Schemas extends SettingBase {
         '#items' => $results['errors'],
         '#context' => ['type' => 'errors'],
       ]);
-      drupal_set_message(new FormattableMarkup('@message' . $list->renderPlain(), [
+      Bootstrap::message(new FormattableMarkup('@message' . $list->renderPlain(), [
         '@message' => t('The following theme updates could not be completed:'),
       ]), 'error');
     }

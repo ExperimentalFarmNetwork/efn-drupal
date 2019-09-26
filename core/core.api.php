@@ -1046,7 +1046,7 @@
  *   more information.
  * - In configuration schema files, you can use the unique ID ('id' annotation)
  *   from any DataType plugin class as the 'type' value for an entry. See the
- *   @link config_api Confuration API topic @endlink for more information.
+ *   @link config_api Configuration API topic @endlink for more information.
  * - If you need to create a typed data object in code, first get the
  *   typed_data_manager service from the container or by calling
  *   \Drupal::typedDataManager(). Then pass the plugin ID to
@@ -1195,12 +1195,11 @@
  * @section running Running tests
  * You can run both Simpletest and PHPUnit tests by enabling the core Testing
  * module (core/modules/simpletest). Once that module is enabled, tests can be
- * run using the core/scripts/run-tests.sh script, using
- * @link https://www.drupal.org/project/drush Drush @endlink, or from the
- *   Testing module user interface.
+ * run on through the Testing module's user interface or on the command line.
  *
- * PHPUnit tests can also be run from the command line, using the PHPUnit
- * framework. See https://www.drupal.org/node/2116263 for more information.
+ * See @link https://www.drupal.org/node/2116263 Running tests with PHPUnit
+ * binary @endlink or @link https://www.drupal.org/node/645286 Running tests
+ * with run-tests.sh @endlink for more information.
  * @}
  */
 

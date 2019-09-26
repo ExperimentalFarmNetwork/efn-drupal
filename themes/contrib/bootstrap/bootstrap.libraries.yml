@@ -23,6 +23,13 @@ drupal.bootstrap:
     - core/drupalSettings
     - bootstrap/framework
 
+dialog:
+  js:
+    js/dialog.js: {}
+  dependencies:
+    - bootstrap/theme
+    - bootstrap/modal
+
 # Create a library placeholder for livereload.
 # This is altered dynamically based on the set URL.
 # @see \Drupal\bootstrap\Plugin\Alter\LibraryInfo::alter
@@ -101,6 +108,10 @@ drupal.form:
   dependencies:
     - bootstrap/theme
 
+drupal.message:
+  js:
+    js/misc/message.js: {}
+
 drupal.progress:
   js:
     js/misc/progress.js: {}
@@ -112,6 +123,10 @@ drupal.states:
 drupal.tabledrag:
   js:
     js/misc/tabledrag.js: {}
+
+drupal.tableheader:
+  js:
+    js/misc/tableheader.js: {}
 
 image_widget_crop:
   js:

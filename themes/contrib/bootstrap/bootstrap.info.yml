@@ -31,12 +31,16 @@ libraries-extend:
     - bootstrap/drupal.dialog.ajax
   core/drupal.form:
     - bootstrap/drupal.form
+  core/drupal.message:
+    - bootstrap/drupal.message
   core/drupal.progress:
     - bootstrap/drupal.progress
   core/drupal.states:
     - bootstrap/drupal.states
   core/drupal.tabledrag:
     - bootstrap/drupal.tabledrag
+  core/drupal.tableheader:
+  - bootstrap/drupal.tableheader
   image_widget_crop/cropper.integration:
     - bootstrap/image_widget_crop
   views/views.ajax:
@@ -73,8 +77,8 @@ libraries-override:
       theme:
         css/node.preview.css: false
 
-# Information added by Drupal.org packaging script on 2018-09-12
-version: '8.x-3.13'
+# Information added by Drupal.org packaging script on 2019-06-20
+version: '8.x-3.20'
 core: '8.x'
 project: 'bootstrap'
-datestamp: 1536786486
+datestamp: 1561051706
