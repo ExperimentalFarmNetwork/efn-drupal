@@ -19,8 +19,7 @@ use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\Finder\Finder;
 
 /**
- * An implementation of BundleInterface that adds a few conventions
- * for DependencyInjection extensions and Console commands.
+ * An implementation of BundleInterface that adds a few conventions for DependencyInjection extensions.
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
@@ -34,23 +33,21 @@ abstract class Bundle implements BundleInterface
     private $namespace;
 
     /**
-     * Boots the Bundle.
+     * {@inheritdoc}
      */
     public function boot()
     {
     }
 
     /**
-     * Shutdowns the Bundle.
+     * {@inheritdoc}
      */
     public function shutdown()
     {
     }
 
     /**
-     * Builds the bundle.
-     *
-     * It is only ever called once when the cache is empty.
+     * {@inheritdoc}
      *
      * This method can be overridden to register compilation passes,
      * other extensions, ...
@@ -81,10 +78,7 @@ abstract class Bundle implements BundleInterface
                 $expectedAlias = Container::underscore($basename);
 
                 if ($expectedAlias != $extension->getAlias()) {
-                    throw new \LogicException(sprintf(
-                        'Users will expect the alias of the default extension of a bundle to be the underscored version of the bundle name ("%s"). You can override "Bundle::getContainerExtension()" if you want to use "%s" or another alias.',
-                        $expectedAlias, $extension->getAlias()
-                    ));
+                    throw new \LogicException(sprintf('Users will expect the alias of the default extension of a bundle to be the underscored version of the bundle name ("%s"). You can override "Bundle::getContainerExtension()" if you want to use "%s" or another alias.', $expectedAlias, $extension->getAlias()));
                 }
 
                 $this->extension = $extension;
@@ -93,15 +87,11 @@ abstract class Bundle implements BundleInterface
             }
         }
 
-        if ($this->extension) {
-            return $this->extension;
-        }
+        return $this->extension ?: null;
     }
 
     /**
-     * Gets the Bundle namespace.
-     *
-     * @return string The Bundle namespace
+     * {@inheritdoc}
      */
     public function getNamespace()
     {
@@ -113,9 +103,7 @@ abstract class Bundle implements BundleInterface
     }
 
     /**
-     * Gets the Bundle directory path.
-     *
-     * @return string The Bundle absolute path
+     * {@inheritdoc}
      */
     public function getPath()
     {
@@ -128,18 +116,14 @@ abstract class Bundle implements BundleInterface
     }
 
     /**
-     * Returns the bundle parent name.
-     *
-     * @return string|null The Bundle parent name it overrides or null if no parent
+     * {@inheritdoc}
      */
     public function getParent()
     {
     }
 
     /**
-     * Returns the bundle name (the class short name).
-     *
-     * @return string The Bundle name
+     * {@inheritdoc}
      */
     final public function getName()
     {
@@ -179,7 +163,7 @@ abstract class Bundle implements BundleInterface
             }
             $class = $ns.'\\'.$file->getBasename('.php');
             if ($this->container) {
-                $commandIds = $this->container->hasParameter('console.command.ids') ? $this->container->getParameter('console.command.ids') : array();
+                $commandIds = $this->container->hasParameter('console.command.ids') ? $this->container->getParameter('console.command.ids') : [];
                 $alias = 'console.command.'.strtolower(str_replace('\\', '_', $class));
                 if (isset($commandIds[$alias]) || $this->container->has($alias)) {
                     continue;
@@ -213,9 +197,7 @@ abstract class Bundle implements BundleInterface
      */
     protected function createContainerExtension()
     {
-        if (class_exists($class = $this->getContainerExtensionClass())) {
-            return new $class();
-        }
+        return class_exists($class = $this->getContainerExtensionClass()) ? new $class() : null;
     }
 
     private function parseClassName()

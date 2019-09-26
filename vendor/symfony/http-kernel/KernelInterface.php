@@ -131,14 +131,14 @@ interface KernelInterface extends HttpKernelInterface, \Serializable
     /**
      * Gets the current container.
      *
-     * @return ContainerInterface A ContainerInterface instance
+     * @return ContainerInterface|null A ContainerInterface instance or null when the Kernel is shutdown
      */
     public function getContainer();
 
     /**
      * Gets the request start time (not available if debug is disabled).
      *
-     * @return int The request start timestamp
+     * @return float The request start timestamp
      */
     public function getStartTime();
 
