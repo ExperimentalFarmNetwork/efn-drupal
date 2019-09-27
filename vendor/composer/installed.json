@@ -1959,17 +1959,17 @@
     },
     {
         "name": "drupal/core",
-        "version": "8.6.15",
-        "version_normalized": "8.6.15.0",
+        "version": "8.6.16",
+        "version_normalized": "8.6.16.0",
         "source": {
             "type": "git",
             "url": "https://github.com/drupal/core.git",
-            "reference": "936456cdeac25c6bbd2f55b0d587239c6a81ba86"
+            "reference": "a9c4c97c7da9ec1a38782912bb06784d28590539"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/drupal/core/zipball/936456cdeac25c6bbd2f55b0d587239c6a81ba86",
-            "reference": "936456cdeac25c6bbd2f55b0d587239c6a81ba86",
+            "url": "https://api.github.com/repos/drupal/core/zipball/a9c4c97c7da9ec1a38782912bb06784d28590539",
+            "reference": "a9c4c97c7da9ec1a38782912bb06784d28590539",
             "shasum": ""
         },
         "require": {
@@ -2013,7 +2013,7 @@
             "symfony/validator": "~3.4.0",
             "symfony/yaml": "~3.4.5",
             "twig/twig": "^1.38.2",
-            "typo3/phar-stream-wrapper": "^2.0.1",
+            "typo3/phar-stream-wrapper": "^2.1.1",
             "zendframework/zend-diactoros": "^1.1",
             "zendframework/zend-feed": "^2.4"
         },
@@ -2142,7 +2142,7 @@
             "symfony/debug": "^3.4.0",
             "symfony/phpunit-bridge": "^3.4.3"
         },
-        "time": "2019-04-17T20:00:11+00:00",
+        "time": "2019-05-08T16:00:58+00:00",
         "type": "drupal-core",
         "extra": {
             "merge-plugin": {
