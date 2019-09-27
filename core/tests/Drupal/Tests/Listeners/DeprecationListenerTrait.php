@@ -144,6 +144,9 @@ trait DeprecationListenerTrait {
       // higher
       'The "Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory" class is deprecated since symfony/psr-http-message-bridge 1.2, use PsrHttpFactory instead.',
       'The "psr7.http_message_factory" service relies on the deprecated "Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory" class. It should either be deprecated or its implementation upgraded.',
+      // This deprecation comes from behat/mink-browserkit-driver when updating
+      // symfony/browser-kit to 4.3+.
+      'The "Symfony\Component\BrowserKit\Response::getStatus()" method is deprecated since Symfony 4.3, use getStatusCode() instead.',
     ];
   }
 
@@ -175,12 +178,16 @@ trait DeprecationListenerTrait {
     // SymfonyTestsListenerTrait has its own error handler that needs to be
     // removed before this one.
     $test_result_object = $test->getTestResultObject();
-    $reflection_class = new \ReflectionClass($test_result_object);
-    $reflection_property = $reflection_class->getProperty('listeners');
-    $reflection_property->setAccessible(TRUE);
-    $listeners = $reflection_property->getValue($test_result_object);
-    $listeners[] = new AfterSymfonyListener();
-    $reflection_property->setValue($test_result_object, $listeners);
+    // It's possible that a test does not have a result object. This can happen
+    // when a test class does not have any test methods.
+    if ($test_result_object) {
+      $reflection_class = new \ReflectionClass($test_result_object);
+      $reflection_property = $reflection_class->getProperty('listeners');
+      $reflection_property->setAccessible(TRUE);
+      $listeners = $reflection_property->getValue($test_result_object);
+      $listeners[] = new AfterSymfonyListener();
+      $reflection_property->setValue($test_result_object, $listeners);
+    }
   }
 
 }

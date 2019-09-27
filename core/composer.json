@@ -31,7 +31,7 @@
         "symfony/process": "~3.4.0",
         "symfony/polyfill-iconv": "^1.0",
         "symfony/yaml": "~3.4.5",
-        "typo3/phar-stream-wrapper": "^2.0.1",
+        "typo3/phar-stream-wrapper": "^2.1.1",
         "twig/twig": "^1.38.2",
         "doctrine/common": "^2.5",
         "doctrine/annotations": "^1.2",
@@ -45,12 +45,13 @@
         "symfony/psr-http-message-bridge": "^1.0",
         "zendframework/zend-diactoros": "^1.1",
         "composer/semver": "^1.0",
-        "paragonie/random_compat": "^1.0|^2.0",
+        "paragonie/random_compat": "^1.0|^2.0|^9.99.99",
         "asm89/stack-cors": "^1.1",
         "pear/archive_tar": "^1.4"
     },
     "conflict": {
-        "drush/drush": "<8.1.10"
+        "drush/drush": "<8.1.10",
+        "symfony/dom-crawler": ">=4"
     },
     "require-dev": {
         "behat/mink": "1.7.x-dev",

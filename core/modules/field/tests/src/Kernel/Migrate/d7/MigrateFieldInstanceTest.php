@@ -80,6 +80,23 @@ class MigrateFieldInstanceTest extends MigrateDrupal7TestBase {
   }
 
   /**
+   * Asserts the settings of an entity reference field config entity.
+   *
+   * @param string $id
+   *   The entity ID in the form ENTITY_TYPE.BUNDLE.FIELD_NAME.
+   * @param string[] $target_bundles
+   *   An array of expected target bundles.
+   */
+  protected function assertEntityReferenceFields($id, array $target_bundles) {
+    $field = FieldConfig::load($id);
+    $handler_settings = $field->getSetting('handler_settings');
+    $this->assertArrayHasKey('target_bundles', $handler_settings);
+    foreach ($handler_settings['target_bundles'] as $target_bundle) {
+      $this->assertContains($target_bundle, $target_bundles);
+    }
+  }
+
+  /**
    * Tests migrating D7 field instances to field_config entities.
    */
   public function testFieldInstances() {
@@ -120,6 +137,10 @@ class MigrateFieldInstanceTest extends MigrateDrupal7TestBase {
     $this->assertLinkFields('node.article.field_link', DRUPAL_DISABLED);
     $this->assertLinkFields('node.blog.field_link', DRUPAL_REQUIRED);
 
+    $this->assertEntityReferenceFields('node.article.field_tags', ['tags']);
+    $this->assertEntityReferenceFields('node.forum.taxonomy_forums', ['forums']);
+    $this->assertEntityReferenceFields('node.test_content_type.field_term_reference', ['tags', 'test_vocabulary']);
+
     // Tests that fields created by the Title module are not migrated.
     $title_field = FieldConfig::load('node.test_content_type.title_field');
     $this->assertNull($title_field);
@@ -129,6 +150,13 @@ class MigrateFieldInstanceTest extends MigrateDrupal7TestBase {
     $this->assertNull($name_field);
     $description_field = FieldConfig::load('taxonomy_term.test_vocabulary.description_field');
     $this->assertNull($description_field);
+
+    $boolean_field = FieldConfig::load('node.test_content_type.field_boolean');
+    $expected_settings = [
+      'on_label' => '1',
+      'off_label' => 'Off',
+    ];
+    $this->assertSame($expected_settings, $boolean_field->get('settings'));
   }
 
   /**
