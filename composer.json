@@ -42,7 +42,8 @@
         "drupal/bootstrap": "^3.6",
         "drupal/views_send": "^1.1",
         "drupal/views_data_export": "^1.0@beta",
-        "drupal/csv_serialization": "^1.4"
+        "drupal/csv_serialization": "^1.4",
+        "drush/drush": "^9.7"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
