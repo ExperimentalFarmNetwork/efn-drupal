@@ -41,6 +41,5 @@ permissions:
   - 'view own profile'
   - 'view own researcher profile'
   - 'view own volunteer profile'
-  - 'view profile'
   - 'view researcher profile'
   - 'view volunteer profile'

@@ -91,8 +91,7 @@ content:
     region: content
   field_location:
     weight: 5
-    settings:
-      default_country: US
+    settings: {  }
     third_party_settings: {  }
     type: address_default
     region: content
@@ -161,3 +160,4 @@ content:
     region: content
 hidden:
   field_location_geo: true
+  is_default: true

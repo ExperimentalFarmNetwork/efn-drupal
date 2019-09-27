@@ -16,27 +16,9 @@ dependencies:
     - profile.type.researcher
   module:
     - address
-    - field_group
     - field_states_ui
     - file
     - link
-third_party_settings:
-  field_group:
-    group_public_contact_information:
-      children:
-        - field_email
-        - field_address
-        - field_phone
-        - field_additional_contact
-      parent_name: ''
-      weight: 20
-      format_type: fieldset
-      format_settings:
-        id: ''
-        classes: ''
-        description: 'Optional: Provide contact information that will be displayed publicly on your profile.'
-        required_fields: true
-      label: 'Public Contact Information'
 id: profile.researcher.default
 targetEntityType: profile
 bundle: researcher
@@ -52,8 +34,7 @@ content:
     region: content
   field_address:
     weight: 18
-    settings:
-      default_country: US
+    settings: {  }
     third_party_settings:
       field_states_ui:
         form:
@@ -112,3 +93,4 @@ content:
 hidden:
   field_farmland_details: true
   field_farmland_have_details: true
+  is_default: true

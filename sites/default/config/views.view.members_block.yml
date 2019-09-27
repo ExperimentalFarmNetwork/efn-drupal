@@ -306,11 +306,12 @@ display:
     cache_metadata:
       max-age: -1
       contexts:
-        - group_membership.roles.permissions
-        - 'languages:language_content'
-        - 'languages:language_interface'
-        - route
-        - url
+        1: 'languages:language_content'
+        2: 'languages:language_interface'
+        3: route
+        4: url
+        5: route.group
+        6: user.group_permissions
       tags:
         - 'config:field.storage.profile.field_user_image'
   block_2:
@@ -575,10 +576,11 @@ display:
     cache_metadata:
       max-age: -1
       contexts:
-        - group_membership.roles.permissions
-        - 'languages:language_content'
-        - 'languages:language_interface'
-        - route
-        - url
+        1: 'languages:language_content'
+        2: 'languages:language_interface'
+        3: route
+        4: url
+        5: route.group
+        6: user.group_permissions
       tags:
         - 'config:field.storage.profile.field_user_image'

@@ -805,13 +805,14 @@ display:
       display_extenders: {  }
       title: Members
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
-        - group_membership.roles.permissions
-        - 'languages:language_content'
-        - 'languages:language_interface'
-        - url
-        - url.query_args
+        1: 'languages:language_content'
+        2: 'languages:language_interface'
+        3: url
+        4: url.query_args
+        5: route.group
+        6: user.group_permissions
       tags:
         - 'config:field.storage.group_content.group_roles'
   page_1:
@@ -1398,11 +1399,12 @@ display:
     cache_metadata:
       max-age: -1
       contexts:
-        - group_membership.roles.permissions
-        - 'languages:language_content'
-        - 'languages:language_interface'
-        - url
-        - url.query_args
+        1: 'languages:language_content'
+        2: 'languages:language_interface'
+        3: url
+        4: url.query_args
+        5: route.group
+        6: user.group_permissions
       tags:
         - 'config:field.storage.group_content.group_roles'
   page_2:
@@ -1679,13 +1681,14 @@ display:
             format: raw_html
           plugin_id: text
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
-        - group_membership.roles.permissions
-        - 'languages:language_content'
-        - 'languages:language_interface'
-        - url
-        - url.query_args
+        1: 'languages:language_content'
+        2: 'languages:language_interface'
+        3: url
+        4: url.query_args
+        5: route.group
+        6: user.group_permissions
       tags: {  }
   rest_export_2:
     display_plugin: rest_export
@@ -2059,10 +2062,11 @@ display:
     cache_metadata:
       max-age: -1
       contexts:
-        - group_membership.roles.permissions
-        - 'languages:language_content'
-        - 'languages:language_interface'
-        - request_format
-        - url
+        1: 'languages:language_content'
+        2: 'languages:language_interface'
+        3: request_format
+        4: url
+        5: route.group
+        6: user.group_permissions
       tags:
         - 'config:field.storage.profile.field_full_name'

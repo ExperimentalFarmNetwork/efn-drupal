@@ -5,5 +5,4 @@ dependencies: {  }
 name: 'Soil Type'
 vid: soil_type
 description: ''
-hierarchy: 0
 weight: 0

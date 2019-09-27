@@ -17,19 +17,7 @@ required: true
 translatable: true
 default_value:
   -
-    langcode: null
     country_code: US
-    administrative_area: ''
-    locality: ''
-    dependent_locality: null
-    postal_code: ''
-    sorting_code: null
-    address_line1: ''
-    address_line2: ''
-    organization: ''
-    given_name: ''
-    additional_name: null
-    family_name: ''
 default_value_callback: ''
 settings:
   available_countries: {  }
@@ -46,4 +34,5 @@ settings:
     additionalName: '0'
     familyName: '0'
   langcode_override: ''
+  field_overrides: {  }
 field_type: address

@@ -14,6 +14,6 @@ permissions:
   - 'access user profiles'
   - 'edit own main profile'
   - 'view main profile'
-  - 'view profile'
+  - 'view own profile'
   - 'view researcher profile'
   - 'view volunteer profile'

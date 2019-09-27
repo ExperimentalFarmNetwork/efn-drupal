@@ -12,4 +12,3 @@ permissions:
   - 'create project group'
   - 'edit own comments'
   - 'post comments'
-  - 'skip comment approval'

@@ -1,0 +1,51 @@
+'group_members:page_2':
+  'uid:16':
+    bulk_form:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    from_name: 'Nate - Experimental Farm Network'
+    from_mail: nathankleinman@gmail.com
+    tokens:
+      name_pos_0: name
+      view_group_content_pos_1: view_group_content
+      mail_pos_2: mail
+    to_name: name_pos_0
+    to_mail: mail_pos_2
+    subject: 'EFN Perennial Sorghum Project'
+    message:
+      value: "Hi all,\r\n\r\nYou're receiving this email because you signed up to join the EFN Perennial Sorghum project. Some of you may have received seeds from me in the past, in which case I'd much appreciate an update (especially once the soil warms, and you find out if any of your plants survived the winter). \r\n\r\nIf you'd like to receive seeds from me, please reply with your mailing address as soon as possible. I will send seeds from the general population of 'M61' perennial sorghum, and a separate bag of seeds from the single plant we've had survive a winter unprotected here in New Jersey. We're eager to get these seeds into the ground in as many places as possible, to determine the limits of its perenniality and to identify extraordinary individual plants for further selection.\r\n\r\nThanks so much for your participation!\r\n\r\nNate Kleinman\r\nEFN Co-founder/Co-director\r\nnathankleinman@gmail.com"
+      format: plain_text
+    priority: '0'
+    receipt: 0
+    headers: ''
+    direct: 1
+    carbon_copy: 1
+    remember: 1

@@ -12,4 +12,3 @@ permissions:
   - 'add own researcher profile'
   - 'create project group'
   - 'delete own researcher profile'
-  - 'skip comment approval'

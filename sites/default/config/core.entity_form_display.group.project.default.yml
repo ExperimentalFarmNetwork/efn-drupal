@@ -47,8 +47,7 @@ content:
     region: content
   field_location:
     weight: 3
-    settings:
-      default_country: US
+    settings: {  }
     third_party_settings:
       field_states_ui:
         form:

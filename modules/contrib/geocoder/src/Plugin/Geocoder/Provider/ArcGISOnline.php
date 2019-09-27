@@ -8,7 +8,7 @@ use Drupal\geocoder\ConfigurableProviderUsingHandlerWithAdapterBase;
  * Provides an ArcGISOnline geocoder provider plugin.
  *
  * @GeocoderProvider(
- *   id = "Arcgisonline",
+ *   id = "arcgisonline",
  *   name = "ArcGISOnline",
  *   handler = "\Geocoder\Provider\ArcGISOnline\ArcGISOnline",
  *   arguments = {

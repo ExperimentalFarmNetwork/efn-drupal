@@ -30,7 +30,6 @@ module:
   email_registration: 0
   entity: 0
   field: 0
-  field_group: 0
   field_states_ui: 0
   field_ui: 0
   file: 0

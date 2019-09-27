@@ -5,5 +5,4 @@ dependencies: {  }
 name: 'Growing Location Descriptors'
 vid: growing_location_descriptors
 description: ''
-hierarchy: 0
 weight: 0

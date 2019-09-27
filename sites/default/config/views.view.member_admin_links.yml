@@ -171,10 +171,11 @@ display:
     cache_metadata:
       max-age: -1
       contexts:
-        - group_membership.roles.permissions
-        - 'languages:language_interface'
-        - route
-        - url
+        1: 'languages:language_interface'
+        2: route
+        3: url
+        4: route.group
+        5: user.group_permissions
       tags: {  }
   block_1:
     display_plugin: block
@@ -186,8 +187,9 @@ display:
     cache_metadata:
       max-age: -1
       contexts:
-        - group_membership.roles.permissions
-        - 'languages:language_interface'
-        - route
-        - url
+        1: 'languages:language_interface'
+        2: route
+        3: url
+        4: route.group
+        5: user.group_permissions
       tags: {  }

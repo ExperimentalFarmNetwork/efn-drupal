@@ -1,0 +1,40 @@
+uuid: c1884ae9-81cc-4939-bea9-0ce76d796bd2
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_form_mode.user.register
+  module:
+    - profile
+    - user
+id: user.user.register
+targetEntityType: user
+bundle: user
+mode: register
+content:
+  account:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  language:
+    weight: 1
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  main_profiles:
+    type: profile_form
+    weight: 91
+    settings:
+      form_mode: default
+    third_party_settings: {  }
+    region: content
+  timezone:
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  contact: true
+  researcher_profiles: true
+  volunteer_profiles: true
