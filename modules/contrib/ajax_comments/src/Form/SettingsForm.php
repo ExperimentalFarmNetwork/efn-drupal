@@ -123,23 +123,23 @@ class SettingsForm extends ConfigFormBase {
       '#items' => $links,
     ];
 
-    $form['notify'] = array(
+    $form['notify'] = [
       '#title' => $this->t('Add notification message when comment posted'),
       '#type' => 'checkbox',
       '#default_value' => $config->get('notify'),
-    );
+    ];
 
-    $form['enable_scroll'] = array(
+    $form['enable_scroll'] = [
       '#title' => $this->t('Enable scrolling events'),
       '#type' => 'checkbox',
       '#default_value' => $config->get('enable_scroll'),
-    );
+    ];
 
-    $form['reply_autoclose'] = array(
+    $form['reply_autoclose'] = [
       '#title' => t('Autoclose any opened reply forms'),
       '#type' => 'checkbox',
       '#default_value' => $config->get('reply_autoclose'),
-    );
+    ];
 
     return parent::buildForm($form, $form_state);
   }

@@ -309,4 +309,28 @@ class WktGenerator implements WktGeneratorInterface {
     return $this->buildWkt(GEOFIELD_TYPE_MULTIPOLYGON, $this->generateMultipolygon());
   }
 
+  /**
+   * Builds a multipolygon coordinates.
+   *
+   * @param array $rings
+   *   The array of polygon arrays.
+   *
+   * @return string
+   *   The structured multipolygon coordinates.
+   */
+  protected function buildMultipolygon(array $rings) {
+    $poly = [];
+    foreach ($rings as $ring) {
+      $poly[] = $this->buildPolygon($ring);
+    }
+    return $this->buildMultiCoordinates($poly);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function wktBuildMultipolygon(array $rings) {
+    return $this->buildWkt(GEOFIELD_TYPE_MULTIPOLYGON, $this->buildMultipolygon($rings));
+  }
+
 }

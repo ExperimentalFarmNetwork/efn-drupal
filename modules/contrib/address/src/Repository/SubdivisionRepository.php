@@ -2,7 +2,7 @@
 
 namespace Drupal\address\Repository;
 
-use Commerceguys\Addressing\AddressFormat\AddressFormatRepositoryInterface;
+use CommerceGuys\Addressing\AddressFormat\AddressFormatRepositoryInterface;
 use CommerceGuys\Addressing\Subdivision\SubdivisionRepository as ExternalSubdivisionRepository;
 use Drupal\address\Event\AddressEvents;
 use Drupal\address\Event\SubdivisionsEvent;

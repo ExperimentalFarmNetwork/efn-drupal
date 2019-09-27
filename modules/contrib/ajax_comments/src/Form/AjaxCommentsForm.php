@@ -389,7 +389,7 @@ class AjaxCommentsForm extends CommentForm {
     // Code adapted from FormSubmitter::redirectForm().
     $request = $this->requestStack->getCurrentRequest();
     $route_name = RouteMatch::createFromRequest($request)->getRouteName();
-    if (!in_array($route_name, array('entity.comment.edit_form', 'comment.reply'))) {
+    if (!in_array($route_name, ['entity.comment.edit_form', 'comment.reply'])) {
       $form_state->setRedirect(
         '<current>',
         [],

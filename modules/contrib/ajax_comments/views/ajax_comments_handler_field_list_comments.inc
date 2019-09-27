@@ -13,17 +13,17 @@ class ajax_comments_handler_field_list_comments extends views_handler_field_enti
 
   function option_definition() {
     $options = parent::option_definition();
-    $options['ajax_comments_display_add_comment_form'] = array('default' => FALSE, 'bool' => TRUE);
+    $options['ajax_comments_display_add_comment_form'] = ['default' => FALSE, 'bool' => TRUE];
     return $options;
   }
   
   function options_form(&$form, &$form_state) {
-    $form['ajax_comments_display_add_comment_form'] = array(
+    $form['ajax_comments_display_add_comment_form'] = [
       '#title' => t('Show Add Comment form'),
       '#description' => t("Enable to display the Add Comment form below the list of comments."),
       '#type' => 'checkbox', 
       '#default_value' => $this->options['ajax_comments_display_add_comment_form'],
-    );
+    ];
     parent::options_form($form, $form_state);
   }
   
@@ -35,12 +35,16 @@ class ajax_comments_handler_field_list_comments extends views_handler_field_enti
   function render($values) {
     if (user_access('post comments') && $node = $this->get_value($values)) {
       // Init with dummy Comment. For explanation look at ajax_comments_process_node().
-      $result = array('comments' => array('dummyComment' => array(
+      $result = [
+        'comments' => [
+          'dummyComment' => [
         '#prefix' => '<div class="ajax-comment-wrapper ajax-comment-dummy-comment" style="display:none">',
         '#type' => 'item',
         '#markup' => '',
         '#suffix' => '</div>',
-      )));
+          ]
+        ]
+      ];
 
       // Only attempt to render comments if the node has visible comments.
       // Unpublished comments are not included in $node->comment_count, so show
@@ -64,16 +68,16 @@ class ajax_comments_handler_field_list_comments extends views_handler_field_enti
       if (user_access('post comments') && $node->comment == COMMENT_NODE_OPEN 
           && (variable_get('comment_form_location_' . $node->type, COMMENT_FORM_BELOW) == COMMENT_FORM_BELOW 
           && $this->options['ajax_comments_display_add_comment_form'])) {
-        $result['comment_form'] = drupal_get_form("comment_node_{$node->type}_form", (object) array('nid' => $node->nid));
+        $result['comment_form'] = drupal_get_form("comment_node_{$node->type}_form", (object) ['nid' => $node->nid]);
       }
 
       // Theme comments
-      $result += array(
+      $result += [
           '#theme' => 'comment_wrapper__node_' . $node->type, 
           '#node' => $node, 
-          'comments' => array(),
-          'comment_form' => array(),
-      );
+          'comments' => [],
+          'comment_form' => [],
+      ];
       return $result;
     }
   }

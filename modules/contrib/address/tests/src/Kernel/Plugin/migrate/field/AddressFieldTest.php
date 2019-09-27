@@ -40,7 +40,7 @@ class AddressFieldTest extends KernelTestBase {
   /**
    * Tests discovery of the cck field plugin.
    */
-  public function testLegacyPlugin() {
+  public function testDeprecatedPlugin() {
     $migration = $this->prophesize(MigrationInterface::class)->reveal();
     $cck_plugin_manager = $this->container->get('plugin.manager.migrate.cckfield');
     $definition = $cck_plugin_manager->getDefinition('addressfield');

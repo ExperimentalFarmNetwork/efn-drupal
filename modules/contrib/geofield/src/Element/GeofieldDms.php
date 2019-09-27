@@ -48,8 +48,8 @@ class GeofieldDms extends FormElement {
   public static function dmsProcess(array &$element, FormStateInterface $form_state, array &$complete_form) {
     $element['#tree'] = TRUE;
     $element['#input'] = TRUE;
-    $default_value = NULL;
-    if (isset($element['#default_value']['lon']) && isset($element['#default_value']['lat'])) {
+    $default_value = [];
+    if (!empty($element['#default_value']['lon']) && !empty($element['#default_value']['lat'])) {
       $default_value = DmsConverter::decimalToDms($element['#default_value']['lon'], $element['#default_value']['lat']);
     }
 
@@ -65,7 +65,7 @@ class GeofieldDms extends FormElement {
     ];
 
     foreach ($options as $type => $option) {
-      $component_default = isset($default_value) ? $default_value->get($type) : NULL;
+      $component_default = !empty($default_value) ? $default_value->get($type) : [];
       self::processComponent($element, $type, $option, $component_default);
     }
 
@@ -118,7 +118,7 @@ class GeofieldDms extends FormElement {
       '#options' => $options,
       '#multiple' => FALSE,
       '#required' => (!empty($element['#required'])) ? $element['#required'] : FALSE,
-      '#default_value' => (isset($default_value)) ? $default_value['orientation'] : '',
+      '#default_value' => (!empty($default_value)) ? $default_value['orientation'] : '',
       '#attributes' => [
         'class' => [
           'geofield-' . $type . '-orientation',
@@ -136,7 +136,7 @@ class GeofieldDms extends FormElement {
       '#max' => 180,
       '#title' => '',
       '#required' => (!empty($element['#required'])) ? $element['#required'] : FALSE,
-      '#default_value' => (isset($default_value)) ? $default_value['degrees'] : '',
+      '#default_value' => (!empty($default_value)) ? $default_value['degrees'] : '',
       '#suffix' => '°',
       '#attributes' => [
         'class' => [
@@ -152,7 +152,7 @@ class GeofieldDms extends FormElement {
       '#step' => 1,
       '#title' => '',
       '#required' => (!empty($element['#required'])) ? $element['#required'] : FALSE,
-      '#default_value' => (isset($default_value)) ? $default_value['minutes'] : '',
+      '#default_value' => (!empty($default_value)) ? $default_value['minutes'] : '',
       '#suffix' => '\'',
       '#attributes' => [
         'class' => [
@@ -168,7 +168,7 @@ class GeofieldDms extends FormElement {
       '#step' => 1,
       '#title' => '',
       '#required' => (!empty($element['#required'])) ? $element['#required'] : FALSE,
-      '#default_value' => (isset($default_value)) ? $default_value['seconds'] : '',
+      '#default_value' => (!empty($default_value)) ? $default_value['seconds'] : '',
       '#suffix' => '"',
       '#attributes' => [
         'class' => [

@@ -8,8 +8,6 @@ use Drupal\comment\Tests\CommentTestTrait;
 use Drupal\editor\Entity\Editor;
 use Drupal\filter\Entity\FilterFormat;
 use Drupal\FunctionalJavascriptTests\JavascriptTestBase;
-use Drupal\simpletest\ContentTypeCreationTrait;
-use Drupal\simpletest\NodeCreationTrait;
 use Drupal\user\Entity\Role;
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
 
@@ -21,8 +19,6 @@ use Drupal\Core\Entity\Entity\EntityViewDisplay;
 class AjaxCommentsFunctionalTest extends JavascriptTestBase {
 
   use CommentTestTrait;
-  use ContentTypeCreationTrait;
-  use NodeCreationTrait;
 
   /**
    * {@inheritdoc}
@@ -38,19 +34,31 @@ class AjaxCommentsFunctionalTest extends JavascriptTestBase {
   ];
 
   /**
-   * Tests that comments can be posted and edited over ajax without errors.
+   * {@inheritdoc}
    */
-  public function testCommentPosting() {
+  protected function setUp() {
+    parent::setUp();
+    $this->entityTypeManager = $this->container->get('entity_type.manager');
+
     // Ensure an `article` node type exists.
-    $this->createContentType(['type' => 'article']);
+    $this->drupalCreateContentType(['type' => 'article']);
     $this->addDefaultCommentField('node', 'article');
+
+    $comment_field = $this->entityTypeManager->getStorage('field_config')->load('node.article.comment');
+    $comment_field->setSetting('per_page', 10);
+    $comment_field->save();
 
     // Enable ajax comments on the comment field.
     $entity_view_display = EntityViewDisplay::load('node.article.default');
     $renderer = $entity_view_display->getRenderer('comment');
-    $renderer->setThirdPartySetting('ajax_comments', 'enable_ajax_comments', TRUE);
+    $renderer->setThirdPartySetting('ajax_comments', 'enable_ajax_comments', '1');
     $entity_view_display->save();
+  }
 
+  /**
+   * Tests that comments can be posted and edited over ajax without errors.
+   */
+  public function testCommentPosting() {
     // Enable CKEditor.
     $format = $this->randomMachineName();
     FilterFormat::create([
@@ -91,7 +99,7 @@ class AjaxCommentsFunctionalTest extends JavascriptTestBase {
     ]);
     $this->drupalLogin($admin_user);
 
-    $node = $this->createNode([
+    $node = $this->drupalCreateNode([
       'type' => 'article',
       'comment' => CommentItemInterface::OPEN,
     ]);
@@ -111,7 +119,7 @@ JS;
     $page = $this->getSession()->getPage();
 
     // Post comments through ajax.
-    for ($i = 0; $i < 2; $i++) {
+    for ($i = 0; $i < 11; $i++) {
       $comment_body_id = $page
         ->findField('comment_body[0][value]')
         ->getAttribute('id');
@@ -134,6 +142,13 @@ JS;
     $this->assertSession()->pageTextContains('Your comment has been posted.');
     $this->assertSession()->pageTextContains('New comment 1');
     $this->assertSession()->pageTextContains('New comment 2');
+
+    $current_url = $this->getSession()->getCurrentUrl();
+    $parts = parse_url($current_url);
+    $path = empty($parts['path']) ? '/' : $parts['path'];
+    $current_path = preg_replace('/^\\/[^\\.\\/]+\\.php\\//', '/', $path);
+
+    $this->assertSession()->linkByHrefExists($current_path . '?page=1');
 
     $javascript_assertion = <<<JS
     (function () {

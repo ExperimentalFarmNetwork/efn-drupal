@@ -95,6 +95,7 @@ class GeofieldDefaultFormatter extends FormatterBase implements ContainerFactory
   public static function defaultSettings() {
     return [
       'output_format' => 'wkt',
+      'output_escape' => TRUE,
     ];
   }
 
@@ -122,6 +123,14 @@ class GeofieldDefaultFormatter extends FormatterBase implements ContainerFactory
       '#options' => $this->options,
       '#required' => TRUE,
     ];
+
+    $elements['output_escape'] = [
+      '#title' => $this->t('Escape output (recommended)'),
+      '#description' => $this->t('The text is escaped by converting special characters to HTML entities.<br>In some circumstances (i.e. part of Json output) this might not be the wanted/preferred behaviour.'),
+      '#type' => 'checkbox',
+      '#default_value' => $this->getSetting('output_escape'),
+    ];
+
     return $elements;
   }
 
@@ -143,7 +152,10 @@ class GeofieldDefaultFormatter extends FormatterBase implements ContainerFactory
     foreach ($items as $delta => $item) {
       $geom = $this->geoPhpWrapper->load($item->value);
       $output = $geom ? $geom->out($this->getOutputFormat()) : '';
-      $elements[$delta] = ['#markup' => Html::escape($output)];
+      if ($this->getSetting('output_escape')) {
+        $output = Html::escape($output);
+      }
+      $elements[$delta] = ['#markup' => $output];
     }
 
     return $elements;

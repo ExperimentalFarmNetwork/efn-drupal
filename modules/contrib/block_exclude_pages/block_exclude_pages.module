@@ -6,7 +6,6 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\Core\Path;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\block\Entity\Block;
 use Drupal\Core\Session\AccountInterface;
@@ -15,19 +14,27 @@ use Drupal\Core\Session\AccountInterface;
  * Implements hook_help().
  */
 function block_exclude_pages_help($route_name, RouteMatchInterface $route_match) {
+  $output = '';
   switch ($route_name) {
     // Main module help for the block_exclude_pages module.
     case 'help.page.block_exclude_pages':
-      $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
       $description = block_exclude_pages_blockhelptext();
       $output .= '<p>' . t('This module adds an exclude pages filter for blocks') . '</p>';
       $output .= $description;
-      return $output;
-
-    default:
-
+    default: 
   }
+  return $output;
+}
+
+/**
+ * Doc function returns the help markup.
+ */
+function block_exclude_pages_blockhelptext() {
+  $description = "<br>";
+  $description .= t("<b>To exclude Specific pages</b>, prefix the path with a '!', Example excluded path") . "<em class='placeholder'>!/user/jc</em>";
+  $description = $description;
+  return $description;
 }
 
 /**
@@ -35,55 +42,59 @@ function block_exclude_pages_help($route_name, RouteMatchInterface $route_match)
  */
 function block_exclude_pages_form_block_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   $description = block_exclude_pages_blockhelptext();
-  $form['visibility']['request_path']['pages']['#description'] = t($description);
-}
-
-/**
- * Doc function returns the help markup.
- */
-function block_exclude_pages_blockhelptext() {
-  $description = "<ul>";
-  $description .= "<li>" . t("Specify pages by using their paths. Enter one path per line. Using") . "<em class='placeholder'>/node/[nid]</em> " . t("is recommended as pages aliases can change on page editing.") . "</li>";
-  $description .= "<li>" . t("The '*' character is a wildcard. Example paths are /user for the current user's page and /user/* for every user page.") . "</li>";
-  $description .= "<li>" . t("To exclude Specific pages, prefix the path with a '!', Example excluded path") . "<em class='placeholder'>!/user/jc</em></li>";
-  $description .= "</ul>";
-  $description = $description;
-  return $description;
+  $currenthelper = $form['visibility']['request_path']['pages']['#description'];
+  $form['visibility']['request_path']['pages']['#description'] = $currenthelper . $description;
 }
 
 /**
  * Implements hook_block_access().
  */
 function block_exclude_pages_block_access(Block $block, $operation, AccountInterface $account) {
+
   $nodeid = \Drupal::service('path.current')->getPath();
   $path = explode('/', trim(\Drupal::request()->query->get('q'), '/'));
-  if ($path[0] == "" && \Drupal::service('path.matcher')->isFrontPage() != true) {
+  if ($path[0] == "" && \Drupal::service('path.matcher')->isFrontPage() != TRUE) {
     $path = explode('/', trim(\Drupal::service('path.alias_manager')->getAliasByPath($nodeid), '/'));
   }
   $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
+
   // - unset language id if present in path.
-  if($path[0] == $language) unset($path[0]);
-  $path = "/" . join("/",$path);
+  if ($path[0] == $language) {
+    unset($path[0]);
+  }
+
+  // - join paths.
+  $path = "/" . implode("/", $path);
+
+  // - get block's visibility conditions.
   $conditions = $block->getVisibilityConditions()->getConfiguration();
+
   if (count($conditions) > 0 && !empty($conditions['request_path'])) {
     $pages = explode("\n", $conditions['request_path']['pages']);
+    $pttr = '#^\!#';
+
     foreach ($pages as $p) {
-      $pttr = '#^\!#';
-      if (preg_match($pttr, $p) === 1) {
-        $excl = trim(preg_replace($pttr, "", $p));
-        if (fnmatch($excl, $nodeid) || fnmatch($excl, $path)) {
-          $config['pages'] = $excl;
-          $config['context_mapping'] = array();
-          if (isset($conditions['negate']) && $conditions['negate'] ==  TRUE) {
-            $config['negate'] = FALSE;
-          }
-          else {
-            $config['negate'] = TRUE;
-          }
-          $block->setVisibilityConfig('request_path', $config);
-          break;
-        }
+
+      // - check if exclude conditions is set.
+      if (preg_match($pttr, $p) !== 1) {
+        continue;
       }
+
+      // - exclude item found, now test if on page path.
+      $exclude = trim(preg_replace($pttr, "", $p));
+      if (fnmatch($exclude, $nodeid) || fnmatch($exclude, $path)) {
+        $config['pages'] = $exclude;
+        $config['context_mapping'] = [];
+        if (isset($conditions['request_path']['negate']) && $conditions['request_path']['negate'] == TRUE) {
+          $config['negate'] = FALSE;
+        }
+        else {
+          $config['negate'] = TRUE;
+        }
+        $block->setVisibilityConfig('request_path', $config);
+        break;
+      }
+
     }
   }
 }

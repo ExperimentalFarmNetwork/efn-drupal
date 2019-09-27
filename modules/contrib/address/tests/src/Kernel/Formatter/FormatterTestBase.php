@@ -2,7 +2,6 @@
 
 namespace Drupal\Tests\address\Kernel\Formatter;
 
-use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\field\Entity\FieldConfig;
@@ -53,7 +52,7 @@ abstract class FormatterTestBase extends KernelTestBase {
     $this->installConfig(['address']);
     $this->installEntitySchema('entity_test');
 
-    $this->fieldName = Unicode::strtolower($this->randomMachineName());
+    $this->fieldName = mb_strtolower($this->randomMachineName());
   }
 
   /**

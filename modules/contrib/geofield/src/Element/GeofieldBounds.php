@@ -76,7 +76,7 @@ class GeofieldBounds extends GeofieldElementBase {
     ];
 
     foreach ($pairs as $pair) {
-      if ($element[$pair['smaller']]['#value'] >= $element[$pair['bigger']]['#value']) {
+      if ($element[$pair['smaller']]['#value'] > $element[$pair['bigger']]['#value']) {
         $form_state->setError(
           $element[$pair['smaller']],
           t('@title: @component_bigger must be greater than @component_smaller.', [

@@ -84,7 +84,7 @@ function leaflet_leaflet_map_info() {
           'earth' => [
             'urlTemplate' => '//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
             'options' => [
-              'attribution' => 'OSM Mapnik',
+              'attribution' => '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors',
             ],
           ],
         ],

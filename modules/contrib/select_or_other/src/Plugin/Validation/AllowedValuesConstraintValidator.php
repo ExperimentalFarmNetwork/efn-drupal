@@ -60,6 +60,12 @@ class AllowedValuesConstraintValidator extends ChoiceValidator implements Contai
       $constraint->choices = array_keys($this->getValidChoices($typed_data));
       $value = $this->getMainPropertyValue($typed_data);
 
+      // Force the choices to be the same type as the value.
+      $type = gettype($value);
+      foreach ($constraint->choices as &$choice) {
+        settype($choice, $type);
+      }
+
       if (isset($value)) {
         parent::validate($value, $constraint);
       }

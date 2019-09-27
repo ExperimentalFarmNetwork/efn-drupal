@@ -28,6 +28,9 @@ final class AddressEvents {
   /**
    * Name of the event fired when altering initial values.
    *
+   * @deprecated No longer fired since 1.5. Use hook_field_widget_form_alter()
+   *             to change the address #default_value instead.
+   *
    * @Event
    *
    * @see \Drupal\address\Event\InitialValuesEvent

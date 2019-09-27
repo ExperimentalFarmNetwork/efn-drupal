@@ -135,7 +135,7 @@ function ajax_comments_node_links_alter(array &$node_links, NodeInterface $node,
   $links = \Drupal::service('comment.link_builder')->buildCommentedEntityLinks($node, $context);
   foreach ($links as $link_name => $link) {
     $field_name = substr($link_name, strlen('comment__'));
-    $classes = array('js-use-ajax-comments', 'js-ajax-comments-reply', 'js-ajax-comments-reply-' . $node->id() . '-' . $field_name . '-0');
+    $classes = ['js-use-ajax-comments', 'js-ajax-comments-reply', 'js-ajax-comments-reply-' . $node->id() . '-' . $field_name . '-0'];
     if (!empty($link['#links']['comment-add'])) {
       if (empty($link['#links']['comment-add']['attributes']['class'])) {
         $links[$link_name]['#links']['comment-add']['attributes']['class'] = $classes;
@@ -170,8 +170,10 @@ function ajax_comments_entity_display_build_alter(&$build, $context) {
         }
 
         $html_id = $field['#entity_type'] . '_' . $field['#bundle'] . '_' . $field['#field_name'];
-        $build[$field_name]['#attributes']['id'] = Html::getUniqueId($html_id);
-        Utility::setEntityRenderArray($build, $context['entity'], $context['display']->getMode());
+        if (isset($build[$field_name])) {
+          $build[$field_name]['#attributes']['id'] = Html::getUniqueId($html_id);
+          Utility::setEntityRenderArray($build, $context['entity'], $context['display']->getMode());
+        }
       }
     }
   }
@@ -259,12 +261,12 @@ function ajax_comments_form_comment_form_alter(&$form, \Drupal\Core\Form\FormSta
     $form['actions']['submit']['#id'] = \Drupal\Component\Utility\Html::getUniqueId('edit-' . $id);
   }
 
-  $form['actions']['preview']['#ajax'] = array(
+  $form['actions']['preview']['#ajax'] = [
     'callback' => '_ajax_comments_preview_js',
     'wrapper' => $form['#attributes']['id'],
     'method' => 'replace',
     'effect' => 'fade',
-  );
+  ];
   // Set unique id (need for Views with enabled AJAX).
   if (empty($form['actions']['preview']['#id'])) {
     $form['actions']['preview']['#id'] = \Drupal\Component\Utility\Html::getUniqueId('preview-' . $id);
@@ -288,6 +290,45 @@ function ajax_comments_preprocess_comment(&$variables) {
   /** @var \Drupal\comment\CommentInterface $comment */
   $comment = $variables['elements']['#comment'];
   $variables['attributes']['class'][] = AjaxCommentsController::$commentClassPrefix . $comment->id();
+}
+
+/**
+ * Implements template_preprocess_pager().
+ */
+function ajax_comments_preprocess_pager(&$variables) {
+  // Query parameters are added in
+  // core/includes/pager.inc in the template_preprocess_pager(),
+  // where pager_query_add_page() calls pager_get_query_parameters(),
+  // which will pick up the ajax wrapper format from the ajax request, which breaks
+  // the pager.
+  // Unfortunately there is no way to remove this parameter before it is rendered to text,
+  // so this preprocess function removes the parameter with string replacement.
+  $items = [];
+
+  // Remove ajax wrapper format from first, previous.
+  if (isset($variables['items']['first'])) {
+    $items['first'] = ['href' => str_replace('_wrapper_format=drupal_ajax&', '', $variables['items']['first']['href'])];
+  }
+  if (isset($variables['items']['previous'])) {
+    $items['previous'] = ['href' => str_replace('_wrapper_format=drupal_ajax&', '', $variables['items']['previous']['href'])];
+  }
+
+  // Remove ajax wrapper format from specific page links.
+  if (isset($variables['items']['pages'])) {
+    foreach($variables['items']['pages'] as $key => $value) {
+      $items['pages'][$key] = ['href' => str_replace('_wrapper_format=drupal_ajax&', '', $value['href'])];
+    }
+  }
+
+  // Remove ajax wrapper format from next, last.
+  if (isset($variables['items']['next'])) {
+    $items['next'] = ['href' => str_replace('_wrapper_format=drupal_ajax&', '', $variables['items']['next']['href'])];
+  }
+  if (isset($variables['items']['last'])) {
+    $items['last'] = ['href' => str_replace('_wrapper_format=drupal_ajax&', '', $variables['items']['last']['href'])];
+  }
+
+  $variables['items'] = $items;
 }
 
 /**

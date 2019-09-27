@@ -15,10 +15,13 @@
  * - attributes: HTML attributes for the wrapper.
  * - profile: The profile object.
  * - url: The profile URL, if available.
+ * - title_suffix: Additional output populated by modules, intended to be
+ *   displayed after the main title tag that appears in the template.
  *
  * @ingroup themeable
  */
 #}
 <div{{ attributes }}>
+  {{ title_suffix.contextual_links }}
   {{ content }}
 </div>

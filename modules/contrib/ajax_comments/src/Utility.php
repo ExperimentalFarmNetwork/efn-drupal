@@ -43,9 +43,6 @@ class Utility {
     $id = $entity->id();
     $key = $entity_type . '.' . $bundle . '.' . $view_mode . '.' . $id;
     static::$entityRenderArrays[$key] = $build;
-    // Store the render array in cache, with an indication of whether or not
-    // it is from an ajax request.
-    \Drupal::cache()->set($prefix . '.' . $key, $build);
   }
 
   /**
@@ -56,8 +53,8 @@ class Utility {
    * @param string $view_mode
    *   The view mode of the render array to load.
    *
-   * @return mixed
-   *   The stored render array, or FALSE if the stored render array
+   * @return array
+   *   The stored render array, or an empty array if the stored render array
    *   cannot be found for the entity/view mode combination.
    */
   public static function getEntityRenderArray(ContentEntityInterface $entity, $view_mode = 'default') {
@@ -78,15 +75,7 @@ class Utility {
         return static::$entityRenderArrays[$key];
       }
     }
-    // Try to load from cache if the render array is not in
-    // the static variable.
-    foreach ($modes as $mode) {
-      $key = $prefix . '.' . $entity_type . '.' . $bundle . '.' . $mode . '.' . $id;
-      if ($cache = \Drupal::cache()->get($key)) {
-        return $cache->data;
-      }
-    }
-    return FALSE;
+    return [];
   }
 
   /**
@@ -167,7 +156,7 @@ class Utility {
       // or from the cache set by this class (both approaches are tried
       // in the method static::getEntityRenderArray()).
       $render_array = static::getEntityRenderArray($commented_entity, 'full');
-      if ($render_array) {
+      if (isset($render_array[$field_name])) {
         $wrapper_html_id = $render_array[$field_name]['#attributes']['id'];
       }
       else {

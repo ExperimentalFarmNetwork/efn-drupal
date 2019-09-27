@@ -3,7 +3,6 @@
 namespace Drupal\profile\Form;
 
 use Drupal\Core\Entity\ContentEntityForm;
-use Drupal\Core\Entity\RevisionableEntityBundleInterface;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
@@ -80,11 +79,11 @@ class ProfileForm extends ContentEntityForm {
   public function save(array $form, FormStateInterface $form_state) {
     switch ($this->entity->save()) {
       case SAVED_NEW:
-        drupal_set_message($this->t('%label has been created.', ['%label' => $this->entity->label()]));
+        $this->messenger()->addMessage($this->t('%label has been created.', ['%label' => $this->entity->label()]));
         break;
 
       case SAVED_UPDATED:
-        drupal_set_message($this->t('%label has been updated.', ['%label' => $this->entity->label()]));
+        $this->messenger()->addMessage($this->t('%label has been updated.', ['%label' => $this->entity->label()]));
         break;
     }
 

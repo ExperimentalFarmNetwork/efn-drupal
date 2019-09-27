@@ -136,7 +136,6 @@ class ReferenceWidgetTest extends UnitTestBase {
       $parent = $this->prepareFormElementMock($target_type, 'Drupal\select_or_other\Plugin\Field\FieldWidget\WidgetBase');
 
       $entity = $this->getMockForAbstractClass('Drupal\Core\Entity\FieldableEntityInterface');
-      $entity->method('getOwnerId')->willReturn(1);
       $items = $this->getMockForAbstractClass('Drupal\Core\Field\FieldItemListInterface');
       $items->method('getEntity')->willReturn($entity);
       /** @var FieldItemListInterface $items */

@@ -158,7 +158,7 @@ class FieldSettingsHelper {
    *   settings.
    */
   public function isEnabled(FormatterInterface $comment_formatter) {
-    return $comment_formatter->getThirdPartySetting('ajax_comments', 'enable_ajax_comments', TRUE);
+    return $comment_formatter->getThirdPartySetting('ajax_comments', 'enable_ajax_comments', '1');
   }
 
 }

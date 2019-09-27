@@ -14,6 +14,12 @@ chosen.settings:
     minimum_width:
       type: integer
       label: 'The minimum width of the Chosen widget.'
+    max_shown_results:
+      type: integer
+      label: 'Only show the first (n) matching options in the results. This can be used to increase performance for selects with very many options.'
+    use_relative_width:
+      type: boolean
+      label: 'The relative width (% instead of px) of the Chosen widget.'
     jquery_selector:
       type: string
       label: 'Apply Chosen to the following elements'

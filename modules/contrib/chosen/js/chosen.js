@@ -153,11 +153,13 @@
       // The width default option is considered the minimum width, so this
       // must be evaluated for every option.
       if (this.settings.minimum_width > 0) {
+        var dimension = this.settings.use_relative_width ? '%' : 'px';
+
         if ($element.width() < this.settings.minimum_width) {
-          options.width = this.settings.minimum_width + 'px';
+          options.width = this.settings.minimum_width + dimension;
         }
         else {
-          options.width = $element.width() + 'px';
+          options.width = $element.width() + dimension;
         }
       }
 

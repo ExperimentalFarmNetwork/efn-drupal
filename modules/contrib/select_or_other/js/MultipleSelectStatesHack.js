@@ -35,8 +35,11 @@
         select_or_other_check_and_show($select, 0);
         $select.addClass('select-or-other-initialized');
 
-        // Bind event callback.
+        // Bind event callbacks.
         $select.change(function () {
+          select_or_other_check_and_show($(this), 200);
+        });
+        $select.click(function () {
           select_or_other_check_and_show($(this), 200);
         });
       });

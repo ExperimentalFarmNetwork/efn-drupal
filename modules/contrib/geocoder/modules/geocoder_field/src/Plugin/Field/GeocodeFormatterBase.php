@@ -83,7 +83,7 @@ abstract class GeocodeFormatterBase extends FormatterBase implements ContainerFa
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   A config factory for retrieving required config objects.
    * @param \Drupal\geocoder\Geocoder $geocoder
-   *   The gecoder service.
+   *   The geocoder service.
    * @param \Drupal\geocoder\ProviderPluginManager $provider_plugin_manager
    *   The provider plugin manager service.
    * @param \Drupal\geocoder\DumperPluginManager $dumper_plugin_manager
@@ -217,10 +217,9 @@ abstract class GeocodeFormatterBase extends FormatterBase implements ContainerFa
     $elements = [];
     $dumper = $this->dumperPluginManager->createInstance($this->getSetting('dumper'));
     $provider_plugins = $this->getEnabledProviderPlugins();
-    $geocoder_plugins_options = (array) $this->config->get('plugins_options');
 
     foreach ($items as $delta => $item) {
-      if ($address_collection = $this->geocoder->geocode($item->value, array_keys($provider_plugins), $geocoder_plugins_options)) {
+      if ($address_collection = $this->geocoder->geocode($item->value, array_keys($provider_plugins))) {
         $elements[$delta] = [
           '#plain_text' => $dumper->dump($address_collection->first()),
         ];
@@ -242,7 +241,7 @@ abstract class GeocodeFormatterBase extends FormatterBase implements ContainerFa
 
     // Filter out unchecked plugins.
     $provider_plugin_ids = array_filter($plugins_settings, function ($plugin) {
-      return $plugin['checked'] == TRUE;
+      return isset($plugin['checked']) && $plugin['checked'] == TRUE;
     });
 
     $provider_plugin_ids = array_combine(array_keys($provider_plugin_ids), array_keys($provider_plugin_ids));

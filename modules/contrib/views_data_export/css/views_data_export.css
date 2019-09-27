@@ -1,19 +1,26 @@
 .views-data-export-feed {
   display: inline;
 }
+.views-data-export-feed .feed-icon {
+  background: no-repeat;
+  overflow: hidden;
+  text-indent: -9999px;
+  display: block;
+  width: 36px;
+}
 .json-feed .feed-icon {
   background-image: url(../images/json.png);
-  width: 36px;
 }
 .xml-feed .feed-icon {
   background-image: url(../images/xml.png);
-  width: 36px;
 }
 .csv-feed .feed-icon {
   background-image: url(../images/csv.png);
-  width: 36px;
 }
 .xls-feed .feed-icon {
   background-image: url(../images/xls.png);
-  width: 36px;
+}
+.xlsx-feed .feed-icon {
+  background-image: url(../images/xlsx.png);
+  width: 43px;
 }

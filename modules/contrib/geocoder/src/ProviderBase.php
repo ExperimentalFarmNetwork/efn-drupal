@@ -84,7 +84,7 @@ abstract class ProviderBase extends PluginBase implements ProviderInterface, Con
    *   item with the string. When reversing, contains 2 items: the latitude and
    *   the longitude.
    *
-   * @return \Geocoder\Model\Address|null
+   * @return \Geocoder\Model\AddressCollection|\Geometry|null
    *   The Address, NULL otherwise.
    */
   protected function process($method, array $data) {
@@ -114,7 +114,7 @@ abstract class ProviderBase extends PluginBase implements ProviderInterface, Con
    * @param string $source
    *   The data to be geocoded.
    *
-   * @return \Geocoder\Model\Address|null
+   * @return \Geocoder\Model\AddressCollection|\Geometry|null
    *   The Address, NULL otherwise.
    */
   abstract protected function doGeocode($source);

@@ -4,4 +4,4 @@ email_registration.settings:
   mapping:
     login_with_username:
       type: boolean
-      label: 'Allow users to log in with e-mail or username.'
+      label: 'Allow users to log in with email address or username.'

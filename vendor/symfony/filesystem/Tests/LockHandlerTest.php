@@ -21,24 +21,20 @@ use Symfony\Component\Filesystem\LockHandler;
  */
 class LockHandlerTest extends TestCase
 {
-    /**
-     * @expectedException \Symfony\Component\Filesystem\Exception\IOException
-     * @expectedExceptionMessage Failed to create "/a/b/c/d/e": mkdir(): Permission denied.
-     */
     public function testConstructWhenRepositoryDoesNotExist()
     {
+        $this->expectException('Symfony\Component\Filesystem\Exception\IOException');
+        $this->expectExceptionMessage('Failed to create "/a/b/c/d/e": mkdir(): Permission denied.');
         if (!getenv('USER') || 'root' === getenv('USER')) {
             $this->markTestSkipped('This test will fail if run under superuser');
         }
         new LockHandler('lock', '/a/b/c/d/e');
     }
 
-    /**
-     * @expectedException \Symfony\Component\Filesystem\Exception\IOException
-     * @expectedExceptionMessage The directory "/" is not writable.
-     */
     public function testConstructWhenRepositoryIsNotWriteable()
     {
+        $this->expectException('Symfony\Component\Filesystem\Exception\IOException');
+        $this->expectExceptionMessage('The directory "/" is not writable.');
         if (!getenv('USER') || 'root' === getenv('USER')) {
             $this->markTestSkipped('This test will fail if run under superuser');
         }
@@ -50,6 +46,10 @@ class LockHandlerTest extends TestCase
         // skip test on Windows; PHP can't easily set file as unreadable on Windows
         if ('\\' === \DIRECTORY_SEPARATOR) {
             $this->markTestSkipped('This test cannot run on Windows.');
+        }
+
+        if (!getenv('USER') || 'root' === getenv('USER')) {
+            $this->markTestSkipped('This test will fail if run under superuser');
         }
 
         $lockPath = sys_get_temp_dir().'/'.uniqid('', true);

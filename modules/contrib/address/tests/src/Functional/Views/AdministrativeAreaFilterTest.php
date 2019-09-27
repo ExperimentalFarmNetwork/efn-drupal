@@ -166,10 +166,10 @@ class AdministrativeAreaFilterTest extends BrowserTestBase {
         'Cairo Governorate' => 'Cairo Governorate',
       ],
       'MX' => [
-        'CHIS' => 'Chiapas',
-        'JAL' => 'Jalisco',
-        'OAX' => 'Oaxaca',
-        'VER' => 'Veracruz',
+        'Chis.' => 'Chiapas',
+        'Jal.' => 'Jalisco',
+        'Oax.' => 'Oaxaca',
+        'Ver.' => 'Veracruz',
       ],
       'US' => [
         'LA' => 'Louisiana',

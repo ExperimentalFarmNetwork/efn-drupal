@@ -9,23 +9,23 @@
  * Implements hook_requirements().
  */
 function email_registration_requirements() {
-  $requirements = array();
+  $requirements = [];
 
   // @todo Get rid of variable_get() and check is this conflict still valid.
   if (\Drupal::moduleHandler()->moduleExists('logintoboggan') && \Drupal::config('logintoboggan.settings')->get('login_with_email')) {
-    $requirements['email_registration'] = array(
+    $requirements['email_registration'] = [
       'title' => t('Email Registration / LoginToboggan Conflict'),
       'value' => t('Conflict'),
-      'description' => t('There is a conflict between %email_registration and %logintoboggan. You should disable the "Allow users to login using their e-mail address" option from %logintoboggan.', array('%email_registration' => 'Email registration', '%logintoboggan' => 'Login Toboggan')),
+      'description' => t('There is a conflict between %email_registration and %logintoboggan. You should disable the "Allow users to login using their email address" option from %logintoboggan.', ['%email_registration' => 'Email registration', '%logintoboggan' => 'Login Toboggan']),
       'severity' => REQUIREMENT_ERROR,
-    );
+    ];
   }
 
   return $requirements;
 }
 
 /**
- * Add an option to log in with the username as well as the e-mail address.
+ * Add an option to log in with the username as well as the email address.
  */
 function email_registration_update_8100() {
   $config_factory = \Drupal::configFactory();

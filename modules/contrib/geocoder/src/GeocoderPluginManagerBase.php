@@ -20,6 +20,8 @@ abstract class GeocoderPluginManagerBase extends DefaultPluginManager {
     "text",
     "text_long",
     "text_with_summary",
+    "file",
+    "image",
   ];
 
   /**

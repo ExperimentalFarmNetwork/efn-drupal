@@ -20,7 +20,7 @@ class ProfileStorage extends SqlContentEntityStorage implements ProfileStorageIn
       'status' => $active,
     ]);
 
-    return reset($result);
+    return !empty($result) ? reset($result) : NULL;
   }
 
   /**
@@ -45,7 +45,7 @@ class ProfileStorage extends SqlContentEntityStorage implements ProfileStorageIn
       'is_default' => TRUE,
     ]);
 
-    return reset($result);
+    return !empty($result) ? reset($result) : NULL;
   }
 
 }

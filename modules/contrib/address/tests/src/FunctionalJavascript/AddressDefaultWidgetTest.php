@@ -6,7 +6,7 @@ use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
-use Drupal\FunctionalJavascriptTests\JavascriptTestBase;
+use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
 use Drupal\node\Entity\NodeType;
 
 /**
@@ -14,7 +14,7 @@ use Drupal\node\Entity\NodeType;
  *
  * @group address
  */
-class AddressDefaultWidgetTest extends JavascriptTestBase {
+class AddressDefaultWidgetTest extends WebDriverTestBase {
 
   /**
    * Modules to enable.
@@ -32,7 +32,7 @@ class AddressDefaultWidgetTest extends JavascriptTestBase {
   ];
 
   /**
-   * User with permission to administer entites.
+   * User with permission to administer entities.
    *
    * @var \Drupal\user\UserInterface
    */
@@ -98,7 +98,7 @@ class AddressDefaultWidgetTest extends JavascriptTestBase {
     $type->save();
 
     // Create user that will be used for tests.
-    $this->adminUser = $this->drupalCreateUser([
+    $this->adminUser = $this->createUser([
       'create article content',
       'edit own article content',
       'administer content types',
@@ -118,6 +118,11 @@ class AddressDefaultWidgetTest extends JavascriptTestBase {
       'field_storage' => $field_storage,
       'bundle' => 'article',
       'label' => 'Address',
+      'default_value' => [
+        [
+          'country_code' => 'US',
+        ],
+      ],
     ]);
     $this->field->save();
 
@@ -135,9 +140,6 @@ class AddressDefaultWidgetTest extends JavascriptTestBase {
     }
     $this->formDisplay->setComponent($this->field->getName(), [
       'type' => 'address_default',
-      'settings' => [
-        'default_country' => 'US',
-      ],
     ])->save();
 
     $this->nodeAddUrl = 'node/add/article';
@@ -153,7 +155,6 @@ class AddressDefaultWidgetTest extends JavascriptTestBase {
    *
    * Checked:
    * - required/optional status.
-   * - default_country widget setting.
    * - available_countries instance setting.
    */
   public function testCountries() {
@@ -182,7 +183,6 @@ class AddressDefaultWidgetTest extends JavascriptTestBase {
     }, $countries);
     $this->drupalGet($this->fieldConfigUrl);
     $this->submitForm($edit, t('Save settings'));
-    $this->assertSession()->statusCodeEquals(200);
     $this->drupalGet($this->nodeAddUrl);
     $this->assertOptions($field_name . '[0][address][country_code]', $countries, 'The restricted list of available countries is present.');
 
@@ -207,7 +207,6 @@ class AddressDefaultWidgetTest extends JavascriptTestBase {
       $edit[$path] = $value;
     }
     $this->submitForm($edit, t('Save'));
-    $this->assertSession()->statusCodeEquals(200);
     // Check that the article has been created.
     $node = $this->getNodeByTitle($edit['title[0][value]']);
     $this->assertNotEmpty($node, 'Created article ' . $edit['title[0][value]']);
@@ -264,7 +263,45 @@ class AddressDefaultWidgetTest extends JavascriptTestBase {
   }
 
   /**
-   * Tests the initial values and available countries alter events.
+   * Tests the default value functionality.
+   */
+  public function testDefaultValue() {
+    $this->drupalGet($this->fieldConfigUrl);
+    // Confirm that the US is selected by default.
+    $this->assertSession()->fieldValueEquals('default_value_input[field_address][0][address][country_code]', 'US');
+    // Confirm that it is possible to switch the country to France.
+    $this->getSession()->getPage()->fillField('default_value_input[field_address][0][address][country_code]', 'FR');
+    $this->waitForAjaxToFinish();
+    $this->assertSession()->fieldNotExists('default_value_input[field_address][0][address][administrative_area]');
+    // Confirm that it is possible to fill-in only certain fields.
+    $edit = [
+      'default_value_input[field_address][0][address][given_name]' => 'John',
+      'default_value_input[field_address][0][address][family_name]' => 'Smith',
+    ];
+    $this->submitForm($edit, t('Save settings'));
+    $this->assertSession()->pageTextContains('Saved Address configuration.');
+
+    $this->container->get('entity_type.manager')->getStorage('field_config')->resetCache();
+    $this->field = FieldConfig::load($this->field->id());
+    $default_value = $this->field->getDefaultValueLiteral();
+    $expected_default_value = [
+      'country_code' => 'FR',
+      'given_name' => 'John',
+      'family_name' => 'Smith',
+    ];
+    $this->assertCount(1, $default_value);
+    $this->assertEquals($expected_default_value, array_filter($default_value[0]));
+
+    // Confirm that the default value is used on the node form.
+    $this->drupalGet($this->nodeAddUrl);
+    $this->assertSession()->fieldValueEquals('field_address[0][address][country_code]', 'FR');
+    $this->assertSession()->fieldValueEquals('field_address[0][address][given_name]', 'John');
+    $this->assertSession()->fieldValueEquals('field_address[0][address][family_name]', 'Smith');
+    $this->assertSession()->fieldValueEquals('field_address[0][address][postal_code]', '');
+  }
+
+  /**
+   * Tests the alter events.
    */
   public function testEvents() {
     $field_name = $this->field->getName();
@@ -273,21 +310,14 @@ class AddressDefaultWidgetTest extends JavascriptTestBase {
     self::$modules[] = 'address_test';
     $this->container->get('module_installer')->install(self::$modules);
     $this->container = $this->kernel->rebuildContainer();
-    // Get available countries and initial values from module's event subscriber.
+
+    // Confirm that the list of available countries was altered.
     $subscriber = \Drupal::service('address_test.event_subscriber');
     $available_countries = array_keys($subscriber->getAvailableCountries());
-    $initial_values = $subscriber->getInitialValues();
-    // Access the content add form and test the list of countries.
     $this->drupalGet($this->nodeAddUrl);
-    $this->assertOptions($field_name . '[0][address][country_code]', $available_countries, 'Available countries set in the event subscriber are present in the widget.');
-    // Test the values of the fields.
-    foreach ($initial_values as $key => $value) {
-      if ($value) {
-        $name = $field_name . '[0][address][' . $key . ']';
-        $this->assertSession()->fieldValueEquals($name, $value);
-      }
-    }
-    // Test the GB counties.
+    $this->assertOptions($field_name . '[0][address][country_code]', $available_countries);
+
+    // Confirm that counties for Great Britain were added.
     $expected_counties = [
       'Anglesey', 'Blaenau Gwent', 'Bridgend', 'Caerphilly', 'Cardiff',
       'Carmarthenshire', 'Ceredigion', 'Conwy', 'Denbighshire', 'Flintshire',
@@ -301,6 +331,7 @@ class AddressDefaultWidgetTest extends JavascriptTestBase {
     $this->assertSession()->pageTextContains(t('County'));
     $this->assertSession()->fieldExists($field_name . '[0][address][administrative_area]');
     $this->assertOptions($field_name . '[0][address][administrative_area]', $expected_counties);
+
     // Uninstall and remove the address_test module.
     $this->container->get('module_installer')->uninstall(['address_test']);
     $this->container = $this->kernel->rebuildContainer();
@@ -342,7 +373,7 @@ class AddressDefaultWidgetTest extends JavascriptTestBase {
       // Make one assert instead of many asserts for each field's existence.
       $elements = $this->xpath('//input[starts-with(@name,"' . $field_name . '")] | //select[starts-with(@name,"' . $field_name . '")]');
       $form_fields = [];
-      foreach ($elements as $key => $element) {
+      foreach ($elements as $element) {
         if ($field = array_search($element->getAttribute('name'), $all_fields)) {
           $form_fields[] = $field;
         }
@@ -359,7 +390,6 @@ class AddressDefaultWidgetTest extends JavascriptTestBase {
     ];
     $this->drupalGet($this->fieldConfigUrl);
     $this->submitForm($edit, t('Save settings'));
-    $this->assertSession()->statusCodeEquals(200);
 
     $this->drupalGet($this->nodeAddUrl);
     $this->assertEmpty((bool) $this->xpath('//input[@name="field_address[0][address][given_name]" and contains(@required, "required")]'));
@@ -381,7 +411,6 @@ class AddressDefaultWidgetTest extends JavascriptTestBase {
     $edit[$field_name . '[0][address][locality]'] = 'Mountain View';
     $edit[$field_name . '[0][address][administrative_area]'] = 'CA';
     $this->submitForm($edit, t('Save'));
-    $this->assertSession()->statusCodeEquals(200);
     $node = $this->getNodeByTitle($edit['title[0][value]']);
     $this->assertNotEmpty($node, 'Created article ' . $edit['title[0][value]']);
   }
@@ -440,7 +469,6 @@ class AddressDefaultWidgetTest extends JavascriptTestBase {
     $edit[$field_name . '[0][address][administrative_area]'] = 'CA';
     $edit[$field_name . '[0][address][postal_code]'] = '94043';
     $this->submitForm($edit, t('Save'));
-    $this->assertSession()->statusCodeEquals(200);
     $node = $this->getNodeByTitle($edit['title[0][value]']);
 
     $this->drupalGet('node/' . $node->id() . '/edit');
@@ -454,7 +482,6 @@ class AddressDefaultWidgetTest extends JavascriptTestBase {
     $this->getSession()->getPage()->fillField($field_name . '[0][address][country_code]', 'CN');
     $this->waitForAjaxToFinish();
     $this->submitForm([], t('Save'));
-    $this->assertSession()->statusCodeEquals(200);
     // Check that values are cleared.
     $this->assertSession()->fieldValueEquals($field_name . '[0][address][country_code]', 'CN');
     $this->assertSession()->fieldValueEquals($field_name . '[0][address][administrative_area]', '');
@@ -539,7 +566,7 @@ class AddressDefaultWidgetTest extends JavascriptTestBase {
       $valid = FALSE;
     }
 
-    $this->assertNotEmpty($valid, $message);
+    $this->assertTrue($valid, $message);
   }
 
   /**

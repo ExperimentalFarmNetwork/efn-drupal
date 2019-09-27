@@ -6,10 +6,10 @@ general:
 
 leaflet:
   remote: http://leafletjs.com/
-  version: 1.0.3
+  version: 1.4.0
   license:
     name: Leaflet-License
-    url: https://github.com/Leaflet/Leaflet/blob/v1.0.3/LICENSE
+    url: https://github.com/Leaflet/Leaflet/blob/v1.4.0/LICENSE
     gpl-compatible: true
   js:
     js/leaflet/dist/leaflet.js: {}
@@ -18,10 +18,38 @@ leaflet:
       js/leaflet/dist/leaflet.css: {}
 
 leaflet-drupal:
-    version: VERSION
-    js:
-      leaflet.drupal.js: {}
-    dependencies:
-      - leaflet/leaflet
-      - core/jquery
-      - core/drupal
+  version: VERSION
+  js:
+    leaflet.drupal.js: {}
+  dependencies:
+    - leaflet/leaflet
+    - core/jquery
+    - core/drupal
+
+# Control Fullscreen
+leaflet.fullscreen:
+  header: true
+  remote: https://github.com/Leaflet/Leaflet.fullscreen
+  version: '1.0.1'
+  license:
+    name: ISC License
+    url: https://github.com/Leaflet/Leaflet.fullscreen/blob/gh-pages/LICENSE
+    gpl-compatible: true
+  css:
+    component:
+      'https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css': { type: external}
+  js:
+    'https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js': { type: external, minified: true }
+  dependencies:
+    - leaflet/leaflet
+
+leaflet.geocoder:
+  version: 1.x
+  css:
+    component:
+      css/leaflet_geocoder.css: {}
+  js:
+    js/leaflet.geocoder.drupal.js: {}
+  dependencies:
+    - core/drupal.autocomplete
+    - leaflet/leaflet-drupal

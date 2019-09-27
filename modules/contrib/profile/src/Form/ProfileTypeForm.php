@@ -109,10 +109,10 @@ class ProfileTypeForm extends BundleEntityFormBase {
     $status = $type->save();
 
     if ($status == SAVED_UPDATED) {
-      drupal_set_message($this->t('%label profile type has been updated.', ['%label' => $type->label()]));
+      $this->messenger()->addMessage($this->t('%label profile type has been updated.', ['%label' => $type->label()]));
     }
     else {
-      drupal_set_message($this->t('%label profile type has been created.', ['%label' => $type->label()]));
+      $this->messenger()->addMessage($this->t('%label profile type has been created.', ['%label' => $type->label()]));
     }
     $form_state->setRedirect('entity.profile_type.collection');
   }

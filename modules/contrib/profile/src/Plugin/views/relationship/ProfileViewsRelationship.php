@@ -75,7 +75,7 @@ class ProfileViewsRelationship extends RelationshipPluginBase {
 
     $this->definition['extra'][] = [
       'field' => 'type',
-      'value' => $this->options['profile_type']
+      'value' => $this->options['profile_type'],
     ];
 
     parent::query();

@@ -2,19 +2,46 @@
 
 namespace Drupal\profile\Controller;
 
+use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\profile\Entity\ProfileInterface;
 use Drupal\profile\Entity\ProfileTypeInterface;
 use Drupal\profile\Entity\Profile;
 use Drupal\user\UserInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Returns responses for ProfileController routes.
  */
-class ProfileController extends ControllerBase implements ContainerInjectionInterface {
+class ProfileController extends ControllerBase {
+
+  /**
+   * The time.
+   *
+   * @var \Drupal\Component\Datetime\TimeInterface
+   */
+  protected $time;
+
+  /**
+   * Constructs a new ProfileController object.
+   *
+   * @param \Drupal\Component\Datetime\TimeInterface $time
+   *   The time.
+   */
+  public function __construct(TimeInterface $time) {
+    $this->time = $time;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('datetime.time')
+    );
+  }
 
   /**
    * Provides the profile submission form.
@@ -36,7 +63,7 @@ class ProfileController extends ControllerBase implements ContainerInjectionInte
       'type' => $profile_type->id(),
     ]);
 
-    return $this->entityFormBuilder()->getForm($profile, 'add', ['uid' => $user->id(), 'created' => REQUEST_TIME]);
+    return $this->entityFormBuilder()->getForm($profile, 'add', ['uid' => $user->id(), 'created' => $this->time->getRequestTime()]);
   }
 
   /**
@@ -100,7 +127,7 @@ class ProfileController extends ControllerBase implements ContainerInjectionInte
    *   The profile type entity for the profile.
    *
    * @return array
-   *    Returns form array.
+   *   Returns form array.
    */
   public function userProfileForm(RouteMatchInterface $route_match, UserInterface $user, ProfileTypeInterface $profile_type) {
     /** @var \Drupal\profile\Entity\ProfileType $profile_type */
@@ -170,7 +197,7 @@ class ProfileController extends ControllerBase implements ContainerInjectionInte
     $profile->setDefault(TRUE);
     $profile->save();
 
-    drupal_set_message($this->t('The %label profile has been marked as default.', ['%label' => $profile->label()]));
+    $this->messenger()->addMessage($this->t('The %label profile has been marked as default.', ['%label' => $profile->label()]));
 
     $url = $profile->toUrl('collection');
     return $this->redirect($url->getRouteName(), $url->getRouteParameters(), $url->getOptions());

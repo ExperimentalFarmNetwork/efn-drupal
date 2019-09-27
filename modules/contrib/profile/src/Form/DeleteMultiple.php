@@ -6,17 +6,17 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\ConfirmFormBase;
 use Drupal\Core\Url;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\user\PrivateTempStoreFactory;
+use Drupal\Core\TempStore\PrivateTempStoreFactory;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Provides a node deletion confirmation form.
+ * Provides a profile deletion confirmation form.
  */
 class DeleteMultiple extends ConfirmFormBase {
 
   /**
-   * The array of nodes to delete.
+   * The array of profiles to delete.
    *
    * @var array
    */
@@ -25,12 +25,12 @@ class DeleteMultiple extends ConfirmFormBase {
   /**
    * The private_tempstore factory.
    *
-   * @var \Drupal\user\PrivateTempStoreFactory
+   * @var \Drupal\Core\TempStore\PrivateTempStoreFactory
    */
   protected $privateTempStoreFactory;
 
   /**
-   * The node storage.
+   * The profile storage.
    *
    * @var \Drupal\Core\Entity\EntityStorageInterface
    */
@@ -39,7 +39,7 @@ class DeleteMultiple extends ConfirmFormBase {
   /**
    * Constructs a DeleteMultiple form object.
    *
-   * @param \Drupal\user\PrivateTempStoreFactory $temp_store_factory
+   * @param \Drupal\Core\TempStore\PrivateTempStoreFactory $temp_store_factory
    *   The tempstore factory.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $manager
    *   The entity manager.
@@ -54,7 +54,7 @@ class DeleteMultiple extends ConfirmFormBase {
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('user.private_tempstore'),
+      $container->get('tempstore.private'),
       $container->get('entity.manager')
     );
   }
@@ -116,7 +116,7 @@ class DeleteMultiple extends ConfirmFormBase {
       $this->privateTempStoreFactory->get('profile_multiple_delete_confirm')->delete(\Drupal::currentUser()->id());
       $count = count($this->profiles);
       $this->logger('content')->notice('Deleted @count profiles.', ['@count' => $count]);
-      drupal_set_message(\Drupal::translation()->formatPlural($count, 'Deleted 1 profile.', 'Deleted @count profiles.'));
+      $this->messenger()->addMessage(\Drupal::translation()->formatPlural($count, 'Deleted 1 profile.', 'Deleted @count profiles.'));
     }
     $form_state->setRedirect('entity.profile.collection');
   }

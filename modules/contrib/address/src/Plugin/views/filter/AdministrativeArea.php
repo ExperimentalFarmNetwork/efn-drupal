@@ -160,7 +160,7 @@ class AdministrativeArea extends CountryAwareInOperatorBase {
     if (!empty($argument_options)) {
       $form['country']['country_argument_id'] = [
         '#type' => 'select',
-        '#title' => t('Country contextual filter'),
+        '#title' => $this->t('Country contextual filter'),
         '#options' => $argument_options,
         '#default_value' => $this->options['country']['country_argument_id'],
       ];
@@ -172,7 +172,7 @@ class AdministrativeArea extends CountryAwareInOperatorBase {
       ];
       $form['country']['country_argument_id']['error'] = [
         '#type' => 'markup',
-        '#markup' => t('You must add a contextual filter for the country code to use this filter for administrative areas.'),
+        '#markup' => $this->t('You must add a contextual filter for the country code to use this filter for administrative areas.'),
       ];
     }
     $form['country']['country_argument_id']['#states'] = [
@@ -192,7 +192,7 @@ class AdministrativeArea extends CountryAwareInOperatorBase {
     if (!empty($filter_options)) {
       $form['country']['country_filter_id'] = [
         '#type' => 'select',
-        '#title' => t('Exposed country filter to determine values'),
+        '#title' => $this->t('Exposed country filter to determine values'),
         '#options' => $filter_options,
         '#default_value' => $this->options['country']['country_filter_id'],
       ];
@@ -204,7 +204,7 @@ class AdministrativeArea extends CountryAwareInOperatorBase {
       ];
       $form['country']['country_filter_id']['error'] = [
         '#type' => 'markup',
-        '#markup' => t('You must add a filter for the country code to use this filter for administrative areas.'),
+        '#markup' => $this->t('You must add a filter for the country code to use this filter for administrative areas.'),
       ];
     }
     $form['country']['country_filter_id']['#states'] = [
@@ -217,7 +217,7 @@ class AdministrativeArea extends CountryAwareInOperatorBase {
 
     $form['country']['country_static_code'] = [
       '#type' => 'select',
-      '#title' => t('Predefined country for administrative areas'),
+      '#title' => $this->t('Predefined country for administrative areas'),
       '#options' => $countries,
       '#empty_value' => '',
       '#default_value' => $this->options['country']['country_static_code'],
@@ -377,7 +377,7 @@ class AdministrativeArea extends CountryAwareInOperatorBase {
       ];
       $form['value']['message'] = [
         '#type' => 'markup',
-        '#markup' => t("You can only select options here if you use a predefined country for the 'Country source'."),
+        '#markup' => $this->t("You can only select options here if you use a predefined country for the 'Country source'."),
       ];
     }
   }

@@ -5,7 +5,7 @@ entity.profile.collection:
     _entity_list: 'profile'
     _title: 'Profiles'
   requirements:
-    _permission: 'administer profile'
+    _permission: 'administer profile+access profile overview'
 
 entity.profile_type.collection:
   path: '/admin/config/people/profiles'

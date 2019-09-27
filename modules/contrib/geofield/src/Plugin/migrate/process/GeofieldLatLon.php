@@ -2,9 +2,12 @@
 
 namespace Drupal\geofield\Plugin\migrate\process;
 
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
+use Drupal\geofield\WktGeneratorInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Process latitude and longitude and return the value for the D8 geofield.
@@ -13,7 +16,34 @@ use Drupal\migrate\Row;
  *   id = "geofield_latlon"
  * )
  */
-class GeofieldLatLon extends ProcessPluginBase {
+class GeofieldLatLon extends ProcessPluginBase implements ContainerFactoryPluginInterface {
+
+  /**
+   * The WktGenerator service.
+   *
+   * @var \Drupal\geofield\WktGeneratorInterface
+   */
+  protected $wktGenerator;
+
+  /**
+   * {@inheritdoc}
+   */
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, WktGeneratorInterface $wkt_generator) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition);
+    $this->wktGenerator = $wkt_generator;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $container->get('geofield.wkt_generator')
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -26,9 +56,7 @@ class GeofieldLatLon extends ProcessPluginBase {
       return NULL;
     }
 
-    $lonlat = \Drupal::service('geofield.wkt_generator')->WktBuildPoint([$lon, $lat]);
-
-    return $lonlat;
+    return $this->wktGenerator->WktBuildPoint([$lon, $lat]);
   }
 
 }

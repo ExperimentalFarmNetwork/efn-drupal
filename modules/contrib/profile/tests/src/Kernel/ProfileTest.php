@@ -67,6 +67,8 @@ class ProfileTest extends EntityKernelTestBase {
    * Tests the profile entity and its methods.
    */
   public function testProfile() {
+    $time = $this->container->get('datetime.time');
+
     $types_data = [
       'profile_type_0' => ['label' => $this->randomMachineName()],
       'profile_type_1' => ['label' => $this->randomMachineName()],
@@ -87,12 +89,12 @@ class ProfileTest extends EntityKernelTestBase {
     ]);
 
     $this->assertEquals($profile->getOwnerId(), $this->user1->id());
-    $this->assertEquals($profile->getCreatedTime(), REQUEST_TIME);
-    $this->assertEquals($profile->getChangedTime(), REQUEST_TIME);
+    $this->assertEquals($profile->getCreatedTime(), $time->getRequestTime());
+    $this->assertEquals($profile->getChangedTime(), $time->getRequestTime());
 
     // Save the profile.
     $profile->save();
-    $this->assertEquals(REQUEST_TIME, $profile->getChangedTime());
+    $this->assertEquals($time->getRequestTime(), $profile->getChangedTime());
     $expected_label = new TranslatableMarkup('@type profile #@id', [
       '@type' => $types['profile_type_0']->label(),
       '@id' => $profile->id(),
@@ -270,7 +272,6 @@ class ProfileTest extends EntityKernelTestBase {
       'label' => 'Full name',
     ]);
     $field->save();
-
 
     // Create new profiles.
     /** @var \Drupal\profile\Entity\Profile $profile1 */

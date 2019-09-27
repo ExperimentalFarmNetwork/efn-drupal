@@ -55,7 +55,7 @@ class ProfileTabTest extends ProfileTestBase {
       'profile_type_1' => ['label' => $this->randomMachineName()],
     ];
 
-    /** @var ProfileType[] $types */
+    /** @var \Drupal\profile\Entity\ProfileType[] $types */
     $types = [];
     foreach ($types_data as $id => $values) {
       $types[$id] = ProfileType::create(['id' => $id] + $values);

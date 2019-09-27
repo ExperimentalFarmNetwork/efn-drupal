@@ -1,0 +1,15 @@
+views.field.geofield_proximity_field:
+  type: views.field.numeric
+  label: 'Geofield Proximity Field'
+
+views.filter_value.geofield_proximity_filter:
+  type: views.field.numeric
+  label: 'Geofield Proximity Filter'
+
+views.sort.geofield_proximity_sort:
+  type: views_sort
+  label: 'Geofield Proximity Sort'
+
+views.argument.geofield_proximity_argument:
+  type: views_argument
+  label: 'Geofield Proximity Argument'

@@ -4,7 +4,7 @@ namespace Drupal\profile;
 
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Session\AccountInterface;
-use Drupal\entity\EntityAccessControlHandler as EntityApiAccessControlHandler;
+use Drupal\entity\UncacheableEntityAccessControlHandler;
 use Drupal\profile\Entity\ProfileType;
 
 /**
@@ -12,7 +12,7 @@ use Drupal\profile\Entity\ProfileType;
  *
  * @see \Drupal\profile\Entity\Profile
  */
-class ProfileAccessControlHandler extends EntityApiAccessControlHandler {
+class ProfileAccessControlHandler extends UncacheableEntityAccessControlHandler {
 
   /**
    * {@inheritdoc}

@@ -1,0 +1,59 @@
+Integration with the <a href="http://leafletjs.com/download.html" target="_blank">Leaflet</a> JS mapping library.
+
+<blockquote>A Modern, Lightweight Open-Source JavaScript Library for Interactive Maps (by <a href="http://cloudmade.com/">CloudMade</a>).</blockquote>
+
+The Leaflet module features:
+<ul>
+  <li>Field formatter that can show a map for fields that contain geospatial data.</li>
+  <li>Views integration that plots data on a map (using the sub module Leaflet Views).</li>
+  <li>Lightweight and easy to use API for defining maps and displaying data on a map.</li>
+</ul>
+
+<h2><a href="http://www.geodemocracy.com/geofield_d8/web/geoplaces-map-leaflet" target="blank">>>>> Drupal 8 Live Demo <<<<</a></h2>
+<br>
+<strong>IMPORTANT!: Since 8.x-1.2 the Leaflet module itself contains the "Leaflet Markecluster" submodule</strong>, that integrates the <a href="https://github.com/Leaflet/Leaflet.markercluster" title="Leaflet Markercluster Js library" target="_blank">Leaflet Markercluster Js library (version 1.4.1)</a>.
+
+<strong>IMPORTANT!: (warning before upgrading from 8.x-1.2 to 8.x-1.3 version)</strong>
+Leaflet Markecluster settings will be lost upgrading from 8.x-1.2 to 8.x-1.3 version.
+Thus you are invited to store them before the upgrade, and reapply them manually, after it. Sorry for that. (<a href="https://www.drupal.org/project/leaflet/issues/3033668">more info</a>).
+
+
+Please refer to the README file included into the project for all the details, including help on installation, configuration and usage.
+
+<hr>
+<h2>The Drupal 7 version of Leaflet</h2>
+Some modules that build on Leaflet, adding various features:
+<ul>
+  <li><a href="http://drupal.org/project/leaflet_more_maps">Leaflet More Maps</a>: adds over 20 map styles, selected at the flick of a drop-down</li>
+  <li><a href="http://drupal.org/project/leaflet_label">Leaflet Label</a>: alternative tool tip hovers for polygons and line strings</li>
+  <li><a href="http://drupal.org/project/leaflet_hash">Leaflet Hash</a>: bookmarking for maps, appends a hash of current map center and zoom to the URL, so you save and restore the "view port"</li>
+  <li><a href="http://drupal.org/project/leaflet_markercluster">Leaflet MarkerCluster</a>: makes large marker populations easier to navigate through animated clustering and drill-down capability</li>
+  <li><a href="http://drupal.org/project/ip_geoloc">IP Geolocation Views & Maps</a>: adds a swag of cool features such as centering options, markers colour-coded by any field in your View, cross-highlighting between content and map, geocoding and reverse geocoding options.</li>
+  <li><a href="https://www.drupal.org/node/1645460">Many more...</a></li>
+</ul>
+
+<hr>
+<h2>The Drupal 8 version of Leaflet</h2>
+In stable and usable version,
+<ul>
+  <li>embeds <a href="https://leafletjs.com/download.html" target="_blank">Leaflet Js library (version 1.4.0)</a>;</li>
+  <li>provides Leaflet Map Formatter and Leaflet Map Views Integration with advanced functionalities and configurations;</li>
+  <li>perfectly matches with the <a href="https://www.drupal.org/project/leaflet_widget" title="Leaflet Widget module" target="_blank">Leaflet Widget module</a> widget;</li>
+  <li>perfectly matches with the <a href="https://www.drupal.org/project/geofield_map" title="Geofield Map module" target="_blank">Geofield Map module</a> widget;</li>
+</ul>
+<br>
+<strong>IMPORTANT!: Since 8.x-1.2 the Leaflet module itself contains the "Leaflet Markecluster" submodule</strong>, that integrates the <a href="https://github.com/Leaflet/Leaflet.markercluster" title="Leaflet Markercluster Js library" target="_blank">Leaflet Markercluster Js library (version 1.4.1)</a>.
+
+It needs to be installed <a href="https://www.drupal.org/docs/develop/using-composer/using-composer-to-manage-drupal-site-dependencies" target="_blank">using Composer to manage Drupal site dependencies</a>, which will also download the required <a href="https://www.drupal.org/project/geofield" title="Geofield Module" target="_blank">Geofield Module</a> dependency and <a href="https://geophp.net" title="GeoPHP library">GeoPHP library</a>.
+It means simply running the following command from your project root (where the main composer.json file is sited):
+
+<b><code>$ composer require 'drupal/leaflet'</code></b>
+
+Read the Installation and Use instructions in the Readme.md file for further details.
+
+<hr>
+
+
+D7 version originally developed by <a href="http://thinkshout.com" target="_blank">ThinkShout</a> and <a href="http://drupal.org/user/108811" target="_blank">@pvhee</a> (from <a href="http://marzeelabs.org">Marzee Labs</a>) with lots of help from the <a href="http://drupal.org/node/1222714/committers">community</a>.
+D8 version started by <a href="https://drupal.org/user/404007" target="_blank">RdeBoer</a> of <a href="http://flink.com.au/" target="_blank">flink</a>, and evolved to maturity by <a href="https://drupal.org/u/itamair" target="_blank">Itamair</a>.
+Please help out and contribute so that Leaflet remains at the cutting edge of the Drupal geo stack.

@@ -80,7 +80,7 @@ class WktGeneratorTest extends KernelTestBase {
    */
   public function testPoint() {
     $point = $this->wktGenerator->wktGeneratePoint(['3', '4']);
-    $this->assertEqual('POINT (3 4)', $point, 'Point generated properly');
+    $this->assertEquals('POINT (3 4)', $point, 'Point generated properly');
 
     $point = $this->wktGenerator->wktGeneratePoint();
     $match = preg_match($this->pointRegex, $point);

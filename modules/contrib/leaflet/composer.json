@@ -37,7 +37,7 @@
     ],
     "support": {
         "issues": "https://www.drupal.org/project/issues/leaflet",
-        "source": "http://cgit.drupalcode.org/leaflet"
+        "source": "https://git.drupalcode.org/project/leaflet"
     },
     "license": "GPL-2.0+",
     "minimum-stability": "dev",

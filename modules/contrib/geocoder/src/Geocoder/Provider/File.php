@@ -23,7 +23,8 @@ class File extends AbstractProvider implements Provider {
    * {@inheritdoc}
    */
   public function geocode($filename) {
-    if ($exif = exif_read_data($filename)) {
+    // Check file type exists and is a JPG (IMAGETYPE_JPEG) before exif_read.
+    if (file_exists($filename) && exif_imagetype($filename) == 2 && $exif = @exif_read_data($filename)) {
       if (isset($exif['GPSLatitude']) && isset($exif['GPSLatitudeRef']) && $exif['GPSLongitude'] && $exif['GPSLongitudeRef']) {
         $latitude = $this->getGpsExif($exif['GPSLatitude'], $exif['GPSLatitudeRef']);
         $longitude = $this->getGpsExif($exif['GPSLongitude'], $exif['GPSLongitudeRef']);
@@ -76,7 +77,7 @@ class File extends AbstractProvider implements Provider {
    * {@inheritdoc}
    */
   public function reverse($latitude, $longitude) {
-    throw new UnsupportedOperation('The Image plugin is not able to do reverse geocoding.');
+    throw new UnsupportedOperation('The File plugin is not able to do reverse geocoding.');
   }
 
 }

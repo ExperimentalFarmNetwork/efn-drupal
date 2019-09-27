@@ -1,0 +1,34 @@
+{
+    "name": "drupal/email_registration",
+    "type": "drupal-module",
+    "description": "Allows users to register with an email address as their username.",
+    "license": "GPL-2.0+",
+    "homepage": "https://www.drupal.org/project/email_registration",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Greg Knaddison (greggles)",
+            "homepage": "https://www.drupal.org/u/greggles",
+            "role": "Maintainer"
+        },
+        {
+            "name": "Andrey Postnikov (andypost)",
+            "homepage": "https://www.drupal.org/u/andypost",
+            "role": "Maintainer"
+        },
+        {
+            "name": "Chris Herberte",
+            "homepage": "https://www.drupal.org/u/chris-herberte",
+            "role": "Maintainer"
+        },
+        {
+            "name": "Moshe Weitzman (moshe weitzman)",
+            "homepage": "https://www.drupal.org/u/moshe-weitzman",
+            "role": "Maintainer"
+        }
+    ],
+    "support": {
+        "issues": "http://drupal.org/project/issues/email_registration",
+        "source": "http://cgit.drupalcode.org/email_registration"
+    }
+}

@@ -146,39 +146,7 @@
           e.preventDefault();
         });
       });
-    },
-
-    /**
-     * Scan a dialog for any button-style links and move them to the button area.
-     *
-     * @param {Drupal.dialog~dialogDefinition} dialog
-     *   The Drupal.dialog object.
-     * @param {jQuery} $element
-     *   An jQuery object containing the element that is the dialog target.
-     * @param {object} settings
-     *   The dialog settings object.
-     */
-    prepareDialogButtons: function (dialog, $element, settings) {
-      var buttons = settings.buttons || [];
-      var $buttonLinks = $element.find('a.button');
-      $buttonLinks.once('ajax-comments').each(function () {
-        var $originalButton = $(this).css({
-          display: 'none',
-          visibility: 'hidden'
-        });
-        buttons.push({
-          text: $originalButton.html(),
-          class: $originalButton.attr('class'),
-          click: function(e) {
-            $originalButton.trigger('click');
-            e.preventDefault();
-            e.stopPropagation();
-          }
-        });
-      });
-      $element.dialog('option', 'buttons', buttons);
     }
-
   };
 
   /**
@@ -193,21 +161,5 @@
       }
     };
   })(Drupal.Ajax.prototype.beforeSerialize);
-
-
-  /**
-   * Binds a listener on dialog creation to handle dialog customizations.
-   *
-   * @param {jQuery.Event} e
-   * @param {Drupal.dialog~dialogDefinition} dialog
-   * @param {jQuery} $element
-   * @param {object} settings
-   */
-  $(window).on('dialog:aftercreate', function (e, dialog, $element, settings) {
-    // Only apply this logic on Ajax Comments forms
-    if ($element.find('form.ajax-comments').length) {
-      Drupal.behaviors.ajaxCommentsBehavior.prepareDialogButtons(dialog, $element, settings);
-    }
-  });
 
 })(jQuery, this, Drupal, drupalSettings);

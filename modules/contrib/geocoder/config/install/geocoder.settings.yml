@@ -1,2 +1,3 @@
+geocoder_presave_disabled: false
 cache: true
 plugins_options: { }

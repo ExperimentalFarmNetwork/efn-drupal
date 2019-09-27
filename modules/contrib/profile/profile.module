@@ -133,12 +133,12 @@ function profile_entity_extra_field_info() {
   // automatically to other view modes.
   /** @var \Drupal\profile\Entity\ProfileType $bundle */
   foreach (ProfileType::loadMultiple() as $bundle) {
-    $extra['user']['user']['display']['profile_' . $bundle->id()] = array(
+    $extra['user']['user']['display']['profile_' . $bundle->id()] = [
       'label' => $bundle->label(),
       'description' => t('Display @type profiles', ['@type' => $bundle->label()]),
       'weight' => 10,
       'visible' => FALSE,
-    );
+    ];
   }
   return $extra;
 }
@@ -180,7 +180,7 @@ function profile_form_field_config_edit_form_alter(&$form, FormStateInterface $f
  *
  * @param array $form
  *   The form array.
- * @param FormStateInterface $form_state
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
  *   The form state.
  */
 function profile_form_field_config_edit_form_submit(array $form, FormStateInterface $form_state) {
@@ -207,7 +207,7 @@ function profile_form_user_register_form_alter(&$form, FormStateInterface $form_
   $attached_profile_form = FALSE;
   $weight = 90;
 
-  /** @var ProfileType[] $profile_types */
+  /** @var \Drupal\profile\Entity\ProfileType[] $profile_types */
   $profile_types = ProfileType::loadMultiple();
   foreach ($profile_types as $profile_type) {
     $instances = array_filter(\Drupal::service('entity_field.manager')->getFieldDefinitions('profile', $profile_type->id()), function ($field_definition) {
@@ -248,7 +248,7 @@ function profile_form_user_register_form_alter(&$form, FormStateInterface $form_
         ];
 
         field_group_attach_groups($form['entity_' . $profile_type->id()], $context);
-        $form['entity_' . $profile_type->id()]['#pre_render'][] = 'field_group_form_pre_render';
+        $form['entity_' . $profile_type->id()]['#process'][] = 'field_group_form_process';
       }
 
       $form_state
@@ -303,6 +303,7 @@ function profile_form_user_register_form_submit(array &$form, FormStateInterface
 
 /**
  * Pre render callback for profile embedded views to ensure a title is set.
+ *
  * @param $element
  *
  * @return mixed

@@ -5,6 +5,25 @@
  * Install, update and uninstall functions for the profile module.
  */
 
+use Drupal\user\Entity\Role;
+
+/**
+ * Implements hook_update_dependencies().
+ */
+function profile_update_dependencies() {
+  $dependencies = [];
+
+  // Drupal's system update 8501 alters revisionable entities, this uses the
+  // entity_keys. The langcode key was removed from the Profile entity in
+  // profile_update_8001 but it was not removed from the stored entity_keys. To
+  // fix this, update 8003 must run before 8501 is executed.
+  $dependencies['system'][8501] = [
+    'profile' => 8003,
+  ];
+
+  return $dependencies;
+}
+
 /**
  * Uninstalls the langcode field from the profile entity.
  */
@@ -33,4 +52,71 @@ function profile_update_8001() {
   }
 
   return t('Language code field uninstalled from profile entity.');
+}
+
+/**
+ * Updates view profile permission name.
+ */
+function profile_update_8002() {
+  /** @var \Drupal\user\Entity\Role[] $roles */
+  $roles = Role::loadMultiple();
+
+  foreach ($roles as $role) {
+    if ($role->hasPermission('view profile')) {
+      $role->revokePermission('view profile');
+      $role->grantPermission('view own profile');
+      $role->save();
+    }
+  }
+
+  return t('Permission name updated.');
+}
+
+/**
+ * Removes the langcode key from the profile entity keys.
+ */
+function profile_update_8003() {
+  $definition_update_manager = \Drupal::entityDefinitionUpdateManager();
+  $profile_entity_type = $definition_update_manager->getEntityType('profile');
+  if ($profile_entity_type->hasKey('langcode')) {
+    $keys = $profile_entity_type->getKeys();
+    unset($keys['langcode']);
+    $profile_entity_type->set('entity_keys', $keys);
+    $definition_update_manager->updateEntityType($profile_entity_type);
+  }
+
+  return t('Language code key removed from profile entity definition.');
+}
+
+/**
+ * Add the uid entity key to profiles.
+ */
+function profile_update_8004() {
+  $definition_update_manager = \Drupal::entityDefinitionUpdateManager();
+  $entity_type = $definition_update_manager->getEntityType('profile');
+
+  $entity_keys = $entity_type->getKeys();
+  $entity_keys['uid'] = 'uid';
+  $entity_type->set('entity_keys', $entity_keys);
+  $definition_update_manager->updateEntityType($entity_type);
+
+  // @todo The above should be enough, since that is the only definition that
+  //   changed. But \Drupal\Core\Entity\Sql\SqlContentEntityStorageSchema varies
+  //   field schema by whether a field is an entity key, so invoke
+  //   EntityDefinitionUpdateManagerInterface::updateFieldStorageDefinition()
+  //   with an unmodified field storage definition to trigger the necessary
+  //   changes. SqlContentEntityStorageSchema::onEntityTypeUpdate() should be
+  //   fixed to automatically handle this.
+  //   @see https://www.drupal.org/node/2554245
+  $definition_update_manager->updateFieldStorageDefinition($definition_update_manager->getFieldStorageDefinition('uid', 'profile'));
+
+  return t('The uid entity key has been added to profiles.');
+}
+
+/**
+ * Rerun uid entity key addition after incorrect entity type fixed.
+ */
+function profile_update_8005() {
+  // Rerun the previous update with correction.
+  profile_update_8004();
 }

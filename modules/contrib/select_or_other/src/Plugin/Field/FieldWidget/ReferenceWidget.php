@@ -11,6 +11,10 @@ use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\user\EntityOwnerInterface;
+use Drupal\Core\Entity\EntityTypeManager;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 
 /**
  * Plugin implementation of the 'select_or_other_reference' widget.
@@ -24,7 +28,37 @@ use Drupal\user\EntityOwnerInterface;
  *   multiple_values = TRUE
  * )
  */
-class ReferenceWidget extends WidgetBase {
+class ReferenceWidget extends WidgetBase implements ContainerFactoryPluginInterface {
+
+  /**
+   * The entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManager
+   */
+  protected $entityTypeManager;
+
+  /**
+   * The bundle info service.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeBundleInfoInterface
+   */
+  protected $bundleInfoService;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static($plugin_id, $plugin_definition, $configuration['field_definition'], $configuration['settings'], $configuration['third_party_settings'], $container->get('entity_type.manager'), $container->get('entity_type.bundle.info'));
+  }
+
+  /**
+   * Constructs a ReferenceWidget object.
+   */
+  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, array $third_party_settings, EntityTypeManager $entity_type =  NULL, EntityTypeBundleInfoInterface $bundle_info_service = NULL) {
+    parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $third_party_settings);
+    $this->entityTypeManager = $entity_type;
+    $this->bundleInfoService = $bundle_info_service;
+  }
 
   /**
    * Helper method which prepares element values for validation.
@@ -53,7 +87,7 @@ class ReferenceWidget extends WidgetBase {
    */
   protected function getEntityStorage() {
     $target_type = $this->getFieldSetting('target_type');
-    return \Drupal::entityTypeManager()->getStorage($target_type);
+    return $this->entityTypeManager->getStorage($target_type);
   }
 
   /**
@@ -187,7 +221,7 @@ class ReferenceWidget extends WidgetBase {
       else {
         // @todo Expose a proper UI for choosing the bundle for autocreated
         // entities in https://www.drupal.org/node/2412569.
-        $bundles = \Drupal::entityManager()
+        $bundles = $this->bundleInfoService
           ->getBundleInfo($this->getFieldSetting('target_type'));
         $bundle = key($bundles);
       }

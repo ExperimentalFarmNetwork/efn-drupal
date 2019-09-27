@@ -4,7 +4,7 @@
  * @file
  * General functions and hook implementations.
  *
- * @see http://harvesthq.github.com/chosen/
+ * @see https://harvesthq.github.com/chosen/
  */
 
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
@@ -18,7 +18,7 @@ use Drupal\Core\Url;
 /**
  * Define chosen library url.
  */
-define('CHOSEN_WEBSITE_URL', 'http://harvesthq.github.io/chosen');
+define('CHOSEN_WEBSITE_URL', 'https://harvesthq.github.io/chosen');
 define('CHOSEN_INCLUDE_ADMIN', 0);
 define('CHOSEN_INCLUDE_NO_ADMIN', 1);
 define('CHOSEN_INCLUDE_EVERYWHERE', 2);
@@ -163,6 +163,7 @@ function chosen_attach_library(array &$element) {
     'placeholder_text_multiple' => $chosen_conf->get('placeholder_text_multiple'),
     'placeholder_text_single' => $chosen_conf->get('placeholder_text_single'),
     'no_results_text' => $chosen_conf->get('no_results_text'),
+    'max_shown_results' => $chosen_conf->get('max_shown_results'),
     'inherit_select_classes' => TRUE,
   ];
 
@@ -171,6 +172,7 @@ function chosen_attach_library(array &$element) {
     'minimum_single' => (int) $chosen_conf->get('minimum_single'),
     'minimum_multiple' => (int) $chosen_conf->get('minimum_multiple'),
     'minimum_width' => (int) $chosen_conf->get('minimum_width'),
+    'use_relative_width' => (bool) $chosen_conf->get('use_relative_width'),
     'options' => $options,
   ];
 }

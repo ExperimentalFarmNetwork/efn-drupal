@@ -131,6 +131,14 @@ class GeocoderFieldPluginManager extends DefaultPluginManager {
     // List the possible Geocoding Field Types.
     $source_fields_types = $this->preprocessorPluginManager->getGeocodeSourceFieldsTypes();
 
+    // Add File and Image field types, for File provider integration.
+    if ($this->moduleHandler->moduleExists('image')) {
+      array_push($source_fields_types,
+        "file",
+        "image"
+      );
+    }
+
     // Add Address and Country Field types, for Address module integration.
     if ($this->moduleHandler->moduleExists('geocoder_address')) {
       array_push($source_fields_types,
@@ -138,6 +146,18 @@ class GeocoderFieldPluginManager extends DefaultPluginManager {
         "address_country"
       );
     }
+
+    // Add Computed field types, for Computed field module integration.
+    if ($this->moduleHandler->moduleExists('computed_field')) {
+      array_push($source_fields_types,
+        "computed_string",
+        "computed_string_long"
+      );
+
+    }
+
+    // Allow other modules to add/alter list of possible Geocoding Field Types.
+    $this->moduleHandler->alter('geocode_source_fields', $source_fields_types);
 
     return $this->getFieldsOptions(
       $entity_type_id,
@@ -164,6 +184,10 @@ class GeocoderFieldPluginManager extends DefaultPluginManager {
 
     // List the possible Reverse Geocoding Field Types.
     $source_fields_types = $this->preprocessorPluginManager->getReverseGeocodeSourceFieldsTypes();
+
+    // Allow other modules to add/alter list of possible Reverse
+    // Geocoding Field Types.
+    $this->moduleHandler->alter('reverse_geocode_source_fields', $source_fields_types);
 
     return $this->getFieldsOptions(
       $entity_type_id,

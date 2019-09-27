@@ -3,7 +3,7 @@
 namespace Drupal\geocoder_geofield\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\geocoder_field\Plugin\Field\GeocodeFormatterBase;
+use Drupal\geocoder_field\Plugin\Field\FieldFormatter\GeocodeFormatter;
 
 /**
  * Plugin implementation of the Geocode formatter.
@@ -16,7 +16,7 @@ use Drupal\geocoder_field\Plugin\Field\GeocodeFormatterBase;
  *   }
  * )
  */
-class ReverseGeocodeGeofieldFormatter extends GeocodeFormatterBase {
+class ReverseGeocodeGeofieldFormatter extends GeocodeFormatter {
 
   /**
    * {@inheritdoc}
@@ -25,7 +25,6 @@ class ReverseGeocodeGeofieldFormatter extends GeocodeFormatterBase {
     $elements = [];
     $dumper = $this->dumperPluginManager->createInstance($this->getSetting('dumper'));
     $provider_plugins = $this->getEnabledProviderPlugins();
-    $geocoder_plugins_options = (array) $this->config->get('plugins_options');
 
     /** @var \Drupal\geofield\GeoPHP\GeoPHPInterface $geophp */
     $geophp = \Drupal::service('geofield.geophp');
@@ -37,7 +36,7 @@ class ReverseGeocodeGeofieldFormatter extends GeocodeFormatterBase {
       /** @var \Point $centroid */
       $centroid = $geom->getCentroid();
 
-      if ($address_collection = $this->geocoder->reverse($centroid->y(), $centroid->x(), array_keys($provider_plugins), $geocoder_plugins_options)) {
+      if ($address_collection = $this->geocoder->reverse($centroid->y(), $centroid->x(), array_keys($provider_plugins))) {
         $elements[$delta] = [
           '#markup' => $dumper->dump($address_collection->first()),
         ];

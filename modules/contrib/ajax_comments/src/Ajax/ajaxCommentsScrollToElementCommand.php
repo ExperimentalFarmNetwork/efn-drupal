@@ -37,10 +37,10 @@ class ajaxCommentsScrollToElementCommand Implements CommandInterface {
    * {@inheritdoc}
    */
   public function render() {
-    return array(
+    return [
       'command' => 'ajaxCommentsScrollToElement',
       'selector' => $this->selector,
-    );
+    ];
   }
 
 }

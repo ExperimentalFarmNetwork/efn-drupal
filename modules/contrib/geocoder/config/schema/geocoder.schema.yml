@@ -4,6 +4,10 @@ geocoder.settings:
   type: config_object
   label: 'Geocoder settings'
   mapping:
+    geocoder_presave_disabled:
+      type: boolean
+      label: 'Geocoder Presave Disabled'
+      description: 'Check to globally disable Geocoding and Reverse Geocoding operations when inserting and updating entities (useful, for example, to temporary prevent geocoding operations during content migration).'
     cache:
       type: boolean
       label: 'Should we cache the results ?'
@@ -170,6 +174,11 @@ geocoder.settings.plugins.freegeoip:
   label: 'Freegeoip arguments'
   sequence:
 
+geocoder.settings.plugins.geojsonfile:
+  type: sequence
+  label: 'GeoJson arguments'
+  sequence:
+
 geocoder.settings.plugins.geoip:
   type: sequence
   label: 'Geoip arguments'
@@ -183,6 +192,11 @@ geocoder.settings.plugins.geoplugin:
 geocoder.settings.plugins.gpxfile:
   type: sequence
   label: 'Gpxfile arguments'
+  sequence:
+
+geocoder.settings.plugins.kmlfile:
+  type: sequence
+  label: 'Kmlfile arguments'
   sequence:
 
 geocoder.settings.plugins.hostip:

@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * @file
+ * Install, update, and uninstall functions for geocoder.
+ */
+
+/**
+ * Adds geocoder_presave_disabled configuration and schema.
+ */
+function geocoder_update_8201() {
+  // Update geocoder configuration.
+  $config_factory = \Drupal::configFactory();
+  $config = $config_factory->getEditable('geocoder.settings');
+  $config->set('geocoder_presave_disabled', FALSE);
+  $config->save(TRUE);
+}

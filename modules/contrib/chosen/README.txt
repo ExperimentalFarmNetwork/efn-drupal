@@ -7,7 +7,7 @@
 -- INSTALLATION --
 
   1. Download the Chosen jQuery plugin
-     (http://harvesthq.github.io/chosen/ version 1.5 or higher is recommended)
+     (https://harvesthq.github.io/chosen/ version 1.5 or higher is recommended)
      and extract the file under "libraries".
   2. Download and enable the module.
   3. Configure at Administer > Configuration > User interface > Chosen
@@ -28,10 +28,10 @@
       "type": "package",
       "package": {
         "name": "harvesthq/chosen",
-        "version": "1.8.2",
+        "version": "1.8.7",
         "type": "drupal-library",
         "dist": {
-          "url": "https://github.com/harvesthq/chosen/releases/download/v1.8.2/chosen_v1.8.2.zip",
+          "url": "https://github.com/harvesthq/chosen/releases/download/v1.8.7/chosen_v1.8.7.zip",
           "type": "zip"
         },
         "require": {

@@ -17,4 +17,4 @@
  *
  */
 #}
-<div id="{{ map_id }}" style="min-width: 150px; height: {{ height }}"></div>
+<div id="{{ map_id }}" style="min-width: 150px; {% if height is not empty %}height: {{ height }}{% endif %}"></div>

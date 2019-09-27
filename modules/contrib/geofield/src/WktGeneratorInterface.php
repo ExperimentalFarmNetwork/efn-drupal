@@ -104,6 +104,17 @@ interface WktGeneratorInterface {
   public function wktGeneratePolygon(array $start = NULL, $segments = NULL);
 
   /**
+   * Returns a WKT format multipolygon feature given an array of polygon points.
+   *
+   * @param array $rings
+   *   The array of polygon arrays.
+   *
+   * @return string
+   *   The WKT multipolygon feature.
+   */
+  public function wktBuildMultipolygon(array $rings);
+
+  /**
    * Returns a WKT format multipolygon feature.
    *
    * @return string

@@ -14,9 +14,9 @@ ajax_comments.settings:
       type: boolean
       label: 'Autoclose any opened reply forms'
 
-core.entity_view_display.*.*.*.content.*.third_party_settings.ajax_comments:
+field.formatter.third_party.ajax_comments:
   type: mapping
   mapping:
     enable_ajax_comments:
       label: Enable Ajax Comments
-      type: boolean
+      type: string

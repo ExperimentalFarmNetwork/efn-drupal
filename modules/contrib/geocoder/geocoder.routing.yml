@@ -5,3 +5,25 @@ geocoder.settings:
     _title: 'Geocoder configuration'
   requirements:
     _permission: 'administer site configuration'
+
+geocoder.api.geocode:
+  path: '/geocoder/api/geocode'
+  defaults:
+    _controller: '\Drupal\geocoder\Controller\GeocoderApiEnpoints::geocode'
+    _title: 'Geocode'
+  methods:  [GET]
+  requirements:
+    _permission: 'access geocoder api endpoints'
+  options:
+    no_cache: 'TRUE'
+
+geocoder.api.reverse_geocode:
+  path: '/geocoder/api/reverse_geocode'
+  defaults:
+    _controller: '\Drupal\geocoder\Controller\GeocoderApiEnpoints::reverseGeocode'
+    _title: 'Reverse Geocode'
+  methods:  [GET]
+  requirements:
+    _permission: 'access geocoder api endpoints'
+  options:
+    no_cache: 'TRUE'

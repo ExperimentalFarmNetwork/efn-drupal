@@ -10,7 +10,7 @@ use Drupal\Core\Form\FormStateInterface;
  *
  * @FieldWidget(
  *   id = "geofield_default",
- *   label = @Translation("Geofield"),
+ *   label = @Translation("Geofield (WKT)"),
  *   field_types = {
  *     "geofield"
  *   }

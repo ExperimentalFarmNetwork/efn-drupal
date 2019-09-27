@@ -8,7 +8,7 @@
 /**
  * The Chosen plugin URI.
  */
-define('CHOSEN_DOWNLOAD_URI', 'https://github.com/harvesthq/chosen/releases/download/v1.8.2/chosen_v1.8.2.zip');
+define('CHOSEN_DOWNLOAD_URI', 'https://github.com/harvesthq/chosen/releases/download/v1.8.7/chosen_v1.8.7.zip');
 
 /**
  * Implements hook_drush_command().
@@ -37,7 +37,7 @@ function chosen_lib_drush_command() {
 function chosen_lib_drush_help($section) {
   switch ($section) {
     case 'drush:chosen-plugin':
-      return dt('Download and install the Chosen plugin from http://harvesthq.github.com/chosen, default location is /libraries.');
+      return dt('Download and install the Chosen plugin from https://harvesthq.github.com/chosen, default location is /libraries.');
   }
 }
 

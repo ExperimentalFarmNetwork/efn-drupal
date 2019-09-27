@@ -4,7 +4,7 @@
  * @file
  * General functions and hook implementations.
  *
- * @see http://harvesthq.github.com/chosen/
+ * @see https://harvesthq.github.com/chosen/
  */
 
 /**
@@ -46,7 +46,7 @@ function _chosen_lib_get_chosen_path() {
   // Similar to 'modules' and 'themes' directories inside an installation
   // profile, installation profiles may want to place libraries into a
   // 'libraries' directory.
-  $searchdir[] = 'profiles/' . drupal_get_profile() . '/libraries';
+  $searchdir[] = 'profiles/' . \Drupal::installProfile() . '/libraries';
 
   // Always search libraries.
   $searchdir[] = 'libraries';

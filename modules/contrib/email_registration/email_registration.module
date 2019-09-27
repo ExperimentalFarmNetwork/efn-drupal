@@ -2,10 +2,9 @@
 
 /**
  * @file
- * Allows users to register with an e-mail address as their username.
+ * Allows users to register with an email address as their username.
  */
 
-use Drupal\Component\Utility\Unicode;
 use Drupal\user\UserInterface;
 use Drupal\Core\Render\Element\Email;
 use Drupal\Core\Form\FormStateInterface;
@@ -26,7 +25,7 @@ function email_registration_user_insert(UserInterface $account) {
   // Other modules may implement hook_email_registration_name($edit, $account)
   // to generate a username (return a string to be used as the username, NULL
   // to have email_registration generate it).
-  $names = Drupal::moduleHandler()->invokeAll('email_registration_name', array($account));
+  $names = Drupal::moduleHandler()->invokeAll('email_registration_name', [$account]);
   // Remove any empty entries.
   $names = array_filter($names);
 
@@ -81,7 +80,7 @@ function email_registration_unique_username($name, $uid = 0) {
   $database = \Drupal::database();
   do {
     $new_name = empty($i) ? $name : $name . '_' . $i;
-    $found = $database->queryRange("SELECT uid from {users_field_data} WHERE uid <> :uid AND name = :name", 0, 1, array(':uid' => $uid, ':name' => $new_name))->fetchAssoc();
+    $found = $database->queryRange("SELECT uid from {users_field_data} WHERE uid <> :uid AND name = :name", 0, 1, [':uid' => $uid, ':name' => $new_name])->fetchAssoc();
     $i++;
   } while (!empty($found));
 
@@ -115,27 +114,35 @@ function email_registration_cleanup_username($name) {
   $name = ('' === $name) ? t('user') : $name;
 
   // Truncate to a reasonable size.
-  $name = (Unicode::strlen($name) > (USERNAME_MAX_LENGTH - 10)) ? Unicode::substr($name, 0, USERNAME_MAX_LENGTH - 11) : $name;
+  $name = (mb_strlen($name) > (UserInterface::USERNAME_MAX_LENGTH - 10)) ? mb_substr($name, 0, UserInterface::USERNAME_MAX_LENGTH - 11) : $name;
   return $name;
 }
 
 /**
- * Implements hook_form_FORM_ID_alter().
+ * Implements hook_form_BASE_FORM_ID_alter().
  */
-function email_registration_form_user_register_form_alter(&$form, FormStateInterface $form_state) {
+function email_registration_form_user_form_alter(&$form, FormStateInterface $form_state) {
   $form['account']['name']['#type'] = 'value';
-  $form['account']['name']['#value'] = 'email_registration_' . user_password();
-  $form['account']['mail']['#title'] = t('E-mail');
+  // Provide a random user name only if we are creating a new user, i.e. this
+  // is a registration.
+  if ($form_state->getFormObject()->getEntity()->isNew()) {
+    $form['account']['name']['#value'] = 'email_registration_' . user_password();
+  }
+  $form['account']['mail']['#title'] = t('Email');
 }
 
 /**
  * Implements hook_form_FORM_ID_alter().
  */
 function email_registration_form_user_pass_alter(&$form, FormStateInterface $form_state) {
-  $form['name']['#title'] = t('E-mail');
-  // Allow client side validation of input format.
-  $form['name']['#type'] = 'email';
-  $form['name']['#maxlength'] = Email::EMAIL_MAX_LENGTH;
+  $form['name']['#title'] = t('Email');
+  // Only convert textfields to email fields. This field is a hidden value when
+  // you are already logged in.
+  if ($form['name']['#type'] == 'textfield') {
+    // Allow client side validation of input format.
+    $form['name']['#type'] = 'email';
+    $form['name']['#maxlength'] = Email::EMAIL_MAX_LENGTH;
+  }
 }
 
 /**
@@ -144,10 +151,10 @@ function email_registration_form_user_pass_alter(&$form, FormStateInterface $for
 function email_registration_form_user_login_form_alter(&$form, FormStateInterface $form_state) {
   $config = \Drupal::config('email_registration.settings');
   $login_with_username = $config->get('login_with_username');
-  $form['name']['#title'] = $login_with_username ? t('E-mail or username') : t('E-mail');
-  $form['name']['#description'] = $login_with_username ? t('Enter your e-mail address or username.') : t('Enter your e-mail address.');
+  $form['name']['#title'] = $login_with_username ? t('Email or username') : t('Email');
+  $form['name']['#description'] = $login_with_username ? t('Enter your email address or username.') : t('Enter your email address.');
   $form['name']['#element_validate'][] = 'email_registration_user_login_validate';
-  $form['pass']['#description'] = t('Enter the password that accompanies your e-mail.');
+  $form['pass']['#description'] = t('Enter the password that accompanies your email address.');
   // Allow client side validation of input format.
   $form['name']['#type'] = $login_with_username ? 'textfield' : 'email';
   $form['name']['#maxlength'] = Email::EMAIL_MAX_LENGTH;
@@ -170,16 +177,9 @@ function email_registration_user_login_validate($form, FormStateInterface $form_
     elseif (!$config->get('login_with_username')) {
       $user_input = $form_state->getUserInput();
       $query = isset($user_input['name']) ? ['name' => $user_input['name']] : [];
-      $form_state->setErrorByName('name', t('Unrecognized e-mail address or password. <a href=":password">Forgot your password?</a>', [':password' => Url::fromRoute('user.pass', [], ['query' => $query])->toString()]));
+      $form_state->setErrorByName('name', t('Unrecognized email address or password. <a href=":password">Forgot your password?</a>', [':password' => Url::fromRoute('user.pass', [], ['query' => $query])->toString()]));
     }
   }
-}
-
-/**
- * Implements hook_form_FORM_ID_alter().
- */
-function email_registration_form_user_form_alter(&$form, FormStateInterface $form_state) {
-  $form['account']['name']['#title'] = t('Display name');
 }
 
 /**
@@ -189,8 +189,8 @@ function email_registration_form_user_admin_settings_alter(&$form, FormStateInte
   $config = \Drupal::config('email_registration.settings');
   $form['registration_cancellation']['login_with_username'] = [
     '#type' => 'checkbox',
-    '#title' => t('Allow to log in with e-mail or username.'),
-    '#description' => t('Allow users to log in with either their username or their e-mail address.'),
+    '#title' => t('Allow log in with email address or username.'),
+    '#description' => t('Allow users to log in with either their email address or their username.'),
     '#default_value' => $config->get('login_with_username'),
   ];
   $form['#submit'][] = 'email_registration_form_user_admin_settings_submit';

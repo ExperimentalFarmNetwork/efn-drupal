@@ -81,6 +81,7 @@ class ChosenConfigForm extends ConfigFormBase {
       ));
       return $form;
     }
+    $form = parent::buildForm($form, $form_state);
 
     // Chosen settings:
     $chosen_conf = $this->configFactory->get('chosen.settings');
@@ -109,6 +110,13 @@ class ChosenConfigForm extends ConfigFormBase {
       '#description' => $this->t('The minimum number of options to apply Chosen search box. Example : choosing 10 will only apply Chosen search if the number of options is greater or equal to 10.'),
     ];
 
+    $form['max_shown_results'] = [
+      '#type' => 'number',
+      '#title' => $this->t('Maximum shown results'),
+      '#default_value' => $chosen_conf->get('max_shown_results'),
+      '#description' => $this->t('Only show the first (n) matching options in the results. This can be used to increase performance for selects with very many options. Leave blank to show all results.'),
+    ];
+
     $form['minimum_width'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Minimum width of widget'),
@@ -116,6 +124,13 @@ class ChosenConfigForm extends ConfigFormBase {
       '#size' => 3,
       '#default_value' => $chosen_conf->get('minimum_width'),
       '#description' => $this->t('The minimum width of the Chosen widget. Leave blank to have chosen determine this.'),
+    ];
+
+    $form['use_relative_width'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Use relative width'),
+      '#default_value' => $chosen_conf->get('use_relative_width'),
+      '#description' => $this->t('The relative width (% instead of px) of the Chosen widget.'),
     ];
 
     $form['jquery_selector'] = [
@@ -126,8 +141,9 @@ class ChosenConfigForm extends ConfigFormBase {
     ];
 
     $form['options'] = [
-      '#type' => 'fieldset',
-      '#title' => t('Chosen general options'),
+      '#type' => 'details',
+      '#title' => $this->t('Chosen general options'),
+      '#open' => TRUE,
     ];
 
     $form['options']['search_contains'] = [
@@ -153,8 +169,9 @@ class ChosenConfigForm extends ConfigFormBase {
     ];
 
     $form['theme_options'] = [
-      '#type' => 'fieldset',
+      '#type' => 'details',
       '#title' => $this->t('Chosen per theme options'),
+      '#open' => TRUE,
     ];
 
     $default_disabled_themes = $chosen_conf->get('disabled_themes');
@@ -179,8 +196,9 @@ class ChosenConfigForm extends ConfigFormBase {
     ];
 
     $form['strings'] = [
-      '#type' => 'fieldset',
+      '#type' => 'details',
       '#title' => $this->t('Chosen strings'),
+      '#open' => TRUE,
     ];
 
     $form['strings']['placeholder_text_multiple'] = [
@@ -204,11 +222,6 @@ class ChosenConfigForm extends ConfigFormBase {
       '#default_value' => $chosen_conf->get('no_results_text'),
     ];
 
-    $form['submit'] = [
-      '#type' => 'submit',
-      '#value' => $this->t('Submit'),
-    ];
-
     return $form;
   }
 
@@ -227,7 +240,9 @@ class ChosenConfigForm extends ConfigFormBase {
       ->set('minimum_single', $form_state->getValue('minimum_single'))
       ->set('minimum_multiple', $form_state->getValue('minimum_multiple'))
       ->set('disable_search_threshold', $form_state->getValue('disable_search_threshold'))
+      ->set('max_shown_results', $form_state->getValue('max_shown_results'))
       ->set('minimum_width', $form_state->getValue('minimum_width'))
+      ->set('use_relative_width', $form_state->getValue('use_relative_width'))
       ->set('jquery_selector', $form_state->getValue('jquery_selector'))
       ->set('search_contains', $form_state->getValue('search_contains'))
       ->set('disable_search', $form_state->getValue('disable_search'))

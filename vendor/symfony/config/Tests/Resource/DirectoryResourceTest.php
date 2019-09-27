@@ -63,12 +63,10 @@ class DirectoryResourceTest extends TestCase
         $this->assertEquals('bar', $resource->getPattern());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessageRegExp /The directory ".*" does not exist./
-     */
     public function testResourceDoesNotExist()
     {
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessageRegExp('/The directory ".*" does not exist./');
         $resource = new DirectoryResource('/____foo/foobar'.mt_rand(1, 999999));
     }
 
@@ -178,6 +176,6 @@ class DirectoryResourceTest extends TestCase
         $resourceA = new DirectoryResource($this->directory, '/.xml$/');
         $resourceB = new DirectoryResource($this->directory, '/.yaml$/');
 
-        $this->assertCount(2, array_unique(array($resourceA, $resourceB)));
+        $this->assertCount(2, array_unique([$resourceA, $resourceB]));
     }
 }

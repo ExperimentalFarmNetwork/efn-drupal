@@ -5,11 +5,11 @@ namespace Drupal\geocoder_geofield\Plugin\Geocoder\Provider;
 use Drupal\geocoder\ProviderUsingHandlerBase;
 
 /**
- * Provides a File geocoder provider plugin.
+ * Provides a GPXFile geocoder provider plugin.
  *
  * @GeocoderProvider(
  *   id = "gpxfile",
- *   name = "GPXFile",
+ *   name = "GPX File",
  *   handler = "\Drupal\geocoder_geofield\Geocoder\Provider\GPXFile"
  * )
  */

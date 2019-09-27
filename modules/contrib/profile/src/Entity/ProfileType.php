@@ -3,7 +3,6 @@
 namespace Drupal\profile\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
-use Drupal\Core\Entity\EntityDescriptionInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 
 /**
@@ -210,4 +209,5 @@ class ProfileType extends ConfigEntityBundleBase implements ProfileTypeInterface
       system_rebuild_module_data();
     }
   }
+
 }

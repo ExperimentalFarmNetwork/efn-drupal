@@ -1,7 +1,7 @@
 # Schema for the views plugins of the Views Data Export module.
 
 views.display.data_export:
-  type: views_display_path
+  type: views.display.rest_export
   label: 'Data export display options'
   mapping:
     displays:
@@ -46,6 +46,9 @@ views.style.data_export:
         encoding:
           type: string
           label: 'Encoding'
+        utf8_bom:
+          type: string
+          label: 'Include unicode signature (BOM)'
     xls_settings:
       type: mapping
       label: 'XLS settings'

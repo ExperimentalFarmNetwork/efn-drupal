@@ -337,8 +337,9 @@ class AddressFormatRepository implements AddressFormatRepositoryInterface
                 'postal_code_pattern' => '\d{4,5}|\d{3}-\d{4}',
             ],
             'CU' => [
-                'format' => "%givenName %familyName\n%organization\n%addressLine1\n%addressLine2\n%administrativeArea%locality\n%postalCode",
+                'format' => "%givenName %familyName\n%organization\n%addressLine1\n%addressLine2\n%locality %administrativeArea\n%postalCode",
                 'postal_code_pattern' => '\d{5}',
+                'subdivision_depth' => 1,
             ],
             'CV' => [
                 'format' => "%givenName %familyName\n%organization\n%addressLine1\n%addressLine2\n%postalCode %locality\n%administrativeArea",
@@ -999,6 +1000,10 @@ class AddressFormatRepository implements AddressFormatRepositoryInterface
                 'postal_code_pattern' => '\d{4}',
                 'subdivision_depth' => 1,
             ],
+            'NA' => [
+                'format' => "%givenName %familyName\n%organization\n%addressLine1\n%addressLine2\n%localityn%postalCode",
+                'postal_code_pattern' => '\d{5}',
+            ],
             'NC' => [
                 'format' => "%organization\n%givenName %familyName\n%addressLine1\n%addressLine2\n%postalCode %locality %sortingCode",
                 'required_fields' => [
@@ -1084,7 +1089,9 @@ class AddressFormatRepository implements AddressFormatRepositoryInterface
             ],
             'PE' => [
                 'format' => "%givenName %familyName\n%organization\n%addressLine1\n%addressLine2\n%locality %postalCode\n%administrativeArea",
+                'locality_type' => 'district',
                 'postal_code_pattern' => '(?:LIMA \d{1,2}|CALLAO 0?\d)|[0-2]\d{4}',
+                'subdivision_depth' => 1,
             ],
             'PF' => [
                 'format' => "%givenName %familyName\n%organization\n%addressLine1\n%addressLine2\n%postalCode %locality %administrativeArea",
@@ -1192,6 +1199,9 @@ class AddressFormatRepository implements AddressFormatRepositoryInterface
             ],
             'RO' => [
                 'format' => "%givenName %familyName\n%organization\n%addressLine1\n%addressLine2\n%postalCode %locality",
+                'required_fields' => [
+                    'addressLine1', 'locality', 'postalCode',
+                ],
                 'uppercase_fields' => [
                     'addressLine1', 'addressLine2', 'locality',
                 ],

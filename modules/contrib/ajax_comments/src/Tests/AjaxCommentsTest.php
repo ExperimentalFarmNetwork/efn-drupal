@@ -360,12 +360,12 @@ class AjaxCommentsTest extends CommentTestBase {
     $selector = AjaxCommentsController::getCommentSelectorPrefix() . $pid;
     $reply_comment = $this->container->get('entity_type.manager')
       ->getStorage('comment')
-      ->create(array(
+      ->create([
       'entity_id' => $nid,
       'pid' => $pid,
       'entity_type' => $entity_type,
       'field_name' => $comment_field_name,
-    ));
+      ]);
     $reply_form_render_array = $this->container
       ->get('entity.form_builder')
       ->getForm(

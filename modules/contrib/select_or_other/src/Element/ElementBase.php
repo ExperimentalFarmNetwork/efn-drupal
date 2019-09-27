@@ -25,7 +25,7 @@ abstract class ElementBase extends FormElement {
    * Adds an 'other' option to the selectbox.
    */
   protected static function addOtherOption($options) {
-    $options['select_or_other'] = 'Other';
+    $options['select_or_other'] = t('Other');
 
     return $options;
   }

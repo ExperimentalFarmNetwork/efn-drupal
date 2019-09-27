@@ -34,6 +34,8 @@ abstract class ProviderUsingHandlerWithAdapterBase extends ProviderUsingHandlerB
    *   The cache backend used to cache geocoding data.
    * @param \Ivory\HttpAdapter\HttpAdapterInterface $http_adapter
    *   The HTTP adapter.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $config_factory, CacheBackendInterface $cache_backend, HttpAdapterInterface $http_adapter) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $config_factory, $cache_backend);
@@ -42,6 +44,8 @@ abstract class ProviderUsingHandlerWithAdapterBase extends ProviderUsingHandlerB
 
   /**
    * {@inheritdoc}
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     return new static(

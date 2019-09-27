@@ -119,7 +119,6 @@ class ProfileRevisionTest extends ProfileTestBase {
     $this->assertEquals($existing_profile_id, $profile->id());
     $this->assertEquals($existing_revision_id, $profile->getRevisionId());
 
-
     $user = $this->createUser([
       "create {$this->useRevisionsType->id()} profile",
       "view own {$this->useRevisionsType->id()} profile",

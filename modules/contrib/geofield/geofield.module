@@ -5,7 +5,7 @@
  * Contains the geofield.module.
  */
 
-use Drupal\Core\Template\Attribute;
+use Drupal\Core\Database\Database;
 
 /**
  * Point feature constant.
@@ -89,9 +89,6 @@ define('GEOFIELD_NAUTICAL_MILES', 3444);
  */
 function geofield_theme() {
   return [
-    'geofield_proximity' => [
-      'render element' => 'element',
-    ],
     'geofield_dms' => [
       'variables' => [
         'components' => [],
@@ -111,39 +108,40 @@ function geofield_theme() {
  */
 function geofield_radius_options() {
   return [
-    GEOFIELD_KILOMETERS => t('Kilometers'),
-    GEOFIELD_METERS => t('Meters'),
-    GEOFIELD_MILES => t('Miles'),
-    GEOFIELD_YARDS => t('Yards'),
-    GEOFIELD_FEET => t('Feet'),
-    GEOFIELD_NAUTICAL_MILES => t('Nautical Miles'),
+    'GEOFIELD_KILOMETERS' => t('Kilometers'),
+    'GEOFIELD_METERS' => t('Meters'),
+    'GEOFIELD_MILES' => t('Miles'),
+    'GEOFIELD_YARDS' => t('Yards'),
+    'GEOFIELD_FEET' => t('Feet'),
+    'GEOFIELD_NAUTICAL_MILES' => t('Nautical Miles'),
   ];
 }
 
 /**
- * Theme wrapper for geofield_proximity form item.
+ * Build SQL query snippet for the haversine formula.
  *
- * @param array $vars
- *   The variables.
+ * @param array $options
+ *   The haversine options.
+ *   - origin_latitude - the origin latitude (in degrees).
+ *   - origin_longitude - the origin longitude (in degrees).
+ *   - earth_radius - the earth radius (see the constants at the top).
+ *   - destination_latitude - the db field with the latitude.
+ *   - destination_longitude - the db field with the longitude.
  *
  * @return string
- *   The return markup..
+ *   The generated SQL query snippet for haversine formula.
  */
-function theme_geofield_proximity(array $vars) {
-  $element = $vars['element'];
+function geofield_haversine(array $options = []) {
+  $formula = '( :earth_radius * ACOS( LEAST(1, COS( RADIANS(:origin_latitude)) * COS( RADIANS(:destination_latitude) ) * COS( RADIANS(:destination_longitude) - RADIANS(:origin_longitude) ) + SIN( RADIANS(:origin_latitude) ) * SIN( RADIANS(:destination_latitude) ) ) ) )';
 
-  $attributes = !empty($element['#wrapper_attributes']) ? $element['#wrapper_attributes'] : ['class' => []];
-  $attributes['class'][] = 'geofield-proximity-field-wrapper';
-  $attributes['class'][] = 'clearfix';
-
-  $wrapper_attributes = [];
-  $wrapper_attributes['class'][] = 'clearfix';
-
-  if (isset($element['#children'])) {
-    $element['#children'] = '<div id="' . $element['#id'] . '" ' . new Attribute($wrapper_attributes) . '>' . $element['#children'] . '</div>';
+  foreach ($options as $key => $field) {
+    if (is_numeric($field)) {
+      $formula = str_replace(':' . $key, $field, $formula);
+    }
+    else {
+      $formula = str_replace(':' . $key, Database::getConnection()->escapeField($field), $formula);
+    }
   }
 
-  $output = '<div ' . new Attribute($attributes) . '>' . render($vars) . '</div>';
-
-  return $output;
+  return $formula;
 }

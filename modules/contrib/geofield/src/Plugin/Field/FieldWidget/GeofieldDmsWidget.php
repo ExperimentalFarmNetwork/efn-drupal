@@ -43,10 +43,23 @@ class GeofieldDmsWidget extends GeofieldBaseWidget {
    */
   public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
     foreach ($values as $delta => $value) {
-      $components = DmsConverter::dmsToDecimal(new DmsPoint($value['value']['lon'], $value['value']['lat']));
-      $values[$delta]['value'] = $this->wktGenerator->wktGeneratePoint($components);
+      // Generate a valid Geofield only if the DMS coordinates are valid.
+      if (
+        is_numeric($value['value']['lon']['degrees']) &&
+        is_numeric($value['value']['lon']['minutes']) &&
+        is_numeric($value['value']['lon']['seconds']) &&
+        is_numeric($value['value']['lat']['degrees']) &&
+        is_numeric($value['value']['lat']['minutes']) &&
+        is_numeric($value['value']['lat']['seconds'])
+      ) {
+        $components = DmsConverter::dmsToDecimal(new DmsPoint($value['value']['lon'], $value['value']['lat']));
+        $values[$delta]['value'] = $this->wktGenerator->wktGeneratePoint($components);
+      }
+      // Otherwise delete the entry.
+      else {
+        $values[$delta]['value'] = NULL;
+      }
     }
-
     return $values;
   }
 

@@ -2,7 +2,6 @@
 
 namespace Drupal\ajax_comments\Controller;
 
-use Drupal\ajax_comments\Ajax\ajaxCommentsScrollToElementCommand;
 use Drupal\ajax_comments\TempStore;
 use Drupal\ajax_comments\Utility;
 use Drupal\comment\CommentInterface;
@@ -25,6 +24,7 @@ use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Controller routines for AJAX comments routes.
@@ -47,6 +47,15 @@ class AjaxCommentsController extends ControllerBase {
   protected $renderer;
 
   /**
+   * The Router service.
+   *
+   * A router class for Drupal.
+   *
+   * @var \Symfony\Component\Routing\RouterInterface
+   */
+  protected $router;
+
+  /**
    * The TempStore service.
    *
    * This service stores temporary data to be used across HTTP requests.
@@ -64,13 +73,16 @@ class AjaxCommentsController extends ControllerBase {
    *   The current user.
    * @param \Drupal\Core\Render\RendererInterface $renderer
    *   The render service.
+   * @param \Symfony\Component\Routing\RouterInterface $router
+   *   The Router service.
    * @param \Drupal\ajax_comments\TempStore $temp_store
    *   The TempStore service.
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, AccountInterface $current_user, RendererInterface $renderer, TempStore $temp_store) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, AccountInterface $current_user, RendererInterface $renderer, RouterInterface $router, TempStore $temp_store) {
     $this->entityTypeManager = $entity_type_manager;
     $this->currentUser = $current_user;
     $this->renderer = $renderer;
+    $this->router = $router;
     $this->tempStore = $temp_store;
   }
 
@@ -82,6 +94,7 @@ class AjaxCommentsController extends ControllerBase {
       $container->get('entity_type.manager'),
       $container->get('current_user'),
       $container->get('renderer'),
+      $container->get('router.no_access_checks'),
       $container->get('ajax_comments.temp_store')
     );
   }
@@ -121,6 +134,32 @@ class AjaxCommentsController extends ControllerBase {
     // To avoid infinite nesting of #theme_wrappers elements on subsequent
     // ajax responses, unset them here.
     unset($comment_display['#theme_wrappers']);
+
+    // Remove unneeded route parameters.
+    unset($comment_display[0]['comments']['pager']['#route_parameters']['entity_type']);
+    unset($comment_display[0]['comments']['pager']['#route_parameters']['entity']);
+    unset($comment_display[0]['comments']['pager']['#route_parameters']['field_name']);
+    unset($comment_display[0]['comments']['pager']['#route_parameters']['pid']);
+
+    $entity_type = $entity->getEntityType();
+
+    // For replies, the passed $entity is the parent comment.
+    // However, for the pager we want the parent entity.
+    if ($entity_type->id() === 'comment') {
+      $entity = $entity->getCommentedEntity();
+      $entity_type = $entity->getEntityType();
+    }
+
+    $handler = $this->entityTypeManager()->getRouteProviders($entity_type->id())['html'];
+    $route_collection = $handler->getRoutes($entity_type);
+    $name = 'entity.' . $entity_type->get('id') . '.canonical';
+    $route = $route_collection->get($name);
+    // Override the ajax route object with the actual entity route.
+    $entity_url = $entity->toURL();
+    if ($route) {
+      $comment_display[0]['comments']['pager']['#route_name'] = $route;
+      $comment_display[0]['comments']['pager']['#route_parameters'] = $entity_url->getRouteParameters();
+    }
 
     return $comment_display;
   }
@@ -360,7 +399,7 @@ class AjaxCommentsController extends ControllerBase {
       $cid = $this->tempStore->getCid();
 
       // Try to insert the message above the new comment.
-      if (!empty($cid) && !$errors) {
+      if (!empty($cid) && !$errors && \Drupal::currentUser()->hasPermission('skip comment approval')) {
         $selector = static::getCommentSelectorPrefix() . $cid;
         $response = $this->addMessages(
           $request,
@@ -369,7 +408,7 @@ class AjaxCommentsController extends ControllerBase {
           'before'
         );
       }
-      // If no selector for the new comment can be found, or if there are
+      // If the new comment is not to be shown immediately, or if there are
       // errors, insert the message directly below the parent comment.
       else {
         $response = $this->addMessages(
@@ -544,14 +583,42 @@ class AjaxCommentsController extends ControllerBase {
       return $response;
     }
 
-    // Build the updated comment field and insert into a replaceWith response.
-    // Also prepend any status messages in the response.
-    $response = $this->buildCommentFieldResponse(
-      $request,
-      $response,
-      $entity,
-      $field_name
-    );
+    // Build the comment entity form.
+    // This approach is very similar to the one taken in
+    // \Drupal\comment\CommentLazyBuilders::renderForm().
+    $comment = $this->entityTypeManager()->getStorage('comment')->create([
+      'entity_id' => $entity->id(),
+      'pid' => $pid,
+      'entity_type' => $entity->getEntityTypeId(),
+      'field_name' => $field_name,
+    ]);
+
+    // Rebuild the form to trigger form submission.
+    $form = $this->entityFormBuilder()->getForm($comment);
+
+    // Check for errors.
+    if (empty(drupal_get_messages('error', FALSE))) {
+      // If there are no errors, set the ajax-updated
+      // selector value for the form.
+      $this->tempStore->setSelector('form_html_id', $form['#attributes']['id']);
+
+      // Build the updated comment field and insert into a replaceWith
+      // response.
+      $response = $this->buildCommentFieldResponse(
+        $request,
+        $response,
+        $entity,
+        $field_name
+      );
+    }
+    else {
+      // Retrieve the selector values for use in building the response.
+      $selectors = $this->tempStore->getSelectors($request, $overwrite = TRUE);
+      $wrapper_html_id = $selectors['wrapper_html_id'];
+
+      // If there are errors, remove old messages.
+      $response->addCommand(new RemoveCommand($wrapper_html_id . ' .js-ajax-comments-messages'));
+    }
 
     // The form_html_id should have been updated by the form constructor when
     // $this->buildCommentFieldResponse() was called, so retrieve the updated
@@ -559,12 +626,14 @@ class AjaxCommentsController extends ControllerBase {
     $selectors = $this->tempStore->getSelectors($request);
     $form_html_id = $selectors['form_html_id'];
 
+    // Prepend any status messages in the response.
     $response = $this->addMessages(
       $request,
       $response,
       $form_html_id,
       'before'
     );
+
     // Clear out the tempStore variables.
     $this->tempStore->deleteAll();
 
@@ -638,12 +707,12 @@ class AjaxCommentsController extends ControllerBase {
       // Build the comment entity form.
       // This approach is very similar to the one taken in
       // \Drupal\comment\CommentLazyBuilders::renderForm().
-      $comment = $this->entityTypeManager()->getStorage('comment')->create(array(
+      $comment = $this->entityTypeManager()->getStorage('comment')->create([
         'entity_id' => $entity->id(),
         'pid' => $pid,
         'entity_type' => $entity->getEntityTypeId(),
         'field_name' => $field_name,
-      ));
+      ]);
       // Build the comment form.
       $form = $this->entityFormBuilder()->getForm($comment);
       $response->addCommand(new AfterCommand(static::getCommentSelectorPrefix() . $pid, $form));
@@ -724,12 +793,12 @@ class AjaxCommentsController extends ControllerBase {
     // @endcode
     // This approach is very similar to the one taken in
     // \Drupal\comment\CommentLazyBuilders::renderForm().
-    $comment = $this->entityTypeManager()->getStorage('comment')->create(array(
+    $comment = $this->entityTypeManager()->getStorage('comment')->create([
       'entity_id' => $entity->id(),
       'pid' => $pid,
       'entity_type' => $entity->getEntityTypeId(),
       'field_name' => $field_name,
-    ));
+    ]);
     // Rebuild the form to trigger form submission.
     return $this->save($request, $comment);
   }

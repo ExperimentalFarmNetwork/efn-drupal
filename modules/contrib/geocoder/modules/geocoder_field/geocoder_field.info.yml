@@ -1,13 +1,12 @@
 type: module
 name: Geocoder Field
 description: 'Geocodes the content of a field and stores the result in other field and vice-versa.'
-# core: 8.x
+core: 8.x
 dependencies:
-  - field
-  - geocoder
+  - drupal:field
+  - geocoder:geocoder
 
-# Information added by Drupal.org packaging script on 2018-08-10
-version: '8.x-2.0-beta5'
-core: '8.x'
+# Information added by Drupal.org packaging script on 2019-09-03
+version: '8.x-2.3'
 project: 'geocoder'
-datestamp: 1533910985
+datestamp: 1567546396

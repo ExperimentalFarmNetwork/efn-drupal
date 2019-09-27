@@ -2,7 +2,7 @@ services:
 
   geocoder:
     class: Drupal\geocoder\Geocoder
-    arguments: ['@plugin.manager.geocoder.provider']
+    arguments: ['@config.factory','@plugin.manager.geocoder.provider']
 
   geocoder.http_adapter:
     class: Drupal\geocoder\GeocoderHttpAdapter

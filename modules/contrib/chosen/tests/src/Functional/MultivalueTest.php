@@ -5,9 +5,10 @@ namespace Drupal\Tests\chosen\Functional;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
-use Drupal\simpletest\ContentTypeCreationTrait;
-use Drupal\simpletest\UserCreationTrait;
+use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
+use Drupal\Tests\user\Traits\UserCreationTrait;
 use Drupal\Tests\BrowserTestBase;
+use Drupal\Core\Entity\Entity\EntityFormDisplay;
 
 /**
  * Tests that multivalue select fields are handled properly.
@@ -62,8 +63,24 @@ class MultivalueTest extends BrowserTestBase {
     ]);
     $field->save();
 
-    entity_get_form_display('node', 'article', 'default')
-      ->setComponent('test_multiselect', ['type' => 'options_select'])
+    // Try loading the entity from configuration.
+    $entity_form_display = EntityFormDisplay::load('node' . '.' . 'article' . '.' . 'default');
+
+    // If not found, create a fresh entity object. We do not preemptively create
+    // new entity form display configuration entries for each existing entity type
+    // and bundle whenever a new form mode becomes available. Instead,
+    // configuration entries are only created when an entity form display is
+    // explicitly configured and saved.
+    if (!$entity_form_display) {
+      $entity_form_display = EntityFormDisplay::create([
+        'targetEntityType' => 'node',
+        'bundle' => 'article',
+        'mode' => 'default',
+        'status' => TRUE,
+      ]);
+    }
+
+    $entity_form_display->setComponent('test_multiselect', ['type' => 'options_select'])
       ->save();
   }
 

@@ -71,6 +71,7 @@ class ProfileAccessTest extends EntityKernelTestBase {
   public function testProfileCreateAccess() {
     // Test user without any permissions.
     $web_user1 = $this->createUser();
+    $this->container->get('current_user')->setAccount($web_user1);
 
     // Verify user does not have access to create.
     $access = $this->accessControlHandler->createAccess($this->type->id(), $web_user1);
@@ -96,12 +97,14 @@ class ProfileAccessTest extends EntityKernelTestBase {
     $this->assertTrue($access);
 
     // User 2 can create profile of type.
+    $this->container->get('current_user')->setAccount($web_user2);
     $this->assertTrue($this->accessManager->checkNamedRoute(
       'entity.profile.type.user_profile_form.add',
       ['user' => $web_user2->id(), 'profile_type' => $this->type->id()],
       $web_user2
     ));
     // User 1 cannot create a profile for User 2.
+    $this->container->get('current_user')->setAccount($web_user1);
     $this->assertFalse($this->accessManager->checkNamedRoute(
       'entity.profile.type.user_profile_form.add',
       ['user' => $web_user2->id(), 'profile_type' => $this->type->id()],
@@ -109,6 +112,7 @@ class ProfileAccessTest extends EntityKernelTestBase {
     ));
 
     // Create a new profile type.
+    $this->container->get('current_user')->setAccount($web_user2);
     $second_type = $this->createProfileType('test2', 'Test2 profile', TRUE);
     $this->assertFalse($this->accessControlHandler->createAccess('test2', $web_user2));
     $this->assertFalse($this->accessManager->checkNamedRoute(
@@ -125,6 +129,7 @@ class ProfileAccessTest extends EntityKernelTestBase {
     $this->assertTrue($this->accessControlHandler->createAccess($this->type->id(), $web_user3));
 
     // Verify access through route.
+    $this->container->get('current_user')->setAccount($web_user3);
     $this->assertTrue($this->accessManager->checkNamedRoute(
       'entity.profile.type.user_profile_form.add',
       ['user' => $web_user3->id(), 'profile_type' => $this->type->id()],

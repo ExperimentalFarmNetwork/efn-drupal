@@ -1,0 +1,47 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Views Data Export module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_theme().
+ */
+function views_data_export_theme() {
+  return [
+    'export_icon' => [
+      'variables' => [
+        'type' => NULL,
+        'url' => NULL,
+      ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_help().
+ */
+function views_data_export_help($route_name, RouteMatchInterface $route_match) {
+  if ($route_name === 'help.page.views_data_export') {
+    $readme_file = file_exists(__DIR__ . '/README.md') ? __DIR__ . '/README.md' : __DIR__ . '/README.txt';
+    if (!file_exists($readme_file)) {
+      return NULL;
+    }
+    $text = file_get_contents($readme_file);
+    if ($text && !\Drupal::moduleHandler()->moduleExists('markdown')) {
+      return '<pre>' . $text . '</pre>';
+    }
+    else {
+      // Use the Markdown filter to render the README.
+      $filter_manager = \Drupal::service('plugin.manager.filter');
+      $settings = \Drupal::configFactory()->get('markdown.settings')->getRawData();
+      $config = ['settings' => $settings];
+      $filter = $filter_manager->createInstance('markdown', $config);
+      return $filter->process($text, 'en');
+    }
+  }
+  return NULL;
+}
