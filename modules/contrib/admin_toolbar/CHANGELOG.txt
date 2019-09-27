@@ -1,3 +1,39 @@
+Admin Toolbar 8.x-2.0-XXXXX, 2019-XX-XX
+---------------------------------------
+Changes since 8.x-2.0-beta1:
+
+- #3067551 by Juhi Rathi, romainj, AkashkumarOSL, adriancid: Fixing remaining
+  Coding Standards.
+- #3077435 by super_romeo, adriancid: Final curly brace missin in the
+  admin_toolbar_links_access_filter_filter_non_accessible_links function.
+- #3026731 by Al Munnings, romainj, idebr, adriancid: The implementation of the
+  template_preprocess_admin_block_content hook is not needed.
+
+Admin Toolbar 8.x-2.0-beta1, 2019-07-04
+---------------------------------------
+Changes since 8.x-1.27:
+
+- #3065013 by oknate, adriancid:  Undefined class constant 'MAX_BUNDLE_NUMBER'.
+- #3063356 by oknate, adriancid: Admin toolbar doesn't update when menus or
+  bundles change
+- #3063502 by oknate, adriancid: Fix coding standard issues.
+- #3062573 by oknate, adriancid: The menus are sorted by machine name and not by
+  label.
+- #3062729 by oknate, adriancid: Search Extra Links json caching: Add cache
+  tags.
+- #3062611 by oknate, adriancid: Search link selector can result in duplicate
+  results.
+- #3062346 by oknate, adriancid: Restore in search feature bundles and menus
+  removed for performance reasons.
+- #3062148 by lhridley, oknate, adriancid: Search element is not accessible.
+- #3061837 by romainj, adriancid: Limit the number of menus to display in the
+  drop-down admin menu.
+- #3061853 by romainj, adriancid: Do not load more than 10 bundles per entity
+  type.
+- #3061832 by romainj, adriancid: Missing required keys (core).
+- #3056856 by jigarius, jurgenhaas, adriancid, oknate, eme: Create a keyboard
+  shortcut to toggle access the search functionality.
+
 Admin Toolbar 8.x-1.27, 2019-05-22
 ----------------------------------
 Changes since 8.x-1.26:
