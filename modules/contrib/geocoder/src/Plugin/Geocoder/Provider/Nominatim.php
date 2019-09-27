@@ -2,7 +2,7 @@
 
 namespace Drupal\geocoder\Plugin\Geocoder\Provider;
 
-use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
+use Drupal\geocoder\ConfigurableProviderUsingHandlerWithAdapterBase;
 
 /**
  * Provides a Nominatim geocoder provider plugin.
@@ -10,11 +10,12 @@ use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
  * @GeocoderProvider(
  *   id = "nominatim",
  *   name = "Nominatim",
- *   handler = "\Geocoder\Provider\Nominatim",
+ *   handler = "\Geocoder\Provider\Nominatim\Nominatim",
  *   arguments = {
- *     "rooturl" = NULL,
- *     "locale" = NULL
+ *     "rootUrl" = "",
+ *     "userAgent" = "",
+ *     "referer" = ""
  *   }
  * )
  */
-class Nominatim extends ProviderUsingHandlerWithAdapterBase {}
+class Nominatim extends ConfigurableProviderUsingHandlerWithAdapterBase {}

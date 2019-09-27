@@ -2,7 +2,7 @@
 
 namespace Drupal\geocoder\Plugin\Geocoder\Provider;
 
-use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
+use Drupal\geocoder\ConfigurableProviderUsingHandlerWithAdapterBase;
 
 /**
  * Provides a BingMaps geocoder provider plugin.
@@ -10,11 +10,10 @@ use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
  * @GeocoderProvider(
  *   id = "bingmaps",
  *   name = "BingMaps",
- *   handler = "\Geocoder\Provider\BingMaps",
+ *   handler = "\Geocoder\Provider\BingMaps\BingMaps",
  *   arguments = {
- *     "apikey" = NULL,
- *     "locale" = NULL
+ *     "apiKey" = ""
  *   }
  * )
  */
-class BingMaps extends ProviderUsingHandlerWithAdapterBase {}
+class BingMaps extends ConfigurableProviderUsingHandlerWithAdapterBase {}

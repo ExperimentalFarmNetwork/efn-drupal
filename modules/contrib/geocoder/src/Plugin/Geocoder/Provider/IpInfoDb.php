@@ -2,7 +2,7 @@
 
 namespace Drupal\geocoder\Plugin\Geocoder\Provider;
 
-use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
+use Drupal\geocoder\ConfigurableProviderUsingHandlerWithAdapterBase;
 
 /**
  * Provides an IpInfoDb geocoder provider plugin.
@@ -10,11 +10,11 @@ use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
  * @GeocoderProvider(
  *   id = "ipinfodb",
  *   name = "IpInfoDb",
- *   handler = "\Geocoder\Provider\IpInfoDb",
+ *   handler = "\Geocoder\Provider\IpInfoDb\IpInfoDb",
  *   arguments = {
- *     "apikey" = NULL,
+ *     "apiKey" = "",
  *     "precision" = "city"
  *   }
  * )
  */
-class IpInfoDb extends ProviderUsingHandlerWithAdapterBase {}
+class IpInfoDb extends ConfigurableProviderUsingHandlerWithAdapterBase {}

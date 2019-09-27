@@ -28,7 +28,7 @@ class GeofieldField extends DefaultField {
     // The Geofield can just be object of Geocoding.
     $element['method']['#options'] = [
       'none' => $this->t('No geocoding'),
-      'source' => $this->t('<b>Geocode</b> from an existing field'),
+      'geocode' => $this->t('<b>Geocode</b> from an existing field'),
     ];
 
     // On Geofield the dumper should always be 'wkt'.

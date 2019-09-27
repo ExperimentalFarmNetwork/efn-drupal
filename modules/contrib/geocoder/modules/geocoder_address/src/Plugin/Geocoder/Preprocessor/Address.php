@@ -3,7 +3,6 @@
 namespace Drupal\geocoder_address\Plugin\Geocoder\Preprocessor;
 
 use Drupal\geocoder_field\PreprocessorBase;
-use Drupal\Core\Locale\CountryManager;
 
 /**
  * Provides a geocoder preprocessor plugin for address fields.
@@ -17,23 +16,6 @@ use Drupal\Core\Locale\CountryManager;
  * )
  */
 class Address extends PreprocessorBase {
-
-  /**
-   * Decode country code into country name (if valid code).
-   *
-   * @param string $country_code
-   *   The country code.
-   *
-   * @return string
-   *   The country name or country code if not decode existing.
-   */
-  protected function countryCodeToString($country_code) {
-    $countries = CountryManager::getStandardList();
-    if (array_key_exists($country_code, $countries)) {
-      return $countries[$country_code];
-    }
-    return $country_code;
-  }
 
   /**
    * {@inheritdoc}
@@ -58,7 +40,7 @@ class Address extends PreprocessorBase {
         $value['dependent_locality'],
         str_replace($value['country_code'] . '-', '', $value['administrative_area']),
         $value['postal_code'],
-        $this->countryCodeToString($value['country_code']),
+        $value['country_code'],
       ];
 
       $value['value'] = implode(',', array_filter($address));

@@ -5,18 +5,18 @@ services:
     arguments: ['@config.factory','@plugin.manager.geocoder.provider']
 
   geocoder.http_adapter:
-    class: Drupal\geocoder\GeocoderHttpAdapter
+    class: Http\Adapter\Guzzle6\Client
     arguments: ['@http_client']
 
   plugin.manager.geocoder.provider:
     class: Drupal\geocoder\ProviderPluginManager
     parent: default_plugin_manager
-    arguments: ['@config.factory', '@string_translation', '@renderer', '@link_generator']
+    arguments: ['@string_translation', '@renderer', '@link_generator', '@entity_type.manager', '@messenger']
 
   plugin.manager.geocoder.dumper:
     class: Drupal\geocoder\DumperPluginManager
     parent: default_plugin_manager
-    arguments: ['@logger.factory']
+    arguments: ['@logger.factory', '@messenger']
 
   plugin.manager.geocoder.formatter:
     class: Drupal\geocoder\FormatterPluginManager
@@ -28,3 +28,9 @@ services:
       - { name: cache.bin }
     factory: cache_factory:get
     arguments: [geocoder]
+
+  geocoder.breadcrumb:
+    class: Drupal\geocoder\GeocoderBreadcrumbBuilder
+    arguments: ['@router.request_context', '@access_manager', '@router', '@path_processor_manager', '@config.factory',  '@title_resolver', '@current_user', '@path.current', '@path.matcher']
+    tags:
+      - { name: breadcrumb_builder, priority: 100 }

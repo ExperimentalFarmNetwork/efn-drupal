@@ -2,7 +2,7 @@
 
 namespace Drupal\geocoder\Plugin\Geocoder\Provider;
 
-use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
+use Drupal\geocoder\ConfigurableProviderUsingHandlerWithAdapterBase;
 
 /**
  * Provides an OpenCage geocoder provider plugin.
@@ -10,12 +10,10 @@ use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
  * @GeocoderProvider(
  *   id = "opencage",
  *   name = "OpenCage",
- *   handler = "\Geocoder\Provider\OpenCage",
+ *   handler = "Geocoder\Provider\OpenCage\OpenCage",
  *   arguments = {
- *     "apikey" = NULL,
- *     "usessl" = FALSE,
- *     "locale" = NULL
+ *     "apiKey" = "",
  *   }
  * )
  */
-class OpenCage extends ProviderUsingHandlerWithAdapterBase {}
+class OpenCage extends ConfigurableProviderUsingHandlerWithAdapterBase {}

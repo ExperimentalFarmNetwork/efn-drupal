@@ -2,7 +2,7 @@
 
 namespace Drupal\geocoder;
 
-use Geocoder\Model\Address;
+use Geocoder\Location;
 
 /**
  * Provides an interface for geocoder dumper plugins.
@@ -15,12 +15,12 @@ interface DumperInterface {
   /**
    * Dumps the argument into a specific format.
    *
-   * @param \Geocoder\Model\Address $address
+   * @param \Geocoder\Location $location
    *   The address to be formatted.
    *
    * @return string
    *   The formatted address.
    */
-  public function dump(Address $address);
+  public function dump(Location $location);
 
 }

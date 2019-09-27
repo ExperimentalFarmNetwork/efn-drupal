@@ -4,7 +4,7 @@ namespace Drupal\geocoder;
 
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Plugin\PluginBase;
-use Geocoder\Model\Address;
+use Geocoder\Location;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -29,8 +29,8 @@ abstract class DumperBase extends PluginBase implements DumperInterface, Contain
   /**
    * {@inheritdoc}
    */
-  public function dump(Address $address) {
-    return $this->getHandler()->dump($address);
+  public function dump(Location $location) {
+    return $this->getHandler()->dump($location);
   }
 
   /**
@@ -40,11 +40,12 @@ abstract class DumperBase extends PluginBase implements DumperInterface, Contain
    *   Returns dumper handler.
    */
   protected function getHandler() {
-    if (!isset($this->handler)) {
+    if ($this->handler === NULL) {
       $definition = $this->getPluginDefinition();
       $class = $definition['handler'];
       $this->handler = new $class();
     }
+
     return $this->handler;
   }
 

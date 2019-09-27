@@ -10,7 +10,7 @@ use Drupal\geocoder\ProviderUsingHandlerBase;
  * @GeocoderProvider(
  *   id = "geoip",
  *   name = "Geoip",
- *   handler = "\Geocoder\Provider\Geoip"
+ *   handler = "\Geocoder\Provider\Geoip\GeoIp"
  * )
  */
 class Geoip extends ProviderUsingHandlerBase {}

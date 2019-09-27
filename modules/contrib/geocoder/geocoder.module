@@ -5,6 +5,8 @@
  * Geocoder Module.
  */
 
+declare(strict_types = 1);
+
 use Drupal\Core\Routing\RouteMatchInterface;
 
 /**
@@ -34,5 +36,17 @@ function geocoder_help($route_name, RouteMatchInterface $route_match) {
     default:
       return '';
   }
+}
 
+/**
+ * Implements hook_geocoder_provider_info_alter().
+ *
+ * @param array $plugins
+ *   The list of plugin definitions to alter, passed by reference.
+ */
+function geocoder_geocoder_provider_info_alter(array &$plugins): void {
+  // Remove plugins for which the providers are not installed.
+  $plugins = array_filter($plugins, function (array $plugin): bool {
+    return empty($plugin['handler']) || class_exists($plugin['handler']);
+  });
 }

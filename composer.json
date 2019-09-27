@@ -12,7 +12,7 @@
         "drupal/console": "^1",
         "drupal/devel": "2.1",
         "drupal/features": "^3.5",
-        "drupal/geocoder": "^2.0-beta",
+        "drupal/geocoder": "^3.0",
         "drupal/geofield": "^1.0",
         "drupal/geophp": "^1.0@beta",
         "drupal/group": "^1.0",
@@ -41,7 +41,8 @@
         "drupal/views_slideshow": "^4.5",
         "drupal/bootstrap": "^3.6",
         "drupal/views_send": "^1.1",
-        "drupal/views_data_export": "^1.0@beta"
+        "drupal/views_data_export": "^1.0@beta",
+        "drupal/csv_serialization": "^1.4"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

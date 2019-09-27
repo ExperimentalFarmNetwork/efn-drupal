@@ -2,7 +2,7 @@
 
 namespace Drupal\geocoder\Plugin\Geocoder\Provider;
 
-use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
+use Drupal\geocoder\ConfigurableProviderUsingHandlerWithAdapterBase;
 
 /**
  * Provides a Geoip geocoder provider plugin.
@@ -10,11 +10,10 @@ use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
  * @GeocoderProvider(
  *   id = "geonames",
  *   name = "Geonames",
- *   handler = "\Geocoder\Provider\Geonames",
+ *   handler = "\Geocoder\Provider\Geonames\Geonames",
  *   arguments = {
- *     "username" = NULL,
- *     "locale" = NULL
+ *     "username" = ""
  *   }
  * )
  */
-class Geonames extends ProviderUsingHandlerWithAdapterBase {}
+class Geonames extends ConfigurableProviderUsingHandlerWithAdapterBase {}

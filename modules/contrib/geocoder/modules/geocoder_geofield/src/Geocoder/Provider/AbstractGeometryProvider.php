@@ -2,8 +2,8 @@
 
 namespace Drupal\geocoder_geofield\Geocoder\Provider;
 
-use Geocoder\Exception\NoResult;
 use Geometry;
+use Geocoder\Exception\LogicException;
 use Geocoder\Exception\UnsupportedOperation;
 
 /**
@@ -51,7 +51,7 @@ abstract class AbstractGeometryProvider implements GeometryProviderInterface {
         return $geometry;
       }
     }
-    throw new NoResult(sprintf('Could not find %s data in file: "%s".', $this->geophpType, basename($filename)));
+    throw new LogicException(sprintf('Could not find %s data in file: "%s".', $this->geophpType, basename($filename)));
   }
 
   /**

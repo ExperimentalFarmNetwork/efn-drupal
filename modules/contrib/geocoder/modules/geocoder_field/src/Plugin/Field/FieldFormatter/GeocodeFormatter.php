@@ -31,6 +31,7 @@ class GeocodeFormatter extends GeocodeFormatterBase {
     'gpxfile',
     'kmlfile',
     'geojsonfile',
+
   ];
 
   /**
@@ -41,10 +42,25 @@ class GeocodeFormatter extends GeocodeFormatterBase {
 
     // Filter out the Geocoder Plugins that are not compatible with the Geocode
     // Formatter action.
-    $element['plugins'] = array_filter($element['plugins'], function ($e) {
-      return !in_array($e, $this->incompatiblePlugins);
+    $compatible_providers = array_filter($element['providers'], function ($e) {
+      $geocoder_providers = $this->geocoderProviders;
+      /* @var \Drupal\geocoder\Entity\GeocoderProvider $geocoder_provider */
+      if (isset($geocoder_providers[$e]) && $geocoder_provider = $geocoder_providers[$e]) {
+        /* @var \Drupal\Component\Plugin\PluginBase $plugin */
+        $plugin = $geocoder_provider->getPlugin();
+        return !in_array($plugin->getPluginId(), $this->incompatiblePlugins);
+      }
+      return TRUE;
+
     }, ARRAY_FILTER_USE_KEY);
 
+    // Generate a warning markup in case of no compatible Geocoder Provider.
+    if (count($element['providers']) - count($compatible_providers) == count($this->geocoderProviders)) {
+      $element['warning'] = [
+        '#markup' => $this->t('Any compatible Geocoder Provider available for this Formatter.'),
+      ];
+    }
+    $element['providers'] = $compatible_providers;
     return $element;
 
   }

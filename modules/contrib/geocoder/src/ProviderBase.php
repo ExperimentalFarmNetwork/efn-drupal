@@ -4,6 +4,7 @@ namespace Drupal\geocoder;
 
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Plugin\PluginBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -28,6 +29,13 @@ abstract class ProviderBase extends PluginBase implements ProviderInterface, Con
   protected $cacheBackend;
 
   /**
+   * The configurable language manager.
+   *
+   * @var \Drupal\language\ConfigurableLanguageManager
+   */
+  protected $languageManager;
+
+  /**
    * Constructs a geocoder provider plugin object.
    *
    * @param array $configuration
@@ -40,11 +48,14 @@ abstract class ProviderBase extends PluginBase implements ProviderInterface, Con
    *   The config factory service.
    * @param \Drupal\Core\Cache\CacheBackendInterface $cache_backend
    *   The cache backend used to cache geocoding data.
+   * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
+   *   The Drupal language manager service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $config_factory, CacheBackendInterface $cache_backend) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $config_factory, CacheBackendInterface $cache_backend, LanguageManagerInterface $language_manager) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configFactory = $config_factory;
     $this->cacheBackend = $cache_backend;
+    $this->languageManager = $language_manager;
   }
 
   /**
@@ -56,7 +67,8 @@ abstract class ProviderBase extends PluginBase implements ProviderInterface, Con
       $plugin_id,
       $plugin_definition,
       $container->get('config.factory'),
-      $container->get('cache.geocoder')
+      $container->get('cache.geocoder'),
+      $container->get('language_manager')
     );
   }
 
@@ -64,14 +76,14 @@ abstract class ProviderBase extends PluginBase implements ProviderInterface, Con
    * {@inheritdoc}
    */
   public function geocode($source) {
-    return $this->process(__FUNCTION__, func_get_args());
+    return $this->process(__FUNCTION__, \func_get_args());
   }
 
   /**
    * {@inheritdoc}
    */
   public function reverse($latitude, $longitude) {
-    return $this->process(__FUNCTION__, func_get_args());
+    return $this->process(__FUNCTION__, \func_get_args());
   }
 
   /**
@@ -84,7 +96,7 @@ abstract class ProviderBase extends PluginBase implements ProviderInterface, Con
    *   item with the string. When reversing, contains 2 items: the latitude and
    *   the longitude.
    *
-   * @return \Geocoder\Model\AddressCollection|\Geometry|null
+   * @return \Geocoder\Model\Address|null
    *   The Address, NULL otherwise.
    */
   protected function process($method, array $data) {
@@ -98,7 +110,7 @@ abstract class ProviderBase extends PluginBase implements ProviderInterface, Con
 
     // Call the processor.
     $processor = $method == 'geocode' ? 'doGeocode' : 'doReverse';
-    $value = call_user_func_array([$this, $processor], $data);
+    $value = \call_user_func_array([$this, $processor], $data);
 
     if ($caching) {
       // Cache the result.
@@ -115,7 +127,7 @@ abstract class ProviderBase extends PluginBase implements ProviderInterface, Con
    *   The data to be geocoded.
    *
    * @return \Geocoder\Model\AddressCollection|\Geometry|null
-   *   The Address, NULL otherwise.
+   *   The address collection, or the geometry, or NULL.
    */
   abstract protected function doGeocode($source);
 
@@ -145,9 +157,10 @@ abstract class ProviderBase extends PluginBase implements ProviderInterface, Con
    * @return string
    *   An unique cache id.
    */
-  protected function getCacheId($method, array $data) {
+  protected function getCacheId($method, array $data): string {
     $cid = [$method, $this->getPluginId()];
     $cid[] = sha1(serialize($this->configuration) . serialize($data));
+
     return implode(':', $cid);
   }
 

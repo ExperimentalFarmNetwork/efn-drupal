@@ -2,7 +2,7 @@
 
 namespace Drupal\geocoder\Plugin\Geocoder\Provider;
 
-use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
+use Drupal\geocoder\ConfigurableProviderUsingHandlerWithAdapterBase;
 
 /**
  * Provides a FreeGeoIp geocoder provider plugin.
@@ -10,7 +10,10 @@ use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
  * @GeocoderProvider(
  *   id = "freegeoip",
  *   name = "FreeGeoIp",
- *   handler = "\Geocoder\Provider\FreeGeoIp"
+ *   handler = "\Geocoder\Provider\FreeGeoIp\FreeGeoIp",
+ *   arguments = {
+ *     "baseUrl" = "https://freegeoip.net/json/%s"
+ *   }
  * )
  */
-class FreeGeoIp extends ProviderUsingHandlerWithAdapterBase {}
+class FreeGeoIp extends ConfigurableProviderUsingHandlerWithAdapterBase {}

@@ -2,7 +2,7 @@
 
 namespace Drupal\geocoder\Plugin\Geocoder\Provider;
 
-use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
+use Drupal\geocoder\ConfigurableProviderUsingHandlerWithAdapterBase;
 
 /**
  * Provides a MapQuest geocoder provider plugin.
@@ -10,11 +10,11 @@ use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
  * @GeocoderProvider(
  *   id = "mapquest",
  *   name = "MapQuest",
- *   handler = "\Geocoder\Provider\MapQuest",
+ *   handler = "\Geocoder\Provider\MapQuest\MapQuest",
  *   arguments = {
- *     "apikey" = NULL,
+ *     "apiKey" = "",
  *     "licensed" = FALSE
  *   }
  * )
  */
-class MapQuest extends ProviderUsingHandlerWithAdapterBase {}
+class MapQuest extends ConfigurableProviderUsingHandlerWithAdapterBase {}

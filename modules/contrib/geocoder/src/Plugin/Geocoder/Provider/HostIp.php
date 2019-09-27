@@ -10,7 +10,7 @@ use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
  * @GeocoderProvider(
  *   id = "hostip",
  *   name = "HostIp",
- *   handler = "\Geocoder\Provider\HostIp"
+ *   handler = "\Geocoder\Provider\HostIp\HostIp",
  * )
  */
 class HostIp extends ProviderUsingHandlerWithAdapterBase {}

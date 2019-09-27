@@ -10,7 +10,7 @@ use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
  * @GeocoderProvider(
  *   id = "geoplugin",
  *   name = "GeoPlugin",
- *   handler = "\Geocoder\Provider\GeoPlugin"
+ *   handler = "\Geocoder\Provider\GeoPlugin\GeoPlugin",
  * )
  */
 class GeoPlugin extends ProviderUsingHandlerWithAdapterBase {}

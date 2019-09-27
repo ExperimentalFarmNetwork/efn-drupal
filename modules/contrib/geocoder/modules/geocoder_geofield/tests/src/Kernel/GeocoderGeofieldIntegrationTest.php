@@ -61,7 +61,7 @@ class GeocoderGeofieldIntegrationTest extends KernelTestBase {
       'field_name' => 'bar',
       'third_party_settings' => [
         'geocoder_field' => [
-          'method' => 'source',
+          'method' => 'geocode',
           'field' => 'foo',
           'plugins' => ['test_provider'],
           'dumper' => 'wkt',

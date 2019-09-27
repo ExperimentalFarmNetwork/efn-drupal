@@ -4,6 +4,7 @@ namespace Drupal\geocoder;
 
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\geocoder\Annotation\GeocoderDumper;
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Field\FieldConfigInterface;
@@ -14,9 +15,14 @@ use Drupal\Core\Logger\LoggerChannelFactoryInterface;
  */
 class DumperPluginManager extends GeocoderPluginManagerBase {
 
+  /**
+   * List of fields having a max length.
+   *
+   * @var string[]
+   */
   private $maxLengthFieldTypes = [
-    "text",
-    "string",
+    'text',
+    'string',
   ];
 
   /**
@@ -27,13 +33,21 @@ class DumperPluginManager extends GeocoderPluginManagerBase {
   protected $logger;
 
   /**
+   * The Drupal messenger service.
+   *
+   * @var \Drupal\Core\Messenger\MessengerInterface
+   */
+  protected $messenger;
+
+  /**
    * {@inheritdoc}
    */
-  public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler, LoggerChannelFactoryInterface $logger_factory) {
+  public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler, LoggerChannelFactoryInterface $logger_factory, MessengerInterface $messenger) {
     parent::__construct('Plugin/Geocoder/Dumper', $namespaces, $module_handler, DumperInterface::class, GeocoderDumper::class);
     $this->alterInfo('geocoder_dumper_info');
     $this->setCacheBackend($cache_backend, 'geocoder_dumper_plugins');
     $this->logger = $logger_factory;
+    $this->messenger = $messenger;
   }
 
   /**
@@ -45,7 +59,7 @@ class DumperPluginManager extends GeocoderPluginManagerBase {
    * @return array
    *   An array of the Address field value.
    */
-  public function setAddressFieldFromGeojson($geojson) {
+  public function setAddressFieldFromGeojson($geojson): array {
     $geojson_array = Json::decode($geojson);
 
     $country_code = $this->setCountryFromGeojson($geojson);
@@ -73,7 +87,7 @@ class DumperPluginManager extends GeocoderPluginManagerBase {
    * @return string
    *   A country code.
    */
-  public function setCountryFromGeojson($geojson) {
+  public function setCountryFromGeojson($geojson): string {
     $geojson_array = Json::decode($geojson);
 
     $country_code = isset($geojson_array['properties']['countryCode']) ? strtoupper(substr($geojson_array['properties']['countryCode'], 0, 2)) : NULL;
@@ -81,7 +95,7 @@ class DumperPluginManager extends GeocoderPluginManagerBase {
     // Some provider (like MapQuest) might not return the countryCode but just
     // the country name, so try to convert it into countryCode, as it seems to
     // be mandatory in Address Field Entity API.
-    if (!isset($country_code)) {
+    if ($country_code === NULL) {
       $country_code = isset($geojson_array['properties']['country']) ? strtoupper(substr($geojson_array['properties']['country'], 0, 2)) : '';
     }
 
@@ -98,10 +112,10 @@ class DumperPluginManager extends GeocoderPluginManagerBase {
    * @param \Drupal\Core\Field\FieldConfigInterface $field_config
    *   The Field Configuration.
    */
-  public function fixDumperFieldIncompatibility(&$dumper_result, $dumper, FieldConfigInterface $field_config) {
+  public function fixDumperFieldIncompatibility(&$dumper_result, $dumper, FieldConfigInterface $field_config): void {
     // Fix not UTF-8 encoded result strings.
     // https://stackoverflow.com/questions/6723562/how-to-detect-malformed-utf-8-string-in-php
-    if (is_string($dumper_result)) {
+    if (\is_string($dumper_result)) {
       if (!preg_match('//u', $dumper_result)) {
         $dumper_result = utf8_encode($dumper_result);
       }
@@ -110,8 +124,8 @@ class DumperPluginManager extends GeocoderPluginManagerBase {
     // If the field is a string|text type check if the result length is
     // compatible with its max_length definition, otherwise truncate it and
     // set | log a warning message.
-    if (in_array($field_config->getType(), $this->maxLengthFieldTypes) &&
-      strlen($dumper_result) > $field_config->getFieldStorageDefinition()->getSetting('max_length')) {
+    if (\in_array($field_config->getType(), $this->maxLengthFieldTypes, TRUE) &&
+      \strlen($dumper_result) > $field_config->getFieldStorageDefinition()->getSetting('max_length')) {
 
       $incompatibility_warning_message = t("The '@field_name' field 'max length' property is not compatible with the chosen '@dumper' dumper.<br>Thus <b>be aware</b> <u>the dumper output result has been truncated to @max_length chars (max length)</u>.<br> You are advised to change the '@field_name' field definition or chose another compatible dumper.", [
         '@field_name' => $field_config->getLabel(),
@@ -122,7 +136,7 @@ class DumperPluginManager extends GeocoderPluginManagerBase {
       $dumper_result = substr($dumper_result, 0, $field_config->getFieldStorageDefinition()->getSetting('max_length'));
 
       // Display a max-length incompatibility warning message.
-      drupal_set_message($incompatibility_warning_message, 'warning');
+      $this->messenger->addWarning($incompatibility_warning_message);
 
       // Log the max-length incompatibility.
       $this->logger->get('geocoder')->warning($incompatibility_warning_message);

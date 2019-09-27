@@ -12,209 +12,261 @@ geocoder.settings:
       type: boolean
       label: 'Should we cache the results ?'
       description: 'To prevent sending multiple times the same request, you can enable to cache to save temporarily the result of the geocode and reverse geocode in the cache.'
-    plugins_options:
-      type: sequence
-      label: 'Plugins arguments'
-      sequence:
-        type: geocoder.settings.plugins.[%key]
-        label: 'The configuration of a plugin'
 
-geocoder.settings.plugins.googlemaps:
+geocoder.geocoder_provider.*:
+  type: config_entity
+  label: 'Geocoder provider'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    plugin:
+      type: string
+      label: 'Plugin'
+    configuration:
+      type: geocoder_provider.configuration.[%parent.plugin]
+
+geocoder_provider.configuration.*:
+  type: geocoder_provider_configuration
+  label: 'Geocoder provider configuration'
+
+geocoder_provider_configuration:
   type: mapping
+  label: 'Default Geocoder provider configuration'
+
+geocoder_provider.configuration.googlemaps:
+  type: geocoder_provider_configuration
   label: 'GoogleMaps arguments'
   mapping:
-    apikey:
+    apiKey:
       type: string
-      label: 'The apikey'
-      description: '<a href="https://developers.google.com/maps/documentation/javascript/get-api-key">Get a valid Google Maps Api Key</a>'
-    locale:
-      type: string
-      label: 'The locale'
+      nullable: true
+      label: 'Google Geocoding API key (optional)'
+      description: '<a href="https://developers.google.com/maps/documentation/javascript/get-api-key#standard-auth" target="blank">Follow these steps to get an API key</a>'
     region:
       type: string
-      label: 'The region'
-    usessl:
-      type: boolean
-      label: 'Use SSL'
+      nullable: true
+      label: 'Region code for region biasing (optional)'
+      description: 'See <a href="https://developers.google.com/maps/documentation/javascript/geocoding#GeocodingRegionCodes" target="blank">Region code biasing</a>'
 
-geocoder.settings.plugins.googlemaps_business:
-  type: mapping
+geocoder_provider.configuration.googlemaps_business:
+  type: geocoder_provider_configuration
   label: 'GoogleMaps for Business arguments'
   mapping:
     clientId:
       type: string
-      label: 'The client ID'
-      description: '<a href="https://developers.google.com/maps/documentation/javascript/get-api-key">Get a valid Google Maps Client ID</a>'
+      label: 'Client ID'
+      description: '<a href="https://developers.google.com/maps/documentation/geocoding/get-api-key#client-id" target="blank">Authenticating your application using a client ID and digital signature</a>'
     privateKey:
       type: string
-      label: 'The private key'
-      description: '<a href="https://developers.google.com/maps/documentation/javascript/get-api-key#client-id">Get a valid Google Maps Private Key</a>'
-    locale:
+      nullable: true
+      label: 'Private key (optional)'
+      description: '<a href="https://developers.google.com/maps/documentation/geocoding/get-api-key#cryptographic_signing_keys" target="blank">Getting a private cryptographic key</a>'
+    apiKey:
       type: string
-      label: 'The locale'
+      nullable: true
+      label: 'Google Geocoding API key (optional)'
+      description: '<a href="https://developers.google.com/maps/documentation/javascript/get-api-key#standard-auth" target="blank">Follow these steps to get an API key</a>'
     region:
       type: string
-      label: 'The region'
-    usessl:
-      type: boolean
-      label: 'Use SSL'
+      nullable: true
+      label: 'Region code for region biasing (optional)'
+      description: 'See <a href="https://developers.google.com/maps/documentation/javascript/geocoding#GeocodingRegionCodes" target="blank">Region code biasing</a>'
+    channel:
+      type: string
+      nullable: true
+      label: 'Channel (optional)'
+      description: 'See <a href="https://developers.google.com/maps/premium/reports/usage-reports#channels" target="blank">What are channels?</a>'
 
-geocoder.settings.plugins.arcgisonline:
-  type: mapping
+geocoder_provider.configuration.arcgisonline:
+  type: geocoder_provider_configuration
   label: 'ArcGISOnline arguments'
   mapping:
-    sourcecountry:
+    sourceCountry:
       type: string
-      label: 'The source country'
-    usessl:
-      type: boolean
-      label: 'Use SSL'
+      label: 'Source country for country biasing (optional)'
+      nullable: true
 
-geocoder.settings.plugins.bingmaps:
-  type: mapping
+geocoder_provider.configuration.bingmaps:
+  type: geocoder_provider_configuration
   label: 'Bingmaps arguments'
   mapping:
-    apikey:
+    apiKey:
       type: string
-      label: 'The apikey'
-    locale:
-      type: string
-      label: 'The locale'
+      label: 'API key'
+      description: '<a href="https://msdn.microsoft.com/en-us/library/ff428642.aspx" target="blank">Getting a Bing Maps API key</a>'
 
-geocoder.settings.plugins.geonames:
-  type: mapping
+geocoder_provider.configuration.geonames:
+  type: geocoder_provider_configuration
   label: 'Geonames arguments'
   mapping:
     username:
       type: string
-      label: 'The username'
-    locale:
-      type: string
-      label: 'The locale'
+      label: 'Username'
+      description: 'Create a free user account at <a href="http://www.geonames.org/login" target="blank">www.geonames.org/login</a>'
 
-geocoder.settings.plugins.ipinfodb:
-  type: mapping
+geocoder_provider.configuration.ipinfodb:
+  type: geocoder_provider_configuration
   label: 'IpInfoDb arguments'
   mapping:
-    apikey:
+    apiKey:
       type: string
-      label: 'The apikey'
+      label: 'API key'
+      description: 'Get an API key by creating a free account at <a href="https://www.ipinfodb.com/register" target="blank">www.ipinfodb.com/register</a>'
     precision:
       type: string
-      label: 'The precision'
+      nullable: true
+      label: 'Precision (optional)'
+      description: 'Either "city" or "country" (faster). Defaults to "city".'
 
-geocoder.settings.plugins.mapquest:
-  type: mapping
+geocoder_provider.configuration.mapbox:
+  type: geocoder_provider_configuration
+  label: 'Mapbox arguments'
+  mapping:
+    accessToken:
+      type: string
+      label: 'Access Token'
+      description: '<a href="https://www.mapbox.com/signup/" target="blank">Get your free API key</a>'
+    country:
+      type: string
+      label: 'Limit results to one or more countries. Permitted values are <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2" target="blank">ISO 3166 alpha 2</a> country codes separated by commas.'
+      nullable: true
+
+geocoder_provider.configuration.mapquest:
+  type: geocoder_provider_configuration
   label: 'MapQuest arguments'
   mapping:
-    apikey:
+    apiKey:
       type: string
-      label: 'The apikey'
+      label: 'API key'
+      description: '<a href="https://developer.mapquest.com/" target="blank">Get your free API key</a>'
     licensed:
       type: boolean
-      label: 'Is licensed'
+      label: 'Licensed'
+      description: 'Whether to use MapQuest''s licensed endpoints. Uncheck to use the open endpoints.'
 
-geocoder.settings.plugins.maxmind:
-  type: mapping
+geocoder_provider.configuration.maxmind:
+  type: geocoder_provider_configuration
   label: 'MaxMind arguments'
   mapping:
-    apikey:
+    apiKey:
       type: string
-      label: 'The apikey'
+      label: 'API key'
     service:
       type: string
-      label: 'The service'
-    usessl:
-      type: boolean
-      label: 'Use SSL'
+      nullable: true
+      label: 'MaxMind service (optional)'
+      description: 'Can be either "a", "b", "f" or "e". Defaults to "f". See <a href="https://dev.maxmind.com/geoip/legacy/web-services/#Per-Service_URIs" target="blank">Services</a>'
 
-geocoder.settings.plugins.nominatim:
-  type: mapping
+geocoder_provider.configuration.nominatim:
+  type: geocoder_provider_configuration
   label: 'Nominatim arguments'
   mapping:
-    rooturl:
+    rootUrl:
       type: string
-      label: 'The root URL'
-    locale:
+      label: 'Root URL'
+      description: 'Root URL of the nominatim server'
+    userAgent:
       type: string
-      label: 'The locale'
+      label: 'User agent'
+      description: 'Value of the User-Agent header'
+    referer:
+      type: string
+      label: 'Referer'
+      description: 'Value of the Referer header'
 
-geocoder.settings.plugins.opencage:
-  type: mapping
+geocoder_provider.configuration.opencage:
+  type: geocoder_provider_configuration
   label: 'OpenCage arguments'
   mapping:
-    apikey:
+    apiKey:
       type: string
-      label: 'The apikey'
-    locale:
-      type: string
-      label: 'The locale'
-    usessl:
-      type: boolean
-      label: 'Use SSL'
+      label: 'API key'
+      description: 'Sign up for a free API key at <a href="https://opencagedata.com/users/sign_up" target="blank">opencagedata.com/users/sign_up</a>'
 
-geocoder.settings.plugins.tomtom:
-  type: mapping
+geocoder_provider.configuration.tomtom:
+  type: geocoder_provider_configuration
   label: 'TomTom arguments'
   mapping:
-    apikey:
+    apiKey:
       type: string
-      label: 'The apikey'
-    locale:
-      type: string
-      label: 'The locale'
+      label: 'API key'
+      description: '<a href="https://developer.tomtom.com/apps/myapps" target="blank">Request an evaluation API key</a>'
 
-geocoder.settings.plugins.file:
-  type: sequence
+geocoder_provider.configuration.file:
+  type: geocoder_provider_configuration
   label: 'File arguments'
-  sequence:
 
-geocoder.settings.plugins.freegeoip:
-  type: sequence
+geocoder_provider.configuration.freegeoip:
+  type: geocoder_provider_configuration
   label: 'Freegeoip arguments'
-  sequence:
+  mapping:
+    baseUrl:
+      type: string
+      label: 'Base URL'
+      description: 'URL of the FreeGeoIP API endpoint.'
 
-geocoder.settings.plugins.geojsonfile:
-  type: sequence
-  label: 'GeoJson arguments'
-  sequence:
+geocoder_provider.configuration.geojsonfile:
+  type: geocoder_provider_configuration
+  label: 'GeoJson File arguments'
 
-geocoder.settings.plugins.geoip:
-  type: sequence
+geocoder_provider.configuration.geoip:
+  type: geocoder_provider_configuration
   label: 'Geoip arguments'
-  sequence:
 
-geocoder.settings.plugins.geoplugin:
-  type: sequence
+geocoder_provider.configuration.geoplugin:
+  type: geocoder_provider_configuration
   label: 'Geoplugin arguments'
-  sequence:
 
-geocoder.settings.plugins.gpxfile:
-  type: sequence
-  label: 'Gpxfile arguments'
-  sequence:
+geocoder_provider.configuration.gpxfile:
+  type: geocoder_provider_configuration
+  label: 'Gpx file arguments'
 
-geocoder.settings.plugins.kmlfile:
-  type: sequence
-  label: 'Kmlfile arguments'
-  sequence:
-
-geocoder.settings.plugins.hostip:
-  type: sequence
+geocoder_provider.configuration.hostip:
+  type: geocoder_provider_configuration
   label: 'Hostip arguments'
-  sequence:
 
-geocoder.settings.plugins.openstreetmap:
-  type: sequence
+geocoder_provider.configuration.kmlfile:
+  type: geocoder_provider_configuration
+  label: 'Kml File arguments'
+
+geocoder_provider.configuration.openstreetmap:
+  type: geocoder_provider_configuration
   label: 'Openstreetmap arguments'
-  sequence:
+  mapping:
+    rootUrl:
+      type: string
+      label: 'Root URL'
+      description: 'The URL representing the OpenStreetMap API endpoint.'
+    userAgent:
+      type: string
+      label: 'User agent'
+      description: 'Value of the User-Agent header'
+    referer:
+      type: string
+      label: 'Referer'
+      description: 'Value of the Referer header'
 
-geocoder.settings.plugins.random:
-  type: sequence
+geocoder_provider.configuration.photon:
+  type: geocoder_provider_configuration
+  label: 'Photon arguments'
+  mapping:
+    rootUrl:
+      type: string
+      label: 'Root URL'
+      description: 'The URL representing the Photon API endpoint.'
+
+geocoder_provider.configuration.random:
+  type: geocoder_provider_configuration
   label: 'Random arguments'
-  sequence:
 
-geocoder.settings.plugins.yandex:
-  type: sequence
+geocoder_provider.configuration.yandex:
+  type: geocoder_provider_configuration
   label: 'Yandex arguments'
-  sequence:
+  mapping:
+    toponym:
+      type: string
+      label: 'Toponym'

@@ -3,7 +3,7 @@
 namespace Drupal\geocoder_geofield\Plugin\Geocoder\Dumper;
 
 use Drupal\geocoder\DumperBase;
-use Geocoder\Model\Address;
+use Geocoder\Location;
 
 /**
  * Provides a geohash geocoder dumper plugin.
@@ -19,8 +19,8 @@ class Geohash extends DumperBase {
   /**
    * {@inheritdoc}
    */
-  public function dump(Address $address) {
-    return parent::dump($address)->out('geohash');
+  public function dump(Location $location) {
+    return parent::dump($location)->out('geohash');
   }
 
 }
