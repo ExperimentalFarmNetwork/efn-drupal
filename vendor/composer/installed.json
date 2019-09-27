@@ -1959,17 +1959,17 @@
     },
     {
         "name": "drupal/core",
-        "version": "8.6.13",
-        "version_normalized": "8.6.13.0",
+        "version": "8.6.15",
+        "version_normalized": "8.6.15.0",
         "source": {
             "type": "git",
             "url": "https://github.com/drupal/core.git",
-            "reference": "8d5b80030ac3f13df2d66aeef0ea388fd9a90632"
+            "reference": "936456cdeac25c6bbd2f55b0d587239c6a81ba86"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/drupal/core/zipball/8d5b80030ac3f13df2d66aeef0ea388fd9a90632",
-            "reference": "8d5b80030ac3f13df2d66aeef0ea388fd9a90632",
+            "url": "https://api.github.com/repos/drupal/core/zipball/936456cdeac25c6bbd2f55b0d587239c6a81ba86",
+            "reference": "936456cdeac25c6bbd2f55b0d587239c6a81ba86",
             "shasum": ""
         },
         "require": {
@@ -2000,9 +2000,9 @@
             "symfony-cmf/routing": "^1.4",
             "symfony/class-loader": "~3.4.0",
             "symfony/console": "~3.4.0",
-            "symfony/dependency-injection": "~3.4.0",
+            "symfony/dependency-injection": "~3.4.26",
             "symfony/event-dispatcher": "~3.4.0",
-            "symfony/http-foundation": "~3.4.14",
+            "symfony/http-foundation": "~3.4.26",
             "symfony/http-kernel": "~3.4.14",
             "symfony/polyfill-iconv": "^1.0",
             "symfony/process": "~3.4.0",
@@ -2142,7 +2142,7 @@
             "symfony/debug": "^3.4.0",
             "symfony/phpunit-bridge": "^3.4.3"
         },
-        "time": "2019-03-20T06:01:19+00:00",
+        "time": "2019-04-17T20:00:11+00:00",
         "type": "drupal-core",
         "extra": {
             "merge-plugin": {
