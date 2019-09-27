@@ -12,3 +12,12 @@ function efn_update_8001() {
   \Drupal::service('module_installer')->uninstall(['geocoder']);
   \Drupal::service('module_installer')->install(['geocoder']);
 }
+
+ /**
+  * Uninstall and re-install geocoder to fix error once again.
+  */
+  function efn_update_8002() {
+    \Drupal::service('module_installer')->uninstall(['geocoder']);
+    \Drupal::service('module_installer')->install(['geocoder']);
+  }
+  
