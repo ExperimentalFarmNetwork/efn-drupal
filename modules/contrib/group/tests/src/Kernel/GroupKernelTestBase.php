@@ -12,6 +12,9 @@ abstract class GroupKernelTestBase extends EntityKernelTestBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @todo Refactor tests to not automatically use group_test_config unless they
+   *       have a good reason to.
    */
   public static $modules = ['group', 'group_test_config'];
 
@@ -38,11 +41,11 @@ abstract class GroupKernelTestBase extends EntityKernelTestBase {
     $this->entityTypeManager = $this->container->get('entity_type.manager');
     $this->pluginManager = $this->container->get('plugin.manager.group_content_enabler');
 
-    $this->installConfig(['group', 'group_test_config']);
     $this->installEntitySchema('group');
     $this->installEntitySchema('group_type');
     $this->installEntitySchema('group_content');
     $this->installEntitySchema('group_content_type');
+    $this->installConfig(['group', 'group_test_config']);
 
     $this->setCurrentUser($this->createUser());
   }
@@ -76,14 +79,34 @@ abstract class GroupKernelTestBase extends EntityKernelTestBase {
    * @return \Drupal\group\Entity\Group
    *   The created group entity.
    */
-  protected function createGroup($values = []) {
-    $group = $this->entityTypeManager->getStorage('group')->create($values + [
+  protected function createGroup(array $values = []) {
+    $storage = $this->entityTypeManager->getStorage('group');
+    $group = $storage->create($values + [
       'type' => 'default',
-      'label' => $this->randomMachineName(),
+      'label' => $this->randomString(),
     ]);
     $group->enforceIsNew();
-    $group->save();
+    $storage->save($group);
     return $group;
+  }
+
+  /**
+   * Creates a group type.
+   *
+   * @param array $values
+   *   (optional) The values used to create the entity.
+   *
+   * @return \Drupal\group\Entity\GroupType
+   *   The created group type entity.
+   */
+  protected function createGroupType(array $values = []) {
+    $storage = $this->entityTypeManager->getStorage('group_type');
+    $group_type = $storage->create($values + [
+      'id' => $this->randomMachineName(),
+      'label' => $this->randomString(),
+    ]);
+    $storage->save($group_type);
+    return $group_type;
   }
 
 }

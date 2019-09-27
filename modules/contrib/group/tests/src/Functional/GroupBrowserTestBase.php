@@ -48,6 +48,7 @@ abstract class GroupBrowserTestBase extends BrowserTestBase {
     return [
       'view the administration theme',
       'access administration pages',
+      'access group overview',
       'create default group',
       'create other group',
     ];

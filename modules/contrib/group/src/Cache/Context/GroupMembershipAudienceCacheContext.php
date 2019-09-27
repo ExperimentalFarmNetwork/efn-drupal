@@ -19,6 +19,8 @@ use Drupal\Core\Cache\Context\CacheContextInterface;
  * service. See an example at: \Drupal\group\Plugin\Block\GroupOperationsBlock.
  *
  * Cache context ID: 'group_membership.audience'.
+ *
+ * @deprecated in Group 1.0-rc3, will be removed before Group 1.0.
  */
 class GroupMembershipAudienceCacheContext extends GroupMembershipCacheContextBase implements CacheContextInterface {
 

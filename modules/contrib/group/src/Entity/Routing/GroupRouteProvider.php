@@ -59,6 +59,7 @@ class GroupRouteProvider extends DefaultHtmlRouteProvider {
     if ($route = parent::getCollectionRoute($entity_type)) {
       $route->setDefault('_title', 'Groups');
       $route->setDefault('_title_arguments', []);
+      $route->setRequirement('_permission', 'access group overview');
       return $route;
     }
   }

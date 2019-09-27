@@ -30,7 +30,7 @@ group.delete_form:
   weight: 10
 
 group.content:
-  title: 'Related entities'
+  title: 'All entities'
   base_route: 'entity.group.canonical'
   route_name: 'entity.group_content.collection'
   weight: 15

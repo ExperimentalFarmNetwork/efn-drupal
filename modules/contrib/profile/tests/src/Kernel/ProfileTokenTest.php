@@ -2,7 +2,6 @@
 
 namespace Drupal\Tests\profile\Kernel;
 
-use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\EntityViewBuilderInterface;
 use Drupal\Core\Render\RendererInterface;
@@ -10,7 +9,6 @@ use Drupal\profile\Entity\Profile;
 use Drupal\profile\Entity\ProfileType;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\field\Entity\FieldConfig;
-use Drupal\user\UserInterface;
 use Drupal\KernelTests\Core\Entity\EntityKernelTestBase;
 
 /**

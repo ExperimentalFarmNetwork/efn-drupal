@@ -252,7 +252,7 @@ class GroupContentController extends ControllerBase {
     /** @var \Drupal\group\Plugin\GroupContentEnablerInterface $plugin */
     $plugin = $group->getGroupType()->getContentPlugin($plugin_id);
     $group_content_type = GroupContentType::load($plugin->getContentTypeConfigId());
-    return $this->t('Create @name', ['@name' => $group_content_type->label()]);
+    return $this->t('Add @name', ['@name' => $group_content_type->label()]);
   }
 
   /**
@@ -286,7 +286,7 @@ class GroupContentController extends ControllerBase {
    * @todo Revisit when 8.2.0 is released, https://www.drupal.org/node/2767853.
    */
   public function collectionTitle(GroupInterface $group) {
-    return $this->t('Related entities for @group', ['@group' => $group->label()]);
+    return $this->t('All entities for @group', ['@group' => $group->label()]);
   }
 
   /**
@@ -376,7 +376,7 @@ class GroupContentController extends ControllerBase {
     /** @var \Drupal\group\Plugin\GroupContentEnablerInterface $plugin */
     $plugin = $group->getGroupType()->getContentPlugin($plugin_id);
     $group_content_type = GroupContentType::load($plugin->getContentTypeConfigId());
-    return $this->t('Create @name', ['@name' => $group_content_type->label()]);
+    return $this->t('Add @name', ['@name' => $group_content_type->label()]);
   }
 
 }

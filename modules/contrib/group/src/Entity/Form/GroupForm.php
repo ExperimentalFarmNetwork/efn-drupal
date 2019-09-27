@@ -104,7 +104,7 @@ class GroupForm extends ContentEntityForm {
       '%title' => $this->entity->label(),
     ];
 
-    drupal_set_message($this->operation == 'edit'
+    $this->messenger()->addStatus($this->operation == 'edit'
       ? $this->t('@type %title has been updated.', $t_args)
       : $this->t('@type %title has been created.', $t_args)
     );

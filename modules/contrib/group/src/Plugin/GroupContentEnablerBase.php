@@ -3,6 +3,7 @@
 namespace Drupal\group\Plugin;
 
 use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\group\Access\GroupAccessResult;
 use Drupal\group\Entity\GroupType;
 use Drupal\group\Entity\GroupInterface;
@@ -187,6 +188,13 @@ abstract class GroupContentEnablerBase extends PluginBase implements GroupConten
   /**
    * {@inheritdoc}
    */
+  public function getGroupOperationsCacheableMetadata() {
+    return new CacheableMetadata();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getOperations() {
     return [];
   }
@@ -219,7 +227,7 @@ abstract class GroupContentEnablerBase extends PluginBase implements GroupConten
 
     $permissions["create $plugin_id content"] = [
       'title' => "$prefix Add entity relation",
-      'description' => 'Allows you to relate an existing %entity_type entity to the group.',
+      'description' => 'Allows you to add an existing %entity_type entity to the group.',
     ] + $defaults;
 
     $permissions["update own $plugin_id content"] = [
@@ -269,7 +277,7 @@ abstract class GroupContentEnablerBase extends PluginBase implements GroupConten
 
     $permissions["create $plugin_id entity"] = [
       'title' => "$prefix Add %entity_type entities",
-      'description' => 'Allows you to create a new %entity_type entity and relate it to the group.',
+      'description' => 'Allows you to add a new %entity_type entity and add it to the group.',
     ] + $defaults;
 
     $permissions["update own $plugin_id entity"] = [
@@ -403,12 +411,15 @@ abstract class GroupContentEnablerBase extends PluginBase implements GroupConten
       case 'view':
         $result = $this->viewAccess($group_content, $account);
         break;
+
       case 'update':
         $result = $this->updateAccess($group_content, $account);
         break;
+
       case 'delete':
         $result = $this->deleteAccess($group_content, $account);
         break;
+
       default:
         $result = GroupAccessResult::neutral();
     }
@@ -484,7 +495,7 @@ abstract class GroupContentEnablerBase extends PluginBase implements GroupConten
     return [
       'group_cardinality' => 0,
       'entity_cardinality' => 0,
-      'use_creation_wizard' => 1
+      'use_creation_wizard' => 0,
     ];
   }
 

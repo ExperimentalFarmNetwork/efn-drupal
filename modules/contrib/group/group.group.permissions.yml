@@ -1,3 +1,4 @@
+# @todo Remove god-mode permission in 8.2.0 release, use 'is_admin' flag on role instead.
 administer group:
   title: 'Administer group'
   description: 'Administer the group, its content and members'
@@ -11,6 +12,6 @@ delete group:
   title: 'Delete group'
   description: 'Delete the group'
 access content overview:
-  title: 'Access related entities overview'
+  title: 'Access all entities overview'
   description: 'View all of the entity relations for the group'
   warning: 'Warning: This can be rather technical and should only be granted to power users.'

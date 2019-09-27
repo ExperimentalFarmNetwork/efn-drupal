@@ -269,7 +269,8 @@ class GroupContent extends ContentEntityBase implements GroupContentInterface {
       ->setLabel(t('Parent group'))
       ->setDescription(t('The group containing the entity.'))
       ->setSetting('target_type', 'group')
-      ->setReadOnly(TRUE);
+      ->setReadOnly(TRUE)
+      ->setRequired(TRUE);
 
     // Borrowed this logic from the Comment module.
     // Warning! May change in the future: https://www.drupal.org/node/2346347

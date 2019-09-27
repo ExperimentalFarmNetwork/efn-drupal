@@ -5,6 +5,7 @@
  * Install, update and uninstall functions for the profile module.
  */
 
+use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\user\Entity\Role;
 
 /**
@@ -95,20 +96,24 @@ function profile_update_8004() {
   $definition_update_manager = \Drupal::entityDefinitionUpdateManager();
   $entity_type = $definition_update_manager->getEntityType('profile');
 
+  // Fix any null `uid` field values.
+  $database = \Drupal::database();
+  $database->update($entity_type->getBaseTable())
+    ->fields(['uid' => 0])
+    ->isNull('uid')
+    ->execute();
+  $database->update($entity_type->getRevisionTable())
+    ->fields(['uid' => 0])
+    ->isNull('uid')
+    ->execute();
+
   $entity_keys = $entity_type->getKeys();
   $entity_keys['uid'] = 'uid';
+  $entity_keys['owner'] = 'uid';
   $entity_type->set('entity_keys', $entity_keys);
   $definition_update_manager->updateEntityType($entity_type);
-
-  // @todo The above should be enough, since that is the only definition that
-  //   changed. But \Drupal\Core\Entity\Sql\SqlContentEntityStorageSchema varies
-  //   field schema by whether a field is an entity key, so invoke
-  //   EntityDefinitionUpdateManagerInterface::updateFieldStorageDefinition()
-  //   with an unmodified field storage definition to trigger the necessary
-  //   changes. SqlContentEntityStorageSchema::onEntityTypeUpdate() should be
-  //   fixed to automatically handle this.
-  //   @see https://www.drupal.org/node/2554245
-  $definition_update_manager->updateFieldStorageDefinition($definition_update_manager->getFieldStorageDefinition('uid', 'profile'));
+  $uid_definition = $definition_update_manager->getFieldStorageDefinition('uid', 'profile');
+  $definition_update_manager->updateFieldStorageDefinition($uid_definition);
 
   return t('The uid entity key has been added to profiles.');
 }
@@ -119,4 +124,101 @@ function profile_update_8004() {
 function profile_update_8005() {
   // Rerun the previous update with correction.
   profile_update_8004();
+}
+
+/**
+ * Install the `data` field.
+ */
+function profile_update_8006() {
+  $storage_definition = BaseFieldDefinition::create('map')
+    ->setLabel(t('Data'))
+    ->setDescription(t('A serialized array of additional data.'))
+    ->setRevisionable(TRUE);
+
+  $update_manager = \Drupal::entityDefinitionUpdateManager();
+  $update_manager->installFieldStorageDefinition('data', 'profile', 'profile', $storage_definition);
+}
+
+/**
+ * Set the 'published' entity key.
+ */
+function profile_update_8007() {
+  $definition_update_manager = \Drupal::entityDefinitionUpdateManager();
+  $entity_type = $definition_update_manager->getEntityType('profile');
+  $keys = $entity_type->getKeys();
+  $keys['published'] = 'status';
+  $entity_type->set('entity_keys', $keys);
+  $definition_update_manager->updateEntityType($entity_type);
+}
+
+/**
+ * Adds a storage schema for profile that adds a multi-column index.
+ */
+function profile_update_8008() {
+  $definition_update_manager = \Drupal::entityDefinitionUpdateManager();
+  $entity_type = $definition_update_manager->getEntityType('profile');
+  $entity_type->setHandlerClass('storage_schema', \Drupal\profile\ProfileStorageSchema::class);
+  $definition_update_manager->updateEntityType($entity_type);
+}
+
+/**
+ * Update revision fields.
+ */
+function profile_update_8009() {
+  $definition_update_manager = \Drupal::entityDefinitionUpdateManager();
+  $entity_type = $definition_update_manager->getEntityType('profile');
+  $revision_metadata_keys = $entity_type->get('revision_metadata_keys');
+  $revision_metadata_keys += [
+    'revision_created' => 'revision_created',
+    'revision_user' => 'revision_user',
+    'revision_log_message' => 'revision_log_message'
+  ];
+  $entity_type->set('revision_metadata_keys', $revision_metadata_keys);
+  $definition_update_manager->updateEntityType($entity_type);
+
+  $revision_created = BaseFieldDefinition::create('created')
+    ->setLabel(t('Revision create time'))
+    ->setDescription(t('The time that the current revision was created.'))
+    ->setRevisionable(TRUE);
+  $definition_update_manager->installFieldStorageDefinition('revision_created', $entity_type->id(), 'profile', $revision_created);
+
+  $revision_user = BaseFieldDefinition::create('entity_reference')
+    ->setLabel(t('Revision user'))
+    ->setDescription(t('The user ID of the author of the current revision.'))
+    ->setSetting('target_type', 'user')
+    ->setInitialValueFromField('uid')
+    ->setRevisionable(TRUE);
+  $definition_update_manager->installFieldStorageDefinition('revision_user', $entity_type->id(), 'profile', $revision_user);
+
+  $revision_log_message = BaseFieldDefinition::create('string_long')
+    ->setLabel(t('Revision log message'))
+    ->setDescription(t('Briefly describe the changes you have made.'))
+    ->setRevisionable(TRUE)
+    ->setDefaultValue('')
+    ->setDisplayOptions('form', [
+      'type' => 'string_textarea',
+      'weight' => 25,
+      'settings' => [
+        'rows' => 4,
+      ],
+    ]);
+  $definition_update_manager->installFieldStorageDefinition('revision_log_message', $entity_type->id(), 'profile', $revision_log_message);
+
+  // Use the "changed" timestamp as the initial revision_created.
+  $database = \Drupal::database();
+  $database->update($entity_type->getRevisionTable())
+    ->expression('revision_created', 'changed')
+    ->execute();
+
+  return t('The revision metadata fields have been added to profiles.');
+}
+
+/**
+ * Update the status field.
+ */
+function profile_update_8010() {
+  $definition_update_manager = \Drupal::entityDefinitionUpdateManager();
+  $field_definition = $definition_update_manager->getFieldStorageDefinition('status', 'profile');
+  $field_definition->setTranslatable(FALSE);
+  $definition_update_manager->updateFieldStorageDefinition($field_definition);
 }

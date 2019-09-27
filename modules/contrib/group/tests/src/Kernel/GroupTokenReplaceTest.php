@@ -3,6 +3,7 @@
 namespace Drupal\Tests\group\Kernel;
 
 use Drupal\Component\Render\FormattableMarkup;
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Render\BubbleableMetadata;
 
 /**
@@ -31,10 +32,10 @@ class GroupTokenReplaceTest extends GroupTokenReplaceKernelTestBase {
     $tests['[group:id]'] = $group->id();
     $tests['[group:type]'] = 'default';
     $tests['[group:type-name]'] = 'Default label';
-    $tests['[group:title]'] = $group->label();
+    $tests['[group:title]'] = Html::escape($group->label());
     $tests['[group:langcode]'] = $group->language()->getId();
-    $tests['[group:url]'] = $group->url('canonical', $url_options);
-    $tests['[group:edit-url]'] = $group->url('edit-form', $url_options);
+    $tests['[group:url]'] = $group->toUrl('canonical', $url_options)->toString();
+    $tests['[group:edit-url]'] = $group->toUrl('edit-form', $url_options)->toString();
     $tests['[group:author]'] = $account->getAccountName();
     $tests['[group:author:uid]'] = $group->getOwnerId();
     $tests['[group:author:name]'] = $account->getAccountName();

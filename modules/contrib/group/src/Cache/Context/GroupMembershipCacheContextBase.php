@@ -20,12 +20,10 @@ use Drupal\group\Context\GroupRouteContextTrait;
  */
 abstract class GroupMembershipCacheContextBase {
 
-  /**
-   * Instead of relying on the Group context provider, we re-use some of its
-   * logic for retrieving a group entity from the route. This is because cache
-   * contexts need to be really fast and loading the whole context service is
-   * slower than simply using the 'current_route_match' service.
-   */
+  // Instead of relying on the Group context provider, we re-use some of its
+  // logic for retrieving a group entity from the route. This is because cache
+  // contexts need to be really fast and loading the whole context service is
+  // slower than simply using the 'current_route_match' service.
   use GroupRouteContextTrait;
 
   /**
@@ -41,13 +39,6 @@ abstract class GroupMembershipCacheContextBase {
    * @var \Drupal\Core\Session\AccountInterface
    */
   protected $user;
-
-  /**
-   * The entity type manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
 
   /**
    * Constructs a new GroupMembershipCacheContextBase class.
@@ -80,6 +71,7 @@ abstract class GroupMembershipCacheContextBase {
    * Gets the group role storage.
    *
    * @return \Drupal\group\Entity\Storage\GroupRoleStorageInterface
+   *   The group role storage.
    */
   protected function groupRoleStorage() {
     return $this->entityTypeManager->getStorage('group_role');

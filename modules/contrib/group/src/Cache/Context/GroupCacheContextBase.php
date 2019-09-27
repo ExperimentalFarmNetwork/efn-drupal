@@ -2,6 +2,7 @@
 
 namespace Drupal\group\Cache\Context;
 
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\group\Context\GroupRouteContextTrait;
 
@@ -18,12 +19,10 @@ use Drupal\group\Context\GroupRouteContextTrait;
  */
 abstract class GroupCacheContextBase {
 
-  /**
-   * Instead of relying on the Group context provider, we re-use some of its
-   * logic for retrieving a group entity from the route. This is because cache
-   * contexts need to be really fast and loading the whole context service is
-   * slower than simply using the 'current_route_match' service.
-   */
+  // Instead of relying on the Group context provider, we re-use some of its
+  // logic for retrieving a group entity from the route. This is because cache
+  // contexts need to be really fast and loading the whole context service is
+  // slower than simply using the 'current_route_match' service.
   use GroupRouteContextTrait;
 
   /**
@@ -38,9 +37,12 @@ abstract class GroupCacheContextBase {
    *
    * @param \Drupal\Core\Routing\RouteMatchInterface $current_route_match
    *   The current route match object.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager.
    */
-  public function __construct(RouteMatchInterface $current_route_match) {
+  public function __construct(RouteMatchInterface $current_route_match, EntityTypeManagerInterface $entity_type_manager) {
     $this->currentRouteMatch = $current_route_match;
+    $this->entityTypeManager = $entity_type_manager;
     $this->group = $this->getGroupFromRoute();
   }
 

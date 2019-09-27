@@ -6,7 +6,10 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityListBuilder;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Routing\RedirectDestinationInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -24,6 +27,20 @@ class GroupListBuilder extends EntityListBuilder {
   protected $redirectDestination;
 
   /**
+   * The current user.
+   *
+   * @var \Drupal\Core\Session\AccountInterface
+   */
+  protected $currentUser;
+
+  /**
+   * The module handler.
+   *
+   * @var \Drupal\Core\Extension\ModuleHandlerInterface
+   */
+  protected $moduleHandler;
+
+  /**
    * Constructs a new GroupListBuilder object.
    *
    * @param \Drupal\Core\Entity\EntityTypeInterface $entity_type
@@ -32,10 +49,16 @@ class GroupListBuilder extends EntityListBuilder {
    *   The entity storage class.
    * @param \Drupal\Core\Routing\RedirectDestinationInterface $redirect_destination
    *   The redirect destination service.
+   * @param \Drupal\Core\Session\AccountInterface $current_user
+   *   The current user.
+   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
+   *   The module handler.
    */
-  public function __construct(EntityTypeInterface $entity_type, EntityStorageInterface $storage, RedirectDestinationInterface $redirect_destination) {
+  public function __construct(EntityTypeInterface $entity_type, EntityStorageInterface $storage, RedirectDestinationInterface $redirect_destination, AccountInterface $current_user, ModuleHandlerInterface $module_handler) {
     parent::__construct($entity_type, $storage);
     $this->redirectDestination = $redirect_destination;
+    $this->currentUser = $current_user;
+    $this->moduleHandler = $module_handler;
   }
 
   /**
@@ -45,7 +68,9 @@ class GroupListBuilder extends EntityListBuilder {
     return new static(
       $entity_type,
       $container->get('entity_type.manager')->getStorage($entity_type->id()),
-      $container->get('redirect.destination')
+      $container->get('redirect.destination'),
+      $container->get('current_user'),
+      $container->get('module_handler')
     );
   }
 
@@ -53,10 +78,26 @@ class GroupListBuilder extends EntityListBuilder {
    * {@inheritdoc}
    */
   public function buildHeader() {
-    $header['gid'] = $this->t('Group ID');
-    $header['name'] = $this->t('Name');
-    $header['type'] = $this->t('Type');
-    $header['uid'] = $this->t('Owner');
+    $header = [
+      'gid' => [
+        'data' => $this->t('Group ID'),
+        'specifier' => 'id',
+        'field' => 'id',
+      ],
+      'label' => [
+        'data' => $this->t('Name'),
+        'specifier' => 'label',
+        'field' => 'label',
+      ],
+      'type' => [
+        'data' => $this->t('Type'),
+        'specifier' =>'type',
+        'field' => 'type',
+      ],
+      'uid' => [
+        'data' => $this->t('Owner'),
+      ],
+    ];
     return $header + parent::buildHeader();
   }
 
@@ -86,8 +127,35 @@ class GroupListBuilder extends EntityListBuilder {
   /**
    * {@inheritdoc}
    */
+  protected function getEntityIds() {
+    $query = $this->getStorage()->getQuery();
+
+    // Add a simple table sort by header, see ::buildHeader().
+    $header = $this->buildHeader();
+    $query->tableSort($header);
+
+    // Only add the pager if a limit is specified.
+    if ($this->limit) {
+      $query->pager($this->limit);
+    }
+
+    return $query->execute();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   protected function getDefaultOperations(EntityInterface $entity) {
     $operations = parent::getDefaultOperations($entity);
+
+    /** @var \Drupal\group\Entity\GroupInterface $entity */
+    if ($this->moduleHandler->moduleExists('views') && $entity->hasPermission('administer members', $this->currentUser)) {
+      $operations['members'] = [
+        'title' => $this->t('Members'),
+        'weight' => 15,
+        'url' => Url::fromRoute('view.group_members.page_1', ['group' => $entity->id()]),
+      ];
+    }
 
     // Add the current path or destination as a redirect to the operation links.
     $destination = $this->redirectDestination->getAsArray();

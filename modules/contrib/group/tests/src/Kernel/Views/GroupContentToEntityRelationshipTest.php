@@ -42,12 +42,12 @@ class GroupContentToEntityRelationshipTest extends ViewsKernelTestBase {
 
     $this->entityTypeManager = $this->container->get('entity_type.manager');
 
-    $this->installConfig(['group', 'field', 'group_test_config']);
     $this->installEntitySchema('user');
     $this->installEntitySchema('group');
     $this->installEntitySchema('group_type');
     $this->installEntitySchema('group_content');
     $this->installEntitySchema('group_content_type');
+    $this->installConfig(['group', 'field', 'group_test_config']);
 
     // Set the current user so group creation can rely on it.
     $this->container->get('current_user')->setAccount($this->createUser());

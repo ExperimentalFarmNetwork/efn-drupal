@@ -285,7 +285,7 @@ abstract class GroupPermissionsForm extends FormBase {
       $group_role->changePermissions($permissions)->trustData()->save();
     }
 
-    drupal_set_message($this->t('The changes have been saved.'));
+    $this->messenger()->addStatus($this->t('The changes have been saved.'));
   }
 
 }

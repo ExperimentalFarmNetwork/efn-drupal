@@ -93,7 +93,7 @@ class GroupContentEnablerManager extends DefaultPluginManager implements GroupCo
    *   Cache backend instance to use.
    * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
    *   The module handler to invoke the alter hook with.
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
    */
   public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler, EntityTypeManagerInterface $entity_type_manager) {
@@ -109,6 +109,7 @@ class GroupContentEnablerManager extends DefaultPluginManager implements GroupCo
    * Returns the group type storage handler.
    *
    * @return \Drupal\Core\Config\Entity\ConfigEntityStorageInterface
+   *   The group type storage handler.
    */
   protected function getGroupTypeStorage() {
     if (!isset($this->groupTypeStorage)) {
@@ -121,6 +122,7 @@ class GroupContentEnablerManager extends DefaultPluginManager implements GroupCo
    * Returns the group content type storage handler.
    *
    * @return \Drupal\group\Entity\Storage\GroupContentTypeStorageInterface
+   *   The group content type storage handler.
    */
   protected function getGroupContentTypeStorage() {
     if (!isset($this->groupContentTypeStorage)) {
@@ -128,7 +130,7 @@ class GroupContentEnablerManager extends DefaultPluginManager implements GroupCo
     }
     return $this->groupContentTypeStorage;
   }
-  
+
   /**
    * {@inheritdoc}
    */
@@ -327,7 +329,7 @@ class GroupContentEnablerManager extends DefaultPluginManager implements GroupCo
    * @param array $map
    *   The group content type ID map to store in cache.
    */
-  protected function setCachedPluginGroupContentTypeMap($map) {
+  protected function setCachedPluginGroupContentTypeMap(array $map) {
     $this->cacheSet($this->pluginGroupContentTypeMapCacheKey, $map, Cache::PERMANENT);
     $this->pluginGroupContentTypeMap = $map;
   }
@@ -374,7 +376,7 @@ class GroupContentEnablerManager extends DefaultPluginManager implements GroupCo
    * @param array $map
    *   The group type plugin map to store in cache.
    */
-  protected function setCachedGroupTypePluginMap($map) {
+  protected function setCachedGroupTypePluginMap(array $map) {
     $this->cacheSet($this->groupTypePluginMapCacheKey, $map, Cache::PERMANENT);
     $this->groupTypePluginMap = $map;
   }

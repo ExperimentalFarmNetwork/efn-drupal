@@ -104,7 +104,7 @@ class GroupContentForm extends ContentEntityForm {
             '@entity_type' => $entity_type->getLowercaseLabel(),
             '@group' => $this->getEntity()->getGroup()->label(),
           ];
-          $actions['submit']['#value'] = $this->t('Create @entity_type in @group', $replace);
+          $actions['submit']['#value'] = $this->t('Add new @entity_type to @group', $replace);
         }
 
         // Make sure we complete the wizard before saving the group content.

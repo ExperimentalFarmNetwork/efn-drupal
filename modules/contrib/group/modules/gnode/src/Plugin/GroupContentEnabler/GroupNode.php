@@ -46,7 +46,7 @@ class GroupNode extends GroupContentEnablerBase {
     if ($group->hasPermission("create $plugin_id entity", $account)) {
       $route_params = ['group' => $group->id(), 'plugin_id' => $plugin_id];
       $operations["gnode-create-$type"] = [
-        'title' => $this->t('Create @type', ['@type' => $this->getNodeType()->label()]),
+        'title' => $this->t('Add @type', ['@type' => $this->getNodeType()->label()]),
         'url' => new Url('entity.group_content.create_form', $route_params),
         'weight' => 30,
       ];

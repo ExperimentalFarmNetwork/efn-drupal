@@ -119,7 +119,7 @@ class GroupContentTypeDeleteForm extends EntityDeleteForm {
     ]);
 
     $form_state->setRedirect('entity.group_type.content_plugins', ['group_type' => $group_type->id()]);
-    drupal_set_message($this->t('The content plugin was uninstalled from the group type.'));
+    $this->messenger()->addStatus($this->t('The content plugin was uninstalled from the group type.'));
   }
 
 }

@@ -3,6 +3,7 @@
 namespace Drupal\group\Entity\Storage;
 
 use Drupal\Component\Uuid\UuidInterface;
+use Drupal\Core\Cache\MemoryCache\MemoryCacheInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Config\Entity\ConfigEntityStorage;
 use Drupal\Core\Entity\EntityTypeInterface;
@@ -39,9 +40,11 @@ class GroupContentTypeStorage extends ConfigEntityStorage implements GroupConten
    *   The UUID service.
    * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
    *   The language manager.
+   * @param \Drupal\Core\Cache\MemoryCache\MemoryCacheInterface $memory_cache
+   *   The memory cache backend.
    */
-  public function __construct(EntityTypeInterface $entity_type, GroupContentEnablerManagerInterface $plugin_manager, ConfigFactoryInterface $config_factory, UuidInterface $uuid_service, LanguageManagerInterface $language_manager) {
-    parent::__construct($entity_type, $config_factory, $uuid_service, $language_manager);
+  public function __construct(EntityTypeInterface $entity_type, GroupContentEnablerManagerInterface $plugin_manager, ConfigFactoryInterface $config_factory, UuidInterface $uuid_service, LanguageManagerInterface $language_manager, MemoryCacheInterface $memory_cache) {
+    parent::__construct($entity_type, $config_factory, $uuid_service, $language_manager, $memory_cache);
     $this->pluginManager = $plugin_manager;
   }
 
@@ -54,7 +57,8 @@ class GroupContentTypeStorage extends ConfigEntityStorage implements GroupConten
       $container->get('plugin.manager.group_content_enabler'),
       $container->get('config.factory'),
       $container->get('uuid'),
-      $container->get('language_manager')
+      $container->get('language_manager'),
+      $container->get('entity.memory_cache')
     );
   }
 

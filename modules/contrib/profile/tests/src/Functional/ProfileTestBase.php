@@ -7,6 +7,7 @@ use Drupal\Core\Entity\Entity\EntityViewDisplay;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\profile\Entity\ProfileType;
 use Drupal\profile\ProfileTestTrait;
 use Drupal\Tests\BrowserTestBase;
 
@@ -64,6 +65,17 @@ abstract class ProfileTestBase extends BrowserTestBase {
     $this->drupalPlaceBlock('local_actions_block');
     $this->drupalPlaceBlock('page_title_block');
 
+    $user_form_display = EntityFormDisplay::load("user.user.default");
+    if (!$user_form_display) {
+      $user_form_display = EntityFormDisplay::create([
+        'targetEntityType' => 'user',
+        'bundle' => 'user',
+        'mode' => 'default',
+        'status' => TRUE,
+      ]);
+      $user_form_display->save();
+    }
+
     $this->type = $this->createProfileType('test', 'Test profile', TRUE);
 
     $id = $this->type->id();
@@ -83,6 +95,18 @@ abstract class ProfileTestBase extends BrowserTestBase {
     $this->field->save();
 
     // Configure the default display.
+    $user_display = EntityViewDisplay::load("user.user.default");
+    if (!$user_display) {
+      $user_display = EntityViewDisplay::create([
+        'targetEntityType' => 'user',
+        'bundle' => 'user',
+        'mode' => 'default',
+        'status' => TRUE,
+      ]);
+      $user_display->save();
+    }
+
+    // Configure the default display.
     $this->display = EntityViewDisplay::load("profile.{$this->type->id()}.default");
     if (!$this->display) {
       $this->display = EntityViewDisplay::create([
@@ -96,6 +120,20 @@ abstract class ProfileTestBase extends BrowserTestBase {
     $this->display
       ->setComponent($this->field->getName(), ['type' => 'string'])
       ->save();
+
+    // Configure the profile field display on user view modes.
+    $profile_types = ProfileType::loadMultiple();
+    foreach ($profile_types as $profile_type) {
+      $field_name = $profile_type->id() . '_profiles';
+      // Assign display properties for the 'default' view mode.
+      $user_display->setComponent($field_name, [
+        'label' => 'above',
+        'type' => 'entity_reference_entity_view',
+        'settings' => [
+          'view_mode' => $this->display->id(),
+        ],
+      ])->save();
+    }
 
     // Configure the default form.
     $this->form = EntityFormDisplay::load("profile.{$this->type->id()}.default");

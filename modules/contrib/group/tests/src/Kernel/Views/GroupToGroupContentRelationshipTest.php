@@ -58,12 +58,12 @@ class GroupToGroupContentRelationshipTest extends ViewsKernelTestBase {
    * Installs the required configuration and schemas for this test.
    */
   protected function installTestConfiguration() {
-    $this->installConfig(['group', 'field', 'group_test_config']);
     $this->installEntitySchema('user');
     $this->installEntitySchema('group');
     $this->installEntitySchema('group_type');
     $this->installEntitySchema('group_content');
     $this->installEntitySchema('group_content_type');
+    $this->installConfig(['group', 'field', 'group_test_config']);
   }
 
   /**

@@ -73,7 +73,7 @@ class GroupContentRouteProvider extends DefaultHtmlRouteProvider {
       $route = new Route($entity_type->getLinkTemplate('add-page'));
       $route
         ->setDefault('_controller', '\Drupal\group\Entity\Controller\GroupContentController::addPage')
-        ->setDefault('_title', 'Relate content to group')
+        ->setDefault('_title', 'Add existing content')
         ->setRequirement('_group_content_create_any_access', 'TRUE')
         ->setOption('_group_operation_route', TRUE);
 
@@ -114,7 +114,7 @@ class GroupContentRouteProvider extends DefaultHtmlRouteProvider {
       $route = new Route($entity_type->getLinkTemplate('create-page'));
       $route
         ->setDefault('_controller', '\Drupal\group\Entity\Controller\GroupContentController::addPage')
-        ->setDefault('_title', 'Create content in group')
+        ->setDefault('_title', 'Add new content')
         ->setDefault('create_mode', TRUE)
         ->setRequirement('_group_content_create_any_entity_access', 'TRUE')
         ->setOption('_group_operation_route', TRUE);

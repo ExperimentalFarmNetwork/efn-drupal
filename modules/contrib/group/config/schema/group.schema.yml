@@ -93,10 +93,10 @@ group_content_type:
       type: 'text'
       label: 'Description'
     group_type:
-      type: 'text'
+      type: 'string'
       label: 'Group type ID'
     content_plugin:
-      type: 'text'
+      type: 'string'
       label: 'Group content plugin ID'
     plugin_config:
       type: 'sequence'

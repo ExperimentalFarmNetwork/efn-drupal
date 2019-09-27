@@ -2,7 +2,6 @@
 
 namespace Drupal\Tests\profile\Kernel;
 
-use Drupal\Component\Utility\Unicode;
 use Drupal\profile\ProfileTestTrait;
 use Drupal\Tests\views\Kernel\ViewsKernelTestBase;
 use Drupal\user\Entity\User;
@@ -51,22 +50,22 @@ class ProfileViewTest extends ViewsKernelTestBase {
     $profile_type = $this->createProfileType();
 
     $user[0] = $user1 = User::create([
-      'name' => Unicode::strtolower($this->randomMachineName()),
+      'name' => mb_strtolower($this->randomMachineName()),
       'status' => TRUE,
     ]);
     $user1->save();
     $user2 = User::create([
-      'name' => Unicode::strtolower($this->randomMachineName()),
+      'name' => mb_strtolower($this->randomMachineName()),
       'status' => TRUE,
     ]);
     $user2->save();
     $user[1] = $user3 = User::create([
-      'name' => Unicode::strtolower($this->randomMachineName()),
+      'name' => mb_strtolower($this->randomMachineName()),
       'status' => TRUE,
     ]);
     $user3->save();
     $user4 = User::create([
-      'name' => Unicode::strtolower($this->randomMachineName()),
+      'name' => mb_strtolower($this->randomMachineName()),
       'status' => TRUE,
     ]);
     $user4->save();
@@ -99,7 +98,7 @@ class ProfileViewTest extends ViewsKernelTestBase {
    */
   protected function createUser() {
     $user = User::create([
-      'name' => Unicode::strtolower($this->randomMachineName()),
+      'name' => mb_strtolower($this->randomMachineName()),
       'status' => TRUE,
     ]);
     $user->save();

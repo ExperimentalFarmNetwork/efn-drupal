@@ -162,7 +162,11 @@ function template_preprocess_group_content(&$variables) {
  */
 function group_rebuild() {
   _group_content_enabler_manager()->installEnforced();
-  _group_role_synchronizer()->createGroupRoles();
+
+  /** @var \Drupal\group\Entity\Storage\GroupRoleStorageInterface $storage */
+  $storage = \Drupal::entityTypeManager()->getStorage('group_role');
+  $storage->createInternal();
+  $storage->createSynchronized();
 }
 
 /**
@@ -172,7 +176,11 @@ function group_modules_installed($modules) {
   // Only create config objects while config import is not in progress.
   if (!\Drupal::isConfigSyncing()) {
     _group_content_enabler_manager()->installEnforced();
-    _group_role_synchronizer()->createGroupRoles();
+
+    /** @var \Drupal\group\Entity\Storage\GroupRoleStorageInterface $storage */
+    $storage = \Drupal::entityTypeManager()->getStorage('group_role');
+    $storage->createInternal();
+    $storage->createSynchronized();
   }
 }
 
@@ -355,7 +363,9 @@ function group_user_delete(EntityInterface $account) {
 function group_user_role_insert(RoleInterface $role) {
   // Only create config objects while config import is not in progress.
   if (!\Drupal::isConfigSyncing()) {
-    _group_role_synchronizer()->createGroupRoles(NULL, [$role->id()]);
+    /** @var \Drupal\group\Entity\Storage\GroupRoleStorageInterface $storage */
+    $storage = \Drupal::entityTypeManager()->getStorage('group_role');
+    $storage->createSynchronized(NULL, [$role->id()]);
   }
 }
 
@@ -368,7 +378,9 @@ function group_user_role_update(RoleInterface $role) {
 
   // Update the group roles if the user role label changed.
   if ($role->label() != $original->label()) {
-    _group_role_synchronizer()->updateGroupRoleLabels($role);
+    /** @var \Drupal\group\Entity\Storage\GroupRoleStorageInterface $storage */
+    $storage = \Drupal::entityTypeManager()->getStorage('group_role');
+    $storage->updateSynchronizedLabels($role);
   }
 }
 

@@ -5,11 +5,11 @@ type: 'module'
 # version: 1.0
 # core: '8.x'
 dependencies:
-  - 'node'
-  - 'group'
+  - 'drupal:node'
+  - 'group:group'
 
-# Information added by Drupal.org packaging script on 2018-02-05
-version: '8.x-1.0-rc2'
+# Information added by Drupal.org packaging script on 2019-07-18
+version: '8.x-1.0-rc4'
 core: '8.x'
 project: 'group'
-datestamp: 1517836781
+datestamp: 1563460136

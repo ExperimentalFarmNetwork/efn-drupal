@@ -28,7 +28,7 @@ function profile_token_info_alter(&$info) {
 /**
  * Implements hook_tokens().
  */
-function profile_tokens($type, array $tokens, array $data = array(), array $options = array(), BubbleableMetadata $bubbleable_metadata) {
+function profile_tokens($type, array $tokens, array $data = [], array $options = [], BubbleableMetadata $bubbleable_metadata) {
   $replacements = [];
   // Entity tokens on the Drupal user object.
   if ($type == 'entity' && $data['entity_type'] == 'user' && $data['token_type'] == 'user') {
@@ -43,10 +43,9 @@ function profile_tokens($type, array $tokens, array $data = array(), array $opti
 
         /** @var \Drupal\profile\ProfileStorageInterface $storage */
         $storage = \Drupal::entityTypeManager()->getStorage('profile');
-        $profile = $storage->loadByUser($user, $profile_type, TRUE);
+        $profile = $storage->loadByUser($user, $profile_type);
 
         if (!empty($profile)) {
-
           // If the token contains prefixes, invoke the field token generators.
           if (count($parts) > 1 && $profile_tokens = \Drupal::token()->findWithPrefix($tokens, $profile_type)) {
             $profile_token_data = [

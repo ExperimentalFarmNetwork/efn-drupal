@@ -83,7 +83,7 @@ class GroupRoleListBuilder extends DraggableListBuilder {
    * {@inheritdoc}
    */
   public function buildHeader() {
-    $header['label'] = t('Name');
+    $header['label'] = $this->t('Name');
     return $header + parent::buildHeader();
   }
 
@@ -103,7 +103,7 @@ class GroupRoleListBuilder extends DraggableListBuilder {
 
     if ($entity->hasLinkTemplate('permissions-form')) {
       $operations['permissions'] = [
-        'title' => t('Edit permissions'),
+        'title' => $this->t('Edit permissions'),
         'weight' => 5,
         'url' => $entity->toUrl('permissions-form'),
       ];
