@@ -44,11 +44,60 @@ function efn_theme() {
 // Hide text formatting widget
 
 /**
- * Implements hook_field_widget_form_alter().
+ * Implements hook_form_alter().
  */
 function efn_form_alter(&$form, &$form_state, &$form_id) {
+  // Simplify the contact project members form
+
+  if (strpos($form_id, 'iews_form_group_members_page_2') ) {
+
     $form['field_description']['widget']['#after_build'][] = '_allowed_formats_remove_textarea_help';
     $form['field_project_report']['widget']['#after_build'][] = '_allowed_formats_remove_textarea_help';
+    $form_state->setValue(['views_send_tokens'], ['mail_pos_2' => 'mail']);
+    $values = $form_state->getValues();
+    $build_info = $form_state->getBuildInfo();
+    $view = $build_info['args'][0];
+
+    if ($form_state->getStorage()['step'] == 'views_send_config_form') {
+      $user = \Drupal::currentUser();
+      $form['from']['#title'] = t('Your Details');
+      $form['from']['#collapsed'] = TRUE;
+      $form['from']['views_send_from_name']['#title'] = t('Your name');
+      $form['from']['views_send_from_name']['#default_value'] = $user->getDisplayName();
+      $form['from']['views_send_from_name']['#description'] = NULL;
+      $form['from']['views_send_from_mail']['#title'] = t('Your e-mail');
+      $form['from']['views_send_from_mail']['#default_value'] = t('robot@experimentalfarmnetwork.org');
+      $form['from']['views_send_from_mail']['#description'] = t('If you wish to send your enquiry from a different e-mail address please change it here.');
+      $form['to']['views_send_to_name']['#default_value'] = 'name_pos_0';
+      $form['to']['views_send_to_mail']['#default_value'] = 'mail_pos_2';
+      $form['to']['#access'] = FALSE;
+      $form['mail']['token']['#access'] = FALSE;
+      $form['additional']['#access'] = FALSE;
+      $form['views_send_direct']['#access'] = FALSE;
+      $form['views_send_remember']['#access'] = FALSE;
+      $form['views_send_carbon_copy']['#access'] = FALSE;
+    } 
+  }
+
+}
+
+/**
+ * Change permissions on the fly for email contact pages
+ * Implements hook_page_top().
+ */
+function efn_page_top() {
+  $user = \Drupal::currentUser();
+  $route_name = \Drupal::routeMatch()->getRouteName();
+  $role = \Drupal\user\Entity\Role::load('researcher');
+  if (in_array('researcher', $user->getRoles())) {
+    if (in_array($route_name, array('view.group_members.page_2','entity.user.contact_form'))) {
+      $role->grantPermission('administer users');
+      $role->save();
+    } else {
+      $role->revokePermission('administer users');
+      $role->save();
+    }
+  }
 }
 
 function _allowed_formats_remove_textarea_help($form_element, FormStateInterface $form_state) {

@@ -53,7 +53,10 @@ function minimus_preprocess_group(&$variables, $hook){
 }
 function minimus_preprocess_page__user(&$variables, $hook){
   $route = \Drupal::routeMatch()->getRouteName();
-  if ($route == 'entity.user.canonical') {
+  $user = \Drupal::currentUser();
+  // the check here for administer users is a little weird. it is so that only users who can access
+  // emails (for some reason only users with admin users perms can email them) can see the contact users button
+  if ($route == 'entity.user.canonical' && $user->hasPermission('administer users')) {
     $variables['show_contact'] = true;
   }
 }
