@@ -10,5 +10,8 @@ permissions:
   - 'access contextual links'
   - 'access user profiles'
   - 'add own researcher profile'
+  - 'administer users'
+  - 'attachments with views_send'
   - 'create project group'
   - 'delete own researcher profile'
+  - 'mass mailing with views_send'

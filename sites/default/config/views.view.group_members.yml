@@ -805,14 +805,14 @@ display:
       display_extenders: {  }
       title: Members
     cache_metadata:
-      max-age: -1
+      max-age: 0
       contexts:
-        1: 'languages:language_content'
-        2: 'languages:language_interface'
-        3: url
-        4: url.query_args
-        5: route.group
-        6: user.group_permissions
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - route.group
+        - url
+        - url.query_args
+        - user.group_permissions
       tags:
         - 'config:field.storage.group_content.group_roles'
   page_1:
@@ -1399,12 +1399,12 @@ display:
     cache_metadata:
       max-age: -1
       contexts:
-        1: 'languages:language_content'
-        2: 'languages:language_interface'
-        3: url
-        4: url.query_args
-        5: route.group
-        6: user.group_permissions
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - route.group
+        - url
+        - url.query_args
+        - user.group_permissions
       tags:
         - 'config:field.storage.group_content.group_roles'
   page_2:
@@ -1556,7 +1556,7 @@ display:
           group_type: group
           admin_label: ''
           label: Email
-          exclude: true
+          exclude: false
           alter:
             alter_text: false
             text: ''
@@ -1681,14 +1681,14 @@ display:
             format: raw_html
           plugin_id: text
     cache_metadata:
-      max-age: -1
+      max-age: 0
       contexts:
-        1: 'languages:language_content'
-        2: 'languages:language_interface'
-        3: url
-        4: url.query_args
-        5: route.group
-        6: user.group_permissions
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - route.group
+        - url
+        - url.query_args
+        - user.group_permissions
       tags: {  }
   rest_export_2:
     display_plugin: rest_export
@@ -2062,11 +2062,11 @@ display:
     cache_metadata:
       max-age: -1
       contexts:
-        1: 'languages:language_content'
-        2: 'languages:language_interface'
-        3: request_format
-        4: url
-        5: route.group
-        6: user.group_permissions
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - request_format
+        - route.group
+        - url
+        - user.group_permissions
       tags:
         - 'config:field.storage.profile.field_full_name'

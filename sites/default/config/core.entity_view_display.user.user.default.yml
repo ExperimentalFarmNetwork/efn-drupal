@@ -29,4 +29,7 @@ content:
     settings: {  }
     third_party_settings: {  }
     region: content
-hidden: {  }
+hidden:
+  main_profiles: true
+  researcher_profiles: true
+  volunteer_profiles: true
