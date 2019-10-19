@@ -5,6 +5,8 @@ dependencies:
   config:
     - field.storage.profile.field_full_name
     - profile.type.main
+  module:
+    - geocoder_field
 third_party_settings:
   geocoder_field:
     method: none
@@ -22,7 +24,7 @@ entity_type: profile
 bundle: main
 label: 'Full Name'
 description: ''
-required: false
+required: true
 translatable: true
 default_value: {  }
 default_value_callback: ''
