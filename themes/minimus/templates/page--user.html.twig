@@ -102,7 +102,7 @@
         {% block header %}
           <div class="col-sm-12" role="heading">
             {{ page.header }}
-            {% if logged_in and show_contact %}
+            {% if logged_in and show_contact == 1  %}
               <a href="/{{ route }}/contact" class="btn btn-default pull-right btn-contact">
                 <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
                 CONTACT
