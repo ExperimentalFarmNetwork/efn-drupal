@@ -102,12 +102,6 @@
         {% block header %}
           <div class="col-sm-12" role="heading">
             {{ page.header }}
-            {% if logged_in and show_contact == 1  %}
-              <a href="/{{ route }}/contact" class="btn btn-default pull-right btn-contact">
-                <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-                CONTACT
-              </a>
-            {% endif %}
           </div>
         {% endblock %}
       {% endif %}
@@ -154,13 +148,13 @@
       </section>
 
       {# Sidebar Second #}
-      {# {% if page.sidebar_second %}
+      {% if page.sidebar_second %}
         {% block sidebar_second %}
           <aside class="col-sm-3" role="complementary">
             {{ page.sidebar_second }}
           </aside>
         {% endblock %}
-      {% endif %} #}
+      {% endif %}
     </div>
   </div>
 {% endblock %}

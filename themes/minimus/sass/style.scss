@@ -75,8 +75,8 @@ h1.page-header, button, nav, h2, h3{
 }
 
 #block-newproject, #block-newprojectbutton, #block-newprojectbutton-2{
-	position: relative;
-	bottom: 5px;
+	// position: relative;
+	// bottom: 5px;
 	.field--name-body{
 		a{
 			background:$du-asparagus;
@@ -126,15 +126,22 @@ header.navbar-default{
 		}
 	}
 	#block-minimus-account-menu, #block-newproject, #block-views-block-account-menu-block-1{
-		display:inline-table;
+		// display:inline-table;
 	}
 
 	#block-views-block-account-menu-block-1 {
+		// float: right;
 		.views-row, .view-empty {
 			display:flex;
 			font-size:.7em;
 			margin-left:2em;
-			margin-top:12px;
+
+			@media screen and (max-width:766px){
+				margin: 0;
+				justify-content: space-between;
+			}
+
+			// margin-top:12px;
 			.views-field {
 				width: 60px;
 				margin-right: 5px;
@@ -181,9 +188,24 @@ header.navbar-default{
 		}
 	}
 
+	#block-minimus-main-menu {
+		@media screen and (min-width:766px){
+			margin-right: auto;
+			height: 69px; 
+			display: flex;
+			align-items: center;
+		}
+	}
+
 	// Mobile Nav dropdown
 	.region-navigation-collapsible {
 		text-align: center;
+		@media screen and (min-width:766px){
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			height: 69px; 
+		}
 		ul.navbar-nav li a {
 			margin-bottom: 5px;
 			text-transform: uppercase;
@@ -194,9 +216,11 @@ header.navbar-default{
 			}
 		}
 	}
+
 	ul.navbar-nav{
-		margin-left:2em;
-		margin-top:22px;
+		@media screen and (min-width:766px){
+			margin-left:2em;
+		}
 		li{
 			a{
 				color: $du-green;
@@ -223,7 +247,7 @@ header.navbar-default{
 
 body.user-logged-in{
 	ul.navbar-nav.navbar-right{
-		margin-top:8px;
+		// margin-top:8px;
 	}
 }
 
@@ -437,9 +461,7 @@ div.main-container{
 				border-top:0;
 				padding:0;
 			}
-
 		}
-
 	}
 }
 
