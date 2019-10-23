@@ -26,6 +26,6 @@ settings:
 visibility:
   request_path:
     id: request_path
-    pages: "/group/*\r\n/project/*\r\n/project/*#*\r\n!/group/*/j*\r\n!/project/*/j*\r\n!/group/*/m*\r\n!/project/*/m*\r\n!/group/*/c*\r\n!/project/*/c*\r\n!/group/*/n*\r\n!/project/*/n*\r\n!/group/*/e*\r\n!/project/*/e*\r\n!/group/*/d*\r\n!/project/*/d*"
+    pages: "/group/*\r\n/project/*\r\n/project/*#*\r\n!/group/*/j*\r\n!/project/*/j*\r\n!/group/*/m*\r\n!/project/*/m*\r\n!/group/*/c*\r\n!/project/*/c*\r\n!/group/*/n*\r\n!/project/*/n*\r\n!/group/*/e*\r\n!/project/*/e*\r\n!/group/*/d*\r\n!/project/*/d*\r\n!/project/*/leave\r\n!/group/*/leave"
     negate: false
     context_mapping: {  }

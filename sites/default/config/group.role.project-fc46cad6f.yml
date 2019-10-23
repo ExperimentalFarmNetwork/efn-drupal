@@ -14,4 +14,6 @@ internal: true
 audience: outsider
 group_type: project
 permissions_ui: false
-permissions: {  }
+permissions:
+  - 'view group_membership content'
+  - 'view group_node:project_update entity'
