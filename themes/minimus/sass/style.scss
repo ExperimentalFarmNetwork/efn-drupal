@@ -125,12 +125,8 @@ header.navbar-default{
 			transition:.3s cubic-bezier(0.4, 0, 0.2, 1);
 		}
 	}
-	#block-minimus-account-menu, #block-newproject, #block-views-block-account-menu-block-1{
-		// display:inline-table;
-	}
 
 	#block-views-block-account-menu-block-1 {
-		// float: right;
 		.views-row, .view-empty {
 			display:flex;
 			font-size:.7em;
@@ -141,7 +137,6 @@ header.navbar-default{
 				justify-content: space-between;
 			}
 
-			// margin-top:12px;
 			.views-field {
 				width: 60px;
 				margin-right: 5px;
@@ -177,10 +172,12 @@ header.navbar-default{
 			}
 		}
 		.view-empty {
-			margin-top: 22px;
+			text-align: center;
 			a {
 				font-size: 19px;
 				line-height: 27px;
+				text-decoration: none;
+				margin: 0 auto;
 			}
 		}
 		@media screen and (max-width:766px){
@@ -226,8 +223,10 @@ header.navbar-default{
 				color: $du-green;
 				text-transform: uppercase;
 				border-bottom:thin solid $du-asparagus;
-				margin-right: 15px;
 				padding:0;
+				@media screen and (min-width:766px){
+					margin-right: 15px;
+				}
 				&:hover{
 					color:$du-orange;
 				}
@@ -242,12 +241,6 @@ header.navbar-default{
 				border-bottom: $du-asparagus thin solid;
 			}
 		}
-	}
-}
-
-body.user-logged-in{
-	ul.navbar-nav.navbar-right{
-		// margin-top:8px;
 	}
 }
 
