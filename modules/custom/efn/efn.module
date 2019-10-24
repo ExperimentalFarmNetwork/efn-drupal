@@ -69,7 +69,7 @@ function efn_form_alter(&$form, &$form_state, &$form_id) {
       $form['from']['views_send_from_mail']['#default_value'] = t('robot@experimentalfarmnetwork.org');
       $form['from']['views_send_from_mail']['#description'] = t('If you wish to send your enquiry from a different e-mail address please change it here.');
       $form['to']['views_send_to_name']['#default_value'] = 'name_pos_0';
-      $form['to']['views_send_to_mail']['#default_value'] = 'mail_pos_2';
+      $form['to']['views_send_to_mail']['#default_value'] = 'nothing_pos_2';
       $form['to']['#access'] = FALSE;
       $form['mail']['token']['#access'] = FALSE;
       $form['additional']['#access'] = FALSE;
@@ -78,30 +78,20 @@ function efn_form_alter(&$form, &$form_state, &$form_id) {
       $form['views_send_carbon_copy']['#access'] = FALSE;
     } 
   }
-
 }
 
 /**
- * Change permissions on the fly for email contact pages
- * Implements hook_page_top().
+ * Implements hook_preprocess_views_view_field().
  */
-function efn_page_top() {
-  $user = \Drupal::currentUser();
-  $route_name = \Drupal::routeMatch()->getRouteName();
-  $role = \Drupal\user\Entity\Role::load('researcher');
-  if (in_array('researcher', $user->getRoles())) {
-    if (in_array($route_name, array('view.group_members.page_2','entity.user.contact_form'))) {
-      $role->grantPermission('administer users');
-      $role->save();
-    } else {
-      $role->revokePermission('administer users');
-      $role->save();
-    }
+function efn_preprocess_views_view_field(&$variables) {
+  $view = $variables['view'];
+  if(isset($view) && $view->id() == 'group_members' && $variables['field']->field == 'nothing') {
+    $email = $variables['row']->_relationship_entities['gc__user']->getEmail();
+    $variables['output'] = $email;
   }
 }
 
 function _allowed_formats_remove_textarea_help($form_element, FormStateInterface $form_state) {
-
   if (isset($form_element[0]['format'])) {
     // All this stuff is needed to hide the help text.
     unset($form_element[0]['format']['guidelines']);

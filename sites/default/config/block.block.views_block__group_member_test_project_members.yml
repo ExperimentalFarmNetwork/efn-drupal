@@ -12,7 +12,7 @@ dependencies:
 id: views_block__group_member_test_project_members
 theme: minimus
 region: sidebar_second
-weight: -11
+weight: -10
 provider: null
 plugin: 'views_block:group_member_test-project_members'
 settings:

@@ -171,11 +171,11 @@ display:
     cache_metadata:
       max-age: -1
       contexts:
-        1: 'languages:language_interface'
-        2: route
-        3: url
-        4: route.group
-        5: user.group_permissions
+        - 'languages:language_interface'
+        - route
+        - route.group
+        - url
+        - user.group_permissions
       tags: {  }
   block_1:
     display_plugin: block
@@ -184,12 +184,141 @@ display:
     position: 1
     display_options:
       display_extenders: {  }
+      fields:
+        view_group:
+          id: view_group
+          table: groups
+          field: view_group
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: true
+            text: '<a href="{{ view_group }}/members/mail" class="btn btn-default"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Email Members</a> '
+            make_link: true
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          text: 'Mail members'
+          output_url_as_text: true
+          absolute: true
+          entity_type: group
+          plugin_id: entity_link
+      defaults:
+        fields: false
     cache_metadata:
       max-age: -1
       contexts:
-        1: 'languages:language_interface'
-        2: route
-        3: url
-        4: route.group
-        5: user.group_permissions
+        - 'languages:language_interface'
+        - route
+        - route.group
+        - url
+        - user.group_permissions
+      tags: {  }
+  block_2:
+    display_plugin: block
+    id: block_2
+    display_title: 'Admin Block'
+    position: 1
+    display_options:
+      display_extenders: {  }
+      display_description: 'includes csv download'
+      fields:
+        view_group:
+          id: view_group
+          table: groups
+          field: view_group
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: true
+            text: '<a href="{{ view_group }}/members/export.csv" class="btn btn-default"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>Download Members as CSV</a>'
+            make_link: true
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          text: 'Mail members'
+          output_url_as_text: true
+          absolute: true
+          entity_type: group
+          plugin_id: entity_link
+      defaults:
+        fields: false
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_interface'
+        - route
+        - route.group
+        - url
+        - user.group_permissions
       tags: {  }

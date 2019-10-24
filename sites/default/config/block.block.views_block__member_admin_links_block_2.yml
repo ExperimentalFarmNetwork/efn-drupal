@@ -1,0 +1,49 @@
+uuid: 343ee5f8-2f72-471c-a4b6-63b390ecf368
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.member_admin_links
+  module:
+    - ctools
+    - group
+    - user
+    - views
+  theme:
+    - minimus
+id: views_block__member_admin_links_block_2
+theme: minimus
+region: sidebar_second
+weight: -12
+provider: null
+plugin: 'views_block:member_admin_links-block_2'
+settings:
+  id: 'views_block:member_admin_links-block_2'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+  items_per_page: none
+  context_mapping: {  }
+visibility:
+  'entity_bundle:group':
+    id: 'entity_bundle:group'
+    bundles:
+      project: project
+    negate: false
+    context_mapping:
+      group: '@group.group_route_context:group'
+  group_type:
+    id: group_type
+    group_types:
+      project: project
+    negate: false
+    context_mapping:
+      group: '@group.group_route_context:group'
+  user_role:
+    id: user_role
+    roles:
+      administrator: administrator
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
