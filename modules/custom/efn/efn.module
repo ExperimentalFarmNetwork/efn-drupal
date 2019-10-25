@@ -66,7 +66,7 @@ function efn_form_alter(&$form, &$form_state, &$form_id) {
       $form['from']['views_send_from_name']['#default_value'] = $user->getDisplayName();
       $form['from']['views_send_from_name']['#description'] = NULL;
       $form['from']['views_send_from_mail']['#title'] = t('Your e-mail');
-      $form['from']['views_send_from_mail']['#default_value'] = t('robot@experimentalfarmnetwork.org');
+      $form['from']['views_send_from_mail']['#default_value'] = t('efn@radicante.net');
       $form['from']['views_send_from_mail']['#description'] = t('If you wish to send your enquiry from a different e-mail address please change it here.');
       $form['to']['views_send_to_name']['#default_value'] = 'name_pos_0';
       $form['to']['views_send_to_mail']['#default_value'] = 'nothing_pos_2';
