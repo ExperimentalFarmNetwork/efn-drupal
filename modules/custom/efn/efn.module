@@ -254,7 +254,7 @@ function efn_entity_insert(EntityInterface $entity) {
      $message .= "\n\n" . html_entity_decode(strip_tags(($entity->get('body')->value)));
      $message .= "\n\n * " . $group_title . ": https://www.experimentalfarmnetwork.org/project/" . $gid . " *";
 
-     efn_stopdevmail($message, $to, $mails, $mail);
+    //  efn_stopdevmail($message, $to, $mails, $mail);
 
      $params['message'] = t($message);
      $params['title'] = "✭✭✭ New EFN Project Update: " . $title ."✭✭✭";
@@ -301,7 +301,8 @@ function efn_entity_insert(EntityInterface $entity) {
    $message .= "\n" . $member_name . " just joined: " . $group_title;
    $message .= "\n\n * " . $group_title . ": https://www.experimentalfarmnetwork.org/group/" . $gid . "/members *";
 
-   efn_stopdevmail($message, $to, $mails, $mail);
+   // enable for testing
+  //  efn_stopdevmail($message, $to, $mails, $mail);
 
    $params['message'] = t($message);
    $params['title'] = "🙋 New Member in the project: " . $group_title;
@@ -384,7 +385,7 @@ function efn_comment_insert($comment) {
       $message .= "\n\n" . html_entity_decode(strip_tags(($comment->get('field_comment_body')->value)));
       $message .= "\n\n * " . $group_title . ": https://www.experimentalfarmnetwork.org/project/" . $gid . " *";
 
-      efn_stopdevmail($message, $to, $mails, $mail);
+      // efn_stopdevmail($message, $to, $mails, $mail);
 
       $params['message'] = t($message);
       $params['title'] = "✎✎✎ New Comment on EFN Project Update: " . $title ."✎✎✎";
@@ -429,7 +430,7 @@ function efn_mail($key, &$message, $params) {
 }
 
 function efn_stopdevmail(&$message, &$to, $mails, $mail) {
-  if ($_SERVER['HTTP_HOST'] != 'experimentalfarmnetwork.org') {
+  if ($_SERVER['HTTP_HOST'] != 'wwww.experimentalfarmnetwork.org') {
     $to = 'onion@radicante.media';
     $message .= "\n\n current email:" . $mail;
     $message .= "\n\n Should have gone to: ". implode(", ", $mails) . "\n";
