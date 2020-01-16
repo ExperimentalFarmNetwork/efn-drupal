@@ -30,6 +30,13 @@ abstract class ConfigurableProviderUsingHandlerWithAdapterBase extends ProviderU
   protected $typedConfigManager;
 
   /**
+   * The throttle service.
+   *
+   * @var \Drupal\geocoder\GeocoderThrottleInterface
+   */
+  protected $throttle;
+
+  /**
    * Constructs a new configurable geocoder provider using handlers.
    *
    * @param array $configuration
@@ -48,8 +55,10 @@ abstract class ConfigurableProviderUsingHandlerWithAdapterBase extends ProviderU
    *   The typed config manager.
    * @param \Http\Client\HttpClient $http_adapter
    *   The HTTP adapter.
+   * @param \Drupal\geocoder\GeocoderThrottleInterface $throttle
+   *   The Geocoder Throttle service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $config_factory, CacheBackendInterface $cache_backend, LanguageManagerInterface $language_manager, TypedConfigManagerInterface $typed_config_manager, HttpClient $http_adapter) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $config_factory, CacheBackendInterface $cache_backend, LanguageManagerInterface $language_manager, TypedConfigManagerInterface $typed_config_manager, HttpClient $http_adapter, GeocoderThrottleInterface $throttle) {
     try {
       // The typedConfigManager property needs to be set before the constructor,
       // to prevent its possible exception, and allow the
@@ -57,6 +66,7 @@ abstract class ConfigurableProviderUsingHandlerWithAdapterBase extends ProviderU
       $this->typedConfigManager = $typed_config_manager;
       parent::__construct($configuration, $plugin_id, $plugin_definition, $config_factory, $cache_backend, $language_manager, $http_adapter);
       $this->setConfiguration($configuration);
+      $this->throttle = $throttle;
     }
     catch (InvalidPluginDefinitionException $e) {
       watchdog_exception('geocoder', $e);
@@ -75,8 +85,25 @@ abstract class ConfigurableProviderUsingHandlerWithAdapterBase extends ProviderU
       $container->get('cache.geocoder'),
       $container->get('language_manager'),
       $container->get('config.typed'),
-      $container->get('geocoder.http_adapter')
+      $container->get('geocoder.http_adapter'),
+      $container->get('geocoder.throttle')
     );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function doGeocode($source) {
+    $this->throttle->waitForAvailability($this->pluginId, isset($this->configuration['throttle']) ? $this->configuration['throttle'] : []);
+    return parent::doGeocode($source);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function doReverse($latitude, $longitude) {
+    $this->throttle->waitForAvailability($this->pluginId, isset($this->configuration['throttle']) ? $this->configuration['throttle'] : []);
+    return parent::doReverse($latitude, $longitude);
   }
 
 }

@@ -22,7 +22,7 @@ class GroupDeleteForm extends ContentEntityConfirmFormBase {
    * {@inheritdoc}
    */
   public function getCancelURL() {
-    return new Url('entity.group.collection');
+    return $this->entity->toUrl();
   }
 
   /**

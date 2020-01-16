@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace Drupal\geocoder\Traits;
 
-use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\Core\Config\Schema\SchemaIncompleteException;
 use Drupal\Core\Form\FormStateInterface;
@@ -81,6 +80,27 @@ trait ConfigurableProviderTrait {
         ]),
       ];
     }
+
+    $form['options']['throttle'] = [
+      '#type' => 'details',
+      '#title' => $this->t("Throttle"),
+      '#description' => $this->t("Limit the number of geocoding requests sent by a process for a given period of time.
+      Be aware that if you bulk geocode with a hard throttle, it may take a long time or even reach the maximum execution time."),
+      '#open' => FALSE,
+      '#tree' => TRUE,
+    ];
+    foreach ($this->getThrottleOptions() as $option => $option_definition) {
+      $form['options']['throttle'][$option] = [
+        '#type' => 'number',
+        '#title' => $option_definition['label'],
+        '#description' => $option_definition['description'],
+        '#default_value' => $this->configuration['throttle'][$option] ?? $this->pluginDefinition['throttle'][$option] ?? NULL,
+        '#required' => FALSE,
+      ];
+      if (!empty($form['options']['throttle'][$option]['#default_value'])) {
+        $form['options']['throttle']['#open'] = TRUE;
+      }
+    }
     return $form;
   }
 
@@ -88,6 +108,20 @@ trait ConfigurableProviderTrait {
    * {@inheritdoc}
    */
   public function validateConfigurationForm(array &$form, FormStateInterface $form_state): void {
+    $period = $form_state->getValue(['throttle', 'period']);
+    $limit = $form_state->getValue(['throttle', 'limit']);
+    if (empty($period) && !empty($limit)) {
+      $form_state->setErrorByName('throttle][period', $this->t('If you set a throttle limit, you must set a throttle period, like 60 for "per minute".'));
+    }
+    elseif (!empty($period) && empty($limit)) {
+      $form_state->setErrorByName('throttle][limit', $this->t('If you set a throttle period, you must set the throttle limit for this period.'));
+    }
+    elseif (!empty($period) && $period <= 0) {
+      $form_state->setErrorByName('throttle][period', $this->t('Throttle period must be strictly positive'));
+    }
+    elseif (!empty($limit) && $limit <= 0) {
+      $form_state->setErrorByName('throttle][limit', $this->t('Throttle limit must be strictly positive'));
+    }
   }
 
   /**
@@ -97,6 +131,12 @@ trait ConfigurableProviderTrait {
     try {
       foreach (array_keys($this->getPluginArguments()) as $argument) {
         $this->configuration[$argument] = $form_state->getValue($argument);
+      }
+      foreach (array_keys($this->getThrottleOptions()) as $option) {
+        $this->configuration['throttle'][$option] = $form_state->getValue([
+          'throttle',
+          $option,
+        ]);
       }
     }
     catch (\Exception $e) {
@@ -143,18 +183,31 @@ trait ConfigurableProviderTrait {
     // match.
     $config_schema_arguments = array_keys($config_schema_definition['mapping']);
     $plugin_annotation_arguments = array_keys($this->pluginDefinition['arguments']);
-    if (count($config_schema_arguments) != count($plugin_annotation_arguments) || !empty(array_diff($config_schema_arguments, $plugin_annotation_arguments))) {
+    if (!empty(array_diff($plugin_annotation_arguments, $config_schema_arguments))) {
       throw new InvalidPluginDefinitionException($plugin_id, 'The arguments defined in the plugin annotation do not match the arguments defined in the config schema.');
     }
 
     // Enrich the config schema data with the default values from the plugin
     // annotation.
-    $plugin_arguments = $config_schema_definition['mapping'];
+    $plugin_arguments = [];
     foreach ($this->pluginDefinition['arguments'] as $argument => $default_value) {
+      $plugin_arguments[$argument] = $config_schema_definition['mapping'][$argument];
       $plugin_arguments[$argument]['default_value'] = $default_value;
     }
 
     return $plugin_arguments;
+  }
+
+  /**
+   * Returns the throttle options of the plugin.
+   *
+   * @return array
+   *   An associative array of throttle data, keyed by option name. The
+   *   throttle data consists of the config schema information.
+   */
+  protected function getThrottleOptions() {
+    $throttle_definition = $this->typedConfigManager->getDefinition('geocoder_throttle_configuration');
+    return $throttle_definition['mapping'];
   }
 
   /**

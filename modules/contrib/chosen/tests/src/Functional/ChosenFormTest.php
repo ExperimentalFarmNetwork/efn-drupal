@@ -10,7 +10,16 @@ use Drupal\Tests\BrowserTestBase;
  * @group chosen
  */
 class ChosenFormTest extends BrowserTestBase {
+  /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stark';
 
+  /**
+   * Modules to enable.
+   *
+   * @var array
+   */
   public static $modules = ['chosen', 'chosen_test'];
 
   /**
@@ -19,7 +28,7 @@ class ChosenFormTest extends BrowserTestBase {
   public function testFormPage() {
     $this->drupalGet('chosen-test');
     $this->assertText('Select');
-    $this->assertTrue($this->xpath('//select[@id=:id and contains(@class, :class)]', [':id' => 'edit-select', ':class' => 'chosen-enable']), 'The select has chosen enable class.');
+    $this->assertSession()->elementExists('css', 'select#edit-select.chosen-enable');
   }
 
 }

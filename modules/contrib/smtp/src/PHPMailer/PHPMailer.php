@@ -33,8 +33,8 @@ Orginal release information:
 
 namespace Drupal\smtp\PHPMailer;
 
-use Drupal\smtp\PHPMailer\SMTP;
 use Drupal\smtp\Exception\PHPMailerException;
+use Drupal\smtp\PHPMailer\SMTP;
 
 /**
  * PHPMailer - PHP email transport class
@@ -462,7 +462,7 @@ class PHPMailer {
     $address = trim($address);
     $name = trim(preg_replace('/[\r\n]+/', '', $name)); //Strip breaks and trim
     if (!self::ValidateAddress($address)) {
-      $invalidAddress = t('Invalid address: @address', ['address' => $address]);
+      $invalidAddress = t('Invalid address: @address', ['@address' => $address]);
       $this->SetError($invalidAddress);
       if ($this->exceptions) {
         throw new PHPMailerException($invalidAddress);
@@ -496,7 +496,7 @@ class PHPMailer {
     $address = trim($address);
     $name = trim(preg_replace('/[\r\n]+/', '', $name)); //Strip breaks and trim
     if (!self::ValidateAddress($address)) {
-      $invalidAddress = t('Invalid address: @address', ['address' => $address]);
+      $invalidAddress = t('Invalid address: @address', ['@address' => $address]);
       $this->SetError($invalidAddress);
       if ($this->exceptions) {
         throw new PHPMailerException($invalidAddress);
@@ -768,7 +768,7 @@ class PHPMailer {
 
     if (count($bad_rcpt) > 0 ) { //Create error message for any bad addresses
       $badaddresses = implode(', ', $bad_rcpt);
-      throw new PHPMailerException(t('SMTP Error: The following recipients failed: @bad', array('@bad' => $badaddresses)));
+      $this->SetError(t('SMTP Error: The following recipients failed: @bad', array('@bad' => $badaddresses)));
     }
     if (!$this->smtp->Data($header . $body)) {
       throw new PHPMailerException(t('SMTP Error: Data not accepted.'), self::STOP_CRITICAL);
@@ -1474,24 +1474,8 @@ class PHPMailer {
         }
       }
       $magic_quotes = get_magic_quotes_runtime();
-      if ($magic_quotes) {
-        if (version_compare(PHP_VERSION, '5.3.0', '<')) {
-          set_magic_quotes_runtime(0);
-        }
-        else {
-          ini_set('magic_quotes_runtime', 0);
-        }
-      }
       $file_buffer  = file_get_contents($path);
       $file_buffer  = $this->EncodeString($file_buffer, $encoding);
-      if ($magic_quotes) {
-        if (version_compare(PHP_VERSION, '5.3.0', '<')) {
-          set_magic_quotes_runtime($magic_quotes);
-        }
-        else {
-          ini_set('magic_quotes_runtime', $magic_quotes);
-        }
-      }
       return $file_buffer;
     } catch (Exception $e) {
       $this->SetError($e->getMessage());
@@ -1665,7 +1649,7 @@ class PHPMailer {
     $eol = "\r\n";
     $escape = '=';
     $output = '';
-    while ( list(, $line) = each($lines) ) {
+    foreach ($lines as $line) {
       $linlen = strlen($line);
       $newline = '';
       for ($i = 0; $i < $linlen; $i++) {

@@ -36,6 +36,24 @@ geocoder_provider.configuration.*:
 geocoder_provider_configuration:
   type: mapping
   label: 'Default Geocoder provider configuration'
+  mapping:
+    throttle:
+      type: geocoder_throttle_configuration
+      label: 'Throttle'
+      nullable: true
+
+geocoder_throttle_configuration:
+  type: mapping
+  label: "Geocoder throttle configuration"
+  mapping:
+    period:
+      type: integer
+      label: "Period"
+      description: "Period of time for which the number of requests is limited, in seconds"
+    limit:
+      type: integer
+      label: "Limit"
+      description: "Maximum number of requests allowed for the given period"
 
 geocoder_provider.configuration.googlemaps:
   type: geocoder_provider_configuration
@@ -177,6 +195,28 @@ geocoder_provider.configuration.nominatim:
       type: string
       label: 'Referer'
       description: 'Value of the Referer header'
+
+geocoder_provider.configuration.pelias:
+  type: geocoder_provider_configuration
+  label: 'Pelias arguments'
+  mapping:
+    root:
+      type: string
+      label: 'Root URL'
+      description: 'Root URL of the pelias server'
+    version:
+      type: string
+      label: 'Version'
+      description: 'API version number'
+
+geocoder_provider.configuration.openrouteservice:
+  type: geocoder_provider_configuration
+  label: 'Openrouteservice arguments'
+  mapping:
+    apiKey:
+      type: string
+      label: 'API key'
+      description: 'Sign up for a free API key at <a href="https://openrouteservice.org/dev/#/signup" target="blank">openrouteservice.org/dev/#/signup</a>'
 
 geocoder_provider.configuration.opencage:
   type: geocoder_provider_configuration

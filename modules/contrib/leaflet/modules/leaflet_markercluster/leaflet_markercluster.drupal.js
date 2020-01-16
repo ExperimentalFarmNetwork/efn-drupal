@@ -20,7 +20,8 @@
           lFeature = this.create_feature(groupFeature);
           if (lFeature !== undefined) {
             if (lFeature.setStyle) {
-              lFeature.setStyle(Drupal.Leaflet[mapid].path);
+              feature.path = feature.path ? JSON.parse(feature.path) : {};
+              lFeature.setStyle(feature.path);
             }
             if (groupFeature.popup) {
               lFeature.bindPopup(groupFeature.popup);
@@ -36,7 +37,8 @@
         lFeature = this.create_feature(feature);
         if (lFeature !== undefined) {
           if (lFeature.setStyle) {
-            lFeature.setStyle(Drupal.Leaflet[mapid].path);
+            feature.path = feature.path ? JSON.parse(feature.path) : {};
+            lFeature.setStyle(feature.path);
             collections_cluster_layers[i] = new L.MarkerClusterGroup(leaflet_markercluster_options);
             collections_cluster_layers[i].addLayer(lFeature);
             if (feature.popup) {

@@ -5,6 +5,8 @@
  * Drush integration for chosen.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+
 /**
  * The Chosen plugin URI.
  */
@@ -21,7 +23,7 @@ function chosen_lib_drush_command() {
   $items['chosen-plugin'] = [
     'callback' => 'drush_chosen_lib_plugin',
     'description' => dt('Download and install the Chosen plugin.'),
-    'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
+    'bootstrap' => DRUSH_BOOTSTRAP_NONE,
     'arguments' => [
       'path' => dt('Optional. A path where to install the Chosen plugin. If omitted Drush will use the default location.'),
     ],
@@ -56,7 +58,8 @@ function drush_chosen_lib_plugin() {
   // Create the path if it does not exist.
   if (!is_dir($path)) {
     drush_op('mkdir', $path);
-    drush_log(dt('Directory @path was created', ['@path' => $path]), 'notice');
+    \Drupal::logger(dt('Directory @path was created', ['@path' => $path]))->notice('notice');
+
   }
 
   // Set the directory to the download location.
@@ -70,9 +73,9 @@ function drush_chosen_lib_plugin() {
 
     // Remove any existing Chosen plugin directory.
     if (is_dir($dirname) || is_dir('chosen')) {
-      drush_delete_dir($dirname, TRUE);
-      drush_delete_dir('chosen', TRUE);
-      drush_log(dt('A existing Chosen plugin was deleted from @path', ['@path' => $path]), 'notice');
+      Filesystem::remove($dirname, TRUE);
+      Filesystem::remove('chosen', TRUE);
+      \Drupal::logger(dt('A existing Chosen plugin was deleted from @path', ['@path' => $path]))->notice('notice');
     }
 
     // Decompress the zip archive.
@@ -86,10 +89,10 @@ function drush_chosen_lib_plugin() {
   }
 
   if (is_dir($dirname)) {
-    drush_log(dt('Chosen plugin has been installed in @path', ['@path' => $path]), 'success');
+    \Drupal::logger(dt('Chosen plugin has been installed in @path', ['@path' => $path]))->info('success');
   }
   else {
-    drush_log(dt('Drush was unable to install the Chosen plugin to @path', ['@path' => $path]), 'error');
+    \Drupal::logger(dt('Drush was unable to install the Chosen plugin to @path', ['@path' => $path]))->error('error');
   }
 
   // Set working directory back to the previous working directory.

@@ -30,4 +30,15 @@ class GeocoderProvider extends GeocoderPluginBase {
    */
   public $arguments = [];
 
+  /**
+   * Throttle.
+   *
+   * Associative array where "period" is in seconds and "limit" is the maximum
+   * number of requests allowed during the period.
+   * This property is optional in the annotation and can be left out.
+   *
+   * @var array
+   */
+  public $throttle = NULL;
+
 }

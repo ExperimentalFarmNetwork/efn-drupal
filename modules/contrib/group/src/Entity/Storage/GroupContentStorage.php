@@ -16,6 +16,13 @@ use Drupal\group\Entity\GroupInterface;
 class GroupContentStorage extends SqlContentEntityStorage implements GroupContentStorageInterface {
 
   /**
+   * Static cache for looking up group content entities for entities.
+   *
+   * @var array
+   */
+  protected $loadByEntityCache = [];
+
+  /**
    * {@inheritdoc}
    */
   public function createForEntityInGroup(ContentEntityInterface $entity, GroupInterface $group, $plugin_id, $values = []) {
@@ -84,18 +91,31 @@ class GroupContentStorage extends SqlContentEntityStorage implements GroupConten
       throw new EntityStorageException("Cannot load GroupContent entities for an unsaved entity.");
     }
 
-    // If no responsible group content types were found, we return nothing.
-    /** @var \Drupal\group\Entity\Storage\GroupContentTypeStorageInterface $storage */
-    $storage = $this->entityManager->getStorage('group_content_type');
-    $group_content_types = $storage->loadByEntityTypeId($entity->getEntityTypeId());
-    if (empty($group_content_types)) {
-      return [];
+    if (!isset($this->loadByEntityCache[$entity->getEntityTypeId()][$entity->id()])) {
+      /** @var \Drupal\group\Entity\Storage\GroupContentTypeStorageInterface $storage */
+      $storage = $this->entityManager->getStorage('group_content_type');
+      $group_content_types = $storage->loadByEntityTypeId($entity->getEntityTypeId());
+
+
+      // Statically cache all group content IDs for the group content types.
+      if (!empty($group_content_types)) {
+        $this->loadByEntityCache[$entity->getEntityTypeId()][$entity->id()] = $this->getQuery()
+          ->condition('type', array_keys($group_content_types), 'IN')
+          ->condition('entity_id', $entity->id())
+          ->execute();
+      }
+      // If no responsible group content types were found, we return nothing.
+      else {
+        $this->loadByEntityCache[$entity->getEntityTypeId()][$entity->id()] = [];
+      }
     }
 
-    return $this->loadByProperties([
-      'type' => array_keys($group_content_types),
-      'entity_id' => $entity->id(),
-    ]);
+    if (!empty($this->loadByEntityCache[$entity->getEntityTypeId()][$entity->id()])) {
+      return $this->loadMultiple($this->loadByEntityCache[$entity->getEntityTypeId()][$entity->id()]);
+    }
+    else {
+      return [];
+    }
   }
 
   /**
@@ -111,6 +131,14 @@ class GroupContentStorage extends SqlContentEntityStorage implements GroupConten
     }
 
     return $this->loadByProperties(['type' => array_keys($group_content_types)]);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function resetCache(array $ids = NULL) {
+    parent::resetCache($ids);
+    $this->loadByEntityCache = [];
   }
 
 }

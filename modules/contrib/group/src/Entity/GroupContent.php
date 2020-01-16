@@ -2,6 +2,7 @@
 
 namespace Drupal\group\Entity;
 
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityChangedTrait;
@@ -27,6 +28,7 @@ use Drupal\user\UserInterface;
  *   bundle_label = @Translation("Group content type"),
  *   handlers = {
  *     "storage" = "Drupal\group\Entity\Storage\GroupContentStorage",
+ *     "storage_schema" = "Drupal\group\Entity\Storage\GroupContentStorageSchema",
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *     "views_data" = "Drupal\group\Entity\Views\GroupContentViewsData",
  *     "list_builder" = "Drupal\group\Entity\Controller\GroupContentListBuilder",
@@ -257,6 +259,50 @@ class GroupContent extends ContentEntityBase implements GroupContentInterface {
         }
       }
     }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function invalidateTagsOnSave($update) {
+    parent::invalidateTagsOnSave($update);
+    // Always invalidate our custom list cache tags, even for new entities.
+    if (!$update) {
+      Cache::invalidateTags($this->getCacheTagsToInvalidate());
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheTagsToInvalidate() {
+    $tags = parent::getCacheTagsToInvalidate();
+
+    $group_id = $this->get('gid')->target_id;
+    $entity_id = $this->get('entity_id')->target_id;
+    $plugin_id = $this->getGroupContentType()->getContentPluginId();
+
+    // A specific group gets any content, regardless of plugin used.
+    // E.g.: A group's list of entities can be flushed with this.
+    $tags[] = "group_content_list:group:$group_id";
+
+    // A specific entity gets added to any group, regardless of plugin used.
+    // E.g.: An entity's list of groups can be flushed with this.
+    $tags[] = "group_content_list:entity:$entity_id";
+
+    // Any entity gets added to any group using a specific plugin.
+    // E.g.: A list of all memberships anywhere can be flushed with this.
+    $tags[] = "group_content_list:plugin:$plugin_id";
+
+    // A specific group gets any content using a specific plugin.
+    // E.g.: A group's list of members can be flushed with this.
+    $tags[] = "group_content_list:plugin:$plugin_id:group:$group_id";
+
+    // A specific entity gets added to any group using a specific plugin.
+    // E.g.: A user's list of memberships can be flushed with this.
+    $tags[] = "group_content_list:plugin:$plugin_id:entity:$entity_id";
+
+    return $tags;
   }
 
   /**

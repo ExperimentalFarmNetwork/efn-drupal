@@ -11,6 +11,7 @@ use Drupal\Core\Routing\RedirectDestinationInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Provides a list controller for group entities.
@@ -41,6 +42,13 @@ class GroupListBuilder extends EntityListBuilder {
   protected $moduleHandler;
 
   /**
+   * The router.
+   *
+   * @var \Symfony\Component\Routing\RouterInterface
+   */
+  protected $router;
+
+  /**
    * Constructs a new GroupListBuilder object.
    *
    * @param \Drupal\Core\Entity\EntityTypeInterface $entity_type
@@ -53,12 +61,15 @@ class GroupListBuilder extends EntityListBuilder {
    *   The current user.
    * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
    *   The module handler.
+   * @param \Symfony\Component\Routing\RouterInterface $router
+   *   The router.
    */
-  public function __construct(EntityTypeInterface $entity_type, EntityStorageInterface $storage, RedirectDestinationInterface $redirect_destination, AccountInterface $current_user, ModuleHandlerInterface $module_handler) {
+  public function __construct(EntityTypeInterface $entity_type, EntityStorageInterface $storage, RedirectDestinationInterface $redirect_destination, AccountInterface $current_user, ModuleHandlerInterface $module_handler, RouterInterface $router) {
     parent::__construct($entity_type, $storage);
     $this->redirectDestination = $redirect_destination;
     $this->currentUser = $current_user;
     $this->moduleHandler = $module_handler;
+    $this->router = $router;
   }
 
   /**
@@ -70,7 +81,8 @@ class GroupListBuilder extends EntityListBuilder {
       $container->get('entity_type.manager')->getStorage($entity_type->id()),
       $container->get('redirect.destination'),
       $container->get('current_user'),
-      $container->get('module_handler')
+      $container->get('module_handler'),
+      $container->get('router.no_access_checks')
     );
   }
 
@@ -150,11 +162,13 @@ class GroupListBuilder extends EntityListBuilder {
 
     /** @var \Drupal\group\Entity\GroupInterface $entity */
     if ($this->moduleHandler->moduleExists('views') && $entity->hasPermission('administer members', $this->currentUser)) {
-      $operations['members'] = [
-        'title' => $this->t('Members'),
-        'weight' => 15,
-        'url' => Url::fromRoute('view.group_members.page_1', ['group' => $entity->id()]),
-      ];
+      if ($this->router->getRouteCollection()->get('view.group_members.page_1') !== NULL) {
+        $operations['members'] = [
+          'title' => $this->t('Members'),
+          'weight' => 15,
+          'url' => Url::fromRoute('view.group_members.page_1', ['group' => $entity->id()]),
+        ];
+      }
     }
 
     // Add the current path or destination as a redirect to the operation links.

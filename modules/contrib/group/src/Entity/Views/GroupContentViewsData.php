@@ -24,13 +24,6 @@ class GroupContentViewsData extends EntityViewsData {
   protected $pluginManager;
 
   /**
-   * The entity manager set but not declared in the parent class.
-   *
-   * @var \Drupal\Core\Entity\EntityManagerInterface;
-   */
-  protected $entityManager;
-
-  /**
    * Constructs a GroupContentViewsData object.
    *
    * @param \Drupal\group\Plugin\GroupContentEnablerManagerInterface $plugin_manager

@@ -2,15 +2,15 @@
 
 namespace Drupal\smtp\Plugin\Mail;
 
+use Drupal\Component\Utility\EmailValidator;
 use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Mail\MailFormatHelper;
 use Drupal\Core\Mail\MailInterface;
 use Drupal\Core\Messenger\Messenger;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Egulias\EmailValidator\EmailValidator;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\smtp\PHPMailer\PHPMailer;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Modify the drupal mail system to use smtp when sending emails.
@@ -44,7 +44,7 @@ class SMTPMailSystem implements MailInterface, ContainerFactoryPluginInterface {
   /**
    * Email validator.
    *
-   * @var Egulias\EmailValidator\EmailValidator
+   * @var \Drupal\Component\Utility\EmailValidator
    */
   protected $emailValidator;
 
@@ -61,7 +61,7 @@ class SMTPMailSystem implements MailInterface, ContainerFactoryPluginInterface {
    *   The logger object.
    * @param \Drupal\Core\Messenger\Messenger $messenger
    *   The messenger object.
-   * @param \Egulias\EmailValidator\EmailValidator $emailValidator
+   * @param \Drupal\Component\Utility\EmailValidator $emailValidator
    *   The messenger object.
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, LoggerChannelFactoryInterface $logger, Messenger $messenger, EmailValidator $emailValidator) {
@@ -140,15 +140,27 @@ class SMTPMailSystem implements MailInterface, ContainerFactoryPluginInterface {
     $subject = $message['subject'];
 
     // Create a new PHPMailer object - autoloaded from registry.
-    $mailer = new PHPMailer();
+    $mailer = new PHPMailer(TRUE);
 
     // Turn on debugging, if requested.
     if ($this->smtpConfig->get('smtp_debugging') && \Drupal::currentUser()->hasPermission('administer smtp module')) {
       $mailer->SMTPDebug = TRUE;
     }
 
-    // Set the from name.
-    $from_name = $this->smtpConfig->get('smtp_fromname');
+    // The $from address might contain the "name" part. If it does, split it,
+    // since PHPMailer expects $from to be the raw email address.
+    $matches = [];
+    if (preg_match('/^(.*)\s\<(.*)\>$/', $from, $matches)) {
+      $from = $matches[2];
+      $from_name = $matches[1];
+    }
+
+    // If the smtp_fromname is set, it overrides the name that was passed as
+    // part of the $from address.
+    if (!empty($this->smtpConfig->get('smtp_fromname'))) {
+      $from_name = $this->smtpConfig->get('smtp_fromname');
+    }
+
     if (empty($from_name)) {
       // If value is not defined in settings, use site_name.
       $from_name = \Drupal::config('system.site')->get('name');
@@ -250,7 +262,6 @@ class SMTPMailSystem implements MailInterface, ContainerFactoryPluginInterface {
               $mailer->ContentType = $content_type = 'multipart/alternative';
 
               // Get the boundary ID from the Content-Type header.
-
               $boundary = $this->getSubstring($value, 'boundary', '"', '"');
               break;
 
@@ -309,7 +320,7 @@ class SMTPMailSystem implements MailInterface, ContainerFactoryPluginInterface {
         case 'bcc':
           $bccrecipients = explode(',', $value);
           foreach ($bccrecipients as $bccrecipient) {
-            $bcc_comp = $this->_get_components($bccrecipient);
+            $bcc_comp = $this->getComponents($bccrecipient);
             $mailer->AddBCC($bcc_comp['email'], Unicode::mimeHeaderEncode($bcc_comp['name']));
           }
           break;
@@ -407,7 +418,7 @@ class SMTPMailSystem implements MailInterface, ContainerFactoryPluginInterface {
                 // Clean up the text.
                 $body_part2 = trim($this->removeHeaders(trim($body_part2)));
                 // Check whether the encoding is base64, and if so, decode it.
-                if (Unicode::strtolower($body_part2_encoding) == 'base64') {
+                if (mb_strtolower($body_part2_encoding) == 'base64') {
                   // Include it as part of the mail object.
                   $mailer->Body = base64_decode($body_part2);
                   // Ensure the whole message is recoded in the base64 format.
@@ -463,10 +474,10 @@ class SMTPMailSystem implements MailInterface, ContainerFactoryPluginInterface {
               // Clean up the text.
               $body_part = trim($this->removeHeaders(trim($body_part)));
 
-              if (Unicode::strtolower($file_encoding) == 'base64') {
+              if (mb_strtolower($file_encoding) == 'base64') {
                 $attachment = base64_decode($body_part);
               }
-              elseif (Unicode::strtolower($file_encoding) == 'quoted-printable') {
+              elseif (mb_strtolower($file_encoding) == 'quoted-printable') {
                 $attachment = quoted_printable_decode($body_part);
               }
               else {
@@ -491,7 +502,7 @@ class SMTPMailSystem implements MailInterface, ContainerFactoryPluginInterface {
     }
 
     // Process mimemail attachments, which are prepared in mimemail_mail().
-    if (isset($message['params']['attachments'])) {
+    if (!empty($message['params']['attachments'])) {
       foreach ($message['params']['attachments'] as $attachment) {
         if (isset($attachment['filecontent'])) {
           $mailer->AddStringAttachment($attachment['filecontent'], $attachment['filename'], 'base64', $attachment['filemime']);

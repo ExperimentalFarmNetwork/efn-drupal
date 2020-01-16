@@ -157,7 +157,7 @@ class SMTPConfigForm extends ConfigFormBase {
 
     $form['email_options'] = [
       '#type'  => 'details',
-      '#title' =>$this->t('E-mail options'),
+      '#title' => $this->t('E-mail options'),
       '#open' => TRUE,
     ];
     $form['email_options']['smtp_from'] = [
@@ -315,7 +315,8 @@ class SMTPConfigForm extends ConfigFormBase {
     }
 
     // Set as default mail system if module is enabled.
-    if ($config->get('smtp_on')) {
+    if ($config->get('smtp_on') ||
+        ($this->isOverridden('smtp_on') && $values['smtp_on'] == 'on')) {
       if ($mail_system != 'SMTPMailSystem') {
         $config->set('prev_mail_system', $mail_system);
       }
@@ -357,6 +358,10 @@ class SMTPConfigForm extends ConfigFormBase {
   /**
    * {@inheritdoc}
    */
-  protected function getEditableConfigNames() {}
+  protected function getEditableConfigNames() {
+    return [
+      'smtp.settings',
+    ];
+  }
 
 }

@@ -76,6 +76,7 @@ class GeofieldProximitySourceManager extends DefaultPluginManager {
       if (isset($definition['context'])
         && (empty($definition['context']) || in_array($context, $definition['context']))
         && (!isset($definition['exposedOnly']) || ($definition['exposedOnly'] && $is_exposed))
+        && (!isset($definition['no_ui']) || !$definition['no_ui'])
       ) {
         $form['source']['#options'][$plugin_id] = $definition['label'];
       }

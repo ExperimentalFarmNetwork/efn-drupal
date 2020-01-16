@@ -205,8 +205,7 @@ function geocoder_field_entity_presave(EntityInterface $entity) {
     $failure_status_message = NULL;
     $providers = GeocoderProvider::loadMultiple($geocoder['providers']);
 
-    // Skip the Geocode/Reverse Geocode operation is so requested for not
-    // empty coordinates.
+    // Skip Geocode/Reverse Geocode op is so requested for not empty value.
     if (isset($geocoder['skip_not_empty_value']) && $geocoder['skip_not_empty_value'] && !$default_values->isEmpty()) {
       return;
     }
@@ -231,7 +230,7 @@ function geocoder_field_entity_presave(EntityInterface $entity) {
         default:
       }
 
-      if (isset($dumper) && $geo_collection && !$geo_collection->isEmpty()) {
+      if (isset($dumper) && isset($geo_collection) && !$geo_collection->isEmpty()) {
 
         // Normally each geocode/reverse op would return an AddressCollection.
         if ($geo_collection instanceof AddressCollection) {

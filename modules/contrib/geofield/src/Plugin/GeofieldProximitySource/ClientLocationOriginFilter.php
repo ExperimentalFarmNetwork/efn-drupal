@@ -16,7 +16,8 @@ use Drupal\Component\Render\FormattableMarkup;
  *   description = @Translation("Gets the Client Location through the browser HTML5 Geolocation API."),
  *   context = {
  *     "filter",
- *   }
+ *   },
+ *   exposedOnly = true
  * )
  */
 class ClientLocationOriginFilter extends ManualOriginDefault {
@@ -51,11 +52,6 @@ class ClientLocationOriginFilter extends ManualOriginDefault {
         '#type' => 'checkbox',
         '#title' => t('Show the Client Origin coordinates as summary in the Exposed Form'),
         '#default_value' => isset($this->configuration['origin_summary_flag']) ? $this->configuration['origin_summary_flag'] : TRUE,
-        '#states' => [
-          'invisible' => [
-            'input[name="options[expose_button][checkbox][checkbox]"]' => ['checked' => FALSE],
-          ],
-        ],
       ];
     }
 

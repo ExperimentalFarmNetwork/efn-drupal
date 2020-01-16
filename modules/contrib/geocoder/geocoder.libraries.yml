@@ -3,3 +3,13 @@ general:
   css:
     component:
       css/geocoder_general.css: { }
+
+geocoder:
+  version: 1.x
+  css:
+    component:
+      css/geocoder_geocoder.css: {}
+  js:
+    js/geocoder.drupal.js: {}
+  dependencies:
+    - core/drupal.autocomplete

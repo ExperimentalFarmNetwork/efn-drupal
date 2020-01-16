@@ -12,6 +12,13 @@ use Drupal\group\GroupMembershipLoaderInterface;
 class DefaultGroupPermissionCalculator extends GroupPermissionCalculatorBase {
 
   /**
+   * The member roles depend on which memberships you have, for which we do not
+   * currently have a dedicated cache context as it has a very high granularity.
+   * We therefore cache the calculated permissions per user.
+   */
+  const MEMBER_CACHE_CONTEXTS = ['user'];
+
+  /**
    * The entity type manager.
    *
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
@@ -104,18 +111,9 @@ class DefaultGroupPermissionCalculator extends GroupPermissionCalculatorBase {
   public function calculateMemberPermissions(AccountInterface $account) {
     $calculated_permissions = new RefinableCalculatedGroupPermissions();
 
-    // The member roles depend on which memberships you have, for which we do
-    // not currently have a dedicated cache context as it has a very high
-    // granularity. We therefore cache the calculated permissions per user.
-    $calculated_permissions->addCacheContexts(['user']);
-
-    // @todo Use a cache tag for memberships (e.g.: when new one is added).
-    // If the user gets added to or removed from a group, their account will
-    // be re-saved in GroupContent::postDelete() and GroupContent::postSave().
-    // This means we can add the user's cacheable metadata to invalidate this
-    // list of permissions whenever the user is saved.
-    $user = $this->entityTypeManager->getStorage('user')->load($account->id());
-    $calculated_permissions->addCacheableDependency($user);
+    // The member permissions need to be recalculated whenever the user is added
+    // to or removed from a group.
+    $calculated_permissions->addCacheTags(['group_content_list:plugin:group_membership:entity:' . $account->id()]);
 
     foreach ($this->membershipLoader->loadByUser($account) as $group_membership) {
       $group_id = $group_membership->getGroup()->id();
@@ -134,7 +132,6 @@ class DefaultGroupPermissionCalculator extends GroupPermissionCalculatorBase {
       );
 
       $calculated_permissions->addItem($item);
-      $calculated_permissions->addCacheableDependency($group_membership);
     }
 
     return $calculated_permissions;

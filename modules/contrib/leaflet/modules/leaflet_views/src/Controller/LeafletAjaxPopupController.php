@@ -6,7 +6,6 @@ use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\Render\HtmlResponse;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -91,13 +90,13 @@ class LeafletAjaxPopupController extends ControllerBase {
   /**
    * Get popup identifier.
    *
-   * @param $entityType
+   * @param string $entityType
    *   The entity type.
-   * @param $entityId
+   * @param int $entityId
    *   The entity id.
-   * @param $viewMode
+   * @param string $viewMode
    *   The view mode.
-   * @param $langcode
+   * @param string $langcode
    *   The langcode.
    *
    * @return string
@@ -110,13 +109,13 @@ class LeafletAjaxPopupController extends ControllerBase {
   /**
    * Get popup identifier attribute.
    *
-   * @param $entityType
+   * @param string $entityType
    *   The entity type.
-   * @param $entityId
+   * @param int $entityId
    *   The entity id.
-   * @param $viewMode
+   * @param string $viewMode
    *   The view mode.
-   * @param $langcode
+   * @param string $langcode
    *   The langcode.
    *
    * @return string
@@ -129,13 +128,13 @@ class LeafletAjaxPopupController extends ControllerBase {
   /**
    * Get popup identifier selector.
    *
-   * @param $entityType
+   * @param string $entityType
    *   The entity type.
-   * @param $entityId
+   * @param int $entityId
    *   The entity id.
-   * @param $viewMode
+   * @param string $viewMode
    *   The view mode.
-   * @param $langcode
+   * @param string $langcode
    *   The langcode.
    *
    * @return string

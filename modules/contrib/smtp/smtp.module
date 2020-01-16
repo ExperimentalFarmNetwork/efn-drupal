@@ -11,8 +11,8 @@
  *
  * Overriding mail handling in Drupal to make SMTP the default
  * transport layer, requires to change the 'system.mail.interface'
- * default value array('default' => 'Drupal\Core\Mail\PhpMail').
- * This module uses array('default' => 'SMTPMailSystem').
+ * default value ['default' => 'Drupal\Core\Mail\PhpMail'].
+ * This module uses ['default' => 'SMTPMailSystem'].
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
@@ -44,7 +44,7 @@ function smtp_queue_info() {
   $queues['smtp_send_queue'] = [
     'worker callback' => 'smtp_send_queue_runner',
     'cron' => [
-      'time' => 60, // This is the max run time per cron run in seconds.
+      'time' => 60,
     ],
   ];
   return $queues;
@@ -73,8 +73,15 @@ function _smtp_mailer_send($variables) {
   $logger->info('Sending mail to: @to', ['@to' => $to]);
 
   // Try to send e-mail. If it fails, set watchdog entry.
-  if (!$mailer->Send()) {
-    $logger->error('Error sending e-mail from @from to @to: @error_message', ['@from' => $from, '@to' => $to, '@error_message' => $mailer->ErrorInfo]);
+  try {
+    $mailer->Send();
+  }
+  catch (Exception $e) {
+    $logger->error('Error sending e-mail from @from to @to: @error_message', [
+      '@from' => $from,
+      '@to' => $to,
+      '@error_message' => $mailer->ErrorInfo,
+    ]);
     return FALSE;
   }
 

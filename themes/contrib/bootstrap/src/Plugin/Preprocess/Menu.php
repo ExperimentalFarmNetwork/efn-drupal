@@ -40,6 +40,13 @@ class Menu extends PreprocessBase implements PreprocessInterface {
         $wrapperAttributes->setAttributes($item['url']->getOption('wrapper_attributes') ?: []);
         $wrapperAttributes->setAttributes($item['url']->getOption('container_attributes') ?: []);
         $linkAttributes->setAttributes($item['url']->getOption('attributes') ?: []);
+        
+        // If URL isn't a link, it's rendered as a <span> element. Add the
+        // "navbar-text" class so it doesn't disrupt the navbar items.
+        // @see https://www.drupal.org/project/bootstrap/issues/3053464
+        if ($item['url']->isRouted() && $item['url']->getRouteName() === '<nolink>') {
+          $linkAttributes->addClass('navbar-text');
+        }
       }
 
       // Unfortunately, in newer core/Twig versions, only certain classes are

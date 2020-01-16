@@ -2,15 +2,27 @@
 
 namespace Drupal\geocoder\Tests;
 
-use Drupal\simpletest\WebTestBase;
+use Drupal\Tests\BrowserTestBase;
 
 /**
  * Tests for the Geocoder module.
  *
  * @group Geocoder
  */
-class GeocoderTest extends WebTestBase {
+class GeocoderTest extends BrowserTestBase {
 
+  /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stark';
+
+  /**
+   * Set to TRUE to strict check all configuration saved.
+   *
+   * @var bool
+   *
+   * @see \Drupal\Core\Config\Testing\ConfigSchemaChecker
+   */
   protected $strictConfigSchema = FALSE;
 
   /**
@@ -25,6 +37,8 @@ class GeocoderTest extends WebTestBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function setUp() {
 
@@ -48,6 +62,8 @@ class GeocoderTest extends WebTestBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @throws \Exception
    */
   public function testConfigForm() {
 
@@ -58,8 +74,7 @@ class GeocoderTest extends WebTestBase {
     $config = $this->config('geocoder.settings');
     $this->assertFieldByName(
       'cache',
-      $config->get('cache'),
-      'Cache field has the default value'
+      $config->get('cache')
     );
 
     $this->drupalPostForm(NULL, [
@@ -70,8 +85,7 @@ class GeocoderTest extends WebTestBase {
     $this->assertResponse(200);
     $this->assertFieldByName(
       'cache',
-      TRUE,
-      'Cahe field is OK.'
+      FALSE
     );
   }
 

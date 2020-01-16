@@ -13,4 +13,4 @@ views_send.settings:
       label: 'How many days messages are retained in the spool after successfull sending'
     debug:
       type: boolean
-      label: 'Log all outgoing mesages in the system log'
+      label: 'Log all outgoing messages in the system log'

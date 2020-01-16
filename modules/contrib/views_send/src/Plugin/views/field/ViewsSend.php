@@ -5,8 +5,8 @@ namespace Drupal\views_send\Plugin\views\field;
 use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
-use Drupal\system\Plugin\views\field\BulkForm;;
-use Drupal\views\ResultRow;
+use Drupal\views\Plugin\views\field\BulkForm;
+use Drupal\Core\File\FileSystemInterface;
 
 /**
  * Defines a simple send mass mail form element.
@@ -46,7 +46,7 @@ class ViewsSend extends BulkForm {
   }
 
   /**
-   * Overrides \Drupal\system\Plugin\views\field\BulkForm::viewsForm(). 
+   * Overrides \Drupal\system\Plugin\views\field\BulkForm::viewsForm().
    */
   function viewsForm(&$form, FormStateInterface $form_state) {
     parent::viewsForm($form, $form_state);
@@ -76,14 +76,14 @@ class ViewsSend extends BulkForm {
   }
 
   /**
-   * Overrides \Drupal\system\Plugin\views\field\BulkForm::getBulkOptions(). 
+   * Overrides \Drupal\system\Plugin\views\field\BulkForm::getBulkOptions().
    */
   protected function getBulkOptions($filtered = TRUE) {
     return [];
   }
 
   /**
-   * Overrides \Drupal\system\Plugin\views\field\BulkForm::viewsFormSubmit(). 
+   * Overrides \Drupal\system\Plugin\views\field\BulkForm::viewsFormSubmit().
    */
   function viewsFormSubmit(&$form, FormStateInterface $form_state) {
     switch ($form_state->get('step')) {
@@ -128,7 +128,7 @@ class ViewsSend extends BulkForm {
             isset($_FILES['files']) && is_uploaded_file($_FILES['files']['tmp_name']['views_send_attachments'])) {
           // attempt to save the uploaded file
           $dir = file_default_scheme() . '://views_send_attachments';
-          file_prepare_directory($dir, FILE_CREATE_DIRECTORY);
+          \Drupal::service('file_system')->prepareDirectory($dir, FileSystemInterface::CREATE_DIRECTORY);
           $files = file_save_upload('views_send_attachments', [], $dir);
           // set error if file was not uploaded
           if (!$files) {
@@ -154,9 +154,9 @@ class ViewsSend extends BulkForm {
         break;
     }
   }
-  
+
   /**
-   * Overrides \Drupal\system\Plugin\views\field\BulkForm::::viewsFormValidate(). 
+   * Overrides \Drupal\system\Plugin\views\field\BulkForm::::viewsFormValidate().
    */
   function viewsFormValidate(&$form, FormStateInterface $form_state) {
     if ($form_state->get('step') != 'views_form_views_form') {

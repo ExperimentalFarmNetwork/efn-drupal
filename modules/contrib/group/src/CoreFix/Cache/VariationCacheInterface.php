@@ -16,13 +16,16 @@ interface VariationCacheInterface {
    *
    * @param string[] $keys
    *   The cache keys to retrieve the cache entry for.
+   * @param \Drupal\Core\Cache\CacheableDependencyInterface $initial_cacheability
+   *   The cache metadata of the data to store before other systems had a chance
+   *   to adjust it. This is also commonly known as "pre-bubbling" cacheability.
    *
    * @return object|false
    *   The cache item or FALSE on failure.
    *
    * @see \Drupal\Core\Cache\CacheBackendInterface::get()
    */
-  public function get(array $keys);
+  public function get(array $keys, CacheableDependencyInterface $initial_cacheability);
 
   /**
    * Stores data in the cache.
@@ -33,10 +36,17 @@ interface VariationCacheInterface {
    *   The data to store in the cache.
    * @param \Drupal\Core\Cache\CacheableDependencyInterface $cacheability
    *   The cache metadata of the data to store.
+   * @param \Drupal\Core\Cache\CacheableDependencyInterface $initial_cacheability
+   *   The cache metadata of the data to store before other systems had a chance
+   *   to adjust it. This is also commonly known as "pre-bubbling" cacheability.
    *
    * @see \Drupal\Core\Cache\CacheBackendInterface::set()
+   *
+   * @throws \LogicException
+   *   Thrown when cacheability is provided that does not contain a cache
+   *   context or does not completely contain the initial cacheability.
    */
-  public function set(array $keys, $data, CacheableDependencyInterface $cacheability);
+  public function set(array $keys, $data, CacheableDependencyInterface $cacheability, CacheableDependencyInterface $initial_cacheability);
 
   /**
    * Deletes an item from the cache.
@@ -46,10 +56,13 @@ interface VariationCacheInterface {
    *
    * @param string[] $keys
    *   The cache keys of the data to delete.
+   * @param \Drupal\Core\Cache\CacheableDependencyInterface $initial_cacheability
+   *   The cache metadata of the data to store before other systems had a chance
+   *   to adjust it. This is also commonly known as "pre-bubbling" cacheability.
    *
    * @see \Drupal\Core\Cache\CacheBackendInterface::delete()
    */
-  public function delete(array $keys);
+  public function delete(array $keys, CacheableDependencyInterface $initial_cacheability);
 
   /**
    * Marks a cache item as invalid.
@@ -59,9 +72,12 @@ interface VariationCacheInterface {
    *
    * @param string[] $keys
    *   The cache keys of the data to invalidate.
+   * @param \Drupal\Core\Cache\CacheableDependencyInterface $initial_cacheability
+   *   The cache metadata of the data to store before other systems had a chance
+   *   to adjust it. This is also commonly known as "pre-bubbling" cacheability.
    *
    * @see \Drupal\Core\Cache\CacheBackendInterface::invalidate()
    */
-  public function invalidate(array $keys);
+  public function invalidate(array $keys, CacheableDependencyInterface $initial_cacheability);
 
 }

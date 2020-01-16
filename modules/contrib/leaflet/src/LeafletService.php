@@ -84,6 +84,7 @@ class LeafletService {
   public function leafletRenderMap(array $map, array $features = [], $height = '400px') {
     $map_id = isset($map['id']) ? $map['id'] : Html::getUniqueId('leaflet_map');
     $attached_libraries = ['leaflet/leaflet-drupal', 'leaflet/general'];
+
     // Add the Leaflet Fullscreen library, if requested.
     if (isset($map['settings']['fullscreen_control'])) {
       $attached_libraries[] = 'leaflet/leaflet.fullscreen';

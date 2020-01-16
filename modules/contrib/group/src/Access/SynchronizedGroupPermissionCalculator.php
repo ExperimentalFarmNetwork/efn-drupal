@@ -12,6 +12,12 @@ use Drupal\group\GroupRoleSynchronizerInterface;
 class SynchronizedGroupPermissionCalculator extends GroupPermissionCalculatorBase {
 
   /**
+   * The synchronized roles depend on which user roles you have, so we need to
+   * vary the calculated permissions by the user.roles cache context.
+   */
+  const OUTSIDER_CACHE_CONTEXTS = ['user.roles'];
+
+  /**
    * The entity type manager.
    *
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
@@ -43,17 +49,6 @@ class SynchronizedGroupPermissionCalculator extends GroupPermissionCalculatorBas
    */
   public function calculateOutsiderPermissions(AccountInterface $account) {
     $calculated_permissions = new RefinableCalculatedGroupPermissions();
-
-    // The synchronized roles depend on which user roles you have, so we need to
-    // vary the calculated permissions by the user.roles cache context.
-    $calculated_permissions->addCacheContexts(['user.roles']);
-
-    // @todo Introduce group_role_list:audience:outsider cache tag.
-    // If a new group type is introduced, we need to recalculate the outsider
-    // permissions. Therefore, we need to introduce the group type list cache
-    // tag.
-    $calculated_permissions->addCacheTags(['config:group_type_list']);
-
     $group_type_storage = $this->entityTypeManager->getStorage('group_type');
     $group_role_storage = $this->entityTypeManager->getStorage('group_role');
     $roles = $account->getRoles(TRUE);

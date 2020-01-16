@@ -3,13 +3,12 @@ description: 'Enables Group functionality for the Node module'
 package: 'Group'
 type: 'module'
 # version: 1.0
-# core: '8.x'
+core: '8.x'
 dependencies:
   - 'drupal:node'
   - 'group:group'
 
-# Information added by Drupal.org packaging script on 2019-07-18
-version: '8.x-1.0-rc4'
-core: '8.x'
+# Information added by Drupal.org packaging script on 2019-12-20
+version: '8.x-1.0-rc5'
 project: 'group'
-datestamp: 1563460136
+datestamp: 1576854204

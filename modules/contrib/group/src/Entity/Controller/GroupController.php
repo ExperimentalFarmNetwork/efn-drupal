@@ -124,4 +124,19 @@ class GroupController extends ControllerBase {
     return $this->entityFormBuilder()->getForm($entity, 'add', $extra);
   }
 
+  /**
+   * The _title_callback for the group.add route.
+   *
+   * @param \Drupal\group\Entity\GroupTypeInterface $group_type
+   *   The type of group to create.
+   *
+   * @return string
+   *   The page title.
+   */
+  public function addFormTitle(GroupTypeInterface $group_type) {
+    return $this->t('Add @group_type_label', [
+      '@group_type_label' => $group_type->label(),
+    ]);
+  }
+
 }

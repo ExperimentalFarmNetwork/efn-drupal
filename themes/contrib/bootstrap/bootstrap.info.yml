@@ -1,4 +1,4 @@
-# core: 8.x
+core: 8.x
 type: theme
 base theme: false
 
@@ -77,8 +77,7 @@ libraries-override:
       theme:
         css/node.preview.css: false
 
-# Information added by Drupal.org packaging script on 2019-06-20
-version: '8.x-3.20'
-core: '8.x'
+# Information added by Drupal.org packaging script on 2019-11-22
+version: '8.x-3.21'
 project: 'bootstrap'
-datestamp: 1561051706
+datestamp: 1574417591

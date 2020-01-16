@@ -1,0 +1,36 @@
+dev:
+  host: appserver.dev.a89bf3ff-fa8d-43ff-8a9a-eff53f0b65be.drush.in
+  options:
+    db-allows-remote: true
+    db-url: 'mysql://pantheon:857bee06fe5d4404ac74481846fbc38b@dbserver.dev.a89bf3ff-fa8d-43ff-8a9a-eff53f0b65be.drush.in:20417/pantheon'
+  paths:
+    drush-script: drush
+    files: files
+  ssh:
+    options: '-p 2222 -o "AddressFamily inet"'
+  uri: dev-efn.pantheonsite.io
+  user: dev.a89bf3ff-fa8d-43ff-8a9a-eff53f0b65be
+live:
+  host: appserver.live.a89bf3ff-fa8d-43ff-8a9a-eff53f0b65be.drush.in
+  options:
+    db-allows-remote: true
+    db-url: 'mysql://pantheon:027ce7ca36ea437192c1ed5ccabc0273@dbserver.live.a89bf3ff-fa8d-43ff-8a9a-eff53f0b65be.drush.in:16783/pantheon'
+  paths:
+    drush-script: drush
+    files: files
+  ssh:
+    options: '-p 2222 -o "AddressFamily inet"'
+  uri: live-efn.pantheonsite.io
+  user: live.a89bf3ff-fa8d-43ff-8a9a-eff53f0b65be
+test:
+  host: appserver.test.a89bf3ff-fa8d-43ff-8a9a-eff53f0b65be.drush.in
+  options:
+    db-allows-remote: true
+    db-url: 'mysql://pantheon:40125a726f474252af86a245ee3a0dd1@dbserver.test.a89bf3ff-fa8d-43ff-8a9a-eff53f0b65be.drush.in:10511/pantheon'
+  paths:
+    drush-script: drush
+    files: files
+  ssh:
+    options: '-p 2222 -o "AddressFamily inet"'
+  uri: test-efn.pantheonsite.io
+  user: test.a89bf3ff-fa8d-43ff-8a9a-eff53f0b65be

@@ -76,9 +76,10 @@ class UpdateManager extends PluginManager {
    */
   public function getPendingUpdates($private = FALSE) {
     $pending = [];
-    $installed = $this->theme->getSetting('schemas', []);
+    $installed_schemas = $this->theme->getSetting('schemas', []);
     foreach ($this->getUpdates($private) as $version => $update) {
-      if ($version > $installed) {
+      $installed_schema = $installed_schemas[$update->getProvider()] ?? \Drupal::CORE_MINIMUM_SCHEMA_VERSION;
+      if ($version > $installed_schema) {
         $pending[$version] = $update;
       }
     }

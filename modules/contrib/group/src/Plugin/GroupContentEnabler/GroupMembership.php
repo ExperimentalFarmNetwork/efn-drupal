@@ -24,8 +24,8 @@ use Drupal\Core\Session\AccountInterface;
  *   description = @Translation("Adds users to groups as members."),
  *   entity_type_id = "user",
  *   pretty_path_key = "member",
- *   reference_label = @Translation("Username"),
- *   reference_description = @Translation("The name of the user you want to make a member"),
+ *   reference_label = @Translation("User"),
+ *   reference_description = @Translation("The user you want to make a member"),
  *   enforced = TRUE
  * )
  */

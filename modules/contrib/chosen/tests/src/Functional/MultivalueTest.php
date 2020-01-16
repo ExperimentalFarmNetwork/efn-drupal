@@ -23,6 +23,11 @@ class MultivalueTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
+  protected $defaultTheme = 'stark';
+
+  /**
+   * {@inheritdoc}
+   */
   public static $modules = ['chosen', 'options', 'node'];
 
   /**

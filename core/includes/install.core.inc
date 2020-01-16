@@ -426,10 +426,9 @@ function install_begin_request($class_loader, &$install_state) {
   }
   $GLOBALS['conf']['container_service_providers']['InstallerConfigOverride'] = 'Drupal\Core\Installer\ConfigOverride';
 
-  // Only allow dumping the container once the hash salt has been created. Note,
-  // InstallerKernel::createFromRequest() is not used because Settings is
+  // Note, InstallerKernel::createFromRequest() is not used because Settings is
   // already initialized.
-  $kernel = new InstallerKernel($environment, $class_loader, (bool) Settings::get('hash_salt', FALSE));
+  $kernel = new InstallerKernel($environment, $class_loader, FALSE);
   $kernel::bootEnvironment();
   $kernel->setSitePath($site_path);
   $kernel->boot();
@@ -758,7 +757,8 @@ function install_tasks($install_state) {
   // 'install_import_translations' task. Import when a non-English language is
   // available and selected. Also we will need translations even if the
   // installer language is English but there are other languages on the system.
-  $needs_translations = (count($install_state['translations']) > 1 && !empty($install_state['parameters']['langcode']) && $install_state['parameters']['langcode'] != 'en') || \Drupal::languageManager()->isMultilingual();
+  $locale_module_installed = \Drupal::moduleHandler()->moduleExists('locale');
+  $needs_translations = $locale_module_installed && ((count($install_state['translations']) > 1 && !empty($install_state['parameters']['langcode']) && $install_state['parameters']['langcode'] != 'en') || \Drupal::languageManager()->isMultilingual());
   // Determine whether a translation file must be downloaded during the
   // 'install_download_translation' task. Download when a non-English language
   // is selected, but no translation is yet in the translations directory.

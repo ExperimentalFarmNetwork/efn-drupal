@@ -5,11 +5,12 @@
  * Install, update and uninstall functions for the group module.
  */
 
-use Drupal\group\Entity\GroupContent;
 use Drupal\Core\Config\ExtensionInstallStorage;
 use Drupal\Core\Config\InstallStorage;
 use Drupal\Core\Entity\EntityTypeListenerInterface;
 use Drupal\Core\Entity\Sql\SqlContentEntityStorage;
+use Drupal\group\Entity\GroupContent;
+use Drupal\group\Entity\Storage\GroupContentStorageSchema;
 
 /**
  * Resave all GroupContent labels and remove orphaned entities.
@@ -429,62 +430,26 @@ function group_update_8014() {
  * Update the group members view to use the new cache group permissions context.
  */
 function group_update_8015() {
-  if (\Drupal::moduleHandler()->moduleExists('views')) {
-    $view = \Drupal::configFactory()->getEditable('views.view.group_members');
-    if (!$view->isNew()) {
-      foreach (['default', 'page_1'] as $display) {
-        $cache_metadata_key = "display.$display.cache_metadata";
-        $cache_metadata = $view->get($cache_metadata_key);
-
-        // Remove the deleted cache context and add the updated metadata.
-        $key = array_search('group_membership.roles.permissions', $cache_metadata['contexts'], TRUE);
-        if ($key !== FALSE) {
-          unset($cache_metadata['contexts'][$key]);
-        }
-        $cache_metadata['max-age'] = -1;
-        $cache_metadata['contexts'][] = 'route.group';
-        $cache_metadata['contexts'][] = 'user.group_permissions';
-
-        $view->set($cache_metadata_key, $cache_metadata);
-      }
-
-      $view->save(TRUE);
-    }
-  }
+  // Empty update. See group_post_update_view_cache_contexts();
 }
 
 /**
  * Re-run a fixed version of _8015 and gnode_update_8006 on all views.
  */
 function group_update_8016() {
-  if (\Drupal::moduleHandler()->moduleExists('views')) {
-    $config_factory = \Drupal::configFactory();
+  // Empty update. See group_post_update_view_cache_contexts();
+}
 
-    foreach ($config_factory->listAll('views.view.') as $view_config_name) {
-      $view = $config_factory->getEditable($view_config_name);
 
-      $needs_save = FALSE;
-      foreach ($view->get('display') as $display => $display_data) {
-        $cache_metadata_key = "display.$display.cache_metadata";
-        $cache_metadata = $view->get($cache_metadata_key);
+/**
+ * Add storage schema to group content.
+ */
+function group_update_8017() {
+  $manager = \Drupal::entityDefinitionUpdateManager();
 
-        // Remove the deleted cache context and add the updated metadata.
-        $key = array_search('group_membership.roles.permissions', $cache_metadata['contexts'], TRUE);
-        if ($key !== FALSE) {
-          unset($cache_metadata['contexts'][$key]);
-
-          $cache_metadata['max-age'] = -1;
-          $cache_metadata['contexts'][] = 'route.group';
-          $cache_metadata['contexts'][] = 'user.group_permissions';
-
-          $view->set($cache_metadata_key, $cache_metadata);
-          $needs_save = TRUE;
-        }
-      }
-
-      if ($needs_save) {
-        $view->save(TRUE);
-      }
-    }
-  }
+  // Add the new storage schema to the GroupContent entity type, which should
+  // automatically reindex the table.
+  $entity_type = $manager->getEntityType('group_content');
+  $entity_type->setHandlerClass('storage_schema', GroupContentStorageSchema::class);
+  $manager->updateEntityType($entity_type);
 }

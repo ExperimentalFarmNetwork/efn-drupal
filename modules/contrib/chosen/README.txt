@@ -17,52 +17,59 @@
   It is assumed you are installing Drupal through Composer using the Drupal
   Composer facade. See https://www.drupal.org/docs/develop/using-composer/using-composer-to-manage-drupal-site-dependencies#drupal-packagist
 
-  The Chosen JavaScript library does not support composer so manual steps are
-  required in order to install it through this method.
-
-  First, copy the following snippet into your project's composer.json file so
-  the correct package is downloaded:
-
-  "repositories": [
-    {
-      "type": "package",
-      "package": {
-        "name": "harvesthq/chosen",
-        "version": "1.8.7",
-        "type": "drupal-library",
-        "dist": {
-          "url": "https://github.com/harvesthq/chosen/releases/download/v1.8.7/chosen_v1.8.7.zip",
-          "type": "zip"
-        },
-        "require": {
-            "composer/installers": "^1.2.0"
+  Before you add the module using composer, you should add an installer path
+  so that the Chosen JavaScript library is installed in the correct location.
+  You might have an entry similar to below in your composer.json already if
+  you had used [drupal-composer/drupal-project](https://github.com/drupal-composer/drupal-project)
+  to create your project.
+```
+    "extra": {
+        "installer-paths": {
+            "web/libraries/{$name}": ["type:drupal-library"]
         }
-      }
     }
-  ]
+```
+  where `web/libraries/` is the path to the libraries directory relative to your
+  _project_ root. Modify the entry above to add `harvesthq/chosen` in that array.
+```
+    "extra": {
+        "installer-paths": {
+            "web/libraries/{$name}": [
+              "type:drupal-library",
+              "harvesthq/chosen"
+            ]
+        }
+    }
+```
 
-  Next, the following snippet must be added into your project's composer.json
-  file so the javascript library is installed into the correct location:
+  Next, you need to add a custom installer-type so that composer installer
+  extended plugin can pick it up. Find the `installer-types` entry in extra
+  section and add `library` to it. Your entry should look something like the
+  following:
+```
+    "extra": {
+        "installer-types": [
+            "library"
+        ]
+    }
+```
 
-  "extra": {
-      "installer-paths": {
-          "libraries/{$name}": ["type:drupal-library"]
-      }
-  }
+  Remember, you may have other entries in there already. For this to work, you
+  need to have the 'oomphinc/composer-installers-extender' installer. If you
+  don't have it, or are not sure, simply run:
+```
+composer require oomphinc/composer-installers-extender
+```
 
-  If there are already 'repositories' and/or 'extra' entries in the
-  composer.json, merge these new entries with the already existing entries.
+  Then, run the following composer command:
 
-  After that, run:
+```
+composer require drupal/chosen
+```
 
-  $ composer require harvesthq/chosen
-  $ composer require drupal/chosen
-
-  The first uses the manual entries you made to install the JavaScript library,
-  the second adds the Drupal module.
-
-  Note: the requirement on the library is not in the module's composer.json
-  because that would cause problems with automated testing.
+  This command will add the Chosen Drupal module and JavaScript library to your
+  project. The library will be downloaded to the `drupal-library` installer path
+  you set in the first step.
 
 -- INSTALLATION VIA DRUSH --
 

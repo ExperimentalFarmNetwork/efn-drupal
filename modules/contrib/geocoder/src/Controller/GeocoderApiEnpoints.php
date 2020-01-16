@@ -67,8 +67,8 @@ class GeocoderApiEnpoints extends ControllerBase {
   /**
    * Get the Address Formatter.
    */
-  protected function getAddressFormatter() {
-    return 'default_formatted_address';
+  protected function getAddressFormatter($address_format = NULL) {
+    return $address_format ?: 'default_formatted_address';
   }
 
   /**
@@ -86,12 +86,12 @@ class GeocoderApiEnpoints extends ControllerBase {
     // Retrieve geocoders options from the module configurations.
     $geocoders_configs = $this->config->get('plugins_options') ?: [];
 
-    // Get possible query string
-    // specific geocoders options.
+    // Get possible query string specific geocoders options.
     $geocoders_options = $request->get('options') ?: [];
 
     // Merge geocoders options.
     $options = NestedArray::mergeDeep($geocoders_configs, $geocoders_options);
+
     return $options;
   }
 
@@ -133,21 +133,24 @@ class GeocoderApiEnpoints extends ControllerBase {
    *   The Address Collection.
    * @param \Drupal\geocoder\DumperInterface|null $dumper
    *   The Dumper or null.
+   * @param string|null $address_format
+   *   The specific @GeocoderFormatter id to be used.
    */
-  protected function getAddressCollectionResponse(AddressCollection $geo_collection, $dumper = NULL): void {
+  protected function getAddressCollectionResponse(AddressCollection $geo_collection, $dumper = NULL, $address_format = NULL): void {
     $result = [];
+    /** @var \Geocoder\Model\Address $geo_address **/
     foreach ($geo_collection->all() as $k => $geo_address) {
       if (isset($dumper)) {
         $result[$k] = $dumper->dump($geo_address);
       }
       else {
-        /** @var \Geocoder\Model\Address $geo_address **/
         $result[$k] = $geo_address->toArray();
         // If a formatted_address property is not defined (as Google Maps
         // Geocoding does), then create it with our own formatter.
         if (!isset($result[$k]['formatted_address'])) {
+
           try {
-            $result[$k]['formatted_address'] = $this->geocoderFormatterPluginManager->createInstance($this->getAddressFormatter())
+            $result[$k]['formatted_address'] = $this->geocoderFormatterPluginManager->createInstance($this->getAddressFormatter($address_format))
               ->format($geo_address);
           }
           catch (\Exception $e) {
@@ -235,7 +238,6 @@ class GeocoderApiEnpoints extends ControllerBase {
    * {@inheritdoc}
    */
   public function geocode(Request $request) {
-
     $address = $request->get('address');
     $geocoders_ids = $request->get('geocoder');
     $format = $request->get('format');
@@ -243,18 +245,21 @@ class GeocoderApiEnpoints extends ControllerBase {
 
     try {
       $geocoders = $this->entityTypeManager->getStorage('geocoder_provider')
-        ->loadMultiple(explode(',', $geocoders_ids));
+        ->loadMultiple(explode(',', str_replace(' ', '', $geocoders_ids)));
     }
     catch (\Exception $e) {
       watchdog_exception('geocoder', $e);
     }
 
+    $address_format = $request->get('address_format');
+
     if (isset($address)) {
+
       $options = $this->setGeocodersOptions($request);
       $dumper = $this->getDumper($format);
       $geo_collection = $this->geocoder->geocode($address, $geocoders, $options);
       if ($geo_collection && $geo_collection instanceof AddressCollection) {
-        $this->getAddressCollectionResponse($geo_collection, $dumper);
+        $this->getAddressCollectionResponse($geo_collection, $dumper, $address_format);
       }
     }
     return $this->response;

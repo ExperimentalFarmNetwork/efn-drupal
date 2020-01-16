@@ -170,6 +170,29 @@ class LeafletDefaultFormatter extends FormatterBase implements ContainerFactoryP
     $elements = parent::settingsForm($form, $form_state);
     $field_name = $this->fieldDefinition->getName();
 
+    if ($this->moduleHandler->moduleExists('token')) {
+
+      $elements['replacement_patterns'] = [
+        '#type' => 'details',
+        '#title' => 'Replacement patterns',
+        '#description' => $this->t('The following replacement tokens are available for the "Popup Content and the Icon Options":'),
+      ];
+
+      $elements['replacement_patterns']['token_help'] = [
+        '#theme' => 'token_tree_link',
+        '#token_types' => [$this->fieldDefinition->getTargetEntityTypeId()],
+      ];
+    }
+    else {
+      $elements['replacement_patterns']['#description'] = $this->t('The @token_link is needed to browse and use @entity_type entity token replacements.', [
+        '@token_link' => $this->link->generate(t('Token module'), Url::fromUri('https://www.drupal.org/project/token', [
+          'absolute' => TRUE,
+          'attributes' => ['target' => 'blank'],
+        ])),
+        '@entity_type' => $this->fieldDefinition->getTargetEntityTypeId(),
+      ]);
+    }
+
     if ($field_cardinality !== 1) {
       $elements['multiple_map'] = [
         '#type' => 'checkbox',
@@ -196,7 +219,7 @@ class LeafletDefaultFormatter extends FormatterBase implements ContainerFactoryP
     $elements['popup_content'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Popup content'),
-      '#description' => $this->t('Define the custom content for the Pop Infowindow. If empty the Content Title will be output.<br>See "REPLACEMENT PATTERNS" below for available replacements.'),
+      '#description' => $this->t('Define the custom content for the Pop Infowindow. If empty the Content Title will be output.<br>See "REPLACEMENT PATTERNS" above for available replacements.'),
       '#default_value' => $settings['popup_content'],
       '#states' => [
         'visible' => [
@@ -204,34 +227,6 @@ class LeafletDefaultFormatter extends FormatterBase implements ContainerFactoryP
         ],
       ],
     ];
-
-    if ($this->moduleHandler->moduleExists('token')) {
-
-      $elements['replacement_patterns'] = [
-        '#type' => 'details',
-        '#title' => 'Replacement patterns',
-        '#description' => $this->t('The following replacement tokens are available for the "Popup Content and the Icon Options":'),
-        '#states' => [
-          'visible' => [
-            'input[name="fields[' . $field_name . '][settings_edit_form][settings][popup]"]' => ['checked' => TRUE],
-          ],
-        ],
-      ];
-
-      $elements['replacement_patterns']['token_help'] = [
-        '#theme' => 'token_tree_link',
-        '#token_types' => [$this->fieldDefinition->getTargetEntityTypeId()],
-      ];
-    }
-    else {
-      $elements['replacement_patterns']['#description'] = $this->t('The @token_link is needed to browse and use @entity_type entity token replacements.', [
-        '@token_link' => $this->link->generate(t('Token module'), Url::fromUri('https://www.drupal.org/project/token', [
-          'absolute' => TRUE,
-          'attributes' => ['target' => 'blank'],
-        ])),
-        '@entity_type' => $this->fieldDefinition->getTargetEntityTypeId(),
-      ]);
-    }
 
     // Generate the Leaflet Map General Settings.
     $this->generateMapGeneralSettings($elements, $settings);
@@ -371,15 +366,21 @@ class LeafletDefaultFormatter extends FormatterBase implements ContainerFactoryP
       $icon_type = isset($settings['icon']['iconType']) ? $settings['icon']['iconType'] : 'marker';
 
       // Eventually set the custom icon as DivIcon or Icon Url.
-      if ($icon_type === 'html' && !empty($settings['icon']['html'])) {
+      if ($feature['type'] === 'point' && $icon_type === 'html' && !empty($settings['icon']['html'])) {
         $settings['icon']['html'] = $this->token->replace($settings['icon']['html'], $token_context);
         $settings['icon']['html_class'] = isset($settings['icon']['html_class']) ? $settings['icon']['html_class'] : '';
         $feature['icon'] = $settings['icon'];
       }
-      elseif (!empty($settings['icon']['iconUrl'])) {
+      elseif ($feature['type'] === 'point' && !empty($settings['icon']['iconUrl'])) {
         $settings['icon']['iconUrl'] = !empty($settings['icon']['iconUrl']) > 0 ? $this->token->replace($settings['icon']['iconUrl'], $token_context) : '';
         $settings['icon']['shadowUrl'] = !empty($settings['icon']['shadowUrl']) > 0 ? $this->token->replace($settings['icon']['shadowUrl'], $token_context) : '';
         $feature['icon'] = $settings['icon'];
+      }
+
+      // Associate dynamic path properties (token based) to the feature,
+      // in case of not point.
+      if ($feature['type'] !== 'point') {
+        $feature['path'] = str_replace(["\n", "\r"], "", $this->token->replace($settings['path'], $token_context));
       }
 
       $features[] = $feature;

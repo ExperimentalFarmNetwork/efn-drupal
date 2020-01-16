@@ -24,6 +24,11 @@ function group_token_info() {
     'description' => t('The unique ID of the group.'),
   ];
 
+  $tokens['group']['uuid'] = [
+    'name' => t('Group UUID'),
+    'description' => t('The universally unique ID of the group.'),
+  ];
+
   $tokens['group']['type'] = [
     'name' => t('Group type'),
     'description' => t('The machine name of the group type.'),
@@ -143,6 +148,10 @@ function group_tokens($type, $tokens, array $data, array $options, BubbleableMet
       switch ($name) {
         case 'id':
           $replacements[$original] = $group->id();
+          break;
+
+        case 'uuid':
+          $replacements[$original] = $group->uuid();
           break;
 
         case 'type':

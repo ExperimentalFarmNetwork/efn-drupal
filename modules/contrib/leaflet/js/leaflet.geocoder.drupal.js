@@ -31,20 +31,19 @@
     var control = new L.Control({position: geocoder_settings.position});
     control.onAdd = function() {
       var controlUI = L.DomUtil.create('div','geocoder');
-      controlUI.id = mapid + '--geocoder-control--container'
+      controlUI.id = mapid + '--leaflet--geocoder-control--container';
       controlDiv.appendChild(controlUI);
 
       // Set CSS for the control search interior.
       var controlSearch = document.createElement('input');
       controlSearch.placeholder = Drupal.t('Search Address');
-      controlSearch.id = mapid + '--geocoder-control';
+      controlSearch.id = mapid + '--leaflet--geocoder-control';
       controlSearch.title = Drupal.t('Search an Address on the Map');
       controlSearch.style.color = 'rgb(25,25,25)';
       controlSearch.style.padding = '0.2em 1em';
       controlSearch.style.borderRadius = '3px';
       controlSearch.size = geocoder_settings.input_size || 25;
       controlSearch.maxlength = 256;
-      controlSearch.style.borderRadius = '3px';
       controlUI.appendChild(controlSearch);
       return controlUI;
     };
@@ -55,8 +54,7 @@
   Drupal.Leaflet.prototype.map_geocoder_control.autocomplete = function(mapid, geocoder_settings) {
     var providers = geocoder_settings.providers.toString();
     var options = geocoder_settings.options;
-    $('#' + mapid + '--geocoder-control').autocomplete({
-      // @todo Set a dynamic params.geocoder_min_terms
+    $('#' + mapid + '--leaflet--geocoder-control').autocomplete({
       autoFocus: true,
       minLength: geocoder_settings.min_terms || 4,
       delay: geocoder_settings.delay || 800,

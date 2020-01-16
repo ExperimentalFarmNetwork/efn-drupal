@@ -217,9 +217,8 @@ class GeofieldProximityFilter extends NumericFilter {
         $condition = (new Condition('AND'))->isNotNull($haversine_options['destination_latitude'])->isNotNull($haversine_options['destination_longitude']);
         $query->addWhere($this->options['group'], $condition);
       }
-      // Otherwise output empty result in case of unexposed priximity filter or
-      // submitted/applied one.
-      elseif (!$this->isExposed() || isset($proximity_filter_get)) {
+      // Otherwise output empty result in case of unexposed proximity filter.
+      elseif (!$this->isExposed()) {
         // Origin is not valid so return no results (if not exposed filter).
         $query->addWhereExpression($this->options['group'], '1=0');
       }
@@ -335,19 +334,18 @@ class GeofieldProximityFilter extends NumericFilter {
 
     // Validate the Origin (not null) value, when the filter is required.
     if ($this->options['expose']['required'] == TRUE) {
-      if (isset($form_values[$identifier]['source_configuration']['origin'])) {
-        $input_origin = $form_values[$identifier]['source_configuration']['origin'];
-        if ($this->sourcePlugin->isEmptyLocation($input_origin['lat'], $input_origin['lon'])) {
-          $form_state->setError($form[$identifier]['source_configuration']['origin'], t('The Origin (Lat/Lon) is required'));
-        }
-      }
-      elseif (isset($form_values[$identifier]['source_configuration']['origin_address'])) {
+      if (isset($form_values[$identifier]['source_configuration']['origin_address'])) {
         $input_address = $form_values[$identifier]['source_configuration']['origin_address'];
         if (empty($input_address)) {
           $form_state->setError($form[$identifier]['source_configuration']['origin_address'], t('The Origin Address is required'));
         }
       }
-
+      elseif (isset($form_values[$identifier]['source_configuration']['origin'])) {
+        $input_origin = $form_values[$identifier]['source_configuration']['origin'];
+        if ($this->sourcePlugin->isEmptyLocation($input_origin['lat'], $input_origin['lon'])) {
+          $form_state->setError($form[$identifier]['source_configuration']['origin'], t('The Origin (Lat/Lon) is required'));
+        }
+      }
     }
   }
 

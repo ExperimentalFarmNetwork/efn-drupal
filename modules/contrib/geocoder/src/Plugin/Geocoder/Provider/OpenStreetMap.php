@@ -15,6 +15,10 @@ use Drupal\geocoder\ConfigurableProviderUsingHandlerWithAdapterBase;
  *     "rootUrl" = "https://nominatim.openstreetmap.org",
  *     "userAgent" = "",
  *     "referer" = ""
+ *   },
+ *   throttle = {
+ *     "period" = 2,
+ *     "limit" = 1
  *   }
  * )
  */

@@ -3,6 +3,7 @@
 namespace Drupal\chosen_lib\Commands;
 
 use Drush\Commands\DrushCommands;
+use Drush\Drush;
 use Symfony\Component\Filesystem\Filesystem;
 use Psr\Log\LogLevel;
 
@@ -27,11 +28,13 @@ class ChosenLibCommands extends DrushCommands {
   /**
    * Download and install the Chosen plugin.
    *
-   * @param $path
-   *   Optional. A path where to install the Chosen plugin. If omitted Drush will use the default location.
+   * @param string $path
+   *   Optional. A path where to install the Chosen plugin. If omitted Drush
+   *   will use the default location.
    *
    * @command chosen:plugin
    * @aliases chosenplugin,chosen-plugin
+   *
    * @throws \Exception
    */
   public function plugin($path = '') {
@@ -56,8 +59,8 @@ class ChosenLibCommands extends DrushCommands {
 
       // Remove any existing Chosen plugin directory.
       if (is_dir($dirname) || is_dir('chosen')) {
-        drush_delete_dir($dirname, TRUE);
-        drush_delete_dir('chosen', TRUE);
+        Filesystem::remove($dirname, TRUE);
+        Filesystem::remove('chosen', TRUE);
         $this->drush_log(dt('A existing Chosen plugin was deleted from @path', ['@path' => $path]), 'notice');
       }
 
@@ -65,7 +68,7 @@ class ChosenLibCommands extends DrushCommands {
       $this->drush_tarball_extract($filename, $dirname);
 
       // Change the directory name to "chosen" if needed.
-      if ($dirname != 'chosen') {
+      if ('chosen' !== $dirname) {
         $this->drush_move_dir($dirname, 'chosen');
         $dirname = 'chosen';
       }
@@ -85,17 +88,24 @@ class ChosenLibCommands extends DrushCommands {
   }
 
   /**
-   * @param $message
-   * @param $type
+   * Logs with an arbitrary level.
+   *
+   * @param string $message
+   *   The log message.
+   * @param mixed $type
+   *   The log type.
    */
   public function drush_log($message, $type = LogLevel::INFO) {
     $this->logger()->log($type, $message);
   }
 
   /**
-   * @param $url
-   * @param bool $destination
+   * @param string $url
+   *   The download url.
+   * @param mixed $destination
+   *   The destination path.
    * @return bool|string
+   *   The destination file.
    * @throws \Exception
    */
   public function drush_download_file($url, $destination = FALSE) {
@@ -108,16 +118,21 @@ class ChosenLibCommands extends DrushCommands {
     // Copied from: \Drush\Commands\SyncViaHttpCommands::downloadFile
     static $use_wget;
     if ($use_wget === NULL) {
-      $use_wget = drush_shell_exec('which wget');
+      $process = Drush::process(['which', 'wget']);
+      $process->run();
+      $use_wget = $process->isSuccessful();
     }
 
     $destination_tmp = drush_tempnam('download_file');
     if ($use_wget) {
-      drush_shell_exec("wget -q --timeout=30 -O %s %s", $destination_tmp, $url);
+      $args = ['wget', '-q', '--timeout=30', '-O', $destination_tmp, $url];
     }
     else {
-      drush_shell_exec("curl -s -L --connect-timeout 30 -o %s %s", $destination_tmp, $url);
+      $args = ['curl', '-s', '-L', '--connect-timeout', '30', '-o', $destination_tmp, $url];
     }
+    $process = Drush::process($args);
+    $process->mustRun();
+
     if (!drush_file_not_empty($destination_tmp) && $file = @file_get_contents($url)) {
       @file_put_contents($destination_tmp, $file);
     }
@@ -134,8 +149,10 @@ class ChosenLibCommands extends DrushCommands {
   }
 
   /**
-   * @param $src
-   * @param $dest
+   * @param string $src
+   *   The origin filename or directory.
+   * @param string $dest
+   *   The new filename or directory.
    * @return bool
    */
   public function drush_move_dir($src, $dest) {
@@ -145,7 +162,8 @@ class ChosenLibCommands extends DrushCommands {
   }
 
   /**
-   * @param $path
+   * @param string $path
+   *   The make directory path.
    * @return bool
    */
   public function drush_mkdir($path) {
@@ -155,25 +173,39 @@ class ChosenLibCommands extends DrushCommands {
   }
 
   /**
-   * @param $path
+   * @param string $path
+   *   The filename or directory.
    * @param bool $destination
+   *   The destination path.
    * @return mixed
    * @throws \Exception
    */
   public function drush_tarball_extract($path, $destination = FALSE) {
     $this->drush_mkdir($destination);
+    $cwd = getcwd();
     if (preg_match('/\.tgz$/', $path)) {
-      $return = drush_shell_cd_and_exec(dirname($path), "tar -xvzf %s -C %s", $path, $destination);
+      drush_op('chdir', dirname($path));
+      $process = Drush::process(['tar', '-xvzf', $path, '-C', $destination]);
+      $process->run();
+      $return = $process->isSuccessful();
+      drush_op('chdir', $cwd);
+
       if (!$return) {
-        throw new \Exception(dt('Unable to extract !filename.' . PHP_EOL . implode(PHP_EOL, drush_shell_exec_output()), ['!filename' => $path]));
+        throw new \Exception(dt('Unable to extract !filename.' . PHP_EOL . implode(PHP_EOL, $process->getOutput()), ['!filename' => $path]));
       }
     }
     else {
-      $return = drush_shell_cd_and_exec(dirname($path), "unzip %s -d %s", $path, $destination);
+      drush_op('chdir', dirname($path));
+      $process = Drush::process(['unzip', $path, '-d', $destination]);
+      $process->run();
+      $return = $process->isSuccessful();
+      drush_op('chdir', $cwd);
+
       if (!$return) {
-        throw new \Exception(dt('Unable to extract !filename.' . PHP_EOL . implode(PHP_EOL, drush_shell_exec_output()), ['!filename' => $path]));
+        throw new \Exception(dt('Unable to extract !filename.' . PHP_EOL . implode(PHP_EOL, $process->getOutput()), ['!filename' => $path]));
       }
     }
+
     return $return;
   }
 

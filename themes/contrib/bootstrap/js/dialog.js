@@ -127,8 +127,22 @@
       return;
     }
 
+    var attributes = Attributes.create(element).remove('style').set('data-drupal-theme', this.themeHooks.modal);
+
+    // Merge in trigger data attributes.
+    if (options.$trigger && options.$trigger[0]) {
+      var trigger = options.$trigger[0];
+      var data = trigger.getAttributeNames().filter(function (name) {
+        return name.startsWith('data-');
+      }).reduce(function (data, name) {
+        data[name] = trigger.getAttribute(name);
+        return data;
+      }, {});
+      attributes.merge(data);
+    }
+
     options = $.extend(true, {}, options, {
-      attributes: Attributes.create(element).remove('style').set('data-drupal-theme', this.themeHooks.modal),
+      attributes: attributes,
     });
 
     // Create a new modal.

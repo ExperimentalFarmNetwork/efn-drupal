@@ -56,7 +56,6 @@ class Geocoder implements GeocoderInterface {
         static::log($e->getMessage());
       }
     }
-
     return NULL;
   }
 
@@ -77,7 +76,6 @@ class Geocoder implements GeocoderInterface {
         static::log($e->getMessage());
       }
     }
-
     return NULL;
   }
 

@@ -13,6 +13,11 @@ use Drupal\Component\Render\FormattableMarkup;
 class ChosenFieldWidgetsTest extends FieldTestBase {
 
   /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stark';
+
+  /**
    * Modules to enable.
    *
    * @var array
@@ -118,7 +123,7 @@ class ChosenFieldWidgetsTest extends FieldTestBase {
     // Display form.
     $this->drupalGet('entity_test/manage/' . $entity->id() . '/edit');
     // A required field without any value has a "none" option.
-    $this->assertTrue($this->xpath('//select[@id=:id]//option[@value="_none" and text()=:label]', [':id' => 'edit-card-1', ':label' => '- Select a value -']), 'A non-required select list has a "Select a value" choice.');
+    $this->assertSession()->elementExists('xpath', '//select[@id="edit-card-1"]//option[@value="_none" and text()="- Select a value -"]');
 
     // With no field data, nothing is selected.
     $options = ['_none', 0, 1, 2];
@@ -126,7 +131,7 @@ class ChosenFieldWidgetsTest extends FieldTestBase {
     foreach ($options as $option) {
       $option_field = $this->assertSession()->optionExists($id, $option);
       $message = "Option $option for field $id is not selected.";
-      $this->assertFalse($option_field->hasAttribute('selected'), $message);
+      $this->assertEmpty($option_field->hasAttribute('selected'), $message);
     }
 
     $this->assertSession()->responseContains('Some dangerous &amp; unescaped markup');
@@ -144,20 +149,20 @@ class ChosenFieldWidgetsTest extends FieldTestBase {
     // Display form: check that the right options are selected.
     $this->drupalGet('entity_test/manage/' . $entity->id() . '/edit');
     // A required field with a value has no 'none' option.
-    $this->assertFalse($this->xpath('//select[@id=:id]//option[@value="_none"]', [':id' => 'edit-card-1']), 'A required select list with an actual value has no "none" choice.');
+    $this->assertSession()->elementNotExists('xpath', '//select[@id="edit-card-1"]//option[@value="_none"]');
 
     $id = 'edit-card-1';
     $option = 0;
     $option_field = $this->assertSession()->optionExists($id, $option);
     $message = "Option $option for field $id is selected.";
-    $this->assertTrue($option_field->hasAttribute('selected'), $message);
+    $this->assertNotEmpty($option_field->hasAttribute('selected'), $message);
 
     $options = [1, 2];
     $id = 'edit-card-1';
     foreach ($options as $option) {
       $option_field = $this->assertSession()->optionExists($id, $option);
       $message = "Option $option for field $id is not selected.";
-      $this->assertFalse($option_field->hasAttribute('selected'), $message);
+      $this->assertEmpty($option_field->hasAttribute('selected'), $message);
     }
 
     // Make the field non required.
@@ -167,7 +172,7 @@ class ChosenFieldWidgetsTest extends FieldTestBase {
     // Display form.
     $this->drupalGet('entity_test/manage/' . $entity->id() . '/edit');
     // A non-required field has a 'none' option.
-    $this->assertTrue($this->xpath('//select[@id=:id]//option[@value="_none" and text()=:label]', [':id' => 'edit-card-1', ':label' => '- None -']), 'A non-required select list has a "None" choice.');
+    $this->assertSession()->elementExists('xpath', '//select[@id="edit-card-1"]//option[@value="_none" and text()="- None -"]');
     // Submit form: Unselect the option.
     $edit = ['card_1' => '_none'];
     $this->drupalPostForm('entity_test/manage/' . $entity->id() . '/edit', $edit, 'Save');
@@ -186,7 +191,7 @@ class ChosenFieldWidgetsTest extends FieldTestBase {
     foreach ($options as $option) {
       $option_field = $this->assertSession()->optionExists($id, $option);
       $message = "Option $option for field $id is not selected.";
-      $this->assertFalse($option_field->hasAttribute('selected'), $message);
+      $this->assertEmpty($option_field->hasAttribute('selected'), $message);
     }
 
     $this->assertSession()->responseContains('Some dangerous &amp; unescaped markup');
@@ -204,14 +209,14 @@ class ChosenFieldWidgetsTest extends FieldTestBase {
     $option = 0;
     $option_field = $this->assertSession()->optionExists($id, $option);
     $message = "Option $option for field $id is selected.";
-    $this->assertTrue($option_field->hasAttribute('selected'), $message);
+    $this->assertNotEmpty($option_field->hasAttribute('selected'), $message);
 
     $options = [1, 2];
     $id = 'edit-card-1';
     foreach ($options as $option) {
       $option_field = $this->assertSession()->optionExists($id, $option);
       $message = "Option $option for field $id is not selected.";
-      $this->assertFalse($option_field->hasAttribute('selected'), $message);
+      $this->assertEmpty($option_field->hasAttribute('selected'), $message);
     }
 
     // Submit form: Unselect the option.
@@ -253,7 +258,7 @@ class ChosenFieldWidgetsTest extends FieldTestBase {
     foreach ($options as $option) {
       $option_field = $this->assertSession()->optionExists($id, $option);
       $message = "Option $option for field $id is not selected.";
-      $this->assertFalse($option_field->hasAttribute('selected'), $message);
+      $this->assertEmpty($option_field->hasAttribute('selected'), $message);
     }
 
     $this->assertSession()->responseContains('Some dangerous &amp; unescaped markup');
@@ -270,19 +275,19 @@ class ChosenFieldWidgetsTest extends FieldTestBase {
     $option = 0;
     $option_field = $this->assertSession()->optionExists($id, $option);
     $message = "Option $option for field $id is selected.";
-    $this->assertTrue($option_field->hasAttribute('selected'), $message);
+    $this->assertNotEmpty($option_field->hasAttribute('selected'), $message);
 
     $option = 1;
     $id = 'edit-card-2';
     $option_field = $this->assertSession()->optionExists($id, $option);
     $message = "Option $option for field $id is not selected.";
-    $this->assertFalse($option_field->hasAttribute('selected'), $message);
+    $this->assertEmpty($option_field->hasAttribute('selected'), $message);
 
     $id = 'edit-card-2';
     $option = 2;
     $option_field = $this->assertSession()->optionExists($id, $option);
     $message = "Option $option for field $id is selected.";
-    $this->assertTrue($option_field->hasAttribute('selected'), $message);
+    $this->assertNotEmpty($option_field->hasAttribute('selected'), $message);
 
     // Submit form: select only first option.
     $edit = ['card_2[]' => [0 => 0]];
@@ -296,14 +301,14 @@ class ChosenFieldWidgetsTest extends FieldTestBase {
     $option = 0;
     $option_field = $this->assertSession()->optionExists($id, $option);
     $message = "Option $option for field $id is selected.";
-    $this->assertTrue($option_field->hasAttribute('selected'), $message);
+    $this->assertNotEmpty($option_field->hasAttribute('selected'), $message);
 
     $options = [1, 2];
     $id = 'edit-card-2';
     foreach ($options as $option) {
       $option_field = $this->assertSession()->optionExists($id, $option);
       $message = "Option $option for field $id is not selected.";
-      $this->assertFalse($option_field->hasAttribute('selected'), $message);
+      $this->assertEmpty($option_field->hasAttribute('selected'), $message);
     }
 
     // Submit form: select the three options while the field accepts only 2.
@@ -320,7 +325,7 @@ class ChosenFieldWidgetsTest extends FieldTestBase {
     $instance->setRequired(TRUE);
     $instance->save();
     $this->drupalGet('entity_test/manage/' . $entity->id() . '/edit');
-    $this->assertFalse($this->xpath('//select[@id=:id]//option[@value=""]', [':id' => 'edit-card-2']), 'A required select list does not have an empty key.');
+    $this->assertSession()->elementNotExists('xpath', '//select[@id="edit-card-2"]//option[@value=""]');
 
     // We do not have to test that a required select list with one option is
     // auto-selected because the browser does it for us.
@@ -341,7 +346,7 @@ class ChosenFieldWidgetsTest extends FieldTestBase {
     foreach ($options as $option) {
       $option_field = $this->assertSession()->optionExists($id, $option);
       $message = "Option $option for field $id is not selected.";
-      $this->assertFalse($option_field->hasAttribute('selected'), $message);
+      $this->assertEmpty($option_field->hasAttribute('selected'), $message);
     }
 
     $this->assertSession()->responseContains('Some dangerous &amp; unescaped markup');
@@ -359,14 +364,14 @@ class ChosenFieldWidgetsTest extends FieldTestBase {
     $option = 0;
     $option_field = $this->assertSession()->optionExists($id, $option);
     $message = "Option $option for field $id is selected.";
-    $this->assertTrue($option_field->hasAttribute('selected'), $message);
+    $this->assertNotEmpty($option_field->hasAttribute('selected'), $message);
 
     $options = [1, 2];
     $id = 'edit-card-2';
     foreach ($options as $option) {
       $option_field = $this->assertSession()->optionExists($id, $option);
       $message = "Option $option for field $id is not selected.";
-      $this->assertFalse($option_field->hasAttribute('selected'), $message);
+      $this->assertEmpty($option_field->hasAttribute('selected'), $message);
     }
   }
 

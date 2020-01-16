@@ -521,10 +521,8 @@
         variables = $.extend(true, {}, defaults, variables);
 
         if (typeof variables.title === 'string') {
-          variables.title = $.extend({}, defaults, { content: variables.title });
+          variables.title = $.extend({}, defaults.title, { content: variables.title });
         }
-
-        variables.title.attributes = Attributes.create(defaults.title.attributes).merge(variables.title.attributes);
 
         var title = Drupal.theme('bootstrapModalTitle', variables.title);
         if (title) {

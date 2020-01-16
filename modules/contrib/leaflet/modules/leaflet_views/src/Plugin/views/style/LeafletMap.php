@@ -31,7 +31,7 @@ use Drupal\Core\Utility\LinkGeneratorInterface;
 use Drupal\leaflet\LeafletSettingsElementsTrait;
 use Drupal\views\Plugin\views\PluginBase;
 use Drupal\views\Views;
-use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Component\Serialization\Json;
 
 /**
  * Style plugin to render a View output as a Leaflet map.
@@ -696,7 +696,7 @@ class LeafletMap extends StylePluginBase implements ContainerFactoryPluginInterf
 
         if (!empty($geofield_value)) {
 
-          $points = $this->leafletService->leafletProcessGeofield($geofield_value);
+          $features = $this->leafletService->leafletProcessGeofield($geofield_value);
 
           if (!empty($result->_entity)) {
             // Entity API provides a plain entity object.
@@ -782,6 +782,7 @@ class LeafletMap extends StylePluginBase implements ContainerFactoryPluginInterf
                 $url = Url::fromRoute('leaflet_views.ajax_popup', $parameters, ['absolute' => TRUE]);
                 $description = sprintf('<div class="leaflet-ajax-popup" data-leaflet-ajax-popup="%s" %s></div>',
                   $url->toString(), LeafletAjaxPopupController::getPopupIdentifierAttribute($entity_type, $entity->id(), $this->options['view_mode'], $langcode));
+                $map['settings']['ajaxPoup'] = TRUE;
                 break;
 
               default:
@@ -791,23 +792,23 @@ class LeafletMap extends StylePluginBase implements ContainerFactoryPluginInterf
 
             // Relates the feature with its entity id, so that it might be
             // referenced from outside.
-            foreach ($points as &$point) {
-              $point['entity_id'] = $entity->id();
+            foreach ($features as &$feature) {
+              $feature['entity_id'] = $entity->id();
             }
 
             // Attach pop-ups if we have a description field.
             if (isset($description)) {
-              foreach ($points as &$point) {
-                $point['popup'] = $description;
+              foreach ($features as &$feature) {
+                $feature['popup'] = $description;
               }
             }
 
             // Attach also titles, they might be used later on.
             if ($this->options['name_field']) {
-              foreach ($points as &$point) {
+              foreach ($features as &$feature) {
                 // Decode any entities because JS will encode them again and
                 // we don't want double encoding.
-                $point['label'] = !empty($this->options['name_field']) ? Html::decodeEntities(($this->rendered_fields[$result->index][$this->options['name_field']])) : '';
+                $feature['label'] = !empty($this->options['name_field']) ? Html::decodeEntities(($this->rendered_fields[$result->index][$this->options['name_field']])) : '';
               }
             }
 
@@ -824,38 +825,48 @@ class LeafletMap extends StylePluginBase implements ContainerFactoryPluginInterf
               $this->options['icon'] = array_replace($map['icon'], $this->options['icon']);
             }
 
+            // Define possible tokens.
+            $tokens = [];
+            foreach ($this->rendered_fields[$result->index] as $field_name => $field_value) {
+              $tokens[$field_name] = $field_value;
+              $tokens["{{ $field_name }}"] = $field_value;
+            }
+
             $icon_type = isset($this->options['icon']['iconType']) ? $this->options['icon']['iconType'] : 'marker';
 
             // Eventually set the custom icon as DivIcon or Icon Url.
             if ($icon_type === 'marker' && !empty($this->options['icon']['iconUrl'])
               || $icon_type === 'html' && !empty($this->options['icon']['html'])) {
-              $tokens = [];
-              foreach ($this->rendered_fields[$result->index] as $field_name => $field_value) {
-                $tokens[$field_name] = $field_value;
-                $tokens["{{ $field_name }}"] = $field_value;
-              }
-              foreach ($points as &$point) {
-                if ($icon_type === 'html' && !empty($this->options['icon']['html'])) {
-                  $point['icon'] = $this->options['icon'];
-                  $point['icon']['html'] = $this->viewsTokenReplace($this->options['icon']['html'], $tokens);
-                  $point['icon']['html_class'] = $this->options['icon']['html_class'];
+              foreach ($features as &$feature) {
+                if ($feature['type'] === 'point' && $icon_type === 'html' && !empty($this->options['icon']['html'])) {
+                  $feature['icon'] = $this->options['icon'];
+                  $feature['icon']['html'] = $this->viewsTokenReplace($this->options['icon']['html'], $tokens);
+                  $feature['icon']['html_class'] = $this->options['icon']['html_class'];
                 }
-                elseif (!empty($this->options['icon']['iconUrl'])) {
-                  $point['icon'] = $this->options['icon'];
-                  $point['icon']['iconUrl'] = $this->viewsTokenReplace($this->options['icon']['iconUrl'], $tokens);
+                elseif ($feature['type'] === 'point' && !empty($this->options['icon']['iconUrl'])) {
+                  $feature['icon'] = $this->options['icon'];
+                  $feature['icon']['iconUrl'] = $this->viewsTokenReplace($this->options['icon']['iconUrl'], $tokens);
                   if (!empty($this->options['icon']['shadowUrl'])) {
-                    $point['icon']['shadowUrl'] = $this->viewsTokenReplace($this->options['icon']['shadowUrl'], $tokens);
+                    $feature['icon']['shadowUrl'] = $this->viewsTokenReplace($this->options['icon']['shadowUrl'], $tokens);
                   }
                 }
               }
             }
 
-            foreach ($points as &$point) {
+            // Associate dynamic path properties (token based) to each feature,
+            // in case of not point.
+            foreach ($features as &$feature) {
+              if ($feature['type'] !== 'point') {
+                $feature['path'] = str_replace(["\n", "\r"], "", $this->viewsTokenReplace($this->options['path'], $tokens));
+              }
+            }
+
+            foreach ($features as &$feature) {
               // Allow modules to adjust the marker.
-              \Drupal::moduleHandler()->alter('leaflet_views_feature', $point, $result, $this->view->rowPlugin);
+              \Drupal::moduleHandler()->alter('leaflet_views_feature', $feature, $result, $this->view->rowPlugin);
             }
             // Add new points to the whole basket.
-            $data = array_merge($data, $points);
+            $data = array_merge($data, $features);
           }
         }
       }
@@ -876,11 +887,15 @@ class LeafletMap extends StylePluginBase implements ContainerFactoryPluginInterf
     $this->moduleHandler->alter('leaflet_map_view_style', $js_settings, $this);
 
     $map_height = !empty($this->options['height']) ? $this->options['height'] . $this->options['height_unit'] : '';
-    $build = $this->leafletService->leafletRenderMap($js_settings['map'], $js_settings['features'], $map_height);
-    BubbleableMetadata::createFromRenderArray($build)
+    $element = $this->leafletService->leafletRenderMap($js_settings['map'], $js_settings['features'], $map_height);
+    // Add the Core Drupal Ajax library for Ajax Popups.
+    if (isset($map['settings']['ajaxPoup']) && $map['settings']['ajaxPoup'] == TRUE) {
+      $build_for_bubbleable_metadata['#attached']['library'][] = 'core/drupal.ajax';
+    }
+    BubbleableMetadata::createFromRenderArray($element)
       ->merge(BubbleableMetadata::createFromRenderArray($build_for_bubbleable_metadata))
-      ->applyTo($build);
-    return $build;
+      ->applyTo($element);
+    return $element;
   }
 
   /**

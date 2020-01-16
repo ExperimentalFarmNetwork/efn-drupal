@@ -5,6 +5,7 @@
  * Post update functions for Group.
  */
 
+use Drupal\Core\Config\Entity\ConfigEntityUpdater;
 use Drupal\group\Entity\GroupType;
 use Drupal\group\Entity\GroupContentType;
 use Drupal\user\Entity\Role;
@@ -44,4 +45,17 @@ function group_post_update_grant_access_overview_permission() {
       $role->save();
     }
   }
+}
+
+/**
+ * Fix cache contexts in views.
+ */
+function group_post_update_view_cache_contexts(&$sandbox) {
+  if (!\Drupal::moduleHandler()->moduleExists('views')) {
+    return;
+  }
+  // This will trigger the catch-all fix in group_view_presave().
+  \Drupal::classResolver(ConfigEntityUpdater::class)->update($sandbox, 'view', function ($view) {
+    return TRUE;
+  });
 }

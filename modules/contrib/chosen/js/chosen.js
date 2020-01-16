@@ -149,22 +149,33 @@
     getElementOptions: function (element) {
       var $element = $(element);
       var options = $.extend({}, this.settings.options);
+      var dimension;
+      var width;
 
       // The width default option is considered the minimum width, so this
       // must be evaluated for every option.
       if (this.settings.minimum_width > 0) {
-        var dimension = this.settings.use_relative_width ? '%' : 'px';
+        // Given we need to manage settings as both percentage and pixel widths,
+        // we need to handle width calculations separately.
+        if (this.settings.use_relative_width) {
+          dimension = '%';
+          width = ($element.width() / $element.parent().width() * 100).toPrecision(5);
+        }
+        else {
+          dimension = 'px';
+          width = $element.width();
+        }
 
-        if ($element.width() < this.settings.minimum_width) {
+        if (width < this.settings.minimum_width) {
           options.width = this.settings.minimum_width + dimension;
         }
         else {
-          options.width = $element.width() + dimension;
+          options.width = width + dimension;
         }
       }
 
       // Some field widgets have cardinality, so we must respect that.
-      // @see chosen_pre_render_select()
+      // @see \Drupal\chosen\ChosenFormRender::preRenderSelect()
       var cardinality;
       if ($element.attr('multiple') && (cardinality = $element.data('cardinality'))) {
         options.max_selected_options = cardinality;

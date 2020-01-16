@@ -27,7 +27,8 @@
         "php": ">=7.1.0",
         "php-http/guzzle6-adapter": "^1.1",
         "php-http/message": "^1.6",
-        "willdurand/geocoder": "^4.0"
+        "willdurand/geocoder": "^4.0",
+        "davedevelopment/stiphle": "^0.9.2"
     },
     "require-dev": {
         "phpro/grumphp": "^0.12.1",
@@ -49,6 +50,8 @@
         "geocoder-php/maxmind-provider": "^4.1",
         "geocoder-php/nominatim-provider": "^5.0",
         "geocoder-php/open-cage-provider": "^4.0",
+        "geocoder-php/openrouteservice-provider": "^1.0",
+        "geocoder-php/pelias-provider": "^1.1",
         "geocoder-php/photon-provider": "^0.1.0",
         "geocoder-php/tomtom-provider": "^4.0",
         "geocoder-php/yandex-provider": "^4.0"

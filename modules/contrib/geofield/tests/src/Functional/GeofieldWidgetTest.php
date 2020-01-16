@@ -180,8 +180,8 @@ class GeofieldWidgetTest extends FieldTestBase {
     ];
     $this->drupalPostForm(NULL, $edit, t('Save'));
 
-    $this->assertSession->pageTextContains('geofield_field: Latitude is out of bounds.');
-    $this->assertSession->pageTextContains('geofield_field: Longitude is out of bounds.');
+    $this->assertSession->pageTextContains('geofield_field: Latitude is out of bounds');
+    $this->assertSession->pageTextContains('geofield_field: Longitude is out of bounds');
 
     // Add non numeric values.
     $edit = [
@@ -191,8 +191,8 @@ class GeofieldWidgetTest extends FieldTestBase {
     ];
     $this->drupalPostForm(NULL, $edit, t('Save'));
 
-    $this->assertSession->pageTextContains('geofield_field: Latitude is not numeric.');
-    $this->assertSession->pageTextContains('geofield_field: Longitude is not numeric.');
+    $this->assertSession->pageTextContains('geofield_field: Latitude is not valid.');
+    $this->assertSession->pageTextContains('geofield_field: Longitude is not valid.');
   }
 
   /**
@@ -240,8 +240,8 @@ class GeofieldWidgetTest extends FieldTestBase {
       'geofield_field[0][value][left]' => 750,
     ];
     $this->drupalPostForm(NULL, $edit, t('Save'));
-    $this->assertSession->pageTextContains('geofield_field: Right is not numeric.');
-    $this->assertSession->pageTextContains('geofield_field: Left is out of bounds.');
+    $this->assertSession->pageTextContains('geofield_field: Right is not valid.');
+    $this->assertSession->pageTextContains('geofield_field: Left is out of bounds');
     $this->assertSession->pageTextContains('geofield_field: Top must be greater than Bottom.');
   }
 

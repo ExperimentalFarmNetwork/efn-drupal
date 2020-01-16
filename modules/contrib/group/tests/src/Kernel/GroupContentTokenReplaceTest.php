@@ -40,7 +40,7 @@ class GroupContentTokenReplaceTest extends GroupTokenReplaceKernelTestBase {
     $tests['[group_content:created:since]'] = \Drupal::service('date.formatter')->formatTimeDiffSince($group_content->getCreatedTime(), ['langcode' => $this->interfaceLanguage->getId()]);
     $tests['[group_content:changed:since]'] = \Drupal::service('date.formatter')->formatTimeDiffSince($group_content->getChangedTime(), ['langcode' => $this->interfaceLanguage->getId()]);
 
-    $base_bubbleable_metadata = BubbleableMetadata::createFromObject($group_content);
+    $base_bubbleable_metadata = (new BubbleableMetadata())->addCacheableDependency($group_content);
 
     $metadata_tests = [];
     $metadata_tests['[group_content:id]'] = $base_bubbleable_metadata;

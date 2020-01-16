@@ -29,16 +29,13 @@
 
         // Attach leaflet ajax popup listeners.
         Drupal.Leaflet[mapid].lMap.on('popupopen', function(e) {
-          var content = $('[data-leaflet-ajax-popup]', e.popup._contentNode);
+          var element = e.popup._contentNode;
+          var content = $('[data-leaflet-ajax-popup]', element);
           if (content.length) {
             var url = content.data('leaflet-ajax-popup');
             Drupal.ajax({url: url}).execute();
           }
-        });
-
-        // Attach drupal behaviors on new content.
-        Drupal.Leaflet[mapid].lMap.on('popupopen', function(e) {
-          var element = e.popup._contentNode;
+          // Attach drupal behaviors on new content.
           $(element).each(function () {
             Drupal.attachBehaviors(this, drupalSettings);
           })
@@ -58,9 +55,6 @@
             // Initialize the Drupal.Leaflet.[data.mapid] object,
             // for possible external interaction.
             Drupal.Leaflet[mapid].markers = {}
-
-            // Define the Drupal.Leaflet.path object.
-            Drupal.Leaflet[mapid].path = data.map.settings.path && data.map.settings.path.length > 0 ? JSON.parse(data.map.settings.path) : {};
 
             // Add Leaflet Map Features.
             $container.data('leaflet').add_features(mapid, data.features, true);
@@ -105,8 +99,6 @@
     this.start_zoom = null;
     this.layer_control = null;
     this.markers = {};
-    this.path = {};
-
     this.initialise(mapid);
   };
 
@@ -208,7 +200,7 @@
     var self = this;
     self.overlays[label] = layer;
     if (!layer_hidden) {
-      Drupal.Leaflet[mapid].layer_control.lMap.addLayer(layer);
+      Drupal.Leaflet[mapid].lMap.addLayer(layer);
     }
 
     if (Drupal.Leaflet[mapid].layer_control == null) {
@@ -236,7 +228,8 @@
           lFeature = self.create_feature(groupFeature);
           if (lFeature !== undefined) {
             if (lFeature.setStyle) {
-              lFeature.setStyle(Drupal.Leaflet[mapid].path);
+              feature.path = feature.path ? JSON.parse(feature.path) : {};
+              lFeature.setStyle(feature.path);
             }
             if (groupFeature.popup) {
               lFeature.bindPopup(groupFeature.popup);
@@ -246,13 +239,14 @@
         }
 
         // Add the group to the layer switcher.
-        self.add_overlay(feature.label, lGroup, FALSE);
+        self.add_overlay(feature.label, lGroup, false, mapid);
       }
       else {
         lFeature = self.create_feature(feature);
         if (lFeature !== undefined) {
           if (lFeature.setStyle) {
-            lFeature.setStyle(Drupal.Leaflet[mapid].path);
+            feature.path = feature.path ? JSON.parse(feature.path) : {};
+            lFeature.setStyle(feature.path);
           }
           self.lMap.addLayer(lFeature);
 
@@ -315,7 +309,7 @@
     if (feature.options) {
       for (var option in feature.options) {
         if (feature.options.hasOwnProperty(option)) {
-          options[option] = feature.options.option;
+          options[option] = feature.options[option];
         }
       }
       lFeature.setStyle(options);
