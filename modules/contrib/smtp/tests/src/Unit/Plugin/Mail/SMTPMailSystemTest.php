@@ -2,7 +2,6 @@
 
 namespace Drupal\Tests\smtp\Unit\Plugin\Mail;
 
-use Drupal\Component\Utility\EmailValidator;
 use Drupal\Core\Config\Config;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
@@ -10,6 +9,7 @@ use Drupal\Core\Messenger\Messenger;
 use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\smtp\Plugin\Mail\SMTPMailSystem;
 use Drupal\Tests\UnitTestCase;
+use Egulias\EmailValidator\EmailValidator;
 use Prophecy\Argument;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
