@@ -10,7 +10,7 @@
 
 If you use Composer to manage dependencies, edit `/composer.json` as follows.
 
-1\. Run `composer require --prefer-dist composer/installers` to ensure that you have the `composer/installers` package installed. This package facilitates the installation of packages into directories other than `/vendor` (e.g. `/libraries`) using Composer.
+1\. Run `composer require composer/installers` to ensure that you have the `composer/installers` package installed. This package facilitates the installation of packages into directories other than `/vendor` (e.g. `/libraries`) using Composer.
 
 2\. Add the following to the "installer-paths" section of `composer.json`:
 
@@ -18,35 +18,43 @@ If you use Composer to manage dependencies, edit `/composer.json` as follows.
 "libraries/{$name}": ["type:drupal-library"],
 ```
 
+When you are using the drupal-composer/drupal-project template add the following instead:
+
+```
+"web/libraries/{$name}": ["type:drupal-library"],
+```
+
 3\. Add the following to the "repositories" section of `composer.json`:
 
 ```
-"d3": {
+{
     "type": "package",
     "package": {
         "name": "d3/d3",
         "version": "v3.5.17",
         "type": "drupal-library",
-        "dist": {
-            "url": "https://github.com/d3/d3/archive/v3.5.17.zip",
-            "type": "zip"
+        "source": {
+            "url": "https://github.com/d3/d3.git",
+            "type": "git",
+            "reference": "tags/v3.5.17"
         }
     }
 },
-"highlightjs": {
+{
     "type": "package",
     "package": {
-        "name": "components/highlightjs",
+        "name": "highlightjs/highlightjs",
         "version": "9.7.0",
         "type": "drupal-library",
-        "dist": {
-            "url": "https://github.com/components/highlightjs/archive/9.7.0.zip",
-            "type": "zip"
+        "source": {
+            "url": "https://github.com/highlightjs/highlight.js.git",
+            "type": "git",
+            "reference": "tags/9.7.0"
         }
     }
 }
 ```
-4\. Run `composer require --prefer-dist d3/d3:3.5.* components/highlightjs:9.7.*` - you should find that new directories have been created
+4\. Run `composer require d3/d3 hihglightjs/highlightjs` - you should find that new directories have been created
 under `/libraries`
 
 ## Install manually

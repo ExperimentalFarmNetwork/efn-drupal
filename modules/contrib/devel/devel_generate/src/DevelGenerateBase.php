@@ -29,6 +29,13 @@ abstract class DevelGenerateBase extends PluginBase implements DevelGenerateBase
   protected $random;
 
   /**
+   * The entity type manager service.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  /**
    * {@inheritdoc}
    */
   public function getSetting($key) {
@@ -91,13 +98,18 @@ abstract class DevelGenerateBase extends PluginBase implements DevelGenerateBase
    *
    * @param \Drupal\Core\Entity\EntityInterface $entity
    *   The entity to be enriched with sample field values.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public static function populateFields(EntityInterface $entity) {
-    /* @var \Drupal\field\FieldConfigInterface[] $instances */
-    $instances = entity_load_multiple_by_properties('field_config',[
+    $properties = [
       'entity_type' => $entity->getEntityType()->id(),
       'bundle' => $entity->bundle()
-      ]);
+    ];
+    $field_config_storage = \Drupal::entityTypeManager()->getStorage('field_config');
+    /* @var \Drupal\field\FieldConfigInterface[] $instances */
+    $instances = $field_config_storage->loadByProperties($properties);
 
     if ($skips = function_exists('drush_get_option') ? drush_get_option('skip-fields', '') : @$_REQUEST['skip-fields']) {
       foreach (explode(',', $skips) as $skip) {
@@ -157,6 +169,20 @@ abstract class DevelGenerateBase extends PluginBase implements DevelGenerateBase
     if (!is_numeric($number)) return FALSE;
     return TRUE;
   }
+
+  /**
+   * Gets the entity type manager service.
+   *
+   * @return \Drupal\Core\Entity\EntityTypeManagerInterface
+   *   The entity type manager service.
+   */
+  protected function getEntityTypeManager() {
+    if (!$this->entityTypeManager) {
+      $this->entityTypeManager = \Drupal::entityTypeManager();
+    }
+    return $this->entityTypeManager;
+  }
+
 
   /**
    * Returns the random data generator.

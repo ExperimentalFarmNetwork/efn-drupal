@@ -2,15 +2,14 @@ name: Web Profiler
 type: module
 description: 'Drupal Web Profiler.'
 package: Development
-# core: 8.x
+core: 8.x
 configure: webprofiler.settings
 tags:
  - developer
 dependencies:
  - devel:devel
 
-# Information added by Drupal.org packaging script on 2019-05-02
-version: '8.x-2.1'
-core: '8.x'
+# Information added by Drupal.org packaging script on 2019-10-26
+version: '8.x-3.0-beta1'
 project: 'devel'
-datestamp: 1556799504
+datestamp: 1572125287

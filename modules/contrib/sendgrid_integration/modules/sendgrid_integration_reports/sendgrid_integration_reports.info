@@ -1,0 +1,12 @@
+name = Sendgrid Integration Reports
+description = Sendgrid Reports Module
+dependencies[] = sendgrid_integration
+package = Mail
+core = 7.x
+files[] = tests/sendgrid_integration_reports.test
+
+; Information added by Drupal.org packaging script on 2018-06-14
+version = "8.x-1.2"
+core = "8.x"
+project = "sendgrid_integration"
+datestamp = "1528941234"

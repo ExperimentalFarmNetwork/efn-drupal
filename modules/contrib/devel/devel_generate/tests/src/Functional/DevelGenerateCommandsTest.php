@@ -1,5 +1,5 @@
 <?php
-namespace Drupal\Tests\devel\Functional;
+namespace Drupal\Tests\devel_generate\Functional;
 
 use Drupal\comment\Entity\Comment;
 use Drupal\menu_link_content\Entity\MenuLinkContent;
@@ -13,7 +13,7 @@ use Drupal\user\Entity\User;
 use Drush\TestTraits\DrushTestTrait;
 
 /**
- * Note: Drush must be installed. See https://cgit.drupalcode.org/devel/tree/drupalci.yml?h=8.x-2.x and its docs at
+ * Note: Drush must be in the Composer project. See https://cgit.drupalcode.org/devel/tree/drupalci.yml?h=8.x-2.x and its docs at
  * https://www.drupal.org/drupalorg/docs/drupal-ci/customizing-drupalci-testing-for-projects
  */
 
@@ -48,11 +48,11 @@ class DevelGenerateCommandsTest extends BrowserTestBase
     $this->assertTrue($user->hasRole('administrator'));
 
     // Make sure terms get created, and with correct vocab.
-    $this->drush('devel-generate-terms', [$this->vocabulary->id(), 55], ['kill' => null]);
+    $this->drush('devel-generate-terms', [55], ['kill' => null, 'bundles' => $this->vocabulary->id()]);
     $term = Term::load(55);
     $this->assertEquals($this->vocabulary->id(), $term->bundle());
 
-     // Make sure vocabs get created.
+    // Make sure vocabs get created.
     $this->drush('devel-generate-vocabs', [5], ['kill' => null]);
     $vocabs = Vocabulary::loadMultiple();
     $this->assertGreaterThan(4, count($vocabs));
@@ -72,15 +72,17 @@ class DevelGenerateCommandsTest extends BrowserTestBase
     $this->assertEquals($menu->id(), $link->getMenuName());
 
     // Make sure content gets created, with comments.
-    $this->drush('devel-generate-content', [5, 30], ['kill' => null]);
-    $node = Node::load(5);
-    $this->assertTrue($node);
-    $comment = Comment::load(5);
+    $this->drush('devel-generate-content', [21, 9], ['kill' => null]);
+    $node = Node::load(3);
+    $this->assertNotEmpty($node);
+    $comment = Comment::load(1);
     $this->assertNotEmpty($comment);
 
     // Do same, but with a higher number that triggers batch running.
     $this->drush('devel-generate-content', [55], ['kill' => null]);
     $node = Node::load(55);
     $this->assertNotEmpty($node);
+    $messages = $this->getErrorOutput();
+    $this->assertContains('Finished 55 elements created successfully.', $messages, 'devel-generate-content batch ending message not found', TRUE);
   }
 }

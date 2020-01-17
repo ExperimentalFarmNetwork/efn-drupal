@@ -29,29 +29,30 @@ class DevelControllerTest extends BrowserTestBase {
    */
   protected function setUp() {
     parent::setUp();
+    $entity_type_manager = $this->container->get('entity_type.manager');
 
     // Create a test entity.
     $random_label = $this->randomMachineName();
     $data = ['type' => 'entity_test', 'name' => $random_label];
-    $this->entity = entity_create('entity_test', $data);
+    $this->entity = $entity_type_manager->getStorage('entity_test')->create($data);
     $this->entity->save();
 
     // Create a test entity with only canonical route.
     $random_label = $this->randomMachineName();
     $data = ['type' => 'devel_entity_test_canonical', 'name' => $random_label];
-    $this->entity_canonical = entity_create('devel_entity_test_canonical', $data);
+    $this->entity_canonical = $entity_type_manager->getStorage('devel_entity_test_canonical')->create($data);
     $this->entity_canonical->save();
 
     // Create a test entity with only edit route.
     $random_label = $this->randomMachineName();
     $data = ['type' => 'devel_entity_test_edit', 'name' => $random_label];
-    $this->entity_edit = entity_create('devel_entity_test_edit', $data);
+    $this->entity_edit = $entity_type_manager->getStorage('devel_entity_test_edit')->create($data);
     $this->entity_edit->save();
 
     // Create a test entity with no routes.
     $random_label = $this->randomMachineName();
     $data = ['type' => 'devel_entity_test_no_links', 'name' => $random_label];
-    $this->entity_no_links = entity_create('devel_entity_test_no_links', $data);
+    $this->entity_no_links = $entity_type_manager->getStorage('devel_entity_test_no_links')->create($data);
     $this->entity_no_links->save();
 
     $this->drupalPlaceBlock('local_tasks_block');

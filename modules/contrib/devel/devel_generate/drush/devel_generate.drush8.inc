@@ -34,11 +34,11 @@ function devel_generate_drush_command() {
     ),
     'description' => 'Create terms in specified vocabulary.',
     'arguments' => array(
-      'machine_name' => 'Vocabulary machine name into which new terms will be inserted.',
       'num' => 'Number of terms to insert. Defaults to 10.',
     ),
     'options' => array(
       'kill' => 'Delete all terms in specified vocabulary before generating.',
+      'bundles' => 'A comma-delimited list of machine names for the vocabularies where terms will be created.',
       'feedback' => 'An integer representing interval for insertion rate logging. Defaults to 1000',
       'pipe' => 'Returns the list of generated terms, one per line.',
     ),
@@ -73,7 +73,7 @@ function devel_generate_drush_command() {
     ),
     'options' => array(
       'kill' => 'Delete all content before generating new content.',
-      'types' => 'A comma delimited list of content types to create. Defaults to page,article.',
+      'bundles' => 'A comma delimited list of content types to create. Defaults to page,article.',
       'feedback' => 'An integer representing interval for insertion rate logging. Defaults to 1000',
       'skip-fields' => 'A comma delimited list of fields to omit when generating random values',
       'languages' => 'A comma-separated list of language codes',
@@ -158,7 +158,6 @@ function drush_devel_generate_generate_menus_validate() {
  * the generate() function of the plugin.
  */
 function _drush_plugin_validate($params) {
-
   $instance_and_values = &drupal_static('drush_devel_generate_generate_validate');
   //Getting plugin_id and leaving the command line args
   $plugin_id = array_shift($params);
@@ -192,5 +191,4 @@ function drush_devel_generate() {
   $instance = $instance_and_values[$plugin_id]['instance'];
   $values = $instance_and_values[$plugin_id]['values'];
   $instance->generate($values);
-
 }

@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * @file
+ * Main module file for SendGrid Integration.
+ *
+ * Provides module configuration and help functionality.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Site\Settings;
+
+/**
+ * Implements hook_help().
+ */
+function sendgrid_integration_help($route_name, RouteMatchInterface $route_match) {
+  $output = '';
+  switch ($route_name) {
+    case 'help.page.sendgrid_integration':
+      $output .= '<h3>' . \Drupal::translation()->translate('About') . '</h3>';
+      $output .= '<p>' . \Drupal::translation()
+          ->translate('Module provides own implementation of MailSystemIntegration, replacing the default implementation and uses SendGrid Web API instead.') . '</p>';
+  }
+  return $output;
+}
+
+/**
+ * Implements hook_mail().
+ */
+function sendgrid_integration_mail($key, &$message, $params) {
+  $message['module'] = 'sendgrid_integration';
+  $message['key'] = $key;
+  $message['subject'] = $params['subject'];
+  $message['body'] = explode(
+    Settings::get('mail_line_endings', PHP_EOL) . Settings::get('mail_line_endings', PHP_EOL),
+    $params['body']
+  );
+  if ($params['include_test_attachment']) {
+    $message['attachments'][] = drupal_realpath('core/misc/druplicon.png');
+  }
+  if (isset($params['Reply-To']) && !empty($params['Reply-To'])) {
+    $message['headers']['Reply-To'] = $params['Reply-To'];
+  }
+}

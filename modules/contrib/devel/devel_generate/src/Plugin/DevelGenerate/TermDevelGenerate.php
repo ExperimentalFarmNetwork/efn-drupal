@@ -7,6 +7,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\Language;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\devel_generate\DevelGenerateBase;
+use Drush\Utils\StringUtils;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -228,31 +229,37 @@ class TermDevelGenerate extends DevelGenerateBase implements ContainerFactoryPlu
    * {@inheritdoc}
    */
   public function validateDrushParams($args, $options = []) {
-    $vocabulary_name = array_shift($args);
+    if ($this->isDrush8()) {
+      $bundles = _convert_csv_to_array(drush_get_option('bundles'));
+    }
+    else {
+      $bundles = StringUtils::csvToarray($options['bundles']);
+    }
+    if (count($bundles) < 1) {
+      throw new \Exception(dt('Please provide a vocabulary machine name (--bundles).'));
+    }
+    foreach ($bundles As $bundle) {
+      // Verify that each bundle is a valid vocabulary id.
+      if (!$this->vocabularyStorage->load($bundle)) {
+        throw new \Exception(dt('Invalid vocabulary machine name: @name', array('@name' => $bundle)));
+      }
+    }
+
     $number = array_shift($args);
 
     if ($number === NULL) {
       $number = 10;
     }
 
-    if (!$vocabulary_name) {
-      throw new \Exception(dt('Please provide a vocabulary machine name.'));
-    }
-
     if (!$this->isNumber($number)) {
       throw new \Exception(dt('Invalid number of terms: @num', array('@num' => $number)));
-    }
-
-    // Try to convert machine name to a vocabulary id.
-    if (!$vocabulary = $this->vocabularyStorage->load($vocabulary_name)) {
-      throw new \Exception(dt('Invalid vocabulary name: @name', array('@name' => $vocabulary_name)));
     }
 
     $values = [
       'num' => $number,
       'kill' => $this->isDrush8() ? drush_get_option('kill') : $options['kill'],
       'title_length' => 12,
-      'vids' => [$vocabulary->id()],
+      'vids' => $bundles,
     ];
 
     return $values;

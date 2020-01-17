@@ -314,11 +314,11 @@ class ContentDevelGenerate extends DevelGenerateBase implements ContainerFactory
    * {@inheritdoc}
    */
   protected function generateElements(array $values) {
-    if ($values['num'] <= 50 && $values['max_comments'] <= 10) {
-      $this->generateContent($values);
+    if ($this->isBatch($values['num'], $values['max_comments'])) {
+      $this->generateBatchContent($values);
     }
     else {
-      $this->generateBatchContent($values);
+      $this->generateContent($values);
     }
   }
 
@@ -353,6 +353,8 @@ class ContentDevelGenerate extends DevelGenerateBase implements ContainerFactory
    * the number of elements is greater than 50.
    */
   private function generateBatchContent($values) {
+    // Remove unselected node types.
+    $values['node_types'] = array_filter($values['node_types']);
     // If it is drushBatch then this operation is already run in the
     // self::validateDrushParams().
     if (!$this->drushBatch) {
@@ -390,14 +392,17 @@ class ContentDevelGenerate extends DevelGenerateBase implements ContainerFactory
     $this->develGenerateContentPreNode($context['results']);
   }
 
+  /**
+   * Add node to existings batch operation.
+   */
   public function batchContentAddNode($vars, &$context) {
     if ($this->drushBatch) {
       $this->develGenerateContentAddNode($vars);
     }
     else {
-      $this->develGenerateContentAddNode($vars);
-      $context['results']['num']++;
+      $this->develGenerateContentAddNode($context['results']);
     }
+    $context['results']['num']++;
   }
 
   public function batchContentKill($vars, &$context) {
@@ -428,10 +433,10 @@ class ContentDevelGenerate extends DevelGenerateBase implements ContainerFactory
     $all_types = array_keys(node_type_get_names());
     $default_types = array_intersect(array('page', 'article'), $all_types);
     if ($this->isDrush8()) {
-      $selected_types = _convert_csv_to_array(drush_get_option('types', $default_types));
+      $selected_types = _convert_csv_to_array(drush_get_option('bundles', $default_types));
     }
     else {
-      $selected_types = StringUtils::csvToArray($options['types'] ?: $default_types);
+      $selected_types = StringUtils::csvToArray($options['bundles'] ?: $default_types);
     }
 
     if (empty($selected_types)) {
@@ -442,19 +447,23 @@ class ContentDevelGenerate extends DevelGenerateBase implements ContainerFactory
     $node_types = array_filter($values['node_types']);
 
     if (!empty($values['kill']) && empty($node_types)) {
-      throw new \Exception(dt('Please provide content type (--types) in which you want to delete the content.'));
+      throw new \Exception(dt('To delete content, please provide the content types (--bundles)'));
     }
 
     // Checks for any missing content types before generating nodes.
     if (array_diff($node_types, $all_types)) {
       throw new \Exception(dt('One or more content types have been entered that don\'t exist on this site'));
     }
-    if ($values['num'] > 50) {
+    if ($this->isBatch($values['num'], $values['max_comments'])) {
       $this->drushBatch = TRUE;
       $this->develGenerateContentPreNode($values);
     }
 
     return $values;
+  }
+
+  protected function isBatch($content_count, $comment_count) {
+    return $content_count >= 50 || $comment_count >= 10;
   }
 
   /**
@@ -476,7 +485,7 @@ class ContentDevelGenerate extends DevelGenerateBase implements ContainerFactory
   }
 
   /**
-   * Return the same array passed as parameter
+   * Return the same array passed as parameter,
    * but with an array of uids for the key 'users'.
    */
   protected function develGenerateContentPreNode(&$results) {
@@ -500,7 +509,7 @@ class ContentDevelGenerate extends DevelGenerateBase implements ContainerFactory
     $node = $this->nodeStorage->create(array(
       'nid' => NULL,
       'type' => $node_type,
-      'title' => $this->getRandom()->sentences(mt_rand(1, $results['title_length']), TRUE),
+      'title' => $node_type . '_' . $this->getRandom()->sentences(mt_rand(1, $results['title_length']), TRUE),
       'uid' => $uid,
       'revision' => mt_rand(0, 1),
       'status' => TRUE,
@@ -516,7 +525,7 @@ class ContentDevelGenerate extends DevelGenerateBase implements ContainerFactory
     // Populate all fields with sample values.
     $this->populateFields($node);
 
-    // See devel_generate_node_insert() for actions that happen before and after
+    // See devel_generate_entity_insert() for actions that happen before and after
     // this save.
     $node->save();
   }

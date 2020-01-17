@@ -122,4 +122,42 @@ class DevelGenerateBrowserTest extends BrowserTestBase {
     $this->assertSession()->pageTextContains(t('Generate process complete.'));
   }
 
+  /**
+   * Tests generating content in batch mode.
+   */
+  public function testDevelGenerateBatch() {
+    // For 50 or more nodes, the processing will be done via batch.
+    $edit = array(
+      'num' => 55,
+      'kill' => TRUE,
+      'node_types[article]' => TRUE,
+      'node_types[page]' => TRUE,
+    );
+    $this->drupalPostForm('admin/config/development/generate/content', $edit, t('Generate'));
+    $this->assertSession()->pageTextContains(t('Finished 55 elements created successfully.'));
+    $this->assertSession()->pageTextContains(t('Generate process complete.'));
+
+    // Tests that the expected number of nodes have been created.
+    $count = count(Node::loadMultiple());
+    $this->assertEquals(55, $count, sprintf('The expected total number of nodes is %s, found %s', 55, $count));
+
+    // Generate only articles.
+    $edit = array(
+      'num' => 60,
+      'kill' => TRUE,
+      'node_types[article]' => TRUE,
+      'node_types[page]' => FALSE,
+    );
+    $this->drupalPostForm('admin/config/development/generate/content', $edit, t('Generate'));
+
+    // Tests that all the created nodes were of the node type selected.
+    $nodeStorage = $this->container->get('entity_type.manager')->getStorage('node');
+    $type = 'article';
+    $count = $nodeStorage->getQuery()
+      ->condition('type', $type)
+      ->count()
+      ->execute();
+    $this->assertEquals(60, $count, sprintf('The expected number of %s is %s, found %s', $type, 60, $count));
+
+  }
 }

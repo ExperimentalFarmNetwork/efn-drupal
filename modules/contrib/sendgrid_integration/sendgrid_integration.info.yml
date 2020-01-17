@@ -1,0 +1,14 @@
+name: 'SendGrid Integration'
+description: 'Provides Sendgrid Integration for the Drupal Mail System'
+type: module
+# core: 8.x
+package: 'Mail'
+configure: sendgrid_integration.settings_form
+dependencies:
+ - mailsystem:mailsystem (>=4.x)
+
+# Information added by Drupal.org packaging script on 2018-06-14
+version: '8.x-1.2'
+core: '8.x'
+project: 'sendgrid_integration'
+datestamp: 1528941234

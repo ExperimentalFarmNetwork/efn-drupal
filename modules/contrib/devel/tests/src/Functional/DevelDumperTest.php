@@ -44,12 +44,9 @@ class DevelDumperTest extends BrowserTestBase {
     // and that only the available dumpers are selectable.
     $dumpers = [
       'default',
-      'drupal_variable',
-      'firephp',
-      'chromephp',
       'var_dumper',
     ];
-    $available_dumpers = ['default', 'drupal_variable', 'var_dumper'];
+    $available_dumpers = ['default', 'var_dumper'];
 
     foreach ($dumpers as $dumper) {
       $this->assertFieldByXPath('//input[@type="radio" and @name="dumper"]', $dumper);
@@ -75,36 +72,13 @@ class DevelDumperTest extends BrowserTestBase {
 
     // Ensures that saving of the dumpers configuration works as expected.
     $edit = [
-      'dumper' => 'drupal_variable',
+      'dumper' => 'var_dumper',
     ];
     $this->drupalPostForm('admin/config/development/devel', $edit, t('Save configuration'));
     $this->assertSession()->pageTextContains(t('The configuration options have been saved.'));
 
     $config = \Drupal::config('devel.settings')->get('devel_dumper');
-    $this->assertEquals('drupal_variable', $config, 'The configuration options have been properly saved');
-
-    // Ensure that if the chosen dumper is not available (e.g. the module that
-    // provide it is uninstalled) the 'default' dumper appears selected in the
-    // config page.
-    \Drupal::service('module_installer')->install(['kint']);
-
-    $this->drupalGet('admin/config/development/devel');
-    $this->assertFieldByXPath('//input[@name="dumper"]', 'kint');
-
-    $edit = [
-      'dumper' => 'kint',
-    ];
-    $this->drupalPostForm('admin/config/development/devel', $edit, t('Save configuration'));
-    $this->assertSession()->pageTextContains(t('The configuration options have been saved.'));
-
-    $config = \Drupal::config('devel.settings')->get('devel_dumper');
-    $this->assertEquals('kint', $config, 'The configuration options have been properly saved');
-
-    \Drupal::service('module_installer')->uninstall(['kint']);
-
-    $this->drupalGet('admin/config/development/devel');
-    $this->assertNoFieldByXPath('//input[@name="dumper"]', 'kint');
-    $this->assertSession()->checkboxChecked('edit-dumper-default');
+    $this->assertEquals('var_dumper', $config, 'The configuration options have been properly saved');
   }
 
   /**

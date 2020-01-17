@@ -11,6 +11,7 @@ return array(
     'Twig_' => array($vendorDir . '/twig/twig/lib'),
     'Stiphle' => array($vendorDir . '/davedevelopment/stiphle/src'),
     'Stack' => array($vendorDir . '/stack/builder/src'),
+    'Smtpapi' => array($vendorDir . '/sendgrid/smtpapi/lib'),
     'EasyRdf_' => array($vendorDir . '/easyrdf/easyrdf/lib'),
     'Drupal\\' => array($vendorDir . '/drupal/coder/coder_sniffer/Drupal'),
     'DrupalPractice\\' => array($vendorDir . '/drupal/coder/coder_sniffer/DrupalPractice'),

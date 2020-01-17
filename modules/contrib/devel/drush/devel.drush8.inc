@@ -5,7 +5,7 @@
  * This file is only used by Drush8.
  *
  * Drush9 discovers its commands via tagged
- * service(s) in devel.services.yml. Also see classes in src/Commands.
+ * service(s) in drush.services.yml. Also see classes in src/Commands.
  */
 
 use Drupal\Component\Uuid\Php;

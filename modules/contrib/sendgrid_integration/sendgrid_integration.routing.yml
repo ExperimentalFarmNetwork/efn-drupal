@@ -1,0 +1,14 @@
+sendgrid_integration.settings_form:
+  path: 'admin/config/services/sendgrid'
+  defaults:
+    _title: 'SendGrid Settings'
+    _form: 'Drupal\sendgrid_integration\Form\SendgridSettingsForm'
+  requirements:
+    _permission: 'administer sendgrid settings'
+sendgrid_integration.test_form:
+  path: 'admin/config/services/sendgrid/test'
+  defaults:
+    _title: 'SendGrid Test Email Send'
+    _form: 'Drupal\sendgrid_integration\Form\SendgridTestForm'
+  requirements:
+    _permission: 'administer sendgrid settings'

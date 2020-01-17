@@ -22,6 +22,7 @@ trait DevelGenerateSetupTrait
   protected $vocabulary;
 
   public function setUpData() {
+    $entity_type_manager = $this->container->get('entity_type.manager');
     // Create Basic page and Article node types.
     if ($this->profile != 'standard') {
       $this->drupalCreateContentType(array('type' => 'page', 'name' => 'Basic Page'));
@@ -50,13 +51,15 @@ trait DevelGenerateSetupTrait
     );
     $this->createEntityReferenceField('node', 'article', $field_name, NULL, 'taxonomy_term', 'default', $handler_settings, FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED);
 
-    entity_get_form_display('node', 'article', 'default')
+    $entity_type_manager->getStorage('entity_form_display')
+      ->load('node.article.default')
       ->setComponent($field_name, array(
         'type' => 'options_select',
       ))
       ->save();
-
-    entity_get_display('node', 'article', 'default')
+    
+    $entity_type_manager->getStorage('entity_view_display')
+      ->load('node.article.default')
       ->setComponent($field_name, array(
         'type' => 'entity_reference_label',
       ))

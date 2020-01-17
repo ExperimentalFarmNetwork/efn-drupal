@@ -1,0 +1,63 @@
+<?php
+
+/**
+ * @file
+ * Contains install and update functions for SendGrid Integration
+ */
+
+use Drupal\mailsystem\MailsystemManager;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_install().
+ */
+function sendgrid_integration_install() {
+  $site_settings = \Drupal::config('system.site');
+  $config = \Drupal::configFactory()
+    ->getEditable('sendgrid_integration.settings');
+
+  // Update defaults for test email.
+  $config->set('test_defaults.to', $site_settings->get('mail'));
+  $config->set('test_defaults.body.format', filter_fallback_format());
+  $config->save();
+
+  // Set the mailsystem for the test email.
+  $mailsystem_config = \Drupal::configFactory()
+    ->getEditable('mailsystem.settings');
+  $prefix = MailsystemManager::MAILSYSTEM_MODULES_CONFIG . '.sendgrid_integration.none';
+  $mailsystem_config->set($prefix . '.' . MailsystemManager::MAILSYSTEM_TYPE_FORMATTING, 'sendgrid_integration');
+  $mailsystem_config->set($prefix . '.' . MailsystemManager::MAILSYSTEM_TYPE_SENDING, 'sendgrid_integration');
+  $mailsystem_config->save();
+}
+
+/**
+ * Implements hook_requirements().
+ */
+function sendgrid_integration_requirements($phase) {
+  $requirements = [];
+  $config = \Drupal::configFactory()->get('sendgrid_integration.settings');
+  switch ($phase) {
+    case 'runtime':
+      if (empty($config->get('apikey'))) {
+        $requirements['sendgrid_integration'] = [
+          'title' => t('SendGrid Integration Settings'),
+          'value' => t('API Key Not Set'),
+          'severity' => REQUIREMENT_ERROR,
+          'description' => t('You need to <a href="@url">add a SendGrid API Secret Key</a> for Drupal to be able to deliver mail through SendGrid Integration.', [
+            '@url' => Url::fromRoute('sendgrid_integration.settings_form')
+              ->toString(),
+          ]),
+        ];
+      }
+      else {
+        $requirements['sendgrid_integration'] = [
+          'title' => t('SendGrid Integration Settings'),
+          'severity' => REQUIREMENT_OK,
+          'value' => t('API Secret Key saved'),
+        ];
+      }
+      break;
+  }
+
+  return $requirements;
+}

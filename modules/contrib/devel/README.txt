@@ -44,9 +44,6 @@ This module requires no modules outside of Drupal core.
 INCLUDED MODULES AND FEATURES
 -----------------------------
 
-Devel Kint - Provides a dpr() function, which pretty prints variables.
-Useful during development. Also see similar helpers like dpm(), dvm().
-
 Webprofiler - Adds a debug bar at bottom of all pages with tons of useful
 information like a query list, cache hit/miss data, memory profiling, page
 speed, php info, session info, etc.

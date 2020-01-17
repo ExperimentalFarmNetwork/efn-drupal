@@ -105,7 +105,7 @@ class DevelGenerateForm extends FormBase {
       $instance = $this->getPluginInstance($plugin_id);
       $instance->generate($form_state->getValues());
     }
-    catch (DevelGenerateException $e) {
+    catch (\Exception $e) {
       $this->logger('DevelGenerate', $this->t('Failed to generate elements due to "%error".', ['%error' => $e->getMessage()]));
       $this->messenger()->addMessage($this->t('Failed to generate elements due to "%error".', ['%error' => $e->getMessage()]));
     }

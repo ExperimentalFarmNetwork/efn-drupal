@@ -1,0 +1,35 @@
+sendgrid_integration.settings:
+  type: config_object
+  mapping:
+    apikey:
+      type: string
+      label: 'API key'
+    test_defaults:
+      type: mapping
+      label: 'Test defaults'
+      mapping:
+        to:
+          type: string
+          label: 'The address to send the test mail.'
+        subject:
+          type: string
+          label: 'The subject of the test mail.'
+        body:
+          type: mapping
+          label: 'The body format and value of the test message.'
+          mapping:
+            value:
+              type: string
+              label: 'The value of the body of the test message.'
+            format:
+              type: string
+              label: 'The format of the body of the test message.'
+        from_name:
+          type: string
+          label: 'The from name for the test mail.'
+        to_name:
+          type: string
+          label: 'The name to address the test mail.'
+        reply_to:
+          type: string
+          label: 'The reply to address for the test mail.'

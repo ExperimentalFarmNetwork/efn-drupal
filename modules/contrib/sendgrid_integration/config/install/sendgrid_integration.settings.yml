@@ -1,0 +1,10 @@
+apikey: ''
+test_defaults:
+  to: ''
+  subject: 'Test Email from SendGrid Module'
+  body:
+    value: 'Test Message for SendGrid.'
+    format: ''
+  from_name: ''
+  to_name: ''
+  reply_to: ''

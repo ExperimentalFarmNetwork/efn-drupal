@@ -121,7 +121,7 @@ function devel_generate_add_comments(NodeInterface $node, FieldDefinitionInterfa
     if ($parents) {
       $stub['pid'] = current($parents);
     }
-    $comment = entity_create('comment', $stub);
+    $comment = \Drupal::entityTypeManager()->getStorage('comment')->create($stub);
 
     //Populate all core fields on behalf of field.module
     DevelGenerateBase::populateFields($comment);

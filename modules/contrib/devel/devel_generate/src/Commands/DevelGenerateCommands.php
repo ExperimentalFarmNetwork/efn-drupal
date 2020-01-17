@@ -105,14 +105,13 @@ class DevelGenerateCommands extends DrushCommands {
    *
    * @command devel-generate-terms
    * @pluginId term
-   * @param $machine_name Vocabulary machine name into which new terms will be inserted.
    * @param $num Number of terms to generate.
    * @option kill Delete all terms before generating new ones.
+   * @option bundles A comma-delimited list of machine names for the vocabularies where terms will be created.
    * @option feedback An integer representing interval for insertion rate logging.
-   * @validate-entity-load taxonomy_vocabulary machine_name
    * @aliases gent
    */
-  public function terms($machine_name, $num = 50, $options = ['feedback' => 1000]) {
+  public function terms($num = 50, $options = ['kill' => FALSE, 'feedback' => 1000]) {
     $this->generate();
   }
 
@@ -155,14 +154,14 @@ class DevelGenerateCommands extends DrushCommands {
    * @param int $num Number of nodes to generate.
    * @param int $max_comments Maximum number of comments to generate.
    * @option kill Delete all content before generating new content.
-   * @option types A comma delimited list of content types to create. Defaults to page,article.
+   * @option bundles A comma-delimited list of content types to create.
    * @option feedback An integer representing interval for insertion rate logging.
    * @option skip-fields A comma delimited list of fields to omit when generating random values
    * @option languages A comma-separated list of language codes
    * @aliases genc
    * @validate-module-enabled node
    */
-  public function content($num = 50, $max_comments = 0, $options = ['kill' => FALSE, 'types' => 'page,article', 'feedback' => 1000]) {
+  public function content($num = 50, $max_comments = 0, $options = ['kill' => FALSE, 'bundles' => 'page,article', 'feedback' => 1000]) {
     $this->generate();
   }
 

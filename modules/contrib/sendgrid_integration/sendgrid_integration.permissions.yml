@@ -1,0 +1,3 @@
+'administer sendgrid settings':
+  title: 'Administer SendGrid settings'
+  description: 'Configure SendGrid options like username and password.'

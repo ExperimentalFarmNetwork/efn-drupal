@@ -387,18 +387,6 @@ function dfbt($label) {
   \Drupal::service('devel.dumper')->dump(FirePHP::TRACE, $label, 'firephp');
 }
 
-/**
- * Wrapper for DevelDumperManager::dump().
- *
- * Wrapper for ChromePHP Class log method.
- *
- * @see \Drupal\devel\DevelDumperManager::dump()
- */
-function dcp() {
-  $args = func_get_args();
-  \Drupal::service('devel.dumper')->dump($args, NULL, 'chromephp');
-}
-
 if (!function_exists('dd')) {
 
   /**
@@ -423,6 +411,56 @@ if (!function_exists('ddm')) {
    */
   function ddm($data, $label = NULL) {
     return \Drupal::service('devel.dumper')->debug($data, $label, 'default');
+  }
+}
+
+if (!function_exists('kint')) {
+  /**
+   * Prints passed argument(s) using Kint debug tool.
+   *
+   * Wrapper for DevelDumperManager::dump().
+   *
+   * @see \Drupal\devel\DevelDumperManager::dump()
+   */
+  function kint() {
+    $args = func_get_args();
+    if (count($args) == 1) {
+      // Pass a single argument directly, which works for any plug-in.
+      $args = $args[0];
+      $name = NULL;
+    }
+    else {
+      // Pass an array marked with a special name. The kint plug-in expands the
+      // arguments and prints each separately.
+      $name = '__ARGS__';
+    }
+
+    return \Drupal::service('devel.dumper')->dump($args, $name, 'kint');
+  }
+}
+
+if (!function_exists('ksm')) {
+  /**
+   * Prints passed argument(s) to the 'message' area of the page.
+   *
+   * Wrapper for DevelDumperManager::message().
+   *
+   * @see \Drupal\devel\DevelDumperManager::message()
+   */
+  function ksm() {
+    $args = func_get_args();
+    if (count($args) == 1) {
+      // Pass a single argument directly, which works for any plug-in.
+      $args = $args[0];
+      $name = NULL;
+    }
+    else {
+      // Pass an array marked with a special name. The kint plug-in expands the
+      // arguments and prints each separately.
+      $name = '__ARGS__';
+    }
+
+    return \Drupal::service('devel.dumper')->message($args, $name, 'kint');
   }
 }
 

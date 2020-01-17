@@ -79,6 +79,14 @@ class ConfigEditor extends FormBase {
       '#title' => $this->t('Cancel'),
       '#url' => $this->buildCancelLinkUrl(),
     );
+    $form['actions']['delete'] = array(
+      '#type' => 'link',
+      '#title' => $this->t('Delete'),
+      '#url' => Url::fromRoute('devel.config_delete', ['config_name' => $config_name]),
+      '#attributes' => array(
+        'class' => array('button', 'button--danger'),
+      ),
+    );
 
     return $form;
   }
