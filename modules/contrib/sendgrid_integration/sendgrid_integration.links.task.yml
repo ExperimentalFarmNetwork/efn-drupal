@@ -1,9 +1,0 @@
-sendgrid_integration.settings_form:
-  route_name: sendgrid_integration.settings_form
-  title: 'SendGrid settings'
-  base_route: sendgrid_integration.settings_form
-sendgrid_integration.test_form:
-  route_name: sendgrid_integration.test_form
-  title: 'SendGrid email test'
-  weight: 100
-  base_route: sendgrid_integration.settings_form

@@ -1,7 +1,0 @@
-.DS_Store
-vendor
-*.lock
-test/coverage/*
-dist/
-.env*
-smtpapi-php.zip

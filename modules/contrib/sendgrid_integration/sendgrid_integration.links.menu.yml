@@ -1,7 +1,0 @@
-sendgrid_integration.settings_form:
-  route_name: sendgrid_integration.settings_form
-  parent: system.admin_config_services
-  title: 'SendGrid Settings'
-  description: 'Configure SendGrid Integration settings.'
-
-

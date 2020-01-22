@@ -94,7 +94,6 @@ class ComposerStaticInitDrupal8
             'Symfony\\Cmf\\Component\\Routing\\' => 30,
             'Symfony\\Bridge\\PsrHttpMessage\\' => 30,
             'Symfony\\Bridge\\PhpUnit\\' => 23,
-            'SendGrid\\' => 9,
             'SelfUpdate\\' => 11,
         ),
         'R' => 
@@ -135,7 +134,6 @@ class ComposerStaticInitDrupal8
             'Http\\Message\\' => 13,
             'Http\\Client\\' => 12,
             'Http\\Adapter\\Guzzle6\\' => 21,
-            'Html2Text\\' => 10,
         ),
         'G' => 
         array (
@@ -366,10 +364,6 @@ class ComposerStaticInitDrupal8
         array (
             0 => __DIR__ . '/..' . '/symfony/phpunit-bridge',
         ),
-        'SendGrid\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/fastglass/sendgrid/src',
-        ),
         'SelfUpdate\\' => 
         array (
             0 => __DIR__ . '/..' . '/consolidation/self-update/src',
@@ -446,11 +440,6 @@ class ComposerStaticInitDrupal8
         'Http\\Adapter\\Guzzle6\\' => 
         array (
             0 => __DIR__ . '/..' . '/php-http/guzzle6-adapter/src',
-        ),
-        'Html2Text\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/html2text/html2text/src',
-            1 => __DIR__ . '/..' . '/html2text/html2text/test',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (
@@ -639,10 +628,6 @@ class ComposerStaticInitDrupal8
             'Stack' => 
             array (
                 0 => __DIR__ . '/..' . '/stack/builder/src',
-            ),
-            'Smtpapi' => 
-            array (
-                0 => __DIR__ . '/..' . '/sendgrid/smtpapi/lib',
             ),
         ),
         'E' => 

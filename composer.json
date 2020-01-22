@@ -39,8 +39,7 @@
         "drupal/views_send": "^1.1",
         "drupal/views_data_export": "^1.0@beta",
         "drupal/csv_serialization": "^1.4",
-        "drush/drush": "^9",
-        "drupal/sendgrid_integration": "^1.2"
+        "drush/drush": "^9"
     },
     "replace": {
         "drupal/core": "^8.7"
