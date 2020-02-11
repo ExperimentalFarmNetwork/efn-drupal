@@ -75,8 +75,6 @@ h1.page-header, button, nav, h2, h3{
 }
 
 #block-newproject, #block-newprojectbutton, #block-newprojectbutton-2{
-	// position: relative;
-	// bottom: 5px;
 	.field--name-body{
 		a{
 			background:$du-asparagus;
@@ -787,7 +785,7 @@ body.path-group{
 		section.block{
 			margin:30px 0 0;
 			&.block-views-blockmember-admin-links-block-1 {
-				margin: 10px 0 0;
+				margin: 0;
 				text-align: center;
 				a.btn-default {
 					margin: 5px;
@@ -804,8 +802,7 @@ body.path-group{
 
 		#block-minimus-groupoperations{
 			text-align:center;
-			.btn-group > .btn-lg + .dropdown-toggle,
-			.btn-group-lg.btn-group > .btn + .dropdown-toggle{
+			.dropdown-toggle {
 				display:none;
 			}
 			ul.dropdown-menu{
@@ -816,6 +813,16 @@ body.path-group{
 				text-align: center;
 				width: 100%;
 				position: unset;
+				li {
+					a {
+						display: inline-block;
+						font-size: 2rem;
+						border-radius: 5px;
+						padding: 1rem 2rem;
+						padding: 6px 12px;
+						float: none;
+					}
+				}
 				li a.hidden{
 					display:block;
 				}
