@@ -12,12 +12,9 @@ dependencies:
     - user.role.researcher
     - user.role.volunteer
   module:
-    - csv_serialization
     - group
     - image
     - profile
-    - rest
-    - serialization
     - user
 id: group_member_test
 label: 'Project Members'

@@ -2,7 +2,7 @@
 
 namespace Drupal\group\UninstallValidator;
 
-use Drupal\Core\Entity\EntityTypeManager;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleUninstallValidatorInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslationInterface;
@@ -16,7 +16,7 @@ class GroupContentUninstallValidator implements ModuleUninstallValidatorInterfac
   /**
    * The entity type manager.
    *
-   * @var \Drupal\Core\Entity\EntityTypeManager
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
   protected $entityTypeManager;
 
@@ -32,12 +32,12 @@ class GroupContentUninstallValidator implements ModuleUninstallValidatorInterfac
    *
    * @param \Drupal\Core\StringTranslation\TranslationInterface $string_translation
    *   The string translation service.
-   * @param \Drupal\Core\Entity\EntityTypeManager $entity_type_manager
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
    * @param \Drupal\group\Plugin\GroupContentEnablerManagerInterface $plugin_manager
    *   The group content plugin manager.
    */
-  public function __construct(TranslationInterface $string_translation, EntityTypeManager $entity_type_manager, GroupContentEnablerManagerInterface $plugin_manager) {
+  public function __construct(TranslationInterface $string_translation, EntityTypeManagerInterface $entity_type_manager, GroupContentEnablerManagerInterface $plugin_manager) {
     $this->stringTranslation = $string_translation;
     $this->entityTypeManager = $entity_type_manager;
     $this->pluginManager = $plugin_manager;

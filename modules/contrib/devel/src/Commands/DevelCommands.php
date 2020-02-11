@@ -1,14 +1,10 @@
 <?php
 namespace Drupal\devel\Commands;
 use Consolidation\OutputFormatters\StructuredData\RowsOfFields;
-use Consolidation\SiteAlias\SiteAliasManagerAwareTrait;
-use Consolidation\SiteProcess\Util\Escape;
 use Drupal\Component\Uuid\Php;
 use Drupal\Core\Utility\Token;
 use Drush\Commands\DrushCommands;
 use Drush\Exceptions\UserAbortException;
-use Drush\Exec\ExecTrait;
-use Drush\SiteAlias\SiteAliasManagerAwareInterface;
 use Drush\Utils\StringUtils;
 use Symfony\Component\Console\Input\Input;
 use Symfony\Component\Console\Output\Output;
@@ -20,10 +16,7 @@ use Symfony\Component\Console\Output\Output;
  * In addition to a commandfile like this one, you need to add a drush.services.yml
  * in root of your module like this module does.
  */
-class DevelCommands extends DrushCommands implements SiteAliasManagerAwareInterface {
-
-  use SiteAliasManagerAwareTrait;
-  use ExecTrait;
+class DevelCommands extends DrushCommands {
 
   protected $token;
 
@@ -81,10 +74,8 @@ class DevelCommands extends DrushCommands implements SiteAliasManagerAwareInterf
     $modules = StringUtils::csvToArray($modules);
 
     $modules_str = implode(',', $modules);
-    $process = $this->processManager()->drush($this->siteAliasManager()->getSelf(), 'pm:uninstall', [$modules_str]);
-    $process->mustRun();
-    $process = $this->processManager()->drush($this->siteAliasManager()->getSelf(), 'pm:enable', [$modules_str]);
-    $process->mustRun();
+    drush_invoke_process('@self', 'pm:uninstall', [$modules_str], []);
+    drush_invoke_process('@self', 'pm:enable', [$modules_str], []);
   }
 
   /**
@@ -103,11 +94,8 @@ class DevelCommands extends DrushCommands implements SiteAliasManagerAwareInterf
     include_once './core/includes/install.inc';
     drupal_load_updates();
     $info = $this->codeLocate($implementation . "_$hook");
-    $exec = self::getEditor();
-    $cmd = sprintf($exec, Escape::shellArg($info['file']));
-    $process = $this->processManager()->shell($cmd);
-    $process->setTty(true);
-    $process->mustRun();
+    $exec = drush_get_editor();
+    drush_shell_exec_interactive($exec, $info['file']);
   }
 
   /**
@@ -141,11 +129,8 @@ class DevelCommands extends DrushCommands implements SiteAliasManagerAwareInterf
    */
   function event($event, $implementation) {
     $info= $this->codeLocate($implementation);
-    $exec = self::getEditor();
-    $cmd = sprintf($exec, Escape::shellArg($info['file']));
-    $process = $this->processManager()->shell($cmd);
-    $process->setTty(true);
-    $process->mustRun();
+    $exec = drush_get_editor();
+    drush_shell_exec_interactive($exec, $info['file']);
   }
 
   /**

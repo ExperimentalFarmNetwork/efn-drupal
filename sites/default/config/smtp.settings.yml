@@ -1,12 +1,12 @@
 smtp_on: true
-smtp_host: src8.supercp.com
+smtp_host: smtp.sendgrid.net
 smtp_hostbackup: ''
 smtp_port: '465'
 smtp_protocol: ssl
-smtp_username: efn@radicante.net
-smtp_password: 9qlmSx_Tfx)l
+smtp_username: apikey
+smtp_password: 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
 smtp_from: efn@radicante.net
-smtp_fromname: efn
+smtp_fromname: 'Experimental Farm Network'
 smtp_allowhtml: '1'
 smtp_test_address: ''
 smtp_debugging: false

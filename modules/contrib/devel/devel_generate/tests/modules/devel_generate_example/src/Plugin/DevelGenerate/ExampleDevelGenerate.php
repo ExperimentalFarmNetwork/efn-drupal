@@ -66,7 +66,7 @@ class ExampleDevelGenerate extends DevelGenerateBase {
 
     $account = user_load_by_name('example_devel_generate');
     if (!$account) {
-      $account = $this->getEntityTypeManager()->getStorage('user')->create($edit);
+      $account = entity_create('user', $edit);
     }
 
     // Populate all fields with sample values.
@@ -77,10 +77,10 @@ class ExampleDevelGenerate extends DevelGenerateBase {
     $this->setMessage($this->t('@num_examples created.', array('@num_examples' => $this->formatPlural($num, '1 example', '@count examples'))));
   }
 
-  public function validateDrushParams($args, $options = []) {
+  public function validateDrushParams($args) {
     $values = array(
-      'num' => $options['num'],
-      'kill' => $options['kill'],
+      'num' => array_shift($args),
+      'kill' => drush_get_option('kill'),
     );
     return $values;
   }

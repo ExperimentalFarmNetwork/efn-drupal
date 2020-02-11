@@ -71,7 +71,6 @@ module:
   views_slideshow: 0
   views_slideshow_cycle: 0
   views_ui: 0
-  webprofiler: 0
   pathauto: 1
   minimal: 1000
 theme:
