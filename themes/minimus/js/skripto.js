@@ -2,8 +2,11 @@
     var path = window.location.pathname;
 
     // change bootstrap button for add project update
-    $(".block-group-operations button.btn-xs").removeClass('btn-xs btn-default').addClass('btn-lg btn-success');
-
+    // $(".block-group-operations button.btn-xs").removeClass('btn-xs btn-default').addClass('btn-lg btn-success');
+    
+    // $(".block-group-operations .dropdown-toggle").addClass('hidden');
+    $(".block-group-operations ul li a").addClass('btn btn-default');
+    
     // footer buttons
     $("#block-donate li a").addClass('btn-lg btn-success');
     $('#block-sociallinks a[href="/contact"').addClass('btn-lg btn-success');
