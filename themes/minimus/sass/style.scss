@@ -108,8 +108,10 @@ h1.page-header, button, nav, h2, h3{
 // Header
 header.navbar-default{
 	background: $du-dark;
+	border: 0;
 	border-bottom: $du-gold 3px solid;
 	text-align:right;
+	border-radius: 0;
 	.container-fluid{
 		width:90%;
 		@media screen and (max-width:1203px) and (min-width:766px) {
@@ -813,6 +815,7 @@ body.path-group{
 				text-align: center;
 				width: 100%;
 				position: unset;
+				padding-bottom: 0;
 				li {
 					a {
 						display: inline-block;
@@ -833,6 +836,11 @@ body.path-group{
 					}
 				}
 			}
+		}
+
+		#block-views-block-member-admin-links-block-2 {
+			margin-top: 0;
+			text-align: center;
 		}
 
 		.view-members-block, .view-group-member-test {
@@ -1060,9 +1068,8 @@ body.path-group{
 			}
 		}
 		.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
-    background-color: yellow;
-
-}
+			background-color: yellow;
+		}
 	}
 
 	@media screen and (min-width:768px) and (max-width: 946px) {
@@ -1076,6 +1083,7 @@ body.path-group{
 				display:none;
 			}
 		}
+
 	}
 
 	@media screen and (max-width: 792px) {
