@@ -5,8 +5,8 @@ dependencies:
   config:
     - field.field.group.project.field_description
     - field.field.group.project.field_featured_project
+    - field.field.group.project.field_lat_lon
     - field.field.group.project.field_location
-    - field.field.group.project.field_location_geo
     - field.field.group.project.field_misc
     - field.field.group.project.field_multiyear
     - field.field.group.project.field_project_image
@@ -38,7 +38,7 @@ content:
     type: text_default
     region: content
   field_location:
-    weight: 11
+    weight: 13
     label: above
     settings: {  }
     third_party_settings: {  }
@@ -59,7 +59,7 @@ content:
     type: list_default
     region: content
   field_project_image:
-    weight: 12
+    weight: 11
     label: hidden
     settings:
       image_style: project_banner
@@ -75,7 +75,7 @@ content:
     type: basic_string
     region: content
   field_project_type:
-    weight: 13
+    weight: 12
     label: hidden
     settings:
       link: true
@@ -138,6 +138,6 @@ hidden:
   changed: true
   created: true
   field_featured_project: true
-  field_location_geo: true
+  field_lat_lon: true
   field_project_type_other: true
   uid: true

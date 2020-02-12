@@ -35,8 +35,10 @@ module:
   file: 0
   filter: 0
   geocoder: 0
+  geocoder_address: 0
+  geocoder_field: 0
+  geocoder_geofield: 0
   geofield: 0
-  geophp: 0
   gnode: 0
   group: 0
   hal: 0
@@ -45,6 +47,7 @@ module:
   kint: 0
   leaflet: 0
   leaflet_more_maps: 0
+  leaflet_views: 0
   link: 0
   markup: 0
   menu_link_content: 0

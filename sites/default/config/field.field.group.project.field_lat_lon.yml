@@ -1,0 +1,39 @@
+uuid: c2ee3d89-59ca-47a9-89cd-7d92aa404dcf
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.group.field_lat_lon
+    - group.type.project
+  module:
+    - geocoder_field
+    - geofield
+third_party_settings:
+  geocoder_field:
+    method: geocode
+    weight: 0
+    skip_not_empty_value: 0
+    disabled: false
+    hidden: false
+    providers:
+      - openrouteservice
+    dumper: wkt
+    failure:
+      handling: preserve
+      status_message: true
+      log: true
+    field: field_location
+    delta_handling: default
+id: group.project.field_lat_lon
+field_name: field_lat_lon
+entity_type: group
+bundle: project
+label: lat/lon
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  backend: geofield_backend_default
+field_type: geofield

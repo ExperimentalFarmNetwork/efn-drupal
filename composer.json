@@ -10,9 +10,6 @@
         "drupal/ajax_comments": "^1.0@beta",
         "drupal/config_update": "^1.1",
         "drupal/features": "^3.5",
-        "drupal/geocoder": "^3.0",
-        "drupal/geofield": "^1.0",
-        "drupal/geophp": "^1.0@beta",
         "drupal/group": "^1.0",
         "drupal/profile": "^1.0",
         "drupal/token": "^1.0",
@@ -39,7 +36,11 @@
         "drupal/views_data_export": "^1.0@beta",
         "drupal/csv_serialization": "^1.4",
         "drush/drush": "^9",
-        "drupal/devel": "2.1.0"
+        "drupal/devel": "2.1.0",
+        "geocoder-php/openrouteservice-provider": "^1.0",
+        "geocoder-php/google-maps-provider": "^4.4",
+        "drupal/geofield": "^1.8",
+        "drupal/geocoder": "^3.0@beta"
     },
     "replace": {
         "drupal/core": "^8.7"

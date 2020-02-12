@@ -1,0 +1,20 @@
+uuid: 5c31d6c8-c29a-451b-8bbe-8a7edb3c6cd6
+langcode: en
+status: true
+dependencies:
+  module:
+    - geofield
+    - group
+id: group.field_lat_lon
+field_name: field_lat_lon
+entity_type: group
+type: geofield
+settings:
+  backend: geofield_backend_default
+module: geofield
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

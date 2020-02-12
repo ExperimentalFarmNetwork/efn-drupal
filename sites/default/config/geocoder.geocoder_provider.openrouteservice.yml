@@ -1,0 +1,12 @@
+uuid: ece8abea-8f24-494a-9d1c-88c55a7717e2
+langcode: en
+status: true
+dependencies: {  }
+id: openrouteservice
+label: Openrouteservice
+plugin: openrouteservice
+configuration:
+  apiKey: 5b3ce3597851110001cf62483a61edfd03ce424b88581c41fdc5ffca
+  throttle:
+    period: null
+    limit: null

@@ -243,28 +243,18 @@ class GeocodeOrigin extends GeofieldProximitySourceBase implements ContainerFact
         '#type' => 'details',
         '#title' => $this->t('Geocoder fine Settings'),
         '#open' => FALSE,
-      ];
-
-      $form['settings']['options'] = [
-        '#type' => 'textarea',
-        '#rows' => 4,
-        '#title' => $this->t('Geocoder Control Specific Options'),
-        '#description' => $this->t('This settings would override general Geocoder Providers options. (<u>Note: This would work only for Geocoder 2.x branch/version.</u>)<br>An object literal of specific Geocoder options.The syntax should respect the javascript object notation (json) format.<br>As suggested in the field placeholder, always use double quotes (") both for the indexes and the string values.'),
-        '#default_value' => $this->options,
-        '#placeholder' => '{"googlemaps":{"locale": "it", "region": "it"}, "nominatim":{"locale": "it"}}',
-        '#element_validate' => [[get_class($this), 'jsonValidate']],
-      ];
-
-      $form['settings']['autocomplete'] = [
-        '#type' => 'details',
-        '#title' => $this->t('Autocomplete Settings'),
-        '#open' => TRUE,
         '#states' => [
           'invisible' => [
             [':input[name="options[source_configuration][use_autocomplete]"]' => ['checked' => FALSE]],
             [':input[name="options[expose_button][checkbox][checkbox]"]' => ['checked' => FALSE]],
           ],
         ],
+      ];
+
+      $form['settings']['autocomplete'] = [
+        '#type' => 'details',
+        '#title' => $this->t('Autocomplete Settings'),
+        '#open' => TRUE,
       ];
 
       $form['settings']['autocomplete']['min_terms'] = [
@@ -307,7 +297,6 @@ class GeocodeOrigin extends GeofieldProximitySourceBase implements ContainerFact
           'providers' => array_keys($this->getEnabledProviderPlugins()),
           'minTerms' => $this->minTerms,
           'delay' => $this->delay,
-          'options' => $this->options,
           'address_format' => $this->addressFormat,
         ],
       ];

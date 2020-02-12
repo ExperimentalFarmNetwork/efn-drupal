@@ -5,8 +5,8 @@ dependencies:
   config:
     - field.field.group.project.field_description
     - field.field.group.project.field_featured_project
+    - field.field.group.project.field_lat_lon
     - field.field.group.project.field_location
-    - field.field.group.project.field_location_geo
     - field.field.group.project.field_misc
     - field.field.group.project.field_multiyear
     - field.field.group.project.field_project_image
@@ -149,6 +149,6 @@ content:
     third_party_settings: {  }
     region: content
 hidden:
-  field_location_geo: true
+  field_lat_lon: true
   path: true
   uid: true

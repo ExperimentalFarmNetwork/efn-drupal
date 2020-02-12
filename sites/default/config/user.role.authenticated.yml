@@ -11,6 +11,7 @@ is_admin: false
 permissions:
   - 'access comments'
   - 'access content'
+  - 'access geocoder api endpoints'
   - 'access site-wide contact form'
   - 'access user contact forms'
   - 'access user profiles'

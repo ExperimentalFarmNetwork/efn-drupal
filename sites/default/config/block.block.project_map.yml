@@ -1,0 +1,34 @@
+uuid: 6cc033e5-7e1e-484a-a592-7f13425f18a1
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.project_map
+  module:
+    - ctools
+    - views
+  theme:
+    - minimus
+id: project_map
+theme: minimus
+region: sidebar_second
+weight: 0
+provider: null
+plugin: 'views_block:project_map-block_1'
+settings:
+  id: 'views_block:project_map-block_1'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+  items_per_page: none
+  context_mapping:
+    id: '@group.group_route_context:group'
+visibility:
+  'entity_bundle:group':
+    id: 'entity_bundle:group'
+    bundles:
+      project: project
+    negate: false
+    context_mapping:
+      group: '@group.group_route_context:group'
