@@ -62,3 +62,6 @@ Thumbs.db
 !core/**/*.gz
 
 .idea
+
+# no settings for smtp in config
+sites/default/config/smtp.settings.yml
